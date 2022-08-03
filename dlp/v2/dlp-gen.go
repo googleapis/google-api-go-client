@@ -488,6 +488,11 @@ type ProjectsStoredInfoTypesService struct {
 // job. See https://cloud.google.com/dlp/docs/concepts-actions to learn
 // more.
 type GooglePrivacyDlpV2Action struct {
+	// Deidentify: Create a de-identified copy of the input data. Applicable
+	// for non-image data only. The de-identified copy is in the same
+	// location as the original data.
+	Deidentify *GooglePrivacyDlpV2Deidentify `json:"deidentify,omitempty"`
+
 	// JobNotificationEmails: Enable email notification for project owners
 	// and editors on job's completion/failure.
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
@@ -509,22 +514,20 @@ type GooglePrivacyDlpV2Action struct {
 	// SaveFindings: Save resulting findings in a provided location.
 	SaveFindings *GooglePrivacyDlpV2SaveFindings `json:"saveFindings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "JobNotificationEmails") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Deidentify") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "JobNotificationEmails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Deidentify") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1225,7 +1228,7 @@ func (s *GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2CloudStorageOptions: Options defining a file or a
-// set of files within a Google Cloud Storage bucket.
+// set of files within a Cloud Storage bucket.
 type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// BytesLimitPerFile: Max number of bytes to scan from a file. If a
 	// scanned file's size is bigger than this value then the rest of the
@@ -1568,8 +1571,8 @@ func (s *GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
 // database record.
 type GooglePrivacyDlpV2Container struct {
 	// FullPath: A string representation of the full container name.
-	// Examples: - BigQuery: 'Project:DataSetId.TableId' - Google Cloud
-	// Storage: 'gs://Bucket/folders/filename.txt'
+	// Examples: - BigQuery: 'Project:DataSetId.TableId' - Cloud Storage:
+	// 'gs://Bucket/folders/filename.txt'
 	FullPath string `json:"fullPath,omitempty"`
 
 	// ProjectId: Project where the finding was found. Can be different from
@@ -1578,28 +1581,29 @@ type GooglePrivacyDlpV2Container struct {
 
 	// RelativePath: The rest of the path after the root. Examples: - For
 	// BigQuery table `project_id:dataset_id.table_id`, the relative path is
-	// `table_id` - Google Cloud Storage file
+	// `table_id` - For Cloud Storage file
 	// `gs://bucket/folder/filename.txt`, the relative path is
 	// `folder/filename.txt`
 	RelativePath string `json:"relativePath,omitempty"`
 
 	// RootPath: The root of the container. Examples: - For BigQuery table
 	// `project_id:dataset_id.table_id`, the root is `dataset_id` - For
-	// Google Cloud Storage file `gs://bucket/folder/filename.txt`, the root
-	// is `gs://bucket`
+	// Cloud Storage file `gs://bucket/folder/filename.txt`, the root is
+	// `gs://bucket`
 	RootPath string `json:"rootPath,omitempty"`
 
-	// Type: Container type, for example BigQuery or Google Cloud Storage.
+	// Type: Container type, for example BigQuery or Cloud Storage.
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Findings container modification timestamp, if applicable.
-	// For Google Cloud Storage contains last file modification timestamp.
-	// For BigQuery table contains last_modified_time property. For
-	// Datastore - not populated.
+	// For Cloud Storage, this field contains the last file modification
+	// timestamp. For a BigQuery table, this field contains the
+	// last_modified_time property. For Datastore, this field isn't
+	// populated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Version: Findings container version, if available ("generation" for
-	// Google Cloud Storage).
+	// Cloud Storage).
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullPath") to
@@ -1672,17 +1676,18 @@ type GooglePrivacyDlpV2ContentLocation struct {
 	// tables: `{project_id}:{dataset_id}.{table_id}` * Cloud Storage files:
 	// `gs://{bucket}/{path}` * Datastore namespace: {namespace} Nested
 	// names could be absent if the embedded object has no string identifier
-	// (for an example an image contained within a document).
+	// (for example, an image contained within a document).
 	ContainerName string `json:"containerName,omitempty"`
 
-	// ContainerTimestamp: Findings container modification timestamp, if
-	// applicable. For Google Cloud Storage contains last file modification
-	// timestamp. For BigQuery table contains last_modified_time property.
-	// For Datastore - not populated.
+	// ContainerTimestamp: Finding container modification timestamp, if
+	// applicable. For Cloud Storage, this field contains the last file
+	// modification timestamp. For a BigQuery table, this field contains the
+	// last_modified_time property. For Datastore, this field isn't
+	// populated.
 	ContainerTimestamp string `json:"containerTimestamp,omitempty"`
 
-	// ContainerVersion: Findings container version, if available
-	// ("generation" for Google Cloud Storage).
+	// ContainerVersion: Finding container version, if available
+	// ("generation" for Cloud Storage).
 	ContainerVersion string `json:"containerVersion,omitempty"`
 
 	// DocumentLocation: Location data for document files.
@@ -1935,7 +1940,7 @@ type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
 	// not present when transforming a given value, plaintext would be used
 	// as is for encryption. Note that case (1) is expected when an
 	// `InfoTypeTransformation` is applied to both structured and
-	// non-structured `ContentItem`s.
+	// unstructured `ContentItem`s.
 	Context *GooglePrivacyDlpV2FieldId `json:"context,omitempty"`
 
 	// CryptoKey: The key used by the encryption function. For deterministic
@@ -2096,7 +2101,7 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// transforming a given value or 1. the field is not present when
 	// transforming a given value, a default tweak will be used. Note that
 	// case (1) is expected when an `InfoTypeTransformation` is applied to
-	// both structured and non-structured `ContentItem`s. Currently, the
+	// both structured and unstructured `ContentItem`s. Currently, the
 	// referenced field may be of value type integer or string. The tweak is
 	// constructed as a sequence of bytes in big endian byte order such
 	// that: - a 64 bit integer is encoded followed by a single byte of
@@ -2432,10 +2437,10 @@ func (s *GooglePrivacyDlpV2DataProfilePubSubCondition) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2DataProfilePubSubMessage: The message that will be
-// published to a Pub/Sub topic. To receive a message of protocol buffer
-// schema type, convert the message data to an object of this proto
-// class.
+// GooglePrivacyDlpV2DataProfilePubSubMessage: Pub/Sub topic message for
+// a DataProfileAction.PubSubNotification event. To receive a message of
+// protocol buffer schema type, convert the message data to an object of
+// this proto class.
 // https://cloud.google.com/pubsub/docs/samples/pubsub-subscribe-proto-messages
 type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	// Event: The event that caused the Pub/Sub message to be sent.
@@ -2481,7 +2486,7 @@ func (s *GooglePrivacyDlpV2DataProfilePubSubMessage) MarshalJSON() ([]byte, erro
 }
 
 // GooglePrivacyDlpV2DataRiskLevel: Score is a summary of all elements
-// in the data profile. A higher number means more risky.
+// in the data profile. A higher number means more risk.
 type GooglePrivacyDlpV2DataRiskLevel struct {
 	// Score: The score applied to the resource.
 	//
@@ -2491,9 +2496,9 @@ type GooglePrivacyDlpV2DataRiskLevel struct {
 	// appears to have additional access restrictions in place or no
 	// indication of sensitive data found.
 	//   "RISK_MODERATE" - Medium risk - Sensitive data may be present but
-	// additional access or fine grain access restrictions appears to be
-	// present. Consider limiting access even further or transforming data
-	// to mask.
+	// additional access or fine grain access restrictions appear to be
+	// present. Consider limiting access even further or transform data to
+	// mask.
 	//   "RISK_HIGH" - High risk – SPII may be present. Access controls
 	// may include public ACLs. Exfiltration of data may lead to user data
 	// loss. Re-identification of users may be possible. Consider limiting
@@ -2685,6 +2690,101 @@ func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Deidentify: Create a de-identified copy of the
+// requested table or files. . A TransformationDetail will be created
+// for each transformation. If any rows in BigQuery are skipped during
+// de-identification (transformation errors or row size exceeds BigQuery
+// insert API limits) they are placed in the failure output table. If
+// the original row exceeds the BigQuery insert API limit it will be
+// truncated when written to the failure output table. The failure
+// output table can be set in the
+// action.deidentify.output.big_query_output.deidentified_failure_output_
+// table field, if no table is set, a table will be automatically
+// created in the same project and dataset as the original table.
+// Compatible with: Inspect
+type GooglePrivacyDlpV2Deidentify struct {
+	// CloudStorageOutput: Required. User settable GCS bucket and folders to
+	// store de-identified files. This field must be set for cloud storage
+	// deidentification. The output GCS bucket must be different from the
+	// input bucket. De-identified files will overwrite files in the output
+	// path. Form of: gs://bucket/folder/ or gs://bucket
+	CloudStorageOutput string `json:"cloudStorageOutput,omitempty"`
+
+	// FileTypesToTransform: List of user-specified file type groups to
+	// transform. If specified, only the files with these filetypes will be
+	// transformed. If empty, all supported files will be transformed.
+	// Supported types may be automatically added over time. If a file type
+	// is set in this field that isn't supported by the Deidentify action
+	// then the job will fail and will not be successfully created/started.
+	// Currently the only filetypes supported are: IMAGES, TEXT_FILES, CSV,
+	// TSV.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
+	//   "BINARY_FILE" - Includes all file extensions not covered by another
+	// entry. Binary scanning attempts to convert the content of the file to
+	// utf_8 to scan the file. If you wish to avoid this fall back, specify
+	// one or more of the other FileType's in your storage scan.
+	//   "TEXT_FILE" - Included file extensions: asc,asp, aspx, brf, c,
+	// cc,cfm, cgi, cpp, csv, cxx, c++, cs, css, dart, dat, dot, eml,,
+	// epbub, ged, go, h, hh, hpp, hxx, h++, hs, html, htm, mkd, markdown,
+	// m, ml, mli, perl, pl, plist, pm, php, phtml, pht, properties, py,
+	// pyw, rb, rbw, rs, rss, rc, scala, sh, sql, swift, tex, shtml, shtm,
+	// xhtml, lhs, ics, ini, java, js, json, kix, kml, ocaml, md, txt, text,
+	// tsv, vb, vcard, vcs, wml, xcodeproj, xml, xsl, xsd, yml, yaml.
+	//   "IMAGE" - Included file extensions: bmp, gif, jpg, jpeg, jpe, png.
+	// bytes_limit_per_file has no effect on image files. Image inspection
+	// is restricted to 'global', 'us', 'asia', and 'europe'.
+	//   "WORD" - Word files >30 MB will be scanned as binary files.
+	// Included file extensions: docx, dotx, docm, dotm
+	//   "PDF" - PDF files >30 MB will be scanned as binary files. Included
+	// file extensions: pdf
+	//   "AVRO" - Included file extensions: avro
+	//   "CSV" - Included file extensions: csv
+	//   "TSV" - Included file extensions: tsv
+	//   "POWERPOINT" - Powerpoint files >30 MB will be scanned as binary
+	// files. Included file extensions: pptx, pptm, potx, potm, pot
+	//   "EXCEL" - Excel files >30 MB will be scanned as binary files.
+	// Included file extensions: xlsx, xlsm, xltx, xltm
+	FileTypesToTransform []string `json:"fileTypesToTransform,omitempty"`
+
+	// TransformationConfig: User specified deidentify templates and configs
+	// for structured, unstructured, and image files.
+	TransformationConfig *GooglePrivacyDlpV2TransformationConfig `json:"transformationConfig,omitempty"`
+
+	// TransformationDetailsStorageConfig: Config for storing transformation
+	// details. This is separate from the de-identified content, and
+	// contains metadata about the successful transformations and/or
+	// failures that occurred while de-identifying. This needs to be set in
+	// order for users to access information about the status of each
+	// transformation (see TransformationDetails message for more
+	// information about what is noted).
+	TransformationDetailsStorageConfig *GooglePrivacyDlpV2TransformationDetailsStorageConfig `json:"transformationDetailsStorageConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudStorageOutput")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudStorageOutput") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2Deidentify) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Deidentify
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DeidentifyConfig: The configuration that controls
 // how the data will change.
 type GooglePrivacyDlpV2DeidentifyConfig struct {
@@ -2728,7 +2828,7 @@ func (s *GooglePrivacyDlpV2DeidentifyConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2DeidentifyContentRequest: Request to de-identify a
-// list of items.
+// ContentItem.
 type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	// DeidentifyConfig: Configuration for the de-identification of the
 	// content item. Items specified here will override the template
@@ -3197,13 +3297,13 @@ type GooglePrivacyDlpV2DlpJob struct {
 	//   "RUNNING" - The job is currently running. Once a job has finished
 	// it will transition to FAILED or DONE.
 	//   "DONE" - The job is no longer running.
-	//   "CANCELED" - The job was canceled before it could complete.
+	//   "CANCELED" - The job was canceled before it could be completed.
 	//   "FAILED" - The job had an error and did not complete.
 	//   "ACTIVE" - The job is currently accepting findings via
 	// hybridInspect. A hybrid job in ACTIVE state may continue to have
-	// findings added to it through calling of hybridInspect. After the job
-	// has finished no more calls to hybridInspect may be made. ACTIVE jobs
-	// can transition to DONE.
+	// findings added to it through the calling of hybridInspect. After the
+	// job has finished no more calls to hybridInspect may be made. ACTIVE
+	// jobs can transition to DONE.
 	State string `json:"state,omitempty"`
 
 	// Type: The type of job.
@@ -3338,7 +3438,7 @@ func (s *GooglePrivacyDlpV2Error) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2ExcludeInfoTypes: List of exclude infoTypes.
+// GooglePrivacyDlpV2ExcludeInfoTypes: List of excluded infoTypes.
 type GooglePrivacyDlpV2ExcludeInfoTypes struct {
 	// InfoTypes: InfoType list in ExclusionRule rule drops a finding when
 	// it overlaps or contained within with a finding of an infoType from
@@ -3460,7 +3560,7 @@ func (s *GooglePrivacyDlpV2Export) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Expressions: An expression, consisting or an
+// GooglePrivacyDlpV2Expressions: An expression, consisting of an
 // operator and conditions.
 type GooglePrivacyDlpV2Expressions struct {
 	// Conditions: Conditions to apply to the expression.
@@ -3706,7 +3806,11 @@ func (s *GooglePrivacyDlpV2Finding) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2FindingLimits: Configuration to control the number
 // of findings returned for inspection. This is not used for
-// de-identification or data profiling.
+// de-identification or data profiling. When redacting sensitive data
+// from images, finding limits don't apply. They can cause unexpected or
+// inconsistent results, where only some data is redacted. Don't include
+// finding limits in RedactImage requests. Otherwise, Cloud DLP returns
+// an error.
 type GooglePrivacyDlpV2FindingLimits struct {
 	// MaxFindingsPerInfoType: Configuration of findings limit given for
 	// specified infoTypes.
@@ -4365,6 +4469,9 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	//   "RISK_ANALYSIS" - Supported by the risk analysis operations.
 	SupportedBy []string `json:"supportedBy,omitempty"`
 
+	// Versions: A list of available versions for the infotype.
+	Versions []*GooglePrivacyDlpV2VersionDescription `json:"versions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Categories") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4598,7 +4705,11 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
 	// Limits: Configuration to control the number of findings returned.
-	// This is not used for data profiling.
+	// This is not used for data profiling. When redacting sensitive data
+	// from images, finding limits don't apply. They can cause unexpected or
+	// inconsistent results, where only some data is redacted. Don't include
+	// finding limits in RedactImage requests. Otherwise, Cloud DLP returns
+	// an error.
 	Limits *GooglePrivacyDlpV2FindingLimits `json:"limits,omitempty"`
 
 	// MinLikelihood: Only returns findings equal or above this threshold.
@@ -5630,7 +5741,7 @@ func (s *GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 // custom dictionary created from a data source of any size up to the
 // maximum size defined in the limits
 // (https://cloud.google.com/dlp/limits) page. The artifacts of
-// dictionary creation are stored in the specified Google Cloud Storage
+// dictionary creation are stored in the specified Cloud Storage
 // location. Consider using `CustomInfoType.Dictionary` for smaller
 // dictionaries that satisfy the size requirements.
 type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
@@ -5642,10 +5753,10 @@ type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
 	// of dictionary phrases.
 	CloudStorageFileSet *GooglePrivacyDlpV2CloudStorageFileSet `json:"cloudStorageFileSet,omitempty"`
 
-	// OutputPath: Location to store dictionary artifacts in Google Cloud
-	// Storage. These files will only be accessible by project owners and
-	// the DLP API. If any of these artifacts are modified, the dictionary
-	// is considered invalid and can no longer be used.
+	// OutputPath: Location to store dictionary artifacts in Cloud Storage.
+	// These files will only be accessible by project owners and the DLP
+	// API. If any of these artifacts are modified, the dictionary is
+	// considered invalid and can no longer be used.
 	OutputPath *GooglePrivacyDlpV2CloudStoragePath `json:"outputPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQueryField") to
@@ -6185,8 +6296,8 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	//   "OUTPUT_SCHEMA_UNSPECIFIED" - Unused.
 	//   "BASIC_COLUMNS" - Basic schema including only `info_type`, `quote`,
 	// `certainty`, and `timestamp`.
-	//   "GCS_COLUMNS" - Schema tailored to findings from scanning Google
-	// Cloud Storage.
+	//   "GCS_COLUMNS" - Schema tailored to findings from scanning Cloud
+	// Storage.
 	//   "DATASTORE_COLUMNS" - Schema tailored to findings from scanning
 	// Google Datastore.
 	//   "BIG_QUERY_COLUMNS" - Schema tailored to findings from scanning
@@ -6197,8 +6308,8 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	// Table: Store findings in an existing table or a new table in an
 	// existing dataset. If table_id is not set a new one will be generated
 	// for you with the following format:
-	// dlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific timezone will be used
-	// for generating the date details. For Inspect, each column in an
+	// dlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific time zone will be
+	// used for generating the date details. For Inspect, each column in an
 	// existing output table must have the same name, type, and mode of a
 	// field in the `Finding` object. For Risk, an existing output table
 	// should be the output of a previous Risk analysis job run on the same
@@ -6647,15 +6758,15 @@ type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
 // a DlpJob to the Cloud Security Command Center (CSCC Alpha). This
 // action is only available for projects which are parts of an
 // organization and whitelisted for the alpha Cloud Security Command
-// Center. The action will publish count of finding instances and their
-// info types. The summary of findings will be persisted in CSCC and are
-// governed by CSCC service-specific policy, see
+// Center. The action will publish the count of finding instances and
+// their info types. The summary of findings will be persisted in CSCC
+// and are governed by CSCC service-specific policy, see
 // https://cloud.google.com/terms/service-terms Only a single instance
 // of this action can be specified. Compatible with: Inspect
 type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 }
 
-// GooglePrivacyDlpV2PublishToPubSub: Publish a message into given
+// GooglePrivacyDlpV2PublishToPubSub: Publish a message into a given
 // Pub/Sub topic when DlpJob has completed. The message contains a
 // single field, `DlpJobName`, which is equal to the finished job's
 // `DlpJob.name`
@@ -7230,7 +7341,7 @@ func (s *GooglePrivacyDlpV2ReidentifyContentRequest) MarshalJSON() ([]byte, erro
 }
 
 // GooglePrivacyDlpV2ReidentifyContentResponse: Results of
-// re-identifying a item.
+// re-identifying an item.
 type GooglePrivacyDlpV2ReidentifyContentResponse struct {
 	// Item: The re-identified item.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
@@ -7530,12 +7641,12 @@ func (s *GooglePrivacyDlpV2SaveFindings) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2Schedule: Schedule for inspect job triggers.
 type GooglePrivacyDlpV2Schedule struct {
-	// RecurrencePeriodDuration: With this option a job is started a regular
-	// periodic basis. For example: every day (86400 seconds). A scheduled
-	// start time will be skipped if the previous execution has not ended
-	// when its scheduled time occurs. This value must be set to a time
-	// duration greater than or equal to 1 day and can be no longer than 60
-	// days.
+	// RecurrencePeriodDuration: With this option a job is started on a
+	// regular periodic basis. For example: every day (86400 seconds). A
+	// scheduled start time will be skipped if the previous execution has
+	// not ended when its scheduled time occurs. This value must be set to a
+	// time duration greater than or equal to 1 day and can be no longer
+	// than 60 days.
 	RecurrencePeriodDuration string `json:"recurrencePeriodDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7651,7 +7762,7 @@ type GooglePrivacyDlpV2StorageConfig struct {
 	// BigQueryOptions: BigQuery options.
 	BigQueryOptions *GooglePrivacyDlpV2BigQueryOptions `json:"bigQueryOptions,omitempty"`
 
-	// CloudStorageOptions: Google Cloud Storage options.
+	// CloudStorageOptions: Cloud Storage options.
 	CloudStorageOptions *GooglePrivacyDlpV2CloudStorageOptions `json:"cloudStorageOptions,omitempty"`
 
 	// DatastoreOptions: Google Cloud Datastore options.
@@ -7847,10 +7958,10 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// version, or anomalies detected in the storedInfoType data that render
 	// it unusable. Only the five most recent errors will be displayed, with
 	// the most recent error appearing first. For example, some of the data
-	// for stored custom dictionaries is put in the user's Google Cloud
-	// Storage bucket, and if this data is modified or deleted by the user
-	// or another system, the dictionary becomes invalid. If any errors
-	// occur, fix the problem indicated by the error message and use the
+	// for stored custom dictionaries is put in the user's Cloud Storage
+	// bucket, and if this data is modified or deleted by the user or
+	// another system, the dictionary becomes invalid. If any errors occur,
+	// fix the problem indicated by the error message and use the
 	// UpdateStoredInfoType API method to create another version of the
 	// storedInfoType to continue using it, reusing the same `config` if it
 	// was not the source of the error.
@@ -8335,7 +8446,7 @@ func (s *GooglePrivacyDlpV2TimeZone) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2TimespanConfig: Configuration of the timespan of
 // the items to include in scanning. Currently only supported when
-// inspecting Google Cloud Storage and BigQuery.
+// inspecting Cloud Storage and BigQuery.
 type GooglePrivacyDlpV2TimespanConfig struct {
 	// EnableAutoPopulationOfTimespanConfig: When the job is started by a
 	// JobTrigger we will automatically figure out a valid start_time to
@@ -8354,17 +8465,24 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 
 	// TimestampField: Specification of the field containing the timestamp
 	// of scanned items. Used for data sources like Datastore and BigQuery.
-	// For BigQuery: If this value is not specified and the table was
+	// *For BigQuery* If this value is not specified and the table was
 	// modified between the given start and end times, the entire table will
 	// be scanned. If this value is specified, then rows are filtered based
 	// on the given start and end times. Rows with a `NULL` value in the
 	// provided BigQuery column are skipped. Valid data types of the
 	// provided BigQuery column are: `INTEGER`, `DATE`, `TIMESTAMP`, and
-	// `DATETIME`. For Datastore: If this value is specified, then entities
-	// are filtered based on the given start and end times. If an entity
-	// does not contain the provided timestamp property or contains empty or
+	// `DATETIME`. If your BigQuery table is partitioned at ingestion time
+	// (https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time),
+	// you can use any of the following pseudo-columns as your timestamp
+	// field. When used with Cloud DLP, these pseudo-column names are case
+	// sensitive. - _PARTITIONTIME - _PARTITIONDATE - _PARTITION_LOAD_TIME
+	// *For Datastore* If this value is specified, then entities are
+	// filtered based on the given start and end times. If an entity does
+	// not contain the provided timestamp property or contains empty or
 	// invalid values, then it is included. Valid data types of the provided
-	// timestamp property are: `TIMESTAMP`.
+	// timestamp property are: `TIMESTAMP`. See the known issue
+	// (https://cloud.google.com/dlp/docs/known-issues#bq-timespan) related
+	// to this operation.
 	TimestampField *GooglePrivacyDlpV2FieldId `json:"timestampField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -8388,6 +8506,92 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 
 func (s *GooglePrivacyDlpV2TimespanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TimespanConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TransformationConfig: User specified templates and
+// configs for how to deidentify structured, unstructures, and image
+// files. User must provide either a unstructured deidentify template or
+// at least one redact image config.
+type GooglePrivacyDlpV2TransformationConfig struct {
+	// DeidentifyTemplate: De-identify template. If this template is
+	// specified, it will serve as the default de-identify template. This
+	// template cannot contain `record_transformations` since it can be used
+	// for unstructured content such as free-form text files. If this
+	// template is not set, a default `ReplaceWithInfoTypeConfig` will be
+	// used to de-identify unstructured content.
+	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
+
+	// ImageRedactTemplate: Image redact template. If this template is
+	// specified, it will serve as the de-identify template for images. If
+	// this template is not set, all findings in the image will be redacted
+	// with a black box.
+	ImageRedactTemplate string `json:"imageRedactTemplate,omitempty"`
+
+	// StructuredDeidentifyTemplate: Structured de-identify template. If
+	// this template is specified, it will serve as the de-identify template
+	// for structured content such as delimited files and tables. If this
+	// template is not set but the `deidentify_template` is set, then
+	// `deidentify_template` will also apply to the structured content. If
+	// neither template is set, a default `ReplaceWithInfoTypeConfig` will
+	// be used to de-identify structured content.
+	StructuredDeidentifyTemplate string `json:"structuredDeidentifyTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeidentifyTemplate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeidentifyTemplate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TransformationDetailsStorageConfig: Config for
+// storing transformation details.
+type GooglePrivacyDlpV2TransformationDetailsStorageConfig struct {
+	// Table: The BigQuery table in which to store the output. This may be
+	// an existing table or in a new table in an existing dataset. If
+	// table_id is not set a new one will be generated for you with the
+	// following format:
+	// dlp_googleapis_transformation_details_yyyy_mm_dd_[dlp_job_id].
+	// Pacific time zone will be used for generating the date details.
+	Table *GooglePrivacyDlpV2BigQueryTable `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Table") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Table") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationDetailsStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationDetailsStorageConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8860,6 +9064,38 @@ func (s *GooglePrivacyDlpV2ValueFrequency) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2VersionDescription: Details about each available
+// version for an infotype.
+type GooglePrivacyDlpV2VersionDescription struct {
+	// Description: Description of the version.
+	Description string `json:"description,omitempty"`
+
+	// Version: Name of the version
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2VersionDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2VersionDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2WordList: Message defining a list of words or
 // phrases to search for in the data.
 type GooglePrivacyDlpV2WordList struct {
@@ -9047,9 +9283,9 @@ type InfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of the sensitive information types that the DLP
-// API supports. See
-// https://cloud.google.com/dlp/docs/infotypes-reference to learn more.
+// List: Returns a list of the sensitive information types that DLP API
+// supports. See https://cloud.google.com/dlp/docs/infotypes-reference
+// to learn more.
 func (r *InfoTypesService) List() *InfoTypesListCall {
 	c := &InfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -9183,7 +9419,7 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of the sensitive information types that the DLP API supports. See https://cloud.google.com/dlp/docs/infotypes-reference to learn more.",
+	//   "description": "Returns a list of the sensitive information types that DLP API supports. See https://cloud.google.com/dlp/docs/infotypes-reference to learn more.",
 	//   "flatPath": "v2/infoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.infoTypes.list",
@@ -9232,9 +9468,9 @@ type LocationsInfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of the sensitive information types that the DLP
-// API supports. See
-// https://cloud.google.com/dlp/docs/infotypes-reference to learn more.
+// List: Returns a list of the sensitive information types that DLP API
+// supports. See https://cloud.google.com/dlp/docs/infotypes-reference
+// to learn more.
 //
 // - parent: The parent resource name. The format of this value is as
 //   follows: locations/ LOCATION_ID.
@@ -9368,7 +9604,7 @@ func (c *LocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of the sensitive information types that the DLP API supports. See https://cloud.google.com/dlp/docs/infotypes-reference to learn more.",
+	//   "description": "Returns a list of the sensitive information types that DLP API supports. See https://cloud.google.com/dlp/docs/infotypes-reference to learn more.",
 	//   "flatPath": "v2/locations/{locationsId}/infoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.locations.infoTypes.list",
@@ -9421,7 +9657,7 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates-deid to learn
 // more.
@@ -9539,7 +9775,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
+	//   "description": "Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.deidentifyTemplates.create",
@@ -9905,18 +10141,18 @@ func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string)
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *OrganizationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10045,12 +10281,12 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10259,7 +10495,7 @@ type OrganizationsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an InspectTemplate for reusing frequently used
 // configuration for inspecting content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
@@ -10376,7 +10612,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
+	//   "description": "Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.inspectTemplates.create",
@@ -10739,18 +10975,18 @@ func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *O
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *OrganizationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10879,12 +11115,12 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11092,7 +11328,7 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates-deid to learn
 // more.
@@ -11210,7 +11446,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
+	//   "description": "Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.deidentifyTemplates.create",
@@ -11576,18 +11812,18 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationI
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11716,12 +11952,12 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11958,13 +12194,13 @@ func (r *OrganizationsLocationsDlpJobsService) List(parentid string) *Organizati
 // restriction has the form of `{field} {operator} {value}`. * Supported
 // fields/values for inspect jobs: - `state` -
 // PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` -
-// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name
-// of the trigger that created job. - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
+// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the
+// trigger that created the job. - 'end_time` - Corresponds to the time
+// the job finished. - 'start_time` - Corresponds to the time the job
 // finished. * Supported fields for risk analysis jobs: - `state` -
-// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
-// finished. * The operator must be `=` or `!=`. Examples: *
+// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the
+// time the job finished. - 'start_time` - Corresponds to the time the
+// job finished. * The operator must be `=` or `!=`. Examples: *
 // inspected_storage = cloud_storage AND state = done *
 // inspected_storage = cloud_storage OR inspected_storage = bigquery *
 // inspected_storage = cloud_storage AND (state = done OR state =
@@ -11987,9 +12223,9 @@ func (c *OrganizationsLocationsDlpJobsListCall) LocationId(locationId string) *O
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, end_time asc,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the job was created. - `end_time`: corresponds to time the
-// job ended. - `name`: corresponds to job's name. - `state`:
-// corresponds to `state`
+// to the time the job was created. - `end_time`: corresponds to the
+// time the job ended. - `name`: corresponds to the job's name. -
+// `state`: corresponds to `state`
 func (c *OrganizationsLocationsDlpJobsListCall) OrderBy(orderBy string) *OrganizationsLocationsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -12130,7 +12366,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name of the trigger that created job. - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the trigger that created the job. - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12140,7 +12376,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to time the job was created. - `end_time`: corresponds to time the job ended. - `name`: corresponds to job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12221,7 +12457,7 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an InspectTemplate for reusing frequently used
 // configuration for inspecting content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
@@ -12338,7 +12574,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
+	//   "description": "Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.locations.inspectTemplates.create",
@@ -12701,18 +12937,18 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId s
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *OrganizationsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -12841,12 +13077,12 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -13546,12 +13782,12 @@ func (c *OrganizationsLocationsJobTriggersListCall) LocationId(locationId string
 // postfix. This list is case-insensitive, default sorting order is
 // ascending, redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
-// `create_time`: corresponds to time the JobTrigger was created. -
-// `update_time`: corresponds to time the JobTrigger was last updated. -
-// `last_run_time`: corresponds to the last time the JobTrigger ran. -
-// `name`: corresponds to JobTrigger's name. - `display_name`:
-// corresponds to JobTrigger's display name. - `status`: corresponds to
-// JobTrigger's status.
+// `create_time`: corresponds to the time the JobTrigger was created. -
+// `update_time`: corresponds to the time the JobTrigger was last
+// updated. - `last_run_time`: corresponds to the last time the
+// JobTrigger ran. - `name`: corresponds to the JobTrigger's name. -
+// `display_name`: corresponds to the JobTrigger's display name. -
+// `status`: corresponds to JobTrigger's status.
 func (c *OrganizationsLocationsJobTriggersListCall) OrderBy(orderBy string) *OrganizationsLocationsJobTriggersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -13704,7 +13940,7 @@ func (c *OrganizationsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the JobTrigger was created. - `update_time`: corresponds to time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to JobTrigger's name. - `display_name`: corresponds to JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14412,7 +14648,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId st
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, display_name,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
+// to the time the most recent version of the resource was created. -
 // `state`: corresponds to the state of the resource. - `name`:
 // corresponds to resource name. - `display_name`: corresponds to info
 // type's display name.
@@ -14422,8 +14658,8 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) 
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -14552,12 +14788,12 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -15249,7 +15485,7 @@ func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *Or
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, display_name,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
+// to the time the most recent version of the resource was created. -
 // `state`: corresponds to the state of the resource. - `name`:
 // corresponds to resource name. - `display_name`: corresponds to info
 // type's display name.
@@ -15259,8 +15495,8 @@ func (c *OrganizationsStoredInfoTypesListCall) OrderBy(orderBy string) *Organiza
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *OrganizationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -15389,12 +15625,12 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -16078,7 +16314,7 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates-deid to learn
 // more.
@@ -16196,7 +16432,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
+	//   "description": "Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.deidentifyTemplates.create",
@@ -16562,18 +16798,18 @@ func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *Pro
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *ProjectsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -16702,12 +16938,12 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -17221,7 +17457,7 @@ type ProjectsDlpJobsDeleteCall struct {
 
 // Delete: Deletes a long-running DlpJob. This method indicates that the
 // client is no longer interested in the DlpJob result. The job will be
-// cancelled if possible. See
+// canceled if possible. See
 // https://cloud.google.com/dlp/docs/inspecting-storage and
 // https://cloud.google.com/dlp/docs/compute-risk-analysis to learn
 // more.
@@ -17319,7 +17555,7 @@ func (c *ProjectsDlpJobsDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be cancelled if possible. See https://cloud.google.com/dlp/docs/inspecting-storage and https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
+	//   "description": "Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/dlp/docs/inspecting-storage and https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/dlpJobs/{dlpJobsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.dlpJobs.delete",
@@ -17534,13 +17770,13 @@ func (r *ProjectsDlpJobsService) List(parentid string) *ProjectsDlpJobsListCall 
 // restriction has the form of `{field} {operator} {value}`. * Supported
 // fields/values for inspect jobs: - `state` -
 // PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` -
-// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name
-// of the trigger that created job. - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
+// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the
+// trigger that created the job. - 'end_time` - Corresponds to the time
+// the job finished. - 'start_time` - Corresponds to the time the job
 // finished. * Supported fields for risk analysis jobs: - `state` -
-// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
-// finished. * The operator must be `=` or `!=`. Examples: *
+// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the
+// time the job finished. - 'start_time` - Corresponds to the time the
+// job finished. * The operator must be `=` or `!=`. Examples: *
 // inspected_storage = cloud_storage AND state = done *
 // inspected_storage = cloud_storage OR inspected_storage = bigquery *
 // inspected_storage = cloud_storage AND (state = done OR state =
@@ -17563,9 +17799,9 @@ func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobs
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, end_time asc,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the job was created. - `end_time`: corresponds to time the
-// job ended. - `name`: corresponds to job's name. - `state`:
-// corresponds to `state`
+// to the time the job was created. - `end_time`: corresponds to the
+// time the job ended. - `name`: corresponds to the job's name. -
+// `state`: corresponds to `state`
 func (c *ProjectsDlpJobsListCall) OrderBy(orderBy string) *ProjectsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -17706,7 +17942,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name of the trigger that created job. - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the trigger that created the job. - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17716,7 +17952,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to time the job was created. - `end_time`: corresponds to time the job ended. - `name`: corresponds to job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17955,7 +18191,7 @@ type ProjectsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an InspectTemplate for reusing frequently used
 // configuration for inspecting content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
@@ -18072,7 +18308,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
+	//   "description": "Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.inspectTemplates.create",
@@ -18435,18 +18671,18 @@ func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *Projec
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *ProjectsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -18575,12 +18811,12 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -19424,12 +19660,12 @@ func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJob
 // postfix. This list is case-insensitive, default sorting order is
 // ascending, redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
-// `create_time`: corresponds to time the JobTrigger was created. -
-// `update_time`: corresponds to time the JobTrigger was last updated. -
-// `last_run_time`: corresponds to the last time the JobTrigger ran. -
-// `name`: corresponds to JobTrigger's name. - `display_name`:
-// corresponds to JobTrigger's display name. - `status`: corresponds to
-// JobTrigger's status.
+// `create_time`: corresponds to the time the JobTrigger was created. -
+// `update_time`: corresponds to the time the JobTrigger was last
+// updated. - `last_run_time`: corresponds to the last time the
+// JobTrigger ran. - `name`: corresponds to the JobTrigger's name. -
+// `display_name`: corresponds to the JobTrigger's display name. -
+// `status`: corresponds to JobTrigger's status.
 func (c *ProjectsJobTriggersListCall) OrderBy(orderBy string) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -19582,7 +19818,7 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the JobTrigger was created. - `update_time`: corresponds to time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to JobTrigger's name. - `display_name`: corresponds to JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20282,7 +20518,7 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates-deid to learn
 // more.
@@ -20400,7 +20636,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
+	//   "description": "Creates a DeidentifyTemplate for reusing frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.deidentifyTemplates.create",
@@ -20766,18 +21002,18 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) LocationId(locationId str
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsDeidentifyTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -20906,12 +21142,12 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -21425,7 +21661,7 @@ type ProjectsLocationsDlpJobsDeleteCall struct {
 
 // Delete: Deletes a long-running DlpJob. This method indicates that the
 // client is no longer interested in the DlpJob result. The job will be
-// cancelled if possible. See
+// canceled if possible. See
 // https://cloud.google.com/dlp/docs/inspecting-storage and
 // https://cloud.google.com/dlp/docs/compute-risk-analysis to learn
 // more.
@@ -21523,7 +21759,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be cancelled if possible. See https://cloud.google.com/dlp/docs/inspecting-storage and https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
+	//   "description": "Deletes a long-running DlpJob. This method indicates that the client is no longer interested in the DlpJob result. The job will be canceled if possible. See https://cloud.google.com/dlp/docs/inspecting-storage and https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.locations.dlpJobs.delete",
@@ -22027,13 +22263,13 @@ func (r *ProjectsLocationsDlpJobsService) List(parentid string) *ProjectsLocatio
 // restriction has the form of `{field} {operator} {value}`. * Supported
 // fields/values for inspect jobs: - `state` -
 // PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` -
-// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name
-// of the trigger that created job. - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
+// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the
+// trigger that created the job. - 'end_time` - Corresponds to the time
+// the job finished. - 'start_time` - Corresponds to the time the job
 // finished. * Supported fields for risk analysis jobs: - `state` -
-// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time
-// the job finished. - 'start_time` - Corresponds to time the job
-// finished. * The operator must be `=` or `!=`. Examples: *
+// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the
+// time the job finished. - 'start_time` - Corresponds to the time the
+// job finished. * The operator must be `=` or `!=`. Examples: *
 // inspected_storage = cloud_storage AND state = done *
 // inspected_storage = cloud_storage OR inspected_storage = bigquery *
 // inspected_storage = cloud_storage AND (state = done OR state =
@@ -22056,9 +22292,9 @@ func (c *ProjectsLocationsDlpJobsListCall) LocationId(locationId string) *Projec
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, end_time asc,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the job was created. - `end_time`: corresponds to time the
-// job ended. - `name`: corresponds to job's name. - `state`:
-// corresponds to `state`
+// to the time the job was created. - `end_time`: corresponds to the
+// time the job ended. - `name`: corresponds to the job's name. -
+// `state`: corresponds to `state`
 func (c *ProjectsLocationsDlpJobsListCall) OrderBy(orderBy string) *ProjectsLocationsDlpJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -22199,7 +22435,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name of the trigger that created job. - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The name of the trigger that created the job. - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to the time the job finished. - 'start_time` - Corresponds to the time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22209,7 +22445,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to time the job was created. - `end_time`: corresponds to time the job ended. - `name`: corresponds to job's name. - `state`: corresponds to `state`",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to the time the job was created. - `end_time`: corresponds to the time the job ended. - `name`: corresponds to the job's name. - `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22448,7 +22684,7 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an InspectTemplate for reusing frequently used
 // configuration for inspecting content, images, and storage. See
 // https://cloud.google.com/dlp/docs/creating-templates to learn more.
 //
@@ -22565,7 +22801,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
+	//   "description": "Creates an InspectTemplate for reusing frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.inspectTemplates.create",
@@ -22928,18 +23164,18 @@ func (c *ProjectsLocationsInspectTemplatesListCall) LocationId(locationId string
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc,update_time,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
+// to the time the template was created. - `update_time`: corresponds to
+// the time the template was last updated. - `name`: corresponds to the
+// template's name. - `display_name`: corresponds to the template's
+// display name.
 func (c *ProjectsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsInspectTemplatesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -23068,12 +23304,12 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the template was created. - `update_time`: corresponds to the time the template was last updated. - `name`: corresponds to the template's name. - `display_name`: corresponds to the template's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -24063,12 +24299,12 @@ func (c *ProjectsLocationsJobTriggersListCall) LocationId(locationId string) *Pr
 // postfix. This list is case-insensitive, default sorting order is
 // ascending, redundant space characters are insignificant. Example:
 // `name asc,update_time, create_time desc` Supported fields are: -
-// `create_time`: corresponds to time the JobTrigger was created. -
-// `update_time`: corresponds to time the JobTrigger was last updated. -
-// `last_run_time`: corresponds to the last time the JobTrigger ran. -
-// `name`: corresponds to JobTrigger's name. - `display_name`:
-// corresponds to JobTrigger's display name. - `status`: corresponds to
-// JobTrigger's status.
+// `create_time`: corresponds to the time the JobTrigger was created. -
+// `update_time`: corresponds to the time the JobTrigger was last
+// updated. - `last_run_time`: corresponds to the last time the
+// JobTrigger ran. - `name`: corresponds to the JobTrigger's name. -
+// `display_name`: corresponds to the JobTrigger's display name. -
+// `status`: corresponds to JobTrigger's status.
 func (c *ProjectsLocationsJobTriggersListCall) OrderBy(orderBy string) *ProjectsLocationsJobTriggersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -24221,7 +24457,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the JobTrigger was created. - `update_time`: corresponds to time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to JobTrigger's name. - `display_name`: corresponds to JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger's name. - `display_name`: corresponds to the JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24929,7 +25165,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) LocationId(locationId string)
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, display_name,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
+// to the time the most recent version of the resource was created. -
 // `state`: corresponds to the state of the resource. - `name`:
 // corresponds to resource name. - `display_name`: corresponds to info
 // type's display name.
@@ -24939,8 +25175,8 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) *Proj
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsLocationsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -25069,12 +25305,12 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -25766,7 +26002,7 @@ func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *Project
 // is case-insensitive, default sorting order is ascending, redundant
 // space characters are insignificant. Example: `name asc, display_name,
 // create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
+// to the time the most recent version of the resource was created. -
 // `state`: corresponds to the state of the resource. - `name`:
 // corresponds to resource name. - `display_name`: corresponds to info
 // type's display name.
@@ -25776,8 +26012,8 @@ func (c *ProjectsStoredInfoTypesListCall) OrderBy(orderBy string) *ProjectsStore
 }
 
 // PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
+// can be limited by the server. If zero server returns a page of max
+// size 100.
 func (c *ProjectsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsStoredInfoTypesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -25906,12 +26142,12 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to the time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
+	//       "description": "Size of the page, can be limited by the server. If zero server returns a page of max size 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

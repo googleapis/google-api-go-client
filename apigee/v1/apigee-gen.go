@@ -5653,7 +5653,7 @@ type GoogleCloudApigeeV1Keystore struct {
 	Aliases []string `json:"aliases,omitempty"`
 
 	// Name: Required. Resource ID for this keystore. Values must match the
-	// regular expression `[\w[:space:]-.]{1,255}`.
+	// regular expression `[\w[:space:].-]{1,255}`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -3798,7 +3798,6 @@ func (c *CustomersUserinvitationsCancelCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations"
 	//   ]
 	// }
@@ -3949,7 +3948,6 @@ func (c *CustomersUserinvitationsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	//     "$ref": "UserInvitation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
 	//   ]
@@ -4105,7 +4103,6 @@ func (c *CustomersUserinvitationsIsInvitableUserCall) Do(opts ...googleapi.CallO
 	//     "$ref": "IsInvitableUserResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
 	//   ]
@@ -4317,7 +4314,6 @@ func (c *CustomersUserinvitationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//     "$ref": "ListUserInvitationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations.readonly"
 	//   ]
@@ -4489,7 +4485,6 @@ func (c *CustomersUserinvitationsSendCall) Do(opts ...googleapi.CallOption) (*Op
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity",
 	//     "https://www.googleapis.com/auth/cloud-identity.userinvitations"
 	//   ]
 	// }
@@ -10708,10 +10703,7 @@ func (c *OrgUnitsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListOrg
 	//   "path": "v1beta1/{+parent}/memberships",
 	//   "response": {
 	//     "$ref": "ListOrgMembershipsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity"
-	//   ]
+	//   }
 	// }
 
 }
@@ -10888,10 +10880,7 @@ func (c *OrgUnitsMembershipsMoveCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-identity"
-	//   ]
+	//   }
 	// }
 
 }

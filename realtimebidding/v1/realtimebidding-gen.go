@@ -967,7 +967,7 @@ type Creative struct {
 	//   "ALCOHOL" - The alcohol restricted category.
 	RestrictedCategories []string `json:"restrictedCategories,omitempty"`
 
-	// Version: Output only. The version of this creative. Version for a new
+	// Version: Output only. The version of the creative. Version for a new
 	// creative is 1 and it increments during subsequent creative updates.
 	Version int64 `json:"version,omitempty"`
 

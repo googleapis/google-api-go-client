@@ -8515,7 +8515,7 @@
       }
     }
   },
-  "revision": "20220725",
+  "revision": "20220728",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "EdgeConfigstoreBundleBadBundle": {
@@ -11590,7 +11590,7 @@
           "type": "array"
         },
         "name": {
-          "description": "Required. Resource ID for this keystore. Values must match the regular expression `[\\w[:space:]-.]{1,255}`.",
+          "description": "Required. Resource ID for this keystore. Values must match the regular expression `[\\w[:space:].-]{1,255}`.",
           "type": "string"
         }
       },

@@ -3902,6 +3902,10 @@ type NonComplianceDetail struct {
 	//   "ONC_WIFI_INVALID_VALUE" - There is an incorrect value in ONC Wi-Fi
 	// configuration. fieldPath specifies which field value is incorrect.
 	// oncWifiContext is set. nonComplianceReason is set to INVALID_VALUE.
+	//   "ONC_WIFI_API_LEVEL" - The ONC Wi-Fi setting is not supported in
+	// the API level of the Android version running on the device. fieldPath
+	// specifies which field value is not supported. oncWifiContext is set.
+	// nonComplianceReason is set to API_LEVEL.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -5709,7 +5713,8 @@ func (s *SoftwareInfo) MarshalJSON() ([]byte, error) {
 // SpecificNonComplianceReason.
 type SpecificNonComplianceContext struct {
 	// OncWifiContext: Additional context for non-compliance related to
-	// Wi-Fi configuration. See ONC_WIFI_INVALID_VALUE.
+	// Wi-Fi configuration. See ONC_WIFI_INVALID_VALUE and
+	// ONC_WIFI_API_LEVEL
 	OncWifiContext *OncWifiContext `json:"oncWifiContext,omitempty"`
 
 	// PasswordPoliciesContext: Additional context for non-compliance

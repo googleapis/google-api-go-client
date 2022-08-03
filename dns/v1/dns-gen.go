@@ -2292,6 +2292,8 @@ type RRSetRoutingPolicy struct {
 
 	Kind string `json:"kind,omitempty"`
 
+	PrimaryBackup *RRSetRoutingPolicyPrimaryBackupPolicy `json:"primaryBackup,omitempty"`
+
 	Wrr *RRSetRoutingPolicyWrrPolicy `json:"wrr,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Geo") to
@@ -2320,13 +2322,22 @@ func (s *RRSetRoutingPolicy) MarshalJSON() ([]byte, error) {
 // RRSetRoutingPolicyGeoPolicy: Configures a RRSetRoutingPolicy that
 // routes based on the geo location of the querying user.
 type RRSetRoutingPolicyGeoPolicy struct {
+	// EnableFencing: Without fencing, if health check fails for all
+	// configured items in the current geo bucket, we'll failover to the
+	// next nearest geo bucket. With fencing, if health check is enabled, as
+	// long as some targets in the current geo bucket are healthy, we'll
+	// return only the healthy targets. However, if they're all unhealthy,
+	// we won't failover to the next nearest bucket, we'll simply return all
+	// the items in the current bucket even though they're unhealthy.
+	EnableFencing bool `json:"enableFencing,omitempty"`
+
 	// Items: The primary geo routing configuration. If there are multiple
 	// items with the same location, an error is returned instead.
 	Items []*RRSetRoutingPolicyGeoPolicyGeoPolicyItem `json:"items,omitempty"`
 
 	Kind string `json:"kind,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Items") to
+	// ForceSendFields is a list of field names (e.g. "EnableFencing") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2334,10 +2345,10 @@ type RRSetRoutingPolicyGeoPolicy struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "EnableFencing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2352,6 +2363,11 @@ func (s *RRSetRoutingPolicyGeoPolicy) MarshalJSON() ([]byte, error) {
 // RRSetRoutingPolicyGeoPolicyGeoPolicyItem: ResourceRecordSet data for
 // one geo location.
 type RRSetRoutingPolicyGeoPolicyGeoPolicyItem struct {
+	// HealthCheckedTargets: For A and AAAA types only. Endpoints to return
+	// in the query result only if they are healthy. These can be specified
+	// along with rrdata within this item.
+	HealthCheckedTargets *RRSetRoutingPolicyHealthCheckTargets `json:"healthCheckedTargets,omitempty"`
+
 	Kind string `json:"kind,omitempty"`
 
 	// Location: The geo-location granularity is a GCP region. This location
@@ -2366,20 +2382,22 @@ type RRSetRoutingPolicyGeoPolicyGeoPolicyItem struct {
 	// for DNSSEC enabled zones, there's a restriction of 1 ip per item. .
 	SignatureRrdatas []string `json:"signatureRrdatas,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "HealthCheckedTargets") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HealthCheckedTargets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2387,6 +2405,150 @@ func (s *RRSetRoutingPolicyGeoPolicyGeoPolicyItem) MarshalJSON() ([]byte, error)
 	type NoMethod RRSetRoutingPolicyGeoPolicyGeoPolicyItem
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RRSetRoutingPolicyHealthCheckTargets: HealthCheckTargets describes
+// endpoints to health-check when responding to Routing Policy queries.
+// Only the healthy endpoints will be included in the response.
+type RRSetRoutingPolicyHealthCheckTargets struct {
+	InternalLoadBalancers []*RRSetRoutingPolicyLoadBalancerTarget `json:"internalLoadBalancers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InternalLoadBalancers") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InternalLoadBalancers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RRSetRoutingPolicyHealthCheckTargets) MarshalJSON() ([]byte, error) {
+	type NoMethod RRSetRoutingPolicyHealthCheckTargets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RRSetRoutingPolicyLoadBalancerTarget struct {
+	// IpAddress: The frontend IP address of the
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// Possible values:
+	//   "undefined"
+	//   "tcp"
+	//   "udp"
+	IpProtocol string `json:"ipProtocol,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	// Possible values:
+	//   "none"
+	//   "regionalL4ilb"
+	LoadBalancerType string `json:"loadBalancerType,omitempty"`
+
+	// NetworkUrl: The fully qualified url of the network on which the ILB
+	// is
+	NetworkUrl string `json:"networkUrl,omitempty"`
+
+	// Port: Load Balancer to health check. The configured port of the Load
+	// Balancer.
+	Port string `json:"port,omitempty"`
+
+	// Project: present. This should be formatted like
+	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
+	// The project ID in which the ILB exists.
+	Project string `json:"project,omitempty"`
+
+	// Region: The region for regional ILBs.
+	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RRSetRoutingPolicyLoadBalancerTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod RRSetRoutingPolicyLoadBalancerTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RRSetRoutingPolicyPrimaryBackupPolicy: Configures a
+// RRSetRoutingPolicy such that all queries are responded with the
+// primary_targets if they are healthy. And if all of them are
+// unhealthy, then we fallback to a geo localized policy.
+type RRSetRoutingPolicyPrimaryBackupPolicy struct {
+	// BackupGeoTargets: Backup targets provide a regional failover policy
+	// for the otherwise global primary targets. If serving state is set to
+	// BACKUP, this policy essentially becomes a geo routing policy.
+	BackupGeoTargets *RRSetRoutingPolicyGeoPolicy `json:"backupGeoTargets,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	PrimaryTargets *RRSetRoutingPolicyHealthCheckTargets `json:"primaryTargets,omitempty"`
+
+	// TrickleTraffic: When serving state is PRIMARY, this field provides
+	// the option of sending a small percentage of the traffic to the backup
+	// targets.
+	TrickleTraffic float64 `json:"trickleTraffic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupGeoTargets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupGeoTargets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RRSetRoutingPolicyPrimaryBackupPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RRSetRoutingPolicyPrimaryBackupPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *RRSetRoutingPolicyPrimaryBackupPolicy) UnmarshalJSON(data []byte) error {
+	type NoMethod RRSetRoutingPolicyPrimaryBackupPolicy
+	var s1 struct {
+		TrickleTraffic gensupport.JSONFloat64 `json:"trickleTraffic"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TrickleTraffic = float64(s1.TrickleTraffic)
+	return nil
 }
 
 // RRSetRoutingPolicyWrrPolicy: Configures a RRSetRoutingPolicy that
@@ -2422,6 +2584,14 @@ func (s *RRSetRoutingPolicyWrrPolicy) MarshalJSON() ([]byte, error) {
 // RRSetRoutingPolicyWrrPolicyWrrPolicyItem: A routing block which
 // contains the routing information for one WRR item.
 type RRSetRoutingPolicyWrrPolicyWrrPolicyItem struct {
+	// HealthCheckedTargets: endpoints that need to be health checked before
+	// making the routing decision. The unhealthy endpoints will be omitted
+	// from the result. If all endpoints within a buckete are unhealthy,
+	// we'll choose a different bucket (sampled w.r.t. its weight) for
+	// responding. Note that if DNSSEC is enabled for this zone, only one of
+	// rrdata or health_checked_targets can be set.
+	HealthCheckedTargets *RRSetRoutingPolicyHealthCheckTargets `json:"healthCheckedTargets,omitempty"`
+
 	Kind string `json:"kind,omitempty"`
 
 	Rrdatas []string `json:"rrdatas,omitempty"`
@@ -2438,20 +2608,22 @@ type RRSetRoutingPolicyWrrPolicyWrrPolicyItem struct {
 	// should be non-negative.
 	Weight float64 `json:"weight,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "HealthCheckedTargets") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HealthCheckedTargets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

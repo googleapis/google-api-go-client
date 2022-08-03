@@ -8429,7 +8429,8 @@ type GenerateDefaultLineItemRequest struct {
 	//
 	// Possible values:
 	//   "LINE_ITEM_TYPE_UNSPECIFIED" - Type value is not specified or is
-	// unknown in this version.
+	// unknown in this version. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_DISPLAY_DEFAULT" - Image, HTML5, native, or rich
 	// media ads.
 	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL" - Display ads that
@@ -8439,9 +8440,11 @@ type GenerateDefaultLineItemRequest struct {
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL" - Video ads that drive
 	// installs of an app.
 	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INVENTORY" - Display ads served
-	// on mobile app inventory.
+	// on mobile app inventory. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
-	// mobile app inventory.
+	// mobile app inventory. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - RTB Audio ads sold for a variety
 	// of environments.
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
@@ -10616,7 +10619,8 @@ type LineItem struct {
 	//
 	// Possible values:
 	//   "LINE_ITEM_TYPE_UNSPECIFIED" - Type value is not specified or is
-	// unknown in this version.
+	// unknown in this version. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_DISPLAY_DEFAULT" - Image, HTML5, native, or rich
 	// media ads.
 	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL" - Display ads that
@@ -10626,9 +10630,11 @@ type LineItem struct {
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL" - Video ads that drive
 	// installs of an app.
 	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INVENTORY" - Display ads served
-	// on mobile app inventory.
+	// on mobile app inventory. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
-	// mobile app inventory.
+	// mobile app inventory. Line items of this type and their targeting
+	// cannot be created or updated using the API.
 	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - RTB Audio ads sold for a variety
 	// of environments.
 	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
@@ -33005,20 +33011,16 @@ func (c *CustomBiddingAlgorithmsListCall) AdvertiserId(advertiserId int64) *Cust
 // {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
 // The operator must be `CONTAINS (:)` for the following field: -
 // `displayName` * The operator must be `EQUALS (=)` for the following
-// field: - `customBiddingAlgorithmType` - `customBiddingAlgorithmState`
-// * For `displayName`, the value is a string. We return all custom
-// bidding algorithms whose display_name contains such string. * For
+// field: - `customBiddingAlgorithmType` * For `displayName`, the value
+// is a string. We return all custom bidding algorithms whose
+// display_name contains such string. * For
 // `customBiddingAlgorithmType`, the value is a string. We return all
 // algorithms whose custom_bidding_algorithm_type is equal to the given
-// type. * For `customBiddingAlgorithmState`, the value is a string. We
-// return all algorithms whose custom_bidding_algorithm_state is equal
-// to the given type. Examples: * All custom bidding algorithms for
-// which the display name contains "politics": `displayName:politics`. *
-// All custom bidding algorithms for which the type is "SCRIPT_BASED":
-// `customBiddingAlgorithmType=SCRIPT_BASED` * All custom bidding
-// algorithms for which the state is "ENABLED":
-// `customBiddingAlgorithmState=ENABLED` The length of this field should
-// be no more than 500 characters.
+// type. Examples: * All custom bidding algorithms for which the display
+// name contains "politics": `displayName:politics`. * All custom
+// bidding algorithms for which the type is "SCRIPT_BASED":
+// `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field
+// should be no more than 500 characters.
 func (c *CustomBiddingAlgorithmsListCall) Filter(filter string) *CustomBiddingAlgorithmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -33170,7 +33172,7 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` - `customBiddingAlgorithmState` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. * For `customBiddingAlgorithmState`, the value is a string. We return all algorithms whose custom_bidding_algorithm_state is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` * All custom bidding algorithms for which the state is \"ENABLED\": `customBiddingAlgorithmState=ENABLED` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

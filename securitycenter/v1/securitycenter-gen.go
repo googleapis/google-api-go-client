@@ -459,8 +459,40 @@ type Access struct {
 	// "SetIamPolicy".
 	MethodName string `json:"methodName,omitempty"`
 
-	// PrincipalEmail: Associated email, such as "foo@google.com".
+	// PrincipalEmail: Associated email, such as "foo@google.com". The email
+	// address of the authenticated user (or service account on behalf of
+	// third party principal) making the request. For third party identity
+	// callers, the `principal_subject` field is populated instead of this
+	// field. For privacy reasons, the principal email address is sometimes
+	// redacted. For more information, see Caller identities in audit logs
+	// (https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// PrincipalSubject: A string representing the principal_subject
+	// associated with the identity. As compared to `principal_email`,
+	// supports principals that aren't associated with email addresses, such
+	// as third party principals. For most identities, the format will be
+	// `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject)` except for some GKE identities
+	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
+	// legacy format `serviceAccount:{identity pool name}[{subject}]`
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+
+	// ServiceAccountDelegationInfo: Identity delegation history of an
+	// authenticated service account that makes the request. It contains
+	// information on the real authorities that try to access GCP resources
+	// by delegating on a service account. When multiple authorities are
+	// present, they are guaranteed to be sorted based on the original
+	// ordering of the identity delegation events.
+	ServiceAccountDelegationInfo []*ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
+
+	// ServiceAccountKeyName: The name of the service account key used to
+	// create or exchange credentials for authenticating the service account
+	// making the request. This is a scheme-less URI full resource name. For
+	// example:
+	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/
+	// keys/{key}"
+	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
 
 	// ServiceName: This is the API service that the service account made a
 	// call to, e.g. "iam.googleapis.com"
@@ -3666,6 +3698,7 @@ type MitreAttack struct {
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -3731,6 +3764,7 @@ type MitreAttack struct {
 	//   "DOMAIN_POLICY_MODIFICATION" - T1484
 	//   "IMPAIR_DEFENSES" - T1562
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
+	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -4481,6 +4515,46 @@ type SecurityMarks struct {
 
 func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityMarks
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceAccountDelegationInfo: Identity delegation history of an
+// authenticated service account.
+type ServiceAccountDelegationInfo struct {
+	// PrincipalEmail: The email address of a Google account. .
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// PrincipalSubject: A string representing the principal_subject
+	// associated with the identity. As compared to `principal_email`,
+	// supports principals that aren't associated with email addresses, such
+	// as third party principals. For most identities, the format will be
+	// `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject)` except for some GKE identities
+	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
+	// legacy format `serviceAccount:{identity pool name}[{subject}]`
+	PrincipalSubject string `json:"principalSubject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrincipalEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrincipalEmail") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAccountDelegationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

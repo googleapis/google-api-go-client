@@ -4842,7 +4842,7 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resource. Next ID: 28
+// information of a cloud resource. Next ID: 29
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this
 	// resource. The attributes may vary from one resource type to another.

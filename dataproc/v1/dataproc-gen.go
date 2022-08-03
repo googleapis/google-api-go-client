@@ -4318,10 +4318,25 @@ type RepairClusterRequest struct {
 	// not exist.
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
+	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
+	// decomissioning. Graceful decommissioning facilitates the removal of
+	// cluster nodes without interrupting jobs in progress. The timeout
+	// specifies the amount of time to wait for jobs finish before
+	// forcefully removing nodes. The default timeout is 0 for forceful
+	// decommissioning, and the maximum timeout period is 1 day. (see JSON
+	// Mapping—Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).graceful_decommission_timeout
+	// is supported in Dataproc image versions 1.2+.
+	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
+
 	// NodePools: Optional. Node pools and corresponding repair action to be
 	// taken. All node pools should be unique in this request. i.e. Multiple
 	// entries for the same node pool id are not allowed.
 	NodePools []*NodePool `json:"nodePools,omitempty"`
+
+	// ParentOperationId: Optional. operation id of the parent operation
+	// sending the repair request
+	ParentOperationId string `json:"parentOperationId,omitempty"`
 
 	// RequestId: Optional. A unique ID used to identify the request. If the
 	// server receives two RepairClusterRequests with the same ID, the

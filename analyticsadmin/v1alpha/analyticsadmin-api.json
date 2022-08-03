@@ -1052,7 +1052,7 @@
               ]
             },
             "get": {
-              "description": "Lookup for a single Audience.",
+              "description": "Lookup for a single Audience. Audiences created before 2020 may not be supported.",
               "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}",
               "httpMethod": "GET",
               "id": "analyticsadmin.properties.audiences.get",
@@ -1078,7 +1078,7 @@
               ]
             },
             "list": {
-              "description": "Lists Audiences on a property.",
+              "description": "Lists Audiences on a property. Audiences created before 2020 may not be supported.",
               "flatPath": "v1alpha/properties/{propertiesId}/audiences",
               "httpMethod": "GET",
               "id": "analyticsadmin.properties.audiences.list",
@@ -2773,7 +2773,7 @@
       }
     }
   },
-  "revision": "20220727",
+  "revision": "20220802",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {

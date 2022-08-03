@@ -5071,6 +5071,7 @@ type SDKInfo struct {
 	//   "UNKNOWN" - UNKNOWN Language.
 	//   "JAVA" - Java.
 	//   "PYTHON" - Python.
+	//   "GO" - Go.
 	Language string `json:"language,omitempty"`
 
 	// Version: Optional. The SDK version.

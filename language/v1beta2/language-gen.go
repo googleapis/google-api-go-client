@@ -1059,7 +1059,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 
 // Features: All available features for sentiment, syntax, and semantic
 // analysis. Setting each one to true will enable that specific analysis
-// for the input. Next ID: 10
+// for the input. Next ID: 11
 type Features struct {
 	// ClassifyText: Classify the full document into categories. If this is
 	// true, the API will use the default model which classifies into a

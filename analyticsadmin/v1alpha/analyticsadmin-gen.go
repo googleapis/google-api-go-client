@@ -8931,7 +8931,8 @@ type PropertiesAudiencesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single Audience.
+// Get: Lookup for a single Audience. Audiences created before 2020 may
+// not be supported.
 //
 // - name: The name of the Audience to get. Example format:
 //   properties/1234/audiences/5678.
@@ -9041,7 +9042,7 @@ func (c *PropertiesAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 	}
 	return ret, nil
 	// {
-	//   "description": "Lookup for a single Audience.",
+	//   "description": "Lookup for a single Audience. Audiences created before 2020 may not be supported.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}",
 	//   "httpMethod": "GET",
 	//   "id": "analyticsadmin.properties.audiences.get",
@@ -9080,7 +9081,8 @@ type PropertiesAudiencesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Audiences on a property.
+// List: Lists Audiences on a property. Audiences created before 2020
+// may not be supported.
 //
 // - parent: Example format: properties/1234.
 func (r *PropertiesAudiencesService) List(parent string) *PropertiesAudiencesListCall {
@@ -9209,7 +9211,7 @@ func (c *PropertiesAudiencesListCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Audiences on a property.",
+	//   "description": "Lists Audiences on a property. Audiences created before 2020 may not be supported.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences",
 	//   "httpMethod": "GET",
 	//   "id": "analyticsadmin.properties.audiences.list",

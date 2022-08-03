@@ -308,9 +308,9 @@ func (s *AccessSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AllowedDomainsSettings: Configuration for IAP allowed domains. Allows
-// the customers to restrict access to the app by only allowing requests
-// from the listed trusted domains.
+// AllowedDomainsSettings: Configuration for IAP allowed domains. Lets
+// you to restrict access to an app and allow access to only the domains
+// that you list.
 type AllowedDomainsSettings struct {
 	// Domains: List of trusted domains.
 	Domains []string `json:"domains,omitempty"`

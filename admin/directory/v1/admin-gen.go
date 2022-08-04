@@ -1449,6 +1449,10 @@ type ChromeOsDevice struct {
 	// FirmwareVersion: The Chrome device's firmware version.
 	FirmwareVersion string `json:"firmwareVersion,omitempty"`
 
+	// FirstEnrollmentTime: Date and time for the first time the device was
+	// enrolled.
+	FirstEnrollmentTime string `json:"firstEnrollmentTime,omitempty"`
+
 	// Kind: The type of resource. For the Chromeosdevices resource, the
 	// value is `admin#directory#chromeosdevice`.
 	Kind string `json:"kind,omitempty"`
@@ -1520,6 +1524,9 @@ type ChromeOsDevice struct {
 	// organizational structure for your device, see the administration help
 	// center (https://support.google.com/a/answer/182433).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
+
+	// OsUpdateStatus: The status of the OS updates for the device.
+	OsUpdateStatus *OsUpdateStatus `json:"osUpdateStatus,omitempty"`
 
 	// OsVersion: The Chrome device's operating system version.
 	OsVersion string `json:"osVersion,omitempty"`
@@ -2993,7 +3000,10 @@ type Group struct {
 	// an administrator rather than a user.
 	AdminCreated bool `json:"adminCreated,omitempty"`
 
-	// Aliases: Read-only. A list of a group's alias email addresses.
+	// Aliases: Read-only. A list of a group's alias email addresses. To
+	// add, update, or remove a group's aliases, use the `groups.aliases`
+	// methods. If edited in a group's POST or PUT request, the edit is
+	// ignored.
 	Aliases []string `json:"aliases,omitempty"`
 
 	// Description: An extended description to help users determine the
@@ -3036,7 +3046,7 @@ type Group struct {
 	// domain or subdomains. These are functioning email addresses used by
 	// the group. This is a read-only property returned in the API's
 	// response for a group. If edited in a group's POST or PUT request, the
-	// edit is ignored by the API service.
+	// edit is ignored.
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3762,6 +3772,64 @@ type OrgUnits struct {
 
 func (s *OrgUnits) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgUnits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OsUpdateStatus: Contains information regarding the current OS update
+// status.
+type OsUpdateStatus struct {
+	// RebootTime: Date and time of the last reboot.
+	RebootTime string `json:"rebootTime,omitempty"`
+
+	// State: The update state of an OS update.
+	//
+	// Possible values:
+	//   "updateStateUnspecified" - The update state is unspecified.
+	//   "updateStateNotStarted" - There is an update pending but it hasn't
+	// started.
+	//   "updateStateDownloadInProgress" - The pending update is being
+	// downloaded.
+	//   "updateStateNeedReboot" - The device is ready to install the
+	// update, but it just needs to reboot.
+	State string `json:"state,omitempty"`
+
+	// TargetKioskAppVersion: New required platform version from the pending
+	// updated kiosk app.
+	TargetKioskAppVersion string `json:"targetKioskAppVersion,omitempty"`
+
+	// TargetOsVersion: New platform version of the OS image being
+	// downloaded and applied. It is only set when update status is
+	// UPDATE_STATUS_DOWNLOAD_IN_PROGRESS or UPDATE_STATUS_NEED_REBOOT. Note
+	// this could be a dummy "0.0.0.0" for UPDATE_STATUS_NEED_REBOOT for
+	// some edge cases, e.g. update engine is restarted without a reboot.
+	TargetOsVersion string `json:"targetOsVersion,omitempty"`
+
+	// UpdateCheckTime: Date and time of the last update check.
+	UpdateCheckTime string `json:"updateCheckTime,omitempty"`
+
+	// UpdateTime: Date and time of the last successful OS update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RebootTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RebootTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OsUpdateStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod OsUpdateStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

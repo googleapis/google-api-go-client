@@ -4252,38 +4252,40 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // utc_offset is unset: a civil time on a calendar day in a particular
 // time zone. * When neither time_zone nor utc_offset is set: a civil
 // time on a calendar day in local time. The date is relative to the
-// Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type DateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -13106,6 +13108,258 @@ func (s *ProductUnitPricingMeasure) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ProductView: Product fields. Values are only set for fields requested
+// explicitly in the request's search query.
+type ProductView struct {
+	// AggregatedDestinationStatus: Aggregated destination status.
+	//
+	// Possible values:
+	//   "AGGREGATED_STATUS_UNSPECIFIED" - Undefined aggregated status.
+	//   "NOT_ELIGIBLE_OR_DISAPPROVED" - Offer isn't eligible, or is
+	// disapproved for all destinations.
+	//   "PENDING" - Offer's status is pending in all destinations.
+	//   "ELIGIBLE_LIMITED" - Offer is eligible for some (but not all)
+	// destinations.
+	//   "ELIGIBLE" - Offer is eligible for all destinations.
+	AggregatedDestinationStatus string `json:"aggregatedDestinationStatus,omitempty"`
+
+	// Availability: Availability of the product.
+	Availability string `json:"availability,omitempty"`
+
+	// Brand: Brand of the product.
+	Brand string `json:"brand,omitempty"`
+
+	// Channel: Channel of the product (online versus local).
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - Indicates that the channel is unspecified.
+	//   "LOCAL" - Indicates that the channel is local.
+	//   "ONLINE" - Indicates that the channel is online.
+	Channel string `json:"channel,omitempty"`
+
+	// Condition: Condition of the product.
+	Condition string `json:"condition,omitempty"`
+
+	// CreationTime: The time the merchant created the product in timestamp
+	// seconds.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// CurrencyCode: Product price currency code (for example, ISO 4217).
+	// Absent if product price is not available.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// ExpirationDate: Expiration date for the product. Specified on
+	// insertion.
+	ExpirationDate *Date `json:"expirationDate,omitempty"`
+
+	// Gtin: GTIN of the product.
+	Gtin []string `json:"gtin,omitempty"`
+
+	// Id: The REST ID of the product, in the form of
+	// channel:contentLanguage:targetCountry:offerId. Content API methods
+	// that operate on products take this as their productId parameter.
+	// Should always be included in the SELECT clause.
+	Id string `json:"id,omitempty"`
+
+	// ItemGroupId: Item group ID provided by the merchant for grouping
+	// variants together.
+	ItemGroupId string `json:"itemGroupId,omitempty"`
+
+	// ItemIssues: List of item issues for the product.
+	ItemIssues []*ProductViewItemIssue `json:"itemIssues,omitempty"`
+
+	// LanguageCode: Language code of the product in BCP 47 format.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// OfferId: Merchant-provided id of the product.
+	OfferId string `json:"offerId,omitempty"`
+
+	// PriceMicros: Product price specified as micros in the product
+	// currency. Absent in case the information about the price of the
+	// product is not available.
+	PriceMicros int64 `json:"priceMicros,omitempty,string"`
+
+	// ShippingLabel: The normalized shipping label specified in the feed
+	ShippingLabel string `json:"shippingLabel,omitempty"`
+
+	// Title: Title of the product.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AggregatedDestinationStatus") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AggregatedDestinationStatus") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductView) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssue: Item issue associated with the product.
+type ProductViewItemIssue struct {
+	// IssueType: Item issue type.
+	IssueType *ProductViewItemIssueItemIssueType `json:"issueType,omitempty"`
+
+	// Resolution: Item issue resolution.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown resolution type.
+	//   "MERCHANT_ACTION" - The merchant has to fix the issue.
+	//   "PENDING_PROCESSING" - The issue will be resolved automatically
+	// (for example, image crawl), or Google review. No merchant action is
+	// required now. Resolution might lead to another issue (for example, if
+	// crawl fails).
+	Resolution string `json:"resolution,omitempty"`
+
+	// Severity: Item issue severity.
+	Severity *ProductViewItemIssueItemIssueSeverity `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueIssueSeverityPerDestination: Issue severity for
+// all affected regions in a destination.
+type ProductViewItemIssueIssueSeverityPerDestination struct {
+	// DemotedCountries: List of demoted countries in the destination.
+	DemotedCountries []string `json:"demotedCountries,omitempty"`
+
+	// Destination: Issue destination.
+	Destination string `json:"destination,omitempty"`
+
+	// DisapprovedCountries: List of disapproved countries in the
+	// destination.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DemotedCountries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DemotedCountries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueIssueSeverityPerDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueIssueSeverityPerDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueItemIssueSeverity: Severity of an issue per
+// destination in a region, and aggregated severity.
+type ProductViewItemIssueItemIssueSeverity struct {
+	// AggregatedSeverity: Severity of an issue aggregated for destination.
+	//
+	// Possible values:
+	//   "AGGREGATED_ISSUE_SEVERITY_UNSPECIFIED" - Undefined Issue severity.
+	//   "DISAPPROVED" - Issue disapproves the product in at least one of
+	// the selected destinations.
+	//   "DEMOTED" - Issue demotes the product in all selected destinations
+	// it affects.
+	//   "PENDING" - Issue resolution is `PENDING_PROCESSING`.
+	AggregatedSeverity string `json:"aggregatedSeverity,omitempty"`
+
+	// SeverityPerDestination: Item issue severity for every destination.
+	SeverityPerDestination []*ProductViewItemIssueIssueSeverityPerDestination `json:"severityPerDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregatedSeverity")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregatedSeverity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueItemIssueSeverity) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueItemIssueSeverity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueItemIssueType: Type of the item issue.
+type ProductViewItemIssueItemIssueType struct {
+	// CanonicalAttribute: Canonical attribute name for attribute-specific
+	// issues.
+	CanonicalAttribute string `json:"canonicalAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanonicalAttribute")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalAttribute") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueItemIssueType) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueItemIssueType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProductWeight struct {
 	// Unit: Required. The weight unit. Acceptable values are: - "g" -
 	// "kg" - "oz" - "lb"
@@ -14272,6 +14526,12 @@ type ReportRow struct {
 	// Metrics: Metrics requested by the merchant in the query. Metric
 	// values are only set for metrics requested explicitly in the query.
 	Metrics *Metrics `json:"metrics,omitempty"`
+
+	// ProductView: Product fields requested by the merchant in the query.
+	// Field values are only set if the merchant queries `ProductView`.
+	// `product_view` field is available only to allowlisted users who can
+	// query the `ProductView` table.
+	ProductView *ProductView `json:"productView,omitempty"`
 
 	// Segments: Segmentation dimensions requested by the merchant in the
 	// query. Dimension values are only set for dimensions requested

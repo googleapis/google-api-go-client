@@ -655,13 +655,15 @@ type EffectiveTag struct {
 	// value is directly attached to the resource, inherited will be false.
 	Inherited bool `json:"inherited,omitempty"`
 
-	// NamespacedTagKey: The namespaced_name of the TagKey, in the format of
-	// `{organization_id}/{tag_key_short_name}`
+	// NamespacedTagKey: The namespaced_name of the TagKey. Now only
+	// supported in the format of `{organization_id}/{tag_key_short_name}`.
+	// Other formats will be supported when we add non-org parented tags.
 	NamespacedTagKey string `json:"namespacedTagKey,omitempty"`
 
-	// NamespacedTagValue: Namespaced name of the TagValue. Must be in the
-	// format
+	// NamespacedTagValue: Namespaced name of the TagValue. Now only
+	// supported in the format
 	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`.
+	// Other formats will be supported when we add non-org parented tags.
 	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
 
 	// TagKey: The name of the TagKey, in the format `tagKeys/{id}`, such as
@@ -2270,8 +2272,10 @@ type TagValue struct {
 	// `tagValues/456`.
 	Name string `json:"name,omitempty"`
 
-	// NamespacedName: Output only. Namespaced name of the TagValue. Must be
-	// in the format `{organization_id}/{tag_key_short_name}/{short_name}`.
+	// NamespacedName: Output only. Namespaced name of the TagValue. Now
+	// only supported in the format
+	// `{organization_id}/{tag_key_short_name}/{short_name}`. Other formats
+	// will be supported when we add non-org parented tags.
 	NamespacedName string `json:"namespacedName,omitempty"`
 
 	// Parent: Immutable. The resource name of the new TagValue's parent
@@ -9819,9 +9823,9 @@ type TagValuesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves TagValue. If the TagValue or namespaced name does not
-// exist, or if the user does not have permission to view it, this
-// method will return `PERMISSION_DENIED`.
+// Get: Retrieves a TagValue. This method will return
+// `PERMISSION_DENIED` if the value does not exist or the user does not
+// have permission to view it.
 //
 // - name: Resource name for TagValue to be fetched in the format
 //   `tagValues/456`.
@@ -9930,7 +9934,7 @@ func (c *TagValuesGetCall) Do(opts ...googleapi.CallOption) (*TagValue, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves TagValue. If the TagValue or namespaced name does not exist, or if the user does not have permission to view it, this method will return `PERMISSION_DENIED`.",
+	//   "description": "Retrieves a TagValue. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.",
 	//   "flatPath": "v3/tagValues/{tagValuesId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.tagValues.get",

@@ -755,7 +755,7 @@
       }
     }
   },
-  "revision": "20220707",
+  "revision": "20220727",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -2739,8 +2739,8 @@
             "ANALYSIS_STATUS_UNSPECIFIED",
             "PENDING",
             "SCANNING",
-            "FINISHED_SUCCESS",
             "COMPLETE",
+            "FINISHED_SUCCESS",
             "FINISHED_FAILED",
             "FINISHED_UNSUPPORTED"
           ],
@@ -2748,8 +2748,8 @@
             "Unknown.",
             "Resource is known but no action has been taken yet.",
             "Resource is being analyzed.",
-            "Analysis has finished successfully.",
             "Analysis has completed",
+            "Analysis has finished successfully.",
             "Analysis has finished unsuccessfully, the analysis itself is in a bad state.",
             "The resource is known not to be supported."
           ],

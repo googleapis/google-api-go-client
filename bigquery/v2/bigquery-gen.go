@@ -6864,17 +6864,18 @@ func (s *RegressionMetrics) UnmarshalJSON(data []byte) error {
 type RemoteFunctionOptions struct {
 	// Connection: Fully qualified name of the user-provided connection
 	// object which holds the authentication information to send requests to
-	// the remote service.
-	// projects/{project_id}/locations/{location_id}/connections/{connection_
-	// id}
+	// the remote service. Format:
+	// ``"projects/{projectId}/locations/{locationId}/connections/{connectio
+	// nId}"``
 	Connection string `json:"connection,omitempty"`
 
-	// Endpoint: Endpoint of the user-provided remote service (e.g. a
-	// function url in Google Cloud Functions).
+	// Endpoint: Endpoint of the user-provided remote service, e.g.
+	// ```https://us-east1-my_gcf_project.cloudfunctions.net/remote_add```
 	Endpoint string `json:"endpoint,omitempty"`
 
 	// MaxBatchingRows: Max number of rows in each batch sent to the remote
-	// service. If absent or if 0, it means no limit.
+	// service. If absent or if 0, BigQuery dynamically decides the number
+	// of rows in a batch.
 	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
 
 	// UserDefinedContext: User-defined context as a set of key/value pairs,

@@ -1464,7 +1464,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves TagValue. If the TagValue or namespaced name does not exist, or if the user does not have permission to view it, this method will return `PERMISSION_DENIED`.",
+          "description": "Retrieves a TagValue. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.",
           "flatPath": "v3/tagValues/{tagValuesId}",
           "httpMethod": "GET",
           "id": "cloudresourcemanager.tagValues.get",
@@ -1760,7 +1760,7 @@
       }
     }
   },
-  "revision": "20220710",
+  "revision": "20220731",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1997,11 +1997,11 @@
           "type": "boolean"
         },
         "namespacedTagKey": {
-          "description": "The namespaced_name of the TagKey, in the format of `{organization_id}/{tag_key_short_name}`",
+          "description": "The namespaced_name of the TagKey. Now only supported in the format of `{organization_id}/{tag_key_short_name}`. Other formats will be supported when we add non-org parented tags.",
           "type": "string"
         },
         "namespacedTagValue": {
-          "description": "Namespaced name of the TagValue. Must be in the format `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`.",
+          "description": "Namespaced name of the TagValue. Now only supported in the format `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`. Other formats will be supported when we add non-org parented tags.",
           "type": "string"
         },
         "tagKey": {
@@ -2866,7 +2866,7 @@
           "type": "string"
         },
         "namespacedName": {
-          "description": "Output only. Namespaced name of the TagValue. Must be in the format `{organization_id}/{tag_key_short_name}/{short_name}`.",
+          "description": "Output only. Namespaced name of the TagValue. Now only supported in the format `{organization_id}/{tag_key_short_name}/{short_name}`. Other formats will be supported when we add non-org parented tags.",
           "readOnly": true,
           "type": "string"
         },

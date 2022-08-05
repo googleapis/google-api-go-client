@@ -118,6 +118,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -127,6 +128,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Organizations *OrganizationsService
+
 	Projects *ProjectsService
 }
 
@@ -135,6 +138,39 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.Locations = NewOrganizationsLocationsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	Locations *OrganizationsLocationsService
+}
+
+func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
+	rs := &OrganizationsLocationsService{s: s}
+	rs.Insights = NewOrganizationsLocationsInsightsService(s)
+	return rs
+}
+
+type OrganizationsLocationsService struct {
+	s *Service
+
+	Insights *OrganizationsLocationsInsightsService
+}
+
+func NewOrganizationsLocationsInsightsService(s *Service) *OrganizationsLocationsInsightsService {
+	rs := &OrganizationsLocationsInsightsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsInsightsService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -159,6 +195,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ClientGateways = NewProjectsLocationsClientGatewaysService(s)
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
 	rs.Connectors = NewProjectsLocationsConnectorsService(s)
+	rs.Insights = NewProjectsLocationsInsightsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -181,6 +218,8 @@ type ProjectsLocationsService struct {
 	Connections *ProjectsLocationsConnectionsService
 
 	Connectors *ProjectsLocationsConnectorsService
+
+	Insights *ProjectsLocationsInsightsService
 
 	Operations *ProjectsLocationsOperationsService
 }
@@ -254,6 +293,15 @@ func NewProjectsLocationsConnectorsService(s *Service) *ProjectsLocationsConnect
 }
 
 type ProjectsLocationsConnectorsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInsightsService(s *Service) *ProjectsLocationsInsightsService {
+	rs := &ProjectsLocationsInsightsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInsightsService struct {
 	s *Service
 }
 
@@ -1604,6 +1652,9 @@ type GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnectionGateway struct {
 	// 19443.
 	IngressPort int64 `json:"ingressPort,omitempty"`
 
+	// L7psc: Output only. L7 private service connection for this resource.
+	L7psc string `json:"l7psc,omitempty"`
+
 	// Type: Required. The type of hosting used by the gateway.
 	//
 	// Possible values:
@@ -2661,6 +2712,410 @@ type GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata struct 
 
 func (s *GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpClientgatewaysV1ClientGatewayOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig: The
+// configuration that was applied to generate the result.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig struct {
+	// Aggregation: Output only. Aggregation type applied.
+	//
+	// Possible values:
+	//   "AGGREGATION_UNSPECIFIED" - Unspecified.
+	//   "HOURLY" - Insight should be aggregated at hourly level.
+	//   "DAILY" - Insight should be aggregated at daily level.
+	//   "WEEKLY" - Insight should be aggregated at weekly level.
+	//   "MONTHLY" - Insight should be aggregated at monthly level.
+	//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+	// date range passed in as the start and end time in the request.
+	Aggregation string `json:"aggregation,omitempty"`
+
+	// CustomGrouping: Output only. Customised grouping applied.
+	CustomGrouping *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaCustomGrouping `json:"customGrouping,omitempty"`
+
+	// EndTime: Output only. Ending time for the duration for which insight
+	// was pulled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// FieldFilter: Output only. Filters applied.
+	FieldFilter string `json:"fieldFilter,omitempty"`
+
+	// Group: Output only. Group id of the grouping applied.
+	Group string `json:"group,omitempty"`
+
+	// StartTime: Output only. Starting time for the duration for which
+	// insight was pulled.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightRespo
+// nse: The response for the configured insight.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse struct {
+	// AppliedConfig: Output only. Applied insight config to generate the
+	// result data rows.
+	AppliedConfig *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig `json:"appliedConfig,omitempty"`
+
+	// NextPageToken: Output only. Next page token to be fetched. Set to
+	// empty or NULL if there are no more pages available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Rows: Output only. Result rows returned containing the required
+	// value(s) for configured insight.
+	Rows []*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppliedConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppliedConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaCustomGrouping:
+// Customised grouping option that allows setting the group_by fields
+// and also the filters togather for a configured insight request.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaCustomGrouping struct {
+	// FieldFilter: Optional. Filterable parameters to be added to the
+	// grouping clause. Available fields could be fetched by calling insight
+	// list and get APIs in `BASIC` view. `=` is the only comparison
+	// operator supported. `AND` is the only logical operator supported.
+	// Usage: field_filter="fieldName1=fieldVal1 AND fieldName2=fieldVal2".
+	// NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias`
+	// from `Insight.Metadata.Field` message for the filtering the
+	// corresponding fields in this filter field. (These expressions are
+	// based on the filter language described at
+	// https://google.aip.dev/160).
+	FieldFilter string `json:"fieldFilter,omitempty"`
+
+	// GroupFields: Required. Fields to be used for grouping. NOTE: Use the
+	// `filter_alias` from `Insight.Metadata.Field` message for declaring
+	// the fields to be grouped-by here.
+	GroupFields []string `json:"groupFields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldFilter") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaCustomGrouping) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaCustomGrouping
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight: The Insight
+// object with configuration that was returned and actual list of
+// records.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight struct {
+	// AppliedConfig: Output only. Applied insight config to generate the
+	// result data rows.
+	AppliedConfig *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaAppliedConfig `json:"appliedConfig,omitempty"`
+
+	// Metadata: Output only. Metadata for the Insight.
+	Metadata *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadata `json:"metadata,omitempty"`
+
+	// Name: Output only. The insight resource name. e.g.
+	// `organizations/{organization_id}/locations/{location_id}/insights/{ins
+	// ight_id}` OR
+	// `projects/{project_id}/locations/{location_id}/insights/{insight_id}`.
+	Name string `json:"name,omitempty"`
+
+	// Rows: Output only. Result rows returned containing the required
+	// value(s).
+	Rows []*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppliedConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppliedConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadata:
+// Insight filters, groupings and aggregations that can be applied for
+// the insight. Examples: aggregations, groups, field filters.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadata struct {
+	// Aggregations: Output only. List of aggregation types available for
+	// insight.
+	//
+	// Possible values:
+	//   "AGGREGATION_UNSPECIFIED" - Unspecified.
+	//   "HOURLY" - Insight should be aggregated at hourly level.
+	//   "DAILY" - Insight should be aggregated at daily level.
+	//   "WEEKLY" - Insight should be aggregated at weekly level.
+	//   "MONTHLY" - Insight should be aggregated at monthly level.
+	//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+	// date range passed in as the start and end time in the request.
+	Aggregations []string `json:"aggregations,omitempty"`
+
+	// Category: Output only. Category of the insight.
+	Category string `json:"category,omitempty"`
+
+	// DisplayName: Output only. Common name of the insight.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Fields: Output only. List of fields available for insight.
+	Fields []*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadataField `json:"fields,omitempty"`
+
+	// Groups: Output only. List of groupings available for insight.
+	Groups []string `json:"groups,omitempty"`
+
+	// SubCategory: Output only. Sub-Category of the insight.
+	SubCategory string `json:"subCategory,omitempty"`
+
+	// Type: Output only. Type of the insight. It is metadata describing
+	// whether the insight is a metric (e.g. count) or a report (e.g. list,
+	// status).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadataField:
+// Field metadata. Commonly understandable name and description for the
+// field. Multiple such fields constitute the Insight.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadataField struct {
+	// Description: Output only. Description of the field.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Output only. Name of the field.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FilterAlias: Output only. Field name to be used in filter while
+	// requesting configured insight filtered on this field.
+	FilterAlias string `json:"filterAlias,omitempty"`
+
+	// Filterable: Output only. Indicates whether the field can be used for
+	// filtering.
+	Filterable bool `json:"filterable,omitempty"`
+
+	// Groupable: Output only. Indicates whether the field can be used for
+	// grouping in custom grouping request.
+	Groupable bool `json:"groupable,omitempty"`
+
+	// Id: Output only. Field id for which this is the metadata.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadataField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsightMetadataField
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse:
+// The response for the list of insights.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse struct {
+	// Insights: Output only. List of all insights.
+	Insights []*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight `json:"insights,omitempty"`
+
+	// NextPageToken: Output only. Next page token to be fetched. Set to
+	// empty or NULL if there are no more pages available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Insights") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Insights") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow: Row of the fetch
+// response consisting of a set of entries.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow struct {
+	// FieldValues: Output only. Columns/entries/key-vals in the result.
+	FieldValues []*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal `json:"fieldValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal: Column
+// or key value pair from the request as part of key to use in query or
+// a single pair of the fetch response.
+type GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal struct {
+	// DisplayName: Output only. Name of the field.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FilterAlias: Output only. Field name to be used in filter while
+	// requesting configured insight filtered on this field.
+	FilterAlias string `json:"filterAlias,omitempty"`
+
+	// Id: Output only. Field id.
+	Id string `json:"id,omitempty"`
+
+	// Value: Output only. Value of the field in string format. Acceptable
+	// values are strings or numbers.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSaasplatformInsightsV1alphaRowFieldVal
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3985,6 +4440,795 @@ func (s *Tunnelv1ProtoTunnelerInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod Tunnelv1ProtoTunnelerInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "beyondcorp.organizations.locations.insights.configuredInsight":
+
+type OrganizationsLocationsInsightsConfiguredInsightCall struct {
+	s            *Service
+	insight      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ConfiguredInsight: Gets the value for a selected particular insight
+// based on the provided filters. Use the organization level path for
+// fetching at org level and project level path for fetching the insight
+// value specific to a particular project.
+//
+// - insight: The resource name of the insight using the form:
+//   `organizations/{organization_id}/locations/{location_id}/insights/{i
+//   nsight_id}`
+//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//   `.
+func (r *OrganizationsLocationsInsightsService) ConfiguredInsight(insight string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c := &OrganizationsLocationsInsightsConfiguredInsightCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.insight = insight
+	return c
+}
+
+// Aggregation sets the optional parameter "aggregation": Aggregation
+// type. Available aggregation could be fetched by calling insight list
+// and get APIs in `BASIC` view.
+//
+// Possible values:
+//   "AGGREGATION_UNSPECIFIED" - Unspecified.
+//   "HOURLY" - Insight should be aggregated at hourly level.
+//   "DAILY" - Insight should be aggregated at daily level.
+//   "WEEKLY" - Insight should be aggregated at weekly level.
+//   "MONTHLY" - Insight should be aggregated at monthly level.
+//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+// date range passed in as the start and end time in the request.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Aggregation(aggregation string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("aggregation", aggregation)
+	return c
+}
+
+// CustomGroupingFieldFilter sets the optional parameter
+// "customGrouping.fieldFilter": Filterable parameters to be added to
+// the grouping clause. Available fields could be fetched by calling
+// insight list and get APIs in `BASIC` view. `=` is the only comparison
+// operator supported. `AND` is the only logical operator supported.
+// Usage: field_filter="fieldName1=fieldVal1 AND fieldName2=fieldVal2".
+// NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias`
+// from `Insight.Metadata.Field` message for the filtering the
+// corresponding fields in this filter field. (These expressions are
+// based on the filter language described at
+// https://google.aip.dev/160).
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) CustomGroupingFieldFilter(customGroupingFieldFilter string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("customGrouping.fieldFilter", customGroupingFieldFilter)
+	return c
+}
+
+// CustomGroupingGroupFields sets the optional parameter
+// "customGrouping.groupFields": Required. Fields to be used for
+// grouping. NOTE: Use the `filter_alias` from `Insight.Metadata.Field`
+// message for declaring the fields to be grouped-by here.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) CustomGroupingGroupFields(customGroupingGroupFields ...string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.SetMulti("customGrouping.groupFields", append([]string{}, customGroupingGroupFields...))
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Required. Ending time
+// for the duration for which insight is to be pulled.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) EndTime(endTime string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// FieldFilter sets the optional parameter "fieldFilter": Other
+// filterable/configurable parameters as applicable to the selected
+// insight. Available fields could be fetched by calling insight list
+// and get APIs in `BASIC` view. `=` is the only comparison operator
+// supported. `AND` is the only logical operator supported. Usage:
+// field_filter="fieldName1=fieldVal1 AND fieldName2=fieldVal2". NOTE:
+// Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from
+// `Insight.Metadata.Field` message for the filtering the corresponding
+// fields in this filter field. (These expressions are based on the
+// filter language described at https://google.aip.dev/160).
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) FieldFilter(fieldFilter string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("fieldFilter", fieldFilter)
+	return c
+}
+
+// Group sets the optional parameter "group": Group id of the available
+// groupings for the insight. Available groupings could be fetched by
+// calling insight list and get APIs in `BASIC` view.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Group(group string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("group", group)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) PageSize(pageSize int64) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Used to fetch the
+// page represented by the token. Fetches the first page when not set.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) PageToken(pageToken string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Required. Starting
+// time for the duration for which insight is to be pulled.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) StartTime(startTime string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Context(ctx context.Context) *OrganizationsLocationsInsightsConfiguredInsightCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+insight}:configuredInsight")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"insight": c.insight,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.insights.configuredInsight" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResp
+// onse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResp
+// onse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the value for a selected particular insight based on the provided filters. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/insights/{insightsId}:configuredInsight",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.organizations.locations.insights.configuredInsight",
+	//   "parameterOrder": [
+	//     "insight"
+	//   ],
+	//   "parameters": {
+	//     "aggregation": {
+	//       "description": "Optional. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "enum": [
+	//         "AGGREGATION_UNSPECIFIED",
+	//         "HOURLY",
+	//         "DAILY",
+	//         "WEEKLY",
+	//         "MONTHLY",
+	//         "CUSTOM_DATE_RANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified.",
+	//         "Insight should be aggregated at hourly level.",
+	//         "Insight should be aggregated at daily level.",
+	//         "Insight should be aggregated at weekly level.",
+	//         "Insight should be aggregated at monthly level.",
+	//         "Insight should be aggregated at the custom date range passed in as the start and end time in the request."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customGrouping.fieldFilter": {
+	//       "description": "Optional. Filterable parameters to be added to the grouping clause. Available fields could be fetched by calling insight list and get APIs in `BASIC` view. `=` is the only comparison operator supported. `AND` is the only logical operator supported. Usage: field_filter=\"fieldName1=fieldVal1 AND fieldName2=fieldVal2\". NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for the filtering the corresponding fields in this filter field. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customGrouping.groupFields": {
+	//       "description": "Required. Fields to be used for grouping. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for declaring the fields to be grouped-by here.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "endTime": {
+	//       "description": "Required. Ending time for the duration for which insight is to be pulled.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldFilter": {
+	//       "description": "Optional. Other filterable/configurable parameters as applicable to the selected insight. Available fields could be fetched by calling insight list and get APIs in `BASIC` view. `=` is the only comparison operator supported. `AND` is the only logical operator supported. Usage: field_filter=\"fieldName1=fieldVal1 AND fieldName2=fieldVal2\". NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for the filtering the corresponding fields in this filter field. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "group": {
+	//       "description": "Optional. Group id of the available groupings for the insight. Available groupings could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "insight": {
+	//       "description": "Required. The resource name of the insight using the form: `organizations/{organization_id}/locations/{location_id}/insights/{insight_id}` `projects/{project_id}/locations/{location_id}/insights/{insight_id}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Used to fetch the page represented by the token. Fetches the first page when not set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Required. Starting time for the duration for which insight is to be pulled.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+insight}:configuredInsight",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "beyondcorp.organizations.locations.insights.get":
+
+type OrganizationsLocationsInsightsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the value for a selected particular insight with default
+// configuration. The default aggregation level is 'DAILY' and no
+// grouping will be applied or default grouping if applicable. The data
+// will be returned for recent 7 days. Use the organization level path
+// for fetching at org level and project level path for fetching the
+// insight value specific to a particular project. Setting the `view` to
+// `BASIC` will only return the metadata for the insight.
+//
+// - name: The resource name of the insight using the form:
+//   `organizations/{organization_id}/locations/{location_id}/insights/{i
+//   nsight_id}`
+//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//   `.
+func (r *OrganizationsLocationsInsightsService) Get(name string) *OrganizationsLocationsInsightsGetCall {
+	c := &OrganizationsLocationsInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Required. Metadata only or
+// full data view.
+//
+// Possible values:
+//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+// will default to the BASIC view.
+//   "BASIC" - Include basic metadata about the insight, but not the
+// insight data. This is the default value (for both ListInsights and
+// GetInsight).
+//   "FULL" - Include everything.
+func (c *OrganizationsLocationsInsightsGetCall) View(view string) *OrganizationsLocationsInsightsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsInsightsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInsightsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsInsightsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInsightsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsInsightsGetCall) Context(ctx context.Context) *OrganizationsLocationsInsightsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsInsightsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsInsightsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.insights.get" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsInsightsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/insights/{insightsId}",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.organizations.locations.insights.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the insight using the form: `organizations/{organization_id}/locations/{location_id}/insights/{insight_id}` `projects/{project_id}/locations/{location_id}/insights/{insight_id}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. Metadata only or full data view.",
+	//       "enum": [
+	//         "INSIGHT_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic metadata about the insight, but not the insight data. This is the default value (for both ListInsights and GetInsight).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.organizations.locations.insights.list":
+
+type OrganizationsLocationsInsightsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists for all the available insights that could be fetched from
+// the system. Allows to filter using category. Setting the `view` to
+// `BASIC` will let you iterate over the list of insight metadatas.
+//
+// - parent: The resource name of InsightMetadata using the form:
+//   `organizations/{organization_id}/locations/{location}`
+//   `projects/{project_id}/locations/{location_id}`.
+func (r *OrganizationsLocationsInsightsService) List(parent string) *OrganizationsLocationsInsightsListCall {
+	c := &OrganizationsLocationsInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to
+// restrict the insights returned. Supported filter fields: * `type` *
+// `category` * `subCategory` Examples: * "category = application AND
+// type = count" * "category = application AND subCategory = iap" *
+// "type = status" Allowed values: * type: [count, latency, status,
+// list] * category: [application, device, request, security] *
+// subCategory: [iap, webprotect] NOTE: Only equality based comparison
+// is allowed. Only `AND` conjunction is allowed. NOTE: The 'AND' in the
+// filter field needs to be in capital letters only. NOTE: Just
+// filtering on `subCategory` is not allowed. It should be passed in
+// with the parent `category` too. (These expressions are based on the
+// filter language described at https://google.aip.dev/160).
+func (c *OrganizationsLocationsInsightsListCall) Filter(filter string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order
+// the results. This is currently ignored.
+func (c *OrganizationsLocationsInsightsListCall) OrderBy(orderBy string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default. NOTE: Default page size is 50.
+func (c *OrganizationsLocationsInsightsListCall) PageSize(pageSize int64) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+func (c *OrganizationsLocationsInsightsListCall) PageToken(pageToken string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Required. List only metadata
+// or full data.
+//
+// Possible values:
+//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+// will default to the BASIC view.
+//   "BASIC" - Include basic metadata about the insight, but not the
+// insight data. This is the default value (for both ListInsights and
+// GetInsight).
+//   "FULL" - Include everything.
+func (c *OrganizationsLocationsInsightsListCall) View(view string) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsInsightsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInsightsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsInsightsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInsightsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsInsightsListCall) Context(ctx context.Context) *OrganizationsLocationsInsightsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsInsightsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsInsightsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/insights")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.organizations.locations.insights.list" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse.
+// ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsInsightsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists for all the available insights that could be fetched from the system. Allows to filter using category. Setting the `view` to `BASIC` will let you iterate over the list of insight metadatas.",
+	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/insights",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.organizations.locations.insights.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `type` * `category` * `subCategory` Examples: * \"category = application AND type = count\" * \"category = application AND subCategory = iap\" * \"type = status\" Allowed values: * type: [count, latency, status, list] * category: [application, device, request, security] * subCategory: [iap, webprotect] NOTE: Only equality based comparison is allowed. Only `AND` conjunction is allowed. NOTE: The 'AND' in the filter field needs to be in capital letters only. NOTE: Just filtering on `subCategory` is not allowed. It should be passed in with the parent `category` too. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Hint for how to order the results. This is currently ignored.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. NOTE: Default page size is 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of InsightMetadata using the form: `organizations/{organization_id}/locations/{location}` `projects/{project_id}/locations/{location_id}`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. List only metadata or full data.",
+	//       "enum": [
+	//         "INSIGHT_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic metadata about the insight, but not the insight data. This is the default value (for both ListInsights and GetInsight).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/insights",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsInsightsListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "beyondcorp.projects.locations.get":
@@ -7248,9 +8492,9 @@ type ProjectsLocationsAppConnectorsResolveInstanceConfigCall struct {
 	header_      http.Header
 }
 
-// ResolveInstanceConfig: Get instance config for a given AppConnector.
-// An internal method called by a AppConnector to get its container
-// config.
+// ResolveInstanceConfig: Gets instance configuration for a given
+// AppConnector. An internal method called by a AppConnector to get its
+// container config.
 //
 // - appConnector: BeyondCorp AppConnector name using the form:
 //   `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
@@ -7363,7 +8607,7 @@ func (c *ProjectsLocationsAppConnectorsResolveInstanceConfigCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get instance config for a given AppConnector. An internal method called by a AppConnector to get its container config.",
+	//   "description": "Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/appConnectors/{appConnectorsId}:resolveInstanceConfig",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.projects.locations.appConnectors.resolveInstanceConfig",
@@ -14860,8 +16104,9 @@ type ProjectsLocationsConnectorsResolveInstanceConfigCall struct {
 	header_      http.Header
 }
 
-// ResolveInstanceConfig: Get instance config for a given connector. An
-// internal method called by a connector to get its container config.
+// ResolveInstanceConfig: Gets instance configuration for a given
+// connector. An internal method called by a connector to get its
+// container config.
 //
 // - connector: BeyondCorp Connector name using the form:
 //   `projects/{project_id}/locations/{location_id}/connectors/{connector
@@ -14971,7 +16216,7 @@ func (c *ProjectsLocationsConnectorsResolveInstanceConfigCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Get instance config for a given connector. An internal method called by a connector to get its container config.",
+	//   "description": "Gets instance configuration for a given connector. An internal method called by a connector to get its container config.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/connectors/{connectorsId}:resolveInstanceConfig",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.projects.locations.connectors.resolveInstanceConfig",
@@ -15294,6 +16539,795 @@ func (c *ProjectsLocationsConnectorsTestIamPermissionsCall) Do(opts ...googleapi
 	//   ]
 	// }
 
+}
+
+// method id "beyondcorp.projects.locations.insights.configuredInsight":
+
+type ProjectsLocationsInsightsConfiguredInsightCall struct {
+	s            *Service
+	insight      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ConfiguredInsight: Gets the value for a selected particular insight
+// based on the provided filters. Use the organization level path for
+// fetching at org level and project level path for fetching the insight
+// value specific to a particular project.
+//
+// - insight: The resource name of the insight using the form:
+//   `organizations/{organization_id}/locations/{location_id}/insights/{i
+//   nsight_id}`
+//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//   `.
+func (r *ProjectsLocationsInsightsService) ConfiguredInsight(insight string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c := &ProjectsLocationsInsightsConfiguredInsightCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.insight = insight
+	return c
+}
+
+// Aggregation sets the optional parameter "aggregation": Aggregation
+// type. Available aggregation could be fetched by calling insight list
+// and get APIs in `BASIC` view.
+//
+// Possible values:
+//   "AGGREGATION_UNSPECIFIED" - Unspecified.
+//   "HOURLY" - Insight should be aggregated at hourly level.
+//   "DAILY" - Insight should be aggregated at daily level.
+//   "WEEKLY" - Insight should be aggregated at weekly level.
+//   "MONTHLY" - Insight should be aggregated at monthly level.
+//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+// date range passed in as the start and end time in the request.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Aggregation(aggregation string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("aggregation", aggregation)
+	return c
+}
+
+// CustomGroupingFieldFilter sets the optional parameter
+// "customGrouping.fieldFilter": Filterable parameters to be added to
+// the grouping clause. Available fields could be fetched by calling
+// insight list and get APIs in `BASIC` view. `=` is the only comparison
+// operator supported. `AND` is the only logical operator supported.
+// Usage: field_filter="fieldName1=fieldVal1 AND fieldName2=fieldVal2".
+// NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias`
+// from `Insight.Metadata.Field` message for the filtering the
+// corresponding fields in this filter field. (These expressions are
+// based on the filter language described at
+// https://google.aip.dev/160).
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) CustomGroupingFieldFilter(customGroupingFieldFilter string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("customGrouping.fieldFilter", customGroupingFieldFilter)
+	return c
+}
+
+// CustomGroupingGroupFields sets the optional parameter
+// "customGrouping.groupFields": Required. Fields to be used for
+// grouping. NOTE: Use the `filter_alias` from `Insight.Metadata.Field`
+// message for declaring the fields to be grouped-by here.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) CustomGroupingGroupFields(customGroupingGroupFields ...string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.SetMulti("customGrouping.groupFields", append([]string{}, customGroupingGroupFields...))
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": Required. Ending time
+// for the duration for which insight is to be pulled.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) EndTime(endTime string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// FieldFilter sets the optional parameter "fieldFilter": Other
+// filterable/configurable parameters as applicable to the selected
+// insight. Available fields could be fetched by calling insight list
+// and get APIs in `BASIC` view. `=` is the only comparison operator
+// supported. `AND` is the only logical operator supported. Usage:
+// field_filter="fieldName1=fieldVal1 AND fieldName2=fieldVal2". NOTE:
+// Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from
+// `Insight.Metadata.Field` message for the filtering the corresponding
+// fields in this filter field. (These expressions are based on the
+// filter language described at https://google.aip.dev/160).
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) FieldFilter(fieldFilter string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("fieldFilter", fieldFilter)
+	return c
+}
+
+// Group sets the optional parameter "group": Group id of the available
+// groupings for the insight. Available groupings could be fetched by
+// calling insight list and get APIs in `BASIC` view.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Group(group string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("group", group)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) PageSize(pageSize int64) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Used to fetch the
+// page represented by the token. Fetches the first page when not set.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) PageToken(pageToken string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": Required. Starting
+// time for the duration for which insight is to be pulled.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) StartTime(startTime string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Context(ctx context.Context) *ProjectsLocationsInsightsConfiguredInsightCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+insight}:configuredInsight")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"insight": c.insight,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.insights.configuredInsight" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResp
+// onse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResp
+// onse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the value for a selected particular insight based on the provided filters. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/insights/{insightsId}:configuredInsight",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.insights.configuredInsight",
+	//   "parameterOrder": [
+	//     "insight"
+	//   ],
+	//   "parameters": {
+	//     "aggregation": {
+	//       "description": "Optional. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "enum": [
+	//         "AGGREGATION_UNSPECIFIED",
+	//         "HOURLY",
+	//         "DAILY",
+	//         "WEEKLY",
+	//         "MONTHLY",
+	//         "CUSTOM_DATE_RANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified.",
+	//         "Insight should be aggregated at hourly level.",
+	//         "Insight should be aggregated at daily level.",
+	//         "Insight should be aggregated at weekly level.",
+	//         "Insight should be aggregated at monthly level.",
+	//         "Insight should be aggregated at the custom date range passed in as the start and end time in the request."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customGrouping.fieldFilter": {
+	//       "description": "Optional. Filterable parameters to be added to the grouping clause. Available fields could be fetched by calling insight list and get APIs in `BASIC` view. `=` is the only comparison operator supported. `AND` is the only logical operator supported. Usage: field_filter=\"fieldName1=fieldVal1 AND fieldName2=fieldVal2\". NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for the filtering the corresponding fields in this filter field. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customGrouping.groupFields": {
+	//       "description": "Required. Fields to be used for grouping. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for declaring the fields to be grouped-by here.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "endTime": {
+	//       "description": "Required. Ending time for the duration for which insight is to be pulled.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldFilter": {
+	//       "description": "Optional. Other filterable/configurable parameters as applicable to the selected insight. Available fields could be fetched by calling insight list and get APIs in `BASIC` view. `=` is the only comparison operator supported. `AND` is the only logical operator supported. Usage: field_filter=\"fieldName1=fieldVal1 AND fieldName2=fieldVal2\". NOTE: Only `AND` conditions are allowed. NOTE: Use the `filter_alias` from `Insight.Metadata.Field` message for the filtering the corresponding fields in this filter field. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "group": {
+	//       "description": "Optional. Group id of the available groupings for the insight. Available groupings could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "insight": {
+	//       "description": "Required. The resource name of the insight using the form: `organizations/{organization_id}/locations/{location_id}/insights/{insight_id}` `projects/{project_id}/locations/{location_id}/insights/{insight_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Used to fetch the page represented by the token. Fetches the first page when not set.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "Required. Starting time for the duration for which insight is to be pulled.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+insight}:configuredInsight",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInsightsConfiguredInsightCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaConfiguredInsightResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "beyondcorp.projects.locations.insights.get":
+
+type ProjectsLocationsInsightsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the value for a selected particular insight with default
+// configuration. The default aggregation level is 'DAILY' and no
+// grouping will be applied or default grouping if applicable. The data
+// will be returned for recent 7 days. Use the organization level path
+// for fetching at org level and project level path for fetching the
+// insight value specific to a particular project. Setting the `view` to
+// `BASIC` will only return the metadata for the insight.
+//
+// - name: The resource name of the insight using the form:
+//   `organizations/{organization_id}/locations/{location_id}/insights/{i
+//   nsight_id}`
+//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//   `.
+func (r *ProjectsLocationsInsightsService) Get(name string) *ProjectsLocationsInsightsGetCall {
+	c := &ProjectsLocationsInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Required. Metadata only or
+// full data view.
+//
+// Possible values:
+//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+// will default to the BASIC view.
+//   "BASIC" - Include basic metadata about the insight, but not the
+// insight data. This is the default value (for both ListInsights and
+// GetInsight).
+//   "FULL" - Include everything.
+func (c *ProjectsLocationsInsightsGetCall) View(view string) *ProjectsLocationsInsightsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInsightsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightsGetCall) Context(ctx context.Context) *ProjectsLocationsInsightsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.insights.get" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/insights/{insightsId}",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.insights.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the insight using the form: `organizations/{organization_id}/locations/{location_id}/insights/{insight_id}` `projects/{project_id}/locations/{location_id}/insights/{insight_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/insights/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. Metadata only or full data view.",
+	//       "enum": [
+	//         "INSIGHT_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic metadata about the insight, but not the insight data. This is the default value (for both ListInsights and GetInsight).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaInsight"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.insights.list":
+
+type ProjectsLocationsInsightsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists for all the available insights that could be fetched from
+// the system. Allows to filter using category. Setting the `view` to
+// `BASIC` will let you iterate over the list of insight metadatas.
+//
+// - parent: The resource name of InsightMetadata using the form:
+//   `organizations/{organization_id}/locations/{location}`
+//   `projects/{project_id}/locations/{location_id}`.
+func (r *ProjectsLocationsInsightsService) List(parent string) *ProjectsLocationsInsightsListCall {
+	c := &ProjectsLocationsInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to
+// restrict the insights returned. Supported filter fields: * `type` *
+// `category` * `subCategory` Examples: * "category = application AND
+// type = count" * "category = application AND subCategory = iap" *
+// "type = status" Allowed values: * type: [count, latency, status,
+// list] * category: [application, device, request, security] *
+// subCategory: [iap, webprotect] NOTE: Only equality based comparison
+// is allowed. Only `AND` conjunction is allowed. NOTE: The 'AND' in the
+// filter field needs to be in capital letters only. NOTE: Just
+// filtering on `subCategory` is not allowed. It should be passed in
+// with the parent `category` too. (These expressions are based on the
+// filter language described at https://google.aip.dev/160).
+func (c *ProjectsLocationsInsightsListCall) Filter(filter string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order
+// the results. This is currently ignored.
+func (c *ProjectsLocationsInsightsListCall) OrderBy(orderBy string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default. NOTE: Default page size is 50.
+func (c *ProjectsLocationsInsightsListCall) PageSize(pageSize int64) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+func (c *ProjectsLocationsInsightsListCall) PageToken(pageToken string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Required. List only metadata
+// or full data.
+//
+// Possible values:
+//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+// will default to the BASIC view.
+//   "BASIC" - Include basic metadata about the insight, but not the
+// insight data. This is the default value (for both ListInsights and
+// GetInsight).
+//   "FULL" - Include everything.
+func (c *ProjectsLocationsInsightsListCall) View(view string) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInsightsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInsightsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightsListCall) Context(ctx context.Context) *ProjectsLocationsInsightsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/insights")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.insights.list" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse.
+// ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInsightsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists for all the available insights that could be fetched from the system. Allows to filter using category. Setting the `view` to `BASIC` will let you iterate over the list of insight metadatas.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/insights",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.insights.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `type` * `category` * `subCategory` Examples: * \"category = application AND type = count\" * \"category = application AND subCategory = iap\" * \"type = status\" Allowed values: * type: [count, latency, status, list] * category: [application, device, request, security] * subCategory: [iap, webprotect] NOTE: Only equality based comparison is allowed. Only `AND` conjunction is allowed. NOTE: The 'AND' in the filter field needs to be in capital letters only. NOTE: Just filtering on `subCategory` is not allowed. It should be passed in with the parent `category` too. (These expressions are based on the filter language described at https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Hint for how to order the results. This is currently ignored.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. NOTE: Default page size is 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of InsightMetadata using the form: `organizations/{organization_id}/locations/{location}` `projects/{project_id}/locations/{location_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. List only metadata or full data.",
+	//       "enum": [
+	//         "INSIGHT_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default / unset value. The API will default to the BASIC view.",
+	//         "Include basic metadata about the insight, but not the insight data. This is the default value (for both ListInsights and GetInsight).",
+	//         "Include everything."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/insights",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInsightsListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSaasplatformInsightsV1alphaListInsightsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "beyondcorp.projects.locations.operations.cancel":

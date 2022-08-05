@@ -6003,7 +6003,9 @@ type ProjectsLocationsServicesCreateCall struct {
 // Create: Creates a new Service in a given project and location.
 //
 // - parent: The location and project in which this service should be
-//   created. Format: projects/{projectnumber}/locations/{location}.
+//   created. Format: projects/{projectnumber}/locations/{location} Only
+//   lowercase, digits, and hyphens; must begin with letter, and may not
+//   end with hyphen; must contain fewer than 50 characters.
 func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6127,7 +6129,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The location and project in which this service should be created. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project in which this service should be created. Format: projects/{projectnumber}/locations/{location} Only lowercase, digits, and hyphens; must begin with letter, and may not end with hyphen; must contain fewer than 50 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

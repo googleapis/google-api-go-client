@@ -2720,7 +2720,9 @@ type ObjectMeta struct {
 	// may allow a client to request the generation of an appropriate name
 	// automatically. Name is primarily intended for creation idempotence
 	// and configuration definition. Cannot be updated. More info:
-	// https://kubernetes.io/docs/user-guide/identifiers#names +optional
+	// https://kubernetes.io/docs/user-guide/identifiers#names If ObjectMeta
+	// is part of a namespaces.services.create request, name must contain
+	// fewer than 50 characters. +optional
 	Name string `json:"name,omitempty"`
 
 	// Namespace: Namespace defines the space within each name must be

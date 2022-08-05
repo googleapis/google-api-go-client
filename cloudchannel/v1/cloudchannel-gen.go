@@ -1912,9 +1912,9 @@ type GoogleCloudChannelV1ListTransferableOffersRequest struct {
 	// resource name of that customer here.
 	CustomerName string `json:"customerName,omitempty"`
 
-	// LanguageCode: The BCP-47 language code. For example, "en-US". The
-	// response will localize in the corresponding language code, if
-	// specified. The default value is "en-US".
+	// LanguageCode: Optional. The BCP-47 language code. For example,
+	// "en-US". The response will localize in the corresponding language
+	// code, if specified. The default value is "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// PageSize: Requested page size. Server might return fewer results than

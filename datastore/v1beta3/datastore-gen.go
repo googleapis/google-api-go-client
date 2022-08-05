@@ -2162,7 +2162,6 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 // ReadOptions: The options shared by read requests.
 type ReadOptions struct {
 	// ReadConsistency: The non-transactional read consistency to use.
-	// Cannot be set to `STRONG` for global queries.
 	//
 	// Possible values:
 	//   "READ_CONSISTENCY_UNSPECIFIED" - Unspecified. This value must not
@@ -2237,8 +2236,9 @@ func (s *ReadWrite) MarshalJSON() ([]byte, error) {
 
 // ReserveIdsRequest: The request for Datastore.ReserveIds.
 type ReserveIdsRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Keys: Required. A list of keys with complete key paths whose numeric

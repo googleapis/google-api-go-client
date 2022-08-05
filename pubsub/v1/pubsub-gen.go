@@ -1663,7 +1663,9 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: A subscription resource.
+// Subscription: A subscription resource. If none of `push_config` or
+// `bigquery_config` is set, then the subscriber will pull and ack
+// messages using API methods. At most one of these fields may be set.
 type Subscription struct {
 	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
 	// basis) Pub/Sub waits for the subscriber to acknowledge receipt before
@@ -1684,9 +1686,7 @@ type Subscription struct {
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// BigqueryConfig: If delivery to BigQuery is used with this
-	// subscription, this field is used to configure it. Either `pushConfig`
-	// or `bigQueryConfig` can be set, but not both. If both are empty, then
-	// the subscriber will pull and ack messages using API methods.
+	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
 
 	// DeadLetterPolicy: A policy that specifies the conditions for dead
@@ -1759,9 +1759,7 @@ type Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it. Either `pushConfig` or
-	// `bigQueryConfig` can be set, but not both. If both are empty, then
-	// the subscriber will pull and ack messages using API methods.
+	// field is used to configure it.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// RetainAckedMessages: Indicates whether to retain acknowledged

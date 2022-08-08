@@ -7,7 +7,7 @@
 # Fail on error, and display commands being run.
 set -ex
 
-if [[ $(go version) != *"go1.18"* ]]; then
+if [[ $(go version) != *"go1.19"* ]]; then
   exit 0
 fi
 

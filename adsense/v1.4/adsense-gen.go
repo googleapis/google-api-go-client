@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/adsense/management/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/adsense/v1.4"
-//   ...
-//   ctx := context.Background()
-//   adsenseService, err := adsense.NewService(ctx)
+//	import "google.golang.org/api/adsense/v1.4"
+//	...
+//	ctx := context.Background()
+//	adsenseService, err := adsense.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   adsenseService, err := adsense.NewService(ctx, option.WithScopes(adsense.AdsenseReadonlyScope))
+//	adsenseService, err := adsense.NewService(ctx, option.WithScopes(adsense.AdsenseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   adsenseService, err := adsense.NewService(ctx, option.WithAPIKey("AIza..."))
+//	adsenseService, err := adsense.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   adsenseService, err := adsense.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	adsenseService, err := adsense.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adsense // import "google.golang.org/api/adsense/v1.4"
@@ -4273,11 +4273,11 @@ type AccountsReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 //
-// - accountId: Account upon which to report.
-// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
-//   inclusive.
-// - startDate: Start of the date range to report on in "YYYY-MM-DD"
-//   format, inclusive.
+//   - accountId: Account upon which to report.
+//   - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//     inclusive.
+//   - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//     format, inclusive.
 func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7650,10 +7650,10 @@ type ReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 //
-// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
-//   inclusive.
-// - startDate: Start of the date range to report on in "YYYY-MM-DD"
-//   format, inclusive.
+//   - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//     inclusive.
+//   - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//     format, inclusive.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
 	c := &ReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("startDate", startDate)

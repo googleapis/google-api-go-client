@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/access-context-manager/docs/reference/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/accesscontextmanager/v1"
-//   ...
-//   ctx := context.Background()
-//   accesscontextmanagerService, err := accesscontextmanager.NewService(ctx)
+//	import "google.golang.org/api/accesscontextmanager/v1"
+//	...
+//	ctx := context.Background()
+//	accesscontextmanagerService, err := accesscontextmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   accesscontextmanagerService, err := accesscontextmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	accesscontextmanagerService, err := accesscontextmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   accesscontextmanagerService, err := accesscontextmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	accesscontextmanagerService, err := accesscontextmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package accesscontextmanager // import "google.golang.org/api/accesscontextmanager/v1"
@@ -2430,8 +2430,8 @@ type AccessPoliciesDeleteCall struct {
 // long-running operation has a successful status after the access
 // policy is removed from long-lasting storage.
 //
-// - name: Resource name for the access policy to delete. Format
-//   `accessPolicies/{policy_id}`.
+//   - name: Resource name for the access policy to delete. Format
+//     `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Delete(name string) *AccessPoliciesDeleteCall {
 	c := &AccessPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2564,8 +2564,8 @@ type AccessPoliciesGetCall struct {
 
 // Get: Returns an access policy based on the name.
 //
-// - name: Resource name for the access policy to get. Format
-//   `accessPolicies/{policy_id}`.
+//   - name: Resource name for the access policy to get. Format
+//     `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Get(name string) *AccessPoliciesGetCall {
 	c := &AccessPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2712,10 +2712,10 @@ type AccessPoliciesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM policy for the specified Access Context
 // Manager access policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *AccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *AccessPoliciesGetIamPolicyCall {
 	c := &AccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3049,8 +3049,8 @@ type AccessPoliciesPatchCall struct {
 // RPC has a successful status after the changes to the access policy
 // propagate to long-lasting storage.
 //
-// - name: Output only. Resource name of the `AccessPolicy`. Format:
-//   `accessPolicies/{access_policy}`.
+//   - name: Output only. Resource name of the `AccessPolicy`. Format:
+//     `accessPolicies/{access_policy}`.
 func (r *AccessPoliciesService) Patch(name string, accesspolicy *AccessPolicy) *AccessPoliciesPatchCall {
 	c := &AccessPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3209,10 +3209,10 @@ type AccessPoliciesSetIamPolicyCall struct {
 // can perform specific operations on the Access Context Manager access
 // policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *AccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *AccessPoliciesSetIamPolicyCall {
 	c := &AccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3357,10 +3357,10 @@ type AccessPoliciesTestIamPermissionsCall struct {
 // an AccessPolicy, AccessLevel, or ServicePerimeter. This method does
 // not support other resources.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *AccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesTestIamPermissionsCall {
 	c := &AccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3505,8 +3505,8 @@ type AccessPoliciesAccessLevelsCreateCall struct {
 // long-lasting storage. If access levels contain errors, an error
 // response is returned for the first error encountered.
 //
-// - parent: Resource name for the access policy which owns this Access
-//   Level. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy which owns this Access
+//     Level. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) Create(parent string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsCreateCall {
 	c := &AccessPoliciesAccessLevelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3649,8 +3649,8 @@ type AccessPoliciesAccessLevelsDeleteCall struct {
 // long-running operation from this RPC has a successful status after
 // the access level has been removed from long-lasting storage.
 //
-// - name: Resource name for the Access Level. Format:
-//   `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
+//   - name: Resource name for the Access Level. Format:
+//     `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
 func (r *AccessPoliciesAccessLevelsService) Delete(name string) *AccessPoliciesAccessLevelsDeleteCall {
 	c := &AccessPoliciesAccessLevelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3783,8 +3783,8 @@ type AccessPoliciesAccessLevelsGetCall struct {
 
 // Get: Gets an access level based on the resource name.
 //
-// - name: Resource name for the Access Level. Format:
-//   `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
+//   - name: Resource name for the Access Level. Format:
+//     `accessPolicies/{policy_id}/accessLevels/{access_level_id}`.
 func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAccessLevelsGetCall {
 	c := &AccessPoliciesAccessLevelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3800,11 +3800,15 @@ func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAcce
 // translated to equivalent `CustomLevels`.
 //
 // Possible values:
-//   "LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
-//   "AS_DEFINED" - Uses the format the resource was defined in.
+//
+//	"LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
+//	"AS_DEFINED" - Uses the format the resource was defined in.
+//
 // BasicLevels are returned as BasicLevels, CustomLevels are returned as
 // CustomLevels.
-//   "CEL" - Use Cloud Common Expression Language when returning the
+//
+//	"CEL" - Use Cloud Common Expression Language when returning the
+//
 // resource. Both BasicLevels and CustomLevels are returned as
 // CustomLevels.
 func (c *AccessPoliciesAccessLevelsGetCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsGetCall {
@@ -3966,8 +3970,8 @@ type AccessPoliciesAccessLevelsListCall struct {
 
 // List: Lists all access levels for an access policy.
 //
-// - parent: Resource name for the access policy to list Access Levels
-//   from. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy to list Access Levels
+//     from. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesAccessLevelsListCall {
 	c := &AccessPoliciesAccessLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3980,11 +3984,15 @@ func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesA
 // to returning `AccessLevels` in the format they were defined.
 //
 // Possible values:
-//   "LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
-//   "AS_DEFINED" - Uses the format the resource was defined in.
+//
+//	"LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
+//	"AS_DEFINED" - Uses the format the resource was defined in.
+//
 // BasicLevels are returned as BasicLevels, CustomLevels are returned as
 // CustomLevels.
-//   "CEL" - Use Cloud Common Expression Language when returning the
+//
+//	"CEL" - Use Cloud Common Expression Language when returning the
+//
 // resource. Both BasicLevels and CustomLevels are returned as
 // CustomLevels.
 func (c *AccessPoliciesAccessLevelsListCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsListCall {
@@ -4196,11 +4204,11 @@ type AccessPoliciesAccessLevelsPatchCall struct {
 // propagate to long-lasting storage. If access levels contain errors,
 // an error response is returned for the first error encountered.
 //
-// - name: Resource name for the Access Level. The `short_name`
-//   component must begin with a letter and only include alphanumeric
-//   and '_'. Format:
-//   `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
-//   maximum length of the `access_level` component is 50 characters.
+//   - name: Resource name for the Access Level. The `short_name`
+//     component must begin with a letter and only include alphanumeric
+//     and '_'. Format:
+//     `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+//     maximum length of the `access_level` component is 50 characters.
 func (r *AccessPoliciesAccessLevelsService) Patch(name string, accesslevel *AccessLevel) *AccessPoliciesAccessLevelsPatchCall {
 	c := &AccessPoliciesAccessLevelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4363,8 +4371,8 @@ type AccessPoliciesAccessLevelsReplaceAllCall struct {
 // field contains ReplaceAccessLevelsResponse. Removing access levels
 // contained in existing service perimeters result in an error.
 //
-// - parent: Resource name for the access policy which owns these Access
-//   Levels. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy which owns these Access
+//     Levels. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesAccessLevelsService) ReplaceAll(parent string, replaceaccesslevelsrequest *ReplaceAccessLevelsRequest) *AccessPoliciesAccessLevelsReplaceAllCall {
 	c := &AccessPoliciesAccessLevelsReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4509,10 +4517,10 @@ type AccessPoliciesAccessLevelsTestIamPermissionsCall struct {
 // an AccessPolicy, AccessLevel, or ServicePerimeter. This method does
 // not support other resources.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *AccessPoliciesAccessLevelsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesAccessLevelsTestIamPermissionsCall {
 	c := &AccessPoliciesAccessLevelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4666,9 +4674,9 @@ type AccessPoliciesServicePerimetersCommitCall struct {
 // The `dry_run` and the `spec` fields are cleared after a successful
 // commit operation.
 //
-// - parent: Resource name for the parent Access Policy which owns all
-//   Service Perimeters in scope for the commit operation. Format:
-//   `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the parent Access Policy which owns all
+//     Service Perimeters in scope for the commit operation. Format:
+//     `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) Commit(parent string, commitserviceperimetersrequest *CommitServicePerimetersRequest) *AccessPoliciesServicePerimetersCommitCall {
 	c := &AccessPoliciesServicePerimetersCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4814,8 +4822,8 @@ type AccessPoliciesServicePerimetersCreateCall struct {
 // errors, an error response is returned for the first error
 // encountered.
 //
-// - parent: Resource name for the access policy which owns this Service
-//   Perimeter. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy which owns this Service
+//     Perimeter. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) Create(parent string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersCreateCall {
 	c := &AccessPoliciesServicePerimetersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4958,9 +4966,9 @@ type AccessPoliciesServicePerimetersDeleteCall struct {
 // long-running operation from this RPC has a successful status after
 // the service perimeter is removed from long-lasting storage.
 //
-// - name: Resource name for the Service Perimeter. Format:
-//   `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}
-//   `.
+//   - name: Resource name for the Service Perimeter. Format:
+//     `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}
+//     `.
 func (r *AccessPoliciesServicePerimetersService) Delete(name string) *AccessPoliciesServicePerimetersDeleteCall {
 	c := &AccessPoliciesServicePerimetersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5093,9 +5101,9 @@ type AccessPoliciesServicePerimetersGetCall struct {
 
 // Get: Gets a service perimeter based on the resource name.
 //
-// - name: Resource name for the Service Perimeter. Format:
-//   `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id
-//   }`.
+//   - name: Resource name for the Service Perimeter. Format:
+//     `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id
+//     }`.
 func (r *AccessPoliciesServicePerimetersService) Get(name string) *AccessPoliciesServicePerimetersGetCall {
 	c := &AccessPoliciesServicePerimetersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5241,8 +5249,8 @@ type AccessPoliciesServicePerimetersListCall struct {
 
 // List: Lists all service perimeters for an access policy.
 //
-// - parent: Resource name for the access policy to list Service
-//   Perimeters from. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy to list Service
+//     Perimeters from. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) List(parent string) *AccessPoliciesServicePerimetersListCall {
 	c := &AccessPoliciesServicePerimetersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5439,11 +5447,11 @@ type AccessPoliciesServicePerimetersPatchCall struct {
 // errors, an error response is returned for the first error
 // encountered.
 //
-// - name: Resource name for the ServicePerimeter. The `short_name`
-//   component must begin with a letter and only include alphanumeric
-//   and '_'. Format:
-//   `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter
-//   }`.
+//   - name: Resource name for the ServicePerimeter. The `short_name`
+//     component must begin with a letter and only include alphanumeric
+//     and '_'. Format:
+//     `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter
+//     }`.
 func (r *AccessPoliciesServicePerimetersService) Patch(name string, serviceperimeter *ServicePerimeter) *AccessPoliciesServicePerimetersPatchCall {
 	c := &AccessPoliciesServicePerimetersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5605,8 +5613,8 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 // existing service perimeters are not affected. The Operation.response
 // field contains ReplaceServicePerimetersResponse.
 //
-// - parent: Resource name for the access policy which owns these
-//   Service Perimeters. Format: `accessPolicies/{policy_id}`.
+//   - parent: Resource name for the access policy which owns these
+//     Service Perimeters. Format: `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesServicePerimetersService) ReplaceAll(parent string, replaceserviceperimetersrequest *ReplaceServicePerimetersRequest) *AccessPoliciesServicePerimetersReplaceAllCall {
 	c := &AccessPoliciesServicePerimetersReplaceAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5751,10 +5759,10 @@ type AccessPoliciesServicePerimetersTestIamPermissionsCall struct {
 // an AccessPolicy, AccessLevel, or ServicePerimeter. This method does
 // not support other resources.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *AccessPoliciesServicePerimetersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *AccessPoliciesServicePerimetersTestIamPermissionsCall {
 	c := &AccessPoliciesServicePerimetersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6691,8 +6699,8 @@ type OrganizationsGcpUserAccessBindingsDeleteCall struct {
 // deletion is deployed onto all affected users, which may take more
 // time.
 //
-// - name: Example:
-//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
+//   - name: Example:
+//     "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Delete(name string) *OrganizationsGcpUserAccessBindingsDeleteCall {
 	c := &OrganizationsGcpUserAccessBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6825,8 +6833,8 @@ type OrganizationsGcpUserAccessBindingsGetCall struct {
 
 // Get: Gets the GcpUserAccessBinding with the given name.
 //
-// - name: Example:
-//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
+//   - name: Example:
+//     "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Get(name string) *OrganizationsGcpUserAccessBindingsGetCall {
 	c := &OrganizationsGcpUserAccessBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7171,12 +7179,12 @@ type OrganizationsGcpUserAccessBindingsPatchCall struct {
 // binding is deployed onto all affected users, which may take more
 // time.
 //
-// - name: Immutable. Assigned by the server during creation. The last
-//   segment has an arbitrary length and has only URI unreserved
-//   characters (as defined by RFC 3986 Section 2.3
-//   (https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
-//   specified by the client during creation. Example:
-//   "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
+//   - name: Immutable. Assigned by the server during creation. The last
+//     segment has an arbitrary length and has only URI unreserved
+//     characters (as defined by RFC 3986 Section 2.3
+//     (https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
+//     specified by the client during creation. Example:
+//     "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N".
 func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuseraccessbinding *GcpUserAccessBinding) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c := &OrganizationsGcpUserAccessBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

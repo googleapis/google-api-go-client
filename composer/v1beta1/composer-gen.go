@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/composer/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/composer/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   composerService, err := composer.NewService(ctx)
+//	import "google.golang.org/api/composer/v1beta1"
+//	...
+//	ctx := context.Background()
+//	composerService, err := composer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   composerService, err := composer.NewService(ctx, option.WithAPIKey("AIza..."))
+//	composerService, err := composer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   composerService, err := composer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	composerService, err := composer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package composer // import "google.golang.org/api/composer/v1beta1"
@@ -1924,10 +1924,10 @@ type ProjectsLocationsEnvironmentsCheckUpgradeCall struct {
 // succeed. In case of problems detailed info can be found in the
 // returned Operation.
 //
-// - environment: The resource name of the environment to check upgrade
-//   for, in the form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - environment: The resource name of the environment to check upgrade
+//     for, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) CheckUpgrade(environment string, checkupgraderequest *CheckUpgradeRequest) *ProjectsLocationsEnvironmentsCheckUpgradeCall {
 	c := &ProjectsLocationsEnvironmentsCheckUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -2069,8 +2069,8 @@ type ProjectsLocationsEnvironmentsCreateCall struct {
 
 // Create: Create a new environment.
 //
-// - parent: The parent must be of the form
-//   "projects/{projectId}/locations/{locationId}".
+//   - parent: The parent must be of the form
+//     "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) Create(parent string, environment *Environment) *ProjectsLocationsEnvironmentsCreateCall {
 	c := &ProjectsLocationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2211,9 +2211,9 @@ type ProjectsLocationsEnvironmentsDeleteCall struct {
 
 // Delete: Delete an environment.
 //
-// - name: The environment to delete, in the form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - name: The environment to delete, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Delete(name string) *ProjectsLocationsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2346,9 +2346,9 @@ type ProjectsLocationsEnvironmentsGetCall struct {
 
 // Get: Get an existing environment.
 //
-// - name: The resource name of the environment to get, in the form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - name: The resource name of the environment to get, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Get(name string) *ProjectsLocationsEnvironmentsGetCall {
 	c := &ProjectsLocationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2494,8 +2494,8 @@ type ProjectsLocationsEnvironmentsListCall struct {
 
 // List: List environments.
 //
-// - parent: List environments in the given project and location, in the
-//   form: "projects/{projectId}/locations/{locationId}".
+//   - parent: List environments in the given project and location, in the
+//     form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) List(parent string) *ProjectsLocationsEnvironmentsListCall {
 	c := &ProjectsLocationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2689,10 +2689,10 @@ type ProjectsLocationsEnvironmentsLoadSnapshotCall struct {
 // result of this operation, a snapshot of environment's specified in
 // LoadSnapshotRequest is loaded into the environment.
 //
-// - environment: The resource name of the target environment in the
-//   form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - environment: The resource name of the target environment in the
+//     form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) LoadSnapshot(environment string, loadsnapshotrequest *LoadSnapshotRequest) *ProjectsLocationsEnvironmentsLoadSnapshotCall {
 	c := &ProjectsLocationsEnvironmentsLoadSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -2834,10 +2834,10 @@ type ProjectsLocationsEnvironmentsPatchCall struct {
 
 // Patch: Update an environment.
 //
-// - name: The relative resource name of the environment to update, in
-//   the form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - name: The relative resource name of the environment to update, in
+//     the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *Environment) *ProjectsLocationsEnvironmentsPatchCall {
 	c := &ProjectsLocationsEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3090,10 +3090,10 @@ type ProjectsLocationsEnvironmentsRestartWebServerCall struct {
 
 // RestartWebServer: Restart Airflow web server.
 //
-// - name: The resource name of the environment to restart the web
-//   server for, in the form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - name: The resource name of the environment to restart the web
+//     server for, in the form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) RestartWebServer(name string, restartwebserverrequest *RestartWebServerRequest) *ProjectsLocationsEnvironmentsRestartWebServerCall {
 	c := &ProjectsLocationsEnvironmentsRestartWebServerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3237,10 +3237,10 @@ type ProjectsLocationsEnvironmentsSaveSnapshotCall struct {
 // a result of this operation, snapshot of environment's state is stored
 // in a location specified in the SaveSnapshotRequest.
 //
-// - environment: The resource name of the source environment in the
-//   form:
-//   "projects/{projectId}/locations/{locationId}/environments/{environme
-//   ntId}".
+//   - environment: The resource name of the source environment in the
+//     form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
 func (r *ProjectsLocationsEnvironmentsService) SaveSnapshot(environment string, savesnapshotrequest *SaveSnapshotRequest) *ProjectsLocationsEnvironmentsSaveSnapshotCall {
 	c := &ProjectsLocationsEnvironmentsSaveSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -3382,8 +3382,8 @@ type ProjectsLocationsImageVersionsListCall struct {
 
 // List: List ImageVersions for provided location.
 //
-// - parent: List ImageVersions in the given project and location, in
-//   the form: "projects/{projectId}/locations/{locationId}".
+//   - parent: List ImageVersions in the given project and location, in
+//     the form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

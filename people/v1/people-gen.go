@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/people/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/people/v1"
-//   ...
-//   ctx := context.Background()
-//   peopleService, err := people.NewService(ctx)
+//	import "google.golang.org/api/people/v1"
+//	...
+//	ctx := context.Background()
+//	peopleService, err := people.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   peopleService, err := people.NewService(ctx, option.WithScopes(people.UserinfoProfileScope))
+//	peopleService, err := people.NewService(ctx, option.WithScopes(people.UserinfoProfileScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   peopleService, err := people.NewService(ctx, option.WithAPIKey("AIza..."))
+//	peopleService, err := people.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   peopleService, err := people.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	peopleService, err := people.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package people // import "google.golang.org/api/people/v1"
@@ -4255,9 +4255,9 @@ type ContactGroupsUpdateCall struct {
 // name will return a HTTP 409 error. Mutate requests for the same user
 // should be sent sequentially to avoid increased latency and failures.
 //
-// - resourceName: The resource name for the contact group, assigned by
-//   the server. An ASCII string, in the form of
-//   `contactGroups/{contact_group_id}`.
+//   - resourceName: The resource name for the contact group, assigned by
+//     the server. An ASCII string, in the form of
+//     `contactGroups/{contact_group_id}`.
 func (r *ContactGroupsService) Update(resourceName string, updatecontactgrouprequest *UpdateContactGroupRequest) *ContactGroupsUpdateCall {
 	c := &ContactGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4768,11 +4768,15 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 // is not permitted.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *OtherContactsListCall) Sources(sources ...string) *OtherContactsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -5574,11 +5578,15 @@ func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreat
 // READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleCreateContactCall) Sources(sources ...string) *PeopleCreateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -5865,8 +5873,8 @@ type PeopleDeleteContactPhotoCall struct {
 // DeleteContactPhoto: Delete a contact's photo. Mutate requests for the
 // same user should be done sequentially to avoid // lock contention.
 //
-// - resourceName: The resource name of the contact whose photo will be
-//   deleted.
+//   - resourceName: The resource name of the contact whose photo will be
+//     deleted.
 func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteContactPhotoCall {
 	c := &PeopleDeleteContactPhotoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -5893,11 +5901,15 @@ func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *People
 // READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleDeleteContactPhotoCall) Sources(sources ...string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -6056,12 +6068,12 @@ type PeopleGetCall struct {
 // name. Use `people/me` to indicate the authenticated user. The request
 // returns a 400 error if 'personFields' is not specified.
 //
-// - resourceName: The resource name of the person to provide
-//   information about. - To get information about the authenticated
-//   user, specify `people/me`. - To get information about a google
-//   account, specify `people/{account_id}`. - To get information about
-//   a contact, specify the resource name that identifies the contact as
-//   returned by `people.connections.list`.
+//   - resourceName: The resource name of the person to provide
+//     information about. - To get information about the authenticated
+//     user, specify `people/me`. - To get information about a google
+//     account, specify `people/{account_id}`. - To get information about
+//     a contact, specify the resource name that identifies the contact as
+//     returned by `people.connections.list`.
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -6096,11 +6108,15 @@ func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) 
 // READ_SOURCE_TYPE_CONTACT if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleGetCall) Sources(sources ...string) *PeopleGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -6334,11 +6350,15 @@ func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGe
 // READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleGetBatchGetCall) Sources(sources ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -6535,8 +6555,9 @@ func (r *PeopleService) ListDirectoryPeople() *PeopleListDirectoryPeopleCall {
 // through verified join keys such as email addresses or phone numbers.
 //
 // Possible values:
-//   "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT" - User owned contact.
+//
+//	"DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"DIRECTORY_MERGE_SOURCE_TYPE_CONTACT" - User owned contact.
 func (c *PeopleListDirectoryPeopleCall) MergeSources(mergeSources ...string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.SetMulti("mergeSources", append([]string{}, mergeSources...))
 	return c
@@ -6588,10 +6609,14 @@ func (c *PeopleListDirectoryPeopleCall) RequestSyncToken(requestSyncToken bool) 
 // sources to return.
 //
 // Possible values:
-//   "DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//
+//	"DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//
 // shared contact.
-//   "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
+//
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
+//
 // profile.
 func (c *PeopleListDirectoryPeopleCall) Sources(sources ...string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -6860,11 +6885,15 @@ func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContac
 // types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleSearchContactsCall) Sources(sources ...string) *PeopleSearchContactsCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -7044,8 +7073,9 @@ func (r *PeopleService) SearchDirectoryPeople() *PeopleSearchDirectoryPeopleCall
 // through verified join keys such as email addresses or phone numbers.
 //
 // Possible values:
-//   "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT" - User owned contact.
+//
+//	"DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"DIRECTORY_MERGE_SOURCE_TYPE_CONTACT" - User owned contact.
 func (c *PeopleSearchDirectoryPeopleCall) MergeSources(mergeSources ...string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.SetMulti("mergeSources", append([]string{}, mergeSources...))
 	return c
@@ -7095,10 +7125,14 @@ func (c *PeopleSearchDirectoryPeopleCall) ReadMask(readMask string) *PeopleSearc
 // sources to return.
 //
 // Possible values:
-//   "DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//
+//	"DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//
 // shared contact.
-//   "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
+//
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
+//
 // profile.
 func (c *PeopleSearchDirectoryPeopleCall) Sources(sources ...string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -7321,9 +7355,9 @@ type PeopleUpdateContactCall struct {
 // same user should be sent sequentially to avoid increased latency and
 // failures.
 //
-// - resourceName: The resource name for the person, assigned by the
-//   server. An ASCII string with a max length of 27 characters, in the
-//   form of `people/{person_id}`.
+//   - resourceName: The resource name for the person, assigned by the
+//     server. An ASCII string with a max length of 27 characters, in the
+//     form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7351,11 +7385,15 @@ func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdat
 // READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleUpdateContactCall) Sources(sources ...string) *PeopleUpdateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
@@ -7700,8 +7738,8 @@ type PeopleConnectionsListCall struct {
 // contacts that have changed
 // (/people/v1/contacts#list_the_users_contacts_that_have_changed).
 //
-// - resourceName: The resource name to return connections for. Only
-//   `people/me` is valid.
+//   - resourceName: The resource name to return connections for. Only
+//     `people/me` is valid.
 func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsListCall {
 	c := &PeopleConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7764,12 +7802,17 @@ func (c *PeopleConnectionsListCall) RequestSyncToken(requestSyncToken bool) *Peo
 // `LAST_MODIFIED_ASCENDING`.
 //
 // Possible values:
-//   "LAST_MODIFIED_ASCENDING" - Sort people by when they were changed;
+//
+//	"LAST_MODIFIED_ASCENDING" - Sort people by when they were changed;
+//
 // older entries first.
-//   "LAST_MODIFIED_DESCENDING" - Sort people by when they were changed;
+//
+//	"LAST_MODIFIED_DESCENDING" - Sort people by when they were changed;
+//
 // newer entries first.
-//   "FIRST_NAME_ASCENDING" - Sort people by first name.
-//   "LAST_NAME_ASCENDING" - Sort people by last name.
+//
+//	"FIRST_NAME_ASCENDING" - Sort people by first name.
+//	"LAST_NAME_ASCENDING" - Sort people by last name.
 func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -7780,11 +7823,15 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 // READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
-//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
+//	"READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
+//	"READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
+//
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
-//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
+//	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
+//
 // SourceType.DOMAIN_CONTACT.
 func (c *PeopleConnectionsListCall) Sources(sources ...string) *PeopleConnectionsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))

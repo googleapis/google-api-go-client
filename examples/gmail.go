@@ -33,8 +33,9 @@ type message struct {
 // choose either to Delete, Skip, or Quit for each message.
 //
 // Example usage:
-//   go build -o go-api-demo *.go
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" gmail
+//
+//	go build -o go-api-demo *.go
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" gmail
 func gmailMain(client *http.Client, argv []string) {
 	if len(argv) != 0 {
 		fmt.Fprintln(os.Stderr, "Usage: gmail")

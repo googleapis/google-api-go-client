@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/datastream/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datastream/v1"
-//   ...
-//   ctx := context.Background()
-//   datastreamService, err := datastream.NewService(ctx)
+//	import "google.golang.org/api/datastream/v1"
+//	...
+//	ctx := context.Background()
+//	datastreamService, err := datastream.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   datastreamService, err := datastream.NewService(ctx, option.WithAPIKey("AIza..."))
+//	datastreamService, err := datastream.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   datastreamService, err := datastream.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	datastreamService, err := datastream.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datastream // import "google.golang.org/api/datastream/v1"
@@ -2453,8 +2453,8 @@ type ProjectsLocationsFetchStaticIpsCall struct {
 // FetchStaticIps: The FetchStaticIps API call exposes the static IP
 // addresses used by Datastream.
 //
-// - name: The resource name for the location for which static IPs
-//   should be returned. Must be in the format `projects/*/locations/*`.
+//   - name: The resource name for the location for which static IPs
+//     should be returned. Must be in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsService) FetchStaticIps(name string) *ProjectsLocationsFetchStaticIpsCall {
 	c := &ProjectsLocationsFetchStaticIpsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2794,8 +2794,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3361,8 +3361,8 @@ type ProjectsLocationsConnectionProfilesDiscoverCall struct {
 // the profile. Typically, a request returns children data objects of a
 // parent data object that's optionally supplied in the request.
 //
-// - parent: The parent resource of the connection profile type. Must be
-//   in the format `projects/*/locations/*`.
+//   - parent: The parent resource of the connection profile type. Must be
+//     in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsConnectionProfilesService) Discover(parent string, discoverconnectionprofilerequest *DiscoverConnectionProfileRequest) *ProjectsLocationsConnectionProfilesDiscoverCall {
 	c := &ProjectsLocationsConnectionProfilesDiscoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5218,8 +5218,8 @@ type ProjectsLocationsPrivateConnectionsListCall struct {
 // List: Use this method to list private connectivity configurations in
 // a project and location.
 //
-// - parent: The parent that owns the collection of private connectivity
-//   configurations.
+//   - parent: The parent that owns the collection of private connectivity
+//     configurations.
 func (r *ProjectsLocationsPrivateConnectionsService) List(parent string) *ProjectsLocationsPrivateConnectionsListCall {
 	c := &ProjectsLocationsPrivateConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7548,8 +7548,8 @@ type ProjectsLocationsStreamsObjectsStartBackfillJobCall struct {
 // StartBackfillJob: Use this method to start a backfill job for the
 // specified stream object.
 //
-// - object: The name of the stream object resource to start a backfill
-//   job for.
+//   - object: The name of the stream object resource to start a backfill
+//     job for.
 func (r *ProjectsLocationsStreamsObjectsService) StartBackfillJob(object string, startbackfilljobrequest *StartBackfillJobRequest) *ProjectsLocationsStreamsObjectsStartBackfillJobCall {
 	c := &ProjectsLocationsStreamsObjectsStartBackfillJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.object = object
@@ -7692,8 +7692,8 @@ type ProjectsLocationsStreamsObjectsStopBackfillJobCall struct {
 // StopBackfillJob: Use this method to stop a backfill job for the
 // specified stream object.
 //
-// - object: The name of the stream object resource to stop the backfill
-//   job for.
+//   - object: The name of the stream object resource to stop the backfill
+//     job for.
 func (r *ProjectsLocationsStreamsObjectsService) StopBackfillJob(object string, stopbackfilljobrequest *StopBackfillJobRequest) *ProjectsLocationsStreamsObjectsStopBackfillJobCall {
 	c := &ProjectsLocationsStreamsObjectsStopBackfillJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.object = object

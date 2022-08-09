@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/shopping-content
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/content/v2sandbox"
-//   ...
-//   ctx := context.Background()
-//   contentService, err := content.NewService(ctx)
+//	import "google.golang.org/api/content/v2sandbox"
+//	...
+//	ctx := context.Background()
+//	contentService, err := content.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
+//	contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package content // import "google.golang.org/api/content/v2sandbox"
@@ -5759,8 +5759,9 @@ func (c *OrderreturnsListCall) MaxResults(maxResults int64) *OrderreturnsListCal
 // the specified order.
 //
 // Possible values:
-//   "returnCreationTimeAsc"
-//   "returnCreationTimeDesc"
+//
+//	"returnCreationTimeAsc"
+//	"returnCreationTimeDesc"
 func (c *OrderreturnsListCall) OrderBy(orderBy string) *OrderreturnsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7789,8 +7790,9 @@ func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
 // releases we'll support other sorting criteria.
 //
 // Possible values:
-//   "placedDate asc"
-//   "placedDate desc"
+//
+//	"placedDate asc"
+//	"placedDate desc"
 func (c *OrdersListCall) OrderBy(orderBy string) *OrdersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7826,17 +7828,18 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 // partiallyReturned, returned, and canceled.
 //
 // Possible values:
-//   "active"
-//   "canceled"
-//   "completed"
-//   "delivered"
-//   "inProgress"
-//   "partiallyDelivered"
-//   "partiallyReturned"
-//   "partiallyShipped"
-//   "pendingShipment"
-//   "returned"
-//   "shipped"
+//
+//	"active"
+//	"canceled"
+//	"completed"
+//	"delivered"
+//	"inProgress"
+//	"partiallyDelivered"
+//	"partiallyReturned"
+//	"partiallyShipped"
+//	"pendingShipment"
+//	"returned"
+//	"shipped"
 func (c *OrdersListCall) Statuses(statuses ...string) *OrdersListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c

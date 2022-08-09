@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/admob/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/admob/v1beta"
-//   ...
-//   ctx := context.Background()
-//   admobService, err := admob.NewService(ctx)
+//	import "google.golang.org/api/admob/v1beta"
+//	...
+//	ctx := context.Background()
+//	admobService, err := admob.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   admobService, err := admob.NewService(ctx, option.WithScopes(admob.AdmobReportScope))
+//	admobService, err := admob.NewService(ctx, option.WithScopes(admob.AdmobReportScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   admobService, err := admob.NewService(ctx, option.WithAPIKey("AIza..."))
+//	admobService, err := admob.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   admobService, err := admob.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	admobService, err := admob.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package admob // import "google.golang.org/api/admob/v1beta"
@@ -1884,8 +1884,8 @@ type AccountsGetCall struct {
 
 // Get: Gets information about the specified AdMob publisher account.
 //
-// - name: Resource name of the publisher account to retrieve. Example:
-//   accounts/pub-9876543210987654.
+//   - name: Resource name of the publisher account to retrieve. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2215,8 +2215,8 @@ type AccountsAdSourcesListCall struct {
 
 // List: List the ad sources.
 //
-// - parent: The parent which owns this collection of ad sources.
-//   Format: accounts/{publisher_id}.
+//   - parent: The parent which owns this collection of ad sources.
+//     Format: accounts/{publisher_id}.
 func (r *AccountsAdSourcesService) List(parent string) *AccountsAdSourcesListCall {
 	c := &AccountsAdSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2409,8 +2409,8 @@ type AccountsAdUnitsListCall struct {
 
 // List: List the ad units under the specified AdMob account.
 //
-// - parent: Resource name of the account to list ad units for. Example:
-//   accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to list ad units for. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
 	c := &AccountsAdUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2607,8 +2607,8 @@ type AccountsAppsListCall struct {
 
 // List: List the apps under the specified AdMob account.
 //
-// - parent: Resource name of the account to list apps for. Example:
-//   accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to list apps for. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
 	c := &AccountsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2807,8 +2807,8 @@ type AccountsMediationReportGenerateCall struct {
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
 //
-// - parent: Resource name of the account to generate the report for.
-//   Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to generate the report for.
+//     Example: accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2954,8 +2954,8 @@ type AccountsNetworkReportGenerateCall struct {
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
 //
-// - parent: Resource name of the account to generate the report for.
-//   Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to generate the report for.
+//     Example: accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

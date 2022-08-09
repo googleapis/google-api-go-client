@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/docs/how-to/budget-api-overview
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/billingbudgets/v1"
-//   ...
-//   ctx := context.Background()
-//   billingbudgetsService, err := billingbudgets.NewService(ctx)
+//	import "google.golang.org/api/billingbudgets/v1"
+//	...
+//	ctx := context.Background()
+//	billingbudgetsService, err := billingbudgets.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithScopes(billingbudgets.CloudPlatformScope))
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithScopes(billingbudgets.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	billingbudgetsService, err := billingbudgets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package billingbudgets // import "google.golang.org/api/billingbudgets/v1"
@@ -730,8 +730,8 @@ type BillingAccountsBudgetsCreateCall struct {
 // (https://cloud.google.com/billing/quotas) for more information on the
 // limits of the number of budgets you can create.
 //
-// - parent: The name of the billing account to create the budget in.
-//   Values are of the form `billingAccounts/{billingAccountId}`.
+//   - parent: The name of the billing account to create the budget in.
+//     Values are of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) Create(parent string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsCreateCall {
 	c := &BillingAccountsBudgetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -874,8 +874,8 @@ type BillingAccountsBudgetsDeleteCall struct {
 
 // Delete: Deletes a budget. Returns successfully if already deleted.
 //
-// - name: Name of the budget to delete. Values are of the form
-//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   - name: Name of the budget to delete. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Delete(name string) *BillingAccountsBudgetsDeleteCall {
 	c := &BillingAccountsBudgetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1012,8 +1012,8 @@ type BillingAccountsBudgetsGetCall struct {
 // from the API, you will not see these fields in the return value,
 // though they may have been set in the Cloud Console.
 //
-// - name: Name of budget to get. Values are of the form
-//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   - name: Name of budget to get. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Get(name string) *BillingAccountsBudgetsGetCall {
 	c := &BillingAccountsBudgetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1165,8 +1165,8 @@ type BillingAccountsBudgetsListCall struct {
 // these fields in the return value, though they may have been set in
 // the Cloud Console.
 //
-// - parent: Name of billing account to list budgets under. Values are
-//   of the form `billingAccounts/{billingAccountId}`.
+//   - parent: Name of billing account to list budgets under. Values are
+//     of the form `billingAccounts/{billingAccountId}`.
 func (r *BillingAccountsBudgetsService) List(parent string) *BillingAccountsBudgetsListCall {
 	c := &BillingAccountsBudgetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1366,9 +1366,9 @@ type BillingAccountsBudgetsPatchCall struct {
 // available on this API. Budget fields that are not exposed in this API
 // will not be changed by this method.
 //
-// - name: Output only. Resource name of the budget. The resource name
-//   implies the scope of a budget. Values are of the form
-//   `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
+//   - name: Output only. Resource name of the budget. The resource name
+//     implies the scope of a budget. Values are of the form
+//     `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 func (r *BillingAccountsBudgetsService) Patch(name string, googlecloudbillingbudgetsv1budget *GoogleCloudBillingBudgetsV1Budget) *BillingAccountsBudgetsPatchCall {
 	c := &BillingAccountsBudgetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

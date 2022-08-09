@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://ads.google.com/local-services-ads/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/localservices/v1"
-//   ...
-//   ctx := context.Background()
-//   localservicesService, err := localservices.NewService(ctx)
+//	import "google.golang.org/api/localservices/v1"
+//	...
+//	ctx := context.Background()
+//	localservicesService, err := localservices.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   localservicesService, err := localservices.NewService(ctx, option.WithAPIKey("AIza..."))
+//	localservicesService, err := localservices.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   localservicesService, err := localservices.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	localservicesService, err := localservices.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package localservices // import "google.golang.org/api/localservices/v1"
@@ -575,7 +575,9 @@ func (s *GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse) Marsh
 }
 
 // GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse:
-//  A page of the response received from the SearchDetailedLeadReports
+//
+//	A page of the response received from the SearchDetailedLeadReports
+//
 // method. A paginated response where more pages are available has
 // `next_page_token` set. This token can be used in a subsequent request
 // to retrieve the next request page.
@@ -1096,7 +1098,9 @@ func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, e
 // Do executes the "localservices.detailedLeadReports.search" call.
 // Exactly one of
 // *GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse
-//  or error will be non-nil. Any non-2xx status code is an error.
+//
+//	or error will be non-nil. Any non-2xx status code is an error.
+//
 // Response headers are in either
 // *GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse
 // .ServerResponse.Header or (if a response was returned at all) in

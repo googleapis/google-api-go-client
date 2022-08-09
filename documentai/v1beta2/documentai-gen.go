@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/document-ai/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/documentai/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   documentaiService, err := documentai.NewService(ctx)
+//	import "google.golang.org/api/documentai/v1beta2"
+//	...
+//	ctx := context.Background()
+//	documentaiService, err := documentai.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
+//	documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package documentai // import "google.golang.org/api/documentai/v1beta2"
@@ -7075,12 +7075,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -7485,9 +7485,9 @@ type ProjectsDocumentsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically.
 func (r *ProjectsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsDocumentsBatchProcessCall {
 	c := &ProjectsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7629,10 +7629,10 @@ type ProjectsDocumentsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically. This field is
-//   only populated when used in ProcessDocument method.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically. This field is
+//     only populated when used in ProcessDocument method.
 func (r *ProjectsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsDocumentsProcessCall {
 	c := &ProjectsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7776,9 +7776,9 @@ type ProjectsLocationsDocumentsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically.
 func (r *ProjectsLocationsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsLocationsDocumentsBatchProcessCall {
 	c := &ProjectsLocationsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7920,10 +7920,10 @@ type ProjectsLocationsDocumentsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically. This field is
-//   only populated when used in ProcessDocument method.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically. This field is
+//     only populated when used in ProcessDocument method.
 func (r *ProjectsLocationsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsLocationsDocumentsProcessCall {
 	c := &ProjectsLocationsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

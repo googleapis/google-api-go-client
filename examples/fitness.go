@@ -40,8 +40,9 @@ func millisToTime(t int64) time.Time {
 // fitnessMain is an example that demonstrates calling the Fitness API.
 //
 // Example usage:
-//   go build -o go-api-demo *.go
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" fitness
+//
+//	go build -o go-api-demo *.go
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" fitness
 func fitnessMain(client *http.Client, argv []string) {
 	if len(argv) != 0 {
 		fmt.Fprintln(os.Stderr, "Usage: fitness")

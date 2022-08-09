@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/docs/v1"
-//   ...
-//   ctx := context.Background()
-//   docsService, err := docs.NewService(ctx)
+//	import "google.golang.org/api/docs/v1"
+//	...
+//	ctx := context.Background()
+//	docsService, err := docs.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   docsService, err := docs.NewService(ctx, option.WithScopes(docs.DriveReadonlyScope))
+//	docsService, err := docs.NewService(ctx, option.WithScopes(docs.DriveReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   docsService, err := docs.NewService(ctx, option.WithAPIKey("AIza..."))
+//	docsService, err := docs.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   docsService, err := docs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	docsService, err := docs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package docs // import "google.golang.org/api/docs/v1"
@@ -7528,21 +7528,29 @@ func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 // DEFAULT_FOR_CURRENT_ACCESS is used.
 //
 // Possible values:
-//   "DEFAULT_FOR_CURRENT_ACCESS" - The SuggestionsViewMode applied to
+//
+//	"DEFAULT_FOR_CURRENT_ACCESS" - The SuggestionsViewMode applied to
+//
 // the returned document depends on the user's current access level. If
 // the user only has view access, PREVIEW_WITHOUT_SUGGESTIONS is
 // applied. Otherwise, SUGGESTIONS_INLINE is applied. This is the
 // default suggestions view mode.
-//   "SUGGESTIONS_INLINE" - The returned document has suggestions
+//
+//	"SUGGESTIONS_INLINE" - The returned document has suggestions
+//
 // inline. Suggested changes will be differentiated from base content
 // within the document. Requests to retrieve a document using this mode
 // will return a 403 error if the user does not have permission to view
 // suggested changes.
-//   "PREVIEW_SUGGESTIONS_ACCEPTED" - The returned document is a preview
+//
+//	"PREVIEW_SUGGESTIONS_ACCEPTED" - The returned document is a preview
+//
 // with all suggested changes accepted. Requests to retrieve a document
 // using this mode will return a 403 error if the user does not have
 // permission to view suggested changes.
-//   "PREVIEW_WITHOUT_SUGGESTIONS" - The returned document is a preview
+//
+//	"PREVIEW_WITHOUT_SUGGESTIONS" - The returned document is a preview
+//
 // with all suggested changes rejected if there are any suggestions in
 // the document.
 func (c *DocumentsGetCall) SuggestionsViewMode(suggestionsViewMode string) *DocumentsGetCall {

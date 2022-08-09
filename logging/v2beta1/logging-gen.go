@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/logging/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/logging/v2beta1"
-//   ...
-//   ctx := context.Background()
-//   loggingService, err := logging.NewService(ctx)
+//	import "google.golang.org/api/logging/v2beta1"
+//	...
+//	ctx := context.Background()
+//	loggingService, err := logging.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   loggingService, err := logging.NewService(ctx, option.WithScopes(logging.LoggingWriteScope))
+//	loggingService, err := logging.NewService(ctx, option.WithScopes(logging.LoggingWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
+//	loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package logging // import "google.golang.org/api/logging/v2beta1"
@@ -262,8 +262,10 @@ func (s *BucketOptions) MarshalJSON() ([]byte, error) {
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
 // instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
+//
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
 // }
 // The JSON representation for Empty is empty JSON object {}.
@@ -1546,9 +1548,9 @@ func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 // MonitoredResourceDescriptor for "gce_instance" has labels
 // "instance_id" and "zone":
 // { "type": "gce_instance",
-//   "labels": { "instance_id": "12345678901234",
-//               "zone": "us-central1-a" }}
 //
+//	"labels": { "instance_id": "12345678901234",
+//	            "zone": "us-central1-a" }}
 type MonitoredResource struct {
 	// Labels: Required. Values for all of the labels listed in the
 	// associated monitored resource descriptor. For example, Compute Engine

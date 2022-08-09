@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/remote-build-execution/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/remotebuildexecution/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
+//	import "google.golang.org/api/remotebuildexecution/v1alpha"
+//	...
+//	ctx := context.Background()
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package remotebuildexecution // import "google.golang.org/api/remotebuildexecution/v1alpha"
@@ -1979,7 +1979,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest:
-//  The request used for `CreateWorkerPool`.
+//
+//	The request used for `CreateWorkerPool`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest struct {
 	// Parent: Resource name of the instance in which to create the new
 	// worker pool. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
@@ -2049,7 +2050,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest:
-//  The request used for DeleteWorkerPool.
+//
+//	The request used for DeleteWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest struct {
 	// Name: Name of the worker pool to delete. Format:
 	// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
@@ -2512,7 +2514,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest:
-//  The request used for UpdateWorkerPool.
+//
+//	The request used for UpdateWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
 	// `FieldMask` definition, see
@@ -3431,8 +3434,8 @@ type ProjectsInstancesCreateCall struct {
 // While the long running operation is in progress, any call to
 // `GetInstance` returns an instance in state `CREATING`.
 //
-// - parent: Resource name of the project containing the instance.
-//   Format: `projects/[PROJECT_ID]`.
+//   - parent: Resource name of the project containing the instance.
+//     Format: `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateinstancerequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3576,8 +3579,8 @@ type ProjectsInstancesDeleteCall struct {
 // completion. Deleting an instance with worker pools in it will delete
 // these worker pools.
 //
-// - name: Name of the instance to delete. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   - name: Name of the instance to delete. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3710,8 +3713,8 @@ type ProjectsInstancesGetCall struct {
 
 // Get: Returns the specified instance.
 //
-// - name: Name of the instance to retrieve. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   - name: Name of the instance to retrieve. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3860,8 +3863,8 @@ type ProjectsInstancesListCall struct {
 
 // List: Lists instances in a project.
 //
-// - parent: Resource name of the project. Format:
-//   `projects/[PROJECT_ID]`.
+//   - parent: Resource name of the project. Format:
+//     `projects/[PROJECT_ID]`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4012,10 +4015,10 @@ type ProjectsInstancesPatchCall struct {
 // operation which contains the updated instance in the response on
 // completion.
 //
-// - name: Output only. Instance resource name formatted as:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
-//   populated when creating an instance since it is provided in the
-//   `instance_id` field.
+//   - name: Output only. Instance resource name formatted as:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be
+//     populated when creating an instance since it is provided in the
+//     `instance_id` field.
 func (r *ProjectsInstancesService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphainstance *GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4205,9 +4208,9 @@ type ProjectsInstancesWorkerpoolsCreateCall struct {
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `CREATING`.
 //
-// - parent: Resource name of the instance in which to create the new
-//   worker pool. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   - parent: Resource name of the instance in which to create the new
+//     worker pool. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) Create(parent string, googledevtoolsremotebuildexecutionadminv1alphacreateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsCreateCall {
 	c := &ProjectsInstancesWorkerpoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4351,9 +4354,9 @@ type ProjectsInstancesWorkerpoolsDeleteCall struct {
 // completion. While the long running operation is in progress, any call
 // to `GetWorkerPool` returns a worker pool in state `DELETING`.
 //
-// - name: Name of the worker pool to delete. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
-//   `.
+//   - name: Name of the worker pool to delete. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//     `.
 func (r *ProjectsInstancesWorkerpoolsService) Delete(name string) *ProjectsInstancesWorkerpoolsDeleteCall {
 	c := &ProjectsInstancesWorkerpoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4486,9 +4489,9 @@ type ProjectsInstancesWorkerpoolsGetCall struct {
 
 // Get: Returns the specified worker pool.
 //
-// - name: Name of the worker pool to retrieve. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
-//   `.
+//   - name: Name of the worker pool to retrieve. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//     `.
 func (r *ProjectsInstancesWorkerpoolsService) Get(name string) *ProjectsInstancesWorkerpoolsGetCall {
 	c := &ProjectsInstancesWorkerpoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4637,8 +4640,8 @@ type ProjectsInstancesWorkerpoolsListCall struct {
 
 // List: Lists worker pools in an instance.
 //
-// - parent: Resource name of the instance. Format:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+//   - parent: Resource name of the instance. Format:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInstancesWorkerpoolsListCall {
 	c := &ProjectsInstancesWorkerpoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4731,7 +4734,9 @@ func (c *ProjectsInstancesWorkerpoolsListCall) doRequest(alt string) (*http.Resp
 // Do executes the "remotebuildexecution.projects.instances.workerpools.list" call.
 // Exactly one of
 // *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse
-//  or error will be non-nil. Any non-2xx status code is an error.
+//
+//	or error will be non-nil. Any non-2xx status code is an error.
+//
 // Response headers are in either
 // *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse
 // .ServerResponse.Header or (if a response was returned at all) in
@@ -4818,10 +4823,10 @@ type ProjectsInstancesWorkerpoolsPatchCall struct {
 // progress, any call to `GetWorkerPool` returns a worker pool in state
 // `UPDATING`.
 //
-// - name: WorkerPool resource name formatted as:
-//   `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
-//   `. name should not be populated when creating a worker pool since
-//   it is provided in the `poolId` field.
+//   - name: WorkerPool resource name formatted as:
+//     `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]
+//     `. name should not be populated when creating a worker pool since
+//     it is provided in the `poolId` field.
 func (r *ProjectsInstancesWorkerpoolsService) Patch(name string, googledevtoolsremotebuildexecutionadminv1alphaupdateworkerpoolrequest *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest) *ProjectsInstancesWorkerpoolsPatchCall {
 	c := &ProjectsInstancesWorkerpoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

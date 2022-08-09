@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/functions
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudfunctions/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx)
+//	import "google.golang.org/api/cloudfunctions/v1beta2"
+//	...
+//	ctx := context.Background()
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudfunctions // import "google.golang.org/api/cloudfunctions/v1beta2"
@@ -2339,10 +2339,14 @@ type ProjectsLocationsFunctionsGenerateUploadUrlCall struct {
 // * Source file size should not exceed 100MB limit.
 // * No credentials should be attached - the signed URLs provide access
 // to the
-//   target bucket using internal service identity; if credentials were
-//   attached, the identity from the credentials would be used, but
+//
+//	target bucket using internal service identity; if credentials were
+//	attached, the identity from the credentials would be used, but
+//
 // that
-//   identity does not have permissions to upload files to the
+//
+//	identity does not have permissions to upload files to the
+//
 // URL.
 //
 // When making a HTTP PUT request, these two headers need to be

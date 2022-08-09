@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/cloud-test-lab/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/testing/v1"
-//   ...
-//   ctx := context.Background()
-//   testingService, err := testing.NewService(ctx)
+//	import "google.golang.org/api/testing/v1"
+//	...
+//	ctx := context.Background()
+//	testingService, err := testing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
+//	testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
+//	testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package testing // import "google.golang.org/api/testing/v1"
@@ -3705,9 +3705,9 @@ type ProjectsTestMatricesGetCall struct {
 // not authorized to read project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the Test Matrix does not exist
 //
-// - projectId: Cloud project that owns the test matrix.
-// - testMatrixId: Unique test matrix id which was assigned by the
-//   service.
+//   - projectId: Cloud project that owns the test matrix.
+//   - testMatrixId: Unique test matrix id which was assigned by the
+//     service.
 func (r *ProjectsTestMatricesService) Get(projectId string, testMatrixId string) *ProjectsTestMatricesGetCall {
 	c := &ProjectsTestMatricesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

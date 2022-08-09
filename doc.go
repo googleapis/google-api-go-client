@@ -9,14 +9,12 @@
 // Within api there exist numerous clients which connect to Google APIs,
 // and various utility packages.
 //
-//
-// Client Options
+// # Client Options
 //
 // All clients in sub-packages are configurable via client options. These
 // options are described here: https://godoc.org/google.golang.org/api/option.
 //
-//
-// Authentication and Authorization
+// # Authentication and Authorization
 //
 // All the clients in sub-packages support authentication via Google
 // Application Default Credentials (see
@@ -24,8 +22,7 @@
 // JSON key file for a Service Account. See the authentication examples in
 // https://godoc.org/google.golang.org/api/transport for more details.
 //
-//
-// Versioning and Stability
+// # Versioning and Stability
 //
 // Due to the auto-generated nature of this collection of libraries, complete
 // APIs or specific versions can appear or go away without notice. As a result,
@@ -39,8 +36,7 @@
 // Note that versioning and stability is strictly not communicated through Go
 // modules. Go modules are used only for dependency management.
 //
-//
-// Integers
+// # Integers
 //
 // Many parameters are specified using ints. However, underlying APIs might
 // operate on a finer granularity, expecting int64, int32, uint64, or uint32,
@@ -52,8 +48,7 @@
 // discovery doc. A global catalogue pointing to the discovery doc of APIs can
 // be found at https://www.googleapis.com/discovery/v1/apis.
 //
-//
-// ForceSendFields
+// # ForceSendFields
 //
 // This field can be found on all Request/Response structs in the generated
 // clients. All of these types have the JSON `omitempty` field tag present on
@@ -63,15 +58,15 @@
 // feature by adding the field name to the `ForceSendFields` slice. See docs on
 // any struct for more details.
 //
-//
-// Inspecting errors
+// # Inspecting errors
 //
 // All of the errors returned by a client's `Do` method may be cast to a
 // `*googleapis.Error`. This can be useful for getting more information on an
 // error while debugging.
-//  if _, err := svc.FooCall().Do(); err != nil {
-//      if gErr, ok := err.(*googleapi.Error); ok {
-//          fmt.Println("Status code: %v", gErr.Code)
-//      }
-//  }
+//
+//	if _, err := svc.FooCall().Do(); err != nil {
+//	    if gErr, ok := err.(*googleapi.Error); ok {
+//	        fmt.Println("Status code: %v", gErr.Code)
+//	    }
+//	}
 package api

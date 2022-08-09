@@ -8,35 +8,35 @@
 //
 // For product documentation, see: http://developers.google.com/cloud-dns
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dns/v2beta1"
-//   ...
-//   ctx := context.Background()
-//   dnsService, err := dns.NewService(ctx)
+//	import "google.golang.org/api/dns/v2beta1"
+//	...
+//	ctx := context.Background()
+//	dnsService, err := dns.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   dnsService, err := dns.NewService(ctx, option.WithScopes(dns.NdevClouddnsReadwriteScope))
+//	dnsService, err := dns.NewService(ctx, option.WithScopes(dns.NdevClouddnsReadwriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   dnsService, err := dns.NewService(ctx, option.WithAPIKey("AIza..."))
+//	dnsService, err := dns.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   dnsService, err := dns.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	dnsService, err := dns.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package dns // import "google.golang.org/api/dns/v2beta1"
@@ -2104,7 +2104,8 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 // only supported value is change sequence.
 //
 // Possible values:
-//   "CHANGE_SEQUENCE" (default)
+//
+//	"CHANGE_SEQUENCE" (default)
 func (c *ChangesListCall) SortBy(sortBy string) *ChangesListCall {
 	c.urlParams_.Set("sortBy", sortBy)
 	return c
@@ -2934,8 +2935,9 @@ func (c *ManagedZoneOperationsListCall) PageToken(pageToken string) *ManagedZone
 // only supported values are START_TIME and ID.
 //
 // Possible values:
-//   "START_TIME" (default)
-//   "ID"
+//
+//	"START_TIME" (default)
+//	"ID"
 func (c *ManagedZoneOperationsListCall) SortBy(sortBy string) *ManagedZoneOperationsListCall {
 	c.urlParams_.Set("sortBy", sortBy)
 	return c

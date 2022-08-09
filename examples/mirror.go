@@ -28,8 +28,9 @@ func init() {
 // mirrorMain is an example that demonstrates calling the Mirror API.
 //
 // Example usage:
-//   go build -o go-api-demo *.go
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" mirror
+//
+//	go build -o go-api-demo *.go
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" mirror
 func mirrorMain(client *http.Client, argv []string) {
 	if len(argv) != 0 {
 		fmt.Fprintln(os.Stderr, "Usage: mirror")

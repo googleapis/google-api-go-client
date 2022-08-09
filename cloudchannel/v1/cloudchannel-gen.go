@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/channel
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudchannel/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudchannelService, err := cloudchannel.NewService(ctx)
+//	import "google.golang.org/api/cloudchannel/v1"
+//	...
+//	ctx := context.Background()
+//	cloudchannelService, err := cloudchannel.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudchannelService, err := cloudchannel.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudchannelService, err := cloudchannel.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudchannel // import "google.golang.org/api/cloudchannel/v1"
@@ -4863,8 +4863,8 @@ type AccountsCheckCloudIdentityAccountsExistCall struct {
 // returns if no CloudIdentityCustomerAccount resources match the
 // domain.
 //
-// - parent: The reseller account's resource name. Parent uses the
-//   format: accounts/{account_id}.
+//   - parent: The reseller account's resource name. Parent uses the
+//     format: accounts/{account_id}.
 func (r *AccountsService) CheckCloudIdentityAccountsExist(parent string, googlecloudchannelv1checkcloudidentityaccountsexistrequest *GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest) *AccountsCheckCloudIdentityAccountsExistCall {
 	c := &AccountsCheckCloudIdentityAccountsExistCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5402,8 +5402,8 @@ type AccountsListTransferableSkusCall struct {
 // Required request parameters are missing or invalid. Return value: A
 // list of the customer's TransferableSku.
 //
-// - parent: The reseller account's resource name. Parent uses the
-//   format: accounts/{account_id}.
+//   - parent: The reseller account's resource name. Parent uses the
+//     format: accounts/{account_id}.
 func (r *AccountsService) ListTransferableSkus(parent string, googlecloudchannelv1listtransferableskusrequest *GoogleCloudChannelV1ListTransferableSkusRequest) *AccountsListTransferableSkusCall {
 	c := &AccountsListTransferableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5894,9 +5894,9 @@ type AccountsChannelPartnerLinksCreateCall struct {
 // backend. Contact Cloud Channel support. Return value: The new
 // ChannelPartnerLink resource.
 //
-// - parent: Create a channel partner link for the provided reseller
-//   account's resource name. Parent uses the format:
-//   accounts/{account_id}.
+//   - parent: Create a channel partner link for the provided reseller
+//     account's resource name. Parent uses the format:
+//     accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) Create(parent string, googlecloudchannelv1channelpartnerlink *GoogleCloudChannelV1ChannelPartnerLink) *AccountsChannelPartnerLinksCreateCall {
 	c := &AccountsChannelPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6046,10 +6046,10 @@ type AccountsChannelPartnerLinksGetCall struct {
 // invalid channel partner link name. Return value: The
 // ChannelPartnerLink resource.
 //
-// - name: The resource name of the channel partner link to retrieve.
-//   Name uses the format:
-//   accounts/{account_id}/channelPartnerLinks/{id} where {id} is the
-//   Cloud Identity ID of the partner.
+//   - name: The resource name of the channel partner link to retrieve.
+//     Name uses the format:
+//     accounts/{account_id}/channelPartnerLinks/{id} where {id} is the
+//     Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPartnerLinksGetCall {
 	c := &AccountsChannelPartnerLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6060,11 +6060,16 @@ func (r *AccountsChannelPartnerLinksService) Get(name string) *AccountsChannelPa
 // ChannelPartnerLink will display.
 //
 // Possible values:
-//   "UNSPECIFIED" - The default / unset value. The API will default to
+//
+//	"UNSPECIFIED" - The default / unset value. The API will default to
+//
 // the BASIC view.
-//   "BASIC" - Includes all fields except the
+//
+//	"BASIC" - Includes all fields except the
+//
 // ChannelPartnerLink.channel_partner_cloud_identity_info.
-//   "FULL" - Includes all fields.
+//
+//	"FULL" - Includes all fields.
 func (c *AccountsChannelPartnerLinksGetCall) View(view string) *AccountsChannelPartnerLinksGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6231,9 +6236,9 @@ type AccountsChannelPartnerLinksListCall struct {
 // Return value: The list of the distributor account's
 // ChannelPartnerLink resources.
 //
-// - parent: The resource name of the reseller account for listing
-//   channel partner links. Parent uses the format:
-//   accounts/{account_id}.
+//   - parent: The resource name of the reseller account for listing
+//     channel partner links. Parent uses the format:
+//     accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksService) List(parent string) *AccountsChannelPartnerLinksListCall {
 	c := &AccountsChannelPartnerLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6262,11 +6267,16 @@ func (c *AccountsChannelPartnerLinksListCall) PageToken(pageToken string) *Accou
 // ChannelPartnerLink will display.
 //
 // Possible values:
-//   "UNSPECIFIED" - The default / unset value. The API will default to
+//
+//	"UNSPECIFIED" - The default / unset value. The API will default to
+//
 // the BASIC view.
-//   "BASIC" - Includes all fields except the
+//
+//	"BASIC" - Includes all fields except the
+//
 // ChannelPartnerLink.channel_partner_cloud_identity_info.
-//   "FULL" - Includes all fields.
+//
+//	"FULL" - Includes all fields.
 func (c *AccountsChannelPartnerLinksListCall) View(view string) *AccountsChannelPartnerLinksListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6473,9 +6483,9 @@ type AccountsChannelPartnerLinksPatchCall struct {
 // Channel support. Return value: The updated ChannelPartnerLink
 // resource.
 //
-// - name: The resource name of the channel partner link to cancel. Name
-//   uses the format: accounts/{account_id}/channelPartnerLinks/{id}
-//   where {id} is the Cloud Identity ID of the partner.
+//   - name: The resource name of the channel partner link to cancel. Name
+//     uses the format: accounts/{account_id}/channelPartnerLinks/{id}
+//     where {id} is the Cloud Identity ID of the partner.
 func (r *AccountsChannelPartnerLinksService) Patch(name string, googlecloudchannelv1updatechannelpartnerlinkrequest *GoogleCloudChannelV1UpdateChannelPartnerLinkRequest) *AccountsChannelPartnerLinksPatchCall {
 	c := &AccountsChannelPartnerLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6643,9 +6653,9 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall struct 
 // Cloud Channel support. Return Value: If successful, the updated
 // ChannelPartnerRepricingConfig resource, otherwise returns an error.
 //
-// - parent: The resource name of the ChannelPartner that will receive
-//   the repricing config. Parent uses the format:
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+//   - parent: The resource name of the ChannelPartner that will receive
+//     the repricing config. Parent uses the format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Create(parent string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6796,8 +6806,8 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall struct 
 // in the past. * NOT_FOUND: No ChannelPartnerRepricingConfig found for
 // the name in the request.
 //
-// - name: The resource name of the channel partner repricing config
-//   rule to delete.
+//   - name: The resource name of the channel partner repricing config
+//     rule to delete.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Delete(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6937,10 +6947,10 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall struct {
 // contact Cloud Channel support. Return Value: If successful, the
 // ChannelPartnerRepricingConfig resource, otherwise returns an error.
 //
-// - name: The resource name of the ChannelPartnerRepricingConfig
-//   Format:
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
-//   elPartnerRepricingConfigs/{id}.
+//   - name: The resource name of the ChannelPartnerRepricingConfig
+//     Format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
+//     elPartnerRepricingConfigs/{id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Get(name string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7100,11 +7110,11 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall struct {
 // ChannelPartnerRepricingConfig.update_time If unsuccessful, returns an
 // error.
 //
-// - parent: The resource name of the account's ChannelPartnerLink.
-//   Parent uses the format:
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
-//   Supports accounts/{account_id}/channelPartnerLinks/- to retrieve
-//   configs for all channel partners.
+//   - parent: The resource name of the account's ChannelPartnerLink.
+//     Parent uses the format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+//     Supports accounts/{account_id}/channelPartnerLinks/- to retrieve
+//     configs for all channel partners.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) List(parent string) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7338,10 +7348,10 @@ type AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall struct {
 // If successful, the updated ChannelPartnerRepricingConfig resource,
 // otherwise returns an error.
 //
-// - name: Output only. Resource name of the
-//   ChannelPartnerRepricingConfig. Format:
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
-//   elPartnerRepricingConfigs/{id}.
+//   - name: Output only. Resource name of the
+//     ChannelPartnerRepricingConfig. Format:
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}/chann
+//     elPartnerRepricingConfigs/{id}.
 func (r *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsService) Patch(name string, googlecloudchannelv1channelpartnerrepricingconfig *GoogleCloudChannelV1ChannelPartnerRepricingConfig) *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall {
 	c := &AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7491,8 +7501,8 @@ type AccountsChannelPartnerLinksCustomersCreateCall struct {
 // the primary email domain. Return value: The newly created Customer
 // resource.
 //
-// - parent: The resource name of reseller account in which to create
-//   the customer. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of reseller account in which to create
+//     the customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersCreateCall {
 	c := &AccountsChannelPartnerLinksCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7776,8 +7786,8 @@ type AccountsChannelPartnerLinksCustomersGetCall struct {
 // * NOT_FOUND: The customer resource doesn't exist. Usually the result
 // of an invalid name parameter. Return value: The Customer resource.
 //
-// - name: The resource name of the customer to retrieve. Name uses the
-//   format: accounts/{account_id}/customers/{customer_id}.
+//   - name: The resource name of the customer to retrieve. Name uses the
+//     format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Get(name string) *AccountsChannelPartnerLinksCustomersGetCall {
 	c := &AccountsChannelPartnerLinksCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7933,9 +7943,9 @@ type AccountsChannelPartnerLinksCustomersImportCall struct {
 // and has conflicting critical fields. Requires an overwrite. Return
 // value: The Customer.
 //
-// - parent: The resource name of the reseller's account. Parent takes
-//   the format: accounts/{account_id} or
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+//   - parent: The resource name of the reseller's account. Parent takes
+//     the format: accounts/{account_id} or
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Import(parent string, googlecloudchannelv1importcustomerrequest *GoogleCloudChannelV1ImportCustomerRequest) *AccountsChannelPartnerLinksCustomersImportCall {
 	c := &AccountsChannelPartnerLinksCustomersImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8081,8 +8091,8 @@ type AccountsChannelPartnerLinksCustomersListCall struct {
 // parameters are missing or invalid. Return value: List of Customers,
 // or an empty list if there are no customers.
 //
-// - parent: The resource name of the reseller account to list customers
-//   from. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account to list customers
+//     from. Parent uses the format: accounts/{account_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) List(parent string) *AccountsChannelPartnerLinksCustomersListCall {
 	c := &AccountsChannelPartnerLinksCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8299,8 +8309,8 @@ type AccountsChannelPartnerLinksCustomersPatchCall struct {
 // missing or invalid. * NOT_FOUND: No Customer resource found for the
 // name in the request. Return value: The updated Customer resource.
 //
-// - name: Output only. Resource name of the customer. Format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - name: Output only. Resource name of the customer. Format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsChannelPartnerLinksCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsChannelPartnerLinksCustomersPatchCall {
 	c := &AccountsChannelPartnerLinksCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8461,8 +8471,8 @@ type AccountsCustomersCreateCall struct {
 // the primary email domain. Return value: The newly created Customer
 // resource.
 //
-// - parent: The resource name of reseller account in which to create
-//   the customer. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of reseller account in which to create
+//     the customer. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) Create(parent string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersCreateCall {
 	c := &AccountsCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8746,8 +8756,8 @@ type AccountsCustomersGetCall struct {
 // * NOT_FOUND: The customer resource doesn't exist. Usually the result
 // of an invalid name parameter. Return value: The Customer resource.
 //
-// - name: The resource name of the customer to retrieve. Name uses the
-//   format: accounts/{account_id}/customers/{customer_id}.
+//   - name: The resource name of the customer to retrieve. Name uses the
+//     format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Get(name string) *AccountsCustomersGetCall {
 	c := &AccountsCustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8903,9 +8913,9 @@ type AccountsCustomersImportCall struct {
 // and has conflicting critical fields. Requires an overwrite. Return
 // value: The Customer.
 //
-// - parent: The resource name of the reseller's account. Parent takes
-//   the format: accounts/{account_id} or
-//   accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
+//   - parent: The resource name of the reseller's account. Parent takes
+//     the format: accounts/{account_id} or
+//     accounts/{account_id}/channelPartnerLinks/{channel_partner_id}.
 func (r *AccountsCustomersService) Import(parent string, googlecloudchannelv1importcustomerrequest *GoogleCloudChannelV1ImportCustomerRequest) *AccountsCustomersImportCall {
 	c := &AccountsCustomersImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9051,8 +9061,8 @@ type AccountsCustomersListCall struct {
 // parameters are missing or invalid. Return value: List of Customers,
 // or an empty list if there are no customers.
 //
-// - parent: The resource name of the reseller account to list customers
-//   from. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account to list customers
+//     from. Parent uses the format: accounts/{account_id}.
 func (r *AccountsCustomersService) List(parent string) *AccountsCustomersListCall {
 	c := &AccountsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9268,8 +9278,8 @@ type AccountsCustomersListPurchasableOffersCall struct {
 // doesn't belong to the reseller * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid.
 //
-// - customer: The resource name of the customer to list Offers for.
-//   Format: accounts/{account_id}/customers/{customer_id}.
+//   - customer: The resource name of the customer to list Offers for.
+//     Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableOffers(customer string) *AccountsCustomersListPurchasableOffersCall {
 	c := &AccountsCustomersListPurchasableOffersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -9525,8 +9535,8 @@ type AccountsCustomersListPurchasableSkusCall struct {
 // customer doesn't belong to the reseller. * INVALID_ARGUMENT: Required
 // request parameters are missing or invalid.
 //
-// - customer: The resource name of the customer to list SKUs for.
-//   Format: accounts/{account_id}/customers/{customer_id}.
+//   - customer: The resource name of the customer to list SKUs for.
+//     Format: accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *AccountsCustomersListPurchasableSkusCall {
 	c := &AccountsCustomersListPurchasableSkusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -9538,9 +9548,10 @@ func (r *AccountsCustomersService) ListPurchasableSkus(customer string) *Account
 // entitlement.
 //
 // Possible values:
-//   "CHANGE_TYPE_UNSPECIFIED" - Not used.
-//   "UPGRADE" - SKU is an upgrade on the current entitlement.
-//   "DOWNGRADE" - SKU is a downgrade on the current entitlement.
+//
+//	"CHANGE_TYPE_UNSPECIFIED" - Not used.
+//	"UPGRADE" - SKU is an upgrade on the current entitlement.
+//	"DOWNGRADE" - SKU is a downgrade on the current entitlement.
 func (c *AccountsCustomersListPurchasableSkusCall) ChangeOfferPurchaseChangeType(changeOfferPurchaseChangeType string) *AccountsCustomersListPurchasableSkusCall {
 	c.urlParams_.Set("changeOfferPurchase.changeType", changeOfferPurchaseChangeType)
 	return c
@@ -9656,7 +9667,9 @@ func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudChannelV1ListPurchasableSkusResponse.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -9798,8 +9811,8 @@ type AccountsCustomersPatchCall struct {
 // missing or invalid. * NOT_FOUND: No Customer resource found for the
 // name in the request. Return value: The updated Customer resource.
 //
-// - name: Output only. Resource name of the customer. Format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - name: Output only. Resource name of the customer. Format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) Patch(name string, googlecloudchannelv1customer *GoogleCloudChannelV1Customer) *AccountsCustomersPatchCall {
 	c := &AccountsCustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9967,8 +9980,8 @@ type AccountsCustomersProvisionCloudIdentityCall struct {
 // CloudChannelOperationsService. The Operation metadata contains an
 // instance of OperationMetadata.
 //
-// - customer: Resource name of the customer. Format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - customer: Resource name of the customer. Format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) ProvisionCloudIdentity(customer string, googlecloudchannelv1provisioncloudidentityrequest *GoogleCloudChannelV1ProvisionCloudIdentityRequest) *AccountsCustomersProvisionCloudIdentityCall {
 	c := &AccountsCustomersProvisionCloudIdentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -10128,9 +10141,9 @@ type AccountsCustomersTransferEntitlementsCall struct {
 // call the GetOperation method of CloudChannelOperationsService. The
 // Operation metadata will contain an instance of OperationMetadata.
 //
-// - parent: The resource name of the reseller's customer account that
-//   will receive transferred entitlements. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - parent: The resource name of the reseller's customer account that
+//     will receive transferred entitlements. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlements(parent string, googlecloudchannelv1transferentitlementsrequest *GoogleCloudChannelV1TransferEntitlementsRequest) *AccountsCustomersTransferEntitlementsCall {
 	c := &AccountsCustomersTransferEntitlementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10291,9 +10304,9 @@ type AccountsCustomersTransferEntitlementsToGoogleCall struct {
 // will contain google.protobuf.Empty on success. The Operation metadata
 // will contain an instance of OperationMetadata.
 //
-// - parent: The resource name of the reseller's customer account where
-//   the entitlements transfer from. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - parent: The resource name of the reseller's customer account where
+//     the entitlements transfer from. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersService) TransferEntitlementsToGoogle(parent string, googlecloudchannelv1transferentitlementstogooglerequest *GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) *AccountsCustomersTransferEntitlementsToGoogleCall {
 	c := &AccountsCustomersTransferEntitlementsToGoogleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10460,9 +10473,9 @@ type AccountsCustomersCustomerRepricingConfigsCreateCall struct {
 // Cloud Channel support. Return Value: If successful, the updated
 // CustomerRepricingConfig resource, otherwise returns an error.
 //
-// - parent: The resource name of the customer that will receive this
-//   repricing config. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - parent: The resource name of the customer that will receive this
+//     repricing config. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersCustomerRepricingConfigsService) Create(parent string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsCreateCall {
 	c := &AccountsCustomersCustomerRepricingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10613,10 +10626,10 @@ type AccountsCustomersCustomerRepricingConfigsDeleteCall struct {
 // past. * NOT_FOUND: No CustomerRepricingConfig found for the name in
 // the request.
 //
-// - name: The resource name of the customer repricing config rule to
-//   delete. Format:
-//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//   gs/{id}.
+//   - name: The resource name of the customer repricing config rule to
+//     delete. Format:
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//     gs/{id}.
 func (r *AccountsCustomersCustomerRepricingConfigsService) Delete(name string) *AccountsCustomersCustomerRepricingConfigsDeleteCall {
 	c := &AccountsCustomersCustomerRepricingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10756,9 +10769,9 @@ type AccountsCustomersCustomerRepricingConfigsGetCall struct {
 // If successful, the CustomerRepricingConfig resource, otherwise
 // returns an error.
 //
-// - name: The resource name of the CustomerRepricingConfig. Format:
-//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//   gs/{id}.
+//   - name: The resource name of the CustomerRepricingConfig. Format:
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//     gs/{id}.
 func (r *AccountsCustomersCustomerRepricingConfigsService) Get(name string) *AccountsCustomersCustomerRepricingConfigsGetCall {
 	c := &AccountsCustomersCustomerRepricingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10918,10 +10931,10 @@ type AccountsCustomersCustomerRepricingConfigsListCall struct {
 // CustomerRepricingConfig.update_time If unsuccessful, returns an
 // error.
 //
-// - parent: The resource name of the customer. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}. Supports
-//   accounts/{account_id}/customers/- to retrieve configs for all
-//   customers.
+//   - parent: The resource name of the customer. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}. Supports
+//     accounts/{account_id}/customers/- to retrieve configs for all
+//     customers.
 func (r *AccountsCustomersCustomerRepricingConfigsService) List(parent string) *AccountsCustomersCustomerRepricingConfigsListCall {
 	c := &AccountsCustomersCustomerRepricingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11154,10 +11167,10 @@ type AccountsCustomersCustomerRepricingConfigsPatchCall struct {
 // If successful, the updated CustomerRepricingConfig resource,
 // otherwise returns an error.
 //
-// - name: Output only. Resource name of the CustomerRepricingConfig.
-//   Format:
-//   accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
-//   gs/{id}.
+//   - name: Output only. Resource name of the CustomerRepricingConfig.
+//     Format:
+//     accounts/{account_id}/customers/{customer_id}/customerRepricingConfi
+//     gs/{id}.
 func (r *AccountsCustomersCustomerRepricingConfigsService) Patch(name string, googlecloudchannelv1customerrepricingconfig *GoogleCloudChannelV1CustomerRepricingConfig) *AccountsCustomersCustomerRepricingConfigsPatchCall {
 	c := &AccountsCustomersCustomerRepricingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11318,10 +11331,10 @@ type AccountsCustomersEntitlementsActivateCall struct {
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
 //
-// - name: The resource name of the entitlement to activate. Name uses
-//   the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The resource name of the entitlement to activate. Name uses
+//     the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) Activate(name string, googlecloudchannelv1activateentitlementrequest *GoogleCloudChannelV1ActivateEntitlementRequest) *AccountsCustomersEntitlementsActivateCall {
 	c := &AccountsCustomersEntitlementsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11480,10 +11493,10 @@ type AccountsCustomersEntitlementsCancelCall struct {
 // google.protobuf.Empty on success. The Operation metadata will contain
 // an instance of OperationMetadata.
 //
-// - name: The resource name of the entitlement to cancel. Name uses the
-//   format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The resource name of the entitlement to cancel. Name uses the
+//     format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) Cancel(name string, googlecloudchannelv1cancelentitlementrequest *GoogleCloudChannelV1CancelEntitlementRequest) *AccountsCustomersEntitlementsCancelCall {
 	c := &AccountsCustomersEntitlementsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11637,10 +11650,10 @@ type AccountsCustomersEntitlementsChangeOfferCall struct {
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
 //
-// - name: The resource name of the entitlement to update. Name uses the
-//   format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The resource name of the entitlement to update. Name uses the
+//     format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeOffer(name string, googlecloudchannelv1changeofferrequest *GoogleCloudChannelV1ChangeOfferRequest) *AccountsCustomersEntitlementsChangeOfferCall {
 	c := &AccountsCustomersEntitlementsChangeOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11796,9 +11809,9 @@ type AccountsCustomersEntitlementsChangeParametersCall struct {
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
 //
-// - name: The name of the entitlement to update. Name uses the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The name of the entitlement to update. Name uses the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeParameters(name string, googlecloudchannelv1changeparametersrequest *GoogleCloudChannelV1ChangeParametersRequest) *AccountsCustomersEntitlementsChangeParametersCall {
 	c := &AccountsCustomersEntitlementsChangeParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11954,9 +11967,9 @@ type AccountsCustomersEntitlementsChangeRenewalSettingsCall struct {
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
 //
-// - name: The name of the entitlement to update. Name uses the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The name of the entitlement to update. Name uses the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) ChangeRenewalSettings(name string, googlecloudchannelv1changerenewalsettingsrequest *GoogleCloudChannelV1ChangeRenewalSettingsRequest) *AccountsCustomersEntitlementsChangeRenewalSettingsCall {
 	c := &AccountsCustomersEntitlementsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12121,9 +12134,9 @@ type AccountsCustomersEntitlementsCreateCall struct {
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
 //
-// - parent: The resource name of the reseller's customer account in
-//   which to create the entitlement. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - parent: The resource name of the reseller's customer account in
+//     which to create the entitlement. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) Create(parent string, googlecloudchannelv1createentitlementrequest *GoogleCloudChannelV1CreateEntitlementRequest) *AccountsCustomersEntitlementsCreateCall {
 	c := &AccountsCustomersEntitlementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12269,10 +12282,10 @@ type AccountsCustomersEntitlementsGetCall struct {
 // or invalid. * NOT_FOUND: The customer entitlement was not found.
 // Return value: The requested Entitlement resource.
 //
-// - name: The resource name of the entitlement to retrieve. Name uses
-//   the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The resource name of the entitlement to retrieve. Name uses
+//     the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) Get(name string) *AccountsCustomersEntitlementsGetCall {
 	c := &AccountsCustomersEntitlementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12421,9 +12434,9 @@ type AccountsCustomersEntitlementsListCall struct {
 // reseller. * INVALID_ARGUMENT: Required request parameters are missing
 // or invalid. Return value: A list of the customer's Entitlements.
 //
-// - parent: The resource name of the reseller's customer account to
-//   list entitlements for. Parent uses the format:
-//   accounts/{account_id}/customers/{customer_id}.
+//   - parent: The resource name of the reseller's customer account to
+//     list entitlements for. Parent uses the format:
+//     accounts/{account_id}/customers/{customer_id}.
 func (r *AccountsCustomersEntitlementsService) List(parent string) *AccountsCustomersEntitlementsListCall {
 	c := &AccountsCustomersEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12625,10 +12638,10 @@ type AccountsCustomersEntitlementsLookupOfferCall struct {
 // or invalid. * NOT_FOUND: Entitlement or offer was not found. Return
 // value: The Offer resource.
 //
-// - entitlement: The resource name of the entitlement to retrieve the
-//   Offer. Entitlement uses the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - entitlement: The resource name of the entitlement to retrieve the
+//     Offer. Entitlement uses the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) LookupOffer(entitlement string) *AccountsCustomersEntitlementsLookupOfferCall {
 	c := &AccountsCustomersEntitlementsLookupOfferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entitlement = entitlement
@@ -12788,10 +12801,10 @@ type AccountsCustomersEntitlementsStartPaidServiceCall struct {
 // CloudChannelOperationsService. The Operation metadata will contain an
 // instance of OperationMetadata.
 //
-// - name: The name of the entitlement to start a paid service for. Name
-//   uses the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The name of the entitlement to start a paid service for. Name
+//     uses the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) StartPaidService(name string, googlecloudchannelv1startpaidservicerequest *GoogleCloudChannelV1StartPaidServiceRequest) *AccountsCustomersEntitlementsStartPaidServiceCall {
 	c := &AccountsCustomersEntitlementsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12944,10 +12957,10 @@ type AccountsCustomersEntitlementsSuspendCall struct {
 // GetOperation method of CloudChannelOperationsService. The Operation
 // metadata will contain an instance of OperationMetadata.
 //
-// - name: The resource name of the entitlement to suspend. Name uses
-//   the format:
-//   accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
-//   ent_id}.
+//   - name: The resource name of the entitlement to suspend. Name uses
+//     the format:
+//     accounts/{account_id}/customers/{customer_id}/entitlements/{entitlem
+//     ent_id}.
 func (r *AccountsCustomersEntitlementsService) Suspend(name string, googlecloudchannelv1suspendentitlementrequest *GoogleCloudChannelV1SuspendEntitlementRequest) *AccountsCustomersEntitlementsSuspendCall {
 	c := &AccountsCustomersEntitlementsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13090,8 +13103,8 @@ type AccountsOffersListCall struct {
 // List: Lists the Offers the reseller can sell. Possible error codes: *
 // INVALID_ARGUMENT: Required request parameters are missing or invalid.
 //
-// - parent: The resource name of the reseller account from which to
-//   list Offers. Parent uses the format: accounts/{account_id}.
+//   - parent: The resource name of the reseller account from which to
+//     list Offers. Parent uses the format: accounts/{account_id}.
 func (r *AccountsOffersService) List(parent string) *AccountsOffersListCall {
 	c := &AccountsOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14173,9 +14186,9 @@ type ProductsSkusListCall struct {
 // sell. Possible error codes: * INVALID_ARGUMENT: Required request
 // parameters are missing or invalid.
 //
-// - parent: The resource name of the Product to list SKUs for. Parent
-//   uses the format: products/{product_id}. Supports products/- to
-//   retrieve SKUs for all products.
+//   - parent: The resource name of the Product to list SKUs for. Parent
+//     uses the format: products/{product_id}. Supports products/- to
+//     retrieve SKUs for all products.
 func (r *ProductsSkusService) List(parent string) *ProductsSkusListCall {
 	c := &ProductsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

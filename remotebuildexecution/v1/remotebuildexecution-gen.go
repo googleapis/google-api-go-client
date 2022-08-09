@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/remote-build-execution/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/remotebuildexecution/v1"
-//   ...
-//   ctx := context.Background()
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
+//	import "google.golang.org/api/remotebuildexecution/v1"
+//	...
+//	ctx := context.Background()
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package remotebuildexecution // import "google.golang.org/api/remotebuildexecution/v1"
@@ -2011,7 +2011,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest:
-//  The request used for `CreateWorkerPool`.
+//
+//	The request used for `CreateWorkerPool`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest struct {
 	// Parent: Resource name of the instance in which to create the new
 	// worker pool. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
@@ -2081,7 +2082,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest:
-//  The request used for DeleteWorkerPool.
+//
+//	The request used for DeleteWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest struct {
 	// Name: Name of the worker pool to delete. Format:
 	// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
@@ -2532,7 +2534,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest:
-//  The request used for UpdateWorkerPool.
+//
+//	The request used for UpdateWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
 	// `FieldMask` definition, see
@@ -3499,8 +3502,8 @@ type MediaDownloadCall struct {
 // Download: Downloads media. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
 //
-// - resourceName: Name of the media that is being downloaded. See
-//   ReadRequest.resource_name.
+//   - resourceName: Name of the media that is being downloaded. See
+//     ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3665,8 +3668,8 @@ type MediaUploadCall struct {
 // Upload: Uploads media. Upload is supported on the URI
 // `/upload/v1/media/{+name}`.
 //
-// - resourceName: Name of the media that is being downloaded. See
-//   ReadRequest.resource_name.
+//   - resourceName: Name of the media that is being downloaded. See
+//     ReadRequest.resource_name.
 func (r *MediaService) Upload(resourceName string, googlebytestreammedia *GoogleBytestreamMedia) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName

@@ -21,8 +21,9 @@ func init() {
 // Its purpose is to test out the ability to get maps of struct objects.
 //
 // Example usage:
-//   go build -o go-api-demo *.go
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" calendar
+//
+//	go build -o go-api-demo *.go
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" calendar
 func calendarMain(client *http.Client, argv []string) {
 	if len(argv) != 0 {
 		fmt.Fprintln(os.Stderr, "Usage: calendar")

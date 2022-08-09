@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/manufacturers/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/manufacturers/v1"
-//   ...
-//   ctx := context.Background()
-//   manufacturersService, err := manufacturers.NewService(ctx)
+//	import "google.golang.org/api/manufacturers/v1"
+//	...
+//	ctx := context.Background()
+//	manufacturersService, err := manufacturers.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   manufacturersService, err := manufacturers.NewService(ctx, option.WithAPIKey("AIza..."))
+//	manufacturersService, err := manufacturers.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   manufacturersService, err := manufacturers.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	manufacturersService, err := manufacturers.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package manufacturers // import "google.golang.org/api/manufacturers/v1"
@@ -815,16 +815,16 @@ type AccountsProductsDeleteCall struct {
 
 // Delete: Deletes the product from a Manufacturer Center account.
 //
-// - name: Name in the format
-//   `{target_country}:{content_language}:{product_id}`.
-//   `target_country` - The target country of the product as a CLDR
-//   territory code (for example, US). `content_language` - The content
-//   language of the product as a two-letter ISO 639-1 language code
-//   (for example, en). `product_id` - The ID of the product. For more
-//   information, see
-//   https://support.google.com/manufacturers/answer/6124116#id.
-// - parent: Parent ID in the format `accounts/{account_id}`.
-//   `account_id` - The ID of the Manufacturer Center account.
+//   - name: Name in the format
+//     `{target_country}:{content_language}:{product_id}`.
+//     `target_country` - The target country of the product as a CLDR
+//     territory code (for example, US). `content_language` - The content
+//     language of the product as a two-letter ISO 639-1 language code
+//     (for example, en). `product_id` - The ID of the product. For more
+//     information, see
+//     https://support.google.com/manufacturers/answer/6124116#id.
+//   - parent: Parent ID in the format `accounts/{account_id}`.
+//     `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Delete(parent string, name string) *AccountsProductsDeleteCall {
 	c := &AccountsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -972,16 +972,16 @@ type AccountsProductsGetCall struct {
 // some issues may be available once the product has been processed,
 // other issues may take days to appear.
 //
-// - name: Name in the format
-//   `{target_country}:{content_language}:{product_id}`.
-//   `target_country` - The target country of the product as a CLDR
-//   territory code (for example, US). `content_language` - The content
-//   language of the product as a two-letter ISO 639-1 language code
-//   (for example, en). `product_id` - The ID of the product. For more
-//   information, see
-//   https://support.google.com/manufacturers/answer/6124116#id.
-// - parent: Parent ID in the format `accounts/{account_id}`.
-//   `account_id` - The ID of the Manufacturer Center account.
+//   - name: Name in the format
+//     `{target_country}:{content_language}:{product_id}`.
+//     `target_country` - The target country of the product as a CLDR
+//     territory code (for example, US). `content_language` - The content
+//     language of the product as a two-letter ISO 639-1 language code
+//     (for example, en). `product_id` - The ID of the product. For more
+//     information, see
+//     https://support.google.com/manufacturers/answer/6124116#id.
+//   - parent: Parent ID in the format `accounts/{account_id}`.
+//     `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Get(parent string, name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -993,10 +993,12 @@ func (r *AccountsProductsService) Get(parent string, name string) *AccountsProdu
 // included in the response. Only sections listed here will be returned.
 //
 // Possible values:
-//   "UNKNOWN" - Unknown, never used.
-//   "ATTRIBUTES" - Include the attributes of the product.
-//   "ISSUES" - Include the issues of the product.
-//   "DESTINATION_STATUSES" - Include the destination statuses of the
+//
+//	"UNKNOWN" - Unknown, never used.
+//	"ATTRIBUTES" - Include the attributes of the product.
+//	"ISSUES" - Include the issues of the product.
+//	"DESTINATION_STATUSES" - Include the destination statuses of the
+//
 // product.
 func (c *AccountsProductsGetCall) Include(include ...string) *AccountsProductsGetCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
@@ -1169,8 +1171,8 @@ type AccountsProductsListCall struct {
 
 // List: Lists all the products in a Manufacturer Center account.
 //
-// - parent: Parent ID in the format `accounts/{account_id}`.
-//   `account_id` - The ID of the Manufacturer Center account.
+//   - parent: Parent ID in the format `accounts/{account_id}`.
+//     `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1181,10 +1183,12 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 // included in the response. Only sections listed here will be returned.
 //
 // Possible values:
-//   "UNKNOWN" - Unknown, never used.
-//   "ATTRIBUTES" - Include the attributes of the product.
-//   "ISSUES" - Include the issues of the product.
-//   "DESTINATION_STATUSES" - Include the destination statuses of the
+//
+//	"UNKNOWN" - Unknown, never used.
+//	"ATTRIBUTES" - Include the attributes of the product.
+//	"ISSUES" - Include the issues of the product.
+//	"DESTINATION_STATUSES" - Include the destination statuses of the
+//
 // product.
 func (c *AccountsProductsListCall) Include(include ...string) *AccountsProductsListCall {
 	c.urlParams_.SetMulti("include", append([]string{}, include...))
@@ -1407,16 +1411,16 @@ type AccountsProductsUpdateCall struct {
 // retrieval of previously uploaded products will return the original
 // state of the product.
 //
-// - name: Name in the format
-//   `{target_country}:{content_language}:{product_id}`.
-//   `target_country` - The target country of the product as a CLDR
-//   territory code (for example, US). `content_language` - The content
-//   language of the product as a two-letter ISO 639-1 language code
-//   (for example, en). `product_id` - The ID of the product. For more
-//   information, see
-//   https://support.google.com/manufacturers/answer/6124116#id.
-// - parent: Parent ID in the format `accounts/{account_id}`.
-//   `account_id` - The ID of the Manufacturer Center account.
+//   - name: Name in the format
+//     `{target_country}:{content_language}:{product_id}`.
+//     `target_country` - The target country of the product as a CLDR
+//     territory code (for example, US). `content_language` - The content
+//     language of the product as a two-letter ISO 639-1 language code
+//     (for example, en). `product_id` - The ID of the product. For more
+//     information, see
+//     https://support.google.com/manufacturers/answer/6124116#id.
+//   - parent: Parent ID in the format `accounts/{account_id}`.
+//     `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Update(parent string, name string, attributes *Attributes) *AccountsProductsUpdateCall {
 	c := &AccountsProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -1396,6 +1396,45 @@ func (s *InventorySizeTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InventoryTypeTargeting: Targeting of the inventory types a bid
+// request can originate from.
+type InventoryTypeTargeting struct {
+	// InventoryTypes: The list of targeted inventory types for the bid
+	// request.
+	//
+	// Possible values:
+	//   "INVENTORY_TYPE_UNSPECIFIED" - Unspecified inventory type
+	//   "BROWSER" - Desktop or mobile web browser excluding ads inside a
+	// video player
+	//   "MOBILE_APP" - Mobile apps other than video players and web
+	// browsers
+	//   "VIDEO_PLAYER" - Instream video and audio
+	InventoryTypes []string `json:"inventoryTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InventoryTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InventoryTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InventoryTypeTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod InventoryTypeTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListAuctionPackagesResponse: Response message for listing auction
 // packages.
 type ListAuctionPackagesResponse struct {
@@ -1671,6 +1710,10 @@ type MarketplaceTargeting struct {
 	// InventorySizeTargeting: Output only. Inventory sizes to be
 	// included/excluded.
 	InventorySizeTargeting *InventorySizeTargeting `json:"inventorySizeTargeting,omitempty"`
+
+	// InventoryTypeTargeting: Output only. Inventory type targeting
+	// information.
+	InventoryTypeTargeting *InventoryTypeTargeting `json:"inventoryTypeTargeting,omitempty"`
 
 	// PlacementTargeting: Output only. Placement targeting information, for
 	// example, URL, mobile applications.

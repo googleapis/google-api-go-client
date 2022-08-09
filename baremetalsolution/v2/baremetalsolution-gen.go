@@ -2313,6 +2313,10 @@ type Volume struct {
 	// auto-grow, the value is 0.
 	AutoGrownSizeGib int64 `json:"autoGrownSizeGib,omitempty,string"`
 
+	// BootVolume: Output only. Whether this volume is a boot volume. A boot
+	// volume is one which contains a boot LUN.
+	BootVolume bool `json:"bootVolume,omitempty"`
+
 	// CurrentSizeGib: The current size of this storage volume, in GiB,
 	// including space reserved for snapshots. This size might be different
 	// than the requested size if the storage volume has been configured
@@ -6719,10 +6723,7 @@ func (r *ProjectsLocationsVolumesService) Patch(name string, volume *Volume) *Pr
 }
 
 // UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. The only currently supported fields are:
-// `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name`
-// 'labels' 'snapshot_enabled'
-// 'snapshot_reservation_detail.reserved_space_percent'
+// fields to update. The only currently supported fields are: 'labels'
 func (c *ProjectsLocationsVolumesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVolumesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6835,7 +6836,7 @@ func (c *ProjectsLocationsVolumesPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `snapshot_auto_delete_behavior` `snapshot_schedule_policy_name` 'labels' 'snapshot_enabled' 'snapshot_reservation_detail.reserved_space_percent'",
+	//       "description": "The list of fields to update. The only currently supported fields are: 'labels'",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

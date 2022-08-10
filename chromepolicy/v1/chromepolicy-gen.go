@@ -1824,8 +1824,8 @@ type CustomersPoliciesGroupsBatchDeleteCall struct {
 // values for those keys may be different. On failure the request will
 // return the error details as part of the google.rpc.Status.
 //
-// - customer: ID of the Google Workspace account or literal
-//   "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchDelete(customer string, googlechromepolicyv1batchdeletegrouppoliciesrequest *GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest) *CustomersPoliciesGroupsBatchDeleteCall {
 	c := &CustomersPoliciesGroupsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1972,8 +1972,8 @@ type CustomersPoliciesGroupsBatchModifyCall struct {
 // values for those keys may be different. On failure the request will
 // return the error details as part of the google.rpc.Status.
 //
-// - customer: ID of the Google Workspace account or literal
-//   "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchModify(customer string, googlechromepolicyv1batchmodifygrouppoliciesrequest *GoogleChromePolicyV1BatchModifyGroupPoliciesRequest) *CustomersPoliciesGroupsBatchModifyCall {
 	c := &CustomersPoliciesGroupsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2118,8 +2118,8 @@ type CustomersPoliciesGroupsListGroupPriorityOrderingCall struct {
 // the PolicyTargetKey. On failure the request will return the error
 // details as part of the google.rpc.Status.
 //
-// - customer: ID of the Google Workspace account or literal
-//   "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) ListGroupPriorityOrdering(customer string, googlechromepolicyv1listgrouppriorityorderingrequest *GoogleChromePolicyV1ListGroupPriorityOrderingRequest) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsListGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2267,8 +2267,8 @@ type CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall struct {
 // the PolicyTargetKey. On failure the request will return the error
 // details as part of the google.rpc.Status.
 //
-// - customer: ID of the Google Workspace account or literal
-//   "my_customer" for the customer associated to the request.
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) UpdateGroupPriorityOrdering(customer string, googlechromepolicyv1updategrouppriorityorderingrequest *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer

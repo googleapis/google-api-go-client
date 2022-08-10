@@ -813,9 +813,9 @@ type Empty struct {
 //
 // can
 //
-//	compute the identity key, which becomes a secret between them.
-//  2. Derive or obtain the beacon's identity key via other secure means
-//     (perhaps an ECDH key exchange between the beacon and a mobile
+//		compute the identity key, which becomes a secret between them.
+//	 2. Derive or obtain the beacon's identity key via other secure means
+//	    (perhaps an ECDH key exchange between the beacon and a mobile
 //
 // device
 //
@@ -2404,25 +2404,25 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 //
 // "Room 3"
 //
-//	(not necessarily that exact string).
-//	The string must be double-quoted.
-//   - **status:`<enum>`**
-//     For example: **status:active**
-//     Returns beacons whose status matches the given value. Values must
+//		(not necessarily that exact string).
+//		The string must be double-quoted.
+//	  - **status:`<enum>`**
+//	    For example: **status:active**
+//	    Returns beacons whose status matches the given value. Values must
 //
 // be
 //
-//	one of the Beacon.Status enum values (case insensitive). Accepts
-//	multiple filters which will be combined with OR logic.
-//   - **stability:`<enum>`**
-//     For example: **stability:mobile**
-//     Returns beacons whose expected stability matches the given value.
-//     Values must be one of the Beacon.Stability enum values (case
-//     insensitive). Accepts multiple filters which will be combined with
-//     OR logic.
-//   - **place\_id:"<string>"**
-//     For example: **place\_id:"ChIJVSZzVR8FdkgRXGmmm6SslKw="**
-//     Returns beacons explicitly registered at the given place, expressed
+//		one of the Beacon.Status enum values (case insensitive). Accepts
+//		multiple filters which will be combined with OR logic.
+//	  - **stability:`<enum>`**
+//	    For example: **stability:mobile**
+//	    Returns beacons whose expected stability matches the given value.
+//	    Values must be one of the Beacon.Stability enum values (case
+//	    insensitive). Accepts multiple filters which will be combined with
+//	    OR logic.
+//	  - **place\_id:"<string>"**
+//	    For example: **place\_id:"ChIJVSZzVR8FdkgRXGmmm6SslKw="**
+//	    Returns beacons explicitly registered at the given place, expressed
 //
 // as
 //
@@ -2442,11 +2442,11 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 //
 // place
 //
-//	ID must be double-quoted.
-//   - **registration\_time`[<|>|<=|>=]<integer>`**
-//     For example: **registration\_time>=1433116800**
-//     Returns beacons whose registration time matches the given filter.
-//     Supports the operators: <, >, <=, and >=. Timestamp must be
+//		ID must be double-quoted.
+//	  - **registration\_time`[<|>|<=|>=]<integer>`**
+//	    For example: **registration\_time>=1433116800**
+//	    Returns beacons whose registration time matches the given filter.
+//	    Supports the operators: <, >, <=, and >=. Timestamp must be
 //
 // expressed as
 //
@@ -2462,10 +2462,10 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 //
 // are
 //
-//	ignored.
-//   - **lat:`<double> lng:<double> radius:<integer>`**
-//     For example: **lat:51.1232343 lng:-1.093852 radius:1000**
-//     Returns beacons whose registered location is within the given
+//		ignored.
+//	  - **lat:`<double> lng:<double> radius:<integer>`**
+//	    For example: **lat:51.1232343 lng:-1.093852 radius:1000**
+//	    Returns beacons whose registered location is within the given
 //
 // circle.
 //
@@ -2474,16 +2474,16 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 //
 // between
 //
-//	-180.0 and 180.0 respectively. Radius must be an integer number of
-//	meters between 10 and 1,000,000 (1000 km).
-//   - **property:"<string>=<string>"**
-//     For example: **property:"battery-type=CR2032"**
-//     Returns beacons which have a property of the given name and value.
-//     Supports multiple filters which will be combined with OR logic.
-//     The entire name=value string must be double-quoted as one string.
-//   - **attachment\_type:"<string>"**
-//     For example: **attachment_type:"my-namespace/my-type"**
-//     Returns beacons having at least one attachment of the given
+//		-180.0 and 180.0 respectively. Radius must be an integer number of
+//		meters between 10 and 1,000,000 (1000 km).
+//	  - **property:"<string>=<string>"**
+//	    For example: **property:"battery-type=CR2032"**
+//	    Returns beacons which have a property of the given name and value.
+//	    Supports multiple filters which will be combined with OR logic.
+//	    The entire name=value string must be double-quoted as one string.
+//	  - **attachment\_type:"<string>"**
+//	    For example: **attachment_type:"my-namespace/my-type"**
+//	    Returns beacons having at least one attachment of the given
 //
 // namespaced
 //
@@ -2491,11 +2491,11 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 //
 // wildcard
 //
-//	syntax: "my-namespace/*". Supports multiple filters which will be
-//	combined with OR logic. The string must be double-quoted.
-//   - **indoor\_level:"<string>"**
-//     For example: **indoor\_level:"1"**
-//     Returns beacons which are located on the given indoor level.
+//		syntax: "my-namespace/*". Supports multiple filters which will be
+//		combined with OR logic. The string must be double-quoted.
+//	  - **indoor\_level:"<string>"**
+//	    For example: **indoor\_level:"1"**
+//	    Returns beacons which are located on the given indoor level.
 //
 // Accepts
 //

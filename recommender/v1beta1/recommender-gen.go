@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/recommender/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/recommender/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   recommenderService, err := recommender.NewService(ctx)
+//	import "google.golang.org/api/recommender/v1beta1"
+//	...
+//	ctx := context.Background()
+//	recommenderService, err := recommender.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   recommenderService, err := recommender.NewService(ctx, option.WithAPIKey("AIza..."))
+//	recommenderService, err := recommender.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   recommenderService, err := recommender.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	recommenderService, err := recommender.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package recommender // import "google.golang.org/api/recommender/v1beta1"
@@ -1736,21 +1736,21 @@ type BillingAccountsLocationsInsightTypesInsightsListCall struct {
 // List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
-//   T_TYPE_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
-//   PE_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
-//   pes/[INSIGHT_TYPE_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
-//   _ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
-//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-//   supported insight types:
-//   https://cloud.google.com/recommender/docs/insights/insight-types.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//     PE_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//     _ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//     supported insight types:
+//     https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2266,21 +2266,21 @@ type BillingAccountsLocationsRecommendersRecommendationsListCall struct {
 // Requires the recommender.*.list IAM permission for the specified
 // recommender.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
-//   ers/[RECOMMENDER_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
-//   ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-//   supported recommenders:
-//   https://cloud.google.com/recommender/docs/recommenders.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//     ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//     supported recommenders:
+//     https://cloud.google.com/recommender/docs/recommenders.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3099,21 +3099,21 @@ type FoldersLocationsInsightTypesInsightsListCall struct {
 // List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
-//   T_TYPE_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
-//   PE_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
-//   pes/[INSIGHT_TYPE_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
-//   _ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
-//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-//   supported insight types:
-//   https://cloud.google.com/recommender/docs/insights/insight-types.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//     PE_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//     _ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//     supported insight types:
+//     https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *FoldersLocationsInsightTypesInsightsListCall {
 	c := &FoldersLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3629,21 +3629,21 @@ type FoldersLocationsRecommendersRecommendationsListCall struct {
 // Requires the recommender.*.list IAM permission for the specified
 // recommender.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
-//   ers/[RECOMMENDER_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
-//   ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-//   supported recommenders:
-//   https://cloud.google.com/recommender/docs/recommenders.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//     ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//     supported recommenders:
+//     https://cloud.google.com/recommender/docs/recommenders.
 func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c := &FoldersLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4314,13 +4314,13 @@ type OrganizationsLocationsInsightTypesGetConfigCall struct {
 // GetConfig: Gets the requested InsightTypeConfig. There is only one
 // instance of the config for each InsightType.
 //
-// - name: Name of the InsightTypeConfig to get. Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
-//   PE_ID]/config` *
-//   `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
-//   D]/config` *
-//   `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
-//   GHT_TYPE_ID]/config`.
+//   - name: Name of the InsightTypeConfig to get. Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
+//     PE_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
+//     D]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
+//     GHT_TYPE_ID]/config`.
 func (r *OrganizationsLocationsInsightTypesService) GetConfig(name string) *OrganizationsLocationsInsightTypesGetConfigCall {
 	c := &OrganizationsLocationsInsightTypesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4469,9 +4469,9 @@ type OrganizationsLocationsInsightTypesUpdateConfigCall struct {
 // UpdateConfig: Updates an InsightTypeConfig change. This will create a
 // new revision of the config.
 //
-// - name: Name of insight type config. Eg,
-//   projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT
-//   _TYPE_ID]/config.
+//   - name: Name of insight type config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT
+//     _TYPE_ID]/config.
 func (r *OrganizationsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1beta1insighttypeconfig *GoogleCloudRecommenderV1beta1InsightTypeConfig) *OrganizationsLocationsInsightTypesUpdateConfigCall {
 	c := &OrganizationsLocationsInsightTypesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4790,21 +4790,21 @@ type OrganizationsLocationsInsightTypesInsightsListCall struct {
 // List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
-//   T_TYPE_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
-//   PE_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
-//   pes/[INSIGHT_TYPE_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
-//   _ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
-//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-//   supported insight types:
-//   https://cloud.google.com/recommender/docs/insights/insight-types.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//     PE_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//     _ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//     supported insight types:
+//     https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c := &OrganizationsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5170,14 +5170,14 @@ type OrganizationsLocationsRecommendersGetConfigCall struct {
 // GetConfig: Gets the requested Recommender Config. There is only one
 // instance of the config for each Recommender.
 //
-// - name: Name of the Recommendation Config to get. Acceptable formats:
-//   *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]/config` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]/config` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]/config`.
+//   - name: Name of the Recommendation Config to get. Acceptable formats:
+//     *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]/config`.
 func (r *OrganizationsLocationsRecommendersService) GetConfig(name string) *OrganizationsLocationsRecommendersGetConfigCall {
 	c := &OrganizationsLocationsRecommendersGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5326,9 +5326,9 @@ type OrganizationsLocationsRecommendersUpdateConfigCall struct {
 // UpdateConfig: Updates a Recommender Config. This will create a new
 // revision of the config.
 //
-// - name: Name of recommender config. Eg,
-//   projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMME
-//   NDER_ID]/config.
+//   - name: Name of recommender config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMME
+//     NDER_ID]/config.
 func (r *OrganizationsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1beta1recommenderconfig *GoogleCloudRecommenderV1beta1RecommenderConfig) *OrganizationsLocationsRecommendersUpdateConfigCall {
 	c := &OrganizationsLocationsRecommendersUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5649,21 +5649,21 @@ type OrganizationsLocationsRecommendersRecommendationsListCall struct {
 // Requires the recommender.*.list IAM permission for the specified
 // recommender.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
-//   ers/[RECOMMENDER_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
-//   ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-//   supported recommenders:
-//   https://cloud.google.com/recommender/docs/recommenders.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//     ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//     supported recommenders:
+//     https://cloud.google.com/recommender/docs/recommenders.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6334,13 +6334,13 @@ type ProjectsLocationsInsightTypesGetConfigCall struct {
 // GetConfig: Gets the requested InsightTypeConfig. There is only one
 // instance of the config for each InsightType.
 //
-// - name: Name of the InsightTypeConfig to get. Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
-//   PE_ID]/config` *
-//   `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
-//   D]/config` *
-//   `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
-//   GHT_TYPE_ID]/config`.
+//   - name: Name of the InsightTypeConfig to get. Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
+//     PE_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
+//     D]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
+//     GHT_TYPE_ID]/config`.
 func (r *ProjectsLocationsInsightTypesService) GetConfig(name string) *ProjectsLocationsInsightTypesGetConfigCall {
 	c := &ProjectsLocationsInsightTypesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6489,9 +6489,9 @@ type ProjectsLocationsInsightTypesUpdateConfigCall struct {
 // UpdateConfig: Updates an InsightTypeConfig change. This will create a
 // new revision of the config.
 //
-// - name: Name of insight type config. Eg,
-//   projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT
-//   _TYPE_ID]/config.
+//   - name: Name of insight type config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT
+//     _TYPE_ID]/config.
 func (r *ProjectsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1beta1insighttypeconfig *GoogleCloudRecommenderV1beta1InsightTypeConfig) *ProjectsLocationsInsightTypesUpdateConfigCall {
 	c := &ProjectsLocationsInsightTypesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6810,21 +6810,21 @@ type ProjectsLocationsInsightTypesInsightsListCall struct {
 // List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
-//   T_TYPE_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
-//   PE_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
-//   pes/[INSIGHT_TYPE_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
-//   _ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
-//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
-//   supported insight types:
-//   https://cloud.google.com/recommender/docs/insights/insight-types.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//     PE_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//     _ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//     supported insight types:
+//     https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7190,14 +7190,14 @@ type ProjectsLocationsRecommendersGetConfigCall struct {
 // GetConfig: Gets the requested Recommender Config. There is only one
 // instance of the config for each Recommender.
 //
-// - name: Name of the Recommendation Config to get. Acceptable formats:
-//   *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]/config` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]/config` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]/config`.
+//   - name: Name of the Recommendation Config to get. Acceptable formats:
+//     *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]/config`.
 func (r *ProjectsLocationsRecommendersService) GetConfig(name string) *ProjectsLocationsRecommendersGetConfigCall {
 	c := &ProjectsLocationsRecommendersGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7346,9 +7346,9 @@ type ProjectsLocationsRecommendersUpdateConfigCall struct {
 // UpdateConfig: Updates a Recommender Config. This will create a new
 // revision of the config.
 //
-// - name: Name of recommender config. Eg,
-//   projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMME
-//   NDER_ID]/config.
+//   - name: Name of recommender config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMME
+//     NDER_ID]/config.
 func (r *ProjectsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1beta1recommenderconfig *GoogleCloudRecommenderV1beta1RecommenderConfig) *ProjectsLocationsRecommendersUpdateConfigCall {
 	c := &ProjectsLocationsRecommendersUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7669,21 +7669,21 @@ type ProjectsLocationsRecommendersRecommendationsListCall struct {
 // Requires the recommender.*.list IAM permission for the specified
 // recommender.
 //
-// - parent: The container resource on which to execute the request.
-//   Acceptable formats: *
-//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
-//   ENDER_ID]` *
-//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
-//   R_ID]` *
-//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
-//   ers/[RECOMMENDER_ID]` *
-//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
-//   ID]` *
-//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
-//   supported recommenders:
-//   https://cloud.google.com/recommender/docs/recommenders.
+//   - parent: The container resource on which to execute the request.
+//     Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]` *
+//     `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//     ID]` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//     https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//     supported recommenders:
+//     https://cloud.google.com/recommender/docs/recommenders.
 func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c := &ProjectsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/hosting/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firebasehosting/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   firebasehostingService, err := firebasehosting.NewService(ctx)
+//	import "google.golang.org/api/firebasehosting/v1beta1"
+//	...
+//	ctx := context.Background()
+//	firebasehostingService, err := firebasehosting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebasehosting // import "google.golang.org/api/firebasehosting/v1beta1"
@@ -1954,10 +1954,10 @@ type ProjectsSitesCreateCall struct {
 // project. Note that Hosting sites can take several minutes to
 // propagate through Firebase systems.
 //
-// - parent: The Firebase project in which to create a Hosting site, in
-//   the format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
-//   (../projects#Site.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The Firebase project in which to create a Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//     (../projects#Site.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) Create(parent string, site *Site) *ProjectsSitesCreateCall {
 	c := &ProjectsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2114,10 +2114,10 @@ type ProjectsSitesDeleteCall struct {
 // Delete: Deletes the specified Hosting Site from the specified parent
 // Firebase project.
 //
-// - name: The fully-qualified resource name for the Hosting site, in
-//   the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
-//   `Site` `name` (../projects#Site.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values.
+//   - name: The fully-qualified resource name for the Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//     `Site` `name` (../projects#Site.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) Delete(name string) *ProjectsSitesDeleteCall {
 	c := &ProjectsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2251,12 +2251,12 @@ type ProjectsSitesGetCall struct {
 
 // Get: Gets the specified Hosting Site.
 //
-// - name: The fully-qualified resource name for the Hosting site, in
-//   the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
-//   `Site` `name` (../projects#Site.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally
-//   unique identifier, you can also use the unique sub-collection
-//   resource access pattern, in the format: projects/-/sites/SITE_ID.
+//   - name: The fully-qualified resource name for the Hosting site, in
+//     the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the
+//     `Site` `name` (../projects#Site.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally
+//     unique identifier, you can also use the unique sub-collection
+//     resource access pattern, in the format: projects/-/sites/SITE_ID.
 func (r *ProjectsSitesService) Get(nameid string) *ProjectsSitesGetCall {
 	c := &ProjectsSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2405,8 +2405,8 @@ type ProjectsSitesGetConfigCall struct {
 
 // GetConfig: Gets the Hosting metadata for a specific site.
 //
-// - name: The site for which to get the SiteConfig, in the format:
-//   sites/ site-name/config.
+//   - name: The site for which to get the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *ProjectsSitesService) GetConfig(name string) *ProjectsSitesGetConfigCall {
 	c := &ProjectsSitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2556,10 +2556,10 @@ type ProjectsSitesListCall struct {
 // List: Lists each Hosting Site associated with the specified parent
 // Firebase project.
 //
-// - parent: The Firebase project for which to list sites, in the
-//   format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
-//   (../projects#Site.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The Firebase project for which to list sites, in the
+//     format: projects/PROJECT_IDENTIFIER Refer to the `Site` `name`
+//     (../projects#Site.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsSitesService) List(parent string) *ProjectsSitesListCall {
 	c := &ProjectsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2756,14 +2756,14 @@ type ProjectsSitesPatchCall struct {
 
 // Patch: Updates attributes of the specified Hosting Site.
 //
-// - name: Output only. The fully-qualified resource name of the Hosting
-//   site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
-//   PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
-//   (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
-//   ***(recommended)*** or its `ProjectId`
-//   (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
-//   Learn more about using project identifiers in Google's AIP 2510
-//   standard (https://google.aip.dev/cloud/2510).
+//   - name: Output only. The fully-qualified resource name of the Hosting
+//     site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
+//     PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
+//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+//     Learn more about using project identifiers in Google's AIP 2510
+//     standard (https://google.aip.dev/cloud/2510).
 func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
 	c := &ProjectsSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2919,8 +2919,8 @@ type ProjectsSitesUpdateConfigCall struct {
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
 //
-// - name: The site for which to update the SiteConfig, in the format:
-//   sites/ site-name/config.
+//   - name: The site for which to update the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *ProjectsSitesService) UpdateConfig(name string, siteconfig *SiteConfig) *ProjectsSitesUpdateConfigCall {
 	c := &ProjectsSitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3079,8 +3079,8 @@ type ProjectsSitesChannelsCreateCall struct {
 
 // Create: Creates a new channel in the specified site.
 //
-// - parent: The site in which to create this channel, in the format:
-//   sites/ SITE_ID.
+//   - parent: The site in which to create this channel, in the format:
+//     sites/ SITE_ID.
 func (r *ProjectsSitesChannelsService) Create(parent string, channel *Channel) *ProjectsSitesChannelsCreateCall {
 	c := &ProjectsSitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3235,8 +3235,8 @@ type ProjectsSitesChannelsDeleteCall struct {
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Delete(name string) *ProjectsSitesChannelsDeleteCall {
 	c := &ProjectsSitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3371,8 +3371,8 @@ type ProjectsSitesChannelsGetCall struct {
 // Get: Retrieves information for the specified channel of the specified
 // site.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Get(name string) *ProjectsSitesChannelsGetCall {
 	c := &ProjectsSitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3522,8 +3522,8 @@ type ProjectsSitesChannelsListCall struct {
 // List: Lists the channels for the specified site. All sites have a
 // default `live` channel.
 //
-// - parent: The site for which to list channels, in the format:
-//   sites/SITE_ID.
+//   - parent: The site for which to list channels, in the format:
+//     sites/SITE_ID.
 func (r *ProjectsSitesChannelsService) List(parent string) *ProjectsSitesChannelsListCall {
 	c := &ProjectsSitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3723,8 +3723,8 @@ type ProjectsSitesChannelsPatchCall struct {
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/ SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/ SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsService) Patch(name string, channel *Channel) *ProjectsSitesChannelsPatchCall {
 	c := &ProjectsSitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3881,9 +3881,9 @@ type ProjectsSitesChannelsReleasesCreateCall struct {
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
 //
-// - parent: The site or channel to which the release belongs, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) Create(parent string, release *Release) *ProjectsSitesChannelsReleasesCreateCall {
 	c := &ProjectsSitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4044,9 +4044,9 @@ type ProjectsSitesChannelsReleasesListCall struct {
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
 //
-// - parent: The site or channel for which to list releases, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesChannelsReleasesService) List(parent string) *ProjectsSitesChannelsReleasesListCall {
 	c := &ProjectsSitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4244,8 +4244,8 @@ type ProjectsSitesDomainsCreateCall struct {
 
 // Create: Creates a domain mapping on the specified site.
 //
-// - parent: The parent to create the domain association for, in the
-//   format: sites/site-name.
+//   - parent: The parent to create the domain association for, in the
+//     format: sites/site-name.
 func (r *ProjectsSitesDomainsService) Create(parent string, domain *Domain) *ProjectsSitesDomainsCreateCall {
 	c := &ProjectsSitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4670,8 +4670,8 @@ type ProjectsSitesDomainsListCall struct {
 
 // List: Lists the domains for the specified site.
 //
-// - parent: The parent for which to list domains, in the format: sites/
-//   site-name.
+//   - parent: The parent for which to list domains, in the format: sites/
+//     site-name.
 func (r *ProjectsSitesDomainsService) List(parent string) *ProjectsSitesDomainsListCall {
 	c := &ProjectsSitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4867,8 +4867,8 @@ type ProjectsSitesDomainsUpdateCall struct {
 // Update: Updates the specified domain mapping, creating the mapping as
 // if it does not exist.
 //
-// - name: The name of the domain association to update or create, if an
-//   association doesn't already exist.
+//   - name: The name of the domain association to update or create, if an
+//     association doesn't already exist.
 func (r *ProjectsSitesDomainsService) Update(name string, domain *Domain) *ProjectsSitesDomainsUpdateCall {
 	c := &ProjectsSitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5012,9 +5012,9 @@ type ProjectsSitesReleasesCreateCall struct {
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
 //
-// - parent: The site or channel to which the release belongs, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) Create(parent string, release *Release) *ProjectsSitesReleasesCreateCall {
 	c := &ProjectsSitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5175,9 +5175,9 @@ type ProjectsSitesReleasesListCall struct {
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
 //
-// - parent: The site or channel for which to list releases, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesReleasesService) List(parent string) *ProjectsSitesReleasesListCall {
 	c := &ProjectsSitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5376,8 +5376,8 @@ type ProjectsSitesVersionsCloneCall struct {
 // Clone: Creates a new version on the specified target site using the
 // content of the specified version.
 //
-// - parent: The target site for the cloned version, in the format:
-//   sites/ SITE_ID.
+//   - parent: The target site for the cloned version, in the format:
+//     sites/ SITE_ID.
 func (r *ProjectsSitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *ProjectsSitesVersionsCloneCall {
 	c := &ProjectsSitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5520,8 +5520,8 @@ type ProjectsSitesVersionsCreateCall struct {
 
 // Create: Creates a new version for the specified site.
 //
-// - parent: The site in which to create the version, in the format:
-//   sites/ SITE_ID.
+//   - parent: The site in which to create the version, in the format:
+//     sites/ SITE_ID.
 func (r *ProjectsSitesVersionsService) Create(parent string, version *Version) *ProjectsSitesVersionsCreateCall {
 	c := &ProjectsSitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5690,8 +5690,8 @@ type ProjectsSitesVersionsDeleteCall struct {
 
 // Delete: Deletes the specified version.
 //
-// - name: The fully-qualified resource name for the version, in the
-//   format: sites/SITE_ID/versions/VERSION_ID.
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) Delete(name string) *ProjectsSitesVersionsDeleteCall {
 	c := &ProjectsSitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5827,9 +5827,9 @@ type ProjectsSitesVersionsListCall struct {
 // site. This list includes versions for both the default `live` channel
 // and any active preview channels for the specified site.
 //
-// - parent: The site or channel for which to list versions, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list versions, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *ProjectsSitesVersionsService) List(parent string) *ProjectsSitesVersionsListCall {
 	c := &ProjectsSitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6048,10 +6048,10 @@ type ProjectsSitesVersionsPatchCall struct {
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
 //
-// - name: The fully-qualified resource name for the version, in the
-//   format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
-//   the response body when you call `CreateVersion`
-//   (sites.versions/create).
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//     the response body when you call `CreateVersion`
+//     (sites.versions/create).
 func (r *ProjectsSitesVersionsService) Patch(name string, version *Version) *ProjectsSitesVersionsPatchCall {
 	c := &ProjectsSitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6211,8 +6211,8 @@ type ProjectsSitesVersionsPopulateFilesCall struct {
 // PopulateFiles:  Adds content files to the specified version. Each
 // file must be under 2 GB.
 //
-// - parent: The version to which to add files, in the format:
-//   sites/SITE_ID /versions/VERSION_ID.
+//   - parent: The version to which to add files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *ProjectsSitesVersionsPopulateFilesCall {
 	c := &ProjectsSitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6356,8 +6356,8 @@ type ProjectsSitesVersionsFilesListCall struct {
 // List: Lists the remaining files to be uploaded for the specified
 // version.
 //
-// - parent: The version for which to list files, in the format:
-//   sites/SITE_ID /versions/VERSION_ID.
+//   - parent: The version for which to list files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *ProjectsSitesVersionsFilesService) List(parent string) *ProjectsSitesVersionsFilesListCall {
 	c := &ProjectsSitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6385,11 +6385,16 @@ func (c *ProjectsSitesVersionsFilesListCall) PageToken(pageToken string) *Projec
 // should be listed for the specified version.
 //
 // Possible values:
-//   "STATUS_UNSPECIFIED" - The default status; should not be
+//
+//	"STATUS_UNSPECIFIED" - The default status; should not be
+//
 // intentionally used.
-//   "EXPECTED" - The file has been included in the version and is
+//
+//	"EXPECTED" - The file has been included in the version and is
+//
 // expected to be uploaded in the near future.
-//   "ACTIVE" - The file has already been uploaded to Firebase Hosting.
+//
+//	"ACTIVE" - The file has already been uploaded to Firebase Hosting.
 func (c *ProjectsSitesVersionsFilesListCall) Status(status string) *ProjectsSitesVersionsFilesListCall {
 	c.urlParams_.Set("status", status)
 	return c
@@ -6584,8 +6589,8 @@ type SitesGetConfigCall struct {
 
 // GetConfig: Gets the Hosting metadata for a specific site.
 //
-// - name: The site for which to get the SiteConfig, in the format:
-//   sites/ site-name/config.
+//   - name: The site for which to get the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *SitesService) GetConfig(name string) *SitesGetConfigCall {
 	c := &SitesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6734,8 +6739,8 @@ type SitesUpdateConfigCall struct {
 
 // UpdateConfig: Sets the Hosting metadata for a specific site.
 //
-// - name: The site for which to update the SiteConfig, in the format:
-//   sites/ site-name/config.
+//   - name: The site for which to update the SiteConfig, in the format:
+//     sites/ site-name/config.
 func (r *SitesService) UpdateConfig(name string, siteconfig *SiteConfig) *SitesUpdateConfigCall {
 	c := &SitesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6894,8 +6899,8 @@ type SitesChannelsCreateCall struct {
 
 // Create: Creates a new channel in the specified site.
 //
-// - parent: The site in which to create this channel, in the format:
-//   sites/ SITE_ID.
+//   - parent: The site in which to create this channel, in the format:
+//     sites/ SITE_ID.
 func (r *SitesChannelsService) Create(parent string, channel *Channel) *SitesChannelsCreateCall {
 	c := &SitesChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7050,8 +7055,8 @@ type SitesChannelsDeleteCall struct {
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Delete(name string) *SitesChannelsDeleteCall {
 	c := &SitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7186,8 +7191,8 @@ type SitesChannelsGetCall struct {
 // Get: Retrieves information for the specified channel of the specified
 // site.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Get(name string) *SitesChannelsGetCall {
 	c := &SitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7337,8 +7342,8 @@ type SitesChannelsListCall struct {
 // List: Lists the channels for the specified site. All sites have a
 // default `live` channel.
 //
-// - parent: The site for which to list channels, in the format:
-//   sites/SITE_ID.
+//   - parent: The site for which to list channels, in the format:
+//     sites/SITE_ID.
 func (r *SitesChannelsService) List(parent string) *SitesChannelsListCall {
 	c := &SitesChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7538,8 +7543,8 @@ type SitesChannelsPatchCall struct {
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
 //
-// - name: The fully-qualified resource name for the channel, in the
-//   format: sites/ SITE_ID/channels/CHANNEL_ID.
+//   - name: The fully-qualified resource name for the channel, in the
+//     format: sites/ SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsService) Patch(name string, channel *Channel) *SitesChannelsPatchCall {
 	c := &SitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7696,9 +7701,9 @@ type SitesChannelsReleasesCreateCall struct {
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
 //
-// - parent: The site or channel to which the release belongs, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) Create(parent string, release *Release) *SitesChannelsReleasesCreateCall {
 	c := &SitesChannelsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7859,9 +7864,9 @@ type SitesChannelsReleasesListCall struct {
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
 //
-// - parent: The site or channel for which to list releases, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesChannelsReleasesService) List(parent string) *SitesChannelsReleasesListCall {
 	c := &SitesChannelsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8059,8 +8064,8 @@ type SitesDomainsCreateCall struct {
 
 // Create: Creates a domain mapping on the specified site.
 //
-// - parent: The parent to create the domain association for, in the
-//   format: sites/site-name.
+//   - parent: The parent to create the domain association for, in the
+//     format: sites/site-name.
 func (r *SitesDomainsService) Create(parent string, domain *Domain) *SitesDomainsCreateCall {
 	c := &SitesDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8485,8 +8490,8 @@ type SitesDomainsListCall struct {
 
 // List: Lists the domains for the specified site.
 //
-// - parent: The parent for which to list domains, in the format: sites/
-//   site-name.
+//   - parent: The parent for which to list domains, in the format: sites/
+//     site-name.
 func (r *SitesDomainsService) List(parent string) *SitesDomainsListCall {
 	c := &SitesDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8682,8 +8687,8 @@ type SitesDomainsUpdateCall struct {
 // Update: Updates the specified domain mapping, creating the mapping as
 // if it does not exist.
 //
-// - name: The name of the domain association to update or create, if an
-//   association doesn't already exist.
+//   - name: The name of the domain association to update or create, if an
+//     association doesn't already exist.
 func (r *SitesDomainsService) Update(name string, domain *Domain) *SitesDomainsUpdateCall {
 	c := &SitesDomainsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8827,9 +8832,9 @@ type SitesReleasesCreateCall struct {
 // Create: Creates a new release, which makes the content of the
 // specified version actively display on the appropriate URL(s).
 //
-// - parent: The site or channel to which the release belongs, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel to which the release belongs, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) Create(parent string, release *Release) *SitesReleasesCreateCall {
 	c := &SitesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8990,9 +8995,9 @@ type SitesReleasesListCall struct {
 // includes releases for both the default `live` channel and any active
 // preview channels for the specified site.
 //
-// - parent: The site or channel for which to list releases, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list releases, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesReleasesService) List(parent string) *SitesReleasesListCall {
 	c := &SitesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9191,8 +9196,8 @@ type SitesVersionsCloneCall struct {
 // Clone: Creates a new version on the specified target site using the
 // content of the specified version.
 //
-// - parent: The target site for the cloned version, in the format:
-//   sites/ SITE_ID.
+//   - parent: The target site for the cloned version, in the format:
+//     sites/ SITE_ID.
 func (r *SitesVersionsService) Clone(parent string, cloneversionrequest *CloneVersionRequest) *SitesVersionsCloneCall {
 	c := &SitesVersionsCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9335,8 +9340,8 @@ type SitesVersionsCreateCall struct {
 
 // Create: Creates a new version for the specified site.
 //
-// - parent: The site in which to create the version, in the format:
-//   sites/ SITE_ID.
+//   - parent: The site in which to create the version, in the format:
+//     sites/ SITE_ID.
 func (r *SitesVersionsService) Create(parent string, version *Version) *SitesVersionsCreateCall {
 	c := &SitesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9505,8 +9510,8 @@ type SitesVersionsDeleteCall struct {
 
 // Delete: Deletes the specified version.
 //
-// - name: The fully-qualified resource name for the version, in the
-//   format: sites/SITE_ID/versions/VERSION_ID.
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/SITE_ID/versions/VERSION_ID.
 func (r *SitesVersionsService) Delete(name string) *SitesVersionsDeleteCall {
 	c := &SitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9642,9 +9647,9 @@ type SitesVersionsListCall struct {
 // site. This list includes versions for both the default `live` channel
 // and any active preview channels for the specified site.
 //
-// - parent: The site or channel for which to list versions, in either
-//   of the following formats: - sites/SITE_ID -
-//   sites/SITE_ID/channels/CHANNEL_ID.
+//   - parent: The site or channel for which to list versions, in either
+//     of the following formats: - sites/SITE_ID -
+//     sites/SITE_ID/channels/CHANNEL_ID.
 func (r *SitesVersionsService) List(parent string) *SitesVersionsListCall {
 	c := &SitesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9863,10 +9868,10 @@ type SitesVersionsPatchCall struct {
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
 //
-// - name: The fully-qualified resource name for the version, in the
-//   format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
-//   the response body when you call `CreateVersion`
-//   (sites.versions/create).
+//   - name: The fully-qualified resource name for the version, in the
+//     format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+//     the response body when you call `CreateVersion`
+//     (sites.versions/create).
 func (r *SitesVersionsService) Patch(name string, version *Version) *SitesVersionsPatchCall {
 	c := &SitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10026,8 +10031,8 @@ type SitesVersionsPopulateFilesCall struct {
 // PopulateFiles:  Adds content files to the specified version. Each
 // file must be under 2 GB.
 //
-// - parent: The version to which to add files, in the format:
-//   sites/SITE_ID /versions/VERSION_ID.
+//   - parent: The version to which to add files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsService) PopulateFiles(parent string, populateversionfilesrequest *PopulateVersionFilesRequest) *SitesVersionsPopulateFilesCall {
 	c := &SitesVersionsPopulateFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10171,8 +10176,8 @@ type SitesVersionsFilesListCall struct {
 // List: Lists the remaining files to be uploaded for the specified
 // version.
 //
-// - parent: The version for which to list files, in the format:
-//   sites/SITE_ID /versions/VERSION_ID.
+//   - parent: The version for which to list files, in the format:
+//     sites/SITE_ID /versions/VERSION_ID.
 func (r *SitesVersionsFilesService) List(parent string) *SitesVersionsFilesListCall {
 	c := &SitesVersionsFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10200,11 +10205,16 @@ func (c *SitesVersionsFilesListCall) PageToken(pageToken string) *SitesVersionsF
 // should be listed for the specified version.
 //
 // Possible values:
-//   "STATUS_UNSPECIFIED" - The default status; should not be
+//
+//	"STATUS_UNSPECIFIED" - The default status; should not be
+//
 // intentionally used.
-//   "EXPECTED" - The file has been included in the version and is
+//
+//	"EXPECTED" - The file has been included in the version and is
+//
 // expected to be uploaded in the near future.
-//   "ACTIVE" - The file has already been uploaded to Firebase Hosting.
+//
+//	"ACTIVE" - The file has already been uploaded to Firebase Hosting.
 func (c *SitesVersionsFilesListCall) Status(status string) *SitesVersionsFilesListCall {
 	c.urlParams_.Set("status", status)
 	return c

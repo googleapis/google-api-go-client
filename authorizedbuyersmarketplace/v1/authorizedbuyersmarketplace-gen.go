@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/marketplace/reference/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/authorizedbuyersmarketplace/v1"
-//   ...
-//   ctx := context.Background()
-//   authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx)
+//	import "google.golang.org/api/authorizedbuyersmarketplace/v1"
+//	...
+//	ctx := context.Background()
+//	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithAPIKey("AIza..."))
+//	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	authorizedbuyersmarketplaceService, err := authorizedbuyersmarketplace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package authorizedbuyersmarketplace // import "google.golang.org/api/authorizedbuyersmarketplace/v1"
@@ -2901,10 +2901,10 @@ type BiddersFinalizedDealsListCall struct {
 // "/v1/bidders/{accountId}/finalizedDeals" to list finalized deals for
 // the bidder, its buyers and all their clients.
 //
-// - parent: The buyer to list the finalized deals for, in the format:
-//   `buyers/{accountId}`. When used to list finalized deals for a
-//   bidder, its buyers and clients, in the format
-//   `bidders/{accountId}`.
+//   - parent: The buyer to list the finalized deals for, in the format:
+//     `buyers/{accountId}`. When used to list finalized deals for a
+//     bidder, its buyers and clients, in the format
+//     `bidders/{accountId}`.
 func (r *BiddersFinalizedDealsService) List(parent string) *BiddersFinalizedDealsListCall {
 	c := &BiddersFinalizedDealsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3135,8 +3135,8 @@ type BuyersAuctionPackagesGetCall struct {
 
 // Get: Gets an auction package given its name.
 //
-// - name: Name of auction package to get. Format:
-//   `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
+//   - name: Name of auction package to get. Format:
+//     `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
 func (r *BuyersAuctionPackagesService) Get(name string) *BuyersAuctionPackagesGetCall {
 	c := &BuyersAuctionPackagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3283,8 +3283,8 @@ type BuyersAuctionPackagesListCall struct {
 // List: List the auction packages subscribed by a buyer and its
 // clients.
 //
-// - parent: Name of the parent buyer that can access the auction
-//   package. Format: `buyers/{accountId}`.
+//   - parent: Name of the parent buyer that can access the auction
+//     package. Format: `buyers/{accountId}`.
 func (r *BuyersAuctionPackagesService) List(parent string) *BuyersAuctionPackagesListCall {
 	c := &BuyersAuctionPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3480,8 +3480,8 @@ type BuyersAuctionPackagesSubscribeCall struct {
 // matching the auction package targeting criteria with the auction
 // package deal ID and the specified buyer.
 //
-// - name: Name of the auction package. Format:
-//   `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
+//   - name: Name of the auction package. Format:
+//     `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
 func (r *BuyersAuctionPackagesService) Subscribe(name string, subscribeauctionpackagerequest *SubscribeAuctionPackageRequest) *BuyersAuctionPackagesSubscribeCall {
 	c := &BuyersAuctionPackagesSubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3627,8 +3627,8 @@ type BuyersAuctionPackagesSubscribeClientsCall struct {
 // clients in the list will not be subscribed. Subscribing an already
 // subscribed client will have no effect.
 //
-// - auctionPackage: Name of the auction package. Format:
-//   `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
+//   - auctionPackage: Name of the auction package. Format:
+//     `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
 func (r *BuyersAuctionPackagesService) SubscribeClients(auctionPackage string, subscribeclientsrequest *SubscribeClientsRequest) *BuyersAuctionPackagesSubscribeClientsCall {
 	c := &BuyersAuctionPackagesSubscribeClientsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.auctionPackage = auctionPackage
@@ -3772,8 +3772,8 @@ type BuyersAuctionPackagesUnsubscribeCall struct {
 // buyer. Once unsubscribed, the bidder will no longer receive a call
 // out for the auction package deal ID and the specified buyer.
 //
-// - name: Name of the auction package. Format:
-//   `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
+//   - name: Name of the auction package. Format:
+//     `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
 func (r *BuyersAuctionPackagesService) Unsubscribe(name string, unsubscribeauctionpackagerequest *UnsubscribeAuctionPackageRequest) *BuyersAuctionPackagesUnsubscribeCall {
 	c := &BuyersAuctionPackagesUnsubscribeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3917,8 +3917,8 @@ type BuyersAuctionPackagesUnsubscribeClientsCall struct {
 // specified clients of the buyer. Unsubscribing a client that is not
 // subscribed will have no effect.
 //
-// - auctionPackage: Name of the auction package. Format:
-//   `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
+//   - auctionPackage: Name of the auction package. Format:
+//     `buyers/{accountId}/auctionPackages/{auctionPackageId}`.
 func (r *BuyersAuctionPackagesService) UnsubscribeClients(auctionPackage string, unsubscribeclientsrequest *UnsubscribeClientsRequest) *BuyersAuctionPackagesUnsubscribeClientsCall {
 	c := &BuyersAuctionPackagesUnsubscribeClientsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.auctionPackage = auctionPackage
@@ -4848,8 +4848,8 @@ type BuyersClientsPatchCall struct {
 
 // Patch: Updates an existing client.
 //
-// - name: Output only. The resource name of the client. Format:
-//   `buyers/{accountId}/clients/{clientAccountId}`.
+//   - name: Output only. The resource name of the client. Format:
+//     `buyers/{accountId}/clients/{clientAccountId}`.
 func (r *BuyersClientsService) Patch(name string, client *Client) *BuyersClientsPatchCall {
 	c := &BuyersClientsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5017,9 +5017,9 @@ type BuyersClientsUsersActivateCall struct {
 // be returned if the client user to activate is still in "INVITED"
 // state.
 //
-// - name: Format:
-//   `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
-//   Id}`.
+//   - name: Format:
+//     `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
+//     Id}`.
 func (r *BuyersClientsUsersService) Activate(name string, activateclientuserrequest *ActivateClientUserRequest) *BuyersClientsUsersActivateCall {
 	c := &BuyersClientsUsersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5163,8 +5163,8 @@ type BuyersClientsUsersCreateCall struct {
 // invitation will be sent to the new user, once accepted the user will
 // become active.
 //
-// - parent: The name of the client. Format:
-//   `buyers/{accountId}/clients/{clientAccountId}`.
+//   - parent: The name of the client. Format:
+//     `buyers/{accountId}/clients/{clientAccountId}`.
 func (r *BuyersClientsUsersService) Create(parent string, clientuser *ClientUser) *BuyersClientsUsersCreateCall {
 	c := &BuyersClientsUsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5310,9 +5310,9 @@ type BuyersClientsUsersDeactivateCall struct {
 // error will be returned if the client user to deactivate is still in
 // "INVITED" state.
 //
-// - name: Format:
-//   `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
-//   Id}`.
+//   - name: Format:
+//     `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
+//     Id}`.
 func (r *BuyersClientsUsersService) Deactivate(name string, deactivateclientuserrequest *DeactivateClientUserRequest) *BuyersClientsUsersDeactivateCall {
 	c := &BuyersClientsUsersDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5456,9 +5456,9 @@ type BuyersClientsUsersDeleteCall struct {
 // deleted, the user's access to the UI can't be restored unless a new
 // client user is created and activated.
 //
-// - name: Format:
-//   `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
-//   Id}`.
+//   - name: Format:
+//     `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
+//     Id}`.
 func (r *BuyersClientsUsersService) Delete(name string) *BuyersClientsUsersDeleteCall {
 	c := &BuyersClientsUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5591,9 +5591,9 @@ type BuyersClientsUsersGetCall struct {
 
 // Get: Retrieves an existing client user.
 //
-// - name: Format:
-//   `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
-//   Id}`.
+//   - name: Format:
+//     `buyers/{buyerAccountId}/clients/{clientAccountId}/clientUsers/{user
+//     Id}`.
 func (r *BuyersClientsUsersService) Get(name string) *BuyersClientsUsersGetCall {
 	c := &BuyersClientsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5739,8 +5739,8 @@ type BuyersClientsUsersListCall struct {
 
 // List: Lists all client users for a specified client.
 //
-// - parent: The name of the client. Format:
-//   `buyers/{buyerAccountId}/clients/{clientAccountId}`.
+//   - parent: The name of the client. Format:
+//     `buyers/{buyerAccountId}/clients/{clientAccountId}`.
 func (r *BuyersClientsUsersService) List(parent string) *BuyersClientsUsersListCall {
 	c := &BuyersClientsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5942,8 +5942,8 @@ type BuyersFinalizedDealsAddCreativeCall struct {
 // applies to programmatic guaranteed deals. Maximum number of 1000
 // creatives can be added to a finalized deal.
 //
-// - deal: Name of the finalized deal in the format of:
-//   `buyers/{accountId}/finalizedDeals/{dealId}`.
+//   - deal: Name of the finalized deal in the format of:
+//     `buyers/{accountId}/finalizedDeals/{dealId}`.
 func (r *BuyersFinalizedDealsService) AddCreative(deal string, addcreativerequest *AddCreativeRequest) *BuyersFinalizedDealsAddCreativeCall {
 	c := &BuyersFinalizedDealsAddCreativeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.deal = deal
@@ -6235,10 +6235,10 @@ type BuyersFinalizedDealsListCall struct {
 // "/v1/bidders/{accountId}/finalizedDeals" to list finalized deals for
 // the bidder, its buyers and all their clients.
 //
-// - parent: The buyer to list the finalized deals for, in the format:
-//   `buyers/{accountId}`. When used to list finalized deals for a
-//   bidder, its buyers and clients, in the format
-//   `bidders/{accountId}`.
+//   - parent: The buyer to list the finalized deals for, in the format:
+//     `buyers/{accountId}`. When used to list finalized deals for a
+//     bidder, its buyers and clients, in the format
+//     `bidders/{accountId}`.
 func (r *BuyersFinalizedDealsService) List(parent string) *BuyersFinalizedDealsListCall {
 	c := &BuyersFinalizedDealsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6919,8 +6919,8 @@ type BuyersProposalsAcceptCall struct {
 // means the buyer understands and accepts the
 // Proposal.terms_and_conditions proposed by the seller.
 //
-// - name: Name of the proposal. Format:
-//   `buyers/{accountId}/proposals/{proposalId}`.
+//   - name: Name of the proposal. Format:
+//     `buyers/{accountId}/proposals/{proposalId}`.
 func (r *BuyersProposalsService) Accept(name string, acceptproposalrequest *AcceptProposalRequest) *BuyersProposalsAcceptCall {
 	c := &BuyersProposalsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7062,8 +7062,8 @@ type BuyersProposalsAddNoteCall struct {
 
 // AddNote: Creates a note for this proposal and sends to the seller.
 //
-// - proposal: Name of the proposal. Format:
-//   `buyers/{accountId}/proposals/{proposalId}`.
+//   - proposal: Name of the proposal. Format:
+//     `buyers/{accountId}/proposals/{proposalId}`.
 func (r *BuyersProposalsService) AddNote(proposal string, addnoterequest *AddNoteRequest) *BuyersProposalsAddNoteCall {
 	c := &BuyersProposalsAddNoteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposal = proposal
@@ -7213,8 +7213,8 @@ type BuyersProposalsCancelNegotiationCall struct {
 // Proposal.proposal_revision. This method does not support private
 // auction proposals whose Proposal.deal_type is 'PRIVATE_AUCTION'.
 //
-// - proposal: Name of the proposal. Format:
-//   `buyers/{accountId}/proposals/{proposalId}`.
+//   - proposal: Name of the proposal. Format:
+//     `buyers/{accountId}/proposals/{proposalId}`.
 func (r *BuyersProposalsService) CancelNegotiation(proposal string, cancelnegotiationrequest *CancelNegotiationRequest) *BuyersProposalsCancelNegotiationCall {
 	c := &BuyersProposalsCancelNegotiationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposal = proposal
@@ -7357,8 +7357,8 @@ type BuyersProposalsGetCall struct {
 // Get: Gets a proposal using its name. The proposal is returned at most
 // recent revision. revision.
 //
-// - name: Name of the proposal. Format:
-//   `buyers/{accountId}/proposals/{proposalId}`.
+//   - name: Name of the proposal. Format:
+//     `buyers/{accountId}/proposals/{proposalId}`.
 func (r *BuyersProposalsService) Get(name string) *BuyersProposalsGetCall {
 	c := &BuyersProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7507,8 +7507,8 @@ type BuyersProposalsListCall struct {
 // versions of proposals that are being renegotiated; to retrieve these
 // use the finalizedProposals resource.
 //
-// - parent: Parent that owns the collection of proposals Format:
-//   `buyers/{accountId}`.
+//   - parent: Parent that owns the collection of proposals Format:
+//     `buyers/{accountId}`.
 func (r *BuyersProposalsService) List(parent string) *BuyersProposalsListCall {
 	c := &BuyersProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7724,8 +7724,8 @@ type BuyersProposalsPatchCall struct {
 // Updating a private auction proposal is not allowed and will result in
 // an error.
 //
-// - name: Immutable. The name of the proposal serving as a unique
-//   identifier. Format: buyers/{accountId}/proposals/{proposalId}.
+//   - name: Immutable. The name of the proposal serving as a unique
+//     identifier. Format: buyers/{accountId}/proposals/{proposalId}.
 func (r *BuyersProposalsService) Patch(nameid string, proposal *Proposal) *BuyersProposalsPatchCall {
 	c := &BuyersProposalsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7895,8 +7895,8 @@ type BuyersProposalsSendRfpCall struct {
 // returned in the response. The publisher may review your request and
 // respond with detailed deals in the proposal.
 //
-// - buyer: The current buyer who is sending the RFP in the format:
-//   `buyers/{accountId}`.
+//   - buyer: The current buyer who is sending the RFP in the format:
+//     `buyers/{accountId}`.
 func (r *BuyersProposalsService) SendRfp(buyer string, sendrfprequest *SendRfpRequest) *BuyersProposalsSendRfpCall {
 	c := &BuyersProposalsSendRfpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.buyer = buyer
@@ -8038,8 +8038,8 @@ type BuyersProposalsDealsBatchUpdateCall struct {
 
 // BatchUpdate: Batch updates multiple deals in the same proposal.
 //
-// - parent: The name of the proposal containing the deals to batch
-//   update. Format: buyers/{accountId}/proposals/{proposalId}.
+//   - parent: The name of the proposal containing the deals to batch
+//     update. Format: buyers/{accountId}/proposals/{proposalId}.
 func (r *BuyersProposalsDealsService) BatchUpdate(parent string, batchupdatedealsrequest *BatchUpdateDealsRequest) *BuyersProposalsDealsBatchUpdateCall {
 	c := &BuyersProposalsDealsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8182,8 +8182,8 @@ type BuyersProposalsDealsGetCall struct {
 // Get: Gets a deal given its name. The deal is returned at its head
 // revision.
 //
-// - name: Format:
-//   buyers/{accountId}/proposals/{proposalId}/deals/{dealId}.
+//   - name: Format:
+//     buyers/{accountId}/proposals/{proposalId}/deals/{dealId}.
 func (r *BuyersProposalsDealsService) Get(name string) *BuyersProposalsDealsGetCall {
 	c := &BuyersProposalsDealsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8331,8 +8331,8 @@ type BuyersProposalsDealsListCall struct {
 // revision deals regardless if a deal is being renegotiated, see the
 // FinalizedDeals resource.
 //
-// - parent: The name of the proposal containing the deals to retrieve.
-//   Format: buyers/{accountId}/proposals/{proposalId}.
+//   - parent: The name of the proposal containing the deals to retrieve.
+//     Format: buyers/{accountId}/proposals/{proposalId}.
 func (r *BuyersProposalsDealsService) List(parent string) *BuyersProposalsDealsListCall {
 	c := &BuyersProposalsDealsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8536,9 +8536,9 @@ type BuyersProposalsDealsPatchCall struct {
 // updates), then the server can detect conflicts and reject the
 // proposed changes.
 //
-// - name: Immutable. The unique identifier of the deal. Auto-generated
-//   by the server when a deal is created. Format:
-//   buyers/{accountId}/proposals/{proposalId}/deals/{dealId}.
+//   - name: Immutable. The unique identifier of the deal. Auto-generated
+//     by the server when a deal is created. Format:
+//     buyers/{accountId}/proposals/{proposalId}/deals/{dealId}.
 func (r *BuyersProposalsDealsService) Patch(nameid string, deal *Deal) *BuyersProposalsDealsPatchCall {
 	c := &BuyersProposalsDealsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -8702,8 +8702,8 @@ type BuyersPublisherProfilesGetCall struct {
 
 // Get: Gets the requested publisher profile by name.
 //
-// - name: Name of the publisher profile. Format:
-//   `buyers/{buyerId}/publisherProfiles/{publisherProfileId}`.
+//   - name: Name of the publisher profile. Format:
+//     `buyers/{buyerId}/publisherProfiles/{publisherProfileId}`.
 func (r *BuyersPublisherProfilesService) Get(name string) *BuyersPublisherProfilesGetCall {
 	c := &BuyersPublisherProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8849,8 +8849,8 @@ type BuyersPublisherProfilesListCall struct {
 
 // List: Lists publisher profiles
 //
-// - parent: Parent that owns the collection of publisher profiles
-//   Format: `buyers/{buyerId}`.
+//   - parent: Parent that owns the collection of publisher profiles
+//     Format: `buyers/{buyerId}`.
 func (r *BuyersPublisherProfilesService) List(parent string) *BuyersPublisherProfilesListCall {
 	c := &BuyersPublisherProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

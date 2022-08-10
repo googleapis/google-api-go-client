@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/google-apps/activity/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/appsactivity/v1"
-//   ...
-//   ctx := context.Background()
-//   appsactivityService, err := appsactivity.NewService(ctx)
+//	import "google.golang.org/api/appsactivity/v1"
+//	...
+//	ctx := context.Background()
+//	appsactivityService, err := appsactivity.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   appsactivityService, err := appsactivity.NewService(ctx, option.WithAPIKey("AIza..."))
+//	appsactivityService, err := appsactivity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   appsactivityService, err := appsactivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	appsactivityService, err := appsactivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package appsactivity // import "google.golang.org/api/appsactivity/v1"
@@ -647,8 +647,9 @@ func (c *ActivitiesListCall) DriveFileId(driveFileId string) *ActivitiesListCall
 // associated combinedEvent object.
 //
 // Possible values:
-//   "driveUi" (default)
-//   "none"
+//
+//	"driveUi" (default)
+//	"none"
 func (c *ActivitiesListCall) GroupingStrategy(groupingStrategy string) *ActivitiesListCall {
 	c.urlParams_.Set("groupingStrategy", groupingStrategy)
 	return c

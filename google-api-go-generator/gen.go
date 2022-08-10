@@ -392,7 +392,9 @@ var oddVersionRE = regexp.MustCompile(`^(.+)_(v[\d\.]+)$`)
 // that the final path component of the import path doesn't look
 // like a Go identifier. This keeps the consistency that import paths
 // for the generated Go packages look like:
-//     google.golang.org/api/NAME/v<version>
+//
+//	google.golang.org/api/NAME/v<version>
+//
 // and have package NAME.
 // See https://github.com/google/google-api-go-client/issues/78
 func renameVersion(version string) string {

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/service-management/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/serviceuser/v1"
-//   ...
-//   ctx := context.Background()
-//   serviceuserService, err := serviceuser.NewService(ctx)
+//	import "google.golang.org/api/serviceuser/v1"
+//	...
+//	ctx := context.Background()
+//	serviceuserService, err := serviceuser.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   serviceuserService, err := serviceuser.NewService(ctx, option.WithScopes(serviceuser.ServiceManagementScope))
+//	serviceuserService, err := serviceuser.NewService(ctx, option.WithScopes(serviceuser.ServiceManagementScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   serviceuserService, err := serviceuser.NewService(ctx, option.WithAPIKey("AIza..."))
+//	serviceuserService, err := serviceuser.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   serviceuserService, err := serviceuser.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	serviceuserService, err := serviceuser.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package serviceuser // import "google.golang.org/api/serviceuser/v1"
@@ -430,16 +430,16 @@ func (s *AuthRequirement) MarshalJSON() ([]byte, error) {
 //
 // Example for an API targeted for external use:
 //
-//     name: calendar.googleapis.com
-//     authentication:
-//       providers:
-//       - id: google_calendar_auth
-//         jwks_uri: https://www.googleapis.com/oauth2/v1/certs
-//         issuer: https://securetoken.google.com
-//       rules:
-//       - selector: "*"
-//         requirements:
-//           provider_id: google_calendar_auth
+//	name: calendar.googleapis.com
+//	authentication:
+//	  providers:
+//	  - id: google_calendar_auth
+//	    jwks_uri: https://www.googleapis.com/oauth2/v1/certs
+//	    issuer: https://securetoken.google.com
+//	  rules:
+//	  - selector: "*"
+//	    requirements:
+//	      provider_id: google_calendar_auth
 type Authentication struct {
 	// Providers: Defines a set of authentication providers that a service
 	// supports.
@@ -537,9 +537,9 @@ func (s *AuthenticationRule) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     experimental:
-//       authorization:
-//         provider: firebaserules.googleapis.com
+//	experimental:
+//	  authorization:
+//	    provider: firebaserules.googleapis.com
 type AuthorizationConfig struct {
 	// Provider: The name of the authorization provider, such
 	// as
@@ -668,23 +668,24 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 // metrics
 // for billing:
 //
-//     monitored_resources:
-//     - type: library.googleapis.com/branch
-//       labels:
-//       - key: /city
-//         description: The city where the library branch is located
+//	monitored_resources:
+//	- type: library.googleapis.com/branch
+//	  labels:
+//	  - key: /city
+//	    description: The city where the library branch is located
+//
 // in.
-//       - key: /name
-//         description: The name of the branch.
+//   - key: /name
+//     description: The name of the branch.
 //     metrics:
-//     - name: library.googleapis.com/book/borrowed_count
-//       metric_kind: DELTA
-//       value_type: INT64
+//   - name: library.googleapis.com/book/borrowed_count
+//     metric_kind: DELTA
+//     value_type: INT64
 //     billing:
-//       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
-//         metrics:
-//         - library.googleapis.com/book/borrowed_count
+//     consumer_destinations:
+//   - monitored_resource: library.googleapis.com/branch
+//     metrics:
+//   - library.googleapis.com/book/borrowed_count
 type Billing struct {
 	// ConsumerDestinations: Billing configurations for sending metrics to
 	// the consumer project.
@@ -762,12 +763,12 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     context:
-//       rules:
-//       - selector: "*"
-//         requested:
-//         - google.rpc.context.ProjectContext
-//         - google.rpc.context.OriginContext
+//	context:
+//	  rules:
+//	  - selector: "*"
+//	    requested:
+//	    - google.rpc.context.ProjectContext
+//	    - google.rpc.context.OriginContext
 //
 // The above specifies that all methods in the API
 // request
@@ -792,14 +793,16 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     context:
-//       rules:
-//        - selector:
+//	context:
+//	  rules:
+//	   - selector:
+//
 // "google.example.library.v1.LibraryService.CreateBook"
-//          allowed_request_extensions:
-//          - google.foo.v1.NewExtension
-//          allowed_response_extensions:
-//          - google.foo.v1.NewExtension
+//
+//	allowed_request_extensions:
+//	- google.foo.v1.NewExtension
+//	allowed_response_extensions:
+//	- google.foo.v1.NewExtension
 //
 // You can also specify extension ID instead of fully qualified
 // extension name
@@ -927,10 +930,10 @@ func (s *Control) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     custom_error:
-//       types:
-//       - google.foo.v1.CustomError
-//       - google.foo.v1.AnotherError
+//	custom_error:
+//	  types:
+//	  - google.foo.v1.CustomError
+//	  - google.foo.v1.AnotherError
 type CustomError struct {
 	// Rules: The list of custom error rules that apply to individual API
 	// messages.
@@ -1043,24 +1046,26 @@ type DisableServiceRequest struct {
 //
 // Example:
 // <pre><code>documentation:
-//   summary: >
-//     The Google Calendar API gives access
-//     to most calendar features.
-//   pages:
-//   - name: Overview
-//     content: &#40;== include google/foo/overview.md ==&#41;
-//   - name: Tutorial
-//     content: &#40;== include google/foo/tutorial.md ==&#41;
-//     subpages;
-//     - name: Java
-//       content: &#40;== include google/foo/tutorial_java.md ==&#41;
-//   rules:
-//   - selector: google.calendar.Calendar.Get
-//     description: >
-//       ...
-//   - selector: google.calendar.Calendar.Put
-//     description: >
-//       ...
+//
+//	summary: >
+//	  The Google Calendar API gives access
+//	  to most calendar features.
+//	pages:
+//	- name: Overview
+//	  content: &#40;== include google/foo/overview.md ==&#41;
+//	- name: Tutorial
+//	  content: &#40;== include google/foo/tutorial.md ==&#41;
+//	  subpages;
+//	  - name: Java
+//	    content: &#40;== include google/foo/tutorial_java.md ==&#41;
+//	rules:
+//	- selector: google.calendar.Calendar.Get
+//	  description: >
+//	    ...
+//	- selector: google.calendar.Calendar.Put
+//	  description: >
+//	    ...
+//
 // </code></pre>
 // Documentation is provided in markdown syntax. In addition to
 // standard markdown features, definition lists, tables and fenced
@@ -1227,17 +1232,21 @@ type EnableServiceRequest struct {
 //
 // Example service configuration:
 //
-//     name: library-example.googleapis.com
-//     endpoints:
-//       # Below entry makes 'google.example.library.v1.Library'
-//       # API be served from endpoint address
+//	name: library-example.googleapis.com
+//	endpoints:
+//	  # Below entry makes 'google.example.library.v1.Library'
+//	  # API be served from endpoint address
+//
 // library-example.googleapis.com.
-//       # It also allows HTTP OPTIONS calls to be passed to the
+//
+//	# It also allows HTTP OPTIONS calls to be passed to the
+//
 // backend, for
-//       # it to decide whether the subsequent cross-origin request is
-//       # allowed to proceed.
-//     - name: library-example.googleapis.com
-//       allow_cors: true
+//
+//	  # it to decide whether the subsequent cross-origin request is
+//	  # allowed to proceed.
+//	- name: library-example.googleapis.com
+//	  allow_cors: true
 type Endpoint struct {
 	// Aliases: DEPRECATED: This field is no longer supported. Instead of
 	// using aliases,
@@ -1583,19 +1592,19 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     service Messaging {
-//       rpc GetMessage(GetMessageRequest) returns (Message) {
-//         option (google.api.http) = {
-//             get: "/v1/{name=messages/*}"
-//         };
-//       }
-//     }
-//     message GetMessageRequest {
-//       string name = 1; // Mapped to URL path.
-//     }
-//     message Message {
-//       string text = 1; // The resource content.
-//     }
+//	service Messaging {
+//	  rpc GetMessage(GetMessageRequest) returns (Message) {
+//	    option (google.api.http) = {
+//	        get: "/v1/{name=messages/*}"
+//	    };
+//	  }
+//	}
+//	message GetMessageRequest {
+//	  string name = 1; // Mapped to URL path.
+//	}
+//	message Message {
+//	  string text = 1; // The resource content.
+//	}
 //
 // This enables an HTTP REST to gRPC mapping as below:
 //
@@ -1610,23 +1619,27 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // request body.
 // For example:
 //
-//     service Messaging {
-//       rpc GetMessage(GetMessageRequest) returns (Message) {
-//         option (google.api.http) = {
-//             get:"/v1/messages/{message_id}"
-//         };
-//       }
-//     }
-//     message GetMessageRequest {
-//       message SubMessage {
-//         string subfield = 1;
-//       }
-//       string message_id = 1; // Mapped to URL path.
-//       int64 revision = 2;    // Mapped to URL query parameter
+//	service Messaging {
+//	  rpc GetMessage(GetMessageRequest) returns (Message) {
+//	    option (google.api.http) = {
+//	        get:"/v1/messages/{message_id}"
+//	    };
+//	  }
+//	}
+//	message GetMessageRequest {
+//	  message SubMessage {
+//	    string subfield = 1;
+//	  }
+//	  string message_id = 1; // Mapped to URL path.
+//	  int64 revision = 2;    // Mapped to URL query parameter
+//
 // `revision`.
-//       SubMessage sub = 3;    // Mapped to URL query parameter
+//
+//	SubMessage sub = 3;    // Mapped to URL query parameter
+//
 // `sub.subfield`.
-//     }
+//
+//	}
 //
 // This enables a HTTP JSON to RPC mapping as below:
 //
@@ -1653,18 +1666,18 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // specifies the mapping. Consider a REST update method on the
 // message resource collection:
 //
-//     service Messaging {
-//       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
-//         option (google.api.http) = {
-//           patch: "/v1/messages/{message_id}"
-//           body: "message"
-//         };
-//       }
-//     }
-//     message UpdateMessageRequest {
-//       string message_id = 1; // mapped to the URL
-//       Message message = 2;   // mapped to the body
-//     }
+//	service Messaging {
+//	  rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
+//	    option (google.api.http) = {
+//	      patch: "/v1/messages/{message_id}"
+//	      body: "message"
+//	    };
+//	  }
+//	}
+//	message UpdateMessageRequest {
+//	  string message_id = 1; // mapped to the URL
+//	  Message message = 2;   // mapped to the body
+//	}
 //
 // The following HTTP JSON to RPC mapping is enabled, where
 // the
@@ -1685,19 +1698,18 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // of
 // the update method:
 //
-//     service Messaging {
-//       rpc UpdateMessage(Message) returns (Message) {
-//         option (google.api.http) = {
-//           patch: "/v1/messages/{message_id}"
-//           body: "*"
-//         };
-//       }
-//     }
-//     message Message {
-//       string message_id = 1;
-//       string text = 2;
-//     }
-//
+//	service Messaging {
+//	  rpc UpdateMessage(Message) returns (Message) {
+//	    option (google.api.http) = {
+//	      patch: "/v1/messages/{message_id}"
+//	      body: "*"
+//	    };
+//	  }
+//	}
+//	message Message {
+//	  string message_id = 1;
+//	  string text = 2;
+//	}
 //
 // The following HTTP JSON to RPC mapping is enabled:
 //
@@ -1719,20 +1731,20 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // using
 // the `additional_bindings` option. Example:
 //
-//     service Messaging {
-//       rpc GetMessage(GetMessageRequest) returns (Message) {
-//         option (google.api.http) = {
-//           get: "/v1/messages/{message_id}"
-//           additional_bindings {
-//             get: "/v1/users/{user_id}/messages/{message_id}"
-//           }
-//         };
-//       }
-//     }
-//     message GetMessageRequest {
-//       string message_id = 1;
-//       string user_id = 2;
-//     }
+//	service Messaging {
+//	  rpc GetMessage(GetMessageRequest) returns (Message) {
+//	    option (google.api.http) = {
+//	      get: "/v1/messages/{message_id}"
+//	      additional_bindings {
+//	        get: "/v1/users/{user_id}/messages/{message_id}"
+//	      }
+//	    };
+//	  }
+//	}
+//	message GetMessageRequest {
+//	  string message_id = 1;
+//	  string user_id = 2;
+//	}
 //
 // This enables the following two alternative HTTP JSON to RPC
 // mappings:
@@ -1747,33 +1759,45 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // 1. Leaf request fields (recursive expansion nested messages in the
 // request
-//    message) are classified into three categories:
-//    - Fields referred by the path template. They are passed via the
+//
+//	message) are classified into three categories:
+//	- Fields referred by the path template. They are passed via the
+//
 // URL path.
-//    - Fields referred by the HttpRule.body. They are passed via the
+//   - Fields referred by the HttpRule.body. They are passed via the
+//
 // HTTP
-//      request body.
-//    - All other fields are passed via the URL query parameters, and
+//
+//	  request body.
+//	- All other fields are passed via the URL query parameters, and
+//
 // the
-//      parameter name is the field path in the request message. A
+//
+//	parameter name is the field path in the request message. A
+//
 // repeated
-//      field can be represented as multiple query parameters under the
+//
+//	field can be represented as multiple query parameters under the
+//
 // same
-//      name.
-//  2. If HttpRule.body is "*", there is no URL query parameter, all
+//
+//	    name.
+//	2. If HttpRule.body is "*", there is no URL query parameter, all
+//
 // fields
-//     are passed via URL path and HTTP request body.
-//  3. If HttpRule.body is omitted, there is no HTTP request body, all
-//     fields are passed via URL path and URL query parameters.
+//
+//	   are passed via URL path and HTTP request body.
+//	3. If HttpRule.body is omitted, there is no HTTP request body, all
+//	   fields are passed via URL path and URL query parameters.
 //
 // ### Path template syntax
 //
-//     Template = "/" Segments [ Verb ] ;
-//     Segments = Segment { "/" Segment } ;
-//     Segment  = "*" | "**" | LITERAL | Variable ;
-//     Variable = "{" FieldPath [ "=" Segments ] "}" ;
-//     FieldPath = IDENT { "." IDENT } ;
-//     Verb     = ":" LITERAL ;
+//	Template = "/" Segments [ Verb ] ;
+//	Segments = Segment { "/" Segment } ;
+//	Segment  = "*" | "**" | LITERAL | Variable ;
+//	Variable = "{" FieldPath [ "=" Segments ] "}" ;
+//	FieldPath = IDENT { "." IDENT } ;
+//	Verb     = ":" LITERAL ;
 //
 // The syntax `*` matches a single URL path segment. The syntax `**`
 // matches
@@ -1848,11 +1872,11 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     http:
-//       rules:
-//         # Selects a gRPC method and applies HttpRule to it.
-//         - selector: example.v1.Messaging.GetMessage
-//           get: /v1/messages/{message_id}/{sub.subfield}
+//	http:
+//	  rules:
+//	    # Selects a gRPC method and applies HttpRule to it.
+//	    - selector: example.v1.Messaging.GetMessage
+//	      get: /v1/messages/{message_id}/{sub.subfield}
 //
 // ## Special notes
 //
@@ -2062,13 +2086,15 @@ func (s *ListEnabledServicesResponse) MarshalJSON() ([]byte, error) {
 
 // LogDescriptor: A description of a log type. Example in YAML format:
 //
-//     - name: library.googleapis.com/activity_history
-//       description: The history of borrowing and returning library
+//   - name: library.googleapis.com/activity_history
+//     description: The history of borrowing and returning library
+//
 // items.
-//       display_name: Activity
-//       labels:
-//       - key: /customer_id
-//         description: Identifier of a library customer
+//
+//	display_name: Activity
+//	labels:
+//	- key: /customer_id
+//	  description: Identifier of a library customer
 type LogDescriptor struct {
 	// Description: A human-readable description of this log. This
 	// information appears in
@@ -2128,29 +2154,30 @@ func (s *LogDescriptor) MarshalJSON() ([]byte, error) {
 // the
 // `purchase_history` log is only sent to the producer project.
 //
-//     monitored_resources:
-//     - type: library.googleapis.com/branch
-//       labels:
-//       - key: /city
-//         description: The city where the library branch is located
+//	monitored_resources:
+//	- type: library.googleapis.com/branch
+//	  labels:
+//	  - key: /city
+//	    description: The city where the library branch is located
+//
 // in.
-//       - key: /name
-//         description: The name of the branch.
+//   - key: /name
+//     description: The name of the branch.
 //     logs:
-//     - name: activity_history
-//       labels:
-//       - key: /customer_id
-//     - name: purchase_history
+//   - name: activity_history
+//     labels:
+//   - key: /customer_id
+//   - name: purchase_history
 //     logging:
-//       producer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
-//         logs:
-//         - activity_history
-//         - purchase_history
-//       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
-//         logs:
-//         - activity_history
+//     producer_destinations:
+//   - monitored_resource: library.googleapis.com/branch
+//     logs:
+//   - activity_history
+//   - purchase_history
+//     consumer_destinations:
+//   - monitored_resource: library.googleapis.com/branch
+//     logs:
+//   - activity_history
 type Logging struct {
 	// ConsumerDestinations: Logging configurations for sending logs to the
 	// consumer project.
@@ -2602,45 +2629,45 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // but
 // documentation and options are inherited as follows:
 //
-// - If after comment and whitespace stripping, the documentation
-//   string of the redeclared method is empty, it will be inherited
-//   from the original method.
+//   - If after comment and whitespace stripping, the documentation
+//     string of the redeclared method is empty, it will be inherited
+//     from the original method.
 //
-// - Each annotation belonging to the service config (http,
-//   visibility) which is not set in the redeclared method will be
-//   inherited.
+//   - Each annotation belonging to the service config (http,
+//     visibility) which is not set in the redeclared method will be
+//     inherited.
 //
-// - If an http annotation is inherited, the path pattern will be
-//   modified as follows. Any version prefix will be replaced by the
-//   version of the including interface plus the root path if
-//   specified.
+//   - If an http annotation is inherited, the path pattern will be
+//     modified as follows. Any version prefix will be replaced by the
+//     version of the including interface plus the root path if
+//     specified.
 //
 // Example of a simple mixin:
 //
-//     package google.acl.v1;
-//     service AccessControl {
-//       // Get the underlying ACL object.
-//       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get = "/v1/{resource=**}:getAcl";
-//       }
-//     }
+//	package google.acl.v1;
+//	service AccessControl {
+//	  // Get the underlying ACL object.
+//	  rpc GetAcl(GetAclRequest) returns (Acl) {
+//	    option (google.api.http).get = "/v1/{resource=**}:getAcl";
+//	  }
+//	}
 //
-//     package google.storage.v2;
-//     service Storage {
-//       //       rpc GetAcl(GetAclRequest) returns (Acl);
+//	package google.storage.v2;
+//	service Storage {
+//	  //       rpc GetAcl(GetAclRequest) returns (Acl);
 //
-//       // Get a data record.
-//       rpc GetData(GetDataRequest) returns (Data) {
-//         option (google.api.http).get = "/v2/{resource=**}";
-//       }
-//     }
+//	  // Get a data record.
+//	  rpc GetData(GetDataRequest) returns (Data) {
+//	    option (google.api.http).get = "/v2/{resource=**}";
+//	  }
+//	}
 //
 // Example of a mixin configuration:
 //
-//     apis:
-//     - name: google.storage.v2.Storage
-//       mixins:
-//       - name: google.acl.v1.AccessControl
+//	apis:
+//	- name: google.storage.v2.Storage
+//	  mixins:
+//	  - name: google.acl.v1.AccessControl
 //
 // The mixin construct implies that all methods in `AccessControl`
 // are
@@ -2650,13 +2677,13 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // inherting
 // documentation and annotations as follows:
 //
-//     service Storage {
-//       // Get the underlying ACL object.
-//       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get = "/v2/{resource=**}:getAcl";
-//       }
-//       ...
-//     }
+//	service Storage {
+//	  // Get the underlying ACL object.
+//	  rpc GetAcl(GetAclRequest) returns (Acl) {
+//	    option (google.api.http).get = "/v2/{resource=**}:getAcl";
+//	  }
+//	  ...
+//	}
 //
 // Note how the version in the path pattern changed from `v1` to
 // `v2`.
@@ -2665,22 +2692,24 @@ func (s *MetricRule) MarshalJSON() ([]byte, error) {
 // a
 // relative path under which inherited HTTP paths are placed. Example:
 //
-//     apis:
-//     - name: google.storage.v2.Storage
-//       mixins:
-//       - name: google.acl.v1.AccessControl
-//         root: acls
+//	apis:
+//	- name: google.storage.v2.Storage
+//	  mixins:
+//	  - name: google.acl.v1.AccessControl
+//	    root: acls
 //
 // This implies the following inherited HTTP annotation:
 //
-//     service Storage {
-//       // Get the underlying ACL object.
-//       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get =
+//	service Storage {
+//	  // Get the underlying ACL object.
+//	  rpc GetAcl(GetAclRequest) returns (Acl) {
+//	    option (google.api.http).get =
+//
 // "/v2/acls/{resource=**}:getAcl";
-//       }
-//       ...
-//     }
+//
+//	  }
+//	  ...
+//	}
 type Mixin struct {
 	// Name: The fully qualified name of the interface which is included.
 	Name string `json:"name,omitempty"`
@@ -2805,35 +2834,36 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 // the
 // consumer project.
 //
-//     monitored_resources:
-//     - type: library.googleapis.com/branch
-//       labels:
-//       - key: /city
-//         description: The city where the library branch is located
+//	monitored_resources:
+//	- type: library.googleapis.com/branch
+//	  labels:
+//	  - key: /city
+//	    description: The city where the library branch is located
+//
 // in.
-//       - key: /name
-//         description: The name of the branch.
+//   - key: /name
+//     description: The name of the branch.
 //     metrics:
-//     - name: library.googleapis.com/book/returned_count
-//       metric_kind: DELTA
-//       value_type: INT64
-//       labels:
-//       - key: /customer_id
-//     - name: library.googleapis.com/book/overdue_count
-//       metric_kind: GAUGE
-//       value_type: INT64
-//       labels:
-//       - key: /customer_id
+//   - name: library.googleapis.com/book/returned_count
+//     metric_kind: DELTA
+//     value_type: INT64
+//     labels:
+//   - key: /customer_id
+//   - name: library.googleapis.com/book/overdue_count
+//     metric_kind: GAUGE
+//     value_type: INT64
+//     labels:
+//   - key: /customer_id
 //     monitoring:
-//       producer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
-//         metrics:
-//         - library.googleapis.com/book/returned_count
-//       consumer_destinations:
-//       - monitored_resource: library.googleapis.com/branch
-//         metrics:
-//         - library.googleapis.com/book/returned_count
-//         - library.googleapis.com/book/overdue_count
+//     producer_destinations:
+//   - monitored_resource: library.googleapis.com/branch
+//     metrics:
+//   - library.googleapis.com/book/returned_count
+//     consumer_destinations:
+//   - monitored_resource: library.googleapis.com/branch
+//     metrics:
+//   - library.googleapis.com/book/returned_count
+//   - library.googleapis.com/book/overdue_count
 type Monitoring struct {
 	// ConsumerDestinations: Monitoring configurations for sending metrics
 	// to the consumer project.
@@ -3242,54 +3272,60 @@ func (s *PublishedService) MarshalJSON() ([]byte, error) {
 // usage.
 //
 // The quota configuration works this way:
-// - The service configuration defines a set of metrics.
-// - For API calls, the quota.metric_rules maps methods to metrics with
-//   corresponding costs.
-// - The quota.limits defines limits on the metrics, which will be used
+//   - The service configuration defines a set of metrics.
+//   - For API calls, the quota.metric_rules maps methods to metrics with
+//     corresponding costs.
+//   - The quota.limits defines limits on the metrics, which will be used
+//
 // for
-//   quota checks at runtime.
+//
+//	quota checks at runtime.
 //
 // An example quota configuration in yaml format:
 //
-//    quota:
-//      limits:
+//	quota:
+//	  limits:
 //
-//      - name: apiWriteQpsPerProject
-//        metric: library.googleapis.com/write_calls
-//        unit: "1/min/{project}"  # rate limit for consumer projects
-//        values:
-//          STANDARD: 10000
+//	  - name: apiWriteQpsPerProject
+//	    metric: library.googleapis.com/write_calls
+//	    unit: "1/min/{project}"  # rate limit for consumer projects
+//	    values:
+//	      STANDARD: 10000
 //
 //
-//      # The metric rules bind all methods to the read_calls metric,
-//      # except for the UpdateBook and DeleteBook methods. These two
+//	  # The metric rules bind all methods to the read_calls metric,
+//	  # except for the UpdateBook and DeleteBook methods. These two
+//
 // methods
-//      # are mapped to the write_calls metric, with the UpdateBook
+//
+//	# are mapped to the write_calls metric, with the UpdateBook
+//
 // method
-//      # consuming at twice rate as the DeleteBook method.
-//      metric_rules:
-//      - selector: "*"
-//        metric_costs:
-//          library.googleapis.com/read_calls: 1
-//      - selector: google.example.library.v1.LibraryService.UpdateBook
-//        metric_costs:
-//          library.googleapis.com/write_calls: 2
-//      - selector: google.example.library.v1.LibraryService.DeleteBook
-//        metric_costs:
-//          library.googleapis.com/write_calls: 1
 //
-//  Corresponding Metric definition:
+//	    # consuming at twice rate as the DeleteBook method.
+//	    metric_rules:
+//	    - selector: "*"
+//	      metric_costs:
+//	        library.googleapis.com/read_calls: 1
+//	    - selector: google.example.library.v1.LibraryService.UpdateBook
+//	      metric_costs:
+//	        library.googleapis.com/write_calls: 2
+//	    - selector: google.example.library.v1.LibraryService.DeleteBook
+//	      metric_costs:
+//	        library.googleapis.com/write_calls: 1
 //
-//      metrics:
-//      - name: library.googleapis.com/read_calls
-//        display_name: Read requests
-//        metric_kind: DELTA
-//        value_type: INT64
+//	Corresponding Metric definition:
 //
-//      - name: library.googleapis.com/write_calls
-//        display_name: Write requests
-//        metric_kind: DELTA
-//        value_type: INT64
+//	    metrics:
+//	    - name: library.googleapis.com/read_calls
+//	      display_name: Read requests
+//	      metric_kind: DELTA
+//	      value_type: INT64
+//
+//	    - name: library.googleapis.com/write_calls
+//	      display_name: Write requests
+//	      metric_kind: DELTA
+//	      value_type: INT64
 type Quota struct {
 	// Limits: List of `QuotaLimit` definitions for the service.
 	Limits []*QuotaLimit `json:"limits,omitempty"`
@@ -3514,21 +3550,21 @@ func (s *SearchServicesResponse) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     type: google.api.Service
-//     config_version: 3
-//     name: calendar.googleapis.com
-//     title: Google Calendar API
-//     apis:
-//     - name: google.calendar.v3.Calendar
-//     authentication:
-//       providers:
-//       - id: google_calendar_auth
-//         jwks_uri: https://www.googleapis.com/oauth2/v1/certs
-//         issuer: https://securetoken.google.com
-//       rules:
-//       - selector: "*"
-//         requirements:
-//           provider_id: google_calendar_auth
+//	type: google.api.Service
+//	config_version: 3
+//	name: calendar.googleapis.com
+//	title: Google Calendar API
+//	apis:
+//	- name: google.calendar.v3.Calendar
+//	authentication:
+//	  providers:
+//	  - id: google_calendar_auth
+//	    jwks_uri: https://www.googleapis.com/oauth2/v1/certs
+//	    issuer: https://securetoken.google.com
+//	  rules:
+//	  - selector: "*"
+//	    requirements:
+//	      provider_id: google_calendar_auth
 type Service struct {
 	// Apis: A list of API interfaces exported by this service. Only the
 	// `name` field
@@ -3806,29 +3842,41 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 //
 // - Partial errors. If a service needs to return partial errors to the
 // client,
-//     it may embed the `Status` in the normal response to indicate the
+//
+//	it may embed the `Status` in the normal response to indicate the
+//
 // partial
-//     errors.
+//
+//	errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting.
+//
+//	have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
-//     `Status` message should be used directly inside batch response,
+//
+//	`Status` message should be used directly inside batch response,
+//
 // one for
-//     each error sub-response.
+//
+//	each error sub-response.
 //
 // - Asynchronous operations. If an API call embeds asynchronous
 // operation
-//     results in its response, the status of those operations should
+//
+//	results in its response, the status of those operations should
+//
 // be
-//     represented directly using the `Status` message.
+//
+//	represented directly using the `Status` message.
 //
 // - Logging. If some API errors are stored in logs, the message
 // `Status` could
-//     be used directly after any stripping needed for security/privacy
+//
+//	be used directly after any stripping needed for security/privacy
+//
 // reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
@@ -4174,7 +4222,6 @@ func (s *Usage) MarshalJSON() ([]byte, error) {
 //
 // NOTE: Under development.
 //
-//
 // Use this rule to configure unregistered calls for the service.
 // Unregistered
 // calls are calls that do not contain consumer project
@@ -4189,18 +4236,20 @@ func (s *Usage) MarshalJSON() ([]byte, error) {
 // Example of an API that wants to allow unregistered calls for entire
 // service.
 //
-//     usage:
-//       rules:
-//       - selector: "*"
-//         allow_unregistered_calls: true
+//	usage:
+//	  rules:
+//	  - selector: "*"
+//	    allow_unregistered_calls: true
 //
 // Example of a method that wants to allow unregistered calls.
 //
-//     usage:
-//       rules:
-//       - selector:
+//	usage:
+//	  rules:
+//	  - selector:
+//
 // "google.example.library.v1.LibraryService.CreateBook"
-//         allow_unregistered_calls: true
+//
+//	allow_unregistered_calls: true
 type UsageRule struct {
 	// AllowUnregisteredCalls: If true, the selected method allows
 	// unregistered calls, e.g. calls

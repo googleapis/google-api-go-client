@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/vault
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/vault/v1"
-//   ...
-//   ctx := context.Background()
-//   vaultService, err := vault.NewService(ctx)
+//	import "google.golang.org/api/vault/v1"
+//	...
+//	ctx := context.Background()
+//	vaultService, err := vault.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   vaultService, err := vault.NewService(ctx, option.WithScopes(vault.EdiscoveryReadonlyScope))
+//	vaultService, err := vault.NewService(ctx, option.WithScopes(vault.EdiscoveryReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   vaultService, err := vault.NewService(ctx, option.WithAPIKey("AIza..."))
+//	vaultService, err := vault.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   vaultService, err := vault.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	vaultService, err := vault.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package vault // import "google.golang.org/api/vault/v1"
@@ -3298,11 +3298,17 @@ func (r *MattersService) Get(matterId string) *MattersGetCall {
 // information about the matter to return in the response.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+//
+//	"VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+//
 // **BASIC**.
-//   "BASIC" - Returns the matter ID, name, description, and state.
+//
+//	"BASIC" - Returns the matter ID, name, description, and state.
+//
 // Default choice.
-//   "FULL" - Returns the basic details and a list of matter owners and
+//
+//	"FULL" - Returns the basic details and a list of matter owners and
+//
 // collaborators (see
 // [MatterPermissions](https://developers.google.com/vault/reference/rest
 // /v1/matters#matterpermission)).
@@ -3486,10 +3492,11 @@ func (c *MattersListCall) PageToken(pageToken string) *MattersListCall {
 // with the specified state. The default lists matters of all states.
 //
 // Possible values:
-//   "STATE_UNSPECIFIED" - The matter has no specified state.
-//   "OPEN" - The matter is open.
-//   "CLOSED" - The matter is closed.
-//   "DELETED" - The matter is deleted.
+//
+//	"STATE_UNSPECIFIED" - The matter has no specified state.
+//	"OPEN" - The matter is open.
+//	"CLOSED" - The matter is closed.
+//	"DELETED" - The matter is deleted.
 func (c *MattersListCall) State(state string) *MattersListCall {
 	c.urlParams_.Set("state", state)
 	return c
@@ -3499,11 +3506,17 @@ func (c *MattersListCall) State(state string) *MattersListCall {
 // information about the matter to return in response.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+//
+//	"VIEW_UNSPECIFIED" - The amount of detail is unspecified. Same as
+//
 // **BASIC**.
-//   "BASIC" - Returns the matter ID, name, description, and state.
+//
+//	"BASIC" - Returns the matter ID, name, description, and state.
+//
 // Default choice.
-//   "FULL" - Returns the basic details and a list of matter owners and
+//
+//	"FULL" - Returns the basic details and a list of matter owners and
+//
 // collaborators (see
 // [MatterPermissions](https://developers.google.com/vault/reference/rest
 // /v1/matters#matterpermission)).
@@ -5357,10 +5370,14 @@ func (r *MattersHoldsService) Get(matterId string, holdId string) *MattersHoldsG
 // return for a hold.
 //
 // Possible values:
-//   "HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
-//   "BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+//
+//	"HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
+//	"BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+//
 // query.
-//   "FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+//
+//	"FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+//
 // entities the hold applies to, such as accounts or organizational
 // unit.
 func (c *MattersHoldsGetCall) View(view string) *MattersHoldsGetCall {
@@ -5557,10 +5574,14 @@ func (c *MattersHoldsListCall) PageToken(pageToken string) *MattersHoldsListCall
 // return for a hold.
 //
 // Possible values:
-//   "HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
-//   "BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+//
+//	"HOLD_VIEW_UNSPECIFIED" - Not specified. Defaults to **FULL_HOLD**.
+//	"BASIC_HOLD" - Returns the hold ID, name, update time, service, and
+//
 // query.
-//   "FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+//
+//	"FULL_HOLD" - Returns all details of **BASIC_HOLD** and the
+//
 // entities the hold applies to, such as accounts or organizational
 // unit.
 func (c *MattersHoldsListCall) View(view string) *MattersHoldsListCall {

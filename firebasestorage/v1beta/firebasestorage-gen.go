@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/storage
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firebasestorage/v1beta"
-//   ...
-//   ctx := context.Background()
-//   firebasestorageService, err := firebasestorage.NewService(ctx)
+//	import "google.golang.org/api/firebasestorage/v1beta"
+//	...
+//	ctx := context.Background()
+//	firebasestorageService, err := firebasestorage.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firebasestorageService, err := firebasestorage.NewService(ctx, option.WithScopes(firebasestorage.FirebaseScope))
+//	firebasestorageService, err := firebasestorage.NewService(ctx, option.WithScopes(firebasestorage.FirebaseScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firebasestorageService, err := firebasestorage.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firebasestorageService, err := firebasestorage.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firebasestorageService, err := firebasestorage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firebasestorageService, err := firebasestorage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebasestorage // import "google.golang.org/api/firebasestorage/v1beta"
@@ -404,9 +404,9 @@ type ProjectsBucketsAddFirebaseCall struct {
 // AddFirebase: Links a Google Cloud Storage bucket to a Firebase
 // project.
 //
-// - bucket: Resource name of the bucket, mirrors the ID of the
-//   underlying Google Cloud Storage bucket,
-//   `projects/{project_number}/buckets/{bucket_id}`.
+//   - bucket: Resource name of the bucket, mirrors the ID of the
+//     underlying Google Cloud Storage bucket,
+//     `projects/{project_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) AddFirebase(bucket string, addfirebaserequest *AddFirebaseRequest) *ProjectsBucketsAddFirebaseCall {
 	c := &ProjectsBucketsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -549,9 +549,9 @@ type ProjectsBucketsGetCall struct {
 
 // Get: Gets a single linked storage bucket.
 //
-// - name: Resource name of the bucket, mirrors the ID of the underlying
-//   Google Cloud Storage bucket,
-//   `projects/{project_number}/buckets/{bucket_id}`.
+//   - name: Resource name of the bucket, mirrors the ID of the underlying
+//     Google Cloud Storage bucket,
+//     `projects/{project_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) Get(name string) *ProjectsBucketsGetCall {
 	c := &ProjectsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -698,8 +698,8 @@ type ProjectsBucketsListCall struct {
 
 // List: Lists the linked storage buckets for a project.
 //
-// - parent: Resource name of the parent Firebase project,
-//   `projects/{project_number}`.
+//   - parent: Resource name of the parent Firebase project,
+//     `projects/{project_number}`.
 func (r *ProjectsBucketsService) List(parent string) *ProjectsBucketsListCall {
 	c := &ProjectsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -896,9 +896,9 @@ type ProjectsBucketsRemoveFirebaseCall struct {
 // RemoveFirebase: Unlinks a linked Google Cloud Storage bucket from a
 // Firebase project.
 //
-// - bucket: Resource name of the bucket, mirrors the ID of the
-//   underlying Google Cloud Storage bucket,
-//   `projects/{project_number}/buckets/{bucket_id}`.
+//   - bucket: Resource name of the bucket, mirrors the ID of the
+//     underlying Google Cloud Storage bucket,
+//     `projects/{project_number}/buckets/{bucket_id}`.
 func (r *ProjectsBucketsService) RemoveFirebase(bucket string, removefirebaserequest *RemoveFirebaseRequest) *ProjectsBucketsRemoveFirebaseCall {
 	c := &ProjectsBucketsRemoveFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket

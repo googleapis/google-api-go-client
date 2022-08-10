@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/apigee/docs/api-hub/what-is-api-hub
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/apigeeregistry/v1"
-//   ...
-//   ctx := context.Background()
-//   apigeeregistryService, err := apigeeregistry.NewService(ctx)
+//	import "google.golang.org/api/apigeeregistry/v1"
+//	...
+//	ctx := context.Background()
+//	apigeeregistryService, err := apigeeregistry.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   apigeeregistryService, err := apigeeregistry.NewService(ctx, option.WithAPIKey("AIza..."))
+//	apigeeregistryService, err := apigeeregistry.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   apigeeregistryService, err := apigeeregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	apigeeregistryService, err := apigeeregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package apigeeregistry // import "google.golang.org/api/apigeeregistry/v1"
@@ -2053,8 +2053,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2261,8 +2261,8 @@ type ProjectsLocationsApisCreateCall struct {
 
 // Create: CreateApi creates a specified API.
 //
-// - parent: The parent, which owns this collection of APIs. Format:
-//   projects/*/locations/*.
+//   - parent: The parent, which owns this collection of APIs. Format:
+//     projects/*/locations/*.
 func (r *ProjectsLocationsApisService) Create(parent string, api *Api) *ProjectsLocationsApisCreateCall {
 	c := &ProjectsLocationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2419,8 +2419,8 @@ type ProjectsLocationsApisDeleteCall struct {
 // Delete: DeleteApi removes a specified API and all of the resources
 // that it owns.
 //
-// - name: The name of the API to delete. Format:
-//   projects/*/locations/*/apis/*.
+//   - name: The name of the API to delete. Format:
+//     projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisService) Delete(name string) *ProjectsLocationsApisDeleteCall {
 	c := &ProjectsLocationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2566,8 +2566,8 @@ type ProjectsLocationsApisGetCall struct {
 
 // Get: GetApi returns a specified API.
 //
-// - name: The name of the API to retrieve. Format:
-//   projects/*/locations/*/apis/*.
+//   - name: The name of the API to retrieve. Format:
+//     projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisService) Get(name string) *ProjectsLocationsApisGetCall {
 	c := &ProjectsLocationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2715,10 +2715,10 @@ type ProjectsLocationsApisGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisService) GetIamPolicy(resource string) *ProjectsLocationsApisGetIamPolicyCall {
 	c := &ProjectsLocationsApisGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2888,8 +2888,8 @@ type ProjectsLocationsApisListCall struct {
 
 // List: ListApis returns matching APIs.
 //
-// - parent: The parent, which owns this collection of APIs. Format:
-//   projects/*/locations/*.
+//   - parent: The parent, which owns this collection of APIs. Format:
+//     projects/*/locations/*.
 func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApisListCall {
 	c := &ProjectsLocationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3271,10 +3271,10 @@ type ProjectsLocationsApisSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisSetIamPolicyCall {
 	c := &ProjectsLocationsApisSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3421,10 +3421,10 @@ type ProjectsLocationsApisTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisTestIamPermissionsCall {
 	c := &ProjectsLocationsApisTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3566,8 +3566,8 @@ type ProjectsLocationsApisArtifactsCreateCall struct {
 
 // Create: CreateArtifact creates a specified artifact.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisArtifactsService) Create(parent string, artifact *Artifact) *ProjectsLocationsApisArtifactsCreateCall {
 	c := &ProjectsLocationsApisArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3723,8 +3723,8 @@ type ProjectsLocationsApisArtifactsDeleteCall struct {
 
 // Delete: DeleteArtifact removes a specified artifact.
 //
-// - name: The name of the artifact to delete. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to delete. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisArtifactsService) Delete(name string) *ProjectsLocationsApisArtifactsDeleteCall {
 	c := &ProjectsLocationsApisArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3857,8 +3857,8 @@ type ProjectsLocationsApisArtifactsGetCall struct {
 
 // Get: GetArtifact returns a specified artifact.
 //
-// - name: The name of the artifact to retrieve. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to retrieve. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisArtifactsService) Get(name string) *ProjectsLocationsApisArtifactsGetCall {
 	c := &ProjectsLocationsApisArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4007,8 +4007,8 @@ type ProjectsLocationsApisArtifactsGetContentsCall struct {
 // behavior is to return the artifact uncompressed (the mime_type
 // response field indicates the exact format returned).
 //
-// - name: The name of the artifact whose contents should be retrieved.
-//   Format: {parent}/artifacts/*.
+//   - name: The name of the artifact whose contents should be retrieved.
+//     Format: {parent}/artifacts/*.
 func (r *ProjectsLocationsApisArtifactsService) GetContents(name string) *ProjectsLocationsApisArtifactsGetContentsCall {
 	c := &ProjectsLocationsApisArtifactsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4156,10 +4156,10 @@ type ProjectsLocationsApisArtifactsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisArtifactsService) GetIamPolicy(resource string) *ProjectsLocationsApisArtifactsGetIamPolicyCall {
 	c := &ProjectsLocationsApisArtifactsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4329,8 +4329,8 @@ type ProjectsLocationsApisArtifactsListCall struct {
 
 // List: ListArtifacts returns matching artifacts.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisArtifactsService) List(parent string) *ProjectsLocationsApisArtifactsListCall {
 	c := &ProjectsLocationsApisArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4685,10 +4685,10 @@ type ProjectsLocationsApisArtifactsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisArtifactsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisArtifactsSetIamPolicyCall {
 	c := &ProjectsLocationsApisArtifactsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4835,10 +4835,10 @@ type ProjectsLocationsApisArtifactsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisArtifactsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisArtifactsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisArtifactsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4980,8 +4980,8 @@ type ProjectsLocationsApisDeploymentsCreateCall struct {
 
 // Create: CreateApiDeployment creates a specified deployment.
 //
-// - parent: The parent, which owns this collection of deployments.
-//   Format: projects/*/locations/*/apis/*.
+//   - parent: The parent, which owns this collection of deployments.
+//     Format: projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisDeploymentsService) Create(parent string, apideployment *ApiDeployment) *ProjectsLocationsApisDeploymentsCreateCall {
 	c := &ProjectsLocationsApisDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5138,8 +5138,8 @@ type ProjectsLocationsApisDeploymentsDeleteCall struct {
 // Delete: DeleteApiDeployment removes a specified deployment, all
 // revisions, and all child resources (e.g. artifacts).
 //
-// - name: The name of the deployment to delete. Format:
-//   projects/*/locations/*/apis/*/deployments/*.
+//   - name: The name of the deployment to delete. Format:
+//     projects/*/locations/*/apis/*/deployments/*.
 func (r *ProjectsLocationsApisDeploymentsService) Delete(name string) *ProjectsLocationsApisDeploymentsDeleteCall {
 	c := &ProjectsLocationsApisDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5285,10 +5285,10 @@ type ProjectsLocationsApisDeploymentsDeleteRevisionCall struct {
 // DeleteRevision: DeleteApiDeploymentRevision deletes a revision of a
 // deployment.
 //
-// - name: The name of the deployment revision to be deleted, with a
-//   revision ID explicitly included. Example:
-//   projects/sample/locations/global/apis/petstore/deployments/prod@c7cf
-//   a2a8.
+//   - name: The name of the deployment revision to be deleted, with a
+//     revision ID explicitly included. Example:
+//     projects/sample/locations/global/apis/petstore/deployments/prod@c7cf
+//     a2a8.
 func (r *ProjectsLocationsApisDeploymentsService) DeleteRevision(name string) *ProjectsLocationsApisDeploymentsDeleteRevisionCall {
 	c := &ProjectsLocationsApisDeploymentsDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5421,8 +5421,8 @@ type ProjectsLocationsApisDeploymentsGetCall struct {
 
 // Get: GetApiDeployment returns a specified deployment.
 //
-// - name: The name of the deployment to retrieve. Format:
-//   projects/*/locations/*/apis/*/deployments/*.
+//   - name: The name of the deployment to retrieve. Format:
+//     projects/*/locations/*/apis/*/deployments/*.
 func (r *ProjectsLocationsApisDeploymentsService) Get(name string) *ProjectsLocationsApisDeploymentsGetCall {
 	c := &ProjectsLocationsApisDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5570,10 +5570,10 @@ type ProjectsLocationsApisDeploymentsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisDeploymentsService) GetIamPolicy(resource string) *ProjectsLocationsApisDeploymentsGetIamPolicyCall {
 	c := &ProjectsLocationsApisDeploymentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5743,8 +5743,8 @@ type ProjectsLocationsApisDeploymentsListCall struct {
 
 // List: ListApiDeployments returns matching deployments.
 //
-// - parent: The parent, which owns this collection of deployments.
-//   Format: projects/*/locations/*/apis/*.
+//   - parent: The parent, which owns this collection of deployments.
+//     Format: projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisDeploymentsService) List(parent string) *ProjectsLocationsApisDeploymentsListCall {
 	c := &ProjectsLocationsApisDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6468,10 +6468,10 @@ type ProjectsLocationsApisDeploymentsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisDeploymentsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisDeploymentsSetIamPolicyCall {
 	c := &ProjectsLocationsApisDeploymentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6614,8 +6614,8 @@ type ProjectsLocationsApisDeploymentsTagRevisionCall struct {
 // TagRevision: TagApiDeploymentRevision adds a tag to a specified
 // revision of a deployment.
 //
-// - name: The name of the deployment to be tagged, including the
-//   revision ID.
+//   - name: The name of the deployment to be tagged, including the
+//     revision ID.
 func (r *ProjectsLocationsApisDeploymentsService) TagRevision(name string, tagapideploymentrevisionrequest *TagApiDeploymentRevisionRequest) *ProjectsLocationsApisDeploymentsTagRevisionCall {
 	c := &ProjectsLocationsApisDeploymentsTagRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6762,10 +6762,10 @@ type ProjectsLocationsApisDeploymentsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisDeploymentsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisDeploymentsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisDeploymentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6907,8 +6907,8 @@ type ProjectsLocationsApisDeploymentsArtifactsCreateCall struct {
 
 // Create: CreateArtifact creates a specified artifact.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisDeploymentsArtifactsService) Create(parent string, artifact *Artifact) *ProjectsLocationsApisDeploymentsArtifactsCreateCall {
 	c := &ProjectsLocationsApisDeploymentsArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7064,8 +7064,8 @@ type ProjectsLocationsApisDeploymentsArtifactsDeleteCall struct {
 
 // Delete: DeleteArtifact removes a specified artifact.
 //
-// - name: The name of the artifact to delete. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to delete. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisDeploymentsArtifactsService) Delete(name string) *ProjectsLocationsApisDeploymentsArtifactsDeleteCall {
 	c := &ProjectsLocationsApisDeploymentsArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7198,8 +7198,8 @@ type ProjectsLocationsApisDeploymentsArtifactsGetCall struct {
 
 // Get: GetArtifact returns a specified artifact.
 //
-// - name: The name of the artifact to retrieve. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to retrieve. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisDeploymentsArtifactsService) Get(name string) *ProjectsLocationsApisDeploymentsArtifactsGetCall {
 	c := &ProjectsLocationsApisDeploymentsArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7348,8 +7348,8 @@ type ProjectsLocationsApisDeploymentsArtifactsGetContentsCall struct {
 // behavior is to return the artifact uncompressed (the mime_type
 // response field indicates the exact format returned).
 //
-// - name: The name of the artifact whose contents should be retrieved.
-//   Format: {parent}/artifacts/*.
+//   - name: The name of the artifact whose contents should be retrieved.
+//     Format: {parent}/artifacts/*.
 func (r *ProjectsLocationsApisDeploymentsArtifactsService) GetContents(name string) *ProjectsLocationsApisDeploymentsArtifactsGetContentsCall {
 	c := &ProjectsLocationsApisDeploymentsArtifactsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7495,8 +7495,8 @@ type ProjectsLocationsApisDeploymentsArtifactsListCall struct {
 
 // List: ListArtifacts returns matching artifacts.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisDeploymentsArtifactsService) List(parent string) *ProjectsLocationsApisDeploymentsArtifactsListCall {
 	c := &ProjectsLocationsApisDeploymentsArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7849,8 +7849,8 @@ type ProjectsLocationsApisVersionsCreateCall struct {
 
 // Create: CreateApiVersion creates a specified version.
 //
-// - parent: The parent, which owns this collection of versions. Format:
-//   projects/*/locations/*/apis/*.
+//   - parent: The parent, which owns this collection of versions. Format:
+//     projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisVersionsService) Create(parent string, apiversion *ApiVersion) *ProjectsLocationsApisVersionsCreateCall {
 	c := &ProjectsLocationsApisVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8007,8 +8007,8 @@ type ProjectsLocationsApisVersionsDeleteCall struct {
 // Delete: DeleteApiVersion removes a specified version and all of the
 // resources that it owns.
 //
-// - name: The name of the version to delete. Format:
-//   projects/*/locations/*/apis/*/versions/*.
+//   - name: The name of the version to delete. Format:
+//     projects/*/locations/*/apis/*/versions/*.
 func (r *ProjectsLocationsApisVersionsService) Delete(name string) *ProjectsLocationsApisVersionsDeleteCall {
 	c := &ProjectsLocationsApisVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8154,8 +8154,8 @@ type ProjectsLocationsApisVersionsGetCall struct {
 
 // Get: GetApiVersion returns a specified version.
 //
-// - name: The name of the version to retrieve. Format:
-//   projects/*/locations/*/apis/*/versions/*.
+//   - name: The name of the version to retrieve. Format:
+//     projects/*/locations/*/apis/*/versions/*.
 func (r *ProjectsLocationsApisVersionsService) Get(name string) *ProjectsLocationsApisVersionsGetCall {
 	c := &ProjectsLocationsApisVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8303,10 +8303,10 @@ type ProjectsLocationsApisVersionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsService) GetIamPolicy(resource string) *ProjectsLocationsApisVersionsGetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8476,8 +8476,8 @@ type ProjectsLocationsApisVersionsListCall struct {
 
 // List: ListApiVersions returns matching versions.
 //
-// - parent: The parent, which owns this collection of versions. Format:
-//   projects/*/locations/*/apis/*.
+//   - parent: The parent, which owns this collection of versions. Format:
+//     projects/*/locations/*/apis/*.
 func (r *ProjectsLocationsApisVersionsService) List(parent string) *ProjectsLocationsApisVersionsListCall {
 	c := &ProjectsLocationsApisVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8860,10 +8860,10 @@ type ProjectsLocationsApisVersionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisVersionsSetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9010,10 +9010,10 @@ type ProjectsLocationsApisVersionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisVersionsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisVersionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9155,8 +9155,8 @@ type ProjectsLocationsApisVersionsArtifactsCreateCall struct {
 
 // Create: CreateArtifact creates a specified artifact.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisVersionsArtifactsService) Create(parent string, artifact *Artifact) *ProjectsLocationsApisVersionsArtifactsCreateCall {
 	c := &ProjectsLocationsApisVersionsArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9312,8 +9312,8 @@ type ProjectsLocationsApisVersionsArtifactsDeleteCall struct {
 
 // Delete: DeleteArtifact removes a specified artifact.
 //
-// - name: The name of the artifact to delete. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to delete. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsArtifactsService) Delete(name string) *ProjectsLocationsApisVersionsArtifactsDeleteCall {
 	c := &ProjectsLocationsApisVersionsArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9446,8 +9446,8 @@ type ProjectsLocationsApisVersionsArtifactsGetCall struct {
 
 // Get: GetArtifact returns a specified artifact.
 //
-// - name: The name of the artifact to retrieve. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to retrieve. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsArtifactsService) Get(name string) *ProjectsLocationsApisVersionsArtifactsGetCall {
 	c := &ProjectsLocationsApisVersionsArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9596,8 +9596,8 @@ type ProjectsLocationsApisVersionsArtifactsGetContentsCall struct {
 // behavior is to return the artifact uncompressed (the mime_type
 // response field indicates the exact format returned).
 //
-// - name: The name of the artifact whose contents should be retrieved.
-//   Format: {parent}/artifacts/*.
+//   - name: The name of the artifact whose contents should be retrieved.
+//     Format: {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsArtifactsService) GetContents(name string) *ProjectsLocationsApisVersionsArtifactsGetContentsCall {
 	c := &ProjectsLocationsApisVersionsArtifactsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9745,10 +9745,10 @@ type ProjectsLocationsApisVersionsArtifactsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsArtifactsService) GetIamPolicy(resource string) *ProjectsLocationsApisVersionsArtifactsGetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsArtifactsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9918,8 +9918,8 @@ type ProjectsLocationsApisVersionsArtifactsListCall struct {
 
 // List: ListArtifacts returns matching artifacts.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisVersionsArtifactsService) List(parent string) *ProjectsLocationsApisVersionsArtifactsListCall {
 	c := &ProjectsLocationsApisVersionsArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10274,10 +10274,10 @@ type ProjectsLocationsApisVersionsArtifactsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsArtifactsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisVersionsArtifactsSetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsArtifactsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10424,10 +10424,10 @@ type ProjectsLocationsApisVersionsArtifactsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsArtifactsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisVersionsArtifactsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisVersionsArtifactsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10569,8 +10569,8 @@ type ProjectsLocationsApisVersionsSpecsCreateCall struct {
 
 // Create: CreateApiSpec creates a specified spec.
 //
-// - parent: The parent, which owns this collection of specs. Format:
-//   projects/*/locations/*/apis/*/versions/*.
+//   - parent: The parent, which owns this collection of specs. Format:
+//     projects/*/locations/*/apis/*/versions/*.
 func (r *ProjectsLocationsApisVersionsSpecsService) Create(parent string, apispec *ApiSpec) *ProjectsLocationsApisVersionsSpecsCreateCall {
 	c := &ProjectsLocationsApisVersionsSpecsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10727,8 +10727,8 @@ type ProjectsLocationsApisVersionsSpecsDeleteCall struct {
 // Delete: DeleteApiSpec removes a specified spec, all revisions, and
 // all child resources (e.g. artifacts).
 //
-// - name: The name of the spec to delete. Format:
-//   projects/*/locations/*/apis/*/versions/*/specs/*.
+//   - name: The name of the spec to delete. Format:
+//     projects/*/locations/*/apis/*/versions/*/specs/*.
 func (r *ProjectsLocationsApisVersionsSpecsService) Delete(name string) *ProjectsLocationsApisVersionsSpecsDeleteCall {
 	c := &ProjectsLocationsApisVersionsSpecsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10873,10 +10873,10 @@ type ProjectsLocationsApisVersionsSpecsDeleteRevisionCall struct {
 
 // DeleteRevision: DeleteApiSpecRevision deletes a revision of a spec.
 //
-// - name: The name of the spec revision to be deleted, with a revision
-//   ID explicitly included. Example:
-//   projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/
-//   openapi.yaml@c7cfa2a8.
+//   - name: The name of the spec revision to be deleted, with a revision
+//     ID explicitly included. Example:
+//     projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/
+//     openapi.yaml@c7cfa2a8.
 func (r *ProjectsLocationsApisVersionsSpecsService) DeleteRevision(name string) *ProjectsLocationsApisVersionsSpecsDeleteRevisionCall {
 	c := &ProjectsLocationsApisVersionsSpecsDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11009,8 +11009,8 @@ type ProjectsLocationsApisVersionsSpecsGetCall struct {
 
 // Get: GetApiSpec returns a specified spec.
 //
-// - name: The name of the spec to retrieve. Format:
-//   projects/*/locations/*/apis/*/versions/*/specs/*.
+//   - name: The name of the spec to retrieve. Format:
+//     projects/*/locations/*/apis/*/versions/*/specs/*.
 func (r *ProjectsLocationsApisVersionsSpecsService) Get(name string) *ProjectsLocationsApisVersionsSpecsGetCall {
 	c := &ProjectsLocationsApisVersionsSpecsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11159,8 +11159,8 @@ type ProjectsLocationsApisVersionsSpecsGetContentsCall struct {
 // is to return the spec uncompressed (the mime_type response field
 // indicates the exact format returned).
 //
-// - name: The name of the spec whose contents should be retrieved.
-//   Format: projects/*/locations/*/apis/*/versions/*/specs/*.
+//   - name: The name of the spec whose contents should be retrieved.
+//     Format: projects/*/locations/*/apis/*/versions/*/specs/*.
 func (r *ProjectsLocationsApisVersionsSpecsService) GetContents(name string) *ProjectsLocationsApisVersionsSpecsGetContentsCall {
 	c := &ProjectsLocationsApisVersionsSpecsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11308,10 +11308,10 @@ type ProjectsLocationsApisVersionsSpecsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsService) GetIamPolicy(resource string) *ProjectsLocationsApisVersionsSpecsGetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsSpecsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11481,8 +11481,8 @@ type ProjectsLocationsApisVersionsSpecsListCall struct {
 
 // List: ListApiSpecs returns matching specs.
 //
-// - parent: The parent, which owns this collection of specs. Format:
-//   projects/*/locations/*/apis/*/versions/*.
+//   - parent: The parent, which owns this collection of specs. Format:
+//     projects/*/locations/*/apis/*/versions/*.
 func (r *ProjectsLocationsApisVersionsSpecsService) List(parent string) *ProjectsLocationsApisVersionsSpecsListCall {
 	c := &ProjectsLocationsApisVersionsSpecsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12203,10 +12203,10 @@ type ProjectsLocationsApisVersionsSpecsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisVersionsSpecsSetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsSpecsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12496,10 +12496,10 @@ type ProjectsLocationsApisVersionsSpecsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisVersionsSpecsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisVersionsSpecsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12641,8 +12641,8 @@ type ProjectsLocationsApisVersionsSpecsArtifactsCreateCall struct {
 
 // Create: CreateArtifact creates a specified artifact.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) Create(parent string, artifact *Artifact) *ProjectsLocationsApisVersionsSpecsArtifactsCreateCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12798,8 +12798,8 @@ type ProjectsLocationsApisVersionsSpecsArtifactsDeleteCall struct {
 
 // Delete: DeleteArtifact removes a specified artifact.
 //
-// - name: The name of the artifact to delete. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to delete. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) Delete(name string) *ProjectsLocationsApisVersionsSpecsArtifactsDeleteCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12932,8 +12932,8 @@ type ProjectsLocationsApisVersionsSpecsArtifactsGetCall struct {
 
 // Get: GetArtifact returns a specified artifact.
 //
-// - name: The name of the artifact to retrieve. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to retrieve. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) Get(name string) *ProjectsLocationsApisVersionsSpecsArtifactsGetCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13082,8 +13082,8 @@ type ProjectsLocationsApisVersionsSpecsArtifactsGetContentsCall struct {
 // behavior is to return the artifact uncompressed (the mime_type
 // response field indicates the exact format returned).
 //
-// - name: The name of the artifact whose contents should be retrieved.
-//   Format: {parent}/artifacts/*.
+//   - name: The name of the artifact whose contents should be retrieved.
+//     Format: {parent}/artifacts/*.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) GetContents(name string) *ProjectsLocationsApisVersionsSpecsArtifactsGetContentsCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13231,10 +13231,10 @@ type ProjectsLocationsApisVersionsSpecsArtifactsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) GetIamPolicy(resource string) *ProjectsLocationsApisVersionsSpecsArtifactsGetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13404,8 +13404,8 @@ type ProjectsLocationsApisVersionsSpecsArtifactsListCall struct {
 
 // List: ListArtifacts returns matching artifacts.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) List(parent string) *ProjectsLocationsApisVersionsSpecsArtifactsListCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13760,10 +13760,10 @@ type ProjectsLocationsApisVersionsSpecsArtifactsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsApisVersionsSpecsArtifactsSetIamPolicyCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13910,10 +13910,10 @@ type ProjectsLocationsApisVersionsSpecsArtifactsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApisVersionsSpecsArtifactsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsApisVersionsSpecsArtifactsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisVersionsSpecsArtifactsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14055,8 +14055,8 @@ type ProjectsLocationsArtifactsCreateCall struct {
 
 // Create: CreateArtifact creates a specified artifact.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsArtifactsService) Create(parent string, artifact *Artifact) *ProjectsLocationsArtifactsCreateCall {
 	c := &ProjectsLocationsArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14212,8 +14212,8 @@ type ProjectsLocationsArtifactsDeleteCall struct {
 
 // Delete: DeleteArtifact removes a specified artifact.
 //
-// - name: The name of the artifact to delete. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to delete. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsArtifactsService) Delete(name string) *ProjectsLocationsArtifactsDeleteCall {
 	c := &ProjectsLocationsArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14346,8 +14346,8 @@ type ProjectsLocationsArtifactsGetCall struct {
 
 // Get: GetArtifact returns a specified artifact.
 //
-// - name: The name of the artifact to retrieve. Format:
-//   {parent}/artifacts/*.
+//   - name: The name of the artifact to retrieve. Format:
+//     {parent}/artifacts/*.
 func (r *ProjectsLocationsArtifactsService) Get(name string) *ProjectsLocationsArtifactsGetCall {
 	c := &ProjectsLocationsArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14496,8 +14496,8 @@ type ProjectsLocationsArtifactsGetContentsCall struct {
 // behavior is to return the artifact uncompressed (the mime_type
 // response field indicates the exact format returned).
 //
-// - name: The name of the artifact whose contents should be retrieved.
-//   Format: {parent}/artifacts/*.
+//   - name: The name of the artifact whose contents should be retrieved.
+//     Format: {parent}/artifacts/*.
 func (r *ProjectsLocationsArtifactsService) GetContents(name string) *ProjectsLocationsArtifactsGetContentsCall {
 	c := &ProjectsLocationsArtifactsGetContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14645,10 +14645,10 @@ type ProjectsLocationsArtifactsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsArtifactsService) GetIamPolicy(resource string) *ProjectsLocationsArtifactsGetIamPolicyCall {
 	c := &ProjectsLocationsArtifactsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14818,8 +14818,8 @@ type ProjectsLocationsArtifactsListCall struct {
 
 // List: ListArtifacts returns matching artifacts.
 //
-// - parent: The parent, which owns this collection of artifacts.
-//   Format: {parent}.
+//   - parent: The parent, which owns this collection of artifacts.
+//     Format: {parent}.
 func (r *ProjectsLocationsArtifactsService) List(parent string) *ProjectsLocationsArtifactsListCall {
 	c := &ProjectsLocationsArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15174,10 +15174,10 @@ type ProjectsLocationsArtifactsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsArtifactsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsArtifactsSetIamPolicyCall {
 	c := &ProjectsLocationsArtifactsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15324,10 +15324,10 @@ type ProjectsLocationsArtifactsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsArtifactsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsArtifactsTestIamPermissionsCall {
 	c := &ProjectsLocationsArtifactsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15469,8 +15469,8 @@ type ProjectsLocationsInstancesCreateCall struct {
 
 // Create: Provisions instance resources for the Registry.
 //
-// - parent: Parent resource of the Instance, of the form:
-//   `projects/*/locations/*`.
+//   - parent: Parent resource of the Instance, of the form:
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15624,8 +15624,8 @@ type ProjectsLocationsInstancesDeleteCall struct {
 
 // Delete: Deletes the Registry instance.
 //
-// - name: The name of the Instance to delete. Format:
-//   `projects/*/locations/*/instances/*`.
+//   - name: The name of the Instance to delete. Format:
+//     `projects/*/locations/*/instances/*`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15758,8 +15758,8 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets details of a single Instance.
 //
-// - name: The name of the Instance to retrieve. Format:
-//   `projects/*/locations/*/instances/*`.
+//   - name: The name of the Instance to retrieve. Format:
+//     `projects/*/locations/*/instances/*`.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15907,10 +15907,10 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16082,10 +16082,10 @@ type ProjectsLocationsInstancesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16232,10 +16232,10 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -17026,10 +17026,10 @@ type ProjectsLocationsRuntimeGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRuntimeService) GetIamPolicy(resource string) *ProjectsLocationsRuntimeGetIamPolicyCall {
 	c := &ProjectsLocationsRuntimeGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -17201,10 +17201,10 @@ type ProjectsLocationsRuntimeSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRuntimeService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRuntimeSetIamPolicyCall {
 	c := &ProjectsLocationsRuntimeSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -17351,10 +17351,10 @@ type ProjectsLocationsRuntimeTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRuntimeService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRuntimeTestIamPermissionsCall {
 	c := &ProjectsLocationsRuntimeTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

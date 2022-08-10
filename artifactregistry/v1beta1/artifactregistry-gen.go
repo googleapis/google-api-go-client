@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/artifacts/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/artifactregistry/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   artifactregistryService, err := artifactregistry.NewService(ctx)
+//	import "google.golang.org/api/artifactregistry/v1beta1"
+//	...
+//	ctx := context.Background()
+//	artifactregistryService, err := artifactregistry.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithScopes(artifactregistry.CloudPlatformReadOnlyScope))
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithScopes(artifactregistry.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithAPIKey("AIza..."))
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package artifactregistry // import "google.golang.org/api/artifactregistry/v1beta1"
@@ -1424,8 +1424,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1784,8 +1784,8 @@ type ProjectsLocationsRepositoriesCreateCall struct {
 // the repository has been created. Its response will be the created
 // Repository.
 //
-// - parent: The name of the parent resource where the repository will
-//   be created.
+//   - parent: The name of the parent resource where the repository will
+//     be created.
 func (r *ProjectsLocationsRepositoriesService) Create(parent string, repository *Repository) *ProjectsLocationsRepositoriesCreateCall {
 	c := &ProjectsLocationsRepositoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2221,10 +2221,10 @@ type ProjectsLocationsRepositoriesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM policy for a given resource.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2395,8 +2395,8 @@ type ProjectsLocationsRepositoriesListCall struct {
 
 // List: Lists repositories.
 //
-// - parent: The name of the parent resource whose repositories will be
-//   listed.
+//   - parent: The name of the parent resource whose repositories will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLocationsRepositoriesListCall {
 	c := &ProjectsLocationsRepositoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2589,8 +2589,8 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 
 // Patch: Updates a repository.
 //
-// - name: The name of the repository, for example:
-//   "projects/p1/locations/us-central1/repositories/repo1".
+//   - name: The name of the repository, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1".
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2746,10 +2746,10 @@ type ProjectsLocationsRepositoriesSetIamPolicyCall struct {
 
 // SetIamPolicy: Updates the IAM policy for a given resource.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRepositoriesSetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2892,10 +2892,10 @@ type ProjectsLocationsRepositoriesTestIamPermissionsCall struct {
 // TestIamPermissions: Tests if the caller has a list of permissions on
 // a resource.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRepositoriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRepositoriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3185,8 +3185,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 
 // List: Lists files.
 //
-// - parent: The name of the repository whose files will be listed. For
-//   example: "projects/p1/locations/us-central1/repositories/repo1.
+//   - parent: The name of the repository whose files will be listed. For
+//     example: "projects/p1/locations/us-central1/repositories/repo1.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3678,8 +3678,8 @@ type ProjectsLocationsRepositoriesPackagesListCall struct {
 
 // List: Lists packages.
 //
-// - parent: The name of the parent resource whose packages will be
-//   listed.
+//   - parent: The name of the parent resource whose packages will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *ProjectsLocationsRepositoriesPackagesListCall {
 	c := &ProjectsLocationsRepositoriesPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3872,8 +3872,8 @@ type ProjectsLocationsRepositoriesPackagesTagsCreateCall struct {
 
 // Create: Creates a tag.
 //
-// - parent: The name of the parent resource where the tag will be
-//   created.
+//   - parent: The name of the parent resource where the tag will be
+//     created.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Create(parent string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsCreateCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4516,11 +4516,11 @@ type ProjectsLocationsRepositoriesPackagesTagsPatchCall struct {
 
 // Patch: Updates a tag.
 //
-// - name: The name of the tag, for example:
-//   "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
-//   tags/tag1". If the package part contains slashes, the slashes are
-//   escaped. The tag part can only have characters in
-//   [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
+//   - name: The name of the tag, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
+//     tags/tag1". If the package part contains slashes, the slashes are
+//     escaped. The tag part can only have characters in
+//     [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Patch(name string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsPatchCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4833,11 +4833,16 @@ func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Get(name string) 
 // returned in the response.
 //
 // Possible values:
-//   "VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Includes basic information about the version, but not any
+//
+//	"BASIC" - Includes basic information about the version, but not any
+//
 // related tags.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) View(view string) *ProjectsLocationsRepositoriesPackagesVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4998,8 +5003,8 @@ type ProjectsLocationsRepositoriesPackagesVersionsListCall struct {
 
 // List: Lists versions.
 //
-// - parent: The name of the parent resource whose versions will be
-//   listed.
+//   - parent: The name of the parent resource whose versions will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5031,11 +5036,16 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) PageToken(pageTo
 // returned in the response.
 //
 // Possible values:
-//   "VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Includes basic information about the version, but not any
+//
+//	"BASIC" - Includes basic information about the version, but not any
+//
 // related tags.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) View(view string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c

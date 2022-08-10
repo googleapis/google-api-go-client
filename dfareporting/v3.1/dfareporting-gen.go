@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/doubleclick-advertisers/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dfareporting/v3.1"
-//   ...
-//   ctx := context.Background()
-//   dfareportingService, err := dfareporting.NewService(ctx)
+//	import "google.golang.org/api/dfareporting/v3.1"
+//	...
+//	ctx := context.Background()
+//	dfareportingService, err := dfareporting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   dfareportingService, err := dfareporting.NewService(ctx, option.WithScopes(dfareporting.DfatraffickingScope))
+//	dfareportingService, err := dfareporting.NewService(ctx, option.WithScopes(dfareporting.DfatraffickingScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   dfareportingService, err := dfareporting.NewService(ctx, option.WithAPIKey("AIza..."))
+//	dfareportingService, err := dfareporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   dfareportingService, err := dfareporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	dfareportingService, err := dfareporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package dfareporting // import "google.golang.org/api/dfareporting/v3.1"
@@ -15035,8 +15035,9 @@ func (c *AccountUserProfilesListCall) SearchString(searchString string) *Account
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AccountUserProfilesListCall) SortField(sortField string) *AccountUserProfilesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -15046,8 +15047,9 @@ func (c *AccountUserProfilesListCall) SortField(sortField string) *AccountUserPr
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AccountUserProfilesListCall) SortOrder(sortOrder string) *AccountUserProfilesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -15795,8 +15797,9 @@ func (c *AccountsListCall) SearchString(searchString string) *AccountsListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AccountsListCall) SortField(sortField string) *AccountsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -15806,8 +15809,9 @@ func (c *AccountsListCall) SortField(sortField string) *AccountsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AccountsListCall) SortOrder(sortOrder string) *AccountsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -16669,12 +16673,13 @@ func (c *AdsListCall) CampaignIds(campaignIds ...int64) *AdsListCall {
 // in-stream video ads developed with the VAST standard.
 //
 // Possible values:
-//   "APP"
-//   "APP_INTERSTITIAL"
-//   "DISPLAY"
-//   "DISPLAY_INTERSTITIAL"
-//   "IN_STREAM_AUDIO"
-//   "IN_STREAM_VIDEO"
+//
+//	"APP"
+//	"APP_INTERSTITIAL"
+//	"DISPLAY"
+//	"DISPLAY_INTERSTITIAL"
+//	"IN_STREAM_AUDIO"
+//	"IN_STREAM_VIDEO"
 func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 	c.urlParams_.Set("compatibility", compatibility)
 	return c
@@ -16807,8 +16812,9 @@ func (c *AdsListCall) SizeIds(sizeIds ...int64) *AdsListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AdsListCall) SortField(sortField string) *AdsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -16818,8 +16824,9 @@ func (c *AdsListCall) SortField(sortField string) *AdsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AdsListCall) SortOrder(sortOrder string) *AdsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -16843,10 +16850,11 @@ func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 // types.
 //
 // Possible values:
-//   "AD_SERVING_CLICK_TRACKER"
-//   "AD_SERVING_DEFAULT_AD"
-//   "AD_SERVING_STANDARD_AD"
-//   "AD_SERVING_TRACKING"
+//
+//	"AD_SERVING_CLICK_TRACKER"
+//	"AD_SERVING_DEFAULT_AD"
+//	"AD_SERVING_STANDARD_AD"
+//	"AD_SERVING_TRACKING"
 func (c *AdsListCall) Type(type_ ...string) *AdsListCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -17938,8 +17946,9 @@ func (c *AdvertiserGroupsListCall) SearchString(searchString string) *Advertiser
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AdvertiserGroupsListCall) SortField(sortField string) *AdvertiserGroupsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -17949,8 +17958,9 @@ func (c *AdvertiserGroupsListCall) SortField(sortField string) *AdvertiserGroups
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AdvertiserGroupsListCall) SortOrder(sortOrder string) *AdvertiserGroupsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -18827,8 +18837,9 @@ func (c *AdvertiserLandingPagesListCall) SearchString(searchString string) *Adve
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AdvertiserLandingPagesListCall) SortField(sortField string) *AdvertiserLandingPagesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -18838,8 +18849,9 @@ func (c *AdvertiserLandingPagesListCall) SortField(sortField string) *Advertiser
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AdvertiserLandingPagesListCall) SortOrder(sortOrder string) *AdvertiserLandingPagesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -19758,8 +19770,9 @@ func (c *AdvertisersListCall) SearchString(searchString string) *AdvertisersList
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *AdvertisersListCall) SortField(sortField string) *AdvertisersListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -19769,8 +19782,9 @@ func (c *AdvertisersListCall) SortField(sortField string) *AdvertisersListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *AdvertisersListCall) SortOrder(sortOrder string) *AdvertisersListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -19780,8 +19794,9 @@ func (c *AdvertisersListCall) SortOrder(sortOrder string) *AdvertisersListCall {
 // with the specified status.
 //
 // Possible values:
-//   "APPROVED"
-//   "ON_HOLD"
+//
+//	"APPROVED"
+//	"ON_HOLD"
 func (c *AdvertisersListCall) Status(status string) *AdvertisersListCall {
 	c.urlParams_.Set("status", status)
 	return c
@@ -20659,8 +20674,9 @@ func (c *CampaignCreativeAssociationsListCall) PageToken(pageToken string) *Camp
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CampaignCreativeAssociationsListCall) SortOrder(sortOrder string) *CampaignCreativeAssociationsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -21263,8 +21279,9 @@ func (c *CampaignsListCall) SearchString(searchString string) *CampaignsListCall
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *CampaignsListCall) SortField(sortField string) *CampaignsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -21274,8 +21291,9 @@ func (c *CampaignsListCall) SortField(sortField string) *CampaignsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CampaignsListCall) SortOrder(sortOrder string) *CampaignsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -21995,23 +22013,24 @@ func (r *ChangeLogsService) List(profileId int64) *ChangeLogsListCall {
 // with the specified action.
 //
 // Possible values:
-//   "ACTION_ADD"
-//   "ACTION_ASSIGN"
-//   "ACTION_ASSOCIATE"
-//   "ACTION_CREATE"
-//   "ACTION_DELETE"
-//   "ACTION_DISABLE"
-//   "ACTION_EMAIL_TAGS"
-//   "ACTION_ENABLE"
-//   "ACTION_LINK"
-//   "ACTION_MARK_AS_DEFAULT"
-//   "ACTION_PUSH"
-//   "ACTION_REMOVE"
-//   "ACTION_SEND"
-//   "ACTION_SHARE"
-//   "ACTION_UNASSIGN"
-//   "ACTION_UNLINK"
-//   "ACTION_UPDATE"
+//
+//	"ACTION_ADD"
+//	"ACTION_ASSIGN"
+//	"ACTION_ASSOCIATE"
+//	"ACTION_CREATE"
+//	"ACTION_DELETE"
+//	"ACTION_DISABLE"
+//	"ACTION_EMAIL_TAGS"
+//	"ACTION_ENABLE"
+//	"ACTION_LINK"
+//	"ACTION_MARK_AS_DEFAULT"
+//	"ACTION_PUSH"
+//	"ACTION_REMOVE"
+//	"ACTION_SEND"
+//	"ACTION_SHARE"
+//	"ACTION_UNASSIGN"
+//	"ACTION_UNLINK"
+//	"ACTION_UPDATE"
 func (c *ChangeLogsListCall) Action(action string) *ChangeLogsListCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -22076,46 +22095,47 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 // change logs with the specified object type.
 //
 // Possible values:
-//   "OBJECT_ACCOUNT"
-//   "OBJECT_ACCOUNT_BILLING_FEATURE"
-//   "OBJECT_AD"
-//   "OBJECT_ADVERTISER"
-//   "OBJECT_ADVERTISER_GROUP"
-//   "OBJECT_BILLING_ACCOUNT_GROUP"
-//   "OBJECT_BILLING_FEATURE"
-//   "OBJECT_BILLING_MINIMUM_FEE"
-//   "OBJECT_BILLING_PROFILE"
-//   "OBJECT_CAMPAIGN"
-//   "OBJECT_CONTENT_CATEGORY"
-//   "OBJECT_CREATIVE"
-//   "OBJECT_CREATIVE_ASSET"
-//   "OBJECT_CREATIVE_BUNDLE"
-//   "OBJECT_CREATIVE_FIELD"
-//   "OBJECT_CREATIVE_GROUP"
-//   "OBJECT_DFA_SITE"
-//   "OBJECT_EVENT_TAG"
-//   "OBJECT_FLOODLIGHT_ACTIVITY_GROUP"
-//   "OBJECT_FLOODLIGHT_ACTVITY"
-//   "OBJECT_FLOODLIGHT_CONFIGURATION"
-//   "OBJECT_FLOODLIGHT_DV360_LINK"
-//   "OBJECT_INSTREAM_CREATIVE"
-//   "OBJECT_LANDING_PAGE"
-//   "OBJECT_MEDIA_ORDER"
-//   "OBJECT_PLACEMENT"
-//   "OBJECT_PLACEMENT_STRATEGY"
-//   "OBJECT_PLAYSTORE_LINK"
-//   "OBJECT_PROVIDED_LIST_CLIENT"
-//   "OBJECT_RATE_CARD"
-//   "OBJECT_REMARKETING_LIST"
-//   "OBJECT_RICHMEDIA_CREATIVE"
-//   "OBJECT_SD_SITE"
-//   "OBJECT_SEARCH_LIFT_STUDY"
-//   "OBJECT_SIZE"
-//   "OBJECT_SUBACCOUNT"
-//   "OBJECT_TARGETING_TEMPLATE"
-//   "OBJECT_USER_PROFILE"
-//   "OBJECT_USER_PROFILE_FILTER"
-//   "OBJECT_USER_ROLE"
+//
+//	"OBJECT_ACCOUNT"
+//	"OBJECT_ACCOUNT_BILLING_FEATURE"
+//	"OBJECT_AD"
+//	"OBJECT_ADVERTISER"
+//	"OBJECT_ADVERTISER_GROUP"
+//	"OBJECT_BILLING_ACCOUNT_GROUP"
+//	"OBJECT_BILLING_FEATURE"
+//	"OBJECT_BILLING_MINIMUM_FEE"
+//	"OBJECT_BILLING_PROFILE"
+//	"OBJECT_CAMPAIGN"
+//	"OBJECT_CONTENT_CATEGORY"
+//	"OBJECT_CREATIVE"
+//	"OBJECT_CREATIVE_ASSET"
+//	"OBJECT_CREATIVE_BUNDLE"
+//	"OBJECT_CREATIVE_FIELD"
+//	"OBJECT_CREATIVE_GROUP"
+//	"OBJECT_DFA_SITE"
+//	"OBJECT_EVENT_TAG"
+//	"OBJECT_FLOODLIGHT_ACTIVITY_GROUP"
+//	"OBJECT_FLOODLIGHT_ACTVITY"
+//	"OBJECT_FLOODLIGHT_CONFIGURATION"
+//	"OBJECT_FLOODLIGHT_DV360_LINK"
+//	"OBJECT_INSTREAM_CREATIVE"
+//	"OBJECT_LANDING_PAGE"
+//	"OBJECT_MEDIA_ORDER"
+//	"OBJECT_PLACEMENT"
+//	"OBJECT_PLACEMENT_STRATEGY"
+//	"OBJECT_PLAYSTORE_LINK"
+//	"OBJECT_PROVIDED_LIST_CLIENT"
+//	"OBJECT_RATE_CARD"
+//	"OBJECT_REMARKETING_LIST"
+//	"OBJECT_RICHMEDIA_CREATIVE"
+//	"OBJECT_SD_SITE"
+//	"OBJECT_SEARCH_LIFT_STUDY"
+//	"OBJECT_SIZE"
+//	"OBJECT_SUBACCOUNT"
+//	"OBJECT_TARGETING_TEMPLATE"
+//	"OBJECT_USER_PROFILE"
+//	"OBJECT_USER_PROFILE_FILTER"
+//	"OBJECT_USER_ROLE"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -23448,8 +23468,9 @@ func (c *ContentCategoriesListCall) SearchString(searchString string) *ContentCa
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *ContentCategoriesListCall) SortField(sortField string) *ContentCategoriesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -23459,8 +23480,9 @@ func (c *ContentCategoriesListCall) SortField(sortField string) *ContentCategori
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *ContentCategoriesListCall) SortOrder(sortOrder string) *ContentCategoriesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -25260,8 +25282,9 @@ func (c *CreativeFieldValuesListCall) SearchString(searchString string) *Creativ
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "VALUE"
+//
+//	"ID" (default)
+//	"VALUE"
 func (c *CreativeFieldValuesListCall) SortField(sortField string) *CreativeFieldValuesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -25271,8 +25294,9 @@ func (c *CreativeFieldValuesListCall) SortField(sortField string) *CreativeField
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CreativeFieldValuesListCall) SortOrder(sortOrder string) *CreativeFieldValuesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -26275,8 +26299,9 @@ func (c *CreativeFieldsListCall) SearchString(searchString string) *CreativeFiel
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *CreativeFieldsListCall) SortField(sortField string) *CreativeFieldsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -26286,8 +26311,9 @@ func (c *CreativeFieldsListCall) SortField(sortField string) *CreativeFieldsList
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CreativeFieldsListCall) SortOrder(sortOrder string) *CreativeFieldsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -27161,8 +27187,9 @@ func (c *CreativeGroupsListCall) SearchString(searchString string) *CreativeGrou
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *CreativeGroupsListCall) SortField(sortField string) *CreativeGroupsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -27172,8 +27199,9 @@ func (c *CreativeGroupsListCall) SortField(sortField string) *CreativeGroupsList
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CreativeGroupsListCall) SortOrder(sortOrder string) *CreativeGroupsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -28109,8 +28137,9 @@ func (c *CreativesListCall) SizeIds(sizeIds ...int64) *CreativesListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *CreativesListCall) SortField(sortField string) *CreativesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -28120,8 +28149,9 @@ func (c *CreativesListCall) SortField(sortField string) *CreativesListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *CreativesListCall) SortOrder(sortOrder string) *CreativesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -28138,31 +28168,32 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 // these creative types.
 //
 // Possible values:
-//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-//   "CUSTOM_DISPLAY"
-//   "CUSTOM_DISPLAY_INTERSTITIAL"
-//   "DISPLAY"
-//   "DISPLAY_IMAGE_GALLERY"
-//   "DISPLAY_REDIRECT"
-//   "FLASH_INPAGE"
-//   "HTML5_BANNER"
-//   "IMAGE"
-//   "INSTREAM_AUDIO"
-//   "INSTREAM_VIDEO"
-//   "INSTREAM_VIDEO_REDIRECT"
-//   "INTERNAL_REDIRECT"
-//   "INTERSTITIAL_INTERNAL_REDIRECT"
-//   "RICH_MEDIA_DISPLAY_BANNER"
-//   "RICH_MEDIA_DISPLAY_EXPANDING"
-//   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
-//   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
-//   "RICH_MEDIA_IM_EXPAND"
-//   "RICH_MEDIA_INPAGE_FLOATING"
-//   "RICH_MEDIA_MOBILE_IN_APP"
-//   "RICH_MEDIA_PEEL_DOWN"
-//   "TRACKING_TEXT"
-//   "VPAID_LINEAR_VIDEO"
-//   "VPAID_NON_LINEAR_VIDEO"
+//
+//	"BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+//	"CUSTOM_DISPLAY"
+//	"CUSTOM_DISPLAY_INTERSTITIAL"
+//	"DISPLAY"
+//	"DISPLAY_IMAGE_GALLERY"
+//	"DISPLAY_REDIRECT"
+//	"FLASH_INPAGE"
+//	"HTML5_BANNER"
+//	"IMAGE"
+//	"INSTREAM_AUDIO"
+//	"INSTREAM_VIDEO"
+//	"INSTREAM_VIDEO_REDIRECT"
+//	"INTERNAL_REDIRECT"
+//	"INTERSTITIAL_INTERNAL_REDIRECT"
+//	"RICH_MEDIA_DISPLAY_BANNER"
+//	"RICH_MEDIA_DISPLAY_EXPANDING"
+//	"RICH_MEDIA_DISPLAY_INTERSTITIAL"
+//	"RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
+//	"RICH_MEDIA_IM_EXPAND"
+//	"RICH_MEDIA_INPAGE_FLOATING"
+//	"RICH_MEDIA_MOBILE_IN_APP"
+//	"RICH_MEDIA_PEEL_DOWN"
+//	"TRACKING_TEXT"
+//	"VPAID_LINEAR_VIDEO"
+//	"VPAID_NON_LINEAR_VIDEO"
 func (c *CreativesListCall) Types(types ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("types", append([]string{}, types...))
 	return c
@@ -29355,8 +29386,9 @@ func (c *DirectorySitesListCall) SearchString(searchString string) *DirectorySit
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *DirectorySitesListCall) SortField(sortField string) *DirectorySitesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -29366,8 +29398,9 @@ func (c *DirectorySitesListCall) SortField(sortField string) *DirectorySitesList
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *DirectorySitesListCall) SortOrder(sortOrder string) *DirectorySitesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -29924,10 +29957,11 @@ func (c *DynamicTargetingKeysListCall) ObjectId(objectId int64) *DynamicTargetin
 // dynamic targeting keys with this object type.
 //
 // Possible values:
-//   "OBJECT_AD"
-//   "OBJECT_ADVERTISER"
-//   "OBJECT_CREATIVE"
-//   "OBJECT_PLACEMENT"
+//
+//	"OBJECT_AD"
+//	"OBJECT_ADVERTISER"
+//	"OBJECT_CREATIVE"
+//	"OBJECT_PLACEMENT"
 func (c *DynamicTargetingKeysListCall) ObjectType(objectType string) *DynamicTargetingKeysListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -30570,9 +30604,10 @@ func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 // either impression or click tracking.
 //
 // Possible values:
-//   "CLICK_THROUGH_EVENT_TAG"
-//   "IMPRESSION_IMAGE_EVENT_TAG"
-//   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
+//
+//	"CLICK_THROUGH_EVENT_TAG"
+//	"IMPRESSION_IMAGE_EVENT_TAG"
+//	"IMPRESSION_JAVASCRIPT_EVENT_TAG"
 func (c *EventTagsListCall) EventTagTypes(eventTagTypes ...string) *EventTagsListCall {
 	c.urlParams_.SetMulti("eventTagTypes", append([]string{}, eventTagTypes...))
 	return c
@@ -30606,8 +30641,9 @@ func (c *EventTagsListCall) SearchString(searchString string) *EventTagsListCall
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *EventTagsListCall) SortField(sortField string) *EventTagsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -30617,8 +30653,9 @@ func (c *EventTagsListCall) SortField(sortField string) *EventTagsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *EventTagsListCall) SortOrder(sortOrder string) *EventTagsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -31329,9 +31366,10 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 // which results are returned.
 //
 // Possible values:
-//   "ALL" - All files in account.
-//   "MINE" (default) - My files.
-//   "SHARED_WITH_ME" - Files shared with me.
+//
+//	"ALL" - All files in account.
+//	"MINE" (default) - My files.
+//	"SHARED_WITH_ME" - Files shared with me.
 func (c *FilesListCall) Scope(scope string) *FilesListCall {
 	c.urlParams_.Set("scope", scope)
 	return c
@@ -31341,8 +31379,9 @@ func (c *FilesListCall) Scope(scope string) *FilesListCall {
 // to sort the list.
 //
 // Possible values:
-//   "ID" - Sort by file ID.
-//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
+//
+//	"ID" - Sort by file ID.
+//	"LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -31352,8 +31391,9 @@ func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" - Ascending order.
-//   "DESCENDING" (default) - Descending order.
+//
+//	"ASCENDING" - Ascending order.
+//	"DESCENDING" (default) - Descending order.
 func (c *FilesListCall) SortOrder(sortOrder string) *FilesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -32173,8 +32213,9 @@ func (c *FloodlightActivitiesListCall) FloodlightActivityGroupTagString(floodlig
 // the specified floodlight activity group type.
 //
 // Possible values:
-//   "COUNTER"
-//   "SALE"
+//
+//	"COUNTER"
+//	"SALE"
 func (c *FloodlightActivitiesListCall) FloodlightActivityGroupType(floodlightActivityGroupType string) *FloodlightActivitiesListCall {
 	c.urlParams_.Set("floodlightActivityGroupType", floodlightActivityGroupType)
 	return c
@@ -32233,8 +32274,9 @@ func (c *FloodlightActivitiesListCall) SearchString(searchString string) *Floodl
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *FloodlightActivitiesListCall) SortField(sortField string) *FloodlightActivitiesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -32244,8 +32286,9 @@ func (c *FloodlightActivitiesListCall) SortField(sortField string) *FloodlightAc
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *FloodlightActivitiesListCall) SortOrder(sortOrder string) *FloodlightActivitiesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -33168,8 +33211,9 @@ func (c *FloodlightActivityGroupsListCall) SearchString(searchString string) *Fl
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *FloodlightActivityGroupsListCall) SortField(sortField string) *FloodlightActivityGroupsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -33179,8 +33223,9 @@ func (c *FloodlightActivityGroupsListCall) SortField(sortField string) *Floodlig
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *FloodlightActivityGroupsListCall) SortOrder(sortOrder string) *FloodlightActivityGroupsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -33190,8 +33235,9 @@ func (c *FloodlightActivityGroupsListCall) SortOrder(sortOrder string) *Floodlig
 // activity groups with the specified floodlight activity group type.
 //
 // Possible values:
-//   "COUNTER"
-//   "SALE"
+//
+//	"COUNTER"
+//	"SALE"
 func (c *FloodlightActivityGroupsListCall) Type(type_ string) *FloodlightActivityGroupsListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -34561,8 +34607,9 @@ func (c *InventoryItemsListCall) SiteId(siteId ...int64) *InventoryItemsListCall
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *InventoryItemsListCall) SortField(sortField string) *InventoryItemsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -34572,8 +34619,9 @@ func (c *InventoryItemsListCall) SortField(sortField string) *InventoryItemsList
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *InventoryItemsListCall) SortOrder(sortOrder string) *InventoryItemsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -34583,8 +34631,9 @@ func (c *InventoryItemsListCall) SortOrder(sortOrder string) *InventoryItemsList
 // with this type.
 //
 // Possible values:
-//   "PLANNING_PLACEMENT_TYPE_CREDIT"
-//   "PLANNING_PLACEMENT_TYPE_REGULAR"
+//
+//	"PLANNING_PLACEMENT_TYPE_CREDIT"
+//	"PLANNING_PLACEMENT_TYPE_REGULAR"
 func (c *InventoryItemsListCall) Type(type_ string) *InventoryItemsListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -35287,9 +35336,10 @@ func (r *MobileAppsService) List(profileId int64) *MobileAppsListCall {
 // apps from these directories.
 //
 // Possible values:
-//   "APPLE_APP_STORE"
-//   "GOOGLE_PLAY_STORE"
-//   "UNKNOWN"
+//
+//	"APPLE_APP_STORE"
+//	"GOOGLE_PLAY_STORE"
+//	"UNKNOWN"
 func (c *MobileAppsListCall) Directories(directories ...string) *MobileAppsListCall {
 	c.urlParams_.SetMulti("directories", append([]string{}, directories...))
 	return c
@@ -36665,8 +36715,9 @@ func (c *OrderDocumentsListCall) SiteId(siteId ...int64) *OrderDocumentsListCall
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *OrderDocumentsListCall) SortField(sortField string) *OrderDocumentsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -36676,8 +36727,9 @@ func (c *OrderDocumentsListCall) SortField(sortField string) *OrderDocumentsList
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *OrderDocumentsListCall) SortOrder(sortOrder string) *OrderDocumentsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -37149,8 +37201,9 @@ func (c *OrdersListCall) SiteId(siteId ...int64) *OrdersListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *OrdersListCall) SortField(sortField string) *OrdersListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -37160,8 +37213,9 @@ func (c *OrdersListCall) SortField(sortField string) *OrdersListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *OrdersListCall) SortOrder(sortOrder string) *OrdersListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -37815,8 +37869,9 @@ func (c *PlacementGroupsListCall) PageToken(pageToken string) *PlacementGroupsLi
 // of its assigned placements to be marked as primary for reporting.
 //
 // Possible values:
-//   "PLACEMENT_PACKAGE"
-//   "PLACEMENT_ROADBLOCK"
+//
+//	"PLACEMENT_PACKAGE"
+//	"PLACEMENT_ROADBLOCK"
 func (c *PlacementGroupsListCall) PlacementGroupType(placementGroupType string) *PlacementGroupsListCall {
 	c.urlParams_.Set("placementGroupType", placementGroupType)
 	return c
@@ -37838,12 +37893,13 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds ...i
 // placement groups with these pricing types.
 //
 // Possible values:
-//   "PRICING_TYPE_CPA"
-//   "PRICING_TYPE_CPC"
-//   "PRICING_TYPE_CPM"
-//   "PRICING_TYPE_CPM_ACTIVEVIEW"
-//   "PRICING_TYPE_FLAT_RATE_CLICKS"
-//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+//
+//	"PRICING_TYPE_CPA"
+//	"PRICING_TYPE_CPC"
+//	"PRICING_TYPE_CPM"
+//	"PRICING_TYPE_CPM_ACTIVEVIEW"
+//	"PRICING_TYPE_FLAT_RATE_CLICKS"
+//	"PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementGroupsListCall) PricingTypes(pricingTypes ...string) *PlacementGroupsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
@@ -37878,8 +37934,9 @@ func (c *PlacementGroupsListCall) SiteIds(siteIds ...int64) *PlacementGroupsList
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *PlacementGroupsListCall) SortField(sortField string) *PlacementGroupsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -37889,8 +37946,9 @@ func (c *PlacementGroupsListCall) SortField(sortField string) *PlacementGroupsLi
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *PlacementGroupsListCall) SortOrder(sortOrder string) *PlacementGroupsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -38953,8 +39011,9 @@ func (c *PlacementStrategiesListCall) SearchString(searchString string) *Placeme
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *PlacementStrategiesListCall) SortField(sortField string) *PlacementStrategiesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -38964,8 +39023,9 @@ func (c *PlacementStrategiesListCall) SortField(sortField string) *PlacementStra
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *PlacementStrategiesListCall) SortOrder(sortOrder string) *PlacementStrategiesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -39501,25 +39561,26 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds ...int64) *Placem
 // placements.
 //
 // Possible values:
-//   "PLACEMENT_TAG_CLICK_COMMANDS"
-//   "PLACEMENT_TAG_IFRAME_ILAYER"
-//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
-//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
-//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
-//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_JAVASCRIPT"
-//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_STANDARD"
-//   "PLACEMENT_TAG_TRACKING"
-//   "PLACEMENT_TAG_TRACKING_IFRAME"
-//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+//
+//	"PLACEMENT_TAG_CLICK_COMMANDS"
+//	"PLACEMENT_TAG_IFRAME_ILAYER"
+//	"PLACEMENT_TAG_IFRAME_JAVASCRIPT"
+//	"PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
+//	"PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
+//	"PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
+//	"PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
+//	"PLACEMENT_TAG_INTERNAL_REDIRECT"
+//	"PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
+//	"PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
+//	"PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
+//	"PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
+//	"PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
+//	"PLACEMENT_TAG_JAVASCRIPT"
+//	"PLACEMENT_TAG_JAVASCRIPT_LEGACY"
+//	"PLACEMENT_TAG_STANDARD"
+//	"PLACEMENT_TAG_TRACKING"
+//	"PLACEMENT_TAG_TRACKING_IFRAME"
+//	"PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats ...string) *PlacementsGeneratetagsCall {
 	c.urlParams_.SetMulti("tagFormats", append([]string{}, tagFormats...))
 	return c
@@ -40049,12 +40110,13 @@ func (c *PlacementsListCall) CampaignIds(campaignIds ...int64) *PlacementsListCa
 // with the VAST standard.
 //
 // Possible values:
-//   "APP"
-//   "APP_INTERSTITIAL"
-//   "DISPLAY"
-//   "DISPLAY_INTERSTITIAL"
-//   "IN_STREAM_AUDIO"
-//   "IN_STREAM_VIDEO"
+//
+//	"APP"
+//	"APP_INTERSTITIAL"
+//	"DISPLAY"
+//	"DISPLAY_INTERSTITIAL"
+//	"IN_STREAM_AUDIO"
+//	"IN_STREAM_VIDEO"
 func (c *PlacementsListCall) Compatibilities(compatibilities ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("compatibilities", append([]string{}, compatibilities...))
 	return c
@@ -40156,8 +40218,9 @@ func (c *PlacementsListCall) PageToken(pageToken string) *PlacementsListCall {
 // only placements with this payment source.
 //
 // Possible values:
-//   "PLACEMENT_AGENCY_PAID"
-//   "PLACEMENT_PUBLISHER_PAID"
+//
+//	"PLACEMENT_AGENCY_PAID"
+//	"PLACEMENT_PUBLISHER_PAID"
 func (c *PlacementsListCall) PaymentSource(paymentSource string) *PlacementsListCall {
 	c.urlParams_.Set("paymentSource", paymentSource)
 	return c
@@ -40179,12 +40242,13 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds ...int64)
 // placements with these pricing types.
 //
 // Possible values:
-//   "PRICING_TYPE_CPA"
-//   "PRICING_TYPE_CPC"
-//   "PRICING_TYPE_CPM"
-//   "PRICING_TYPE_CPM_ACTIVEVIEW"
-//   "PRICING_TYPE_FLAT_RATE_CLICKS"
-//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+//
+//	"PRICING_TYPE_CPA"
+//	"PRICING_TYPE_CPC"
+//	"PRICING_TYPE_CPM"
+//	"PRICING_TYPE_CPM_ACTIVEVIEW"
+//	"PRICING_TYPE_FLAT_RATE_CLICKS"
+//	"PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 func (c *PlacementsListCall) PricingTypes(pricingTypes ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
@@ -40229,8 +40293,9 @@ func (c *PlacementsListCall) SizeIds(sizeIds ...int64) *PlacementsListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *PlacementsListCall) SortField(sortField string) *PlacementsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -40240,8 +40305,9 @@ func (c *PlacementsListCall) SortField(sortField string) *PlacementsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *PlacementsListCall) SortOrder(sortOrder string) *PlacementsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -41692,8 +41758,9 @@ func (c *ProjectsListCall) SearchString(searchString string) *ProjectsListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *ProjectsListCall) SortField(sortField string) *ProjectsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -41703,8 +41770,9 @@ func (c *ProjectsListCall) SortField(sortField string) *ProjectsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *ProjectsListCall) SortOrder(sortOrder string) *ProjectsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -42861,8 +42929,9 @@ func (c *RemarketingListsListCall) PageToken(pageToken string) *RemarketingLists
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *RemarketingListsListCall) SortField(sortField string) *RemarketingListsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -42872,8 +42941,9 @@ func (c *RemarketingListsListCall) SortField(sortField string) *RemarketingLists
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *RemarketingListsListCall) SortOrder(sortOrder string) *RemarketingListsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -43820,8 +43890,9 @@ func (c *ReportsListCall) PageToken(pageToken string) *ReportsListCall {
 // which results are returned.
 //
 // Possible values:
-//   "ALL" - All reports in account.
-//   "MINE" (default) - My reports.
+//
+//	"ALL" - All reports in account.
+//	"MINE" (default) - My reports.
 func (c *ReportsListCall) Scope(scope string) *ReportsListCall {
 	c.urlParams_.Set("scope", scope)
 	return c
@@ -43831,9 +43902,10 @@ func (c *ReportsListCall) Scope(scope string) *ReportsListCall {
 // to sort the list.
 //
 // Possible values:
-//   "ID" - Sort by report ID.
-//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastModifiedTime' field.
-//   "NAME" - Sort by name of reports.
+//
+//	"ID" - Sort by report ID.
+//	"LAST_MODIFIED_TIME" (default) - Sort by 'lastModifiedTime' field.
+//	"NAME" - Sort by name of reports.
 func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -43843,8 +43915,9 @@ func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" - Ascending order.
-//   "DESCENDING" (default) - Descending order.
+//
+//	"ASCENDING" - Ascending order.
+//	"DESCENDING" (default) - Descending order.
 func (c *ReportsListCall) SortOrder(sortOrder string) *ReportsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -44868,8 +44941,9 @@ func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall
 // to sort the list.
 //
 // Possible values:
-//   "ID" - Sort by file ID.
-//   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
+//
+//	"ID" - Sort by file ID.
+//	"LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -44879,8 +44953,9 @@ func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall
 // results.
 //
 // Possible values:
-//   "ASCENDING" - Ascending order.
-//   "DESCENDING" (default) - Descending order.
+//
+//	"ASCENDING" - Ascending order.
+//	"DESCENDING" (default) - Descending order.
 func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -45496,8 +45571,9 @@ func (c *SitesListCall) SearchString(searchString string) *SitesListCall {
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *SitesListCall) SortField(sortField string) *SitesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -45507,8 +45583,9 @@ func (c *SitesListCall) SortField(sortField string) *SitesListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *SitesListCall) SortOrder(sortOrder string) *SitesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -46919,8 +46996,9 @@ func (c *SubaccountsListCall) SearchString(searchString string) *SubaccountsList
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *SubaccountsListCall) SortField(sortField string) *SubaccountsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -46930,8 +47008,9 @@ func (c *SubaccountsListCall) SortField(sortField string) *SubaccountsListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *SubaccountsListCall) SortOrder(sortOrder string) *SubaccountsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -47637,8 +47716,9 @@ func (c *TargetableRemarketingListsListCall) PageToken(pageToken string) *Target
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *TargetableRemarketingListsListCall) SortField(sortField string) *TargetableRemarketingListsListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -47648,8 +47728,9 @@ func (c *TargetableRemarketingListsListCall) SortField(sortField string) *Target
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *TargetableRemarketingListsListCall) SortOrder(sortOrder string) *TargetableRemarketingListsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -48223,8 +48304,9 @@ func (c *TargetingTemplatesListCall) SearchString(searchString string) *Targetin
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *TargetingTemplatesListCall) SortField(sortField string) *TargetingTemplatesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -48234,8 +48316,9 @@ func (c *TargetingTemplatesListCall) SortField(sortField string) *TargetingTempl
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *TargetingTemplatesListCall) SortOrder(sortOrder string) *TargetingTemplatesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -50093,8 +50176,9 @@ func (c *UserRolesListCall) SearchString(searchString string) *UserRolesListCall
 // sort the list.
 //
 // Possible values:
-//   "ID" (default)
-//   "NAME"
+//
+//	"ID" (default)
+//	"NAME"
 func (c *UserRolesListCall) SortField(sortField string) *UserRolesListCall {
 	c.urlParams_.Set("sortField", sortField)
 	return c
@@ -50104,8 +50188,9 @@ func (c *UserRolesListCall) SortField(sortField string) *UserRolesListCall {
 // results.
 //
 // Possible values:
-//   "ASCENDING" (default)
-//   "DESCENDING"
+//
+//	"ASCENDING" (default)
+//	"DESCENDING"
 func (c *UserRolesListCall) SortOrder(sortOrder string) *UserRolesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c

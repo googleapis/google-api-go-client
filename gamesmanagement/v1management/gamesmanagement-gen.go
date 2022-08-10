@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/games/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/gamesmanagement/v1management"
-//   ...
-//   ctx := context.Background()
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx)
+//	import "google.golang.org/api/gamesmanagement/v1management"
+//	...
+//	ctx := context.Background()
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	gamesmanagementService, err := gamesmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gamesmanagement // import "google.golang.org/api/gamesmanagement/v1management"
@@ -1296,8 +1296,8 @@ type ApplicationsListHiddenCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 //
-// - applicationId: The application ID from the Google Play developer
-//   console.
+//   - applicationId: The application ID from the Google Play developer
+//     console.
 func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsListHiddenCall {
 	c := &ApplicationsListHiddenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1978,10 +1978,10 @@ type PlayersHideCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 //
-// - applicationId: The application ID from the Google Play developer
-//   console.
-// - playerId: A player ID. A value of `me` may be used in place of the
-//   authenticated player's ID.
+//   - applicationId: The application ID from the Google Play developer
+//     console.
+//   - playerId: A player ID. A value of `me` may be used in place of the
+//     authenticated player's ID.
 func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHideCall {
 	c := &PlayersHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2096,10 +2096,10 @@ type PlayersUnhideCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 //
-// - applicationId: The application ID from the Google Play developer
-//   console.
-// - playerId: A player ID. A value of `me` may be used in place of the
-//   authenticated player's ID.
+//   - applicationId: The application ID from the Google Play developer
+//     console.
+//   - playerId: A player ID. A value of `me` may be used in place of the
+//     authenticated player's ID.
 func (r *PlayersService) Unhide(applicationId string, playerId string) *PlayersUnhideCall {
 	c := &PlayersUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId

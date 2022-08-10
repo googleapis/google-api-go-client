@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/recaptcha-enterprise/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/recaptchaenterprise/v1"
-//   ...
-//   ctx := context.Background()
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx)
+//	import "google.golang.org/api/recaptchaenterprise/v1"
+//	...
+//	ctx := context.Background()
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithAPIKey("AIza..."))
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package recaptchaenterprise // import "google.golang.org/api/recaptchaenterprise/v1"
@@ -1423,8 +1423,8 @@ type ProjectsAssessmentsAnnotateCall struct {
 // additional information on whether the event turned out to be
 // authentic or fraudulent.
 //
-// - name: The resource name of the Assessment, in the format
-//   "projects/{project}/assessments/{assessment}".
+//   - name: The resource name of the Assessment, in the format
+//     "projects/{project}/assessments/{assessment}".
 func (r *ProjectsAssessmentsService) Annotate(name string, googlecloudrecaptchaenterprisev1annotateassessmentrequest *GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest) *ProjectsAssessmentsAnnotateCall {
 	c := &ProjectsAssessmentsAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1570,8 +1570,8 @@ type ProjectsAssessmentsCreateCall struct {
 // Create: Creates an Assessment of the likelihood an event is
 // legitimate.
 //
-// - parent: The name of the project in which the assessment will be
-//   created, in the format "projects/{project}".
+//   - parent: The name of the project in which the assessment will be
+//     created, in the format "projects/{project}".
 func (r *ProjectsAssessmentsService) Create(parent string, googlecloudrecaptchaenterprisev1assessment *GoogleCloudRecaptchaenterpriseV1Assessment) *ProjectsAssessmentsCreateCall {
 	c := &ProjectsAssessmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1715,8 +1715,8 @@ type ProjectsKeysCreateCall struct {
 
 // Create: Creates a new reCAPTCHA Enterprise key.
 //
-// - parent: The name of the project in which the key will be created,
-//   in the format "projects/{project}".
+//   - parent: The name of the project in which the key will be created,
+//     in the format "projects/{project}".
 func (r *ProjectsKeysService) Create(parent string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysCreateCall {
 	c := &ProjectsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1858,8 +1858,8 @@ type ProjectsKeysDeleteCall struct {
 
 // Delete: Deletes the specified key.
 //
-// - name: The name of the key to be deleted, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the key to be deleted, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Delete(name string) *ProjectsKeysDeleteCall {
 	c := &ProjectsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1992,8 +1992,8 @@ type ProjectsKeysGetCall struct {
 
 // Get: Returns the specified key.
 //
-// - name: The name of the requested key, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the requested key, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Get(name string) *ProjectsKeysGetCall {
 	c := &ProjectsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2141,8 +2141,8 @@ type ProjectsKeysGetMetricsCall struct {
 // GetMetrics: Get some aggregated metrics for a Key. This data can be
 // used to build dashboards.
 //
-// - name: The name of the requested metrics, in the format
-//   "projects/{project}/keys/{key}/metrics".
+//   - name: The name of the requested metrics, in the format
+//     "projects/{project}/keys/{key}/metrics".
 func (r *ProjectsKeysService) GetMetrics(name string) *ProjectsKeysGetMetricsCall {
 	c := &ProjectsKeysGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2289,8 +2289,8 @@ type ProjectsKeysListCall struct {
 
 // List: Returns the list of all keys that belong to a project.
 //
-// - parent: The name of the project that contains the keys that will be
-//   listed, in the format "projects/{project}".
+//   - parent: The name of the project that contains the keys that will be
+//     listed, in the format "projects/{project}".
 func (r *ProjectsKeysService) List(parent string) *ProjectsKeysListCall {
 	c := &ProjectsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2490,8 +2490,8 @@ type ProjectsKeysMigrateCall struct {
 // reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise
 // Admin IAM role in the destination project.
 //
-// - name: The name of the key to be migrated, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the key to be migrated, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Migrate(name string, googlecloudrecaptchaenterprisev1migratekeyrequest *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) *ProjectsKeysMigrateCall {
 	c := &ProjectsKeysMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2634,8 +2634,8 @@ type ProjectsKeysPatchCall struct {
 
 // Patch: Updates the specified key.
 //
-// - name: The resource name for the Key in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The resource name for the Key in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysPatchCall {
 	c := &ProjectsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2794,8 +2794,8 @@ type ProjectsKeysRetrieveLegacySecretKeyCall struct {
 // specified public key. You must use the legacy secret key only in a
 // 3rd party integration with legacy reCAPTCHA.
 //
-// - key: The public key name linked to the requested secret key in the
-//   format "projects/{project}/keys/{key}".
+//   - key: The public key name linked to the requested secret key in the
+//     format "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) RetrieveLegacySecretKey(key string) *ProjectsKeysRetrieveLegacySecretKeyCall {
 	c := &ProjectsKeysRetrieveLegacySecretKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.key = key
@@ -2944,9 +2944,9 @@ type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
 
 // Search: Search group memberships related to a given account.
 //
-// - project: The name of the project to search related account group
-//   memberships from. Specify the project name in the following format:
-//   "projects/{project}".
+//   - project: The name of the project to search related account group
+//     memberships from. Specify the project name in the following format:
+//     "projects/{project}".
 func (r *ProjectsRelatedaccountgroupmembershipsService) Search(project string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
 	c := &ProjectsRelatedaccountgroupmembershipsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3114,8 +3114,8 @@ type ProjectsRelatedaccountgroupsListCall struct {
 
 // List: List groups of related accounts.
 //
-// - parent: The name of the project to list related account groups
-//   from, in the format "projects/{project}".
+//   - parent: The name of the project to list related account groups
+//     from, in the format "projects/{project}".
 func (r *ProjectsRelatedaccountgroupsService) List(parent string) *ProjectsRelatedaccountgroupsListCall {
 	c := &ProjectsRelatedaccountgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3315,9 +3315,9 @@ type ProjectsRelatedaccountgroupsMembershipsListCall struct {
 
 // List: Get memberships in a group of related accounts.
 //
-// - parent: The resource name for the related account group in the
-//   format
-//   `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.
+//   - parent: The resource name for the related account group in the
+//     format
+//     `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.
 func (r *ProjectsRelatedaccountgroupsMembershipsService) List(parent string) *ProjectsRelatedaccountgroupsMembershipsListCall {
 	c := &ProjectsRelatedaccountgroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

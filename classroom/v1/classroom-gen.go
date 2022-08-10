@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/classroom/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/classroom/v1"
-//   ...
-//   ctx := context.Background()
-//   classroomService, err := classroom.NewService(ctx)
+//	import "google.golang.org/api/classroom/v1"
+//	...
+//	ctx := context.Background()
+//	classroomService, err := classroom.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   classroomService, err := classroom.NewService(ctx, option.WithScopes(classroom.ClassroomTopicsReadonlyScope))
+//	classroomService, err := classroom.NewService(ctx, option.WithScopes(classroom.ClassroomTopicsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   classroomService, err := classroom.NewService(ctx, option.WithAPIKey("AIza..."))
+//	classroomService, err := classroom.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   classroomService, err := classroom.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	classroomService, err := classroom.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package classroom // import "google.golang.org/api/classroom/v1"
@@ -3383,8 +3383,8 @@ type CoursesDeleteCall struct {
 // to delete the requested course or for access errors. * `NOT_FOUND` if
 // no course exists with the requested ID.
 //
-// - id: Identifier of the course to delete. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to delete. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3519,8 +3519,8 @@ type CoursesGetCall struct {
 // access the requested course or for access errors. * `NOT_FOUND` if no
 // course exists with the requested ID.
 //
-// - id: Identifier of the course to return. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to return. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3680,22 +3680,32 @@ func (r *CoursesService) List() *CoursesListCall {
 // value is ACTIVE, ARCHIVED, PROVISIONED, DECLINED.
 //
 // Possible values:
-//   "COURSE_STATE_UNSPECIFIED" - No course state. No returned Course
+//
+//	"COURSE_STATE_UNSPECIFIED" - No course state. No returned Course
+//
 // message will use this value.
-//   "ACTIVE" - The course is active.
-//   "ARCHIVED" - The course has been archived. You cannot modify it
+//
+//	"ACTIVE" - The course is active.
+//	"ARCHIVED" - The course has been archived. You cannot modify it
+//
 // except to change it to a different state.
-//   "PROVISIONED" - The course has been created, but not yet activated.
+//
+//	"PROVISIONED" - The course has been created, but not yet activated.
+//
 // It is accessible by the primary teacher and domain administrators,
 // who may modify it or change it to the `ACTIVE` or `DECLINED` states.
 // A course may only be changed to `PROVISIONED` if it is in the
 // `DECLINED` state.
-//   "DECLINED" - The course has been created, but declined. It is
+//
+//	"DECLINED" - The course has been created, but declined. It is
+//
 // accessible by the course owner and domain administrators, though it
 // will not be displayed in the web UI. You cannot modify the course
 // except to change it to the `PROVISIONED` state. A course may only be
 // changed to `DECLINED` if it is in the `PROVISIONED` state.
-//   "SUSPENDED" - The course has been suspended. You cannot modify the
+//
+//	"SUSPENDED" - The course has been suspended. You cannot modify the
+//
 // course, and only the user identified by the `owner_id` can view the
 // course. A course may be placed in this state if it potentially
 // violates the Terms of Service.
@@ -3940,8 +3950,8 @@ type CoursesPatchCall struct {
 // or if no update mask is supplied. * `FAILED_PRECONDITION` for the
 // following request errors: * CourseNotModifiable * InactiveCourseOwner
 //
-// - id: Identifier of the course to update. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to update. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	c := &CoursesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -4106,8 +4116,8 @@ type CoursesUpdateCall struct {
 // no course exists with the requested ID. * `FAILED_PRECONDITION` for
 // the following request errors: * CourseNotModifiable
 //
-// - id: Identifier of the course to update. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course to update. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	c := &CoursesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -4254,8 +4264,8 @@ type CoursesAliasesCreateCall struct {
 // does not make sense for the requesting user or course (for example,
 // if a user not in a domain attempts to access a domain-scoped alias).
 //
-// - courseId: Identifier of the course to alias. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course to alias. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
 	c := &CoursesAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4402,11 +4412,11 @@ type CoursesAliasesDeleteCall struct {
 // course (for example, if a user not in a domain attempts to delete a
 // domain-scoped alias).
 //
-// - alias: Alias to delete. This may not be the Classroom-assigned
-//   identifier.
-// - courseId: Identifier of the course whose alias should be deleted.
-//   This identifier can be either the Classroom-assigned identifier or
-//   an alias.
+//   - alias: Alias to delete. This may not be the Classroom-assigned
+//     identifier.
+//   - courseId: Identifier of the course whose alias should be deleted.
+//     This identifier can be either the Classroom-assigned identifier or
+//     an alias.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
 	c := &CoursesAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4550,8 +4560,8 @@ type CoursesAliasesListCall struct {
 // is not permitted to access the course or for access errors. *
 // `NOT_FOUND` if the course does not exist.
 //
-// - courseId: The identifier of the course. This identifier can be
-//   either the Classroom-assigned identifier or an alias.
+//   - courseId: The identifier of the course. This identifier can be
+//     either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 	c := &CoursesAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4753,8 +4763,8 @@ type CoursesAnnouncementsCreateCall struct {
 // requested course does not exist. * `FAILED_PRECONDITION` for the
 // following request error: * AttachmentNotVisible
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) Create(courseId string, announcement *Announcement) *CoursesAnnouncementsCreateCall {
 	c := &CoursesAnnouncementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4904,10 +4914,10 @@ type CoursesAnnouncementsDeleteCall struct {
 // announcement has already been deleted. * `NOT_FOUND` if no course
 // exists with the requested ID.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the announcement to delete. This identifier is a
-//   Classroom-assigned identifier.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the announcement to delete. This identifier is a
+//     Classroom-assigned identifier.
 func (r *CoursesAnnouncementsService) Delete(courseId string, id string) *CoursesAnnouncementsDeleteCall {
 	c := &CoursesAnnouncementsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5053,9 +5063,9 @@ type CoursesAnnouncementsGetCall struct {
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course or announcement does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the announcement.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Get(courseId string, id string) *CoursesAnnouncementsGetCall {
 	c := &CoursesAnnouncementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5216,8 +5226,8 @@ type CoursesAnnouncementsListCall struct {
 // course or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncementsListCall {
 	c := &CoursesAnnouncementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5229,14 +5239,22 @@ func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncement
 // argument is left unspecified, the default value is `PUBLISHED`.
 //
 // Possible values:
-//   "ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is
+//
+//	"ANNOUNCEMENT_STATE_UNSPECIFIED" - No state specified. This is
+//
 // never returned.
-//   "PUBLISHED" - Status for announcement that has been published. This
+//
+//	"PUBLISHED" - Status for announcement that has been published. This
+//
 // is the default state.
-//   "DRAFT" - Status for an announcement that is not yet published.
+//
+//	"DRAFT" - Status for an announcement that is not yet published.
+//
 // Announcement in this state is visible only to course teachers and
 // domain administrators.
-//   "DELETED" - Status for announcement that was published but is now
+//
+//	"DELETED" - Status for announcement that was published but is now
+//
 // deleted. Announcement in this state is visible only to course
 // teachers and domain administrators. Announcement in this state is
 // deleted after some time.
@@ -5475,9 +5493,9 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 // errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if the requested course or course work does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the announcement.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) ModifyAssignees(courseId string, id string, modifyannouncementassigneesrequest *ModifyAnnouncementAssigneesRequest) *CoursesAnnouncementsModifyAssigneesCall {
 	c := &CoursesAnnouncementsModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5634,9 +5652,9 @@ type CoursesAnnouncementsPatchCall struct {
 // announcement has already been deleted. * `NOT_FOUND` if the requested
 // course or announcement does not exist
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the announcement.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announcement *Announcement) *CoursesAnnouncementsPatchCall {
 	c := &CoursesAnnouncementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5818,8 +5836,8 @@ type CoursesCourseWorkCreateCall struct {
 // requested course does not exist. * `FAILED_PRECONDITION` for the
 // following request error: * AttachmentNotVisible
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5969,10 +5987,10 @@ type CoursesCourseWorkDeleteCall struct {
 // work has already been deleted. * `NOT_FOUND` if no course exists with
 // the requested ID.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work to delete. This identifier is a
-//   Classroom-assigned identifier.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work to delete. This identifier is a
+//     Classroom-assigned identifier.
 func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCourseWorkDeleteCall {
 	c := &CoursesCourseWorkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6118,9 +6136,9 @@ type CoursesCourseWorkGetCall struct {
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course or course work does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCourseWorkGetCall {
 	c := &CoursesCourseWorkGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6283,8 +6301,8 @@ type CoursesCourseWorkListCall struct {
 // course or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListCall {
 	c := &CoursesCourseWorkListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6297,13 +6315,21 @@ func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListC
 // `PUBLISHED` is returned.
 //
 // Possible values:
-//   "COURSE_WORK_STATE_UNSPECIFIED" - No state specified. This is never
+//
+//	"COURSE_WORK_STATE_UNSPECIFIED" - No state specified. This is never
+//
 // returned.
-//   "PUBLISHED" - Status for work that has been published. This is the
+//
+//	"PUBLISHED" - Status for work that has been published. This is the
+//
 // default state.
-//   "DRAFT" - Status for work that is not yet published. Work in this
+//
+//	"DRAFT" - Status for work that is not yet published. Work in this
+//
 // state is visible only to course teachers and domain administrators.
-//   "DELETED" - Status for work that was published but is now deleted.
+//
+//	"DELETED" - Status for work that was published but is now deleted.
+//
 // Work in this state is visible only to course teachers and domain
 // administrators. Work in this state is deleted after some time.
 func (c *CoursesCourseWorkListCall) CourseWorkStates(courseWorkStates ...string) *CoursesCourseWorkListCall {
@@ -6543,9 +6569,9 @@ type CoursesCourseWorkModifyAssigneesCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course or course work does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the coursework.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the coursework.
 func (r *CoursesCourseWorkService) ModifyAssignees(courseId string, id string, modifycourseworkassigneesrequest *ModifyCourseWorkAssigneesRequest) *CoursesCourseWorkModifyAssigneesCall {
 	c := &CoursesCourseWorkModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6708,9 +6734,9 @@ type CoursesCourseWorkPatchCall struct {
 // has already been deleted. * `NOT_FOUND` if the requested course,
 // course work, or student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework *CourseWork) *CoursesCourseWorkPatchCall {
 	c := &CoursesCourseWorkPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6888,10 +6914,10 @@ type CoursesCourseWorkStudentSubmissionsGetCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkStudentSubmissionsGetCall {
 	c := &CoursesCourseWorkStudentSubmissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7069,11 +7095,11 @@ type CoursesCourseWorkStudentSubmissionsListCall struct {
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the student work to request. This may
-//   be set to the string literal "-" to request student work for all
-//   course work in the specified course.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the student work to request. This may
+//     be set to the string literal "-" to request student work for all
+//     course work in the specified course.
 func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, courseWorkId string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c := &CoursesCourseWorkStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7087,10 +7113,13 @@ func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, cours
 // of `late` value.
 //
 // Possible values:
-//   "LATE_VALUES_UNSPECIFIED" - No restriction on submission late
+//
+//	"LATE_VALUES_UNSPECIFIED" - No restriction on submission late
+//
 // values specified.
-//   "LATE_ONLY" - Return StudentSubmissions where late is true.
-//   "NOT_LATE_ONLY" - Return StudentSubmissions where late is false.
+//
+//	"LATE_ONLY" - Return StudentSubmissions where late is true.
+//	"NOT_LATE_ONLY" - Return StudentSubmissions where late is false.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) Late(late string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.Set("late", late)
 	return c
@@ -7119,14 +7148,20 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) PageToken(pageToken string
 // specified submission states.
 //
 // Possible values:
-//   "SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should
+//
+//	"SUBMISSION_STATE_UNSPECIFIED" - No state specified. This should
+//
 // never be returned.
-//   "NEW" - The student has never accessed this submission. Attachments
+//
+//	"NEW" - The student has never accessed this submission. Attachments
+//
 // are not returned and timestamps is not set.
-//   "CREATED" - Has been created.
-//   "TURNED_IN" - Has been turned in to the teacher.
-//   "RETURNED" - Has been returned to the student.
-//   "RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the
+//
+//	"CREATED" - Has been created.
+//	"TURNED_IN" - Has been turned in to the teacher.
+//	"RETURNED" - Has been returned to the student.
+//	"RECLAIMED_BY_STUDENT" - Student chose to "unsubmit" the
+//
 // assignment.
 func (c *CoursesCourseWorkStudentSubmissionsListCall) States(states ...string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
@@ -7381,10 +7416,10 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 // is malformed. * `NOT_FOUND` if the requested course, course work, or
 // student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
 	c := &CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7557,10 +7592,10 @@ type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 // is malformed. * `NOT_FOUND` if the requested course, course work, or
 // student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, courseWorkId string, id string, studentsubmission *StudentSubmission) *CoursesCourseWorkStudentSubmissionsPatchCall {
 	c := &CoursesCourseWorkStudentSubmissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7752,10 +7787,10 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 // `NOT_FOUND` if the requested course, course work, or student
 // submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
 	c := &CoursesCourseWorkStudentSubmissionsReclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7929,10 +7964,10 @@ type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
 	c := &CoursesCourseWorkStudentSubmissionsReturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8104,10 +8139,10 @@ type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - courseWorkId: Identifier of the course work.
-// - id: Identifier of the student submission.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - courseWorkId: Identifier of the course work.
+//   - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
 	c := &CoursesCourseWorkStudentSubmissionsTurnInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8273,8 +8308,8 @@ type CoursesCourseWorkMaterialsCreateCall struct {
 // course does not exist. * `FAILED_PRECONDITION` for the following
 // request error: * AttachmentNotVisible
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsCreateCall {
 	c := &CoursesCourseWorkMaterialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8424,10 +8459,10 @@ type CoursesCourseWorkMaterialsDeleteCall struct {
 // requested course work material has already been deleted. *
 // `NOT_FOUND` if no course exists with the requested ID.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work material to delete. This
-//   identifier is a Classroom-assigned identifier.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work material to delete. This
+//     identifier is a Classroom-assigned identifier.
 func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *CoursesCourseWorkMaterialsDeleteCall {
 	c := &CoursesCourseWorkMaterialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8574,9 +8609,9 @@ type CoursesCourseWorkMaterialsGetCall struct {
 // is malformed. * `NOT_FOUND` if the requested course or course work
 // material does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work material.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *CoursesCourseWorkMaterialsGetCall {
 	c := &CoursesCourseWorkMaterialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8738,8 +8773,8 @@ type CoursesCourseWorkMaterialsListCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourseWorkMaterialsListCall {
 	c := &CoursesCourseWorkMaterialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8752,14 +8787,22 @@ func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourse
 // items with a work status of `PUBLISHED` is returned.
 //
 // Possible values:
-//   "COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This
+//
+//	"COURSEWORK_MATERIAL_STATE_UNSPECIFIED" - No state specified. This
+//
 // is never returned.
-//   "PUBLISHED" - Status for course work material that has been
+//
+//	"PUBLISHED" - Status for course work material that has been
+//
 // published. This is the default state.
-//   "DRAFT" - Status for an course work material that is not yet
+//
+//	"DRAFT" - Status for an course work material that is not yet
+//
 // published. Course work material in this state is visible only to
 // course teachers and domain administrators.
-//   "DELETED" - Status for course work material that was published but
+//
+//	"DELETED" - Status for course work material that was published but
+//
 // is now deleted. Course work material in this state is visible only to
 // course teachers and domain administrators. Course work material in
 // this state is deleted after some time.
@@ -9026,9 +9069,9 @@ type CoursesCourseWorkMaterialsPatchCall struct {
 // already been deleted. * `NOT_FOUND` if the requested course or course
 // work material does not exist
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the course work material.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsPatchCall {
 	c := &CoursesCourseWorkMaterialsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9212,9 +9255,9 @@ type CoursesStudentsCreateCall struct {
 // `ALREADY_EXISTS` if the user is already a student or teacher in the
 // course.
 //
-// - courseId: Identifier of the course to create the student in. This
-//   identifier can be either the Classroom-assigned identifier or an
-//   alias.
+//   - courseId: Identifier of the course to create the student in. This
+//     identifier can be either the Classroom-assigned identifier or an
+//     alias.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
 	c := &CoursesStudentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9376,12 +9419,12 @@ type CoursesStudentsDeleteCall struct {
 // errors. * `NOT_FOUND` if no student of this course has the requested
 // ID or if the course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - userId: Identifier of the student to delete. The identifier can be
-//   one of the following: * the numeric identifier for the user * the
-//   email address of the user * the string literal "me", indicating
-//   the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the student to delete. The identifier can be
+//     one of the following: * the numeric identifier for the user * the
+//     email address of the user * the string literal "me", indicating
+//     the requesting user.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
 	c := &CoursesStudentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9527,12 +9570,12 @@ type CoursesStudentsGetCall struct {
 // `NOT_FOUND` if no student of this course has the requested ID or if
 // the course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - userId: Identifier of the student to return. The identifier can be
-//   one of the following: * the numeric identifier for the user * the
-//   email address of the user * the string literal "me", indicating
-//   the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the student to return. The identifier can be
+//     one of the following: * the numeric identifier for the user * the
+//     email address of the user * the string literal "me", indicating
+//     the requesting user.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
 	c := &CoursesStudentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9692,8 +9735,8 @@ type CoursesStudentsListCall struct {
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // access errors.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
 	c := &CoursesStudentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9903,8 +9946,8 @@ type CoursesTeachersCreateCall struct {
 // InactiveCourseOwner * `ALREADY_EXISTS` if the user is already a
 // teacher or student in the course.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
 	c := &CoursesTeachersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10055,12 +10098,12 @@ type CoursesTeachersDeleteCall struct {
 // belongs to the owner of the course Drive folder. *
 // `FAILED_PRECONDITION` if the course no longer has an active owner.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - userId: Identifier of the teacher to delete. The identifier can be
-//   one of the following: * the numeric identifier for the user * the
-//   email address of the user * the string literal "me", indicating
-//   the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the teacher to delete. The identifier can be
+//     one of the following: * the numeric identifier for the user * the
+//     email address of the user * the string literal "me", indicating
+//     the requesting user.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
 	c := &CoursesTeachersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10206,12 +10249,12 @@ type CoursesTeachersGetCall struct {
 // `NOT_FOUND` if no teacher of this course has the requested ID or if
 // the course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - userId: Identifier of the teacher to return. The identifier can be
-//   one of the following: * the numeric identifier for the user * the
-//   email address of the user * the string literal "me", indicating
-//   the requesting user.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - userId: Identifier of the teacher to return. The identifier can be
+//     one of the following: * the numeric identifier for the user * the
+//     email address of the user * the string literal "me", indicating
+//     the requesting user.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
 	c := &CoursesTeachersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10371,8 +10414,8 @@ type CoursesTeachersListCall struct {
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // access errors.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
 	c := &CoursesTeachersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10573,8 +10616,8 @@ type CoursesTopicsCreateCall struct {
 // course, or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) Create(courseId string, topic *Topic) *CoursesTopicsCreateCall {
 	c := &CoursesTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10720,9 +10763,9 @@ type CoursesTopicsDeleteCall struct {
 // deleted. * `NOT_FOUND` if no course or topic exists with the
 // requested ID.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the topic to delete.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the topic to delete.
 func (r *CoursesTopicsService) Delete(courseId string, id string) *CoursesTopicsDeleteCall {
 	c := &CoursesTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -11029,8 +11072,8 @@ type CoursesTopicsListCall struct {
 // the request is malformed. * `NOT_FOUND` if the requested course does
 // not exist.
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) List(courseId string) *CoursesTopicsListCall {
 	c := &CoursesTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -11231,9 +11274,9 @@ type CoursesTopicsPatchCall struct {
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if the requested course or topic does not exist
 //
-// - courseId: Identifier of the course. This identifier can be either
-//   the Classroom-assigned identifier or an alias.
-// - id: Identifier of the topic.
+//   - courseId: Identifier of the course. This identifier can be either
+//     the Classroom-assigned identifier or an alias.
+//   - id: Identifier of the topic.
 func (r *CoursesTopicsService) Patch(courseId string, id string, topic *Topic) *CoursesTopicsPatchCall {
 	c := &CoursesTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -12316,8 +12359,8 @@ type RegistrationsDeleteCall struct {
 // Delete: Deletes a `Registration`, causing Classroom to stop sending
 // notifications for that `Registration`.
 //
-// - registrationId: The `registration_id` of the `Registration` to be
-//   deleted.
+//   - registrationId: The `registration_id` of the `Registration` to be
+//     deleted.
 func (r *RegistrationsService) Delete(registrationId string) *RegistrationsDeleteCall {
 	c := &RegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registrationId = registrationId
@@ -12452,10 +12495,10 @@ type UserProfilesGetCall struct {
 // to access this user profile, if no profile exists with the requested
 // ID, or for access errors.
 //
-// - userId: Identifier of the profile to return. The identifier can be
-//   one of the following: * the numeric identifier for the user * the
-//   email address of the user * the string literal "me", indicating
-//   the requesting user.
+//   - userId: Identifier of the profile to return. The identifier can be
+//     one of the following: * the numeric identifier for the user * the
+//     email address of the user * the string literal "me", indicating
+//     the requesting user.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12779,10 +12822,10 @@ type UserProfilesGuardianInvitationsGetCall struct {
 // if the student exists, but the requesting user does not have access
 // to see that student.
 //
-// - invitationId: The `id` field of the `GuardianInvitation` being
-//   requested.
-// - studentId: The ID of the student whose guardian invitation is being
-//   requested.
+//   - invitationId: The `id` field of the `GuardianInvitation` being
+//     requested.
+//   - studentId: The ID of the student whose guardian invitation is being
+//     requested.
 func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitationId string) *UserProfilesGuardianInvitationsGetCall {
 	c := &UserProfilesGuardianInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12949,13 +12992,13 @@ type UserProfilesGuardianInvitationsListCall struct {
 // `NOT_FOUND` if a `student_id` is specified, and its format can be
 // recognized, but Classroom has no record of that student.
 //
-// - studentId: The ID of the student whose guardian invitations are to
-//   be returned. The identifier can be one of the following: * the
-//   numeric identifier for the user * the email address of the user *
-//   the string literal "me", indicating the requesting user * the
-//   string literal "-", indicating that results should be returned
-//   for all students that the requesting user is permitted to view
-//   guardian invitations.
+//   - studentId: The ID of the student whose guardian invitations are to
+//     be returned. The identifier can be one of the following: * the
+//     numeric identifier for the user * the email address of the user *
+//     the string literal "me", indicating the requesting user * the
+//     string literal "-", indicating that results should be returned
+//     for all students that the requesting user is permitted to view
+//     guardian invitations.
 func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
 	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12993,9 +13036,11 @@ func (c *UserProfilesGuardianInvitationsListCall) PageToken(pageToken string) *U
 // results with a `state` of `PENDING` are returned.
 //
 // Possible values:
-//   "GUARDIAN_INVITATION_STATE_UNSPECIFIED" - Should never be returned.
-//   "PENDING" - The invitation is active and awaiting a response.
-//   "COMPLETE" - The invitation is no longer active. It may have been
+//
+//	"GUARDIAN_INVITATION_STATE_UNSPECIFIED" - Should never be returned.
+//	"PENDING" - The invitation is active and awaiting a response.
+//	"COMPLETE" - The invitation is no longer active. It may have been
+//
 // accepted, declined, withdrawn or it may have expired.
 func (c *UserProfilesGuardianInvitationsListCall) States(states ...string) *UserProfilesGuardianInvitationsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
@@ -13209,10 +13254,10 @@ type UserProfilesGuardianInvitationsPatchCall struct {
 // `id` field does not refer to a guardian invitation known to
 // Classroom.
 //
-// - invitationId: The `id` field of the `GuardianInvitation` to be
-//   modified.
-// - studentId: The ID of the student whose guardian invitation is to be
-//   modified.
+//   - invitationId: The `id` field of the `GuardianInvitation` to be
+//     modified.
+//   - studentId: The ID of the student whose guardian invitation is to be
+//     modified.
 func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitationId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsPatchCall {
 	c := &UserProfilesGuardianInvitationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13390,11 +13435,11 @@ type UserProfilesGuardiansDeleteCall struct {
 // requested `student_id`, but no `Guardian` record exists for that
 // student with the provided `guardian_id`.
 //
-// - guardianId: The `id` field from a `Guardian`.
-// - studentId: The student whose guardian is to be deleted. One of the
-//   following: * the numeric identifier for the user * the email
-//   address of the user * the string literal "me", indicating the
-//   requesting user.
+//   - guardianId: The `id` field from a `Guardian`.
+//   - studentId: The student whose guardian is to be deleted. One of the
+//     following: * the numeric identifier for the user * the email
+//     address of the user * the string literal "me", indicating the
+//     requesting user.
 func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
 	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13547,11 +13592,11 @@ type UserProfilesGuardiansGetCall struct {
 // `student_id`, but no `Guardian` record exists for that student that
 // matches the provided `guardian_id`.
 //
-// - guardianId: The `id` field from a `Guardian`.
-// - studentId: The student whose guardian is being requested. One of
-//   the following: * the numeric identifier for the user * the email
-//   address of the user * the string literal "me", indicating the
-//   requesting user.
+//   - guardianId: The `id` field from a `Guardian`.
+//   - studentId: The student whose guardian is being requested. One of
+//     the following: * the numeric identifier for the user * the email
+//     address of the user * the string literal "me", indicating the
+//     requesting user.
 func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
 	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13723,12 +13768,12 @@ type UserProfilesGuardiansListCall struct {
 // format can be recognized, but Classroom has no record of that
 // student.
 //
-// - studentId: Filter results by the student who the guardian is linked
-//   to. The identifier can be one of the following: * the numeric
-//   identifier for the user * the email address of the user * the
-//   string literal "me", indicating the requesting user * the string
-//   literal "-", indicating that results should be returned for all
-//   students that the requesting user has access to view.
+//   - studentId: Filter results by the student who the guardian is linked
+//     to. The identifier can be one of the following: * the numeric
+//     identifier for the user * the email address of the user * the
+//     string literal "me", indicating the requesting user * the string
+//     literal "-", indicating that results should be returned for all
+//     students that the requesting user has access to view.
 func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
 	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId

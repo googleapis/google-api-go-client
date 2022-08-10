@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/ad-exchange/buyer-rest
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/adexchangebuyer/v1.3"
-//   ...
-//   ctx := context.Background()
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx)
+//	import "google.golang.org/api/adexchangebuyer/v1.3"
+//	...
+//	ctx := context.Background()
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithAPIKey("AIza..."))
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adexchangebuyer // import "google.golang.org/api/adexchangebuyer/v1.3"
@@ -3202,9 +3202,10 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 // specified, only creatives having the given status are returned.
 //
 // Possible values:
-//   "approved" - Creatives which have been approved.
-//   "disapproved" - Creatives which have been disapproved.
-//   "not_checked" - Creatives whose status is not yet checked.
+//
+//	"approved" - Creatives which have been approved.
+//	"disapproved" - Creatives which have been disapproved.
+//	"not_checked" - Creatives whose status is not yet checked.
 func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall {
 	c.urlParams_.Set("statusFilter", statusFilter)
 	return c
@@ -3667,11 +3668,11 @@ type PerformanceReportListCall struct {
 
 // List: Retrieves the authenticated user's list of performance metrics.
 //
-// - accountId: The account id to get the reports.
-// - endDateTime: The end time of the report in ISO 8601 timestamp
-//   format using UTC.
-// - startDateTime: The start time of the report in ISO 8601 timestamp
-//   format using UTC.
+//   - accountId: The account id to get the reports.
+//   - endDateTime: The end time of the report in ISO 8601 timestamp
+//     format using UTC.
+//   - startDateTime: The start time of the report in ISO 8601 timestamp
+//     format using UTC.
 func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
 	c := &PerformanceReportListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("accountId", fmt.Sprint(accountId))

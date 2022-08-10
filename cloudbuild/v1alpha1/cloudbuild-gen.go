@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/cloud-build/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudbuild/v1alpha1"
-//   ...
-//   ctx := context.Background()
-//   cloudbuildService, err := cloudbuild.NewService(ctx)
+//	import "google.golang.org/api/cloudbuild/v1alpha1"
+//	...
+//	ctx := context.Background()
+//	cloudbuildService, err := cloudbuild.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudbuild // import "google.golang.org/api/cloudbuild/v1alpha1"
@@ -3409,8 +3409,8 @@ type ProjectsWorkerPoolsDeleteCall struct {
 
 // Delete: Deletes a `WorkerPool` by its project ID and WorkerPool name.
 //
-// - name: The field will contain name of the resource requested, for
-//   example: "projects/project-1/workerPools/workerpool-name".
+//   - name: The field will contain name of the resource requested, for
+//     example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Delete(name string) *ProjectsWorkerPoolsDeleteCall {
 	c := &ProjectsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3543,8 +3543,8 @@ type ProjectsWorkerPoolsGetCall struct {
 
 // Get: Returns information about a `WorkerPool`.
 //
-// - name: The field will contain name of the resource requested, for
-//   example: "projects/project-1/workerPools/workerpool-name".
+//   - name: The field will contain name of the resource requested, for
+//     example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Get(name string) *ProjectsWorkerPoolsGetCall {
 	c := &ProjectsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3836,8 +3836,8 @@ type ProjectsWorkerPoolsPatchCall struct {
 
 // Patch: Update a `WorkerPool`.
 //
-// - name: The field will contain name of the resource requested, for
-//   example: "projects/project-1/workerPools/workerpool-name".
+//   - name: The field will contain name of the resource requested, for
+//     example: "projects/project-1/workerPools/workerpool-name".
 func (r *ProjectsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsWorkerPoolsPatchCall {
 	c := &ProjectsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

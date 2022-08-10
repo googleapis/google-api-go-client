@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/maps/contact-sales/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/vectortile/v1"
-//   ...
-//   ctx := context.Background()
-//   vectortileService, err := vectortile.NewService(ctx)
+//	import "google.golang.org/api/vectortile/v1"
+//	...
+//	ctx := context.Background()
+//	vectortileService, err := vectortile.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   vectortileService, err := vectortile.NewService(ctx, option.WithAPIKey("AIza..."))
+//	vectortileService, err := vectortile.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   vectortileService, err := vectortile.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	vectortileService, err := vectortile.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package vectortile // import "google.golang.org/api/vectortile/v1"
@@ -1173,10 +1173,10 @@ type FeaturetilesGetCall struct {
 
 // Get: Gets a feature tile by its tile resource name.
 //
-// - name: Resource name of the tile. The tile resource name is prefixed
-//   by its collection ID `tiles/` followed by the resource ID, which
-//   encodes the tile's global x and y coordinates and zoom level as
-//   `@,,z`. For example, `tiles/@1,2,3z`.
+//   - name: Resource name of the tile. The tile resource name is prefixed
+//     by its collection ID `tiles/` followed by the resource ID, which
+//     encodes the tile's global x and y coordinates and zoom level as
+//     `@,,z`. For example, `tiles/@1,2,3z`.
 func (r *FeaturetilesService) Get(name string) *FeaturetilesGetCall {
 	c := &FeaturetilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1238,14 +1238,15 @@ func (c *FeaturetilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSyste
 // Platform where the application is running.
 //
 // Possible values:
-//   "PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
-//   "EDITOR" - Development environment.
-//   "MAC_OS" - macOS.
-//   "WINDOWS" - Windows.
-//   "LINUX" - Linux
-//   "ANDROID" - Android
-//   "IOS" - iOS
-//   "WEB_GL" - WebGL.
+//
+//	"PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
+//	"EDITOR" - Development environment.
+//	"MAC_OS" - macOS.
+//	"WINDOWS" - Windows.
+//	"LINUX" - Linux
+//	"ANDROID" - Android
+//	"IOS" - iOS
+//	"WEB_GL" - WebGL.
 func (c *FeaturetilesGetCall) ClientInfoPlatform(clientInfoPlatform string) *FeaturetilesGetCall {
 	c.urlParams_.Set("clientInfo.platform", clientInfoPlatform)
 	return c
@@ -1592,10 +1593,10 @@ type TerraintilesGetCall struct {
 
 // Get: Gets a terrain tile by its tile resource name.
 //
-// - name: Resource name of the tile. The tile resource name is prefixed
-//   by its collection ID `terraintiles/` followed by the resource ID,
-//   which encodes the tile's global x and y coordinates and zoom level
-//   as `@,,z`. For example, `terraintiles/@1,2,3z`.
+//   - name: Resource name of the tile. The tile resource name is prefixed
+//     by its collection ID `terraintiles/` followed by the resource ID,
+//     which encodes the tile's global x and y coordinates and zoom level
+//     as `@,,z`. For example, `terraintiles/@1,2,3z`.
 func (r *TerraintilesService) Get(name string) *TerraintilesGetCall {
 	c := &TerraintilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1656,14 +1657,15 @@ func (c *TerraintilesGetCall) ClientInfoOperatingSystem(clientInfoOperatingSyste
 // Platform where the application is running.
 //
 // Possible values:
-//   "PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
-//   "EDITOR" - Development environment.
-//   "MAC_OS" - macOS.
-//   "WINDOWS" - Windows.
-//   "LINUX" - Linux
-//   "ANDROID" - Android
-//   "IOS" - iOS
-//   "WEB_GL" - WebGL.
+//
+//	"PLATFORM_UNSPECIFIED" - Unspecified or unknown OS.
+//	"EDITOR" - Development environment.
+//	"MAC_OS" - macOS.
+//	"WINDOWS" - Windows.
+//	"LINUX" - Linux
+//	"ANDROID" - Android
+//	"IOS" - iOS
+//	"WEB_GL" - WebGL.
 func (c *TerraintilesGetCall) ClientInfoPlatform(clientInfoPlatform string) *TerraintilesGetCall {
 	c.urlParams_.Set("clientInfo.platform", clientInfoPlatform)
 	return c
@@ -1716,11 +1718,17 @@ func (c *TerraintilesGetCall) MinElevationResolutionCells(minElevationResolution
 // formats that the client understands.
 //
 // Possible values:
-//   "TERRAIN_FORMAT_UNKNOWN" - An unknown or unspecified terrain
+//
+//	"TERRAIN_FORMAT_UNKNOWN" - An unknown or unspecified terrain
+//
 // format.
-//   "FIRST_DERIVATIVE" - Terrain elevation data encoded as a
+//
+//	"FIRST_DERIVATIVE" - Terrain elevation data encoded as a
+//
 // FirstDerivativeElevationGrid. .
-//   "SECOND_DERIVATIVE" - Terrain elevation data encoded as a
+//
+//	"SECOND_DERIVATIVE" - Terrain elevation data encoded as a
+//
 // SecondDerivativeElevationGrid.
 func (c *TerraintilesGetCall) TerrainFormats(terrainFormats ...string) *TerraintilesGetCall {
 	c.urlParams_.SetMulti("terrainFormats", append([]string{}, terrainFormats...))

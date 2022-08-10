@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/service-directory
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/servicedirectory/v1"
-//   ...
-//   ctx := context.Background()
-//   servicedirectoryService, err := servicedirectory.NewService(ctx)
+//	import "google.golang.org/api/servicedirectory/v1"
+//	...
+//	ctx := context.Background()
+//	servicedirectoryService, err := servicedirectory.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   servicedirectoryService, err := servicedirectory.NewService(ctx, option.WithAPIKey("AIza..."))
+//	servicedirectoryService, err := servicedirectory.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   servicedirectoryService, err := servicedirectory.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	servicedirectoryService, err := servicedirectory.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicedirectory // import "google.golang.org/api/servicedirectory/v1"
@@ -1227,8 +1227,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1435,8 +1435,8 @@ type ProjectsLocationsNamespacesCreateCall struct {
 
 // Create: Creates a namespace, and returns the new namespace.
 //
-// - parent: The resource name of the project and location the namespace
-//   will be created in.
+//   - parent: The resource name of the project and location the namespace
+//     will be created in.
 func (r *ProjectsLocationsNamespacesService) Create(parent string, namespace *Namespace) *ProjectsLocationsNamespacesCreateCall {
 	c := &ProjectsLocationsNamespacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1875,10 +1875,10 @@ type ProjectsLocationsNamespacesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2020,8 +2020,8 @@ type ProjectsLocationsNamespacesListCall struct {
 
 // List: Lists all namespaces.
 //
-// - parent: The resource name of the project and location whose
-//   namespaces you'd like to list.
+//   - parent: The resource name of the project and location whose
+//     namespaces you'd like to list.
 func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocationsNamespacesListCall {
 	c := &ProjectsLocationsNamespacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2029,10 +2029,10 @@ func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// results by. General `filter` string syntax: ` ()` * `` can be `name`
-// or `labels.` for map field * `` can be `<`, `>`, `<=`, `>=`, `!=`,
+// results by. General `filter` string syntax: ` ()` * “ can be `name`
+// or `labels.` for map field * “ can be `<`, `>`, `<=`, `>=`, `!=`,
 // `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` *
-// `` must be the same data type as field * `` can be `AND`, `OR`, `NOT`
+// “ must be the same data type as field * “ can be `AND`, `OR`, `NOT`
 // Examples of valid filters: * `labels.owner` returns namespaces that
 // have a label with the key `owner`, this is the same as `labels:owner`
 // * `labels.owner=sd` returns namespaces that have key/value `owner=sd`
@@ -2052,8 +2052,8 @@ func (c *ProjectsLocationsNamespacesListCall) Filter(filter string) *ProjectsLoc
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// results by. General `order_by` string syntax: ` () (,)` * `` allows
-// value: `name` * `` ascending or descending order by ``. If this is
+// results by. General `order_by` string syntax: ` () (,)` * “ allows
+// value: `name` * “ ascending or descending order by “. If this is
 // left blank, `asc` is used Note that an empty `order_by` string
 // results in default order, which is order by `name` in ascending
 // order.
@@ -2257,8 +2257,8 @@ type ProjectsLocationsNamespacesPatchCall struct {
 
 // Patch: Updates a namespace.
 //
-// - name: Immutable. The resource name for the namespace in the format
-//   `projects/*/locations/*/namespaces/*`.
+//   - name: Immutable. The resource name for the namespace in the format
+//     `projects/*/locations/*/namespaces/*`.
 func (r *ProjectsLocationsNamespacesService) Patch(name string, namespace *Namespace) *ProjectsLocationsNamespacesPatchCall {
 	c := &ProjectsLocationsNamespacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2414,10 +2414,10 @@ type ProjectsLocationsNamespacesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2560,10 +2560,10 @@ type ProjectsLocationsNamespacesTestIamPermissionsCall struct {
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2705,8 +2705,8 @@ type ProjectsLocationsNamespacesServicesCreateCall struct {
 
 // Create: Creates a service, and returns the new service.
 //
-// - parent: The resource name of the namespace this service will belong
-//   to.
+//   - parent: The resource name of the namespace this service will belong
+//     to.
 func (r *ProjectsLocationsNamespacesServicesService) Create(parent string, service *Service) *ProjectsLocationsNamespacesServicesCreateCall {
 	c := &ProjectsLocationsNamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3145,10 +3145,10 @@ type ProjectsLocationsNamespacesServicesGetIamPolicyCall struct {
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServicesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3290,8 +3290,8 @@ type ProjectsLocationsNamespacesServicesListCall struct {
 
 // List: Lists all services belonging to a namespace.
 //
-// - parent: The resource name of the namespace whose services you'd
-//   like to list.
+//   - parent: The resource name of the namespace whose services you'd
+//     like to list.
 func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *ProjectsLocationsNamespacesServicesListCall {
 	c := &ProjectsLocationsNamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3299,10 +3299,10 @@ func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// results by. General `filter` string syntax: ` ()` * `` can be `name`
-// or `annotations.` for map field * `` can be `<`, `>`, `<=`, `>=`,
+// results by. General `filter` string syntax: ` ()` * “ can be `name`
+// or `annotations.` for map field * “ can be `<`, `>`, `<=`, `>=`,
 // `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as
-// `=` * `` must be the same data type as field * `` can be `AND`, `OR`,
+// `=` * “ must be the same data type as field * “ can be `AND`, `OR`,
 // `NOT` Examples of valid filters: * `annotations.owner` returns
 // services that have a annotation with the key `owner`, this is the
 // same as `annotations:owner` * `annotations.protocol=gRPC` returns
@@ -3323,8 +3323,8 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Filter(filter string) *Pro
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// results by. General `order_by` string syntax: ` () (,)` * `` allows
-// value: `name` * `` ascending or descending order by ``. If this is
+// results by. General `order_by` string syntax: ` () (,)` * “ allows
+// value: `name` * “ ascending or descending order by “. If this is
 // left blank, `asc` is used Note that an empty `order_by` string
 // results in default order, which is order by `name` in ascending
 // order.
@@ -3528,8 +3528,8 @@ type ProjectsLocationsNamespacesServicesPatchCall struct {
 
 // Patch: Updates a service.
 //
-// - name: Immutable. The resource name for the service in the format
-//   `projects/*/locations/*/namespaces/*/services/*`.
+//   - name: Immutable. The resource name for the service in the format
+//     `projects/*/locations/*/namespaces/*/services/*`.
 func (r *ProjectsLocationsNamespacesServicesService) Patch(name string, service *Service) *ProjectsLocationsNamespacesServicesPatchCall {
 	c := &ProjectsLocationsNamespacesServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3828,10 +3828,10 @@ type ProjectsLocationsNamespacesServicesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServicesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3974,10 +3974,10 @@ type ProjectsLocationsNamespacesServicesTestIamPermissionsCall struct {
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4119,8 +4119,8 @@ type ProjectsLocationsNamespacesServicesEndpointsCreateCall struct {
 
 // Create: Creates an endpoint, and returns the new endpoint.
 //
-// - parent: The resource name of the service that this endpoint
-//   provides.
+//   - parent: The resource name of the service that this endpoint
+//     provides.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Create(parent string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsCreateCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4557,8 +4557,8 @@ type ProjectsLocationsNamespacesServicesEndpointsListCall struct {
 
 // List: Lists all endpoints.
 //
-// - parent: The resource name of the service whose endpoints you'd like
-//   to list.
+//   - parent: The resource name of the service whose endpoints you'd like
+//     to list.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4566,10 +4566,10 @@ func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// results by. General `filter` string syntax: ` ()` * `` can be `name`,
-// `address`, `port`, or `annotations.` for map field * `` can be `<`,
+// results by. General `filter` string syntax: ` ()` * “ can be `name`,
+// `address`, `port`, or `annotations.` for map field * “ can be `<`,
 // `>`, `<=`, `>=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is
-// roughly the same as `=` * `` must be the same data type as field * ``
+// roughly the same as `=` * “ must be the same data type as field * “
 // can be `AND`, `OR`, `NOT` Examples of valid filters: *
 // `annotations.owner` returns endpoints that have a annotation with the
 // key `owner`, this is the same as `annotations:owner` *
@@ -4593,9 +4593,9 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Filter(filter str
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// results by. General `order_by` string syntax: ` () (,)` * `` allows
-// values: `name`, `address`, `port` * `` ascending or descending order
-// by ``. If this is left blank, `asc` is used Note that an empty
+// results by. General `order_by` string syntax: ` () (,)` * “ allows
+// values: `name`, `address`, `port` * “ ascending or descending order
+// by “. If this is left blank, `asc` is used Note that an empty
 // `order_by` string results in default order, which is order by `name`
 // in ascending order.
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
@@ -4798,8 +4798,8 @@ type ProjectsLocationsNamespacesServicesEndpointsPatchCall struct {
 
 // Patch: Updates an endpoint.
 //
-// - name: Immutable. The resource name for the endpoint in the format
-//   `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
+//   - name: Immutable. The resource name for the endpoint in the format
+//     `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Patch(name string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsPatchCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

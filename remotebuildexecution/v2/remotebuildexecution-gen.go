@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/remote-build-execution/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/remotebuildexecution/v2"
-//   ...
-//   ctx := context.Background()
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
+//	import "google.golang.org/api/remotebuildexecution/v2"
+//	...
+//	ctx := context.Background()
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	remotebuildexecutionService, err := remotebuildexecution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package remotebuildexecution // import "google.golang.org/api/remotebuildexecution/v2"
@@ -2776,7 +2776,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest:
-//  The request used for `CreateWorkerPool`.
+//
+//	The request used for `CreateWorkerPool`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateWorkerPoolRequest struct {
 	// Parent: Resource name of the instance in which to create the new
 	// worker pool. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
@@ -2846,7 +2847,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest:
-//  The request used for DeleteWorkerPool.
+//
+//	The request used for DeleteWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaDeleteWorkerPoolRequest struct {
 	// Name: Name of the worker pool to delete. Format:
 	// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]/workerpools/[POOL_ID]`.
@@ -3297,7 +3299,8 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest) Ma
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest:
-//  The request used for UpdateWorkerPool.
+//
+//	The request used for UpdateWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
 	// `FieldMask` definition, see
@@ -4216,14 +4219,14 @@ type ActionResultsGetCall struct {
 // blobs SHOULD be increased if necessary and applicable. Errors: *
 // `NOT_FOUND`: The requested `ActionResult` is not in the cache.
 //
-// - hash: The hash. In the case of SHA-256, it will always be a
-//   lowercase hex string exactly 64 characters long.
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
-// - sizeBytes: The size of the blob, in bytes.
+//   - hash: The hash. In the case of SHA-256, it will always be a
+//     lowercase hex string exactly 64 characters long.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
+//   - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes int64) *ActionResultsGetCall {
 	c := &ActionResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4441,14 +4444,14 @@ type ActionResultsUpdateCall struct {
 // `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the
 // entry to the cache.
 //
-// - hash: The hash. In the case of SHA-256, it will always be a
-//   lowercase hex string exactly 64 characters long.
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
-// - sizeBytes: The size of the blob, in bytes.
+//   - hash: The hash. In the case of SHA-256, it will always be a
+//     lowercase hex string exactly 64 characters long.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
+//   - sizeBytes: The size of the blob, in bytes.
 func (r *ActionResultsService) Update(instanceName string, hash string, sizeBytes int64, buildbazelremoteexecutionv2actionresult *BuildBazelRemoteExecutionV2ActionResult) *ActionResultsUpdateCall {
 	c := &ActionResultsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4677,11 +4680,11 @@ type ActionsExecuteCall struct {
 // times, potentially in parallel. These redundant executions MAY
 // continue to run, even if the operation is completed.
 //
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
 func (r *ActionsService) Execute(instanceName string, buildbazelremoteexecutionv2executerequest *BuildBazelRemoteExecutionV2ExecuteRequest) *ActionsExecuteCall {
 	c := &ActionsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4832,11 +4835,11 @@ type BlobsBatchReadCall struct {
 // the server supported limit. Every error on individual read will be
 // returned in the corresponding digest status.
 //
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchRead(instanceName string, buildbazelremoteexecutionv2batchreadblobsrequest *BuildBazelRemoteExecutionV2BatchReadBlobsRequest) *BlobsBatchReadCall {
 	c := &BlobsBatchReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -4991,11 +4994,11 @@ type BlobsBatchUpdateCall struct {
 // insufficient disk quota to store the blob. * `INVALID_ARGUMENT`: The
 // Digest does not match the provided data.
 //
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) BatchUpdate(instanceName string, buildbazelremoteexecutionv2batchupdateblobsrequest *BuildBazelRemoteExecutionV2BatchUpdateBlobsRequest) *BlobsBatchUpdateCall {
 	c := &BlobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5143,11 +5146,11 @@ type BlobsFindMissingCall struct {
 // Servers SHOULD increase the lifetimes of the referenced blobs if
 // necessary and applicable. There are no method-specific errors.
 //
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
 func (r *BlobsService) FindMissing(instanceName string, buildbazelremoteexecutionv2findmissingblobsrequest *BuildBazelRemoteExecutionV2FindMissingBlobsRequest) *BlobsFindMissingCall {
 	c := &BlobsFindMissingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5306,14 +5309,14 @@ type BlobsGetTreeCall struct {
 // portion present and omit the rest. Errors: * `NOT_FOUND`: The
 // requested tree root is not present in the CAS.
 //
-// - hash: The hash. In the case of SHA-256, it will always be a
-//   lowercase hex string exactly 64 characters long.
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
-// - sizeBytes: The size of the blob, in bytes.
+//   - hash: The hash. In the case of SHA-256, it will always be a
+//     lowercase hex string exactly 64 characters long.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
+//   - sizeBytes: The size of the blob, in bytes.
 func (r *BlobsService) GetTree(instanceName string, hash string, sizeBytes int64) *BlobsGetTreeCall {
 	c := &BlobsGetTreeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -5686,11 +5689,11 @@ type V2GetCapabilitiesCall struct {
 // ExecutionCapabilities. * CAS + Action Cache only endpoints should
 // return CacheCapabilities.
 //
-// - instanceName: The instance of the execution system to operate
-//   against. A server may support multiple instances of the execution
-//   system (with their own workers, storage, caches, etc.). The server
-//   MAY require use of this field to select between them in an
-//   implementation-defined fashion, otherwise it can be omitted.
+//   - instanceName: The instance of the execution system to operate
+//     against. A server may support multiple instances of the execution
+//     system (with their own workers, storage, caches, etc.). The server
+//     MAY require use of this field to select between them in an
+//     implementation-defined fashion, otherwise it can be omitted.
 func (r *V2Service) GetCapabilities(instanceName string) *V2GetCapabilitiesCall {
 	c := &V2GetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName

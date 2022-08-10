@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/trace
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/tracing/v2"
-//   ...
-//   ctx := context.Background()
-//   tracingService, err := tracing.NewService(ctx)
+//	import "google.golang.org/api/tracing/v2"
+//	...
+//	ctx := context.Background()
+//	tracingService, err := tracing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   tracingService, err := tracing.NewService(ctx, option.WithScopes(tracing.TraceReadonlyScope))
+//	tracingService, err := tracing.NewService(ctx, option.WithScopes(tracing.TraceReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   tracingService, err := tracing.NewService(ctx, option.WithAPIKey("AIza..."))
+//	tracingService, err := tracing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   tracingService, err := tracing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	tracingService, err := tracing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package tracing // import "google.golang.org/api/tracing/v2"
@@ -331,10 +331,12 @@ func (s *BatchWriteSpansRequest) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type Empty struct {
@@ -903,29 +905,41 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 //
 // - Partial errors. If a service needs to return partial errors to the
 // client,
-//     it may embed the `Status` in the normal response to indicate the
+//
+//	it may embed the `Status` in the normal response to indicate the
+//
 // partial
-//     errors.
+//
+//	errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting.
+//
+//	have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
-//     `Status` message should be used directly inside batch response,
+//
+//	`Status` message should be used directly inside batch response,
+//
 // one for
-//     each error sub-response.
+//
+//	each error sub-response.
 //
 // - Asynchronous operations. If an API call embeds asynchronous
 // operation
-//     results in its response, the status of those operations should
+//
+//	results in its response, the status of those operations should
+//
 // be
-//     represented directly using the `Status` message.
+//
+//	represented directly using the `Status` message.
 //
 // - Logging. If some API errors are stored in logs, the message
 // `Status` could
-//     be used directly after any stripping needed for security/privacy
+//
+//	be used directly after any stripping needed for security/privacy
+//
 // reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
@@ -1315,7 +1329,9 @@ func (c *ProjectsTracesListCall) Filter(filter string) *ProjectsTracesListCall {
 // *   `name` (`name` field of root span in the trace)
 // *   `duration` (difference between `end_time` and `start_time` fields
 // of
-//      the root span)
+//
+//	the root span)
+//
 // *   `start` (`start_time` field of the root span)
 //
 // Descending order can be specified by appending `desc` to the sort

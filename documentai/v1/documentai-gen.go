@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/document-ai/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/documentai/v1"
-//   ...
-//   ctx := context.Background()
-//   documentaiService, err := documentai.NewService(ctx)
+//	import "google.golang.org/api/documentai/v1"
+//	...
+//	ctx := context.Background()
+//	documentaiService, err := documentai.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
+//	documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package documentai // import "google.golang.org/api/documentai/v1"
@@ -9778,12 +9778,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -10323,9 +10323,9 @@ type ProjectsLocationsFetchProcessorTypesCall struct {
 // FetchProcessorTypes: Fetches processor types. Note that we do not use
 // ListProcessorTypes here because it is not paginated.
 //
-// - parent: The project of processor type to list. The available
-//   processor types may depend on the allow-listing on projects.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The project of processor type to list. The available
+//     processor types may depend on the allow-listing on projects.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) FetchProcessorTypes(parent string) *ProjectsLocationsFetchProcessorTypesCall {
 	c := &ProjectsLocationsFetchProcessorTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10620,8 +10620,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11333,9 +11333,9 @@ type ProjectsLocationsProcessorTypesListCall struct {
 
 // List: Lists the processor types that exist.
 //
-// - parent: The location of processor type to list. The available
-//   processor types may depend on the allow-listing on projects.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The location of processor type to list. The available
+//     processor types may depend on the allow-listing on projects.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorTypesService) List(parent string) *ProjectsLocationsProcessorTypesListCall {
 	c := &ProjectsLocationsProcessorTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11532,11 +11532,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - name: The resource name of Processor or ProcessorVersion. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of Processor or ProcessorVersion. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11680,8 +11680,8 @@ type ProjectsLocationsProcessorsCreateCall struct {
 // chose. The processor will be at "ENABLED" state by default after its
 // creation.
 //
-// - parent: The parent (project and location) under which to create the
-//   processor. Format: `projects/{project}/locations/{location}`.
+//   - parent: The parent (project and location) under which to create the
+//     processor. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) Create(parent string, googleclouddocumentaiv1processor *GoogleCloudDocumentaiV1Processor) *ProjectsLocationsProcessorsCreateCall {
 	c := &ProjectsLocationsProcessorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12387,9 +12387,9 @@ type ProjectsLocationsProcessorsListCall struct {
 
 // List: Lists all processors which belong to this project.
 //
-// - parent: The parent (project and location) which owns this
-//   collection of Processors. Format:
-//   `projects/{project}/locations/{location}`.
+//   - parent: The parent (project and location) which owns this
+//     collection of Processors. Format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) List(parent string) *ProjectsLocationsProcessorsListCall {
 	c := &ProjectsLocationsProcessorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12586,13 +12586,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - name: The resource name of the Processor or ProcessorVersion to use
-//   for processing. If a Processor is specified, the server will use
-//   its default version. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of the Processor or ProcessorVersion to use
+//     for processing. If a Processor is specified, the server will use
+//     its default version. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12737,8 +12737,8 @@ type ProjectsLocationsProcessorsSetDefaultProcessorVersionCall struct {
 // Processor that will be used in ProcessDocument and
 // BatchProcessDocuments.
 //
-// - processor: The resource name of the Processor to change default
-//   version.
+//   - processor: The resource name of the Processor to change default
+//     version.
 func (r *ProjectsLocationsProcessorsService) SetDefaultProcessorVersion(processor string, googleclouddocumentaiv1setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
 	c := &ProjectsLocationsProcessorsSetDefaultProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.processor = processor
@@ -12881,8 +12881,8 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
 //
-// - humanReviewConfig: The resource name of the HumanReviewConfig that
-//   the document will be reviewed with.
+//   - humanReviewConfig: The resource name of the HumanReviewConfig that
+//     the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1reviewdocumentrequest *GoogleCloudDocumentaiV1ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -13025,11 +13025,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - name: The resource name of Processor or ProcessorVersion. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of Processor or ProcessorVersion. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13593,9 +13593,9 @@ type ProjectsLocationsProcessorsProcessorVersionsListCall struct {
 
 // List: Lists all versions of a processor.
 //
-// - parent: The parent (project, location and processor) to list all
-//   versions. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`.
+//   - parent: The parent (project, location and processor) to list all
+//     versions. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13792,13 +13792,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - name: The resource name of the Processor or ProcessorVersion to use
-//   for processing. If a Processor is specified, the server will use
-//   its default version. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of the Processor or ProcessorVersion to use
+//     for processing. If a Processor is specified, the server will use
+//     its default version. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14378,8 +14378,8 @@ type Uiv1beta3ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *Uiv1beta3ProjectsLocationsService) List(name string) *Uiv1beta3ProjectsLocationsListCall {
 	c := &Uiv1beta3ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

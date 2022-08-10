@@ -23,8 +23,9 @@ func init() {
 // but has been modified slightly to fit into the examples framework.
 //
 // Example usage:
-//   go build -o go-api-demo
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" youtube filename
+//
+//	go build -o go-api-demo
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" youtube filename
 func youtubeMain(client *http.Client, argv []string) {
 	if len(argv) < 1 {
 		fmt.Fprintln(os.Stderr, "Usage: youtube filename")

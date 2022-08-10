@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/reference/rest/database/database-management/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firebasedatabase/v1beta"
-//   ...
-//   ctx := context.Background()
-//   firebasedatabaseService, err := firebasedatabase.NewService(ctx)
+//	import "google.golang.org/api/firebasedatabase/v1beta"
+//	...
+//	ctx := context.Background()
+//	firebasedatabaseService, err := firebasedatabase.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithScopes(firebasedatabase.FirebaseReadonlyScope))
+//	firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithScopes(firebasedatabase.FirebaseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firebasedatabaseService, err := firebasedatabase.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebasedatabase // import "google.golang.org/api/firebasedatabase/v1beta"
@@ -332,8 +332,8 @@ type ProjectsLocationsInstancesCreateCall struct {
 // Note that it might take a few minutes for billing enablement state to
 // propagate to Firebase systems.
 //
-// - parent: The parent project for which to create a database instance,
-//   in the form: `projects/{project-number}/locations/{location-id}`.
+//   - parent: The parent project for which to create a database instance,
+//     in the form: `projects/{project-number}/locations/{location-id}`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -503,10 +503,10 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // deleted database instances may never be recovered or re-used. The
 // Database may only be deleted if it is already in a DISABLED state.
 //
-// - name: The fully qualified resource name of the database instance,
-//   in the form:
-//   `projects/{project-number}/locations/{location-id}/instances/{databa
-//   se-id}`.
+//   - name: The fully qualified resource name of the database instance,
+//     in the form:
+//     `projects/{project-number}/locations/{location-id}/instances/{databa
+//     se-id}`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -643,10 +643,10 @@ type ProjectsLocationsInstancesDisableCall struct {
 // all reads and writes are denied, including view access in the
 // Firebase console.
 //
-// - name: The fully qualified resource name of the database instance,
-//   in the form:
-//   `projects/{project-number}/locations/{location-id}/instances/{databa
-//   se-id}`.
+//   - name: The fully qualified resource name of the database instance,
+//     in the form:
+//     `projects/{project-number}/locations/{location-id}/instances/{databa
+//     se-id}`.
 func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabaseinstancerequest *DisableDatabaseInstanceRequest) *ProjectsLocationsInstancesDisableCall {
 	c := &ProjectsLocationsInstancesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -790,14 +790,14 @@ type ProjectsLocationsInstancesGetCall struct {
 // Get: Gets the DatabaseInstance identified by the specified resource
 // name.
 //
-// - name: The fully qualified resource name of the database instance,
-//   in the form:
-//   `projects/{project-number}/locations/{location-id}/instances/{databa
-//   se-id}`. `database-id` is a globally unique identifier across all
-//   parent collections. For convenience, this method allows you to
-//   supply `-` as a wildcard character in place of specific collections
-//   under `projects` and `locations`. The resulting wildcarding form of
-//   the method is: `projects/-/locations/-/instances/{database-id}`.
+//   - name: The fully qualified resource name of the database instance,
+//     in the form:
+//     `projects/{project-number}/locations/{location-id}/instances/{databa
+//     se-id}`. `database-id` is a globally unique identifier across all
+//     parent collections. For convenience, this method allows you to
+//     supply `-` as a wildcard character in place of specific collections
+//     under `projects` and `locations`. The resulting wildcarding form of
+//     the method is: `projects/-/locations/-/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -951,10 +951,10 @@ type ProjectsLocationsInstancesListCall struct {
 // contains instances in any STATE. The list results may be stale by a
 // few seconds. Use GetDatabaseInstance for consistent reads.
 //
-// - parent: The parent project for which to list database instances, in
-//   the form: `projects/{project-number}/locations/{location-id}` To
-//   list across all locations, use a parent in the form:
-//   `projects/{project-number}/locations/-`.
+//   - parent: The parent project for which to list database instances, in
+//     the form: `projects/{project-number}/locations/{location-id}` To
+//     list across all locations, use a parent in the form:
+//     `projects/{project-number}/locations/-`.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1167,10 +1167,10 @@ type ProjectsLocationsInstancesReenableCall struct {
 // disabled previously using DisableDatabaseInstance. The state of a
 // successfully reenabled DatabaseInstance is ACTIVE.
 //
-// - name: The fully qualified resource name of the database instance,
-//   in the form:
-//   `projects/{project-number}/locations/{location-id}/instances/{databa
-//   se-id}`.
+//   - name: The fully qualified resource name of the database instance,
+//     in the form:
+//     `projects/{project-number}/locations/{location-id}/instances/{databa
+//     se-id}`.
 func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledatabaseinstancerequest *ReenableDatabaseInstanceRequest) *ProjectsLocationsInstancesReenableCall {
 	c := &ProjectsLocationsInstancesReenableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1318,10 +1318,10 @@ type ProjectsLocationsInstancesUndeleteCall struct {
 // any data. This method may only be used on a DatabaseInstance in the
 // DELETED state. Purged DatabaseInstances may not be recovered.
 //
-// - name: The fully qualified resource name of the database instance,
-//   in the form:
-//   `projects/{project-number}/locations/{location-id}/instances/{databa
-//   se-id}`.
+//   - name: The fully qualified resource name of the database instance,
+//     in the form:
+//     `projects/{project-number}/locations/{location-id}/instances/{databa
+//     se-id}`.
 func (r *ProjectsLocationsInstancesService) Undelete(name string, undeletedatabaseinstancerequest *UndeleteDatabaseInstanceRequest) *ProjectsLocationsInstancesUndeleteCall {
 	c := &ProjectsLocationsInstancesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

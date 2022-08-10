@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/appengine/docs/admin-api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/appengine/v1beta4"
-//   ...
-//   ctx := context.Background()
-//   appengineService, err := appengine.NewService(ctx)
+//	import "google.golang.org/api/appengine/v1beta4"
+//	...
+//	ctx := context.Background()
+//	appengineService, err := appengine.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   appengineService, err := appengine.NewService(ctx, option.WithScopes(appengine.CloudPlatformReadOnlyScope))
+//	appengineService, err := appengine.NewService(ctx, option.WithScopes(appengine.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
+//	appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package appengine // import "google.golang.org/api/appengine/v1beta4"
@@ -4521,8 +4521,9 @@ func (r *AppsModulesVersionsService) Get(appsId string, modulesId string, versio
 // returned in the Get response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//
+//	"BASIC"
+//	"FULL"
 func (c *AppsModulesVersionsGetCall) View(view string) *AppsModulesVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4718,8 +4719,9 @@ func (c *AppsModulesVersionsListCall) PageToken(pageToken string) *AppsModulesVe
 // returned in the List response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//
+//	"BASIC"
+//	"FULL"
 func (c *AppsModulesVersionsListCall) View(view string) *AppsModulesVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4919,19 +4921,27 @@ type AppsModulesVersionsPatchCall struct {
 // scaling that the version resource uses:
 // serving_status
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.serving_status):
-//  For Version resources that use basic scaling, manual scaling, or run
+//
+//	For Version resources that use basic scaling, manual scaling, or run
+//
 // in  the App Engine flexible environment.
 // instance_class
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.instance_class):
-//  For Version resources that run in the App Engine standard
+//
+//	For Version resources that run in the App Engine standard
+//
 // environment.
 // automatic_scaling.min_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):
-//  For Version resources that use automatic scaling and run in the App
+//
+//	For Version resources that use automatic scaling and run in the App
+//
 // Engine standard environment.
 // automatic_scaling.max_idle_instances
 // (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):
-//  For Version resources that use automatic scaling and run in the App
+//
+//	For Version resources that use automatic scaling and run in the App
+//
 // Engine standard environment.
 func (r *AppsModulesVersionsService) Patch(appsId string, modulesId string, versionsId string, version *Version) *AppsModulesVersionsPatchCall {
 	c := &AppsModulesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

@@ -10,31 +10,31 @@
 //
 // For product documentation, see: https://cloud.google.com/speech-to-text/docs/quickstart-protocol
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/speech/v1p1beta1"
-//   ...
-//   ctx := context.Background()
-//   speechService, err := speech.NewService(ctx)
+//	import "google.golang.org/api/speech/v1p1beta1"
+//	...
+//	ctx := context.Background()
+//	speechService, err := speech.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   speechService, err := speech.NewService(ctx, option.WithAPIKey("AIza..."))
+//	speechService, err := speech.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   speechService, err := speech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	speechService, err := speech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package speech // import "google.golang.org/api/speech/v1p1beta1"
@@ -2123,15 +2123,15 @@ type ProjectsLocationsCustomClassesCreateCall struct {
 
 // Create: Create a custom class.
 //
-// - parent: The parent resource where this custom class will be
-//   created. Format:
-//   `projects/{project}/locations/{location}/customClasses`
-//   Speech-to-Text supports three locations: `global`, `us` (US North
-//   America), and `eu` (Europe). If you are calling the
-//   `speech.googleapis.com` endpoint, use the `global` location. To
-//   specify a region, use a regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - parent: The parent resource where this custom class will be
+//     created. Format:
+//     `projects/{project}/locations/{location}/customClasses`
+//     Speech-to-Text supports three locations: `global`, `us` (US North
+//     America), and `eu` (Europe). If you are calling the
+//     `speech.googleapis.com` endpoint, use the `global` location. To
+//     specify a region, use a regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
 	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2272,14 +2272,14 @@ type ProjectsLocationsCustomClassesDeleteCall struct {
 
 // Delete: Delete a custom class.
 //
-// - name: The name of the custom class to delete. Format:
-//   `projects/{project}/locations/{location}/customClasses/{custom_class
-//   }` Speech-to-Text supports three locations: `global`, `us` (US
-//   North America), and `eu` (Europe). If you are calling the
-//   `speech.googleapis.com` endpoint, use the `global` location. To
-//   specify a region, use a regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - name: The name of the custom class to delete. Format:
+//     `projects/{project}/locations/{location}/customClasses/{custom_class
+//     }` Speech-to-Text supports three locations: `global`, `us` (US
+//     North America), and `eu` (Europe). If you are calling the
+//     `speech.googleapis.com` endpoint, use the `global` location. To
+//     specify a region, use a regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
 	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2412,9 +2412,9 @@ type ProjectsLocationsCustomClassesGetCall struct {
 
 // Get: Get a custom class.
 //
-// - name: The name of the custom class to retrieve. Format:
-//   `projects/{project}/locations/{location}/customClasses/{custom_class
-//   }`.
+//   - name: The name of the custom class to retrieve. Format:
+//     `projects/{project}/locations/{location}/customClasses/{custom_class
+//     }`.
 func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
 	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2560,14 +2560,14 @@ type ProjectsLocationsCustomClassesListCall struct {
 
 // List: List custom classes.
 //
-// - parent: The parent, which owns this collection of custom classes.
-//   Format: `projects/{project}/locations/{location}/customClasses`
-//   Speech-to-Text supports three locations: `global`, `us` (US North
-//   America), and `eu` (Europe). If you are calling the
-//   `speech.googleapis.com` endpoint, use the `global` location. To
-//   specify a region, use a regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - parent: The parent, which owns this collection of custom classes.
+//     Format: `projects/{project}/locations/{location}/customClasses`
+//     Speech-to-Text supports three locations: `global`, `us` (US North
+//     America), and `eu` (Europe). If you are calling the
+//     `speech.googleapis.com` endpoint, use the `global` location. To
+//     specify a region, use a regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
 	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2922,14 +2922,14 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // favored by the recognition model when you send a call that includes
 // the PhraseSet.
 //
-// - parent: The parent resource where this phrase set will be created.
-//   Format: `projects/{project}/locations/{location}/phraseSets`
-//   Speech-to-Text supports three locations: `global`, `us` (US North
-//   America), and `eu` (Europe). If you are calling the
-//   `speech.googleapis.com` endpoint, use the `global` location. To
-//   specify a region, use a regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - parent: The parent resource where this phrase set will be created.
+//     Format: `projects/{project}/locations/{location}/phraseSets`
+//     Speech-to-Text supports three locations: `global`, `us` (US North
+//     America), and `eu` (Europe). If you are calling the
+//     `speech.googleapis.com` endpoint, use the `global` location. To
+//     specify a region, use a regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
 	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3070,8 +3070,8 @@ type ProjectsLocationsPhraseSetsDeleteCall struct {
 
 // Delete: Delete a phrase set.
 //
-// - name: The name of the phrase set to delete. Format:
-//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
+//   - name: The name of the phrase set to delete. Format:
+//     `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
 func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
 	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3204,14 +3204,14 @@ type ProjectsLocationsPhraseSetsGetCall struct {
 
 // Get: Get a phrase set.
 //
-// - name: The name of the phrase set to retrieve. Format:
-//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
-//   Speech-to-Text supports three locations: `global`, `us` (US North
-//   America), and `eu` (Europe). If you are calling the
-//   `speech.googleapis.com` endpoint, use the `global` location. To
-//   specify a region, use a regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - name: The name of the phrase set to retrieve. Format:
+//     `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
+//     Speech-to-Text supports three locations: `global`, `us` (US North
+//     America), and `eu` (Europe). If you are calling the
+//     `speech.googleapis.com` endpoint, use the `global` location. To
+//     specify a region, use a regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
 	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3357,14 +3357,14 @@ type ProjectsLocationsPhraseSetsListCall struct {
 
 // List: List phrase sets.
 //
-// - parent: The parent, which owns this collection of phrase set.
-//   Format: `projects/{project}/locations/{location}` Speech-to-Text
-//   supports three locations: `global`, `us` (US North America), and
-//   `eu` (Europe). If you are calling the `speech.googleapis.com`
-//   endpoint, use the `global` location. To specify a region, use a
-//   regional endpoint
-//   (https://cloud.google.com/speech-to-text/docs/endpoints) with
-//   matching `us` or `eu` location value.
+//   - parent: The parent, which owns this collection of phrase set.
+//     Format: `projects/{project}/locations/{location}` Speech-to-Text
+//     supports three locations: `global`, `us` (US North America), and
+//     `eu` (Europe). If you are calling the `speech.googleapis.com`
+//     endpoint, use the `global` location. To specify a region, use a
+//     regional endpoint
+//     (https://cloud.google.com/speech-to-text/docs/endpoints) with
+//     matching `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
 	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

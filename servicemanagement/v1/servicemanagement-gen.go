@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/service-management/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/servicemanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   servicemanagementService, err := servicemanagement.NewService(ctx)
+//	import "google.golang.org/api/servicemanagement/v1"
+//	...
+//	ctx := context.Background()
+//	servicemanagementService, err := servicemanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   servicemanagementService, err := servicemanagement.NewService(ctx, option.WithScopes(servicemanagement.ServiceManagementReadonlyScope))
+//	servicemanagementService, err := servicemanagement.NewService(ctx, option.WithScopes(servicemanagement.ServiceManagementReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   servicemanagementService, err := servicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	servicemanagementService, err := servicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   servicemanagementService, err := servicemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	servicemanagementService, err := servicemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicemanagement // import "google.golang.org/api/servicemanagement/v1"
@@ -5302,9 +5302,9 @@ type ServicesDeleteCall struct {
 // service producers may call UndeleteService to restore the service.
 // After 30 days, the service will be permanently deleted. Operation
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) Delete(serviceName string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5573,9 +5573,9 @@ type ServicesGetCall struct {
 // Get: Gets a managed service. Authentication is required unless the
 // service is public.
 //
-// - serviceName: The name of the service. See the `ServiceManager`
-//   overview for naming requirements. For example:
-//   `example.googleapis.com`.
+//   - serviceName: The name of the service. See the `ServiceManager`
+//     overview for naming requirements. For example:
+//     `example.googleapis.com`.
 func (r *ServicesService) Get(serviceName string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5724,9 +5724,9 @@ type ServicesGetConfigCall struct {
 // GetConfig: Gets a service configuration (version) for a managed
 // service.
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) GetConfig(serviceName string) *ServicesGetConfigCall {
 	c := &ServicesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5745,8 +5745,10 @@ func (c *ServicesGetConfigCall) ConfigId(configId string) *ServicesGetConfigCall
 // Service Config should be returned in the response.
 //
 // Possible values:
-//   "BASIC" - Server response includes all fields except SourceInfo.
-//   "FULL" - Server response includes all fields including SourceInfo.
+//
+//	"BASIC" - Server response includes all fields except SourceInfo.
+//	"FULL" - Server response includes all fields including SourceInfo.
+//
 // SourceFiles are of type 'google.api.servicemanagement.v1.ConfigFile'
 // and are only available for configs created using the
 // SubmitConfigSource method.
@@ -5916,10 +5918,10 @@ type ServicesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesGetIamPolicyCall {
 	c := &ServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6273,10 +6275,10 @@ type ServicesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesSetIamPolicyCall {
 	c := &ServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6424,10 +6426,10 @@ type ServicesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesTestIamPermissionsCall {
 	c := &ServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6574,9 +6576,9 @@ type ServicesUndeleteCall struct {
 // was deleted. The target service must exist and must have been deleted
 // within the last 30 days. Operation
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesService) Undelete(serviceName string) *ServicesUndeleteCall {
 	c := &ServicesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6714,9 +6716,9 @@ type ServicesConfigsCreateCall struct {
 // and ones referenced by existing rollouts are kept for each service.
 // The rest will be deleted eventually.
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Create(serviceName string, service *Service) *ServicesConfigsCreateCall {
 	c := &ServicesConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6859,12 +6861,12 @@ type ServicesConfigsGetCall struct {
 
 // Get: Gets a service configuration (version) for a managed service.
 //
-// - configId: The id of the service configuration resource. This field
-//   must be specified for the server to return all fields, including
-//   `SourceInfo`.
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - configId: The id of the service configuration resource. This field
+//     must be specified for the server to return all fields, including
+//     `SourceInfo`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Get(serviceName string, configId string) *ServicesConfigsGetCall {
 	c := &ServicesConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -6876,8 +6878,10 @@ func (r *ServicesConfigsService) Get(serviceName string, configId string) *Servi
 // Service Config should be returned in the response.
 //
 // Possible values:
-//   "BASIC" - Server response includes all fields except SourceInfo.
-//   "FULL" - Server response includes all fields including SourceInfo.
+//
+//	"BASIC" - Server response includes all fields except SourceInfo.
+//	"FULL" - Server response includes all fields including SourceInfo.
+//
 // SourceFiles are of type 'google.api.servicemanagement.v1.ConfigFile'
 // and are only available for configs created using the
 // SubmitConfigSource method.
@@ -7049,9 +7053,9 @@ type ServicesConfigsListCall struct {
 // List: Lists the history of the service configuration for a managed
 // service, from the newest to the oldest.
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) List(serviceName string) *ServicesConfigsListCall {
 	c := &ServicesConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7253,9 +7257,9 @@ type ServicesConfigsSubmitCall struct {
 // and ones referenced by existing service configurtions are kept for
 // each service. The rest will be deleted eventually. Operation
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesConfigsService) Submit(serviceName string, submitconfigsourcerequest *SubmitConfigSourceRequest) *ServicesConfigsSubmitCall {
 	c := &ServicesConfigsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -7399,10 +7403,10 @@ type ServicesConsumersGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesConsumersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ServicesConsumersGetIamPolicyCall {
 	c := &ServicesConsumersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7549,10 +7553,10 @@ type ServicesConsumersSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesConsumersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ServicesConsumersSetIamPolicyCall {
 	c := &ServicesConsumersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7700,10 +7704,10 @@ type ServicesConsumersTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ServicesConsumersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ServicesConsumersTestIamPermissionsCall {
 	c := &ServicesConsumersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7857,9 +7861,9 @@ type ServicesRolloutsCreateCall struct {
 // set of 100 most recent) rollouts are kept for each service. The rest
 // will be deleted eventually. Operation
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Create(serviceName string, rollout *Rollout) *ServicesRolloutsCreateCall {
 	c := &ServicesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8002,10 +8006,10 @@ type ServicesRolloutsGetCall struct {
 
 // Get: Gets a service configuration rollout.
 //
-// - rolloutId: The id of the rollout resource.
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - rolloutId: The id of the rollout resource.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) Get(serviceName string, rolloutId string) *ServicesRolloutsGetCall {
 	c := &ServicesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -8163,9 +8167,9 @@ type ServicesRolloutsListCall struct {
 // List: Lists the history of the service configuration rollouts for a
 // managed service, from the newest to the oldest.
 //
-// - serviceName: The name of the service. See the overview
-//   (https://cloud.google.com/service-management/overview) for naming
-//   requirements. For example: `example.googleapis.com`.
+//   - serviceName: The name of the service. See the overview
+//     (https://cloud.google.com/service-management/overview) for naming
+//     requirements. For example: `example.googleapis.com`.
 func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsListCall {
 	c := &ServicesRolloutsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName

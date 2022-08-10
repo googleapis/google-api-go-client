@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/webmaster-tools/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/webmasters/v3"
-//   ...
-//   ctx := context.Background()
-//   webmastersService, err := webmasters.NewService(ctx)
+//	import "google.golang.org/api/webmasters/v3"
+//	...
+//	ctx := context.Background()
+//	webmastersService, err := webmasters.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   webmastersService, err := webmasters.NewService(ctx, option.WithScopes(webmasters.WebmastersReadonlyScope))
+//	webmastersService, err := webmasters.NewService(ctx, option.WithScopes(webmasters.WebmastersReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   webmastersService, err := webmasters.NewService(ctx, option.WithAPIKey("AIza..."))
+//	webmastersService, err := webmasters.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   webmastersService, err := webmasters.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	webmastersService, err := webmasters.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package webmasters // import "google.golang.org/api/webmasters/v3"
@@ -631,8 +631,8 @@ type SearchanalyticsQueryCall struct {
 // data, issue a broad date range query grouped by date for any metric,
 // and see which day rows are returned.
 //
-// - siteUrl: The site's URL, including protocol. For example:
-//   http://www.example.com/.
+//   - siteUrl: The site's URL, including protocol. For example:
+//     http://www.example.com/.
 func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
 	c := &SearchanalyticsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -773,10 +773,10 @@ type SitemapsDeleteCall struct {
 
 // Delete: Deletes a sitemap from this site.
 //
-// - feedpath: The URL of the actual sitemap. For example:
-//   http://www.example.com/sitemap.xml.
-// - siteUrl: The site's URL, including protocol. For example:
-//   http://www.example.com/.
+//   - feedpath: The URL of the actual sitemap. For example:
+//     http://www.example.com/sitemap.xml.
+//   - siteUrl: The site's URL, including protocol. For example:
+//     http://www.example.com/.
 func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDeleteCall {
 	c := &SitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -889,10 +889,10 @@ type SitemapsGetCall struct {
 
 // Get: Retrieves information about a specific sitemap.
 //
-// - feedpath: The URL of the actual sitemap. For example:
-//   http://www.example.com/sitemap.xml.
-// - siteUrl: The site's URL, including protocol. For example:
-//   http://www.example.com/.
+//   - feedpath: The URL of the actual sitemap. For example:
+//     http://www.example.com/sitemap.xml.
+//   - siteUrl: The site's URL, including protocol. For example:
+//     http://www.example.com/.
 func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall {
 	c := &SitemapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1048,8 +1048,8 @@ type SitemapsListCall struct {
 // in the sitemap index file (if sitemapIndex is specified in the
 // request).
 //
-// - siteUrl: The site's URL, including protocol. For example:
-//   http://www.example.com/.
+//   - siteUrl: The site's URL, including protocol. For example:
+//     http://www.example.com/.
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	c := &SitemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1207,10 +1207,10 @@ type SitemapsSubmitCall struct {
 
 // Submit: Submits a sitemap for a site.
 //
-// - feedpath: The URL of the sitemap to add. For example:
-//   http://www.example.com/sitemap.xml.
-// - siteUrl: The site's URL, including protocol. For example:
-//   http://www.example.com/.
+//   - feedpath: The URL of the sitemap to add. For example:
+//     http://www.example.com/sitemap.xml.
+//   - siteUrl: The site's URL, including protocol. For example:
+//     http://www.example.com/.
 func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmitCall {
 	c := &SitemapsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1424,10 +1424,10 @@ type SitesDeleteCall struct {
 // Delete: Removes a site from the set of the user's Search Console
 // sites.
 //
-// - siteUrl: The URI of the property as defined in Search Console.
-//   Examples: http://www.example.com/ or android-app://com.example/
-//   Note: for property-sets, use the URI that starts with sc-set: which
-//   is used in Search Console URLs.
+//   - siteUrl: The URI of the property as defined in Search Console.
+//     Examples: http://www.example.com/ or android-app://com.example/
+//     Note: for property-sets, use the URI that starts with sc-set: which
+//     is used in Search Console URLs.
 func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 	c := &SitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1530,10 +1530,10 @@ type SitesGetCall struct {
 
 // Get: Retrieves information about specific site.
 //
-// - siteUrl: The URI of the property as defined in Search Console.
-//   Examples: http://www.example.com/ or android-app://com.example/
-//   Note: for property-sets, use the URI that starts with sc-set: which
-//   is used in Search Console URLs.
+//   - siteUrl: The URI of the property as defined in Search Console.
+//     Examples: http://www.example.com/ or android-app://com.example/
+//     Note: for property-sets, use the URI that starts with sc-set: which
+//     is used in Search Console URLs.
 func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl

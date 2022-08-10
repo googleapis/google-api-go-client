@@ -2629,6 +2629,10 @@ type RuntimeSoftwareConfig struct {
 	// from official GPU drivers.
 	CustomGpuDriverPath string `json:"customGpuDriverPath,omitempty"`
 
+	// DisableTerminal: Bool indicating whether JupyterLab terminal will be
+	// available or not. Default: False
+	DisableTerminal bool `json:"disableTerminal,omitempty"`
+
 	// EnableHealthMonitoring: Verifies core internal services are running.
 	// Default: True
 	EnableHealthMonitoring bool `json:"enableHealthMonitoring,omitempty"`
@@ -10345,6 +10349,7 @@ func (c *ProjectsLocationsRuntimesPatchCall) RequestId(requestId string) *Projec
 // software_config.post_startup_script -
 // software_config.custom_gpu_driver_path -
 // software_config.idle_shutdown - software_config.idle_shutdown_timeout
+// - software_config.disable_terminal
 func (c *ProjectsLocationsRuntimesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRuntimesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10462,7 +10467,7 @@ func (c *ProjectsLocationsRuntimesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - software_config.kernels - software_config.post_startup_script - software_config.custom_gpu_driver_path - software_config.idle_shutdown - software_config.idle_shutdown_timeout",
+	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - software_config.kernels - software_config.post_startup_script - software_config.custom_gpu_driver_path - software_config.idle_shutdown - software_config.idle_shutdown_timeout - software_config.disable_terminal",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

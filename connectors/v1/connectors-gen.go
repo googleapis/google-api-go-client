@@ -462,6 +462,13 @@ func (s *AuthConfigTemplate) MarshalJSON() ([]byte, error) {
 // required to render an authorization link for the OAuth Authorization
 // Code Flow.
 type AuthorizationCodeLink struct {
+	// ClientId: The client ID assigned to the GCP Connectors OAuth app for
+	// the connector data source.
+	ClientId string `json:"clientId,omitempty"`
+
+	// EnablePkce: Whether to enable PKCE for the auth code flow.
+	EnablePkce bool `json:"enablePkce,omitempty"`
+
 	// Scopes: The scopes for which the user will authorize GCP Connectors
 	// on the connector data source.
 	Scopes []string `json:"scopes,omitempty"`
@@ -470,7 +477,7 @@ type AuthorizationCodeLink struct {
 	// code login flow.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Scopes") to
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -478,8 +485,8 @@ type AuthorizationCodeLink struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Scopes") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

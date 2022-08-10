@@ -12394,7 +12394,7 @@ type ProjectsInstancesDatabasesDatabaseRolesListCall struct {
 // List: Lists Cloud Spanner database roles.
 //
 //   - parent: The database whose roles should be listed. Values are of
-//     the form `projects//instances//databases//databaseRoles`.
+//     the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesDatabaseRolesService) List(parent string) *ProjectsInstancesDatabasesDatabaseRolesListCall {
 	c := &ProjectsInstancesDatabasesDatabaseRolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12536,7 +12536,7 @@ func (c *ProjectsInstancesDatabasesDatabaseRolesListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The database whose roles should be listed. Values are of the form `projects//instances//databases//databaseRoles`.",
+	//       "description": "Required. The database whose roles should be listed. Values are of the form `projects//instances//databases/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,

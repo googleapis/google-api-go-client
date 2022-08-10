@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/gkebackup/v1"
-//   ...
-//   ctx := context.Background()
-//   gkebackupService, err := gkebackup.NewService(ctx)
+//	import "google.golang.org/api/gkebackup/v1"
+//	...
+//	ctx := context.Background()
+//	gkebackupService, err := gkebackup.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   gkebackupService, err := gkebackup.NewService(ctx, option.WithAPIKey("AIza..."))
+//	gkebackupService, err := gkebackup.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   gkebackupService, err := gkebackup.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	gkebackupService, err := gkebackup.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gkebackup // import "google.golang.org/api/gkebackup/v1"
@@ -2750,8 +2750,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2958,8 +2958,8 @@ type ProjectsLocationsBackupPlansCreateCall struct {
 
 // Create: Creates a new BackupPlan in a given location.
 //
-// - parent: The location within which to create the BackupPlan. Format:
-//   `projects/*/locations/*`.
+//   - parent: The location within which to create the BackupPlan. Format:
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsBackupPlansService) Create(parent string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansCreateCall {
 	c := &ProjectsLocationsBackupPlansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3116,8 +3116,8 @@ type ProjectsLocationsBackupPlansDeleteCall struct {
 
 // Delete: Deletes an existing BackupPlan.
 //
-// - name: Fully qualified BackupPlan name. Format:
-//   `projects/*/locations/*/backupPlans/*`.
+//   - name: Fully qualified BackupPlan name. Format:
+//     `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansService) Delete(name string) *ProjectsLocationsBackupPlansDeleteCall {
 	c := &ProjectsLocationsBackupPlansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3263,8 +3263,8 @@ type ProjectsLocationsBackupPlansGetCall struct {
 
 // Get: Retrieve the details of a single BackupPlan.
 //
-// - name: Fully qualified BackupPlan name. Format:
-//   `projects/*/locations/*/backupPlans/*`.
+//   - name: Fully qualified BackupPlan name. Format:
+//     `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansService) Get(name string) *ProjectsLocationsBackupPlansGetCall {
 	c := &ProjectsLocationsBackupPlansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3412,10 +3412,10 @@ type ProjectsLocationsBackupPlansGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansService) GetIamPolicy(resource string) *ProjectsLocationsBackupPlansGetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3585,8 +3585,8 @@ type ProjectsLocationsBackupPlansListCall struct {
 
 // List: Lists BackupPlans in a given location.
 //
-// - parent: The location that contains the BackupPlans to list. Format:
-//   `projects/*/locations/*`.
+//   - parent: The location that contains the BackupPlans to list. Format:
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsBackupPlansService) List(parent string) *ProjectsLocationsBackupPlansListCall {
 	c := &ProjectsLocationsBackupPlansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3809,8 +3809,8 @@ type ProjectsLocationsBackupPlansPatchCall struct {
 
 // Patch: Update a BackupPlan.
 //
-// - name: Output only. The full name of the BackupPlan resource.
-//   Format: `projects/*/locations/*/backupPlans/*`.
+//   - name: Output only. The full name of the BackupPlan resource.
+//     Format: `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansService) Patch(name string, backupplan *BackupPlan) *ProjectsLocationsBackupPlansPatchCall {
 	c := &ProjectsLocationsBackupPlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3975,10 +3975,10 @@ type ProjectsLocationsBackupPlansSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsBackupPlansSetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4125,10 +4125,10 @@ type ProjectsLocationsBackupPlansTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsBackupPlansTestIamPermissionsCall {
 	c := &ProjectsLocationsBackupPlansTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4270,8 +4270,8 @@ type ProjectsLocationsBackupPlansBackupsCreateCall struct {
 
 // Create: Creates a Backup for the given BackupPlan.
 //
-// - parent: The BackupPlan within which to create the Backup. Format:
-//   `projects/*/locations/*/backupPlans/*`.
+//   - parent: The BackupPlan within which to create the Backup. Format:
+//     `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupPlansBackupsCreateCall {
 	c := &ProjectsLocationsBackupPlansBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4428,8 +4428,8 @@ type ProjectsLocationsBackupPlansBackupsDeleteCall struct {
 
 // Delete: Deletes an existing Backup.
 //
-// - name: Name of the Backup resource. Format:
-//   `projects/*/locations/*/backupPlans/*/backups/*`.
+//   - name: Name of the Backup resource. Format:
+//     `projects/*/locations/*/backupPlans/*/backups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) Delete(name string) *ProjectsLocationsBackupPlansBackupsDeleteCall {
 	c := &ProjectsLocationsBackupPlansBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4588,8 +4588,8 @@ type ProjectsLocationsBackupPlansBackupsGetCall struct {
 
 // Get: Retrieve the details of a single Backup.
 //
-// - name: Full name of the Backup resource. Format:
-//   `projects/*/locations/*/backupPlans/*/backups/*`.
+//   - name: Full name of the Backup resource. Format:
+//     `projects/*/locations/*/backupPlans/*/backups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) Get(name string) *ProjectsLocationsBackupPlansBackupsGetCall {
 	c := &ProjectsLocationsBackupPlansBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4737,10 +4737,10 @@ type ProjectsLocationsBackupPlansBackupsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsService) GetIamPolicy(resource string) *ProjectsLocationsBackupPlansBackupsGetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4910,8 +4910,8 @@ type ProjectsLocationsBackupPlansBackupsListCall struct {
 
 // List: Lists the Backups for a given BackupPlan.
 //
-// - parent: The BackupPlan that contains the Backups to list. Format:
-//   `projects/*/locations/*/backupPlans/*`.
+//   - parent: The BackupPlan that contains the Backups to list. Format:
+//     `projects/*/locations/*/backupPlans/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) List(parent string) *ProjectsLocationsBackupPlansBackupsListCall {
 	c := &ProjectsLocationsBackupPlansBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5134,8 +5134,8 @@ type ProjectsLocationsBackupPlansBackupsPatchCall struct {
 
 // Patch: Update a Backup.
 //
-// - name: Output only. The fully qualified name of the Backup.
-//   `projects/*/locations/*/backupPlans/*/backups/*`.
+//   - name: Output only. The fully qualified name of the Backup.
+//     `projects/*/locations/*/backupPlans/*/backups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsService) Patch(name string, backup *Backup) *ProjectsLocationsBackupPlansBackupsPatchCall {
 	c := &ProjectsLocationsBackupPlansBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5298,10 +5298,10 @@ type ProjectsLocationsBackupPlansBackupsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsBackupPlansBackupsSetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5448,10 +5448,10 @@ type ProjectsLocationsBackupPlansBackupsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsBackupPlansBackupsTestIamPermissionsCall {
 	c := &ProjectsLocationsBackupPlansBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5593,8 +5593,8 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall struct {
 
 // Get: Retrieve the details of a single VolumeBackup.
 //
-// - name: Full name of the VolumeBackup resource. Format:
-//   `projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*`.
+//   - name: Full name of the VolumeBackup resource. Format:
+//     `projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) Get(name string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5742,10 +5742,10 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) GetIamPolicy(resource string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsGetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5915,8 +5915,8 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall struct {
 
 // List: Lists the VolumeBackups for a given Backup.
 //
-// - parent: The Backup that contains the VolumeBackups to list. Format:
-//   `projects/*/locations/*/backupPlans/*/backups/*`.
+//   - parent: The Backup that contains the VolumeBackups to list. Format:
+//     `projects/*/locations/*/backupPlans/*/backups/*`.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) List(parent string) *ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6141,10 +6141,10 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsBackupPlansBackupsVolumeBackupsSetIamPolicyCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6291,10 +6291,10 @@ type ProjectsLocationsBackupPlansBackupsVolumeBackupsTestIamPermissionsCall stru
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsBackupPlansBackupsVolumeBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsBackupPlansBackupsVolumeBackupsTestIamPermissionsCall {
 	c := &ProjectsLocationsBackupPlansBackupsVolumeBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6949,8 +6949,8 @@ type ProjectsLocationsRestorePlansCreateCall struct {
 
 // Create: Creates a new RestorePlan in a given location.
 //
-// - parent: The location within which to create the RestorePlan.
-//   Format: `projects/*/locations/*`.
+//   - parent: The location within which to create the RestorePlan.
+//     Format: `projects/*/locations/*`.
 func (r *ProjectsLocationsRestorePlansService) Create(parent string, restoreplan *RestorePlan) *ProjectsLocationsRestorePlansCreateCall {
 	c := &ProjectsLocationsRestorePlansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7107,8 +7107,8 @@ type ProjectsLocationsRestorePlansDeleteCall struct {
 
 // Delete: Deletes an existing RestorePlan.
 //
-// - name: Fully qualified RestorePlan name. Format:
-//   `projects/*/locations/*/restorePlans/*`.
+//   - name: Fully qualified RestorePlan name. Format:
+//     `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansService) Delete(name string) *ProjectsLocationsRestorePlansDeleteCall {
 	c := &ProjectsLocationsRestorePlansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7267,8 +7267,8 @@ type ProjectsLocationsRestorePlansGetCall struct {
 
 // Get: Retrieve the details of a single RestorePlan.
 //
-// - name: Fully qualified RestorePlan name. Format:
-//   `projects/*/locations/*/restorePlans/*`.
+//   - name: Fully qualified RestorePlan name. Format:
+//     `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansService) Get(name string) *ProjectsLocationsRestorePlansGetCall {
 	c := &ProjectsLocationsRestorePlansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7416,10 +7416,10 @@ type ProjectsLocationsRestorePlansGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansService) GetIamPolicy(resource string) *ProjectsLocationsRestorePlansGetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7589,8 +7589,8 @@ type ProjectsLocationsRestorePlansListCall struct {
 
 // List: Lists RestorePlans in a given location.
 //
-// - parent: The location that contains the RestorePlans to list.
-//   Format: `projects/*/locations/*`.
+//   - parent: The location that contains the RestorePlans to list.
+//     Format: `projects/*/locations/*`.
 func (r *ProjectsLocationsRestorePlansService) List(parent string) *ProjectsLocationsRestorePlansListCall {
 	c := &ProjectsLocationsRestorePlansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7813,8 +7813,8 @@ type ProjectsLocationsRestorePlansPatchCall struct {
 
 // Patch: Update a RestorePlan.
 //
-// - name: Output only. The full name of the RestorePlan resource.
-//   Format: `projects/*/locations/*/restorePlans/*`.
+//   - name: Output only. The full name of the RestorePlan resource.
+//     Format: `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansService) Patch(name string, restoreplan *RestorePlan) *ProjectsLocationsRestorePlansPatchCall {
 	c := &ProjectsLocationsRestorePlansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7978,10 +7978,10 @@ type ProjectsLocationsRestorePlansSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRestorePlansSetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8128,10 +8128,10 @@ type ProjectsLocationsRestorePlansTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRestorePlansTestIamPermissionsCall {
 	c := &ProjectsLocationsRestorePlansTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8273,8 +8273,8 @@ type ProjectsLocationsRestorePlansRestoresCreateCall struct {
 
 // Create: Creates a new Restore for the given RestorePlan.
 //
-// - parent: The RestorePlan within which to create the Restore. Format:
-//   `projects/*/locations/*/restorePlans/*`.
+//   - parent: The RestorePlan within which to create the Restore. Format:
+//     `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) Create(parent string, restore *Restore) *ProjectsLocationsRestorePlansRestoresCreateCall {
 	c := &ProjectsLocationsRestorePlansRestoresCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8431,8 +8431,8 @@ type ProjectsLocationsRestorePlansRestoresDeleteCall struct {
 
 // Delete: Deletes an existing Restore.
 //
-// - name: Full name of the Restore Format:
-//   `projects/*/locations/*/restorePlans/*/restores/*`.
+//   - name: Full name of the Restore Format:
+//     `projects/*/locations/*/restorePlans/*/restores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) Delete(name string) *ProjectsLocationsRestorePlansRestoresDeleteCall {
 	c := &ProjectsLocationsRestorePlansRestoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8591,8 +8591,8 @@ type ProjectsLocationsRestorePlansRestoresGetCall struct {
 
 // Get: Retrieves the details of a single Restore.
 //
-// - name: Name of the restore resource. Format:
-//   `projects/*/locations/*/restorePlans/*/restores/*`.
+//   - name: Name of the restore resource. Format:
+//     `projects/*/locations/*/restorePlans/*/restores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) Get(name string) *ProjectsLocationsRestorePlansRestoresGetCall {
 	c := &ProjectsLocationsRestorePlansRestoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8740,10 +8740,10 @@ type ProjectsLocationsRestorePlansRestoresGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresService) GetIamPolicy(resource string) *ProjectsLocationsRestorePlansRestoresGetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansRestoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8913,8 +8913,8 @@ type ProjectsLocationsRestorePlansRestoresListCall struct {
 
 // List: Lists the Restores for a given RestorePlan.
 //
-// - parent: The RestorePlan that contains the Restores to list. Format:
-//   `projects/*/locations/*/restorePlans/*`.
+//   - parent: The RestorePlan that contains the Restores to list. Format:
+//     `projects/*/locations/*/restorePlans/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) List(parent string) *ProjectsLocationsRestorePlansRestoresListCall {
 	c := &ProjectsLocationsRestorePlansRestoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9137,8 +9137,8 @@ type ProjectsLocationsRestorePlansRestoresPatchCall struct {
 
 // Patch: Update a Restore.
 //
-// - name: Output only. The full name of the Restore resource. Format:
-//   `projects/*/locations/*/restorePlans/*/restores/*`.
+//   - name: Output only. The full name of the Restore resource. Format:
+//     `projects/*/locations/*/restorePlans/*/restores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresService) Patch(name string, restore *Restore) *ProjectsLocationsRestorePlansRestoresPatchCall {
 	c := &ProjectsLocationsRestorePlansRestoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9301,10 +9301,10 @@ type ProjectsLocationsRestorePlansRestoresSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRestorePlansRestoresSetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansRestoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9451,10 +9451,10 @@ type ProjectsLocationsRestorePlansRestoresTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRestorePlansRestoresTestIamPermissionsCall {
 	c := &ProjectsLocationsRestorePlansRestoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9596,8 +9596,8 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall struct {
 
 // Get: Retrieve the details of a single VolumeRestore.
 //
-// - name: Full name of the VolumeRestore resource. Format:
-//   `projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*`.
+//   - name: Full name of the VolumeRestore resource. Format:
+//     `projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) Get(name string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9745,10 +9745,10 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresGetIamPolicyCall struct 
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) GetIamPolicy(resource string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresGetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9918,8 +9918,8 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall struct {
 
 // List: Lists the VolumeRestores for a given Restore.
 //
-// - parent: The Restore that contains the VolumeRestores to list.
-//   Format: `projects/*/locations/*/restorePlans/*/restores/*`.
+//   - parent: The Restore that contains the VolumeRestores to list.
+//     Format: `projects/*/locations/*/restorePlans/*/restores/*`.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) List(parent string) *ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10145,10 +10145,10 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresSetIamPolicyCall struct 
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRestorePlansRestoresVolumeRestoresSetIamPolicyCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10295,10 +10295,10 @@ type ProjectsLocationsRestorePlansRestoresVolumeRestoresTestIamPermissionsCall s
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRestorePlansRestoresVolumeRestoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRestorePlansRestoresVolumeRestoresTestIamPermissionsCall {
 	c := &ProjectsLocationsRestorePlansRestoresVolumeRestoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

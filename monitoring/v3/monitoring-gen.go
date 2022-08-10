@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/monitoring/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/monitoring/v3"
-//   ...
-//   ctx := context.Background()
-//   monitoringService, err := monitoring.NewService(ctx)
+//	import "google.golang.org/api/monitoring/v3"
+//	...
+//	ctx := context.Background()
+//	monitoringService, err := monitoring.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package monitoring // import "google.golang.org/api/monitoring/v3"
@@ -6189,11 +6189,11 @@ type FoldersTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name),
-//   organization or folder on which to execute the request. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
-//   folders/[FOLDER_ID].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name),
+//     organization or folder on which to execute the request. The format
+//     is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//     folders/[FOLDER_ID].
 func (r *FoldersTimeSeriesService) List(name string) *FoldersTimeSeriesListCall {
 	c := &FoldersTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6232,61 +6232,89 @@ func (c *FoldersTimeSeriesListCall) AggregationAlignmentPeriod(aggregationAlignm
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -6331,16 +6359,22 @@ func (c *FoldersTimeSeriesListCall) AggregationGroupByFields(aggregationGroupByF
 // specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -6350,77 +6384,109 @@ func (c *FoldersTimeSeriesListCall) AggregationGroupByFields(aggregationGroupByF
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -6527,61 +6593,89 @@ func (c *FoldersTimeSeriesListCall) SecondaryAggregationAlignmentPeriod(secondar
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -6626,16 +6720,22 @@ func (c *FoldersTimeSeriesListCall) SecondaryAggregationGroupByFields(secondaryA
 // alignment_period must be specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -6645,77 +6745,109 @@ func (c *FoldersTimeSeriesListCall) SecondaryAggregationGroupByFields(secondaryA
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -6738,9 +6870,13 @@ func (c *FoldersTimeSeriesListCall) SecondaryAggregationPerSeriesAligner(seconda
 // information is returned about the time series.
 //
 // Possible values:
-//   "FULL" - Returns the identity of the metric(s), the time series,
+//
+//	"FULL" - Returns the identity of the metric(s), the time series,
+//
 // and the time series data.
-//   "HEADERS" - Returns the identity of the metric and the time series
+//
+//	"HEADERS" - Returns the identity of the metric and the time series
+//
 // resource, but not the time series data.
 func (c *FoldersTimeSeriesListCall) View(view string) *FoldersTimeSeriesListCall {
 	c.urlParams_.Set("view", view)
@@ -7147,11 +7283,11 @@ type OrganizationsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name),
-//   organization or folder on which to execute the request. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
-//   folders/[FOLDER_ID].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name),
+//     organization or folder on which to execute the request. The format
+//     is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//     folders/[FOLDER_ID].
 func (r *OrganizationsTimeSeriesService) List(name string) *OrganizationsTimeSeriesListCall {
 	c := &OrganizationsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7190,61 +7326,89 @@ func (c *OrganizationsTimeSeriesListCall) AggregationAlignmentPeriod(aggregation
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -7289,16 +7453,22 @@ func (c *OrganizationsTimeSeriesListCall) AggregationGroupByFields(aggregationGr
 // specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -7308,77 +7478,109 @@ func (c *OrganizationsTimeSeriesListCall) AggregationGroupByFields(aggregationGr
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -7485,61 +7687,89 @@ func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationAlignmentPeriod(se
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -7584,16 +7814,22 @@ func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationGroupByFields(seco
 // alignment_period must be specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -7603,77 +7839,109 @@ func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationGroupByFields(seco
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -7696,9 +7964,13 @@ func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationPerSeriesAligner(s
 // information is returned about the time series.
 //
 // Possible values:
-//   "FULL" - Returns the identity of the metric(s), the time series,
+//
+//	"FULL" - Returns the identity of the metric(s), the time series,
+//
 // and the time series data.
-//   "HEADERS" - Returns the identity of the metric and the time series
+//
+//	"HEADERS" - Returns the identity of the metric and the time series
+//
 // resource, but not the time series data.
 func (c *OrganizationsTimeSeriesListCall) View(view string) *OrganizationsTimeSeriesListCall {
 	c.urlParams_.Set("view", view)
@@ -8105,17 +8377,17 @@ type ProjectsAlertPoliciesCreateCall struct {
 
 // Create: Creates a new alerting policy.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
-//   to create the alerting policy. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
-//   parent container in which the alerting policy will be written, not
-//   the name of the created policy. |name| must be a host project of a
-//   Metrics Scope, otherwise INVALID_ARGUMENT error will return. The
-//   alerting policy that is returned will have a name that contains a
-//   normalized representation of this name as a prefix but adds a
-//   suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying
-//   the policy in the container.
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//     to create the alerting policy. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//     parent container in which the alerting policy will be written, not
+//     the name of the created policy. |name| must be a host project of a
+//     Metrics Scope, otherwise INVALID_ARGUMENT error will return. The
+//     alerting policy that is returned will have a name that contains a
+//     normalized representation of this name as a prefix but adds a
+//     suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying
+//     the policy in the container.
 func (r *ProjectsAlertPoliciesService) Create(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesCreateCall {
 	c := &ProjectsAlertPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8257,9 +8529,9 @@ type ProjectsAlertPoliciesDeleteCall struct {
 
 // Delete: Deletes an alerting policy.
 //
-// - name: The alerting policy to delete. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For
-//   more information, see AlertPolicy.
+//   - name: The alerting policy to delete. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For
+//     more information, see AlertPolicy.
 func (r *ProjectsAlertPoliciesService) Delete(name string) *ProjectsAlertPoliciesDeleteCall {
 	c := &ProjectsAlertPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8393,8 +8665,8 @@ type ProjectsAlertPoliciesGetCall struct {
 
 // Get: Gets a single alerting policy.
 //
-// - name: The alerting policy to retrieve. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID].
+//   - name: The alerting policy to retrieve. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID].
 func (r *ProjectsAlertPoliciesService) Get(name string) *ProjectsAlertPoliciesGetCall {
 	c := &ProjectsAlertPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8542,13 +8814,13 @@ type ProjectsAlertPoliciesListCall struct {
 
 // List: Lists the existing alerting policies for the workspace.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
-//   alert policies are to be listed. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
-//   parent container in which the alerting policies to be listed are
-//   stored. To retrieve a single alerting policy by name, use the
-//   GetAlertPolicy operation, instead.
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//     alert policies are to be listed. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//     parent container in which the alerting policies to be listed are
+//     stored. To retrieve a single alerting policy by name, use the
+//     GetAlertPolicy operation, instead.
 func (r *ProjectsAlertPoliciesService) List(name string) *ProjectsAlertPoliciesListCall {
 	c := &ProjectsAlertPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8777,13 +9049,13 @@ type ProjectsAlertPoliciesPatchCall struct {
 // alerting policy by specifying the fields to be updated via
 // updateMask. Returns the updated alerting policy.
 //
-// - name: Required if the policy exists. The resource name for this
-//   policy. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
-//   [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy
-//   is created. When calling the alertPolicies.create method, do not
-//   include the name field in the alerting policy passed as part of the
-//   request.
+//   - name: Required if the policy exists. The resource name for this
+//     policy. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+//     [ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy
+//     is created. When calling the alertPolicies.create method, do not
+//     include the name field in the alerting policy passed as part of the
+//     request.
 func (r *ProjectsAlertPoliciesService) Patch(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesPatchCall {
 	c := &ProjectsAlertPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8957,10 +9229,10 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 // method is only for use by the Cloud Monitoring Agent. Use
 // projects.timeSeries.create instead.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
-//   to create the time series. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//     to create the time series. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsCollectdTimeSeriesService) Create(name string, createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest) *ProjectsCollectdTimeSeriesCreateCall {
 	c := &ProjectsCollectdTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9104,9 +9376,9 @@ type ProjectsGroupsCreateCall struct {
 
 // Create: Creates a new group.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
-//   to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//     to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) Create(name string, group *Group) *ProjectsGroupsCreateCall {
 	c := &ProjectsGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9260,8 +9532,8 @@ type ProjectsGroupsDeleteCall struct {
 
 // Delete: Deletes an existing group.
 //
-// - name: The group to delete. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
+//   - name: The group to delete. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Delete(name string) *ProjectsGroupsDeleteCall {
 	c := &ProjectsGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9409,8 +9681,8 @@ type ProjectsGroupsGetCall struct {
 
 // Get: Gets a single group.
 //
-// - name: The group to retrieve. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
+//   - name: The group to retrieve. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Get(name string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9558,10 +9830,10 @@ type ProjectsGroupsListCall struct {
 
 // List: Lists the existing groups.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
-//   groups are to be listed. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//     groups are to be listed. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 	c := &ProjectsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9806,11 +10078,11 @@ type ProjectsGroupsUpdateCall struct {
 // Update: Updates an existing group. You can change any group
 // attributes except name.
 //
-// - name: Output only. The name of this group. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a
-//   group, this field is ignored and a new name is created consisting
-//   of the project specified in the call to CreateGroup and a unique
-//   [GROUP_ID] that is generated automatically.
+//   - name: Output only. The name of this group. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a
+//     group, this field is ignored and a new name is created consisting
+//     of the project specified in the call to CreateGroup and a unique
+//     [GROUP_ID] that is generated automatically.
 func (r *ProjectsGroupsService) Update(name string, group *Group) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9965,8 +10237,8 @@ type ProjectsGroupsMembersListCall struct {
 
 // List: Lists the monitored resources that are members of a group.
 //
-// - name: The group whose members are listed. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
+//   - name: The group whose members are listed. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersListCall {
 	c := &ProjectsGroupsMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10211,10 +10483,10 @@ type ProjectsMetricDescriptorsCreateCall struct {
 // descriptor is updated if it already exists, except that metric labels
 // are never removed.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is: 4
-//   projects/PROJECT_ID_OR_NUMBER.
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is: 4
+//     projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10358,10 +10630,10 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics) can be deleted.
 //
-// - name: The metric descriptor on which to execute the request. The
-//   format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
-//   example of [METRIC_ID] is: "custom.googleapis.com/my_test_metric".
+//   - name: The metric descriptor on which to execute the request. The
+//     format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//     example of [METRIC_ID] is: "custom.googleapis.com/my_test_metric".
 func (r *ProjectsMetricDescriptorsService) Delete(name string) *ProjectsMetricDescriptorsDeleteCall {
 	c := &ProjectsMetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10495,11 +10767,11 @@ type ProjectsMetricDescriptorsGetCall struct {
 
 // Get: Gets a single metric descriptor.
 //
-// - name: The metric descriptor on which to execute the request. The
-//   format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
-//   example value of [METRIC_ID] is
-//   "compute.googleapis.com/instance/disk/read_bytes_count".
+//   - name: The metric descriptor on which to execute the request. The
+//     format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//     example value of [METRIC_ID] is
+//     "compute.googleapis.com/instance/disk/read_bytes_count".
 func (r *ProjectsMetricDescriptorsService) Get(name string) *ProjectsMetricDescriptorsGetCall {
 	c := &ProjectsMetricDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10648,10 +10920,10 @@ type ProjectsMetricDescriptorsListCall struct {
 
 // List: Lists metric descriptors that match a filter.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10866,10 +11138,10 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 
 // Get: Gets a single monitored resource descriptor.
 //
-// - name: The monitored resource descriptor to get. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOUR
-//   CE_TYPE] The [RESOURCE_TYPE] is a predefined type, such as
-//   cloudsql_database.
+//   - name: The monitored resource descriptor to get. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOUR
+//     CE_TYPE] The [RESOURCE_TYPE] is a predefined type, such as
+//     cloudsql_database.
 func (r *ProjectsMonitoredResourceDescriptorsService) Get(name string) *ProjectsMonitoredResourceDescriptorsGetCall {
 	c := &ProjectsMonitoredResourceDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11018,10 +11290,10 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 
 // List: Lists monitored resource descriptors that match a filter.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c := &ProjectsMonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11238,10 +11510,10 @@ type ProjectsNotificationChannelDescriptorsGetCall struct {
 // fields are expected / permitted for a notification channel of the
 // given type.
 //
-// - name: The channel type for which to execute the request. The format
-//   is:
-//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHAN
-//   NEL_TYPE].
+//   - name: The channel type for which to execute the request. The format
+//     is:
+//     projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHAN
+//     NEL_TYPE].
 func (r *ProjectsNotificationChannelDescriptorsService) Get(name string) *ProjectsNotificationChannelDescriptorsGetCall {
 	c := &ProjectsNotificationChannelDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11391,13 +11663,13 @@ type ProjectsNotificationChannelDescriptorsListCall struct {
 // descriptors makes it possible for new channel types to be dynamically
 // added.
 //
-// - name: The REST resource name of the parent from which to retrieve
-//   the notification channel descriptors. The expected syntax is:
-//   projects/[PROJECT_ID_OR_NUMBER] Note that this names
-//   (https://cloud.google.com/monitoring/api/v3#project_name) the
-//   parent container in which to look for the descriptors; to retrieve
-//   a single descriptor by name, use the
-//   GetNotificationChannelDescriptor operation, instead.
+//   - name: The REST resource name of the parent from which to retrieve
+//     the notification channel descriptors. The expected syntax is:
+//     projects/[PROJECT_ID_OR_NUMBER] Note that this names
+//     (https://cloud.google.com/monitoring/api/v3#project_name) the
+//     parent container in which to look for the descriptors; to retrieve
+//     a single descriptor by name, use the
+//     GetNotificationChannelDescriptor operation, instead.
 func (r *ProjectsNotificationChannelDescriptorsService) List(name string) *ProjectsNotificationChannelDescriptorsListCall {
 	c := &ProjectsNotificationChannelDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11597,14 +11869,14 @@ type ProjectsNotificationChannelsCreateCall struct {
 // notification endpoint such as an email address, SMS number, or
 // PagerDuty service.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER] This names the container into which
-//   the channel will be written, this does not name the newly created
-//   channel. The resulting channel's name will have a normalized
-//   version of this field as a prefix, but will add
-//   /notificationChannels/[CHANNEL_ID] to identify the channel.
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] This names the container into which
+//     the channel will be written, this does not name the newly created
+//     channel. The resulting channel's name will have a normalized
+//     version of this field as a prefix, but will add
+//     /notificationChannels/[CHANNEL_ID] to identify the channel.
 func (r *ProjectsNotificationChannelsService) Create(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsCreateCall {
 	c := &ProjectsNotificationChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11746,8 +12018,8 @@ type ProjectsNotificationChannelsDeleteCall struct {
 
 // Delete: Deletes a notification channel.
 //
-// - name: The channel for which to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
+//   - name: The channel for which to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Delete(name string) *ProjectsNotificationChannelsDeleteCall {
 	c := &ProjectsNotificationChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11901,8 +12173,8 @@ type ProjectsNotificationChannelsGetCall struct {
 // identical to the information that was supplied in the call to the
 // create method.
 //
-// - name: The channel for which to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
+//   - name: The channel for which to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Get(name string) *ProjectsNotificationChannelsGetCall {
 	c := &ProjectsNotificationChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12070,10 +12342,10 @@ type ProjectsNotificationChannelsGetVerificationCodeCall struct {
 // GetVerificationCode() will typically return a much longer, websafe
 // base 64 encoded string that has a longer expiration time.
 //
-// - name: The notification channel for which a verification code is to
-//   be generated and retrieved. This must name a channel that is
-//   already verified; if the specified channel is not verified, the
-//   request will fail.
+//   - name: The notification channel for which a verification code is to
+//     be generated and retrieved. This must name a channel that is
+//     already verified; if the specified channel is not verified, the
+//     request will fail.
 func (r *ProjectsNotificationChannelsService) GetVerificationCode(name string, getnotificationchannelverificationcoderequest *GetNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsGetVerificationCodeCall {
 	c := &ProjectsNotificationChannelsGetVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12219,13 +12491,13 @@ type ProjectsNotificationChannelsListCall struct {
 // List: Lists the notification channels that have been created for the
 // project.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER] This names the container in which
-//   to look for the notification channels; it does not name a specific
-//   channel. To query a specific channel by REST resource name, use the
-//   GetNotificationChannel operation.
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] This names the container in which
+//     to look for the notification channels; it does not name a specific
+//     channel. To query a specific channel by REST resource name, use the
+//     GetNotificationChannel operation.
 func (r *ProjectsNotificationChannelsService) List(name string) *ProjectsNotificationChannelsListCall {
 	c := &ProjectsNotificationChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12453,10 +12725,10 @@ type ProjectsNotificationChannelsPatchCall struct {
 // Patch: Updates a notification channel. Fields not specified in the
 // field mask remain unchanged.
 //
-// - name: The full REST resource name for this channel. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
-//   The [CHANNEL_ID] is automatically assigned by the server on
-//   creation.
+//   - name: The full REST resource name for this channel. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
+//     The [CHANNEL_ID] is automatically assigned by the server on
+//     creation.
 func (r *ProjectsNotificationChannelsService) Patch(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsPatchCall {
 	c := &ProjectsNotificationChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12614,8 +12886,8 @@ type ProjectsNotificationChannelsSendVerificationCodeCall struct {
 // the channel. The code can then be supplied in
 // VerifyNotificationChannel to verify the channel.
 //
-// - name: The notification channel to which to send a verification
-//   code.
+//   - name: The notification channel to which to send a verification
+//     code.
 func (r *ProjectsNotificationChannelsService) SendVerificationCode(name string, sendnotificationchannelverificationcoderequest *SendNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsSendVerificationCodeCall {
 	c := &ProjectsNotificationChannelsSendVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12906,10 +13178,10 @@ type ProjectsTimeSeriesCreateCall struct {
 // series could not be written, a corresponding failure message is
 // included in the error response.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Create(name string, createtimeseriesrequest *CreateTimeSeriesRequest) *ProjectsTimeSeriesCreateCall {
 	c := &ProjectsTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13060,10 +13332,10 @@ type ProjectsTimeSeriesCreateServiceCall struct {
 // for use by Google Cloud services. Use projects.timeSeries.create
 // instead.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) CreateService(name string, createtimeseriesrequest *CreateTimeSeriesRequest) *ProjectsTimeSeriesCreateServiceCall {
 	c := &ProjectsTimeSeriesCreateServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13207,11 +13479,11 @@ type ProjectsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name),
-//   organization or folder on which to execute the request. The format
-//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
-//   folders/[FOLDER_ID].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name),
+//     organization or folder on which to execute the request. The format
+//     is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//     folders/[FOLDER_ID].
 func (r *ProjectsTimeSeriesService) List(name string) *ProjectsTimeSeriesListCall {
 	c := &ProjectsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13250,61 +13522,89 @@ func (c *ProjectsTimeSeriesListCall) AggregationAlignmentPeriod(aggregationAlign
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -13349,16 +13649,22 @@ func (c *ProjectsTimeSeriesListCall) AggregationGroupByFields(aggregationGroupBy
 // specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -13368,77 +13674,109 @@ func (c *ProjectsTimeSeriesListCall) AggregationGroupByFields(aggregationGroupBy
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -13545,61 +13883,89 @@ func (c *ProjectsTimeSeriesListCall) SecondaryAggregationAlignmentPeriod(seconda
 // error is returned.
 //
 // Possible values:
-//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+//
+//	"REDUCE_NONE" - No cross-time series reduction. The output of the
+//
 // Aligner is returned.
-//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+//
+//	"REDUCE_MEAN" - Reduce by computing the mean value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric or distribution values. The value_type of
 // the output is DOUBLE.
-//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+//
+//	"REDUCE_MIN" - Reduce by computing the minimum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+//
+//	"REDUCE_MAX" - Reduce by computing the maximum value across time
+//
 // series for each alignment period. This reducer is valid for DELTA and
 // GAUGE metrics with numeric values. The value_type of the output is
 // the same as the value_type of the input.
-//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+//
+//	"REDUCE_SUM" - Reduce by computing the sum across time series for
+//
 // each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics with numeric and distribution values. The value_type of the
 // output is the same as the value_type of the input.
-//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
+//	"REDUCE_STDDEV" - Reduce by computing the standard deviation across
+//
 // time series for each alignment period. This reducer is valid for
 // DELTA and GAUGE metrics with numeric or distribution values. The
 // value_type of the output is DOUBLE.
-//   "REDUCE_COUNT" - Reduce by computing the number of data points
+//
+//	"REDUCE_COUNT" - Reduce by computing the number of data points
+//
 // across time series for each alignment period. This reducer is valid
 // for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
 // string value_type. The value_type of the output is INT64.
-//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
+//	"REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+//
 // data points across time series for each alignment period. This
 // reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
 // The value_type of the output is INT64.
-//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
+//	"REDUCE_COUNT_FALSE" - Reduce by computing the number of
+//
 // False-valued data points across time series for each alignment
 // period. This reducer is valid for DELTA and GAUGE metrics of Boolean
 // value_type. The value_type of the output is INT64.
-//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
+//	"REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+//
 // number of True-valued data points to the total number of data points
 // for each alignment period. This reducer is valid for DELTA and GAUGE
 // metrics of Boolean value_type. The output value is in the range 0.0,
 // 1.0 and has value_type DOUBLE.
-//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
+//	"REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
+//	"REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
+//	"REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
 // output is DOUBLE.
-//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
+//	"REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+//
 // (https://en.wikipedia.org/wiki/Percentile) of data points across time
 // series for each alignment period. This reducer is valid for GAUGE and
 // DELTA metrics of numeric and distribution type. The value of the
@@ -13644,16 +14010,22 @@ func (c *ProjectsTimeSeriesListCall) SecondaryAggregationGroupByFields(secondary
 // alignment_period must be specified; otherwise, an error is returned.
 //
 // Possible values:
-//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
+//	"ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+//
 // cross-series reduction is requested. The value_type of the result is
 // the same as the value_type of the input.
-//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
+//	"ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+//
 // y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
 // the selected alignment period results in periods with no data, then
 // the aligned value for such a period is created by interpolation. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
+//	"ALIGN_RATE" - Align and convert to a rate. The result is computed
+//
 // as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
 // aligner as providing the slope of the line that passes through the
 // value at the start and at the end of the alignment_period.This
@@ -13663,77 +14035,109 @@ func (c *ProjectsTimeSeriesListCall) SecondaryAggregationGroupByFields(secondary
 // interpolation. The output is a GAUGE metric with value_type
 // DOUBLE.If, by "rate", you mean "percentage change", see the
 // ALIGN_PERCENT_CHANGE aligner instead.
-//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
+//	"ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+//
 // points around the alignment period boundary. This aligner is valid
 // for GAUGE metrics with numeric values. The value_type of the aligned
 // result is the same as the value_type of the input.
-//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
+//	"ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+//
 // before the end of the alignment period to the boundary at the end of
 // the alignment period. This aligner is valid for GAUGE metrics. The
 // value_type of the aligned result is the same as the value_type of the
 // input.
-//   "ALIGN_MIN" - Align the time series by returning the minimum value
+//
+//	"ALIGN_MIN" - Align the time series by returning the minimum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MAX" - Align the time series by returning the maximum value
+//
+//	"ALIGN_MAX" - Align the time series by returning the maximum value
+//
 // in each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // the same as the value_type of the input.
-//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+//
+//	"ALIGN_MEAN" - Align the time series by returning the mean value in
+//
 // each alignment period. This aligner is valid for GAUGE and DELTA
 // metrics with numeric values. The value_type of the aligned result is
 // DOUBLE.
-//   "ALIGN_COUNT" - Align the time series by returning the number of
+//
+//	"ALIGN_COUNT" - Align the time series by returning the number of
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric or Boolean values. The value_type of the
 // aligned result is INT64.
-//   "ALIGN_SUM" - Align the time series by returning the sum of the
+//
+//	"ALIGN_SUM" - Align the time series by returning the sum of the
+//
 // values in each alignment period. This aligner is valid for GAUGE and
 // DELTA metrics with numeric and distribution values. The value_type of
 // the aligned result is the same as the value_type of the input.
-//   "ALIGN_STDDEV" - Align the time series by returning the standard
+//
+//	"ALIGN_STDDEV" - Align the time series by returning the standard
+//
 // deviation of the values in each alignment period. This aligner is
 // valid for GAUGE and DELTA metrics with numeric values. The value_type
 // of the output is DOUBLE.
-//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_TRUE" - Align the time series by returning the number
+//
 // of True values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
+//	"ALIGN_COUNT_FALSE" - Align the time series by returning the number
+//
 // of False values in each alignment period. This aligner is valid for
 // GAUGE metrics with Boolean values. The value_type of the output is
 // INT64.
-//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
+//	"ALIGN_FRACTION_TRUE" - Align the time series by returning the
+//
 // ratio of the number of True values to the total number of values in
 // each alignment period. This aligner is valid for GAUGE metrics with
 // Boolean values. The output value is in the range 0.0, 1.0 and has
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_99" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 99th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_95" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 95th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_50" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 50th percentile of all
 // data points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
+//	"ALIGN_PERCENTILE_05" - Align the time series by using percentile
+//
 // aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
 // data point in each alignment period is the 5th percentile of all data
 // points in the period. This aligner is valid for GAUGE and DELTA
 // metrics with distribution values. The output is a GAUGE metric with
 // value_type DOUBLE.
-//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
+//	"ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+//
 // This aligner is valid for GAUGE and DELTA metrics with numeric
 // values. This alignment returns ((current - previous)/previous) * 100,
 // where the value of previous is determined based on the
@@ -13756,9 +14160,13 @@ func (c *ProjectsTimeSeriesListCall) SecondaryAggregationPerSeriesAligner(second
 // information is returned about the time series.
 //
 // Possible values:
-//   "FULL" - Returns the identity of the metric(s), the time series,
+//
+//	"FULL" - Returns the identity of the metric(s), the time series,
+//
 // and the time series data.
-//   "HEADERS" - Returns the identity of the metric and the time series
+//
+//	"HEADERS" - Returns the identity of the metric and the time series
+//
 // resource, but not the time series data.
 func (c *ProjectsTimeSeriesListCall) View(view string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("view", view)
@@ -14165,10 +14573,10 @@ type ProjectsTimeSeriesQueryCall struct {
 
 // Query: Queries time series using Monitoring Query Language.
 //
-// - name: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
-//   to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - name: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//     to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Query(name string, querytimeseriesrequest *QueryTimeSeriesRequest) *ProjectsTimeSeriesQueryCall {
 	c := &ProjectsTimeSeriesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14333,10 +14741,10 @@ type ProjectsUptimeCheckConfigsCreateCall struct {
 
 // Create: Creates a new Uptime check configuration.
 //
-// - parent: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
-//   to create the Uptime check. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - parent: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//     to create the Uptime check. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) Create(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsCreateCall {
 	c := &ProjectsUptimeCheckConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14481,8 +14889,8 @@ type ProjectsUptimeCheckConfigsDeleteCall struct {
 // policy or other dependent configs that would be rendered invalid by
 // the deletion.
 //
-// - name: The Uptime check configuration to delete. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+//   - name: The Uptime check configuration to delete. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Delete(name string) *ProjectsUptimeCheckConfigsDeleteCall {
 	c := &ProjectsUptimeCheckConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14616,8 +15024,8 @@ type ProjectsUptimeCheckConfigsGetCall struct {
 
 // Get: Gets a single Uptime check configuration.
 //
-// - name: The Uptime check configuration to retrieve. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
+//   - name: The Uptime check configuration to retrieve. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Get(name string) *ProjectsUptimeCheckConfigsGetCall {
 	c := &ProjectsUptimeCheckConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14766,10 +15174,10 @@ type ProjectsUptimeCheckConfigsListCall struct {
 // List: Lists the existing valid Uptime check configurations for the
 // project (leaving out any invalid configurations).
 //
-// - parent: The project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
-//   Uptime check configurations are listed. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - parent: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//     Uptime check configurations are listed. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeCheckConfigsListCall {
 	c := &ProjectsUptimeCheckConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14971,13 +15379,13 @@ type ProjectsUptimeCheckConfigsPatchCall struct {
 // fields in the current configuration by specifying the fields to be
 // updated via updateMask. Returns the updated configuration.
 //
-// - name: A unique resource name for this Uptime check configuration.
-//   The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
-//    [PROJECT_ID_OR_NUMBER] is the Workspace host project associated
-//   with the Uptime check.This field should be omitted when creating
-//   the Uptime check configuration; on create, the resource name is
-//   assigned by the server and included in the response.
+//   - name: A unique resource name for this Uptime check configuration.
+//     The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
+//     [PROJECT_ID_OR_NUMBER] is the Workspace host project associated
+//     with the Uptime check.This field should be omitted when creating
+//     the Uptime check configuration; on create, the resource name is
+//     assigned by the server and included in the response.
 func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsPatchCall {
 	c := &ProjectsUptimeCheckConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15136,10 +15544,10 @@ type ServicesCreateCall struct {
 
 // Create: Create a Service.
 //
-// - parent: Resource name
-//   (https://cloud.google.com/monitoring/api/v3#project_name) of the
-//   parent Metrics Scope. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - parent: Resource name
+//     (https://cloud.google.com/monitoring/api/v3#project_name) of the
+//     parent Metrics Scope. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15294,8 +15702,8 @@ type ServicesDeleteCall struct {
 
 // Delete: Soft delete this Service.
 //
-// - name: Resource name of the Service to delete. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
+//   - name: Resource name of the Service to delete. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Delete(name string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15429,8 +15837,8 @@ type ServicesGetCall struct {
 
 // Get: Get the named Service.
 //
-// - name: Resource name of the Service. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
+//   - name: Resource name of the Service. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15578,12 +15986,12 @@ type ServicesListCall struct {
 
 // List: List Services for this Metrics Scope.
 //
-// - parent: Resource name of the parent containing the listed services,
-//   either a project
-//   (https://cloud.google.com/monitoring/api/v3#project_name) or a
-//   Monitoring Metrics Scope. The formats are:
-//   projects/[PROJECT_ID_OR_NUMBER]
-//   workspaces/[HOST_PROJECT_ID_OR_NUMBER].
+//   - parent: Resource name of the parent containing the listed services,
+//     either a project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) or a
+//     Monitoring Metrics Scope. The formats are:
+//     projects/[PROJECT_ID_OR_NUMBER]
+//     workspaces/[HOST_PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15807,8 +16215,8 @@ type ServicesPatchCall struct {
 
 // Patch: Update this Service.
 //
-// - name: Resource name for this Service. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
+//   - name: Resource name for this Service. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Patch(name string, service *MService) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15964,8 +16372,8 @@ type ServicesServiceLevelObjectivesCreateCall struct {
 
 // Create: Create a ServiceLevelObjective for the given Service.
 //
-// - parent: Resource name of the parent Service. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
+//   - parent: Resource name of the parent Service. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesCreateCall {
 	c := &ServicesServiceLevelObjectivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16121,10 +16529,10 @@ type ServicesServiceLevelObjectivesDeleteCall struct {
 
 // Delete: Delete the given ServiceLevelObjective.
 //
-// - name: Resource name of the ServiceLevelObjective to delete. The
-//   format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
-//   jectives/[SLO_NAME].
+//   - name: Resource name of the ServiceLevelObjective to delete. The
+//     format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//     jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Delete(name string) *ServicesServiceLevelObjectivesDeleteCall {
 	c := &ServicesServiceLevelObjectivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16258,10 +16666,10 @@ type ServicesServiceLevelObjectivesGetCall struct {
 
 // Get: Get a ServiceLevelObjective by name.
 //
-// - name: Resource name of the ServiceLevelObjective to get. The format
-//   is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
-//   jectives/[SLO_NAME].
+//   - name: Resource name of the ServiceLevelObjective to get. The format
+//     is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//     jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Get(name string) *ServicesServiceLevelObjectivesGetCall {
 	c := &ServicesServiceLevelObjectivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16275,11 +16683,15 @@ func (r *ServicesServiceLevelObjectivesService) Get(name string) *ServicesServic
 // BasicSli with a RequestBasedSli spelling out how the SLI is computed.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - Same as FULL.
-//   "FULL" - Return the embedded ServiceLevelIndicator in the form in
+//
+//	"VIEW_UNSPECIFIED" - Same as FULL.
+//	"FULL" - Return the embedded ServiceLevelIndicator in the form in
+//
 // which it was defined. If it was defined using a BasicSli, return that
 // BasicSli.
-//   "EXPLICIT" - For ServiceLevelIndicators using BasicSli
+//
+//	"EXPLICIT" - For ServiceLevelIndicators using BasicSli
+//
 // articulation, instead return the ServiceLevelIndicator with its mode
 // of computation fully spelled out as a RequestBasedSli. For
 // ServiceLevelIndicators using RequestBasedSli or WindowsBasedSli,
@@ -16445,10 +16857,10 @@ type ServicesServiceLevelObjectivesListCall struct {
 
 // List: List the ServiceLevelObjectives for the given Service.
 //
-// - parent: Resource name of the parent containing the listed SLOs,
-//   either a project or a Monitoring Metrics Scope. The formats are:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
-//   workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-.
+//   - parent: Resource name of the parent containing the listed SLOs,
+//     either a project or a Monitoring Metrics Scope. The formats are:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
+//     workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-.
 func (r *ServicesServiceLevelObjectivesService) List(parent string) *ServicesServiceLevelObjectivesListCall {
 	c := &ServicesServiceLevelObjectivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16486,11 +16898,15 @@ func (c *ServicesServiceLevelObjectivesListCall) PageToken(pageToken string) *Se
 // BasicSli with a RequestBasedSli spelling out how the SLI is computed.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - Same as FULL.
-//   "FULL" - Return the embedded ServiceLevelIndicator in the form in
+//
+//	"VIEW_UNSPECIFIED" - Same as FULL.
+//	"FULL" - Return the embedded ServiceLevelIndicator in the form in
+//
 // which it was defined. If it was defined using a BasicSli, return that
 // BasicSli.
-//   "EXPLICIT" - For ServiceLevelIndicators using BasicSli
+//
+//	"EXPLICIT" - For ServiceLevelIndicators using BasicSli
+//
 // articulation, instead return the ServiceLevelIndicator with its mode
 // of computation fully spelled out as a RequestBasedSli. For
 // ServiceLevelIndicators using RequestBasedSli or WindowsBasedSli,
@@ -16694,9 +17110,9 @@ type ServicesServiceLevelObjectivesPatchCall struct {
 
 // Patch: Update the given ServiceLevelObjective.
 //
-// - name: Resource name for this ServiceLevelObjective. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
-//   jectives/[SLO_NAME].
+//   - name: Resource name for this ServiceLevelObjective. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//     jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Patch(name string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesPatchCall {
 	c := &ServicesServiceLevelObjectivesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

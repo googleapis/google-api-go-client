@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/bigquery/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/bigquery/v2"
-//   ...
-//   ctx := context.Background()
-//   bigqueryService, err := bigquery.NewService(ctx)
+//	import "google.golang.org/api/bigquery/v2"
+//	...
+//	ctx := context.Background()
+//	bigqueryService, err := bigquery.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithScopes(bigquery.DevstorageReadWriteScope))
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithScopes(bigquery.DevstorageReadWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithAPIKey("AIza..."))
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package bigquery // import "google.golang.org/api/bigquery/v2"
@@ -10410,12 +10410,12 @@ type JobsDeleteCall struct {
 // Delete: Requests the deletion of the metadata of a job. This call
 // returns when the job's metadata is deleted.
 //
-// - jobId: Job ID of the job for which metadata is to be deleted. If
-//   this is a parent job which has child jobs, the metadata from all
-//   child jobs will be deleted as well. Direct deletion of the metadata
-//   of child jobs is not allowed.
-// - projectId: Project ID of the job for which metadata is to be
-//   deleted.
+//   - jobId: Job ID of the job for which metadata is to be deleted. If
+//     this is a parent job which has child jobs, the metadata from all
+//     child jobs will be deleted as well. Direct deletion of the metadata
+//     of child jobs is not allowed.
+//   - projectId: Project ID of the job for which metadata is to be
+//     deleted.
 func (r *JobsService) Delete(projectId string, jobId string) *JobsDeleteCall {
 	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10963,8 +10963,8 @@ type JobsInsertCall struct {
 // Insert: Starts a new asynchronous job. Requires the Can View project
 // role.
 //
-// - projectId: Project ID of the project that will be billed for the
-//   job.
+//   - projectId: Project ID of the project that will be billed for the
+//     job.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11251,8 +11251,9 @@ func (c *JobsListCall) ParentJobId(parentJobId string) *JobsListCall {
 // information returned to a set of selected fields
 //
 // Possible values:
-//   "full" - Includes all job data
-//   "minimal" - Does not include the job configuration
+//
+//	"full" - Includes all job data
+//	"minimal" - Does not include the job configuration
 func (c *JobsListCall) Projection(projection string) *JobsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -11262,9 +11263,10 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 // state
 //
 // Possible values:
-//   "done" - Finished jobs
-//   "pending" - Pending jobs
-//   "running" - Running jobs
+//
+//	"done" - Finished jobs
+//	"pending" - Pending jobs
+//	"running" - Running jobs
 func (c *JobsListCall) StateFilter(stateFilter ...string) *JobsListCall {
 	c.urlParams_.SetMulti("stateFilter", append([]string{}, stateFilter...))
 	return c
@@ -13516,10 +13518,10 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13884,10 +13886,10 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14035,10 +14037,10 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14743,17 +14745,25 @@ func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 // returned.
 //
 // Possible values:
-//   "BASIC" - Includes basic table information including schema and
+//
+//	"BASIC" - Includes basic table information including schema and
+//
 // partitioning specification. This view does not include storage
 // statistics such as numRows or numBytes. This view is significantly
 // more efficient and should be used to support high query rates.
-//   "FULL" - Includes all table information, including storage
+//
+//	"FULL" - Includes all table information, including storage
+//
 // statistics. It returns same information as STORAGE_STATS view, but
 // may contain additional information in the future.
-//   "STORAGE_STATS" - Includes all information in the BASIC view as
+//
+//	"STORAGE_STATS" - Includes all information in the BASIC view as
+//
 // well as storage statistics (numBytes, numLongTermBytes, numRows and
 // lastModifiedTime).
-//   "TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//
+//	"TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//
 // the STORAGE_STATS view.
 func (c *TablesGetCall) View(view string) *TablesGetCall {
 	c.urlParams_.Set("view", view)
@@ -14939,10 +14949,10 @@ type TablesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15622,10 +15632,10 @@ type TablesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15773,10 +15783,10 @@ type TablesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

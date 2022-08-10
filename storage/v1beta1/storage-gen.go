@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://developers.google.com/storage/docs/json_api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/storage/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   storageService, err := storage.NewService(ctx)
+//	import "google.golang.org/api/storage/v1beta1"
+//	...
+//	ctx := context.Background()
+//	storageService, err := storage.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   storageService, err := storage.NewService(ctx, option.WithScopes(storage.DevstorageReadWriteScope))
+//	storageService, err := storage.NewService(ctx, option.WithScopes(storage.DevstorageReadWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   storageService, err := storage.NewService(ctx, option.WithAPIKey("AIza..."))
+//	storageService, err := storage.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   storageService, err := storage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	storageService, err := storage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package storage // import "google.golang.org/api/storage/v1beta1"
@@ -1741,8 +1741,9 @@ func (r *BucketsService) Get(bucket string) *BucketsGetCall {
 // properties to return. Defaults to no_acl.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit acl and defaultObjectAcl properties.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -1910,8 +1911,9 @@ func (r *BucketsService) Insert(bucket *Bucket) *BucketsInsertCall {
 // full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit acl and defaultObjectAcl properties.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2074,8 +2076,9 @@ func (c *BucketsListCall) PageToken(pageToken string) *BucketsListCall {
 // properties to return. Defaults to no_acl.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit acl and defaultObjectAcl properties.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2274,8 +2277,9 @@ func (r *BucketsService) Patch(bucket string, bucket2 *Bucket) *BucketsPatchCall
 // properties to return. Defaults to full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit acl and defaultObjectAcl properties.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -2437,8 +2441,9 @@ func (r *BucketsService) Update(bucket string, bucket2 *Bucket) *BucketsUpdateCa
 // properties to return. Defaults to full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit acl and defaultObjectAcl properties.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -3613,8 +3618,9 @@ func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 // properties to return. Defaults to no_acl.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit the acl property.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit the acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -3817,8 +3823,9 @@ func (c *ObjectsInsertCall) Name(name string) *ObjectsInsertCall {
 // specifies the acl property, when it defaults to full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit the acl property.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit the acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -4102,8 +4109,9 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 // properties to return. Defaults to no_acl.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit the acl property.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit the acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -4318,8 +4326,9 @@ func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *O
 // properties to return. Defaults to full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit the acl property.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit the acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -4491,8 +4500,9 @@ func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *
 // properties to return. Defaults to full.
 //
 // Possible values:
-//   "full" - Include all properties.
-//   "no_acl" - Omit the acl property.
+//
+//	"full" - Include all properties.
+//	"no_acl" - Omit the acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c

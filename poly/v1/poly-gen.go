@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/poly/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/poly/v1"
-//   ...
-//   ctx := context.Background()
-//   polyService, err := poly.NewService(ctx)
+//	import "google.golang.org/api/poly/v1"
+//	...
+//	ctx := context.Background()
+//	polyService, err := poly.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   polyService, err := poly.NewService(ctx, option.WithAPIKey("AIza..."))
+//	polyService, err := poly.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   polyService, err := poly.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	polyService, err := poly.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package poly // import "google.golang.org/api/poly/v1"
@@ -1149,11 +1149,14 @@ func (c *AssetsListCall) Keywords(keywords string) *AssetsListCall {
 // SIMPLE assets.
 //
 // Possible values:
-//   "COMPLEXITY_UNSPECIFIED" - No complexity specified. This is
+//
+//	"COMPLEXITY_UNSPECIFIED" - No complexity specified. This is
+//
 // equivalent to omitting the filter.
-//   "COMPLEX" - Highly-complex.
-//   "MEDIUM" - Averagely-complex.
-//   "SIMPLE" - Simple.
+//
+//	"COMPLEX" - Highly-complex.
+//	"MEDIUM" - Averagely-complex.
+//	"SIMPLE" - Simple.
 func (c *AssetsListCall) MaxComplexity(maxComplexity string) *AssetsListCall {
 	c.urlParams_.Set("maxComplexity", maxComplexity)
 	return c
@@ -1386,9 +1389,9 @@ type UsersAssetsListCall struct {
 // include assets with an access level of PRIVATE or UNLISTED and assets
 // which are All Rights Reserved for the currently-authenticated user.
 //
-// - name: A valid user id. Currently, only the special value 'me',
-//   representing the currently-authenticated user is supported. To use
-//   'me', you must pass an OAuth token with the request.
+//   - name: A valid user id. Currently, only the special value 'me',
+//     representing the currently-authenticated user is supported. To use
+//     'me', you must pass an OAuth token with the request.
 func (r *UsersAssetsService) List(name string) *UsersAssetsListCall {
 	c := &UsersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1434,10 +1437,13 @@ func (c *UsersAssetsListCall) PageToken(pageToken string) *UsersAssetsListCall {
 // which returns all assets.
 //
 // Possible values:
-//   "VISIBILITY_UNSPECIFIED" - No visibility specified. Returns all
+//
+//	"VISIBILITY_UNSPECIFIED" - No visibility specified. Returns all
+//
 // assets.
-//   "PUBLISHED" - Returns only published assets.
-//   "PRIVATE" - Returns only private assets.
+//
+//	"PUBLISHED" - Returns only published assets.
+//	"PRIVATE" - Returns only private assets.
 func (c *UsersAssetsListCall) Visibility(visibility string) *UsersAssetsListCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c
@@ -1638,9 +1644,9 @@ type UsersLikedassetsListCall struct {
 // representing the currently-authenticated user, is supported. May
 // include assets with an access level of UNLISTED.
 //
-// - name: A valid user id. Currently, only the special value 'me',
-//   representing the currently-authenticated user is supported. To use
-//   'me', you must pass an OAuth token with the request.
+//   - name: A valid user id. Currently, only the special value 'me',
+//     representing the currently-authenticated user is supported. To use
+//     'me', you must pass an OAuth token with the request.
 func (r *UsersLikedassetsService) List(name string) *UsersLikedassetsListCall {
 	c := &UsersLikedassetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

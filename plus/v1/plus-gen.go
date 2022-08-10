@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/+/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/plus/v1"
-//   ...
-//   ctx := context.Background()
-//   plusService, err := plus.NewService(ctx)
+//	import "google.golang.org/api/plus/v1"
+//	...
+//	ctx := context.Background()
+//	plusService, err := plus.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   plusService, err := plus.NewService(ctx, option.WithScopes(plus.UserinfoProfileScope))
+//	plusService, err := plus.NewService(ctx, option.WithScopes(plus.UserinfoProfileScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   plusService, err := plus.NewService(ctx, option.WithAPIKey("AIza..."))
+//	plusService, err := plus.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   plusService, err := plus.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	plusService, err := plus.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package plus // import "google.golang.org/api/plus/v1"
@@ -2685,9 +2685,13 @@ func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCal
 // search results.
 //
 // Possible values:
-//   "best" - Sort activities by relevance to the user, most relevant
+//
+//	"best" - Sort activities by relevance to the user, most relevant
+//
 // first.
-//   "recent" (default) - Sort activities by published date, most recent
+//
+//	"recent" (default) - Sort activities by published date, most recent
+//
 // first.
 func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -3066,8 +3070,9 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 // to sort the list of comments.
 //
 // Possible values:
-//   "ascending" (default) - Sort oldest comments first.
-//   "descending" - Sort newest comments first.
+//
+//	"ascending" (default) - Sort oldest comments first.
+//	"descending" - Sort newest comments first.
 func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -3427,8 +3432,9 @@ func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
 // people in.
 //
 // Possible values:
-//   "alphabetical" - Order the people by their display name.
-//   "best" - Order people based on the relevence to the viewer.
+//
+//	"alphabetical" - Order the people by their display name.
+//	"best" - Order people based on the relevence to the viewer.
 func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

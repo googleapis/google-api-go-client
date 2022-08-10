@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/ad-exchange/buyer-rest
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/adexchangebuyer/v1.4"
-//   ...
-//   ctx := context.Background()
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx)
+//	import "google.golang.org/api/adexchangebuyer/v1.4"
+//	...
+//	ctx := context.Background()
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithAPIKey("AIza..."))
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	adexchangebuyerService, err := adexchangebuyer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adexchangebuyer // import "google.golang.org/api/adexchangebuyer/v1.4"
@@ -5805,13 +5805,20 @@ func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId ...string) *Creative
 // returned.
 //
 // Possible values:
-//   "approved" - Creatives which have been approved for serving on
+//
+//	"approved" - Creatives which have been approved for serving on
+//
 // deals.
-//   "conditionally_approved" - Creatives which have been conditionally
+//
+//	"conditionally_approved" - Creatives which have been conditionally
+//
 // approved for serving on deals.
-//   "disapproved" - Creatives which have been disapproved for serving
+//
+//	"disapproved" - Creatives which have been disapproved for serving
+//
 // on deals.
-//   "not_checked" - Creatives whose deals status is not yet checked.
+//
+//	"not_checked" - Creatives whose deals status is not yet checked.
 func (c *CreativesListCall) DealsStatusFilter(dealsStatusFilter string) *CreativesListCall {
 	c.urlParams_.Set("dealsStatusFilter", dealsStatusFilter)
 	return c
@@ -5830,13 +5837,21 @@ func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
 // given open auction status are returned.
 //
 // Possible values:
-//   "approved" - Creatives which have been approved for serving on the
+//
+//	"approved" - Creatives which have been approved for serving on the
+//
 // open auction.
-//   "conditionally_approved" - Creatives which have been conditionally
+//
+//	"conditionally_approved" - Creatives which have been conditionally
+//
 // approved for serving on the open auction.
-//   "disapproved" - Creatives which have been disapproved for serving
+//
+//	"disapproved" - Creatives which have been disapproved for serving
+//
 // on the open auction.
-//   "not_checked" - Creatives whose open auction status is not yet
+//
+//	"not_checked" - Creatives whose open auction status is not yet
+//
 // checked.
 func (c *CreativesListCall) OpenAuctionStatusFilter(openAuctionStatusFilter string) *CreativesListCall {
 	c.urlParams_.Set("openAuctionStatusFilter", openAuctionStatusFilter)
@@ -6620,8 +6635,8 @@ type MarketplacedealsListCall struct {
 
 // List: List all the deals for a given proposal
 //
-// - proposalId: The proposalId to get deals for. To search across all
-//   proposals specify order_id = '-' as part of the URL.
+//   - proposalId: The proposalId to get deals for. To search across all
+//     proposals specify order_id = '-' as part of the URL.
 func (r *MarketplacedealsService) List(proposalId string) *MarketplacedealsListCall {
 	c := &MarketplacedealsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposalId = proposalId
@@ -7058,8 +7073,8 @@ type MarketplacenotesListCall struct {
 
 // List: Get all the notes associated with a proposal
 //
-// - proposalId: The proposalId to get notes for. To search across all
-//   proposals specify order_id = '-' as part of the URL.
+//   - proposalId: The proposalId to get notes for. To search across all
+//     proposals specify order_id = '-' as part of the URL.
 func (r *MarketplacenotesService) List(proposalId string) *MarketplacenotesListCall {
 	c := &MarketplacenotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposalId = proposalId
@@ -7328,11 +7343,11 @@ type PerformanceReportListCall struct {
 
 // List: Retrieves the authenticated user's list of performance metrics.
 //
-// - accountId: The account id to get the reports.
-// - endDateTime: The end time of the report in ISO 8601 timestamp
-//   format using UTC.
-// - startDateTime: The start time of the report in ISO 8601 timestamp
-//   format using UTC.
+//   - accountId: The account id to get the reports.
+//   - endDateTime: The end time of the report in ISO 8601 timestamp
+//     format using UTC.
+//   - startDateTime: The start time of the report in ISO 8601 timestamp
+//     format using UTC.
 func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
 	c := &PerformanceReportListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
@@ -8939,13 +8954,13 @@ type ProposalsPatchCall struct {
 // Patch: Update the given proposal. This method supports patch
 // semantics.
 //
-// - proposalId: The proposal id to update.
-// - revisionNumber: The last known revision number to update. If the
-//   head revision in the marketplace database has since changed, an
-//   error will be thrown. The caller should then fetch the latest
-//   proposal at head revision and retry the update at that revision.
-// - updateAction: The proposed action to take on the proposal. This
-//   field is required and it must be set when updating a proposal.
+//   - proposalId: The proposal id to update.
+//   - revisionNumber: The last known revision number to update. If the
+//     head revision in the marketplace database has since changed, an
+//     error will be thrown. The caller should then fetch the latest
+//     proposal at head revision and retry the update at that revision.
+//   - updateAction: The proposed action to take on the proposal. This
+//     field is required and it must be set when updating a proposal.
 func (r *ProposalsService) Patch(proposalId string, revisionNumber int64, updateAction string, proposal *Proposal) *ProposalsPatchCall {
 	c := &ProposalsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposalId = proposalId
@@ -9365,13 +9380,13 @@ type ProposalsUpdateCall struct {
 
 // Update: Update the given proposal
 //
-// - proposalId: The proposal id to update.
-// - revisionNumber: The last known revision number to update. If the
-//   head revision in the marketplace database has since changed, an
-//   error will be thrown. The caller should then fetch the latest
-//   proposal at head revision and retry the update at that revision.
-// - updateAction: The proposed action to take on the proposal. This
-//   field is required and it must be set when updating a proposal.
+//   - proposalId: The proposal id to update.
+//   - revisionNumber: The last known revision number to update. If the
+//     head revision in the marketplace database has since changed, an
+//     error will be thrown. The caller should then fetch the latest
+//     proposal at head revision and retry the update at that revision.
+//   - updateAction: The proposed action to take on the proposal. This
+//     field is required and it must be set when updating a proposal.
 func (r *ProposalsService) Update(proposalId string, revisionNumber int64, updateAction string, proposal *Proposal) *ProposalsUpdateCall {
 	c := &ProposalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.proposalId = proposalId

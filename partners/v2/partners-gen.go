@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/partners/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/partners/v2"
-//   ...
-//   ctx := context.Background()
-//   partnersService, err := partners.NewService(ctx)
+//	import "google.golang.org/api/partners/v2"
+//	...
+//	ctx := context.Background()
+//	partnersService, err := partners.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   partnersService, err := partners.NewService(ctx, option.WithAPIKey("AIza..."))
+//	partnersService, err := partners.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   partnersService, err := partners.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	partnersService, err := partners.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package partners // import "google.golang.org/api/partners/v2"
@@ -1160,10 +1160,12 @@ func (s *DebugInfo) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type Empty struct {
@@ -3664,8 +3666,9 @@ func (c *CompaniesGetCall) RequestMetadataUserOverridesUserId(requestMetadataUse
 // `COMPANY_VIEW_UNSPECIFIED`.
 //
 // Possible values:
-//   "COMPANY_VIEW_UNSPECIFIED"
-//   "CV_GOOGLE_PARTNER_SEARCH"
+//
+//	"COMPANY_VIEW_UNSPECIFIED"
+//	"CV_GOOGLE_PARTNER_SEARCH"
 func (c *CompaniesGetCall) View(view string) *CompaniesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3888,10 +3891,11 @@ func (c *CompaniesListCall) CompanyName(companyName string) *CompaniesListCall {
 // reasons for using Google Partner Search to get companies.
 //
 // Possible values:
-//   "GPS_MOTIVATION_UNSPECIFIED"
-//   "GPSM_HELP_WITH_ADVERTISING"
-//   "GPSM_HELP_WITH_WEBSITE"
-//   "GPSM_NO_WEBSITE"
+//
+//	"GPS_MOTIVATION_UNSPECIFIED"
+//	"GPSM_HELP_WITH_ADVERTISING"
+//	"GPSM_HELP_WITH_WEBSITE"
+//	"GPSM_NO_WEBSITE"
 func (c *CompaniesListCall) GpsMotivations(gpsMotivations ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("gpsMotivations", append([]string{}, gpsMotivations...))
 	return c
@@ -3901,17 +3905,18 @@ func (c *CompaniesListCall) GpsMotivations(gpsMotivations ...string) *CompaniesL
 // industries the company can help with.
 //
 // Possible values:
-//   "INDUSTRY_UNSPECIFIED"
-//   "I_AUTOMOTIVE"
-//   "I_BUSINESS_TO_BUSINESS"
-//   "I_CONSUMER_PACKAGED_GOODS"
-//   "I_EDUCATION"
-//   "I_FINANCE"
-//   "I_HEALTHCARE"
-//   "I_MEDIA_AND_ENTERTAINMENT"
-//   "I_RETAIL"
-//   "I_TECHNOLOGY"
-//   "I_TRAVEL"
+//
+//	"INDUSTRY_UNSPECIFIED"
+//	"I_AUTOMOTIVE"
+//	"I_BUSINESS_TO_BUSINESS"
+//	"I_CONSUMER_PACKAGED_GOODS"
+//	"I_EDUCATION"
+//	"I_FINANCE"
+//	"I_HEALTHCARE"
+//	"I_MEDIA_AND_ENTERTAINMENT"
+//	"I_RETAIL"
+//	"I_TECHNOLOGY"
+//	"I_TRAVEL"
 func (c *CompaniesListCall) Industries(industries ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("industries", append([]string{}, industries...))
 	return c
@@ -4088,13 +4093,14 @@ func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUs
 // or one of the specializations in the "specializations" field.
 //
 // Possible values:
-//   "SERVICE_UNSPECIFIED"
-//   "S_ADVANCED_ADWORDS_SUPPORT"
-//   "S_ADVERTISING_ON_GOOGLE"
-//   "S_AN_ENHANCED_WEBSITE"
-//   "S_AN_ONLINE_MARKETING_PLAN"
-//   "S_MOBILE_AND_VIDEO_ADS"
-//   "S_MOBILE_WEBSITE_SERVICES"
+//
+//	"SERVICE_UNSPECIFIED"
+//	"S_ADVANCED_ADWORDS_SUPPORT"
+//	"S_ADVERTISING_ON_GOOGLE"
+//	"S_AN_ENHANCED_WEBSITE"
+//	"S_AN_ONLINE_MARKETING_PLAN"
+//	"S_MOBILE_AND_VIDEO_ADS"
+//	"S_MOBILE_WEBSITE_SERVICES"
 func (c *CompaniesListCall) Services(services ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("services", append([]string{}, services...))
 	return c
@@ -4108,12 +4114,13 @@ func (c *CompaniesListCall) Services(services ...string) *CompaniesListCall {
 // specializations, or one of the services in the "services" field.
 //
 // Possible values:
-//   "BADGE_SPECIALIZATION_UNKNOWN"
-//   "BADGE_SPECIALIZATION_ADWORDS_SEARCH"
-//   "BADGE_SPECIALIZATION_ADWORDS_DISPLAY"
-//   "BADGE_SPECIALIZATION_ADWORDS_MOBILE"
-//   "BADGE_SPECIALIZATION_ADWORDS_VIDEO"
-//   "BADGE_SPECIALIZATION_ADWORDS_SHOPPING"
+//
+//	"BADGE_SPECIALIZATION_UNKNOWN"
+//	"BADGE_SPECIALIZATION_ADWORDS_SEARCH"
+//	"BADGE_SPECIALIZATION_ADWORDS_DISPLAY"
+//	"BADGE_SPECIALIZATION_ADWORDS_MOBILE"
+//	"BADGE_SPECIALIZATION_ADWORDS_VIDEO"
+//	"BADGE_SPECIALIZATION_ADWORDS_SHOPPING"
 func (c *CompaniesListCall) Specializations(specializations ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("specializations", append([]string{}, specializations...))
 	return c
@@ -4124,8 +4131,9 @@ func (c *CompaniesListCall) Specializations(specializations ...string) *Companie
 // `COMPANY_VIEW_UNSPECIFIED`.
 //
 // Possible values:
-//   "COMPANY_VIEW_UNSPECIFIED"
-//   "CV_GOOGLE_PARTNER_SEARCH"
+//
+//	"COMPANY_VIEW_UNSPECIFIED"
+//	"CV_GOOGLE_PARTNER_SEARCH"
 func (c *CompaniesListCall) View(view string) *CompaniesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5124,8 +5132,9 @@ func (c *OffersHistoryListCall) EntireCompany(entireCompany bool) *OffersHistory
 // Use "foo desc" to sort descending.
 // List of valid field names is: name, offer_code, expiration_time,
 // status,
-//     last_modified_time, sender_name, creation_time, country_code,
-//     offer_type.
+//
+//	last_modified_time, sender_name, creation_time, country_code,
+//	offer_type.
 func (c *OffersHistoryListCall) OrderBy(orderBy string) *OffersHistoryListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6277,9 +6286,10 @@ func (c *UsersGetCall) RequestMetadataUserOverridesUserId(requestMetadataUserOve
 // of the user information to return.
 //
 // Possible values:
-//   "BASIC"
-//   "PROFILE"
-//   "PUBLIC_PROFILE"
+//
+//	"BASIC"
+//	"PROFILE"
+//	"PUBLIC_PROFILE"
 func (c *UsersGetCall) UserView(userView string) *UsersGetCall {
 	c.urlParams_.Set("userView", userView)
 	return c

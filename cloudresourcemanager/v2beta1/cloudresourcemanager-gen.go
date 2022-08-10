@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/resource-manager
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudresourcemanager/v2beta1"
-//   ...
-//   ctx := context.Background()
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx)
+//	import "google.golang.org/api/cloudresourcemanager/v2beta1"
+//	...
+//	ctx := context.Background()
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithScopes(cloudresourcemanager.CloudPlatformReadOnlyScope))
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithScopes(cloudresourcemanager.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudresourcemanager // import "google.golang.org/api/cloudresourcemanager/v2beta1"
@@ -342,7 +342,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation:
-//  Metadata describing a long running folder operation
+//
+//	Metadata describing a long running folder operation
 type CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation struct {
 	// DestinationParent: The resource name of the folder or organization we
 	// are either creating the folder under or moving the folder to.
@@ -1608,8 +1609,8 @@ type FoldersDeleteCall struct {
 // Folders or Projects in the ACTIVE state. The caller must have
 // `resourcemanager.folders.delete` permission on the identified folder.
 //
-// - name: the resource name of the Folder to be deleted. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: the resource name of the Folder to be deleted. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1745,8 +1746,8 @@ type FoldersGetCall struct {
 // (for example, `folders/1234`). The caller must have
 // `resourcemanager.folders.get` permission on the identified folder.
 //
-// - name: The resource name of the Folder to retrieve. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: The resource name of the Folder to retrieve. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1898,10 +1899,10 @@ type FoldersGetIamPolicyCall struct {
 // `resourcemanager.folders.getIamPolicy` permission on the identified
 // folder.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2271,8 +2272,8 @@ type FoldersMoveCall struct {
 // must have `resourcemanager.folders.move` permission on the folder's
 // current and proposed new parent.
 //
-// - name: The resource name of the Folder to move. Must be of the form
-//   folders/{folder_id}.
+//   - name: The resource name of the Folder to move. Must be of the form
+//     folders/{folder_id}.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2425,8 +2426,8 @@ type FoldersPatchCall struct {
 // PreconditionFailure explaining this violation will be returned in the
 // Status.details field.
 //
-// - name: Output only. The resource name of the Folder. Its format is
-//   `folders/{folder_id}`, for example: "folders/1234".
+//   - name: Output only. The resource name of the Folder. Its format is
+//     `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2736,10 +2737,10 @@ type FoldersSetIamPolicyCall struct {
 // `resourcemanager.folders.setIamPolicy` permission on the identified
 // folder.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2884,10 +2885,10 @@ type FoldersTestIamPermissionsCall struct {
 // resource name, e.g. "folders/1234". There are no permissions required
 // for making this API call.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3036,8 +3037,8 @@ type FoldersUndeleteCall struct {
 // `resourcemanager.folders.undelete` permission on the identified
 // folder.
 //
-// - name: The resource name of the Folder to undelete. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: The resource name of the Folder to undelete. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

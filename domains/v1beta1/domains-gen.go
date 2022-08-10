@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/domains/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/domains/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   domainsService, err := domains.NewService(ctx)
+//	import "google.golang.org/api/domains/v1beta1"
+//	...
+//	ctx := context.Background()
+//	domainsService, err := domains.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   domainsService, err := domains.NewService(ctx, option.WithAPIKey("AIza..."))
+//	domainsService, err := domains.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   domainsService, err := domains.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	domainsService, err := domains.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package domains // import "google.golang.org/api/domains/v1beta1"
@@ -2538,8 +2538,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3109,9 +3109,9 @@ type ProjectsLocationsRegistrationsConfigureContactSettingsCall struct {
 // settings. Some changes require confirmation by the domain's
 // registrant contact .
 //
-// - registration: The name of the `Registration` whose contact settings
-//   are being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose contact settings
+//     are being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureContactSettings(registration string, configurecontactsettingsrequest *ConfigureContactSettingsRequest) *ProjectsLocationsRegistrationsConfigureContactSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureContactSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3253,9 +3253,9 @@ type ProjectsLocationsRegistrationsConfigureDnsSettingsCall struct {
 
 // ConfigureDnsSettings: Updates a `Registration`'s DNS settings.
 //
-// - registration: The name of the `Registration` whose DNS settings are
-//   being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose DNS settings are
+//     being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureDnsSettings(registration string, configurednssettingsrequest *ConfigureDnsSettingsRequest) *ProjectsLocationsRegistrationsConfigureDnsSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureDnsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3398,9 +3398,9 @@ type ProjectsLocationsRegistrationsConfigureManagementSettingsCall struct {
 // ConfigureManagementSettings: Updates a `Registration`'s management
 // settings.
 //
-// - registration: The name of the `Registration` whose management
-//   settings are being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose management
+//     settings are being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureManagementSettings(registration string, configuremanagementsettingsrequest *ConfigureManagementSettingsRequest) *ProjectsLocationsRegistrationsConfigureManagementSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureManagementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3553,8 +3553,8 @@ type ProjectsLocationsRegistrationsDeleteCall struct {
 // there. The domain does not renew automatically unless the new owner
 // sets up billing in Google Domains.
 //
-// - name: The name of the `Registration` to delete, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to delete, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Delete(name string) *ProjectsLocationsRegistrationsDeleteCall {
 	c := &ProjectsLocationsRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3693,8 +3693,8 @@ type ProjectsLocationsRegistrationsExportCall struct {
 // domain are subsequently managed there. The domain does not renew
 // automatically unless the new owner sets up billing in Google Domains.
 //
-// - name: The name of the `Registration` to export, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to export, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Export(name string, exportregistrationrequest *ExportRegistrationRequest) *ProjectsLocationsRegistrationsExportCall {
 	c := &ProjectsLocationsRegistrationsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3836,8 +3836,8 @@ type ProjectsLocationsRegistrationsGetCall struct {
 
 // Get: Gets the details of a `Registration` resource.
 //
-// - name: The name of the `Registration` to get, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to get, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Get(name string) *ProjectsLocationsRegistrationsGetCall {
 	c := &ProjectsLocationsRegistrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3985,10 +3985,10 @@ type ProjectsLocationsRegistrationsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) GetIamPolicy(resource string) *ProjectsLocationsRegistrationsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4162,8 +4162,8 @@ type ProjectsLocationsRegistrationsImportCall struct {
 // instead. Since individual users can own domains in Google Domains,
 // the calling user must have ownership permission on the domain.
 //
-// - parent: The parent resource of the Registration. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the Registration. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Import(parent string, importdomainrequest *ImportDomainRequest) *ProjectsLocationsRegistrationsImportCall {
 	c := &ProjectsLocationsRegistrationsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4305,8 +4305,8 @@ type ProjectsLocationsRegistrationsListCall struct {
 
 // List: Lists the `Registration` resources in a project.
 //
-// - parent: The project and location from which to list
-//   `Registration`s, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which to list
+//     `Registration`s, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) List(parent string) *ProjectsLocationsRegistrationsListCall {
 	c := &ProjectsLocationsRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4528,8 +4528,8 @@ type ProjectsLocationsRegistrationsPatchCall struct {
 // `ConfigureDnsSettings` * To update contact information, see
 // `ConfigureContactSettings`
 //
-// - name: Output only. Name of the `Registration` resource, in the
-//   format `projects/*/locations/*/registrations/`.
+//   - name: Output only. Name of the `Registration` resource, in the
+//     format `projects/*/locations/*/registrations/`.
 func (r *ProjectsLocationsRegistrationsService) Patch(name string, registration *Registration) *ProjectsLocationsRegistrationsPatchCall {
 	c := &ProjectsLocationsRegistrationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4695,8 +4695,8 @@ type ProjectsLocationsRegistrationsRegisterCall struct {
 // that the domain was not registered successfully, and you can safely
 // delete the resource and retry registration.
 //
-// - parent: The parent resource of the `Registration`. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the `Registration`. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Register(parent string, registerdomainrequest *RegisterDomainRequest) *ProjectsLocationsRegistrationsRegisterCall {
 	c := &ProjectsLocationsRegistrationsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4840,9 +4840,9 @@ type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 // `Registration` to a new random string. You can call this method only
 // after 60 days have elapsed since the initial domain registration.
 //
-// - registration: The name of the `Registration` whose authorization
-//   code is being reset, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose authorization
+//     code is being reset, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ResetAuthorizationCode(registration string, resetauthorizationcoderequest *ResetAuthorizationCodeRequest) *ProjectsLocationsRegistrationsResetAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsResetAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4987,9 +4987,9 @@ type ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall struct {
 // registrar. You can call this method only after 60 days have elapsed
 // since the initial domain registration.
 //
-// - registration: The name of the `Registration` whose authorization
-//   code is being retrieved, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose authorization
+//     code is being retrieved, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveAuthorizationCode(registration string) *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -5140,8 +5140,8 @@ type ProjectsLocationsRegistrationsRetrieveImportableDomainsCall struct {
 // individual user making the call. Domains supported by Google Domains,
 // but not supported by Cloud Domains, are not returned.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveImportableDomains(location string) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
 	c := &ProjectsLocationsRegistrationsRetrieveImportableDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5337,8 +5337,8 @@ type ProjectsLocationsRegistrationsRetrieveRegisterParametersCall struct {
 // domain name, including price and up-to-date availability. Use the
 // returned values to call `RegisterDomain`.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveRegisterParameters(location string) *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveRegisterParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5502,8 +5502,8 @@ type ProjectsLocationsRegistrationsRetrieveTransferParametersCall struct {
 // `ImportDomain` instead. Use the returned values to call
 // `TransferDomain`.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveTransferParameters(location string) *ProjectsLocationsRegistrationsRetrieveTransferParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveTransferParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5666,8 +5666,8 @@ type ProjectsLocationsRegistrationsSearchDomainsCall struct {
 // approximate; call `RetrieveRegisterParameters` on a domain before
 // registering to confirm availability.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) SearchDomains(location string) *ProjectsLocationsRegistrationsSearchDomainsCall {
 	c := &ProjectsLocationsRegistrationsSearchDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5827,10 +5827,10 @@ type ProjectsLocationsRegistrationsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistrationsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5977,10 +5977,10 @@ type ProjectsLocationsRegistrationsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistrationsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistrationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6139,8 +6139,8 @@ type ProjectsLocationsRegistrationsTransferCall struct {
 // `TRANSFER_FAILED`. If transfer fails, you can safely delete the
 // resource and retry the transfer.
 //
-// - parent: The parent resource of the `Registration`. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the `Registration`. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Transfer(parent string, transferdomainrequest *TransferDomainRequest) *ProjectsLocationsRegistrationsTransferCall {
 	c := &ProjectsLocationsRegistrationsTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

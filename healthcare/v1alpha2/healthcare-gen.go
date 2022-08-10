@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/healthcare
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/healthcare/v1alpha2"
-//   ...
-//   ctx := context.Background()
-//   healthcareService, err := healthcare.NewService(ctx)
+//	import "google.golang.org/api/healthcare/v1alpha2"
+//	...
+//	ctx := context.Background()
+//	healthcareService, err := healthcare.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
+//	healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package healthcare // import "google.golang.org/api/healthcare/v1alpha2"
@@ -472,41 +472,41 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 //
 // Example Policy with multiple AuditConfigs:
 //
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_configs": [
+//	    {
+//	      "service": "allServices"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	          "exempted_members": [
+//	            "user:jose@example.com"
+//	          ]
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	        },
+//	        {
+//	          "log_type": "ADMIN_READ",
+//	        }
+//	      ]
+//	    },
+//	    {
+//	      "service": "sampleservice.googleapis.com"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	          "exempted_members": [
+//	            "user:aliya@example.com"
+//	          ]
+//	        }
+//	      ]
+//	    }
+//	  ]
+//	}
 //
 // For sampleservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
@@ -553,19 +553,19 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 // permissions.
 // Example:
 //
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_log_configs": [
+//	    {
+//	      "log_type": "DATA_READ",
+//	      "exempted_members": [
+//	        "user:jose@example.com"
+//	      ]
+//	    },
+//	    {
+//	      "log_type": "DATA_WRITE",
+//	    }
+//	  ]
+//	}
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
@@ -1227,10 +1227,12 @@ func (s *DicomStore) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type Empty struct {
@@ -1377,9 +1379,9 @@ func (s *ExportResourcesRequest) MarshalJSON() ([]byte, error) {
 
 // Expr: Represents an expression text. Example:
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+//	title: "User account presence"
+//	description: "Determines whether the request has a user account"
+//	expression: "size(request.user) > 0"
 type Expr struct {
 	// Description: An optional description of the expression. This is a
 	// longer text which
@@ -2348,7 +2350,6 @@ func (s *Hl7V2Store) MarshalJSON() ([]byte, error) {
 // or
 // an HTML page.
 //
-//
 // This message can be used both in streaming and non-streaming API
 // methods in
 // the request as well as the response.
@@ -2361,29 +2362,31 @@ func (s *Hl7V2Store) MarshalJSON() ([]byte, error) {
 //
 // Example:
 //
-//     message GetResourceRequest {
-//       // A unique request id.
-//       string request_id = 1;
+//	message GetResourceRequest {
+//	  // A unique request id.
+//	  string request_id = 1;
 //
-//       // The raw HTTP body is bound to this field.
-//       google.api.HttpBody http_body = 2;
-//     }
+//	  // The raw HTTP body is bound to this field.
+//	  google.api.HttpBody http_body = 2;
+//	}
 //
-//     service ResourceService {
-//       rpc GetResource(GetResourceRequest) returns
+//	service ResourceService {
+//	  rpc GetResource(GetResourceRequest) returns
+//
 // (google.api.HttpBody);
-//       rpc UpdateResource(google.api.HttpBody) returns
-//       (google.protobuf.Empty);
-//     }
+//
+//	  rpc UpdateResource(google.api.HttpBody) returns
+//	  (google.protobuf.Empty);
+//	}
 //
 // Example with streaming methods:
 //
-//     service CaldavService {
-//       rpc GetCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//       rpc UpdateCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//     }
+//	service CaldavService {
+//	  rpc GetCalendar(stream google.api.HttpBody)
+//	    returns (stream google.api.HttpBody);
+//	  rpc UpdateCalendar(stream google.api.HttpBody)
+//	    returns (stream google.api.HttpBody);
+//	}
 //
 // Use of this type only changes how the request and response bodies
 // are
@@ -3504,7 +3507,6 @@ func (s *PatientId) MarshalJSON() ([]byte, error) {
 // used to
 // specify access control policies for Cloud Platform resources.
 //
-//
 // A `Policy` consists of a list of `bindings`. A `binding` binds a list
 // of
 // `members` to a `role`, where the members can be user accounts, Google
@@ -3515,38 +3517,38 @@ func (s *PatientId) MarshalJSON() ([]byte, error) {
 //
 // **JSON Example**
 //
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/owner",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
+//	{
+//	  "bindings": [
+//	    {
+//	      "role": "roles/owner",
+//	      "members": [
+//	        "user:mike@example.com",
+//	        "group:admins@example.com",
+//	        "domain:google.com",
 //
 // "serviceAccount:my-other-app@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/viewer",
-//           "members": ["user:sean@example.com"]
-//         }
-//       ]
-//     }
+//
+//	      ]
+//	    },
+//	    {
+//	      "role": "roles/viewer",
+//	      "members": ["user:sean@example.com"]
+//	    }
+//	  ]
+//	}
 //
 // **YAML Example**
 //
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
-//       role: roles/owner
-//     - members:
-//       - user:sean@example.com
-//       role: roles/viewer
-//
+//	bindings:
+//	- members:
+//	  - user:mike@example.com
+//	  - group:admins@example.com
+//	  - domain:google.com
+//	  - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//	  role: roles/owner
+//	- members:
+//	  - user:sean@example.com
+//	  role: roles/viewer
 //
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
@@ -17993,10 +17995,11 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Get(name string) *
 // in the response.
 //
 // Possible values:
-//   "MESSAGE_VIEW_UNSPECIFIED"
-//   "RAW_ONLY"
-//   "PARSED_ONLY"
-//   "FULL"
+//
+//	"MESSAGE_VIEW_UNSPECIFIED"
+//	"RAW_ONLY"
+//	"PARSED_ONLY"
+//	"FULL"
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) View(view string) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
 	c.urlParams_.Set("view", view)
 	return c

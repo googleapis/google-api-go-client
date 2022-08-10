@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/data-labeling/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datalabeling/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   datalabelingService, err := datalabeling.NewService(ctx)
+//	import "google.golang.org/api/datalabeling/v1beta1"
+//	...
+//	ctx := context.Background()
+//	datalabelingService, err := datalabeling.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   datalabelingService, err := datalabeling.NewService(ctx, option.WithAPIKey("AIza..."))
+//	datalabelingService, err := datalabeling.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   datalabelingService, err := datalabeling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	datalabelingService, err := datalabeling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datalabeling // import "google.golang.org/api/datalabeling/v1beta1"
@@ -689,7 +689,8 @@ func (s *GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse) MarshalJSON
 }
 
 // GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata:
-//  Details of a LabelImageBoundingBox operation metadata.
+//
+//	Details of a LabelImageBoundingBox operation metadata.
 type GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig `json:"basicConfig,omitempty"`
@@ -3892,7 +3893,8 @@ func (s *GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata) M
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata:
-//  Details of LabelImageBoundingPoly operation metadata.
+//
+//	Details of LabelImageBoundingPoly operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata struct {
 	// BasicConfig: Basic human annotation config used in labeling request.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
@@ -4076,7 +4078,8 @@ func (s *GoogleCloudDatalabelingV1beta1LabelImageRequest) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata:
-//  Details of a LabelImageSegmentation operation metadata.
+//
+//	Details of a LabelImageSegmentation operation metadata.
 type GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata struct {
 	// BasicConfig: Basic human annotation config.
 	BasicConfig *GoogleCloudDatalabelingV1beta1HumanAnnotationConfig `json:"basicConfig,omitempty"`
@@ -8005,8 +8008,8 @@ type ProjectsAnnotationSpecSetsCreateCall struct {
 
 // Create: Creates an annotation spec set by providing a set of labels.
 //
-// - parent: AnnotationSpecSet resource parent, format:
-//   projects/{project_id}.
+//   - parent: AnnotationSpecSet resource parent, format:
+//     projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) Create(parent string, googleclouddatalabelingv1beta1createannotationspecsetrequest *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) *ProjectsAnnotationSpecSetsCreateCall {
 	c := &ProjectsAnnotationSpecSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8072,7 +8075,9 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Resp
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -8149,8 +8154,8 @@ type ProjectsAnnotationSpecSetsDeleteCall struct {
 
 // Delete: Deletes an annotation spec set by resource name.
 //
-// - name: AnnotationSpec resource name, format:
-//   `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.
+//   - name: AnnotationSpec resource name, format:
+//     `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.
 func (r *ProjectsAnnotationSpecSetsService) Delete(name string) *ProjectsAnnotationSpecSetsDeleteCall {
 	c := &ProjectsAnnotationSpecSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8283,8 +8288,8 @@ type ProjectsAnnotationSpecSetsGetCall struct {
 
 // Get: Gets an annotation spec set by resource name.
 //
-// - name: AnnotationSpecSet resource name, format:
-//   projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}.
+//   - name: AnnotationSpecSet resource name, format:
+//     projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}.
 func (r *ProjectsAnnotationSpecSetsService) Get(name string) *ProjectsAnnotationSpecSetsGetCall {
 	c := &ProjectsAnnotationSpecSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8357,7 +8362,9 @@ func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Respons
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudDatalabelingV1beta1AnnotationSpecSet.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -8433,8 +8440,8 @@ type ProjectsAnnotationSpecSetsListCall struct {
 // List: Lists annotation spec sets for a project. Pagination is
 // supported.
 //
-// - parent: Parent of AnnotationSpecSet resource, format:
-//   projects/{project_id}.
+//   - parent: Parent of AnnotationSpecSet resource, format:
+//     projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) List(parent string) *ProjectsAnnotationSpecSetsListCall {
 	c := &ProjectsAnnotationSpecSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8786,8 +8793,8 @@ type ProjectsDatasetsDeleteCall struct {
 
 // Delete: Deletes a dataset by resource name.
 //
-// - name: Dataset resource name, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - name: Dataset resource name, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Delete(name string) *ProjectsDatasetsDeleteCall {
 	c := &ProjectsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8920,8 +8927,8 @@ type ProjectsDatasetsExportDataCall struct {
 
 // ExportData: Exports data and annotations from dataset.
 //
-// - name: Dataset resource name, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - name: Dataset resource name, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ExportData(name string, googleclouddatalabelingv1beta1exportdatarequest *GoogleCloudDatalabelingV1beta1ExportDataRequest) *ProjectsDatasetsExportDataCall {
 	c := &ProjectsDatasetsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9063,8 +9070,8 @@ type ProjectsDatasetsGetCall struct {
 
 // Get: Gets dataset by resource name.
 //
-// - name: Dataset resource name, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - name: Dataset resource name, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Get(name string) *ProjectsDatasetsGetCall {
 	c := &ProjectsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9216,8 +9223,8 @@ type ProjectsDatasetsImportDataCall struct {
 // operation) can be started while importing is still ongoing. Vice
 // versa.
 //
-// - name: Dataset resource name, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - name: Dataset resource name, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ImportData(name string, googleclouddatalabelingv1beta1importdatarequest *GoogleCloudDatalabelingV1beta1ImportDataRequest) *ProjectsDatasetsImportDataCall {
 	c := &ProjectsDatasetsImportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9567,9 +9574,9 @@ type ProjectsDatasetsAnnotatedDatasetsDeleteCall struct {
 
 // Delete: Deletes an annotated dataset by resource name.
 //
-// - name: Name of the annotated dataset to delete, format:
-//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-//   {annotated_dataset_id}.
+//   - name: Name of the annotated dataset to delete, format:
+//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//     {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9702,9 +9709,9 @@ type ProjectsDatasetsAnnotatedDatasetsGetCall struct {
 
 // Get: Gets an annotated dataset by resource name.
 //
-// - name: Name of the annotated dataset to get, format:
-//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-//   {annotated_dataset_id}.
+//   - name: Name of the annotated dataset to get, format:
+//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//     {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9853,8 +9860,8 @@ type ProjectsDatasetsAnnotatedDatasetsListCall struct {
 // List: Lists annotated datasets for a dataset. Pagination is
 // supported.
 //
-// - parent: Name of the dataset to list annotated datasets, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the dataset to list annotated datasets, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10065,8 +10072,8 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall struct {
 // Get: Gets a data item in a dataset by resource name. This API can be
 // called after data are imported into dataset.
 //
-// - name: The name of the data item to get, format:
-//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
+//   - name: The name of the data item to get, format:
+//     projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10214,8 +10221,8 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsListCall struct {
 // List: Lists data items in a dataset. This API can be called after
 // data are imported into dataset. Pagination is supported.
 //
-// - parent: Name of the dataset to list data items, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the dataset to list data items, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10424,9 +10431,9 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesGetCall struct {
 // Get: Gets an example by resource name, including both data and
 // annotation.
 //
-// - name: Name of example, format:
-//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
-//   {annotated_dataset_id}/examples/{example_id}.
+//   - name: Name of example, format:
+//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//     {annotated_dataset_id}/examples/{example_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsExamplesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10796,10 +10803,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall struct {
 
 // Delete: Delete a FeedbackThread.
 //
-// - name: Name of the FeedbackThread that is going to be deleted.
-//   Format:
-//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//   - name: Name of the FeedbackThread that is going to be deleted.
+//     Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10932,9 +10939,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 
 // Get: Get a FeedbackThread object.
 //
-// - name: Name of the feedback. Format:
-//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
+//   - name: Name of the feedback. Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11082,9 +11089,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall struct {
 
 // List: List FeedbackThreads with pagination.
 //
-// - parent: FeedbackThread resource parent. Format:
-//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}".
+//   - parent: FeedbackThread resource parent. Format:
+//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11282,9 +11289,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall 
 
 // Create: Create a FeedbackMessage object.
 //
-// - parent: FeedbackMessage resource parent, format:
-//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annot
-//   ated_dataset_id}/feedbackThreads/{feedback_thread_id}.
+//   - parent: FeedbackMessage resource parent, format:
+//     projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annot
+//     ated_dataset_id}/feedbackThreads/{feedback_thread_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Create(parent string, googleclouddatalabelingv1beta1feedbackmessage *GoogleCloudDatalabelingV1beta1FeedbackMessage) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11425,11 +11432,11 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall 
 
 // Delete: Delete a FeedbackMessage.
 //
-// - name: Name of the FeedbackMessage that is going to be deleted.
-//   Format:
-//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
-//   ges/{feedback_message_id}'.
+//   - name: Name of the FeedbackMessage that is going to be deleted.
+//     Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//     ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11562,10 +11569,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall str
 
 // Get: Get a FeedbackMessage object.
 //
-// - name: Name of the feedback. Format:
-//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
-//   ges/{feedback_message_id}'.
+//   - name: Name of the feedback. Format:
+//     'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//     ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11713,9 +11720,9 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall st
 
 // List: List FeedbackMessages with pagination.
 //
-// - parent: FeedbackMessage resource parent. Format:
-//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
-//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}".
+//   - parent: FeedbackMessage resource parent. Format:
+//     "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//     tated_dataset_id}/feedbackThreads/{feedback_thread_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11914,8 +11921,8 @@ type ProjectsDatasetsDataItemsGetCall struct {
 // Get: Gets a data item in a dataset by resource name. This API can be
 // called after data are imported into dataset.
 //
-// - name: The name of the data item to get, format:
-//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
+//   - name: The name of the data item to get, format:
+//     projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsDataItemsService) Get(name string) *ProjectsDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12063,8 +12070,8 @@ type ProjectsDatasetsDataItemsListCall struct {
 // List: Lists data items in a dataset. This API can be called after
 // data are imported into dataset. Pagination is supported.
 //
-// - parent: Name of the dataset to list data items, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the dataset to list data items, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsDataItemsService) List(parent string) *ProjectsDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12273,9 +12280,9 @@ type ProjectsDatasetsEvaluationsGetCall struct {
 // Get: Gets an evaluation by resource name (to search, use
 // projects.evaluations.search).
 //
-// - name: Name of the evaluation. Format:
-//   "projects/{project_id}/datasets/
-//   {dataset_id}/evaluations/{evaluation_id}'.
+//   - name: Name of the evaluation. Format:
+//     "projects/{project_id}/datasets/
+//     {dataset_id}/evaluations/{evaluation_id}'.
 func (r *ProjectsDatasetsEvaluationsService) Get(name string) *ProjectsDatasetsEvaluationsGetCall {
 	c := &ProjectsDatasetsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12426,10 +12433,10 @@ type ProjectsDatasetsEvaluationsExampleComparisonsSearchCall struct {
 // prediction(s) for a single input. Search by providing an evaluation
 // ID.
 //
-// - parent: Name of the Evaluation resource to search for example
-//   comparisons from. Format:
-//   "projects/{project_id}/datasets/{dataset_id}/evaluations/
-//   {evaluation_id}".
+//   - parent: Name of the Evaluation resource to search for example
+//     comparisons from. Format:
+//     "projects/{project_id}/datasets/{dataset_id}/evaluations/
+//     {evaluation_id}".
 func (r *ProjectsDatasetsEvaluationsExampleComparisonsService) Search(parent string, googleclouddatalabelingv1beta1searchexamplecomparisonsrequest *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c := &ProjectsDatasetsEvaluationsExampleComparisonsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12596,8 +12603,8 @@ type ProjectsDatasetsImageLabelCall struct {
 // Label: Starts a labeling task for image. The type of image labeling
 // task is configured by feature in the request.
 //
-// - parent: Name of the dataset to request labeling task, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the dataset to request labeling task, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsImageService) Label(parent string, googleclouddatalabelingv1beta1labelimagerequest *GoogleCloudDatalabelingV1beta1LabelImageRequest) *ProjectsDatasetsImageLabelCall {
 	c := &ProjectsDatasetsImageLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12740,8 +12747,8 @@ type ProjectsDatasetsTextLabelCall struct {
 // Label: Starts a labeling task for text. The type of text labeling
 // task is configured by feature in the request.
 //
-// - parent: Name of the data set to request labeling task, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the data set to request labeling task, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsTextService) Label(parent string, googleclouddatalabelingv1beta1labeltextrequest *GoogleCloudDatalabelingV1beta1LabelTextRequest) *ProjectsDatasetsTextLabelCall {
 	c := &ProjectsDatasetsTextLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12884,8 +12891,8 @@ type ProjectsDatasetsVideoLabelCall struct {
 // Label: Starts a labeling task for video. The type of video labeling
 // task is configured by feature in the request.
 //
-// - parent: Name of the dataset to request labeling task, format:
-//   projects/{project_id}/datasets/{dataset_id}.
+//   - parent: Name of the dataset to request labeling task, format:
+//     projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsVideoService) Label(parent string, googleclouddatalabelingv1beta1labelvideorequest *GoogleCloudDatalabelingV1beta1LabelVideoRequest) *ProjectsDatasetsVideoLabelCall {
 	c := &ProjectsDatasetsVideoLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13027,8 +13034,8 @@ type ProjectsEvaluationJobsCreateCall struct {
 
 // Create: Creates an evaluation job.
 //
-// - parent: Evaluation job resource parent. Format:
-//   "projects/{project_id}".
+//   - parent: Evaluation job resource parent. Format:
+//     "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalabelingv1beta1createevaluationjobrequest *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) *ProjectsEvaluationJobsCreateCall {
 	c := &ProjectsEvaluationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13171,8 +13178,8 @@ type ProjectsEvaluationJobsDeleteCall struct {
 
 // Delete: Stops and deletes an evaluation job.
 //
-// - name: Name of the evaluation job that is going to be deleted.
-//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be deleted.
+//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Delete(name string) *ProjectsEvaluationJobsDeleteCall {
 	c := &ProjectsEvaluationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13305,8 +13312,8 @@ type ProjectsEvaluationJobsGetCall struct {
 
 // Get: Gets an evaluation job by resource name.
 //
-// - name: Name of the evaluation job. Format: "projects/{project_id}
-//   /evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job. Format: "projects/{project_id}
+//     /evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Get(name string) *ProjectsEvaluationJobsGetCall {
 	c := &ProjectsEvaluationJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13455,8 +13462,8 @@ type ProjectsEvaluationJobsListCall struct {
 // List: Lists all evaluation jobs within a project with possible
 // filters. Pagination is supported.
 //
-// - parent: Evaluation job resource parent. Format:
-//   "projects/{project_id}".
+//   - parent: Evaluation job resource parent. Format:
+//     "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) List(parent string) *ProjectsEvaluationJobsListCall {
 	c := &ProjectsEvaluationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13674,9 +13681,9 @@ type ProjectsEvaluationJobsPatchCall struct {
 // `exampleSamplePercentage`. If you want to change any other aspect of
 // the evaluation job, you must delete the job and create a new one.
 //
-// - name: Output only. After you create a job, Data Labeling Service
-//   assigns a name to the job with the following format:
-//   "projects/{project_id}/evaluationJobs/ {evaluation_job_id}".
+//   - name: Output only. After you create a job, Data Labeling Service
+//     assigns a name to the job with the following format:
+//     "projects/{project_id}/evaluationJobs/ {evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Patch(name string, googleclouddatalabelingv1beta1evaluationjob *GoogleCloudDatalabelingV1beta1EvaluationJob) *ProjectsEvaluationJobsPatchCall {
 	c := &ProjectsEvaluationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13838,8 +13845,8 @@ type ProjectsEvaluationJobsPauseCall struct {
 // Pause: Pauses an evaluation job. Pausing an evaluation job that is
 // already in a `PAUSED` state is a no-op.
 //
-// - name: Name of the evaluation job that is going to be paused.
-//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be paused.
+//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Pause(name string, googleclouddatalabelingv1beta1pauseevaluationjobrequest *GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest) *ProjectsEvaluationJobsPauseCall {
 	c := &ProjectsEvaluationJobsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13983,8 +13990,8 @@ type ProjectsEvaluationJobsResumeCall struct {
 // can't be resumed. Resuming a running or scheduled evaluation job is a
 // no-op.
 //
-// - name: Name of the evaluation job that is going to be resumed.
-//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
+//   - name: Name of the evaluation job that is going to be resumed.
+//     Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Resume(name string, googleclouddatalabelingv1beta1resumeevaluationjobrequest *GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest) *ProjectsEvaluationJobsResumeCall {
 	c := &ProjectsEvaluationJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14126,8 +14133,8 @@ type ProjectsEvaluationsSearchCall struct {
 
 // Search: Searches evaluations within a project.
 //
-// - parent: Evaluation search parent (project ID). Format: "projects/
-//   {project_id}".
+//   - parent: Evaluation search parent (project ID). Format: "projects/
+//     {project_id}".
 func (r *ProjectsEvaluationsService) Search(parent string) *ProjectsEvaluationsSearchCall {
 	c := &ProjectsEvaluationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14494,8 +14501,8 @@ type ProjectsInstructionsDeleteCall struct {
 
 // Delete: Deletes an instruction object by resource name.
 //
-// - name: Instruction resource name, format:
-//   projects/{project_id}/instructions/{instruction_id}.
+//   - name: Instruction resource name, format:
+//     projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Delete(name string) *ProjectsInstructionsDeleteCall {
 	c := &ProjectsInstructionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14628,8 +14635,8 @@ type ProjectsInstructionsGetCall struct {
 
 // Get: Gets an instruction by resource name.
 //
-// - name: Instruction resource name, format:
-//   projects/{project_id}/instructions/{instruction_id}.
+//   - name: Instruction resource name, format:
+//     projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Get(name string) *ProjectsInstructionsGetCall {
 	c := &ProjectsInstructionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

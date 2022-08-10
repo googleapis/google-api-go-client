@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/functions
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudfunctions/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx)
+//	import "google.golang.org/api/cloudfunctions/v1"
+//	...
+//	ctx := context.Background()
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudfunctionsService, err := cloudfunctions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudfunctions // import "google.golang.org/api/cloudfunctions/v1"
@@ -2606,8 +2606,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2961,8 +2961,8 @@ type ProjectsLocationsFunctionsCreateCall struct {
 // already exists in the specified project, the long running operation
 // will return `ALREADY_EXISTS` error.
 //
-// - location: The project and location in which the function should be
-//   created, specified in the format `projects/*/locations/*`.
+//   - location: The project and location in which the function should be
+//     created, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFunctionsService) Create(location string, cloudfunction *CloudFunction) *ProjectsLocationsFunctionsCreateCall {
 	c := &ProjectsLocationsFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -3242,8 +3242,8 @@ type ProjectsLocationsFunctionsGenerateDownloadUrlCall struct {
 // about the signed URL usage see:
 // https://cloud.google.com/storage/docs/access-control/signed-urls
 //
-// - name: The name of function for which source code Google Cloud
-//   Storage signed URL should be generated.
+//   - name: The name of function for which source code Google Cloud
+//     Storage signed URL should be generated.
 func (r *ProjectsLocationsFunctionsService) GenerateDownloadUrl(name string, generatedownloadurlrequest *GenerateDownloadUrlRequest) *ProjectsLocationsFunctionsGenerateDownloadUrlCall {
 	c := &ProjectsLocationsFunctionsGenerateDownloadUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3400,9 +3400,9 @@ type ProjectsLocationsFunctionsGenerateUploadUrlCall struct {
 // `x-goog-content-length-range: 0,104857600` And this header SHOULD NOT
 // be specified: * `Authorization: Bearer YOUR_TOKEN`
 //
-// - parent: The project and location in which the Google Cloud Storage
-//   signed URL should be generated, specified in the format
-//   `projects/*/locations/*`.
+//   - parent: The project and location in which the Google Cloud Storage
+//     signed URL should be generated, specified in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsFunctionsService) GenerateUploadUrl(parent string, generateuploadurlrequest *GenerateUploadUrlRequest) *ProjectsLocationsFunctionsGenerateUploadUrlCall {
 	c := &ProjectsLocationsFunctionsGenerateUploadUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3693,10 +3693,10 @@ type ProjectsLocationsFunctionsGetIamPolicyCall struct {
 // Returns an empty policy if the function exists and does not have a
 // policy set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) GetIamPolicy(resource string) *ProjectsLocationsFunctionsGetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3867,13 +3867,13 @@ type ProjectsLocationsFunctionsListCall struct {
 // List: Returns a list of functions that belong to the requested
 // project.
 //
-// - parent: The project and location from which the function should be
-//   listed, specified in the format `projects/*/locations/*` If you
-//   want to list functions in all locations, use "-" in place of a
-//   location. When listing functions in all locations, if one or more
-//   location(s) are unreachable, the response will contain functions
-//   from all reachable locations along with the names of any
-//   unreachable locations.
+//   - parent: The project and location from which the function should be
+//     listed, specified in the format `projects/*/locations/*` If you
+//     want to list functions in all locations, use "-" in place of a
+//     location. When listing functions in all locations, if one or more
+//     location(s) are unreachable, the response will contain functions
+//     from all reachable locations along with the names of any
+//     unreachable locations.
 func (r *ProjectsLocationsFunctionsService) List(parent string) *ProjectsLocationsFunctionsListCall {
 	c := &ProjectsLocationsFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4067,9 +4067,9 @@ type ProjectsLocationsFunctionsPatchCall struct {
 
 // Patch: Updates existing function.
 //
-// - name: A user-defined name of the function. Function names must be
-//   unique globally and match pattern
-//   `projects/*/locations/*/functions/*`.
+//   - name: A user-defined name of the function. Function names must be
+//     unique globally and match pattern
+//     `projects/*/locations/*/functions/*`.
 func (r *ProjectsLocationsFunctionsService) Patch(name string, cloudfunction *CloudFunction) *ProjectsLocationsFunctionsPatchCall {
 	c := &ProjectsLocationsFunctionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4225,10 +4225,10 @@ type ProjectsLocationsFunctionsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM access control policy on the specified
 // function. Replaces any existing policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFunctionsSetIamPolicyCall {
 	c := &ProjectsLocationsFunctionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4372,10 +4372,10 @@ type ProjectsLocationsFunctionsTestIamPermissionsCall struct {
 // access control policy for a function. If the function does not exist,
 // this will return an empty set of permissions, not a NOT_FOUND error.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFunctionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFunctionsTestIamPermissionsCall {
 	c := &ProjectsLocationsFunctionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

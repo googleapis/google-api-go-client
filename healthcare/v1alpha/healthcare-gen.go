@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/healthcare
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/healthcare/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   healthcareService, err := healthcare.NewService(ctx)
+//	import "google.golang.org/api/healthcare/v1alpha"
+//	...
+//	ctx := context.Background()
+//	healthcareService, err := healthcare.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
+//	healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package healthcare // import "google.golang.org/api/healthcare/v1alpha"
@@ -215,41 +215,41 @@ type ProjectsLocationsDatasetsOperationsService struct {
 //
 // Example Policy with multiple AuditConfigs:
 //
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:foo@gmail.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "fooservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:bar@gmail.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_configs": [
+//	    {
+//	      "service": "allServices"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	          "exempted_members": [
+//	            "user:foo@gmail.com"
+//	          ]
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	        },
+//	        {
+//	          "log_type": "ADMIN_READ",
+//	        }
+//	      ]
+//	    },
+//	    {
+//	      "service": "fooservice.googleapis.com"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	          "exempted_members": [
+//	            "user:bar@gmail.com"
+//	          ]
+//	        }
+//	      ]
+//	    }
+//	  ]
+//	}
 //
 // For fooservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
@@ -296,19 +296,19 @@ func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 // permissions.
 // Example:
 //
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:foo@gmail.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_log_configs": [
+//	    {
+//	      "log_type": "DATA_READ",
+//	      "exempted_members": [
+//	        "user:foo@gmail.com"
+//	      ]
+//	    },
+//	    {
+//	      "log_type": "DATA_WRITE",
+//	    }
+//	  ]
+//	}
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
@@ -427,9 +427,9 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 
 // Expr: Represents an expression text. Example:
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+//	title: "User account presence"
+//	description: "Determines whether the request has a user account"
+//	expression: "size(request.user) > 0"
 type Expr struct {
 	// Description: An optional description of the expression. This is a
 	// longer text which
@@ -685,7 +685,6 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // used to
 // specify access control policies for Cloud Platform resources.
 //
-//
 // A `Policy` consists of a list of `bindings`. A `binding` binds a list
 // of
 // `members` to a `role`, where the members can be user accounts, Google
@@ -696,38 +695,38 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 //
 // **JSON Example**
 //
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/owner",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
+//	{
+//	  "bindings": [
+//	    {
+//	      "role": "roles/owner",
+//	      "members": [
+//	        "user:mike@example.com",
+//	        "group:admins@example.com",
+//	        "domain:google.com",
 //
 // "serviceAccount:my-other-app@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/viewer",
-//           "members": ["user:sean@example.com"]
-//         }
-//       ]
-//     }
+//
+//	      ]
+//	    },
+//	    {
+//	      "role": "roles/viewer",
+//	      "members": ["user:sean@example.com"]
+//	    }
+//	  ]
+//	}
 //
 // **YAML Example**
 //
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
-//       role: roles/owner
-//     - members:
-//       - user:sean@example.com
-//       role: roles/viewer
-//
+//	bindings:
+//	- members:
+//	  - user:mike@example.com
+//	  - group:admins@example.com
+//	  - domain:google.com
+//	  - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//	  role: roles/owner
+//	- members:
+//	  - user:sean@example.com
+//	  role: roles/viewer
 //
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
@@ -887,29 +886,41 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 //
 // - Partial errors. If a service needs to return partial errors to the
 // client,
-//     it may embed the `Status` in the normal response to indicate the
+//
+//	it may embed the `Status` in the normal response to indicate the
+//
 // partial
-//     errors.
+//
+//	errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting.
+//
+//	have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
-//     `Status` message should be used directly inside batch response,
+//
+//	`Status` message should be used directly inside batch response,
+//
 // one for
-//     each error sub-response.
+//
+//	each error sub-response.
 //
 // - Asynchronous operations. If an API call embeds asynchronous
 // operation
-//     results in its response, the status of those operations should
+//
+//	results in its response, the status of those operations should
+//
 // be
-//     represented directly using the `Status` message.
+//
+//	represented directly using the `Status` message.
 //
 // - Logging. If some API errors are stored in logs, the message
 // `Status` could
-//     be used directly after any stripping needed for security/privacy
+//
+//	be used directly after any stripping needed for security/privacy
+//
 // reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of

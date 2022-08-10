@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/beyondcorp/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   beyondcorpService, err := beyondcorp.NewService(ctx)
+//	import "google.golang.org/api/beyondcorp/v1alpha"
+//	...
+//	ctx := context.Background()
+//	beyondcorpService, err := beyondcorp.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   beyondcorpService, err := beyondcorp.NewService(ctx, option.WithAPIKey("AIza..."))
+//	beyondcorpService, err := beyondcorp.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   beyondcorpService, err := beyondcorp.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	beyondcorpService, err := beyondcorp.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package beyondcorp // import "google.golang.org/api/beyondcorp/v1alpha"
@@ -4458,11 +4458,11 @@ type OrganizationsLocationsInsightsConfiguredInsightCall struct {
 // fetching at org level and project level path for fetching the insight
 // value specific to a particular project.
 //
-// - insight: The resource name of the insight using the form:
-//   `organizations/{organization_id}/locations/{location_id}/insights/{i
-//   nsight_id}`
-//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
-//   `.
+//   - insight: The resource name of the insight using the form:
+//     `organizations/{organization_id}/locations/{location_id}/insights/{i
+//     nsight_id}`
+//     `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//     `.
 func (r *OrganizationsLocationsInsightsService) ConfiguredInsight(insight string) *OrganizationsLocationsInsightsConfiguredInsightCall {
 	c := &OrganizationsLocationsInsightsConfiguredInsightCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.insight = insight
@@ -4474,12 +4474,14 @@ func (r *OrganizationsLocationsInsightsService) ConfiguredInsight(insight string
 // and get APIs in `BASIC` view.
 //
 // Possible values:
-//   "AGGREGATION_UNSPECIFIED" - Unspecified.
-//   "HOURLY" - Insight should be aggregated at hourly level.
-//   "DAILY" - Insight should be aggregated at daily level.
-//   "WEEKLY" - Insight should be aggregated at weekly level.
-//   "MONTHLY" - Insight should be aggregated at monthly level.
-//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+//
+//	"AGGREGATION_UNSPECIFIED" - Unspecified.
+//	"HOURLY" - Insight should be aggregated at hourly level.
+//	"DAILY" - Insight should be aggregated at daily level.
+//	"WEEKLY" - Insight should be aggregated at weekly level.
+//	"MONTHLY" - Insight should be aggregated at monthly level.
+//	"CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+//
 // date range passed in as the start and end time in the request.
 func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Aggregation(aggregation string) *OrganizationsLocationsInsightsConfiguredInsightCall {
 	c.urlParams_.Set("aggregation", aggregation)
@@ -4797,11 +4799,11 @@ type OrganizationsLocationsInsightsGetCall struct {
 // insight value specific to a particular project. Setting the `view` to
 // `BASIC` will only return the metadata for the insight.
 //
-// - name: The resource name of the insight using the form:
-//   `organizations/{organization_id}/locations/{location_id}/insights/{i
-//   nsight_id}`
-//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
-//   `.
+//   - name: The resource name of the insight using the form:
+//     `organizations/{organization_id}/locations/{location_id}/insights/{i
+//     nsight_id}`
+//     `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//     `.
 func (r *OrganizationsLocationsInsightsService) Get(name string) *OrganizationsLocationsInsightsGetCall {
 	c := &OrganizationsLocationsInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4812,12 +4814,17 @@ func (r *OrganizationsLocationsInsightsService) Get(name string) *OrganizationsL
 // full data view.
 //
 // Possible values:
-//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Include basic metadata about the insight, but not the
+//
+//	"BASIC" - Include basic metadata about the insight, but not the
+//
 // insight data. This is the default value (for both ListInsights and
 // GetInsight).
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *OrganizationsLocationsInsightsGetCall) View(view string) *OrganizationsLocationsInsightsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4982,9 +4989,9 @@ type OrganizationsLocationsInsightsListCall struct {
 // the system. Allows to filter using category. Setting the `view` to
 // `BASIC` will let you iterate over the list of insight metadatas.
 //
-// - parent: The resource name of InsightMetadata using the form:
-//   `organizations/{organization_id}/locations/{location}`
-//   `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of InsightMetadata using the form:
+//     `organizations/{organization_id}/locations/{location}`
+//     `projects/{project_id}/locations/{location_id}`.
 func (r *OrganizationsLocationsInsightsService) List(parent string) *OrganizationsLocationsInsightsListCall {
 	c := &OrganizationsLocationsInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5034,12 +5041,17 @@ func (c *OrganizationsLocationsInsightsListCall) PageToken(pageToken string) *Or
 // or full data.
 //
 // Possible values:
-//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Include basic metadata about the insight, but not the
+//
+//	"BASIC" - Include basic metadata about the insight, but not the
+//
 // insight data. This is the default value (for both ListInsights and
 // GetInsight).
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *OrganizationsLocationsInsightsListCall) View(view string) *OrganizationsLocationsInsightsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5391,8 +5403,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5601,8 +5613,8 @@ type ProjectsLocationsAppConnectionsCreateCall struct {
 
 // Create: Creates a new AppConnection in a given project and location.
 //
-// - parent: The resource project name of the AppConnection location
-//   using the form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource project name of the AppConnection location
+//     using the form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppConnectionsService) Create(parent string, googlecloudbeyondcorpappconnectionsv1alphaappconnection *GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnection) *ProjectsLocationsAppConnectionsCreateCall {
 	c := &ProjectsLocationsAppConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5793,9 +5805,9 @@ type ProjectsLocationsAppConnectionsDeleteCall struct {
 
 // Delete: Deletes a single AppConnection.
 //
-// - name: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/appConnections/{app_c
-//   onnection_id}`.
+//   - name: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/appConnections/{app_c
+//     onnection_id}`.
 func (r *ProjectsLocationsAppConnectionsService) Delete(name string) *ProjectsLocationsAppConnectionsDeleteCall {
 	c := &ProjectsLocationsAppConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5964,9 +5976,9 @@ type ProjectsLocationsAppConnectionsGetCall struct {
 
 // Get: Gets details of a single AppConnection.
 //
-// - name: BeyondCorp AppConnection name using the form:
-//   `projects/{project_id}/locations/{location_id}/appConnections/{app_c
-//   onnection_id}`.
+//   - name: BeyondCorp AppConnection name using the form:
+//     `projects/{project_id}/locations/{location_id}/appConnections/{app_c
+//     onnection_id}`.
 func (r *ProjectsLocationsAppConnectionsService) Get(name string) *ProjectsLocationsAppConnectionsGetCall {
 	c := &ProjectsLocationsAppConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6117,10 +6129,10 @@ type ProjectsLocationsAppConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsAppConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsAppConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6290,8 +6302,8 @@ type ProjectsLocationsAppConnectionsListCall struct {
 
 // List: Lists AppConnections in a given project and location.
 //
-// - parent: The resource name of the AppConnection location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the AppConnection location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppConnectionsService) List(parent string) *ProjectsLocationsAppConnectionsListCall {
 	c := &ProjectsLocationsAppConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6517,8 +6529,8 @@ type ProjectsLocationsAppConnectionsPatchCall struct {
 
 // Patch: Updates the parameters of a single AppConnection.
 //
-// - name: Unique resource name of the AppConnection. The name is
-//   ignored when creating a AppConnection.
+//   - name: Unique resource name of the AppConnection. The name is
+//     ignored when creating a AppConnection.
 func (r *ProjectsLocationsAppConnectionsService) Patch(name string, googlecloudbeyondcorpappconnectionsv1alphaappconnection *GoogleCloudBeyondcorpAppconnectionsV1alphaAppConnection) *ProjectsLocationsAppConnectionsPatchCall {
 	c := &ProjectsLocationsAppConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6726,8 +6738,8 @@ type ProjectsLocationsAppConnectionsResolveCall struct {
 // internal method called by a connector to find AppConnections to
 // connect to.
 //
-// - parent: The resource name of the AppConnection location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the AppConnection location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppConnectionsService) Resolve(parent string) *ProjectsLocationsAppConnectionsResolveCall {
 	c := &ProjectsLocationsAppConnectionsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6944,10 +6956,10 @@ type ProjectsLocationsAppConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectionsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsAppConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsAppConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7094,10 +7106,10 @@ type ProjectsLocationsAppConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectionsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsAppConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsAppConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7240,8 +7252,8 @@ type ProjectsLocationsAppConnectorsCreateCall struct {
 
 // Create: Creates a new AppConnector in a given project and location.
 //
-// - parent: The resource project name of the AppConnector location
-//   using the form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource project name of the AppConnector location
+//     using the form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppConnectorsService) Create(parent string, googlecloudbeyondcorpappconnectorsv1alphaappconnector *GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnector) *ProjectsLocationsAppConnectorsCreateCall {
 	c := &ProjectsLocationsAppConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7432,9 +7444,9 @@ type ProjectsLocationsAppConnectorsDeleteCall struct {
 
 // Delete: Deletes a single AppConnector.
 //
-// - name: BeyondCorp AppConnector name using the form:
-//   `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
-//   nnector_id}`.
+//   - name: BeyondCorp AppConnector name using the form:
+//     `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
+//     nnector_id}`.
 func (r *ProjectsLocationsAppConnectorsService) Delete(name string) *ProjectsLocationsAppConnectorsDeleteCall {
 	c := &ProjectsLocationsAppConnectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7603,9 +7615,9 @@ type ProjectsLocationsAppConnectorsGetCall struct {
 
 // Get: Gets details of a single AppConnector.
 //
-// - name: BeyondCorp AppConnector name using the form:
-//   `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
-//   nnector_id}`.
+//   - name: BeyondCorp AppConnector name using the form:
+//     `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
+//     nnector_id}`.
 func (r *ProjectsLocationsAppConnectorsService) Get(name string) *ProjectsLocationsAppConnectorsGetCall {
 	c := &ProjectsLocationsAppConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7755,10 +7767,10 @@ type ProjectsLocationsAppConnectorsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectorsService) GetIamPolicy(resource string) *ProjectsLocationsAppConnectorsGetIamPolicyCall {
 	c := &ProjectsLocationsAppConnectorsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7928,8 +7940,8 @@ type ProjectsLocationsAppConnectorsListCall struct {
 
 // List: Lists AppConnectors in a given project and location.
 //
-// - parent: The resource name of the AppConnector location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the AppConnector location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppConnectorsService) List(parent string) *ProjectsLocationsAppConnectorsListCall {
 	c := &ProjectsLocationsAppConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8155,8 +8167,8 @@ type ProjectsLocationsAppConnectorsPatchCall struct {
 
 // Patch: Updates the parameters of a single AppConnector.
 //
-// - name: Unique resource name of the AppConnector. The name is ignored
-//   when creating a AppConnector.
+//   - name: Unique resource name of the AppConnector. The name is ignored
+//     when creating a AppConnector.
 func (r *ProjectsLocationsAppConnectorsService) Patch(name string, googlecloudbeyondcorpappconnectorsv1alphaappconnector *GoogleCloudBeyondcorpAppconnectorsV1alphaAppConnector) *ProjectsLocationsAppConnectorsPatchCall {
 	c := &ProjectsLocationsAppConnectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8350,9 +8362,9 @@ type ProjectsLocationsAppConnectorsReportStatusCall struct {
 
 // ReportStatus: Report status for a given connector.
 //
-// - appConnector: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connectors/{connector
-//   }`.
+//   - appConnector: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connectors/{connector
+//     }`.
 func (r *ProjectsLocationsAppConnectorsService) ReportStatus(appConnector string, googlecloudbeyondcorpappconnectorsv1alphareportstatusrequest *GoogleCloudBeyondcorpAppconnectorsV1alphaReportStatusRequest) *ProjectsLocationsAppConnectorsReportStatusCall {
 	c := &ProjectsLocationsAppConnectorsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appConnector = appConnector
@@ -8496,9 +8508,9 @@ type ProjectsLocationsAppConnectorsResolveInstanceConfigCall struct {
 // AppConnector. An internal method called by a AppConnector to get its
 // container config.
 //
-// - appConnector: BeyondCorp AppConnector name using the form:
-//   `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
-//   nnector}`.
+//   - appConnector: BeyondCorp AppConnector name using the form:
+//     `projects/{project_id}/locations/{location_id}/appConnectors/{app_co
+//     nnector}`.
 func (r *ProjectsLocationsAppConnectorsService) ResolveInstanceConfig(appConnector string) *ProjectsLocationsAppConnectorsResolveInstanceConfigCall {
 	c := &ProjectsLocationsAppConnectorsResolveInstanceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appConnector = appConnector
@@ -8649,10 +8661,10 @@ type ProjectsLocationsAppConnectorsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectorsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsAppConnectorsSetIamPolicyCall {
 	c := &ProjectsLocationsAppConnectorsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8799,10 +8811,10 @@ type ProjectsLocationsAppConnectorsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppConnectorsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsAppConnectorsTestIamPermissionsCall {
 	c := &ProjectsLocationsAppConnectorsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8945,8 +8957,8 @@ type ProjectsLocationsAppGatewaysCreateCall struct {
 
 // Create: Creates a new AppGateway in a given project and location.
 //
-// - parent: The resource project name of the AppGateway location using
-//   the form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource project name of the AppGateway location using
+//     the form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppGatewaysService) Create(parent string, appgateway *AppGateway) *ProjectsLocationsAppGatewaysCreateCall {
 	c := &ProjectsLocationsAppGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9137,9 +9149,9 @@ type ProjectsLocationsAppGatewaysDeleteCall struct {
 
 // Delete: Deletes a single AppGateway.
 //
-// - name: BeyondCorp AppGateway name using the form:
-//   `projects/{project_id}/locations/{location_id}/appGateways/{app_gate
-//   way_id}`.
+//   - name: BeyondCorp AppGateway name using the form:
+//     `projects/{project_id}/locations/{location_id}/appGateways/{app_gate
+//     way_id}`.
 func (r *ProjectsLocationsAppGatewaysService) Delete(name string) *ProjectsLocationsAppGatewaysDeleteCall {
 	c := &ProjectsLocationsAppGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9308,9 +9320,9 @@ type ProjectsLocationsAppGatewaysGetCall struct {
 
 // Get: Gets details of a single AppGateway.
 //
-// - name: BeyondCorp AppGateway name using the form:
-//   `projects/{project_id}/locations/{location_id}/appGateways/{app_gate
-//   way_id}`.
+//   - name: BeyondCorp AppGateway name using the form:
+//     `projects/{project_id}/locations/{location_id}/appGateways/{app_gate
+//     way_id}`.
 func (r *ProjectsLocationsAppGatewaysService) Get(name string) *ProjectsLocationsAppGatewaysGetCall {
 	c := &ProjectsLocationsAppGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9458,10 +9470,10 @@ type ProjectsLocationsAppGatewaysGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsAppGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsAppGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9631,8 +9643,8 @@ type ProjectsLocationsAppGatewaysListCall struct {
 
 // List: Lists AppGateways in a given project and location.
 //
-// - parent: The resource name of the AppGateway location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the AppGateway location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsAppGatewaysService) List(parent string) *ProjectsLocationsAppGatewaysListCall {
 	c := &ProjectsLocationsAppGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9857,10 +9869,10 @@ type ProjectsLocationsAppGatewaysSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppGatewaysService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsAppGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsAppGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10007,10 +10019,10 @@ type ProjectsLocationsAppGatewaysTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAppGatewaysService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsAppGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsAppGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10155,10 +10167,10 @@ type ProjectsLocationsApplicationsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApplicationsService) GetIamPolicy(resource string) *ProjectsLocationsApplicationsGetIamPolicyCall {
 	c := &ProjectsLocationsApplicationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10330,10 +10342,10 @@ type ProjectsLocationsApplicationsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApplicationsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsApplicationsSetIamPolicyCall {
 	c := &ProjectsLocationsApplicationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10480,10 +10492,10 @@ type ProjectsLocationsApplicationsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsApplicationsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsApplicationsTestIamPermissionsCall {
 	c := &ProjectsLocationsApplicationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11137,10 +11149,10 @@ type ProjectsLocationsClientConnectorServicesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientConnectorServicesService) GetIamPolicy(resource string) *ProjectsLocationsClientConnectorServicesGetIamPolicyCall {
 	c := &ProjectsLocationsClientConnectorServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11737,10 +11749,10 @@ type ProjectsLocationsClientConnectorServicesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientConnectorServicesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsClientConnectorServicesSetIamPolicyCall {
 	c := &ProjectsLocationsClientConnectorServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11887,10 +11899,10 @@ type ProjectsLocationsClientConnectorServicesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientConnectorServicesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsClientConnectorServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsClientConnectorServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12541,10 +12553,10 @@ type ProjectsLocationsClientGatewaysGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsClientGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsClientGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12932,10 +12944,10 @@ type ProjectsLocationsClientGatewaysSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientGatewaysService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsClientGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsClientGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13082,10 +13094,10 @@ type ProjectsLocationsClientGatewaysTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientGatewaysService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsClientGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsClientGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13228,8 +13240,8 @@ type ProjectsLocationsConnectionsCreateCall struct {
 
 // Create: Creates a new Connection in a given project and location.
 //
-// - parent: The resource project name of the connection location using
-//   the form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource project name of the connection location using
+//     the form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *Connection) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13420,9 +13432,9 @@ type ProjectsLocationsConnectionsDeleteCall struct {
 
 // Delete: Deletes a single Connection.
 //
-// - name: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connections/{connecti
-//   on_id}`.
+//   - name: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connections/{connecti
+//     on_id}`.
 func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocationsConnectionsDeleteCall {
 	c := &ProjectsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13591,9 +13603,9 @@ type ProjectsLocationsConnectionsGetCall struct {
 
 // Get: Gets details of a single Connection.
 //
-// - name: BeyondCorp Connection name using the form:
-//   `projects/{project_id}/locations/{location_id}/connections/{connecti
-//   on_id}`.
+//   - name: BeyondCorp Connection name using the form:
+//     `projects/{project_id}/locations/{location_id}/connections/{connecti
+//     on_id}`.
 func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocationsConnectionsGetCall {
 	c := &ProjectsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13741,10 +13753,10 @@ type ProjectsLocationsConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13914,8 +13926,8 @@ type ProjectsLocationsConnectionsListCall struct {
 
 // List: Lists Connections in a given project and location.
 //
-// - parent: The resource name of the connection location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the connection location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14138,8 +14150,8 @@ type ProjectsLocationsConnectionsPatchCall struct {
 
 // Patch: Updates the parameters of a single Connection.
 //
-// - name: Unique resource name of the connection. The name is ignored
-//   when creating a connection.
+//   - name: Unique resource name of the connection. The name is ignored
+//     when creating a connection.
 func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Connection) *ProjectsLocationsConnectionsPatchCall {
 	c := &ProjectsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14347,8 +14359,8 @@ type ProjectsLocationsConnectionsResolveCall struct {
 // internal method called by a connector to find connections to connect
 // to.
 //
-// - parent: The resource name of the connection location using the
-//   form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the connection location using the
+//     form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) Resolve(parent string) *ProjectsLocationsConnectionsResolveCall {
 	c := &ProjectsLocationsConnectionsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14562,10 +14574,10 @@ type ProjectsLocationsConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14712,10 +14724,10 @@ type ProjectsLocationsConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14858,8 +14870,8 @@ type ProjectsLocationsConnectorsCreateCall struct {
 
 // Create: Creates a new Connector in a given project and location.
 //
-// - parent: The resource project name of the connector location using
-//   the form: `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource project name of the connector location using
+//     the form: `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectorsService) Create(parent string, connector *Connector) *ProjectsLocationsConnectorsCreateCall {
 	c := &ProjectsLocationsConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15050,9 +15062,9 @@ type ProjectsLocationsConnectorsDeleteCall struct {
 
 // Delete: Deletes a single Connector.
 //
-// - name: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connectors/{connector
-//   _id}`.
+//   - name: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connectors/{connector
+//     _id}`.
 func (r *ProjectsLocationsConnectorsService) Delete(name string) *ProjectsLocationsConnectorsDeleteCall {
 	c := &ProjectsLocationsConnectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15221,9 +15233,9 @@ type ProjectsLocationsConnectorsGetCall struct {
 
 // Get: Gets details of a single Connector.
 //
-// - name: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connectors/{connector
-//   _id}`.
+//   - name: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connectors/{connector
+//     _id}`.
 func (r *ProjectsLocationsConnectorsService) Get(name string) *ProjectsLocationsConnectorsGetCall {
 	c := &ProjectsLocationsConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15371,10 +15383,10 @@ type ProjectsLocationsConnectorsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectorsService) GetIamPolicy(resource string) *ProjectsLocationsConnectorsGetIamPolicyCall {
 	c := &ProjectsLocationsConnectorsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15544,8 +15556,8 @@ type ProjectsLocationsConnectorsListCall struct {
 
 // List: Lists Connectors in a given project and location.
 //
-// - parent: The resource name of the connector location using the form:
-//   `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of the connector location using the form:
+//     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectorsService) List(parent string) *ProjectsLocationsConnectorsListCall {
 	c := &ProjectsLocationsConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15768,8 +15780,8 @@ type ProjectsLocationsConnectorsPatchCall struct {
 
 // Patch: Updates the parameters of a single Connector.
 //
-// - name: Unique resource name of the connector. The name is ignored
-//   when creating a connector.
+//   - name: Unique resource name of the connector. The name is ignored
+//     when creating a connector.
 func (r *ProjectsLocationsConnectorsService) Patch(name string, connector *Connector) *ProjectsLocationsConnectorsPatchCall {
 	c := &ProjectsLocationsConnectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15962,9 +15974,9 @@ type ProjectsLocationsConnectorsReportStatusCall struct {
 
 // ReportStatus: Report status for a given connector.
 //
-// - connector: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connectors/{connector
-//   }`.
+//   - connector: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connectors/{connector
+//     }`.
 func (r *ProjectsLocationsConnectorsService) ReportStatus(connector string, reportstatusrequest *ReportStatusRequest) *ProjectsLocationsConnectorsReportStatusCall {
 	c := &ProjectsLocationsConnectorsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.connector = connector
@@ -16108,9 +16120,9 @@ type ProjectsLocationsConnectorsResolveInstanceConfigCall struct {
 // connector. An internal method called by a connector to get its
 // container config.
 //
-// - connector: BeyondCorp Connector name using the form:
-//   `projects/{project_id}/locations/{location_id}/connectors/{connector
-//   }`.
+//   - connector: BeyondCorp Connector name using the form:
+//     `projects/{project_id}/locations/{location_id}/connectors/{connector
+//     }`.
 func (r *ProjectsLocationsConnectorsService) ResolveInstanceConfig(connector string) *ProjectsLocationsConnectorsResolveInstanceConfigCall {
 	c := &ProjectsLocationsConnectorsResolveInstanceConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.connector = connector
@@ -16258,10 +16270,10 @@ type ProjectsLocationsConnectorsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectorsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsConnectorsSetIamPolicyCall {
 	c := &ProjectsLocationsConnectorsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16408,10 +16420,10 @@ type ProjectsLocationsConnectorsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsConnectorsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsConnectorsTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectorsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -16557,11 +16569,11 @@ type ProjectsLocationsInsightsConfiguredInsightCall struct {
 // fetching at org level and project level path for fetching the insight
 // value specific to a particular project.
 //
-// - insight: The resource name of the insight using the form:
-//   `organizations/{organization_id}/locations/{location_id}/insights/{i
-//   nsight_id}`
-//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
-//   `.
+//   - insight: The resource name of the insight using the form:
+//     `organizations/{organization_id}/locations/{location_id}/insights/{i
+//     nsight_id}`
+//     `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//     `.
 func (r *ProjectsLocationsInsightsService) ConfiguredInsight(insight string) *ProjectsLocationsInsightsConfiguredInsightCall {
 	c := &ProjectsLocationsInsightsConfiguredInsightCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.insight = insight
@@ -16573,12 +16585,14 @@ func (r *ProjectsLocationsInsightsService) ConfiguredInsight(insight string) *Pr
 // and get APIs in `BASIC` view.
 //
 // Possible values:
-//   "AGGREGATION_UNSPECIFIED" - Unspecified.
-//   "HOURLY" - Insight should be aggregated at hourly level.
-//   "DAILY" - Insight should be aggregated at daily level.
-//   "WEEKLY" - Insight should be aggregated at weekly level.
-//   "MONTHLY" - Insight should be aggregated at monthly level.
-//   "CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+//
+//	"AGGREGATION_UNSPECIFIED" - Unspecified.
+//	"HOURLY" - Insight should be aggregated at hourly level.
+//	"DAILY" - Insight should be aggregated at daily level.
+//	"WEEKLY" - Insight should be aggregated at weekly level.
+//	"MONTHLY" - Insight should be aggregated at monthly level.
+//	"CUSTOM_DATE_RANGE" - Insight should be aggregated at the custom
+//
 // date range passed in as the start and end time in the request.
 func (c *ProjectsLocationsInsightsConfiguredInsightCall) Aggregation(aggregation string) *ProjectsLocationsInsightsConfiguredInsightCall {
 	c.urlParams_.Set("aggregation", aggregation)
@@ -16896,11 +16910,11 @@ type ProjectsLocationsInsightsGetCall struct {
 // insight value specific to a particular project. Setting the `view` to
 // `BASIC` will only return the metadata for the insight.
 //
-// - name: The resource name of the insight using the form:
-//   `organizations/{organization_id}/locations/{location_id}/insights/{i
-//   nsight_id}`
-//   `projects/{project_id}/locations/{location_id}/insights/{insight_id}
-//   `.
+//   - name: The resource name of the insight using the form:
+//     `organizations/{organization_id}/locations/{location_id}/insights/{i
+//     nsight_id}`
+//     `projects/{project_id}/locations/{location_id}/insights/{insight_id}
+//     `.
 func (r *ProjectsLocationsInsightsService) Get(name string) *ProjectsLocationsInsightsGetCall {
 	c := &ProjectsLocationsInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16911,12 +16925,17 @@ func (r *ProjectsLocationsInsightsService) Get(name string) *ProjectsLocationsIn
 // full data view.
 //
 // Possible values:
-//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Include basic metadata about the insight, but not the
+//
+//	"BASIC" - Include basic metadata about the insight, but not the
+//
 // insight data. This is the default value (for both ListInsights and
 // GetInsight).
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsInsightsGetCall) View(view string) *ProjectsLocationsInsightsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -17081,9 +17100,9 @@ type ProjectsLocationsInsightsListCall struct {
 // the system. Allows to filter using category. Setting the `view` to
 // `BASIC` will let you iterate over the list of insight metadatas.
 //
-// - parent: The resource name of InsightMetadata using the form:
-//   `organizations/{organization_id}/locations/{location}`
-//   `projects/{project_id}/locations/{location_id}`.
+//   - parent: The resource name of InsightMetadata using the form:
+//     `organizations/{organization_id}/locations/{location}`
+//     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsInsightsService) List(parent string) *ProjectsLocationsInsightsListCall {
 	c := &ProjectsLocationsInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17133,12 +17152,17 @@ func (c *ProjectsLocationsInsightsListCall) PageToken(pageToken string) *Project
 // or full data.
 //
 // Possible values:
-//   "INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"INSIGHT_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Include basic metadata about the insight, but not the
+//
+//	"BASIC" - Include basic metadata about the insight, but not the
+//
 // insight data. This is the default value (for both ListInsights and
 // GetInsight).
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsInsightsListCall) View(view string) *ProjectsLocationsInsightsListCall {
 	c.urlParams_.Set("view", view)
 	return c

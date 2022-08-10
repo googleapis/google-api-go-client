@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/binary-authorization/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/binaryauthorization/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   binaryauthorizationService, err := binaryauthorization.NewService(ctx)
+//	import "google.golang.org/api/binaryauthorization/v1beta1"
+//	...
+//	ctx := context.Background()
+//	binaryauthorizationService, err := binaryauthorization.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithAPIKey("AIza..."))
+//	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	binaryauthorizationService, err := binaryauthorization.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package binaryauthorization // import "google.golang.org/api/binaryauthorization/v1beta1"
@@ -1249,8 +1249,8 @@ type ProjectsGetPolicyCall struct {
 // are permitted if a project has no policy. Gets the policy for this
 // project. Returns a default policy if the project does not have one.
 //
-// - name: The resource name of the policy to retrieve, in the format
-//   `projects/*/policy`.
+//   - name: The resource name of the policy to retrieve, in the format
+//     `projects/*/policy`.
 func (r *ProjectsService) GetPolicy(name string) *ProjectsGetPolicyCall {
 	c := &ProjectsGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1400,8 +1400,8 @@ type ProjectsUpdatePolicyCall struct {
 // management!) requests. Returns NOT_FOUND if the project does not
 // exist, INVALID_ARGUMENT if the request is malformed.
 //
-// - name: Output only. The resource name, in the format
-//   `projects/*/policy`. There is at most one policy per project.
+//   - name: Output only. The resource name, in the format
+//     `projects/*/policy`. There is at most one policy per project.
 func (r *ProjectsService) UpdatePolicy(name string, policy *Policy) *ProjectsUpdatePolicyCall {
 	c := &ProjectsUpdatePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1700,8 +1700,8 @@ type ProjectsAttestorsDeleteCall struct {
 // Delete: Deletes an attestor. Returns NOT_FOUND if the attestor does
 // not exist.
 //
-// - name: The name of the attestors to delete, in the format
-//   `projects/*/attestors/*`.
+//   - name: The name of the attestors to delete, in the format
+//     `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) Delete(name string) *ProjectsAttestorsDeleteCall {
 	c := &ProjectsAttestorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1835,8 +1835,8 @@ type ProjectsAttestorsGetCall struct {
 // Get: Gets an attestor. Returns NOT_FOUND if the attestor does not
 // exist.
 //
-// - name: The name of the attestor to retrieve, in the format
-//   `projects/*/attestors/*`.
+//   - name: The name of the attestor to retrieve, in the format
+//     `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) Get(name string) *ProjectsAttestorsGetCall {
 	c := &ProjectsAttestorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1984,10 +1984,10 @@ type ProjectsAttestorsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsAttestorsService) GetIamPolicy(resource string) *ProjectsAttestorsGetIamPolicyCall {
 	c := &ProjectsAttestorsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2158,8 +2158,8 @@ type ProjectsAttestorsListCall struct {
 // List: Lists attestors. Returns INVALID_ARGUMENT if the project does
 // not exist.
 //
-// - parent: The resource name of the project associated with the
-//   attestors, in the format `projects/*`.
+//   - parent: The resource name of the project associated with the
+//     attestors, in the format `projects/*`.
 func (r *ProjectsAttestorsService) List(parent string) *ProjectsAttestorsListCall {
 	c := &ProjectsAttestorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2356,10 +2356,10 @@ type ProjectsAttestorsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsAttestorsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsAttestorsSetIamPolicyCall {
 	c := &ProjectsAttestorsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2506,10 +2506,10 @@ type ProjectsAttestorsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsAttestorsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsAttestorsTestIamPermissionsCall {
 	c := &ProjectsAttestorsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2652,8 +2652,8 @@ type ProjectsAttestorsUpdateCall struct {
 // Update: Updates an attestor. Returns NOT_FOUND if the attestor does
 // not exist.
 //
-// - name: The resource name, in the format: `projects/*/attestors/*`.
-//   This field may not be updated.
+//   - name: The resource name, in the format: `projects/*/attestors/*`.
+//     This field may not be updated.
 func (r *ProjectsAttestorsService) Update(name string, attestor *Attestor) *ProjectsAttestorsUpdateCall {
 	c := &ProjectsAttestorsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2796,8 +2796,8 @@ type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 // ValidateAttestationOccurrence: Returns whether the given Attestation
 // for the given image URI was signed by the given Attestor
 //
-// - attestor: The resource name of the Attestor of the occurrence, in
-//   the format `projects/*/attestors/*`.
+//   - attestor: The resource name of the Attestor of the occurrence, in
+//     the format `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) ValidateAttestationOccurrence(attestor string, validateattestationoccurrencerequest *ValidateAttestationOccurrenceRequest) *ProjectsAttestorsValidateAttestationOccurrenceCall {
 	c := &ProjectsAttestorsValidateAttestationOccurrenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attestor = attestor
@@ -2942,10 +2942,10 @@ type ProjectsPolicyGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsPolicyService) GetIamPolicy(resource string) *ProjectsPolicyGetIamPolicyCall {
 	c := &ProjectsPolicyGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3117,10 +3117,10 @@ type ProjectsPolicySetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsPolicyService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsPolicySetIamPolicyCall {
 	c := &ProjectsPolicySetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3267,10 +3267,10 @@ type ProjectsPolicyTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsPolicyService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsPolicyTestIamPermissionsCall {
 	c := &ProjectsPolicyTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3412,8 +3412,8 @@ type SystempolicyGetPolicyCall struct {
 
 // GetPolicy: Gets the current system policy in the specified location.
 //
-// - name: The resource name, in the format `locations/*/policy`. Note
-//   that the system policy is not associated with a project.
+//   - name: The resource name, in the format `locations/*/policy`. Note
+//     that the system policy is not associated with a project.
 func (r *SystempolicyService) GetPolicy(name string) *SystempolicyGetPolicyCall {
 	c := &SystempolicyGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

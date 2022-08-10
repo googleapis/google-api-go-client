@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/talent-solution/job-search/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/jobs/v3"
-//   ...
-//   ctx := context.Background()
-//   jobsService, err := jobs.NewService(ctx)
+//	import "google.golang.org/api/jobs/v3"
+//	...
+//	ctx := context.Background()
+//	jobsService, err := jobs.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   jobsService, err := jobs.NewService(ctx, option.WithScopes(jobs.JobsScope))
+//	jobsService, err := jobs.NewService(ctx, option.WithScopes(jobs.JobsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   jobsService, err := jobs.NewService(ctx, option.WithAPIKey("AIza..."))
+//	jobsService, err := jobs.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   jobsService, err := jobs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	jobsService, err := jobs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package jobs // import "google.golang.org/api/jobs/v3"
@@ -3701,9 +3701,9 @@ type ProjectsCompleteCall struct {
 // Complete: Completes the specified prefix with keyword suggestions.
 // Intended for use by a job search auto-complete search box.
 //
-// - name: Resource name of project the completion is performed within.
-//   The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - name: Resource name of project the completion is performed within.
+//     The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsService) Complete(name string) *ProjectsCompleteCall {
 	c := &ProjectsCompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3770,10 +3770,14 @@ func (c *ProjectsCompleteCall) Query(query string) *ProjectsCompleteCall {
 // completion. The defaults is CompletionScope.PUBLIC.
 //
 // Possible values:
-//   "COMPLETION_SCOPE_UNSPECIFIED" - Default value.
-//   "TENANT" - Suggestions are based only on the data provided by the
+//
+//	"COMPLETION_SCOPE_UNSPECIFIED" - Default value.
+//	"TENANT" - Suggestions are based only on the data provided by the
+//
 // client.
-//   "PUBLIC" - Suggestions are based on all jobs data in the system
+//
+//	"PUBLIC" - Suggestions are based on all jobs data in the system
+//
 // that's visible to the client
 func (c *ProjectsCompleteCall) Scope(scope string) *ProjectsCompleteCall {
 	c.urlParams_.Set("scope", scope)
@@ -3784,10 +3788,11 @@ func (c *ProjectsCompleteCall) Scope(scope string) *ProjectsCompleteCall {
 // default is CompletionType.COMBINED.
 //
 // Possible values:
-//   "COMPLETION_TYPE_UNSPECIFIED" - Default value.
-//   "JOB_TITLE" - Only suggest job titles.
-//   "COMPANY_NAME" - Only suggest company names.
-//   "COMBINED" - Suggest both job titles and company names.
+//
+//	"COMPLETION_TYPE_UNSPECIFIED" - Default value.
+//	"JOB_TITLE" - Only suggest job titles.
+//	"COMPANY_NAME" - Only suggest company names.
+//	"COMBINED" - Suggest both job titles and company names.
 func (c *ProjectsCompleteCall) Type(type_ string) *ProjectsCompleteCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -4140,9 +4145,9 @@ type ProjectsCompaniesCreateCall struct {
 
 // Create: Creates a new company entity.
 //
-// - parent: Resource name of the project under which the company is
-//   created. The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: Resource name of the project under which the company is
+//     created. The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsCompaniesService) Create(parent string, createcompanyrequest *CreateCompanyRequest) *ProjectsCompaniesCreateCall {
 	c := &ProjectsCompaniesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4285,9 +4290,9 @@ type ProjectsCompaniesDeleteCall struct {
 // Delete: Deletes specified company. Prerequisite: The company has no
 // jobs associated with it.
 //
-// - name: The resource name of the company to be deleted. The format is
-//   "projects/{project_id}/companies/{company_id}", for example,
-//   "projects/api-test-project/companies/foo".
+//   - name: The resource name of the company to be deleted. The format is
+//     "projects/{project_id}/companies/{company_id}", for example,
+//     "projects/api-test-project/companies/foo".
 func (r *ProjectsCompaniesService) Delete(name string) *ProjectsCompaniesDeleteCall {
 	c := &ProjectsCompaniesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4421,9 +4426,9 @@ type ProjectsCompaniesGetCall struct {
 
 // Get: Retrieves specified company.
 //
-// - name: The resource name of the company to be retrieved. The format
-//   is "projects/{project_id}/companies/{company_id}", for example,
-//   "projects/api-test-project/companies/foo".
+//   - name: The resource name of the company to be retrieved. The format
+//     is "projects/{project_id}/companies/{company_id}", for example,
+//     "projects/api-test-project/companies/foo".
 func (r *ProjectsCompaniesService) Get(name string) *ProjectsCompaniesGetCall {
 	c := &ProjectsCompaniesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4570,9 +4575,9 @@ type ProjectsCompaniesListCall struct {
 
 // List: Lists all companies associated with the service account.
 //
-// - parent: Resource name of the project under which the company is
-//   created. The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: Resource name of the project under which the company is
+//     created. The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsCompaniesService) List(parent string) *ProjectsCompaniesListCall {
 	c := &ProjectsCompaniesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4782,11 +4787,11 @@ type ProjectsCompaniesPatchCall struct {
 // update a company name, delete the company and all jobs associated
 // with it, and only then re-create them.
 //
-// - name: Required during company update. The resource name for a
-//   company. This is generated by the service when a company is
-//   created. The format is
-//   "projects/{project_id}/companies/{company_id}", for example,
-//   "projects/api-test-project/companies/foo".
+//   - name: Required during company update. The resource name for a
+//     company. This is generated by the service when a company is
+//     created. The format is
+//     "projects/{project_id}/companies/{company_id}", for example,
+//     "projects/api-test-project/companies/foo".
 func (r *ProjectsCompaniesService) Patch(name string, updatecompanyrequest *UpdateCompanyRequest) *ProjectsCompaniesPatchCall {
 	c := &ProjectsCompaniesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4929,9 +4934,9 @@ type ProjectsJobsBatchDeleteCall struct {
 
 // BatchDelete: Deletes a list of Jobs by filter.
 //
-// - parent: The resource name of the project under which the job is
-//   created. The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: The resource name of the project under which the job is
+//     created. The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsJobsService) BatchDelete(parent string, batchdeletejobsrequest *BatchDeleteJobsRequest) *ProjectsJobsBatchDeleteCall {
 	c := &ProjectsJobsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5075,9 +5080,9 @@ type ProjectsJobsCreateCall struct {
 // Create: Creates a new job. Typically, the job becomes searchable
 // within 10 seconds, but it may take up to 5 minutes.
 //
-// - parent: The resource name of the project under which the job is
-//   created. The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: The resource name of the project under which the job is
+//     created. The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsJobsService) Create(parent string, createjobrequest *CreateJobRequest) *ProjectsJobsCreateCall {
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5220,9 +5225,9 @@ type ProjectsJobsDeleteCall struct {
 // Delete: Deletes the specified job. Typically, the job becomes
 // unsearchable within 10 seconds, but it may take up to 5 minutes.
 //
-// - name: The resource name of the job to be deleted. The format is
-//   "projects/{project_id}/jobs/{job_id}", for example,
-//   "projects/api-test-project/jobs/1234".
+//   - name: The resource name of the job to be deleted. The format is
+//     "projects/{project_id}/jobs/{job_id}", for example,
+//     "projects/api-test-project/jobs/1234".
 func (r *ProjectsJobsService) Delete(name string) *ProjectsJobsDeleteCall {
 	c := &ProjectsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5357,9 +5362,9 @@ type ProjectsJobsGetCall struct {
 // Get: Retrieves the specified job, whose status is OPEN or recently
 // EXPIRED within the last 90 days.
 //
-// - name: The resource name of the job to retrieve. The format is
-//   "projects/{project_id}/jobs/{job_id}", for example,
-//   "projects/api-test-project/jobs/1234".
+//   - name: The resource name of the job to retrieve. The format is
+//     "projects/{project_id}/jobs/{job_id}", for example,
+//     "projects/api-test-project/jobs/1234".
 func (r *ProjectsJobsService) Get(name string) *ProjectsJobsGetCall {
 	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5506,9 +5511,9 @@ type ProjectsJobsListCall struct {
 
 // List: Lists jobs by filter.
 //
-// - parent: The resource name of the project under which the job is
-//   created. The format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: The resource name of the project under which the job is
+//     created. The format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5537,17 +5542,25 @@ func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 // JobView.JOB_VIEW_FULL if no value is specified.
 //
 // Possible values:
-//   "JOB_VIEW_UNSPECIFIED" - Default value.
-//   "JOB_VIEW_ID_ONLY" - A ID only view of job, with following
+//
+//	"JOB_VIEW_UNSPECIFIED" - Default value.
+//	"JOB_VIEW_ID_ONLY" - A ID only view of job, with following
+//
 // attributes: Job.name, Job.requisition_id, Job.language_code.
-//   "JOB_VIEW_MINIMAL" - A minimal view of the job, with the following
+//
+//	"JOB_VIEW_MINIMAL" - A minimal view of the job, with the following
+//
 // attributes: Job.name, Job.requisition_id, Job.title,
 // Job.company_name, Job.DerivedInfo.locations, Job.language_code.
-//   "JOB_VIEW_SMALL" - A small view of the job, with the following
+//
+//	"JOB_VIEW_SMALL" - A small view of the job, with the following
+//
 // attributes in the search results: Job.name, Job.requisition_id,
 // Job.title, Job.company_name, Job.DerivedInfo.locations,
 // Job.visibility, Job.language_code, Job.description.
-//   "JOB_VIEW_FULL" - All available attributes are included in the
+//
+//	"JOB_VIEW_FULL" - All available attributes are included in the
+//
 // search results.
 func (c *ProjectsJobsListCall) JobView(jobView string) *ProjectsJobsListCall {
 	c.urlParams_.Set("jobView", jobView)
@@ -5769,12 +5782,12 @@ type ProjectsJobsPatchCall struct {
 // visible in search results within 10 seconds, but it may take up to 5
 // minutes.
 //
-// - name: Required during job update. The resource name for the job.
-//   This is generated by the service when a job is created. The format
-//   is "projects/{project_id}/jobs/{job_id}", for example,
-//   "projects/api-test-project/jobs/1234". Use of this field in job
-//   queries and API calls is preferred over the use of requisition_id
-//   since this value is unique.
+//   - name: Required during job update. The resource name for the job.
+//     This is generated by the service when a job is created. The format
+//     is "projects/{project_id}/jobs/{job_id}", for example,
+//     "projects/api-test-project/jobs/1234". Use of this field in job
+//     queries and API calls is preferred over the use of requisition_id
+//     since this value is unique.
 func (r *ProjectsJobsService) Patch(name string, updatejobrequest *UpdateJobRequest) *ProjectsJobsPatchCall {
 	c := &ProjectsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5919,9 +5932,9 @@ type ProjectsJobsSearchCall struct {
 // call constrains the visibility of jobs present in the database, and
 // only returns jobs that the caller has permission to search against.
 //
-// - parent: The resource name of the project to search within. The
-//   format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: The resource name of the project to search within. The
+//     format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsJobsService) Search(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsJobsSearchCall {
 	c := &ProjectsJobsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6092,9 +6105,9 @@ type ProjectsJobsSearchForAlertCall struct {
 // present in the database, and only returns jobs the caller has
 // permission to search against.
 //
-// - parent: The resource name of the project to search within. The
-//   format is "projects/{project_id}", for example,
-//   "projects/api-test-project".
+//   - parent: The resource name of the project to search within. The
+//     format is "projects/{project_id}", for example,
+//     "projects/api-test-project".
 func (r *ProjectsJobsService) SearchForAlert(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsJobsSearchForAlertCall {
 	c := &ProjectsJobsSearchForAlertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

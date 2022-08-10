@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/kubernetes-engine/docs/concepts/add-on/service-broker
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/servicebroker/v1alpha1"
-//   ...
-//   ctx := context.Background()
-//   servicebrokerService, err := servicebroker.NewService(ctx)
+//	import "google.golang.org/api/servicebroker/v1alpha1"
+//	...
+//	ctx := context.Background()
+//	servicebrokerService, err := servicebroker.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   servicebrokerService, err := servicebroker.NewService(ctx, option.WithAPIKey("AIza..."))
+//	servicebrokerService, err := servicebroker.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   servicebrokerService, err := servicebroker.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	servicebrokerService, err := servicebroker.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicebroker // import "google.golang.org/api/servicebroker/v1alpha1"
@@ -1154,7 +1154,6 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // which specifies access
 // controls for Google Cloud resources.
 //
-//
 // A `Policy` is a collection of `bindings`. A `binding` binds one or
 // more
 // `members` to a single `role`. Members can be user accounts, service
@@ -1175,52 +1174,56 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //
 // **JSON example:**
 //
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
+//	{
+//	  "bindings": [
+//	    {
+//	      "role": "roles/resourcemanager.organizationAdmin",
+//	      "members": [
+//	        "user:mike@example.com",
+//	        "group:admins@example.com",
+//	        "domain:google.com",
 //
 // "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
+//
+//	  ]
+//	},
+//	{
+//	  "role": "roles/resourcemanager.organizationViewer",
+//	  "members": ["user:eve@example.com"],
+//	  "condition": {
+//	    "title": "expirable access",
+//	    "description": "Does not grant access after Sep 2020",
+//	    "expression": "request.time <
+//
 // timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
+//
+//	      }
+//	    }
+//	  ],
+//	  "etag": "BwWWja0YfJA=",
+//	  "version": 3
+//	}
 //
 // **YAML example:**
 //
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
+//	bindings:
+//	- members:
+//	  - user:mike@example.com
+//	  - group:admins@example.com
+//	  - domain:google.com
+//	  - serviceAccount:my-project-id@appspot.gserviceaccount.com
+//	  role: roles/resourcemanager.organizationAdmin
+//	- members:
+//	  - user:eve@example.com
+//	  role: roles/resourcemanager.organizationViewer
+//	  condition:
+//	    title: expirable access
+//	    description: Does not grant access after Sep 2020
+//	    expression: request.time <
+//
 // timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
+//   - etag: BwWWja0YfJA=
+//   - version: 3
 //
 // For a description of IAM and its features, see the
 // [IAM documentation](https://cloud.google.com/iam/docs/).
@@ -1419,9 +1422,9 @@ func (s *GoogleIamV1__TestIamPermissionsResponse) MarshalJSON() ([]byte, error) 
 
 // GoogleType__Expr: Represents an expression text. Example:
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+//	title: "User account presence"
+//	description: "Determines whether the request has a user account"
+//	expression: "size(request.user) > 0"
 type GoogleType__Expr struct {
 	// Description: An optional description of the expression. This is a
 	// longer text which
@@ -1640,7 +1643,8 @@ func (r *ProjectsBrokersInstancesServiceBindingsService) List(parent string) *Pr
 // PageSize sets the optional parameter "pageSize": Specifies the number
 // of results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
-//  If unset or 0, all the results will be returned.
+//
+//	If unset or 0, all the results will be returned.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) PageSize(pageSize int64) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1838,7 +1842,8 @@ func (r *ProjectsBrokersServiceInstancesService) List(parent string) *ProjectsBr
 // PageSize sets the optional parameter "pageSize": Specifies the number
 // of results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
-//  If unset or 0, all the results will be returned.
+//
+//	If unset or 0, all the results will be returned.
 func (c *ProjectsBrokersServiceInstancesListCall) PageSize(pageSize int64) *ProjectsBrokersServiceInstancesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2038,7 +2043,8 @@ func (r *ProjectsBrokersV2CatalogService) List(parent string) *ProjectsBrokersV2
 // PageSize sets the optional parameter "pageSize": Specifies the number
 // of results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
-//  If unset or 0, all the results will be returned.
+//
+//	If unset or 0, all the results will be returned.
 func (c *ProjectsBrokersV2CatalogListCall) PageSize(pageSize int64) *ProjectsBrokersV2CatalogListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/billing/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudbilling/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudbillingService, err := cloudbilling.NewService(ctx)
+//	import "google.golang.org/api/cloudbilling/v1"
+//	...
+//	ctx := context.Background()
+//	cloudbillingService, err := cloudbilling.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithScopes(cloudbilling.CloudPlatformScope))
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithScopes(cloudbilling.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudbillingService, err := cloudbilling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudbillingService, err := cloudbilling.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudbilling // import "google.golang.org/api/cloudbilling/v1"
@@ -1535,8 +1535,8 @@ type BillingAccountsGetCall struct {
 // authenticated user must be a viewer of the billing account
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-// - name: The resource name of the billing account to retrieve. For
-//   example, `billingAccounts/012345-567890-ABCDEF`.
+//   - name: The resource name of the billing account to retrieve. For
+//     example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1687,10 +1687,10 @@ type BillingAccountsGetIamPolicyCall struct {
 // on the account, which is often given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2227,10 +2227,10 @@ type BillingAccountsSetIamPolicyCall struct {
 // often given to billing account administrators
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2376,10 +2376,10 @@ type BillingAccountsTestIamPermissionsCall struct {
 // input and returns the subset of the input permissions that the caller
 // is allowed for that resource.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *BillingAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *BillingAccountsTestIamPermissionsCall {
 	c := &BillingAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2527,9 +2527,9 @@ type BillingAccountsProjectsListCall struct {
 // given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-// - name: The resource name of the billing account associated with the
-//   projects that you want to list. For example,
-//   `billingAccounts/012345-567890-ABCDEF`.
+//   - name: The resource name of the billing account associated with the
+//     projects that you want to list. For example,
+//     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
 	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2731,8 +2731,8 @@ type ProjectsGetBillingInfoCall struct {
 // (https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
 // role.
 //
-// - name: The resource name of the project for which billing
-//   information is retrieved. For example, `projects/tokyo-rain-123`.
+//   - name: The resource name of the project for which billing
+//     information is retrieved. For example, `projects/tokyo-rain-123`.
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2907,9 +2907,9 @@ type ProjectsUpdateBillingInfoCall struct {
 // be shut down. Thus, unless you wish to disable billing, you should
 // always call this method with the name of an *open* billing account.
 //
-// - name: The resource name of the project associated with the billing
-//   information that you want to update. For example,
-//   `projects/tokyo-rain-123`.
+//   - name: The resource name of the project associated with the billing
+//     information that you want to update. For example,
+//     `projects/tokyo-rain-123`.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
 	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

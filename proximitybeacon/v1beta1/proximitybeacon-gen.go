@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/beacons/proximity/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/proximitybeacon/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   proximitybeaconService, err := proximitybeacon.NewService(ctx)
+//	import "google.golang.org/api/proximitybeacon/v1beta1"
+//	...
+//	ctx := context.Background()
+//	proximitybeaconService, err := proximitybeacon.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   proximitybeaconService, err := proximitybeacon.NewService(ctx, option.WithAPIKey("AIza..."))
+//	proximitybeaconService, err := proximitybeacon.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   proximitybeaconService, err := proximitybeacon.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	proximitybeaconService, err := proximitybeacon.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package proximitybeacon // import "google.golang.org/api/proximitybeacon/v1beta1"
@@ -783,10 +783,12 @@ func (s *Diagnostics) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type Empty struct {
@@ -803,25 +805,36 @@ type Empty struct {
 //
 // 1. Perform an ECDH key exchange via this API, including a previous
 // call
-//    to `GET /v1beta1/eidparams`. In this case the fields
-//    `beacon_ecdh_public_key` and `service_ecdh_public_key` should be
-//    populated and `beacon_identity_key` should not be populated. This
-//    method ensures that only the two parties in the ECDH key exchange
+//
+//	to `GET /v1beta1/eidparams`. In this case the fields
+//	`beacon_ecdh_public_key` and `service_ecdh_public_key` should be
+//	populated and `beacon_identity_key` should not be populated. This
+//	method ensures that only the two parties in the ECDH key exchange
+//
 // can
-//    compute the identity key, which becomes a secret between them.
-// 2. Derive or obtain the beacon's identity key via other secure means
-//    (perhaps an ECDH key exchange between the beacon and a mobile
+//
+//		compute the identity key, which becomes a secret between them.
+//	 2. Derive or obtain the beacon's identity key via other secure means
+//	    (perhaps an ECDH key exchange between the beacon and a mobile
+//
 // device
-//    or any other secure method), and then submit the resulting
+//
+//	or any other secure method), and then submit the resulting
+//
 // identity key
-//    to the service. In this case `beacon_identity_key` field should
+//
+//	to the service. In this case `beacon_identity_key` field should
+//
 // be
-//    populated, and neither of `beacon_ecdh_public_key` nor
-//    `service_ecdh_public_key` fields should be. The security of this
+//
+//	populated, and neither of `beacon_ecdh_public_key` nor
+//	`service_ecdh_public_key` fields should be. The security of this
+//
 // method
-//    depends on how securely the parties involved (in particular the
-//    bluetooth client) handle the identity key, and obviously on how
-//    securely the identity key was generated.
+//
+//	depends on how securely the parties involved (in particular the
+//	bluetooth client) handle the identity key, and obviously on how
+//	securely the identity key was generated.
 //
 // See [the
 // Eddystone
@@ -1529,7 +1542,9 @@ type BeaconsActivateCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -1689,7 +1704,9 @@ type BeaconsDeactivateCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -1848,7 +1865,9 @@ type BeaconsDecommissionCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -2005,7 +2024,9 @@ type BeaconsDeleteCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -2158,7 +2179,9 @@ type BeaconsGetCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **viewer**, **Is owner** or **Can edit**
 // permissions in
 // the Google Developers Console project.
@@ -2338,7 +2361,9 @@ type BeaconsListCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **viewer**, **Is owner** or **Can edit**
 // permissions in
 // the Google Developers Console project.
@@ -2373,76 +2398,108 @@ func (c *BeaconsListCall) ProjectId(projectId string) *BeaconsListCall {
 // Q sets the optional parameter "q": Filter query string that supports
 // the following field filters:
 //
-// * **description:"<string>"**
-//   For example: **description:"Room 3"**
-//   Returns beacons whose description matches tokens in the string
+//   - **description:"<string>"**
+//     For example: **description:"Room 3"**
+//     Returns beacons whose description matches tokens in the string
+//
 // "Room 3"
-//   (not necessarily that exact string).
-//   The string must be double-quoted.
-// * **status:`<enum>`**
-//   For example: **status:active**
-//   Returns beacons whose status matches the given value. Values must
+//
+//		(not necessarily that exact string).
+//		The string must be double-quoted.
+//	  - **status:`<enum>`**
+//	    For example: **status:active**
+//	    Returns beacons whose status matches the given value. Values must
+//
 // be
-//   one of the Beacon.Status enum values (case insensitive). Accepts
-//   multiple filters which will be combined with OR logic.
-// * **stability:`<enum>`**
-//   For example: **stability:mobile**
-//   Returns beacons whose expected stability matches the given value.
-//   Values must be one of the Beacon.Stability enum values (case
-//   insensitive). Accepts multiple filters which will be combined with
-//   OR logic.
-// * **place\_id:"<string>"**
-//   For example: **place\_id:"ChIJVSZzVR8FdkgRXGmmm6SslKw="**
-//   Returns beacons explicitly registered at the given place, expressed
+//
+//		one of the Beacon.Status enum values (case insensitive). Accepts
+//		multiple filters which will be combined with OR logic.
+//	  - **stability:`<enum>`**
+//	    For example: **stability:mobile**
+//	    Returns beacons whose expected stability matches the given value.
+//	    Values must be one of the Beacon.Stability enum values (case
+//	    insensitive). Accepts multiple filters which will be combined with
+//	    OR logic.
+//	  - **place\_id:"<string>"**
+//	    For example: **place\_id:"ChIJVSZzVR8FdkgRXGmmm6SslKw="**
+//	    Returns beacons explicitly registered at the given place, expressed
+//
 // as
-//   a Place ID obtained from [Google Places API](/places/place-id).
+//
+//	a Place ID obtained from [Google Places API](/places/place-id).
+//
 // Does not
-//   match places inside the given place. Does not consider the
+//
+//	match places inside the given place. Does not consider the
+//
 // beacon's
-//   actual location (which may be different from its registered
+//
+//	actual location (which may be different from its registered
+//
 // place).
-//   Accepts multiple filters that will be combined with OR logic. The
+//
+//	Accepts multiple filters that will be combined with OR logic. The
+//
 // place
-//   ID must be double-quoted.
-// * **registration\_time`[<|>|<=|>=]<integer>`**
-//   For example: **registration\_time>=1433116800**
-//   Returns beacons whose registration time matches the given filter.
-//   Supports the operators: <, >, <=, and >=. Timestamp must be
+//
+//		ID must be double-quoted.
+//	  - **registration\_time`[<|>|<=|>=]<integer>`**
+//	    For example: **registration\_time>=1433116800**
+//	    Returns beacons whose registration time matches the given filter.
+//	    Supports the operators: <, >, <=, and >=. Timestamp must be
+//
 // expressed as
-//   an integer number of seconds since midnight January 1, 1970 UTC.
+//
+//	an integer number of seconds since midnight January 1, 1970 UTC.
+//
 // Accepts
-//   at most two filters that will be combined with AND logic, to
+//
+//	at most two filters that will be combined with AND logic, to
+//
 // support
-//   "between" semantics. If more than two are supplied, the latter ones
+//
+//	"between" semantics. If more than two are supplied, the latter ones
+//
 // are
-//   ignored.
-// * **lat:`<double> lng:<double> radius:<integer>`**
-//   For example: **lat:51.1232343 lng:-1.093852 radius:1000**
-//   Returns beacons whose registered location is within the given
+//
+//		ignored.
+//	  - **lat:`<double> lng:<double> radius:<integer>`**
+//	    For example: **lat:51.1232343 lng:-1.093852 radius:1000**
+//	    Returns beacons whose registered location is within the given
+//
 // circle.
-//   When any of these fields are given, all are required. Latitude and
-//   longitude must be decimal degrees between -90.0 and 90.0 and
+//
+//	When any of these fields are given, all are required. Latitude and
+//	longitude must be decimal degrees between -90.0 and 90.0 and
+//
 // between
-//   -180.0 and 180.0 respectively. Radius must be an integer number of
-//   meters between 10 and 1,000,000 (1000 km).
-// * **property:"<string>=<string>"**
-//   For example: **property:"battery-type=CR2032"**
-//   Returns beacons which have a property of the given name and value.
-//   Supports multiple filters which will be combined with OR logic.
-//   The entire name=value string must be double-quoted as one string.
-// * **attachment\_type:"<string>"**
-//   For example: **attachment_type:"my-namespace/my-type"**
-//   Returns beacons having at least one attachment of the given
+//
+//		-180.0 and 180.0 respectively. Radius must be an integer number of
+//		meters between 10 and 1,000,000 (1000 km).
+//	  - **property:"<string>=<string>"**
+//	    For example: **property:"battery-type=CR2032"**
+//	    Returns beacons which have a property of the given name and value.
+//	    Supports multiple filters which will be combined with OR logic.
+//	    The entire name=value string must be double-quoted as one string.
+//	  - **attachment\_type:"<string>"**
+//	    For example: **attachment_type:"my-namespace/my-type"**
+//	    Returns beacons having at least one attachment of the given
+//
 // namespaced
-//   type. Supports "any within this namespace" via the partial
+//
+//	type. Supports "any within this namespace" via the partial
+//
 // wildcard
-//   syntax: "my-namespace/*". Supports multiple filters which will be
-//   combined with OR logic. The string must be double-quoted.
-// * **indoor\_level:"<string>"**
-//   For example: **indoor\_level:"1"**
-//   Returns beacons which are located on the given indoor level.
+//
+//		syntax: "my-namespace/*". Supports multiple filters which will be
+//		combined with OR logic. The string must be double-quoted.
+//	  - **indoor\_level:"<string>"**
+//	    For example: **indoor\_level:"1"**
+//	    Returns beacons which are located on the given indoor level.
+//
 // Accepts
-//   multiple filters that will be combined with OR logic.
+//
+//	multiple filters that will be combined with OR logic.
 //
 // Multiple filters on the same field are combined with OR logic
 // (except
@@ -2639,7 +2696,9 @@ type BeaconsRegisterCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -2800,7 +2859,9 @@ type BeaconsUpdateCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -2972,7 +3033,9 @@ type BeaconsAttachmentsBatchDeleteCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -3159,7 +3222,9 @@ type BeaconsAttachmentsCreateCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -3329,7 +3394,9 @@ type BeaconsAttachmentsDeleteCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **Is owner** or **Can edit** permissions in the
 // Google
 // Developers Console project.
@@ -3490,7 +3557,9 @@ type BeaconsAttachmentsListCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **viewer**, **Is owner** or **Can edit**
 // permissions in
 // the Google Developers Console project.
@@ -3679,7 +3748,9 @@ type BeaconsDiagnosticsListCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **viewer**, **Is owner** or **Can edit**
 // permissions in
 // the Google Developers Console project.
@@ -3694,10 +3765,11 @@ func (r *BeaconsDiagnosticsService) List(beaconName string) *BeaconsDiagnosticsL
 // beacons that have low batteries use `alert_filter=LOW_BATTERY`.
 //
 // Possible values:
-//   "ALERT_UNSPECIFIED"
-//   "WRONG_LOCATION"
-//   "LOW_BATTERY"
-//   "LOW_ACTIVITY"
+//
+//	"ALERT_UNSPECIFIED"
+//	"WRONG_LOCATION"
+//	"LOW_BATTERY"
+//	"LOW_ACTIVITY"
 func (c *BeaconsDiagnosticsListCall) AlertFilter(alertFilter string) *BeaconsDiagnosticsListCall {
 	c.urlParams_.Set("alertFilter", alertFilter)
 	return c
@@ -3923,7 +3995,9 @@ type NamespacesListCall struct {
 // Authenticate using an [OAuth
 // access
 // token](https://developers.google.com/identity/protocols/OAuth2)
-//  from a
+//
+//	from a
+//
 // signed-in user with **viewer**, **Is owner** or **Can edit**
 // permissions in
 // the Google Developers Console project.

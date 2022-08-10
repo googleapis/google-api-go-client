@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/playmoviespartner/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/playmoviespartner/v1"
-//   ...
-//   ctx := context.Background()
-//   playmoviespartnerService, err := playmoviespartner.NewService(ctx)
+//	import "google.golang.org/api/playmoviespartner/v1"
+//	...
+//	ctx := context.Background()
+//	playmoviespartnerService, err := playmoviespartner.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   playmoviespartnerService, err := playmoviespartner.NewService(ctx, option.WithAPIKey("AIza..."))
+//	playmoviespartnerService, err := playmoviespartner.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   playmoviespartnerService, err := playmoviespartner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	playmoviespartnerService, err := playmoviespartner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package playmoviespartner // import "google.golang.org/api/playmoviespartner/v1"
@@ -1591,12 +1591,13 @@ func (c *AccountsOrdersListCall) PphNames(pphNames ...string) *AccountsOrdersLis
 // one of the given status.
 //
 // Possible values:
-//   "STATUS_UNSPECIFIED"
-//   "STATUS_APPROVED"
-//   "STATUS_FAILED"
-//   "STATUS_PROCESSING"
-//   "STATUS_UNFULFILLED"
-//   "STATUS_NOT_AVAILABLE"
+//
+//	"STATUS_UNSPECIFIED"
+//	"STATUS_APPROVED"
+//	"STATUS_FAILED"
+//	"STATUS_PROCESSING"
+//	"STATUS_UNFULFILLED"
+//	"STATUS_NOT_AVAILABLE"
 func (c *AccountsOrdersListCall) Status(status ...string) *AccountsOrdersListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c

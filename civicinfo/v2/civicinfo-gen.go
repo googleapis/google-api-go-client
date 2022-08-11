@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/civic-information/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/civicinfo/v2"
-//	...
-//	ctx := context.Background()
-//	civicinfoService, err := civicinfo.NewService(ctx)
+//   import "google.golang.org/api/civicinfo/v2"
+//   ...
+//   ctx := context.Background()
+//   civicinfoService, err := civicinfo.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	civicinfoService, err := civicinfo.NewService(ctx, option.WithAPIKey("AIza..."))
+//   civicinfoService, err := civicinfo.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	civicinfoService, err := civicinfo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   civicinfoService, err := civicinfo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package civicinfo // import "google.golang.org/api/civicinfo/v2"
@@ -2621,16 +2621,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 // not be returned.
 //
 // Possible values:
-//
-//	"international"
-//	"country"
-//	"administrativeArea1"
-//	"regional"
-//	"administrativeArea2"
-//	"locality"
-//	"subLocality1"
-//	"subLocality2"
-//	"special"
+//   "international"
+//   "country"
+//   "administrativeArea1"
+//   "regional"
+//   "administrativeArea2"
+//   "locality"
+//   "subLocality1"
+//   "subLocality2"
+//   "special"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2642,19 +2641,18 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 // returned.
 //
 // Possible values:
-//
-//	"headOfState"
-//	"headOfGovernment"
-//	"deputyHeadOfGovernment"
-//	"governmentOfficer"
-//	"executiveCouncil"
-//	"legislatorUpperBody"
-//	"legislatorLowerBody"
-//	"highestCourtJudge"
-//	"judge"
-//	"schoolBoard"
-//	"specialPurposeOfficer"
-//	"otherRole"
+//   "headOfState"
+//   "headOfGovernment"
+//   "deputyHeadOfGovernment"
+//   "governmentOfficer"
+//   "executiveCouncil"
+//   "legislatorUpperBody"
+//   "legislatorLowerBody"
+//   "highestCourtJudge"
+//   "judge"
+//   "schoolBoard"
+//   "specialPurposeOfficer"
+//   "otherRole"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
@@ -2858,8 +2856,8 @@ type RepresentativesRepresentativeInfoByDivisionCall struct {
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
 //
-//   - ocdId: The Open Civic Data division identifier of the division to
-//     look up.
+// - ocdId: The Open Civic Data division identifier of the division to
+//   look up.
 func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId
@@ -2872,16 +2870,15 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 // not be returned.
 //
 // Possible values:
-//
-//	"international"
-//	"country"
-//	"administrativeArea1"
-//	"regional"
-//	"administrativeArea2"
-//	"locality"
-//	"subLocality1"
-//	"subLocality2"
-//	"special"
+//   "international"
+//   "country"
+//   "administrativeArea1"
+//   "regional"
+//   "administrativeArea2"
+//   "locality"
+//   "subLocality1"
+//   "subLocality2"
+//   "special"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
@@ -2903,19 +2900,18 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 // returned.
 //
 // Possible values:
-//
-//	"headOfState"
-//	"headOfGovernment"
-//	"deputyHeadOfGovernment"
-//	"governmentOfficer"
-//	"executiveCouncil"
-//	"legislatorUpperBody"
-//	"legislatorLowerBody"
-//	"highestCourtJudge"
-//	"judge"
-//	"schoolBoard"
-//	"specialPurposeOfficer"
-//	"otherRole"
+//   "headOfState"
+//   "headOfGovernment"
+//   "deputyHeadOfGovernment"
+//   "governmentOfficer"
+//   "executiveCouncil"
+//   "legislatorUpperBody"
+//   "legislatorLowerBody"
+//   "highestCourtJudge"
+//   "judge"
+//   "schoolBoard"
+//   "specialPurposeOfficer"
+//   "otherRole"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c

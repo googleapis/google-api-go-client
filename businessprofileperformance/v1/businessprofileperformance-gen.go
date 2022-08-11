@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/my-business/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/businessprofileperformance/v1"
-//	...
-//	ctx := context.Background()
-//	businessprofileperformanceService, err := businessprofileperformance.NewService(ctx)
+//   import "google.golang.org/api/businessprofileperformance/v1"
+//   ...
+//   ctx := context.Background()
+//   businessprofileperformanceService, err := businessprofileperformance.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	businessprofileperformanceService, err := businessprofileperformance.NewService(ctx, option.WithAPIKey("AIza..."))
+//   businessprofileperformanceService, err := businessprofileperformance.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	businessprofileperformanceService, err := businessprofileperformance.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   businessprofileperformanceService, err := businessprofileperformance.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package businessprofileperformance // import "google.golang.org/api/businessprofileperformance/v1"
@@ -434,9 +434,9 @@ type LocationsGetDailyMetricsTimeSeriesCall struct {
 // Example request: `GET
 // https://businessprofileperformance.googleapis.com/v1/locations/12345:getDailyMetricsTimeSeries?dailyMetric=WEBSITE_CLICKS&daily_range.start_date.year=2022&daily_range.start_date.month=1&daily_range.start_date.day=1&daily_range.end_date.year=2022&daily_range.end_date.month=3&daily_range.end_date.day=31`
 //
-//   - name: The location for which the time series should be fetched.
-//     Format: locations/{location_id} where location_id is an
-//     unobfuscated listing id.
+// - name: The location for which the time series should be fetched.
+//   Format: locations/{location_id} where location_id is an
+//   unobfuscated listing id.
 func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetDailyMetricsTimeSeriesCall {
 	c := &LocationsGetDailyMetricsTimeSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -447,50 +447,30 @@ func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetD
 // metric to retrieve time series.
 //
 // Possible values:
-//
-//	"DAILY_METRIC_UNKNOWN" - Represents the default unknown value.
-//	"BUSINESS_IMPRESSIONS_DESKTOP_MAPS" - Business impressions on
-//
+//   "DAILY_METRIC_UNKNOWN" - Represents the default unknown value.
+//   "BUSINESS_IMPRESSIONS_DESKTOP_MAPS" - Business impressions on
 // Google Maps on Desktop devices. Multiple impressions by a unique user
 // within a single day are counted as a single impression.
-//
-//	"BUSINESS_IMPRESSIONS_DESKTOP_SEARCH" - Business impressions on
-//
+//   "BUSINESS_IMPRESSIONS_DESKTOP_SEARCH" - Business impressions on
 // Google Search on Desktop devices. Multiple impressions by a unique
 // user within a single day are counted as a single impression.
-//
-//	"BUSINESS_IMPRESSIONS_MOBILE_MAPS" - Business impressions on Google
-//
+//   "BUSINESS_IMPRESSIONS_MOBILE_MAPS" - Business impressions on Google
 // Maps on Mobile devices. Multiple impressions by a unique user within
 // a single day are counted as a single impression.
-//
-//	"BUSINESS_IMPRESSIONS_MOBILE_SEARCH" - Business impressions on
-//
+//   "BUSINESS_IMPRESSIONS_MOBILE_SEARCH" - Business impressions on
 // Google Search on Mobile devices. Multiple impressions by a unique
 // user within a single day are counted as a single impression.
-//
-//	"BUSINESS_CONVERSATIONS" - The number of message conversations
-//
+//   "BUSINESS_CONVERSATIONS" - The number of message conversations
 // received on the business profile.
-//
-//	"BUSINESS_DIRECTION_REQUESTS" - The number of times a direction
-//
+//   "BUSINESS_DIRECTION_REQUESTS" - The number of times a direction
 // request was requested to the business location.
-//
-//	"CALL_CLICKS" - The number of times the business profile call
-//
+//   "CALL_CLICKS" - The number of times the business profile call
 // button was clicked.
-//
-//	"WEBSITE_CLICKS" - The number of times the business profile website
-//
+//   "WEBSITE_CLICKS" - The number of times the business profile website
 // was clicked.
-//
-//	"BUSINESS_BOOKINGS" - The number of bookings received from the
-//
+//   "BUSINESS_BOOKINGS" - The number of bookings received from the
 // business profile.
-//
-//	"BUSINESS_FOOD_ORDERS" - The number of food orders received from
-//
+//   "BUSINESS_FOOD_ORDERS" - The number of food orders received from
 // the business profile.
 func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyMetric(dailyMetric string) *LocationsGetDailyMetricsTimeSeriesCall {
 	c.urlParams_.Set("dailyMetric", dailyMetric)
@@ -552,15 +532,14 @@ func (c *LocationsGetDailyMetricsTimeSeriesCall) DailyRangeStartDateYear(dailyRa
 // MONDAY.
 //
 // Possible values:
-//
-//	"DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
-//	"MONDAY" - Monday
-//	"TUESDAY" - Tuesday
-//	"WEDNESDAY" - Wednesday
-//	"THURSDAY" - Thursday
-//	"FRIDAY" - Friday
-//	"SATURDAY" - Saturday
-//	"SUNDAY" - Sunday
+//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+//   "MONDAY" - Monday
+//   "TUESDAY" - Tuesday
+//   "WEDNESDAY" - Wednesday
+//   "THURSDAY" - Thursday
+//   "FRIDAY" - Friday
+//   "SATURDAY" - Saturday
+//   "SUNDAY" - Sunday
 func (c *LocationsGetDailyMetricsTimeSeriesCall) DailySubEntityTypeDayOfWeek(dailySubEntityTypeDayOfWeek string) *LocationsGetDailyMetricsTimeSeriesCall {
 	c.urlParams_.Set("dailySubEntityType.dayOfWeek", dailySubEntityTypeDayOfWeek)
 	return c
@@ -856,9 +835,9 @@ type LocationsSearchkeywordsImpressionsMonthlyListCall struct {
 // aggregated on a monthly basis. Example request: `GET
 // https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022&monthly_range.start_month.month=1&monthly_range.end_month.year=2022&monthly_range.end_month.month=3`
 //
-//   - parent: The location for which the time series should be fetched.
-//     Format: locations/{location_id} where location_id is an
-//     unobfuscated listing id.
+// - parent: The location for which the time series should be fetched.
+//   Format: locations/{location_id} where location_id is an
+//   unobfuscated listing id.
 func (r *LocationsSearchkeywordsImpressionsMonthlyService) List(parent string) *LocationsSearchkeywordsImpressionsMonthlyListCall {
 	c := &LocationsSearchkeywordsImpressionsMonthlyListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

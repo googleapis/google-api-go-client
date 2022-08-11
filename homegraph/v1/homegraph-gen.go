@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/actions/smarthome/create-app#request-sync
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/homegraph/v1"
-//	...
-//	ctx := context.Background()
-//	homegraphService, err := homegraph.NewService(ctx)
+//   import "google.golang.org/api/homegraph/v1"
+//   ...
+//   ctx := context.Background()
+//   homegraphService, err := homegraph.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	homegraphService, err := homegraph.NewService(ctx, option.WithAPIKey("AIza..."))
+//   homegraphService, err := homegraph.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	homegraphService, err := homegraph.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   homegraphService, err := homegraph.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package homegraph // import "google.golang.org/api/homegraph/v1"
@@ -583,9 +583,7 @@ func (s *ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 // ReportStateAndNotificationRequest: Request type for the
 // `ReportStateAndNotification`
 // (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
-//
-//	call. It may include states, notifications, or both. States and
-//
+//  call. It may include states, notifications, or both. States and
 // notifications are defined per `device_id` (for example, "123" and
 // "456" in the following example). # Example ```json { "requestId":
 // "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234",
@@ -634,8 +632,7 @@ func (s *ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 // ReportStateAndNotificationResponse: Response type for the
 // `ReportStateAndNotification`
 // (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
-//
-//	call.
+//  call.
 type ReportStateAndNotificationResponse struct {
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`

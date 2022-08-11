@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/payments/reseller/subscription/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/paymentsresellersubscription/v1"
-//	...
-//	ctx := context.Background()
-//	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx)
+//   import "google.golang.org/api/paymentsresellersubscription/v1"
+//   ...
+//   ctx := context.Background()
+//   paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithAPIKey("AIza..."))
+//   paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   paymentsresellersubscriptionService, err := paymentsresellersubscription.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package paymentsresellersubscription // import "google.golang.org/api/paymentsresellersubscription/v1"
@@ -1324,8 +1324,8 @@ type PartnersProductsListCall struct {
 // List: To retrieve the products that can be resold by the partner. It
 // should be autenticated with a service account.
 //
-//   - parent: The parent, the partner that can resell. Format:
-//     partners/{partner}.
+// - parent: The parent, the partner that can resell. Format:
+//   partners/{partner}.
 func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall {
 	c := &PartnersProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1542,8 +1542,8 @@ type PartnersPromotionsFindEligibleCall struct {
 // API requires user authorization via OAuth. The user is inferred from
 // the authenticated OAuth credential.
 //
-//   - parent: The parent, the partner that can resell. Format:
-//     partners/{partner}.
+// - parent: The parent, the partner that can resell. Format:
+//   partners/{partner}.
 func (r *PartnersPromotionsService) FindEligible(parent string, googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) *PartnersPromotionsFindEligibleCall {
 	c := &PartnersPromotionsFindEligibleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1710,8 +1710,8 @@ type PartnersPromotionsListCall struct {
 // used by the partner. It should be autenticated with a service
 // account.
 //
-//   - parent: The parent, the partner that can resell. Format:
-//     partners/{partner}.
+// - parent: The parent, the partner that can resell. Format:
+//   partners/{partner}.
 func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListCall {
 	c := &PartnersPromotionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1929,9 +1929,9 @@ type PartnersSubscriptionsCancelCall struct {
 // customers. It should be called directly by the partner using service
 // accounts.
 //
-//   - name: The name of the subscription resource to be cancelled. It
-//     will have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+// - name: The name of the subscription resource to be cancelled. It
+//   will have the format of
+//   "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Cancel(name string, googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) *PartnersSubscriptionsCancelCall {
 	c := &PartnersSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2076,8 +2076,8 @@ type PartnersSubscriptionsCreateCall struct {
 // inferred from the end user credentials. This API must be authorized
 // by the end user using OAuth.
 //
-//   - parent: The parent resource name, which is the identifier of the
-//     partner. It will have the format of "partners/{partner_id}".
+// - parent: The parent resource name, which is the identifier of the
+//   partner. It will have the format of "partners/{partner_id}".
 func (r *PartnersSubscriptionsService) Create(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsCreateCall {
 	c := &PartnersSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -2236,9 +2236,9 @@ type PartnersSubscriptionsEntitleCall struct {
 // inferred from the authorized credential of the request. This API must
 // be authorized by the end user using OAuth.
 //
-//   - name: The name of the subscription resource that is entitled to the
-//     current end user. It will have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+// - name: The name of the subscription resource that is entitled to the
+//   current end user. It will have the format of
+//   "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Entitle(name string, googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) *PartnersSubscriptionsEntitleCall {
 	c := &PartnersSubscriptionsEntitleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2383,9 +2383,9 @@ type PartnersSubscriptionsExtendCall struct {
 // and renewable. It should be called directly by the partner using
 // service accounts.
 //
-//   - name: The name of the subscription resource to be extended. It will
-//     have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+// - name: The name of the subscription resource to be extended. It will
+//   have the format of
+//   "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Extend(name string, googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) *PartnersSubscriptionsExtendCall {
 	c := &PartnersSubscriptionsExtendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2528,9 +2528,9 @@ type PartnersSubscriptionsGetCall struct {
 // Get: Used by partners to get a subscription by id. It should be
 // called directly by the partner using service accounts.
 //
-//   - name: The name of the subscription resource to retrieve. It will
-//     have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+// - name: The name of the subscription resource to retrieve. It will
+//   have the format of
+//   "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Get(name string) *PartnersSubscriptionsGetCall {
 	c := &PartnersSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2680,8 +2680,8 @@ type PartnersSubscriptionsProvisionCall struct {
 // the subscription. It should be called directly by the partner using
 // service accounts.
 //
-//   - parent: The parent resource name, which is the identifier of the
-//     partner. It will have the format of "partners/{partner_id}".
+// - parent: The parent resource name, which is the identifier of the
+//   partner. It will have the format of "partners/{partner_id}".
 func (r *PartnersSubscriptionsService) Provision(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsProvisionCall {
 	c := &PartnersSubscriptionsProvisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -2841,9 +2841,9 @@ type PartnersSubscriptionsUndoCancelCall struct {
 // fail. It should be called directly by the partner using service
 // accounts.
 //
-//   - name: The name of the subscription resource whose pending
-//     cancellation needs to be undone. It will have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+// - name: The name of the subscription resource whose pending
+//   cancellation needs to be undone. It will have the format of
+//   "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) UndoCancel(name string, googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest) *PartnersSubscriptionsUndoCancelCall {
 	c := &PartnersSubscriptionsUndoCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

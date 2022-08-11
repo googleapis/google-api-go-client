@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/adsense/management/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/adsense/v2"
-//	...
-//	ctx := context.Background()
-//	adsenseService, err := adsense.NewService(ctx)
+//   import "google.golang.org/api/adsense/v2"
+//   ...
+//   ctx := context.Background()
+//   adsenseService, err := adsense.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	adsenseService, err := adsense.NewService(ctx, option.WithScopes(adsense.AdsenseReadonlyScope))
+//   adsenseService, err := adsense.NewService(ctx, option.WithScopes(adsense.AdsenseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	adsenseService, err := adsense.NewService(ctx, option.WithAPIKey("AIza..."))
+//   adsenseService, err := adsense.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	adsenseService, err := adsense.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   adsenseService, err := adsense.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adsense // import "google.golang.org/api/adsense/v2"
@@ -479,10 +479,14 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AdUnitAdCode: Representation of the AdSense code for a given ad unit.
+// AdUnitAdCode: Representation of the ad unit code for a given ad unit.
+// For more information, see About the AdSense code
+// (https://support.google.com/adsense/answer/9274634) and Where to
+// place the ad code in your HTML
+// (https://support.google.com/adsense/answer/9190028).
 type AdUnitAdCode struct {
-	// AdCode: Output only. The AdSense code snippet to add to the body of
-	// an HTML page.
+	// AdCode: Output only. The code snippet to add to the body of an HTML
+	// page.
 	AdCode string `json:"adCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1915,8 +1919,8 @@ type AccountsListChildAccountsCall struct {
 // ListChildAccounts: Lists all accounts directly managed by the given
 // AdSense account.
 //
-//   - parent: The parent account, which owns the child accounts. Format:
-//     accounts/{account}.
+// - parent: The parent account, which owns the child accounts. Format:
+//   accounts/{account}.
 func (r *AccountsService) ListChildAccounts(parent string) *AccountsListChildAccountsCall {
 	c := &AccountsListChildAccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2114,8 +2118,8 @@ type AccountsAdclientsGetCall struct {
 
 // Get: Gets the ad client from the given resource name.
 //
-//   - name: The name of the ad client to retrieve. Format:
-//     accounts/{account}/adclients/{adclient}.
+// - name: The name of the ad client to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}.
 func (r *AccountsAdclientsService) Get(name string) *AccountsAdclientsGetCall {
 	c := &AccountsAdclientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2266,8 +2270,8 @@ type AccountsAdclientsGetAdcodeCall struct {
 // information, see About the AdSense code
 // (https://support.google.com/adsense/answer/9274634).
 //
-//   - name: Name of the ad client for which to get the adcode. Format:
-//     accounts/{account}/adclients/{adclient}.
+// - name: Name of the ad client for which to get the adcode. Format:
+//   accounts/{account}/adclients/{adclient}.
 func (r *AccountsAdclientsService) GetAdcode(name string) *AccountsAdclientsGetAdcodeCall {
 	c := &AccountsAdclientsGetAdcodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2414,8 +2418,8 @@ type AccountsAdclientsListCall struct {
 
 // List: Lists all the ad clients available in an account.
 //
-//   - parent: The account which owns the collection of ad clients.
-//     Format: accounts/{account}.
+// - parent: The account which owns the collection of ad clients.
+//   Format: accounts/{account}.
 func (r *AccountsAdclientsService) List(parent string) *AccountsAdclientsListCall {
 	c := &AccountsAdclientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2613,8 +2617,8 @@ type AccountsAdclientsAdunitsGetCall struct {
 
 // Get: Gets an ad unit from a specified account and ad client.
 //
-//   - name: AdUnit to get information about. Format:
-//     accounts/{account}/adclients/{adclient}/adunits/{adunit}.
+// - name: AdUnit to get information about. Format:
+//   accounts/{account}/adclients/{adclient}/adunits/{adunit}.
 func (r *AccountsAdclientsAdunitsService) Get(name string) *AccountsAdclientsAdunitsGetCall {
 	c := &AccountsAdclientsAdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2759,10 +2763,14 @@ type AccountsAdclientsAdunitsGetAdcodeCall struct {
 	header_      http.Header
 }
 
-// GetAdcode: Gets the AdSense code for a given ad unit.
+// GetAdcode: Gets the ad unit code for a given ad unit. For more
+// information, see About the AdSense code
+// (https://support.google.com/adsense/answer/9274634) and Where to
+// place the ad code in your HTML
+// (https://support.google.com/adsense/answer/9190028).
 //
-//   - name: Name of the adunit for which to get the adcode. Format:
-//     accounts/{account}/adclients/{adclient}/adunits/{adunit}.
+// - name: Name of the adunit for which to get the adcode. Format:
+//   accounts/{account}/adclients/{adclient}/adunits/{adunit}.
 func (r *AccountsAdclientsAdunitsService) GetAdcode(name string) *AccountsAdclientsAdunitsGetAdcodeCall {
 	c := &AccountsAdclientsAdunitsGetAdcodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2868,7 +2876,7 @@ func (c *AccountsAdclientsAdunitsGetAdcodeCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the AdSense code for a given ad unit.",
+	//   "description": "Gets the ad unit code for a given ad unit. For more information, see [About the AdSense code](https://support.google.com/adsense/answer/9274634) and [Where to place the ad code in your HTML](https://support.google.com/adsense/answer/9190028).",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}/adcode",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.accounts.adclients.adunits.getAdcode",
@@ -2909,8 +2917,8 @@ type AccountsAdclientsAdunitsListCall struct {
 
 // List: Lists all ad units under a specified account and ad client.
 //
-//   - parent: The ad client which owns the collection of ad units.
-//     Format: accounts/{account}/adclients/{adclient}.
+// - parent: The ad client which owns the collection of ad units.
+//   Format: accounts/{account}/adclients/{adclient}.
 func (r *AccountsAdclientsAdunitsService) List(parent string) *AccountsAdclientsAdunitsListCall {
 	c := &AccountsAdclientsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3108,8 +3116,8 @@ type AccountsAdclientsAdunitsListLinkedCustomChannelsCall struct {
 // ListLinkedCustomChannels: Lists all the custom channels available for
 // an ad unit.
 //
-//   - parent: The ad unit which owns the collection of custom channels.
-//     Format: accounts/{account}/adclients/{adclient}/adunits/{adunit}.
+// - parent: The ad unit which owns the collection of custom channels.
+//   Format: accounts/{account}/adclients/{adclient}/adunits/{adunit}.
 func (r *AccountsAdclientsAdunitsService) ListLinkedCustomChannels(parent string) *AccountsAdclientsAdunitsListLinkedCustomChannelsCall {
 	c := &AccountsAdclientsAdunitsListLinkedCustomChannelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3307,9 +3315,9 @@ type AccountsAdclientsCustomchannelsGetCall struct {
 
 // Get: Gets information about the selected custom channel.
 //
-//   - name: Name of the custom channel. Format:
-//     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
-//     l}.
+// - name: Name of the custom channel. Format:
+//   accounts/{account}/adclients/{adclient}/customchannels/{customchanne
+//   l}.
 func (r *AccountsAdclientsCustomchannelsService) Get(name string) *AccountsAdclientsCustomchannelsGetCall {
 	c := &AccountsAdclientsCustomchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3456,8 +3464,8 @@ type AccountsAdclientsCustomchannelsListCall struct {
 
 // List: Lists all the custom channels available in an ad client.
 //
-//   - parent: The ad client which owns the collection of custom channels.
-//     Format: accounts/{account}/adclients/{adclient}.
+// - parent: The ad client which owns the collection of custom channels.
+//   Format: accounts/{account}/adclients/{adclient}.
 func (r *AccountsAdclientsCustomchannelsService) List(parent string) *AccountsAdclientsCustomchannelsListCall {
 	c := &AccountsAdclientsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3656,10 +3664,10 @@ type AccountsAdclientsCustomchannelsListLinkedAdUnitsCall struct {
 // ListLinkedAdUnits: Lists all the ad units available for a custom
 // channel.
 //
-//   - parent: The custom channel which owns the collection of ad units.
-//     Format:
-//     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
-//     l}.
+// - parent: The custom channel which owns the collection of ad units.
+//   Format:
+//   accounts/{account}/adclients/{adclient}/customchannels/{customchanne
+//   l}.
 func (r *AccountsAdclientsCustomchannelsService) ListLinkedAdUnits(parent string) *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall {
 	c := &AccountsAdclientsCustomchannelsListLinkedAdUnitsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3857,8 +3865,8 @@ type AccountsAdclientsUrlchannelsGetCall struct {
 
 // Get: Gets information about the selected url channel.
 //
-//   - name: The name of the url channel to retrieve. Format:
-//     accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}.
+// - name: The name of the url channel to retrieve. Format:
+//   accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}.
 func (r *AccountsAdclientsUrlchannelsService) Get(name string) *AccountsAdclientsUrlchannelsGetCall {
 	c := &AccountsAdclientsUrlchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4005,8 +4013,8 @@ type AccountsAdclientsUrlchannelsListCall struct {
 
 // List: Lists active url channels.
 //
-//   - parent: The ad client which owns the collection of url channels.
-//     Format: accounts/{account}/adclients/{adclient}.
+// - parent: The ad client which owns the collection of url channels.
+//   Format: accounts/{account}/adclients/{adclient}.
 func (r *AccountsAdclientsUrlchannelsService) List(parent string) *AccountsAdclientsUrlchannelsListCall {
 	c := &AccountsAdclientsUrlchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4204,8 +4212,8 @@ type AccountsAlertsListCall struct {
 
 // List: Lists all the alerts available in an account.
 //
-//   - parent: The account which owns the collection of alerts. Format:
-//     accounts/{account}.
+// - parent: The account which owns the collection of alerts. Format:
+//   accounts/{account}.
 func (r *AccountsAlertsService) List(parent string) *AccountsAlertsListCall {
 	c := &AccountsAlertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4368,8 +4376,8 @@ type AccountsPaymentsListCall struct {
 
 // List: Lists all the payments available for an account.
 //
-//   - parent: The account which owns the collection of payments. Format:
-//     accounts/{account}.
+// - parent: The account which owns the collection of payments. Format:
+//   accounts/{account}.
 func (r *AccountsPaymentsService) List(parent string) *AccountsPaymentsListCall {
 	c := &AccountsPaymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4516,8 +4524,8 @@ type AccountsReportsGenerateCall struct {
 
 // Generate: Generates an ad hoc report.
 //
-//   - account: The account which owns the collection of reports. Format:
-//     accounts/{account}.
+// - account: The account which owns the collection of reports. Format:
+//   accounts/{account}.
 func (r *AccountsReportsService) Generate(account string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4537,27 +4545,20 @@ func (c *AccountsReportsGenerateCall) CurrencyCode(currencyCode string) *Account
 // report, if unset the range will be considered CUSTOM.
 //
 // Possible values:
-//
-//	"REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
-//	"CUSTOM" - A custom date range specified using the `start_date` and
-//
+//   "REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
+//   "CUSTOM" - A custom date range specified using the `start_date` and
 // `end_date` fields. This is the default if no ReportingDateRange is
 // provided.
-//
-//	"TODAY" - Current day.
-//	"YESTERDAY" - Yesterday.
-//	"MONTH_TO_DATE" - From the start of the current month to the
-//
+//   "TODAY" - Current day.
+//   "YESTERDAY" - Yesterday.
+//   "MONTH_TO_DATE" - From the start of the current month to the
 // current day. e.g. if the current date is 2020-03-12 then the range
 // will be [2020-03-01, 2020-03-12].
-//
-//	"YEAR_TO_DATE" - From the start of the current year to the current
-//
+//   "YEAR_TO_DATE" - From the start of the current year to the current
 // day. e.g. if the current date is 2020-03-12 then the range will be
 // [2020-01-01, 2020-03-12].
-//
-//	"LAST_7_DAYS" - Last 7 days, excluding current day.
-//	"LAST_30_DAYS" - Last 30 days, excluding current day.
+//   "LAST_7_DAYS" - Last 7 days, excluding current day.
+//   "LAST_30_DAYS" - Last 30 days, excluding current day.
 func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsReportsGenerateCall {
 	c.urlParams_.Set("dateRange", dateRange)
 	return c
@@ -4567,180 +4568,101 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 // base the report on.
 //
 // Possible values:
-//
-//	"DIMENSION_UNSPECIFIED" - Unspecified dimension.
-//	"DATE" - Date dimension in YYYY-MM-DD format (e.g. "2010-02-10").
-//	"WEEK" - Week dimension in YYYY-MM-DD format, representing the
-//
+//   "DIMENSION_UNSPECIFIED" - Unspecified dimension.
+//   "DATE" - Date dimension in YYYY-MM-DD format (e.g. "2010-02-10").
+//   "WEEK" - Week dimension in YYYY-MM-DD format, representing the
 // first day of each week (e.g. "2010-02-08"). The first day of the week
 // is determined by the language_code specified in a report generation
 // request (so e.g. this would be a Monday for "en-GB" or "es", but a
 // Sunday for "en" or "fr-CA").
-//
-//	"MONTH" - Month dimension in YYYY-MM format (e.g. "2010-02").
-//	"ACCOUNT_NAME" - Account name. The members of this dimension match
-//
+//   "MONTH" - Month dimension in YYYY-MM format (e.g. "2010-02").
+//   "ACCOUNT_NAME" - Account name. The members of this dimension match
 // the values from Account.display_name.
-//
-//	"AD_CLIENT_ID" - Unique ID of an ad client. The members of this
-//
+//   "AD_CLIENT_ID" - Unique ID of an ad client. The members of this
 // dimension match the values from AdClient.reporting_dimension_id.
-//
-//	"PRODUCT_NAME" - Localized product name (e.g. "AdSense for
-//
+//   "PRODUCT_NAME" - Localized product name (e.g. "AdSense for
 // Content", "AdSense for Search").
-//
-//	"PRODUCT_CODE" - Product code (e.g. "AFC", "AFS"). The members of
-//
+//   "PRODUCT_CODE" - Product code (e.g. "AFC", "AFS"). The members of
 // this dimension match the values from AdClient.product_code.
-//
-//	"AD_UNIT_NAME" - Ad unit name (within which an ad was served). The
-//
+//   "AD_UNIT_NAME" - Ad unit name (within which an ad was served). The
 // members of this dimension match the values from AdUnit.display_name.
-//
-//	"AD_UNIT_ID" - Unique ID of an ad unit (within which an ad was
-//
+//   "AD_UNIT_ID" - Unique ID of an ad unit (within which an ad was
 // served). The members of this dimension match the values from
 // AdUnit.reporting_dimension_id.
-//
-//	"AD_UNIT_SIZE_NAME" - Localized size of an ad unit (e.g. "728x90",
-//
+//   "AD_UNIT_SIZE_NAME" - Localized size of an ad unit (e.g. "728x90",
 // "Responsive").
-//
-//	"AD_UNIT_SIZE_CODE" - The size code of an ad unit (e.g. "728x90",
-//
+//   "AD_UNIT_SIZE_CODE" - The size code of an ad unit (e.g. "728x90",
 // "responsive").
-//
-//	"CUSTOM_CHANNEL_NAME" - Custom channel name. The members of this
-//
+//   "CUSTOM_CHANNEL_NAME" - Custom channel name. The members of this
 // dimension match the values from CustomChannel.display_name.
-//
-//	"CUSTOM_CHANNEL_ID" - Unique ID of a custom channel. The members of
-//
+//   "CUSTOM_CHANNEL_ID" - Unique ID of a custom channel. The members of
 // this dimension match the values from
 // CustomChannel.reporting_dimension_id.
-//
-//	"OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
-//
+//   "OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
 // "example.com"). The members of this dimension match the values from
 // Site.domain.
-//
-//	"OWNED_SITE_ID" - Unique ID of a verified site. The members of this
-//
+//   "OWNED_SITE_ID" - Unique ID of a verified site. The members of this
 // dimension match the values from Site.reporting_dimension_id.
-//
-//	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
-//
+//   "URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 // dimension match the values from UrlChannel.uri_pattern.
-//
-//	"URL_CHANNEL_ID" - Unique ID of a URL channel. The members of this
-//
+//   "URL_CHANNEL_ID" - Unique ID of a URL channel. The members of this
 // dimension match the values from UrlChannel.reporting_dimension_id.
-//
-//	"BUYER_NETWORK_NAME" - Name of an ad network that returned the
-//
+//   "BUYER_NETWORK_NAME" - Name of an ad network that returned the
 // winning ads for an ad request (e.g. "Google AdWords"). Note that
 // unlike other "NAME" dimensions, the members of this dimensions are
 // not localized.
-//
-//	"BUYER_NETWORK_ID" - Unique (opaque) ID of an ad network that
-//
+//   "BUYER_NETWORK_ID" - Unique (opaque) ID of an ad network that
 // returned the winning ads for an ad request.
-//
-//	"BID_TYPE_NAME" - Localized bid type name (e.g. "CPC bids", "CPM
-//
+//   "BID_TYPE_NAME" - Localized bid type name (e.g. "CPC bids", "CPM
 // bids") for a served ad.
-//
-//	"BID_TYPE_CODE" - Type of a bid (e.g. "cpc", "cpm") for a served
-//
+//   "BID_TYPE_CODE" - Type of a bid (e.g. "cpc", "cpm") for a served
 // ad.
-//
-//	"CREATIVE_SIZE_NAME" - Localized creative size name (e.g. "728x90",
-//
+//   "CREATIVE_SIZE_NAME" - Localized creative size name (e.g. "728x90",
 // "Dynamic") of a served ad.
-//
-//	"CREATIVE_SIZE_CODE" - Creative size code (e.g. "728x90",
-//
+//   "CREATIVE_SIZE_CODE" - Creative size code (e.g. "728x90",
 // "dynamic") of a served ad.
-//
-//	"DOMAIN_NAME" - Localized name of a host on which an ad was served,
-//
+//   "DOMAIN_NAME" - Localized name of a host on which an ad was served,
 // after IDNA decoding (e.g. "www.google.com", "Web caches and other",
 // "bücher.example").
-//
-//	"DOMAIN_CODE" - Name of a host on which an ad was served (e.g.
-//
+//   "DOMAIN_CODE" - Name of a host on which an ad was served (e.g.
 // "www.google.com", "webcaches", "xn--bcher-kva.example").
-//
-//	"COUNTRY_NAME" - Localized region name of a user viewing an ad
-//
+//   "COUNTRY_NAME" - Localized region name of a user viewing an ad
 // (e.g. "United States", "France").
-//
-//	"COUNTRY_CODE" - CLDR region code of a user viewing an ad (e.g.
-//
+//   "COUNTRY_CODE" - CLDR region code of a user viewing an ad (e.g.
 // "US", "FR").
-//
-//	"PLATFORM_TYPE_NAME" - Localized platform type name (e.g. "High-end
-//
+//   "PLATFORM_TYPE_NAME" - Localized platform type name (e.g. "High-end
 // mobile devices", "Desktop").
-//
-//	"PLATFORM_TYPE_CODE" - Platform type code (e.g. "HighEndMobile",
-//
+//   "PLATFORM_TYPE_CODE" - Platform type code (e.g. "HighEndMobile",
 // "Desktop").
-//
-//	"TARGETING_TYPE_NAME" - Localized targeting type name (e.g.
-//
+//   "TARGETING_TYPE_NAME" - Localized targeting type name (e.g.
 // "Contextual", "Personalized", "Run of Network").
-//
-//	"TARGETING_TYPE_CODE" - Targeting type code (e.g. "Keyword",
-//
+//   "TARGETING_TYPE_CODE" - Targeting type code (e.g. "Keyword",
 // "UserInterest", "RunOfNetwork").
-//
-//	"CONTENT_PLATFORM_NAME" - Localized content platform name an ad
-//
+//   "CONTENT_PLATFORM_NAME" - Localized content platform name an ad
 // request was made from (e.g. "AMP", "Web").
-//
-//	"CONTENT_PLATFORM_CODE" - Content platform code an ad request was
-//
+//   "CONTENT_PLATFORM_CODE" - Content platform code an ad request was
 // made from (e.g. "AMP", "HTML").
-//
-//	"AD_PLACEMENT_NAME" - Localized ad placement name (e.g. "Ad unit",
-//
+//   "AD_PLACEMENT_NAME" - Localized ad placement name (e.g. "Ad unit",
 // "Global settings", "Manual").
-//
-//	"AD_PLACEMENT_CODE" - Ad placement code (e.g. "AD_UNIT",
-//
+//   "AD_PLACEMENT_CODE" - Ad placement code (e.g. "AD_UNIT",
 // "ca-pub-123456:78910", "OTHER").
-//
-//	"REQUESTED_AD_TYPE_NAME" - Localized requested ad type name (e.g.
-//
+//   "REQUESTED_AD_TYPE_NAME" - Localized requested ad type name (e.g.
 // "Display", "Link unit", "Other").
-//
-//	"REQUESTED_AD_TYPE_CODE" - Requested ad type code (e.g. "IMAGE",
-//
+//   "REQUESTED_AD_TYPE_CODE" - Requested ad type code (e.g. "IMAGE",
 // "RADLINK", "OTHER").
-//
-//	"SERVED_AD_TYPE_NAME" - Localized served ad type name (e.g.
-//
+//   "SERVED_AD_TYPE_NAME" - Localized served ad type name (e.g.
 // "Display", "Link unit", "Other").
-//
-//	"SERVED_AD_TYPE_CODE" - Served ad type code (e.g. "IMAGE",
-//
+//   "SERVED_AD_TYPE_CODE" - Served ad type code (e.g. "IMAGE",
 // "RADLINK", "OTHER").
-//
-//	"AD_FORMAT_NAME" - Localized ad format name indicating the way an
-//
+//   "AD_FORMAT_NAME" - Localized ad format name indicating the way an
 // ad is shown to the users on your site (e.g. "In-page", "Anchor",
 // "Vignette").
-//
-//	"AD_FORMAT_CODE" - Ad format code indicating the way an ad is shown
-//
+//   "AD_FORMAT_CODE" - Ad format code indicating the way an ad is shown
 // to the users on your site (e.g. "ON_PAGE", "ANCHOR", "INTERSTITIAL").
-//
-//	"CUSTOM_SEARCH_STYLE_NAME" - Custom search style name.
-//	"CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
-//	"DOMAIN_REGISTRANT" - Domain registrants.
-//	"WEBSEARCH_QUERY_STRING" - Query strings for web searches.
+//   "CUSTOM_SEARCH_STYLE_NAME" - Custom search style name.
+//   "CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
+//   "DOMAIN_REGISTRANT" - Domain registrants.
+//   "WEBSEARCH_QUERY_STRING" - Query strings for web searches.
 func (c *AccountsReportsGenerateCall) Dimensions(dimensions ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimensions", append([]string{}, dimensions...))
 	return c
@@ -4805,125 +4727,80 @@ func (c *AccountsReportsGenerateCall) Limit(limit int64) *AccountsReportsGenerat
 // metrics.
 //
 // Possible values:
-//
-//	"METRIC_UNSPECIFIED" - Unspecified metric.
-//	"PAGE_VIEWS" - Number of page views.
-//	"AD_REQUESTS" - Number of ad units that requested ads (for content
-//
+//   "METRIC_UNSPECIFIED" - Unspecified metric.
+//   "PAGE_VIEWS" - Number of page views.
+//   "AD_REQUESTS" - Number of ad units that requested ads (for content
 // ads) or search queries (for search ads). An ad request may result in
 // zero, one, or multiple individual ad impressions depending on the
 // size of the ad unit and whether any ads were available.
-//
-//	"MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
-//	"TOTAL_IMPRESSIONS" - Impressions. An impression is counted for
-//
+//   "MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
+//   "TOTAL_IMPRESSIONS" - Impressions. An impression is counted for
 // each ad request where at least one ad has been downloaded to the
 // user’s device and has begun to load. It is the number of ad units
 // (for content ads) or search queries (for search ads) that showed ads.
-//
-//	"IMPRESSIONS" - Impressions. An impression is counted for each ad
-//
+//   "IMPRESSIONS" - Impressions. An impression is counted for each ad
 // request where at least one ad has been downloaded to the user’s
 // device and has begun to load. It is the number of ad units (for
 // content ads) or search queries (for search ads) that showed ads.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will
 // display varying numbers of ads. For example, a vertical banner may
 // consist of 2 or more ads. Also, the number of ads in an ad unit may
 // vary depending on whether the ad unit is displaying standard text
 // ads, expanded text ads or image ads.
-//
-//	"CLICKS" - Number of times a user clicked on a standard content ad.
-//	"PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be
-//
+//   "CLICKS" - Number of times a user clicked on a standard content ad.
+//   "PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be
 // spam. Only available to premium accounts.
-//
-//	"AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be
-//
+//   "AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be
 // spam. Only available to premium accounts.
-//
-//	"MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that
-//
+//   "MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that
 // returned ads considered to be spam. Only available to premium
 // accounts.
-//
-//	"IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be
-//
+//   "IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be
 // spam. Only available to premium accounts.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
 // considered to be spam. Only available to premium accounts.
-//
-//	"CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam.
-//
+//   "CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam.
 // Only available to premium accounts.
-//
-//	"AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to
-//
+//   "AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to
 // the number returned to the site.
-//
-//	"PAGE_VIEWS_CTR" - Ratio of individual page views that resulted in
-//
+//   "PAGE_VIEWS_CTR" - Ratio of individual page views that resulted in
 // a click.
-//
-//	"AD_REQUESTS_CTR" - Ratio of ad requests that resulted in a click.
-//	"MATCHED_AD_REQUESTS_CTR" - Ratio of clicks to matched requests.
-//	"IMPRESSIONS_CTR" - Ratio of IMPRESSIONS that resulted in a click.
-//	"INDIVIDUAL_AD_IMPRESSIONS_CTR" - Ratio of individual ad
-//
+//   "AD_REQUESTS_CTR" - Ratio of ad requests that resulted in a click.
+//   "MATCHED_AD_REQUESTS_CTR" - Ratio of clicks to matched requests.
+//   "IMPRESSIONS_CTR" - Ratio of IMPRESSIONS that resulted in a click.
+//   "INDIVIDUAL_AD_IMPRESSIONS_CTR" - Ratio of individual ad
 // impressions that resulted in a click.
-//
-//	"ACTIVE_VIEW_MEASURABILITY" - Ratio of requests that were
-//
+//   "ACTIVE_VIEW_MEASURABILITY" - Ratio of requests that were
 // measurable for viewability.
-//
-//	"ACTIVE_VIEW_VIEWABILITY" - Ratio of requests that were viewable.
-//	"ACTIVE_VIEW_TIME" - Mean time an ad was displayed on screen.
-//	"ESTIMATED_EARNINGS" - Estimated earnings of the publisher. Note
-//
+//   "ACTIVE_VIEW_VIEWABILITY" - Ratio of requests that were viewable.
+//   "ACTIVE_VIEW_TIME" - Mean time an ad was displayed on screen.
+//   "ESTIMATED_EARNINGS" - Estimated earnings of the publisher. Note
 // that earnings up to yesterday are accurate, more recent earnings are
 // estimated due to the possibility of spam, or exchange rate
 // fluctuations.
-//
-//	"PAGE_VIEWS_RPM" - Revenue per thousand page views. This is
-//
+//   "PAGE_VIEWS_RPM" - Revenue per thousand page views. This is
 // calculated by dividing the estimated revenue by the number of page
 // views multiplied by 1000.
-//
-//	"AD_REQUESTS_RPM" - Revenue per thousand ad requests. This is
-//
+//   "AD_REQUESTS_RPM" - Revenue per thousand ad requests. This is
 // calculated by dividing estimated revenue by the number of ad requests
 // multiplied by 1000.
-//
-//	"MATCHED_AD_REQUESTS_RPM" - Revenue per thousand matched ad
-//
+//   "MATCHED_AD_REQUESTS_RPM" - Revenue per thousand matched ad
 // requests. This is calculated by dividing estimated revenue by the
 // number of matched ad requests multiplied by 1000.
-//
-//	"IMPRESSIONS_RPM" - Revenue per thousand ad impressions. This is
-//
+//   "IMPRESSIONS_RPM" - Revenue per thousand ad impressions. This is
 // calculated by dividing estimated revenue by the number of ad
 // impressions multiplied by 1000.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS_RPM" - Revenue per thousand individual
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS_RPM" - Revenue per thousand individual
 // ad impressions. This is calculated by dividing estimated revenue by
 // the number of individual ad impressions multiplied by 1000.
-//
-//	"COST_PER_CLICK" - Amount the publisher earns each time a user
-//
+//   "COST_PER_CLICK" - Amount the publisher earns each time a user
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
-//
-//	"ADS_PER_IMPRESSION" - Number of ad views per impression.
-//	"TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
-//
+//   "ADS_PER_IMPRESSION" - Number of ad views per impression.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
 // from revenue shared traffic before any parent and child account
 // revenue share is applied.
-//
-//	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCall) Metrics(metrics ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -4945,11 +4822,9 @@ func (c *AccountsReportsGenerateCall) OrderBy(orderBy ...string) *AccountsReport
 // (https://support.google.com/adsense/answer/9830725).
 //
 // Possible values:
-//
-//	"REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
-//	"ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
-//	"GOOGLE_TIME_ZONE" - Use the Google timezone in the report
-//
+//   "REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
+//   "ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
+//   "GOOGLE_TIME_ZONE" - Use the Google timezone in the report
 // (America/Los_Angeles).
 func (c *AccountsReportsGenerateCall) ReportingTimeZone(reportingTimeZone string) *AccountsReportsGenerateCall {
 	c.urlParams_.Set("reportingTimeZone", reportingTimeZone)
@@ -5403,8 +5278,8 @@ type AccountsReportsGenerateCsvCall struct {
 
 // GenerateCsv: Generates a csv formatted ad hoc report.
 //
-//   - account: The account which owns the collection of reports. Format:
-//     accounts/{account}.
+// - account: The account which owns the collection of reports. Format:
+//   accounts/{account}.
 func (r *AccountsReportsService) GenerateCsv(account string) *AccountsReportsGenerateCsvCall {
 	c := &AccountsReportsGenerateCsvCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -5424,27 +5299,20 @@ func (c *AccountsReportsGenerateCsvCall) CurrencyCode(currencyCode string) *Acco
 // report, if unset the range will be considered CUSTOM.
 //
 // Possible values:
-//
-//	"REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
-//	"CUSTOM" - A custom date range specified using the `start_date` and
-//
+//   "REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
+//   "CUSTOM" - A custom date range specified using the `start_date` and
 // `end_date` fields. This is the default if no ReportingDateRange is
 // provided.
-//
-//	"TODAY" - Current day.
-//	"YESTERDAY" - Yesterday.
-//	"MONTH_TO_DATE" - From the start of the current month to the
-//
+//   "TODAY" - Current day.
+//   "YESTERDAY" - Yesterday.
+//   "MONTH_TO_DATE" - From the start of the current month to the
 // current day. e.g. if the current date is 2020-03-12 then the range
 // will be [2020-03-01, 2020-03-12].
-//
-//	"YEAR_TO_DATE" - From the start of the current year to the current
-//
+//   "YEAR_TO_DATE" - From the start of the current year to the current
 // day. e.g. if the current date is 2020-03-12 then the range will be
 // [2020-01-01, 2020-03-12].
-//
-//	"LAST_7_DAYS" - Last 7 days, excluding current day.
-//	"LAST_30_DAYS" - Last 30 days, excluding current day.
+//   "LAST_7_DAYS" - Last 7 days, excluding current day.
+//   "LAST_30_DAYS" - Last 30 days, excluding current day.
 func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.Set("dateRange", dateRange)
 	return c
@@ -5454,180 +5322,101 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 // base the report on.
 //
 // Possible values:
-//
-//	"DIMENSION_UNSPECIFIED" - Unspecified dimension.
-//	"DATE" - Date dimension in YYYY-MM-DD format (e.g. "2010-02-10").
-//	"WEEK" - Week dimension in YYYY-MM-DD format, representing the
-//
+//   "DIMENSION_UNSPECIFIED" - Unspecified dimension.
+//   "DATE" - Date dimension in YYYY-MM-DD format (e.g. "2010-02-10").
+//   "WEEK" - Week dimension in YYYY-MM-DD format, representing the
 // first day of each week (e.g. "2010-02-08"). The first day of the week
 // is determined by the language_code specified in a report generation
 // request (so e.g. this would be a Monday for "en-GB" or "es", but a
 // Sunday for "en" or "fr-CA").
-//
-//	"MONTH" - Month dimension in YYYY-MM format (e.g. "2010-02").
-//	"ACCOUNT_NAME" - Account name. The members of this dimension match
-//
+//   "MONTH" - Month dimension in YYYY-MM format (e.g. "2010-02").
+//   "ACCOUNT_NAME" - Account name. The members of this dimension match
 // the values from Account.display_name.
-//
-//	"AD_CLIENT_ID" - Unique ID of an ad client. The members of this
-//
+//   "AD_CLIENT_ID" - Unique ID of an ad client. The members of this
 // dimension match the values from AdClient.reporting_dimension_id.
-//
-//	"PRODUCT_NAME" - Localized product name (e.g. "AdSense for
-//
+//   "PRODUCT_NAME" - Localized product name (e.g. "AdSense for
 // Content", "AdSense for Search").
-//
-//	"PRODUCT_CODE" - Product code (e.g. "AFC", "AFS"). The members of
-//
+//   "PRODUCT_CODE" - Product code (e.g. "AFC", "AFS"). The members of
 // this dimension match the values from AdClient.product_code.
-//
-//	"AD_UNIT_NAME" - Ad unit name (within which an ad was served). The
-//
+//   "AD_UNIT_NAME" - Ad unit name (within which an ad was served). The
 // members of this dimension match the values from AdUnit.display_name.
-//
-//	"AD_UNIT_ID" - Unique ID of an ad unit (within which an ad was
-//
+//   "AD_UNIT_ID" - Unique ID of an ad unit (within which an ad was
 // served). The members of this dimension match the values from
 // AdUnit.reporting_dimension_id.
-//
-//	"AD_UNIT_SIZE_NAME" - Localized size of an ad unit (e.g. "728x90",
-//
+//   "AD_UNIT_SIZE_NAME" - Localized size of an ad unit (e.g. "728x90",
 // "Responsive").
-//
-//	"AD_UNIT_SIZE_CODE" - The size code of an ad unit (e.g. "728x90",
-//
+//   "AD_UNIT_SIZE_CODE" - The size code of an ad unit (e.g. "728x90",
 // "responsive").
-//
-//	"CUSTOM_CHANNEL_NAME" - Custom channel name. The members of this
-//
+//   "CUSTOM_CHANNEL_NAME" - Custom channel name. The members of this
 // dimension match the values from CustomChannel.display_name.
-//
-//	"CUSTOM_CHANNEL_ID" - Unique ID of a custom channel. The members of
-//
+//   "CUSTOM_CHANNEL_ID" - Unique ID of a custom channel. The members of
 // this dimension match the values from
 // CustomChannel.reporting_dimension_id.
-//
-//	"OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
-//
+//   "OWNED_SITE_DOMAIN_NAME" - Domain name of a verified site (e.g.
 // "example.com"). The members of this dimension match the values from
 // Site.domain.
-//
-//	"OWNED_SITE_ID" - Unique ID of a verified site. The members of this
-//
+//   "OWNED_SITE_ID" - Unique ID of a verified site. The members of this
 // dimension match the values from Site.reporting_dimension_id.
-//
-//	"URL_CHANNEL_NAME" - Name of a URL channel. The members of this
-//
+//   "URL_CHANNEL_NAME" - Name of a URL channel. The members of this
 // dimension match the values from UrlChannel.uri_pattern.
-//
-//	"URL_CHANNEL_ID" - Unique ID of a URL channel. The members of this
-//
+//   "URL_CHANNEL_ID" - Unique ID of a URL channel. The members of this
 // dimension match the values from UrlChannel.reporting_dimension_id.
-//
-//	"BUYER_NETWORK_NAME" - Name of an ad network that returned the
-//
+//   "BUYER_NETWORK_NAME" - Name of an ad network that returned the
 // winning ads for an ad request (e.g. "Google AdWords"). Note that
 // unlike other "NAME" dimensions, the members of this dimensions are
 // not localized.
-//
-//	"BUYER_NETWORK_ID" - Unique (opaque) ID of an ad network that
-//
+//   "BUYER_NETWORK_ID" - Unique (opaque) ID of an ad network that
 // returned the winning ads for an ad request.
-//
-//	"BID_TYPE_NAME" - Localized bid type name (e.g. "CPC bids", "CPM
-//
+//   "BID_TYPE_NAME" - Localized bid type name (e.g. "CPC bids", "CPM
 // bids") for a served ad.
-//
-//	"BID_TYPE_CODE" - Type of a bid (e.g. "cpc", "cpm") for a served
-//
+//   "BID_TYPE_CODE" - Type of a bid (e.g. "cpc", "cpm") for a served
 // ad.
-//
-//	"CREATIVE_SIZE_NAME" - Localized creative size name (e.g. "728x90",
-//
+//   "CREATIVE_SIZE_NAME" - Localized creative size name (e.g. "728x90",
 // "Dynamic") of a served ad.
-//
-//	"CREATIVE_SIZE_CODE" - Creative size code (e.g. "728x90",
-//
+//   "CREATIVE_SIZE_CODE" - Creative size code (e.g. "728x90",
 // "dynamic") of a served ad.
-//
-//	"DOMAIN_NAME" - Localized name of a host on which an ad was served,
-//
+//   "DOMAIN_NAME" - Localized name of a host on which an ad was served,
 // after IDNA decoding (e.g. "www.google.com", "Web caches and other",
 // "bücher.example").
-//
-//	"DOMAIN_CODE" - Name of a host on which an ad was served (e.g.
-//
+//   "DOMAIN_CODE" - Name of a host on which an ad was served (e.g.
 // "www.google.com", "webcaches", "xn--bcher-kva.example").
-//
-//	"COUNTRY_NAME" - Localized region name of a user viewing an ad
-//
+//   "COUNTRY_NAME" - Localized region name of a user viewing an ad
 // (e.g. "United States", "France").
-//
-//	"COUNTRY_CODE" - CLDR region code of a user viewing an ad (e.g.
-//
+//   "COUNTRY_CODE" - CLDR region code of a user viewing an ad (e.g.
 // "US", "FR").
-//
-//	"PLATFORM_TYPE_NAME" - Localized platform type name (e.g. "High-end
-//
+//   "PLATFORM_TYPE_NAME" - Localized platform type name (e.g. "High-end
 // mobile devices", "Desktop").
-//
-//	"PLATFORM_TYPE_CODE" - Platform type code (e.g. "HighEndMobile",
-//
+//   "PLATFORM_TYPE_CODE" - Platform type code (e.g. "HighEndMobile",
 // "Desktop").
-//
-//	"TARGETING_TYPE_NAME" - Localized targeting type name (e.g.
-//
+//   "TARGETING_TYPE_NAME" - Localized targeting type name (e.g.
 // "Contextual", "Personalized", "Run of Network").
-//
-//	"TARGETING_TYPE_CODE" - Targeting type code (e.g. "Keyword",
-//
+//   "TARGETING_TYPE_CODE" - Targeting type code (e.g. "Keyword",
 // "UserInterest", "RunOfNetwork").
-//
-//	"CONTENT_PLATFORM_NAME" - Localized content platform name an ad
-//
+//   "CONTENT_PLATFORM_NAME" - Localized content platform name an ad
 // request was made from (e.g. "AMP", "Web").
-//
-//	"CONTENT_PLATFORM_CODE" - Content platform code an ad request was
-//
+//   "CONTENT_PLATFORM_CODE" - Content platform code an ad request was
 // made from (e.g. "AMP", "HTML").
-//
-//	"AD_PLACEMENT_NAME" - Localized ad placement name (e.g. "Ad unit",
-//
+//   "AD_PLACEMENT_NAME" - Localized ad placement name (e.g. "Ad unit",
 // "Global settings", "Manual").
-//
-//	"AD_PLACEMENT_CODE" - Ad placement code (e.g. "AD_UNIT",
-//
+//   "AD_PLACEMENT_CODE" - Ad placement code (e.g. "AD_UNIT",
 // "ca-pub-123456:78910", "OTHER").
-//
-//	"REQUESTED_AD_TYPE_NAME" - Localized requested ad type name (e.g.
-//
+//   "REQUESTED_AD_TYPE_NAME" - Localized requested ad type name (e.g.
 // "Display", "Link unit", "Other").
-//
-//	"REQUESTED_AD_TYPE_CODE" - Requested ad type code (e.g. "IMAGE",
-//
+//   "REQUESTED_AD_TYPE_CODE" - Requested ad type code (e.g. "IMAGE",
 // "RADLINK", "OTHER").
-//
-//	"SERVED_AD_TYPE_NAME" - Localized served ad type name (e.g.
-//
+//   "SERVED_AD_TYPE_NAME" - Localized served ad type name (e.g.
 // "Display", "Link unit", "Other").
-//
-//	"SERVED_AD_TYPE_CODE" - Served ad type code (e.g. "IMAGE",
-//
+//   "SERVED_AD_TYPE_CODE" - Served ad type code (e.g. "IMAGE",
 // "RADLINK", "OTHER").
-//
-//	"AD_FORMAT_NAME" - Localized ad format name indicating the way an
-//
+//   "AD_FORMAT_NAME" - Localized ad format name indicating the way an
 // ad is shown to the users on your site (e.g. "In-page", "Anchor",
 // "Vignette").
-//
-//	"AD_FORMAT_CODE" - Ad format code indicating the way an ad is shown
-//
+//   "AD_FORMAT_CODE" - Ad format code indicating the way an ad is shown
 // to the users on your site (e.g. "ON_PAGE", "ANCHOR", "INTERSTITIAL").
-//
-//	"CUSTOM_SEARCH_STYLE_NAME" - Custom search style name.
-//	"CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
-//	"DOMAIN_REGISTRANT" - Domain registrants.
-//	"WEBSEARCH_QUERY_STRING" - Query strings for web searches.
+//   "CUSTOM_SEARCH_STYLE_NAME" - Custom search style name.
+//   "CUSTOM_SEARCH_STYLE_ID" - Custom search style id.
+//   "DOMAIN_REGISTRANT" - Domain registrants.
+//   "WEBSEARCH_QUERY_STRING" - Query strings for web searches.
 func (c *AccountsReportsGenerateCsvCall) Dimensions(dimensions ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("dimensions", append([]string{}, dimensions...))
 	return c
@@ -5692,125 +5481,80 @@ func (c *AccountsReportsGenerateCsvCall) Limit(limit int64) *AccountsReportsGene
 // metrics.
 //
 // Possible values:
-//
-//	"METRIC_UNSPECIFIED" - Unspecified metric.
-//	"PAGE_VIEWS" - Number of page views.
-//	"AD_REQUESTS" - Number of ad units that requested ads (for content
-//
+//   "METRIC_UNSPECIFIED" - Unspecified metric.
+//   "PAGE_VIEWS" - Number of page views.
+//   "AD_REQUESTS" - Number of ad units that requested ads (for content
 // ads) or search queries (for search ads). An ad request may result in
 // zero, one, or multiple individual ad impressions depending on the
 // size of the ad unit and whether any ads were available.
-//
-//	"MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
-//	"TOTAL_IMPRESSIONS" - Impressions. An impression is counted for
-//
+//   "MATCHED_AD_REQUESTS" - Requests that returned at least one ad.
+//   "TOTAL_IMPRESSIONS" - Impressions. An impression is counted for
 // each ad request where at least one ad has been downloaded to the
 // user’s device and has begun to load. It is the number of ad units
 // (for content ads) or search queries (for search ads) that showed ads.
-//
-//	"IMPRESSIONS" - Impressions. An impression is counted for each ad
-//
+//   "IMPRESSIONS" - Impressions. An impression is counted for each ad
 // request where at least one ad has been downloaded to the user’s
 // device and has begun to load. It is the number of ad units (for
 // content ads) or search queries (for search ads) that showed ads.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS" - Ads shown. Different ad formats will
 // display varying numbers of ads. For example, a vertical banner may
 // consist of 2 or more ads. Also, the number of ads in an ad unit may
 // vary depending on whether the ad unit is displaying standard text
 // ads, expanded text ads or image ads.
-//
-//	"CLICKS" - Number of times a user clicked on a standard content ad.
-//	"PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be
-//
+//   "CLICKS" - Number of times a user clicked on a standard content ad.
+//   "PAGE_VIEWS_SPAM_RATIO" - Fraction of page views considered to be
 // spam. Only available to premium accounts.
-//
-//	"AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be
-//
+//   "AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests considered to be
 // spam. Only available to premium accounts.
-//
-//	"MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that
-//
+//   "MATCHED_AD_REQUESTS_SPAM_RATIO" - Fraction of ad requests that
 // returned ads considered to be spam. Only available to premium
 // accounts.
-//
-//	"IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be
-//
+//   "IMPRESSIONS_SPAM_RATIO" - Fraction of impressions considered to be
 // spam. Only available to premium accounts.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS_SPAM_RATIO" - Fraction of ad impressions
 // considered to be spam. Only available to premium accounts.
-//
-//	"CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam.
-//
+//   "CLICKS_SPAM_RATIO" - Fraction of clicks considered to be spam.
 // Only available to premium accounts.
-//
-//	"AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to
-//
+//   "AD_REQUESTS_COVERAGE" - Ratio of requested ad units or queries to
 // the number returned to the site.
-//
-//	"PAGE_VIEWS_CTR" - Ratio of individual page views that resulted in
-//
+//   "PAGE_VIEWS_CTR" - Ratio of individual page views that resulted in
 // a click.
-//
-//	"AD_REQUESTS_CTR" - Ratio of ad requests that resulted in a click.
-//	"MATCHED_AD_REQUESTS_CTR" - Ratio of clicks to matched requests.
-//	"IMPRESSIONS_CTR" - Ratio of IMPRESSIONS that resulted in a click.
-//	"INDIVIDUAL_AD_IMPRESSIONS_CTR" - Ratio of individual ad
-//
+//   "AD_REQUESTS_CTR" - Ratio of ad requests that resulted in a click.
+//   "MATCHED_AD_REQUESTS_CTR" - Ratio of clicks to matched requests.
+//   "IMPRESSIONS_CTR" - Ratio of IMPRESSIONS that resulted in a click.
+//   "INDIVIDUAL_AD_IMPRESSIONS_CTR" - Ratio of individual ad
 // impressions that resulted in a click.
-//
-//	"ACTIVE_VIEW_MEASURABILITY" - Ratio of requests that were
-//
+//   "ACTIVE_VIEW_MEASURABILITY" - Ratio of requests that were
 // measurable for viewability.
-//
-//	"ACTIVE_VIEW_VIEWABILITY" - Ratio of requests that were viewable.
-//	"ACTIVE_VIEW_TIME" - Mean time an ad was displayed on screen.
-//	"ESTIMATED_EARNINGS" - Estimated earnings of the publisher. Note
-//
+//   "ACTIVE_VIEW_VIEWABILITY" - Ratio of requests that were viewable.
+//   "ACTIVE_VIEW_TIME" - Mean time an ad was displayed on screen.
+//   "ESTIMATED_EARNINGS" - Estimated earnings of the publisher. Note
 // that earnings up to yesterday are accurate, more recent earnings are
 // estimated due to the possibility of spam, or exchange rate
 // fluctuations.
-//
-//	"PAGE_VIEWS_RPM" - Revenue per thousand page views. This is
-//
+//   "PAGE_VIEWS_RPM" - Revenue per thousand page views. This is
 // calculated by dividing the estimated revenue by the number of page
 // views multiplied by 1000.
-//
-//	"AD_REQUESTS_RPM" - Revenue per thousand ad requests. This is
-//
+//   "AD_REQUESTS_RPM" - Revenue per thousand ad requests. This is
 // calculated by dividing estimated revenue by the number of ad requests
 // multiplied by 1000.
-//
-//	"MATCHED_AD_REQUESTS_RPM" - Revenue per thousand matched ad
-//
+//   "MATCHED_AD_REQUESTS_RPM" - Revenue per thousand matched ad
 // requests. This is calculated by dividing estimated revenue by the
 // number of matched ad requests multiplied by 1000.
-//
-//	"IMPRESSIONS_RPM" - Revenue per thousand ad impressions. This is
-//
+//   "IMPRESSIONS_RPM" - Revenue per thousand ad impressions. This is
 // calculated by dividing estimated revenue by the number of ad
 // impressions multiplied by 1000.
-//
-//	"INDIVIDUAL_AD_IMPRESSIONS_RPM" - Revenue per thousand individual
-//
+//   "INDIVIDUAL_AD_IMPRESSIONS_RPM" - Revenue per thousand individual
 // ad impressions. This is calculated by dividing estimated revenue by
 // the number of individual ad impressions multiplied by 1000.
-//
-//	"COST_PER_CLICK" - Amount the publisher earns each time a user
-//
+//   "COST_PER_CLICK" - Amount the publisher earns each time a user
 // clicks on an ad. CPC is calculated by dividing the estimated revenue
 // by the number of clicks received.
-//
-//	"ADS_PER_IMPRESSION" - Number of ad views per impression.
-//	"TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
-//
+//   "ADS_PER_IMPRESSION" - Number of ad views per impression.
+//   "TOTAL_EARNINGS" - Total earnings are the gross estimated earnings
 // from revenue shared traffic before any parent and child account
 // revenue share is applied.
-//
-//	"WEBSEARCH_RESULT_PAGES" - Number of results pages.
+//   "WEBSEARCH_RESULT_PAGES" - Number of results pages.
 func (c *AccountsReportsGenerateCsvCall) Metrics(metrics ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("metrics", append([]string{}, metrics...))
 	return c
@@ -5832,11 +5576,9 @@ func (c *AccountsReportsGenerateCsvCall) OrderBy(orderBy ...string) *AccountsRep
 // (https://support.google.com/adsense/answer/9830725).
 //
 // Possible values:
-//
-//	"REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
-//	"ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
-//	"GOOGLE_TIME_ZONE" - Use the Google timezone in the report
-//
+//   "REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
+//   "ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
+//   "GOOGLE_TIME_ZONE" - Use the Google timezone in the report
 // (America/Los_Angeles).
 func (c *AccountsReportsGenerateCsvCall) ReportingTimeZone(reportingTimeZone string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.Set("reportingTimeZone", reportingTimeZone)
@@ -6290,8 +6032,8 @@ type AccountsReportsGetSavedCall struct {
 
 // GetSaved: Gets the saved report from the given resource name.
 //
-//   - name: The name of the saved report to retrieve. Format:
-//     accounts/{account}/reports/{report}.
+// - name: The name of the saved report to retrieve. Format:
+//   accounts/{account}/reports/{report}.
 func (r *AccountsReportsService) GetSaved(name string) *AccountsReportsGetSavedCall {
 	c := &AccountsReportsGetSavedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6438,8 +6180,8 @@ type AccountsReportsSavedGenerateCall struct {
 
 // Generate: Generates a saved report.
 //
-//   - name: Name of the saved report. Format:
-//     accounts/{account}/reports/{report}.
+// - name: Name of the saved report. Format:
+//   accounts/{account}/reports/{report}.
 func (r *AccountsReportsSavedService) Generate(name string) *AccountsReportsSavedGenerateCall {
 	c := &AccountsReportsSavedGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6459,27 +6201,20 @@ func (c *AccountsReportsSavedGenerateCall) CurrencyCode(currencyCode string) *Ac
 // report, if unset the range will be considered CUSTOM.
 //
 // Possible values:
-//
-//	"REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
-//	"CUSTOM" - A custom date range specified using the `start_date` and
-//
+//   "REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
+//   "CUSTOM" - A custom date range specified using the `start_date` and
 // `end_date` fields. This is the default if no ReportingDateRange is
 // provided.
-//
-//	"TODAY" - Current day.
-//	"YESTERDAY" - Yesterday.
-//	"MONTH_TO_DATE" - From the start of the current month to the
-//
+//   "TODAY" - Current day.
+//   "YESTERDAY" - Yesterday.
+//   "MONTH_TO_DATE" - From the start of the current month to the
 // current day. e.g. if the current date is 2020-03-12 then the range
 // will be [2020-03-01, 2020-03-12].
-//
-//	"YEAR_TO_DATE" - From the start of the current year to the current
-//
+//   "YEAR_TO_DATE" - From the start of the current year to the current
 // day. e.g. if the current date is 2020-03-12 then the range will be
 // [2020-01-01, 2020-03-12].
-//
-//	"LAST_7_DAYS" - Last 7 days, excluding current day.
-//	"LAST_30_DAYS" - Last 30 days, excluding current day.
+//   "LAST_7_DAYS" - Last 7 days, excluding current day.
+//   "LAST_30_DAYS" - Last 30 days, excluding current day.
 func (c *AccountsReportsSavedGenerateCall) DateRange(dateRange string) *AccountsReportsSavedGenerateCall {
 	c.urlParams_.Set("dateRange", dateRange)
 	return c
@@ -6527,11 +6262,9 @@ func (c *AccountsReportsSavedGenerateCall) LanguageCode(languageCode string) *Ac
 // (https://support.google.com/adsense/answer/9830725).
 //
 // Possible values:
-//
-//	"REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
-//	"ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
-//	"GOOGLE_TIME_ZONE" - Use the Google timezone in the report
-//
+//   "REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
+//   "ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
+//   "GOOGLE_TIME_ZONE" - Use the Google timezone in the report
 // (America/Los_Angeles).
 func (c *AccountsReportsSavedGenerateCall) ReportingTimeZone(reportingTimeZone string) *AccountsReportsSavedGenerateCall {
 	c.urlParams_.Set("reportingTimeZone", reportingTimeZone)
@@ -6789,8 +6522,8 @@ type AccountsReportsSavedGenerateCsvCall struct {
 
 // GenerateCsv: Generates a csv formatted saved report.
 //
-//   - name: Name of the saved report. Format:
-//     accounts/{account}/reports/{report}.
+// - name: Name of the saved report. Format:
+//   accounts/{account}/reports/{report}.
 func (r *AccountsReportsSavedService) GenerateCsv(name string) *AccountsReportsSavedGenerateCsvCall {
 	c := &AccountsReportsSavedGenerateCsvCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6810,27 +6543,20 @@ func (c *AccountsReportsSavedGenerateCsvCall) CurrencyCode(currencyCode string) 
 // report, if unset the range will be considered CUSTOM.
 //
 // Possible values:
-//
-//	"REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
-//	"CUSTOM" - A custom date range specified using the `start_date` and
-//
+//   "REPORTING_DATE_RANGE_UNSPECIFIED" - Unspecified date range.
+//   "CUSTOM" - A custom date range specified using the `start_date` and
 // `end_date` fields. This is the default if no ReportingDateRange is
 // provided.
-//
-//	"TODAY" - Current day.
-//	"YESTERDAY" - Yesterday.
-//	"MONTH_TO_DATE" - From the start of the current month to the
-//
+//   "TODAY" - Current day.
+//   "YESTERDAY" - Yesterday.
+//   "MONTH_TO_DATE" - From the start of the current month to the
 // current day. e.g. if the current date is 2020-03-12 then the range
 // will be [2020-03-01, 2020-03-12].
-//
-//	"YEAR_TO_DATE" - From the start of the current year to the current
-//
+//   "YEAR_TO_DATE" - From the start of the current year to the current
 // day. e.g. if the current date is 2020-03-12 then the range will be
 // [2020-01-01, 2020-03-12].
-//
-//	"LAST_7_DAYS" - Last 7 days, excluding current day.
-//	"LAST_30_DAYS" - Last 30 days, excluding current day.
+//   "LAST_7_DAYS" - Last 7 days, excluding current day.
+//   "LAST_30_DAYS" - Last 30 days, excluding current day.
 func (c *AccountsReportsSavedGenerateCsvCall) DateRange(dateRange string) *AccountsReportsSavedGenerateCsvCall {
 	c.urlParams_.Set("dateRange", dateRange)
 	return c
@@ -6878,11 +6604,9 @@ func (c *AccountsReportsSavedGenerateCsvCall) LanguageCode(languageCode string) 
 // (https://support.google.com/adsense/answer/9830725).
 //
 // Possible values:
-//
-//	"REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
-//	"ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
-//	"GOOGLE_TIME_ZONE" - Use the Google timezone in the report
-//
+//   "REPORTING_TIME_ZONE_UNSPECIFIED" - Unspecified timezone.
+//   "ACCOUNT_TIME_ZONE" - Use the account timezone in the report.
+//   "GOOGLE_TIME_ZONE" - Use the Google timezone in the report
 // (America/Los_Angeles).
 func (c *AccountsReportsSavedGenerateCsvCall) ReportingTimeZone(reportingTimeZone string) *AccountsReportsSavedGenerateCsvCall {
 	c.urlParams_.Set("reportingTimeZone", reportingTimeZone)
@@ -7140,8 +6864,8 @@ type AccountsReportsSavedListCall struct {
 
 // List: Lists saved reports.
 //
-//   - parent: The account which owns the collection of reports. Format:
-//     accounts/{account}.
+// - parent: The account which owns the collection of reports. Format:
+//   accounts/{account}.
 func (r *AccountsReportsSavedService) List(parent string) *AccountsReportsSavedListCall {
 	c := &AccountsReportsSavedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7486,8 +7210,8 @@ type AccountsSitesListCall struct {
 
 // List: Lists all the sites available in an account.
 //
-//   - parent: The account which owns the collection of sites. Format:
-//     accounts/{account}.
+// - parent: The account which owns the collection of sites. Format:
+//   accounts/{account}.
 func (r *AccountsSitesService) List(parent string) *AccountsSitesListCall {
 	c := &AccountsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

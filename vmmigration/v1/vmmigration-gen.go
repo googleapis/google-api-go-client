@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/migrate/virtual-machines
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/vmmigration/v1"
-//	...
-//	ctx := context.Background()
-//	vmmigrationService, err := vmmigration.NewService(ctx)
+//   import "google.golang.org/api/vmmigration/v1"
+//   ...
+//   ctx := context.Background()
+//   vmmigrationService, err := vmmigration.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	vmmigrationService, err := vmmigration.NewService(ctx, option.WithAPIKey("AIza..."))
+//   vmmigrationService, err := vmmigration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	vmmigrationService, err := vmmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   vmmigrationService, err := vmmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package vmmigration // import "google.golang.org/api/vmmigration/v1"
@@ -2816,8 +2816,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5926,9 +5926,9 @@ type ProjectsLocationsSourcesDatacenterConnectorsCreateCall struct {
 
 // Create: Creates a new DatacenterConnector in a given Source.
 //
-//   - parent: The DatacenterConnector's parent. Required. The Source in
-//     where the new DatacenterConnector will be created. For example:
-//     `projects/my-project/locations/us-central1/sources/my-source`.
+// - parent: The DatacenterConnector's parent. Required. The Source in
+//   where the new DatacenterConnector will be created. For example:
+//   `projects/my-project/locations/us-central1/sources/my-source`.
 func (r *ProjectsLocationsSourcesDatacenterConnectorsService) Create(parent string, datacenterconnector *DatacenterConnector) *ProjectsLocationsSourcesDatacenterConnectorsCreateCall {
 	c := &ProjectsLocationsSourcesDatacenterConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7231,17 +7231,12 @@ func (r *ProjectsLocationsSourcesMigratingVmsService) Get(name string) *Projects
 // migrating VM.
 //
 // Possible values:
-//
-//	"MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
-//
+//   "MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
 // fallback to the default value.
-//
-//	"MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
-//
+//   "MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
 // basic details do not include the recent clone jobs and recent cutover
 // jobs lists.
-//
-//	"MIGRATING_VM_VIEW_FULL" - Include everything.
+//   "MIGRATING_VM_VIEW_FULL" - Include everything.
 func (c *ProjectsLocationsSourcesMigratingVmsGetCall) View(view string) *ProjectsLocationsSourcesMigratingVmsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7444,17 +7439,12 @@ func (c *ProjectsLocationsSourcesMigratingVmsListCall) PageToken(pageToken strin
 // migrating VM.
 //
 // Possible values:
-//
-//	"MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
-//
+//   "MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
 // fallback to the default value.
-//
-//	"MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
-//
+//   "MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
 // basic details do not include the recent clone jobs and recent cutover
 // jobs lists.
-//
-//	"MIGRATING_VM_VIEW_FULL" - Include everything.
+//   "MIGRATING_VM_VIEW_FULL" - Include everything.
 func (c *ProjectsLocationsSourcesMigratingVmsListCall) View(view string) *ProjectsLocationsSourcesMigratingVmsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9986,17 +9976,12 @@ func (r *ProjectsLocationsSourcesUtilizationReportsService) Get(name string) *Pr
 // report. Defaults to FULL
 //
 // Possible values:
-//
-//	"UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
-//
+//   "UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
 // The API will default to FULL on single report request and BASIC for
 // multiple reports request.
-//
-//	"BASIC" - Get the report metadata, without the list of VMs and
-//
+//   "BASIC" - Get the report metadata, without the list of VMs and
 // their utilization info.
-//
-//	"FULL" - Include everything.
+//   "FULL" - Include everything.
 func (c *ProjectsLocationsSourcesUtilizationReportsGetCall) View(view string) *ProjectsLocationsSourcesUtilizationReportsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -10199,17 +10184,12 @@ func (c *ProjectsLocationsSourcesUtilizationReportsListCall) PageToken(pageToken
 // report. Defaults to BASIC.
 //
 // Possible values:
-//
-//	"UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
-//
+//   "UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
 // The API will default to FULL on single report request and BASIC for
 // multiple reports request.
-//
-//	"BASIC" - Get the report metadata, without the list of VMs and
-//
+//   "BASIC" - Get the report metadata, without the list of VMs and
 // their utilization info.
-//
-//	"FULL" - Include everything.
+//   "FULL" - Include everything.
 func (c *ProjectsLocationsSourcesUtilizationReportsListCall) View(view string) *ProjectsLocationsSourcesUtilizationReportsListCall {
 	c.urlParams_.Set("view", view)
 	return c

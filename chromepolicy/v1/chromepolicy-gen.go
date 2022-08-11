@@ -8,35 +8,35 @@
 //
 // For product documentation, see: http://developers.google.com/chrome/policy
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/chromepolicy/v1"
-//	...
-//	ctx := context.Background()
-//	chromepolicyService, err := chromepolicy.NewService(ctx)
+//   import "google.golang.org/api/chromepolicy/v1"
+//   ...
+//   ctx := context.Background()
+//   chromepolicyService, err := chromepolicy.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithScopes(chromepolicy.ChromeManagementPolicyReadonlyScope))
+//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithScopes(chromepolicy.ChromeManagementPolicyReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithAPIKey("AIza..."))
+//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package chromepolicy // import "google.golang.org/api/chromepolicy/v1"
@@ -750,8 +750,9 @@ type GoogleChromePolicyV1PolicySchema struct {
 
 	// SchemaName: Output only. The fully qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies or
-	// BatchModifyOrgUnitPolicies
+	// PolicyValue when calling BatchInheritOrgUnitPolicies
+	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
+	// BatchDeleteGroupPolicies.
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
@@ -1007,7 +1008,7 @@ type GoogleChromePolicyV1PolicyTargetKey struct {
 
 	// TargetResource: The target resource on which this policy is applied.
 	// The following resources are supported: * Organizational Unit
-	// ("orgunits/{orgunit_id}")
+	// ("orgunits/{orgunit_id}") * Group ("groups/{group_id}")
 	TargetResource string `json:"targetResource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1653,8 +1654,8 @@ type CustomersPoliciesResolveCall struct {
 // Resolve: Gets the resolved policy values for a list of policies that
 // match a search query.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesService) Resolve(customer string, googlechromepolicyv1resolverequest *GoogleChromePolicyV1ResolveRequest) *CustomersPoliciesResolveCall {
 	c := &CustomersPoliciesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1824,8 +1825,8 @@ type CustomersPoliciesGroupsBatchDeleteCall struct {
 // values for those keys may be different. On failure the request will
 // return the error details as part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+// - customer: ID of the Google Workspace account or literal
+//   "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchDelete(customer string, googlechromepolicyv1batchdeletegrouppoliciesrequest *GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest) *CustomersPoliciesGroupsBatchDeleteCall {
 	c := &CustomersPoliciesGroupsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1972,8 +1973,8 @@ type CustomersPoliciesGroupsBatchModifyCall struct {
 // values for those keys may be different. On failure the request will
 // return the error details as part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+// - customer: ID of the Google Workspace account or literal
+//   "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) BatchModify(customer string, googlechromepolicyv1batchmodifygrouppoliciesrequest *GoogleChromePolicyV1BatchModifyGroupPoliciesRequest) *CustomersPoliciesGroupsBatchModifyCall {
 	c := &CustomersPoliciesGroupsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2118,8 +2119,8 @@ type CustomersPoliciesGroupsListGroupPriorityOrderingCall struct {
 // the PolicyTargetKey. On failure the request will return the error
 // details as part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+// - customer: ID of the Google Workspace account or literal
+//   "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) ListGroupPriorityOrdering(customer string, googlechromepolicyv1listgrouppriorityorderingrequest *GoogleChromePolicyV1ListGroupPriorityOrderingRequest) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsListGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2267,8 +2268,8 @@ type CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall struct {
 // the PolicyTargetKey. On failure the request will return the error
 // details as part of the google.rpc.Status.
 //
-//   - customer: ID of the Google Workspace account or literal
-//     "my_customer" for the customer associated to the request.
+// - customer: ID of the Google Workspace account or literal
+//   "my_customer" for the customer associated to the request.
 func (r *CustomersPoliciesGroupsService) UpdateGroupPriorityOrdering(customer string, googlechromepolicyv1updategrouppriorityorderingrequest *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
 	c := &CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2416,8 +2417,8 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 // the values for those keys may be different. On failure the request
 // will return the error details as part of the google.rpc.Status.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchInherit(customer string, googlechromepolicyv1batchinheritorgunitpoliciesrequest *GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c := &CustomersPoliciesOrgunitsBatchInheritCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2564,8 +2565,8 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 // the values for those keys may be different. On failure the request
 // will return the error details as part of the google.rpc.Status.
 //
-//   - customer: ID of the G Suite account or literal "my_customer" for
-//     the customer associated to the request.
+// - customer: ID of the G Suite account or literal "my_customer" for
+//   the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchModify(customer string, googlechromepolicyv1batchmodifyorgunitpoliciesrequest *GoogleChromePolicyV1BatchModifyOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c := &CustomersPoliciesOrgunitsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer

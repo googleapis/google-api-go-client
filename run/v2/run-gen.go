@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/run/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/run/v2"
-//	...
-//	ctx := context.Background()
-//	runService, err := run.NewService(ctx)
+//   import "google.golang.org/api/run/v2"
+//   ...
+//   ctx := context.Background()
+//   runService, err := run.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
+//   runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package run // import "google.golang.org/api/run/v2"
@@ -2652,16 +2652,20 @@ type GoogleIamV1Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -3146,8 +3150,8 @@ type ProjectsLocationsJobsCreateCall struct {
 
 // Create: Create a Job.
 //
-//   - parent: The location and project in which this Job should be
-//     created. Format: projects/{projectnumber}/locations/{location}.
+// - parent: The location and project in which this Job should be
+//   created. Format: projects/{projectnumber}/locations/{location}.
 func (r *ProjectsLocationsJobsService) Create(parent string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3314,8 +3318,8 @@ type ProjectsLocationsJobsDeleteCall struct {
 
 // Delete: Deletes a Job.
 //
-//   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3489,8 +3493,8 @@ type ProjectsLocationsJobsGetCall struct {
 
 // Get: Gets information about a Job.
 //
-//   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3638,10 +3642,10 @@ type ProjectsLocationsJobsGetIamPolicyCall struct {
 // for the given Job. This result does not include any inherited
 // policies.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) GetIamPolicy(resource string) *ProjectsLocationsJobsGetIamPolicyCall {
 	c := &ProjectsLocationsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3811,8 +3815,8 @@ type ProjectsLocationsJobsListCall struct {
 
 // List: List Jobs.
 //
-//   - parent: The location and project to list resources on. Format:
-//     projects/{projectnumber}/locations/{location}.
+// - parent: The location and project to list resources on. Format:
+//   projects/{projectnumber}/locations/{location}.
 func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4017,8 +4021,8 @@ type ProjectsLocationsJobsPatchCall struct {
 
 // Patch: Updates a Job.
 //
-//   - name: The fully qualified name of this Job. Format:
-//     projects/{project}/locations/{location}/jobs/{job}.
+// - name: The fully qualified name of this Job. Format:
+//   projects/{project}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Patch(name string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsPatchCall {
 	c := &ProjectsLocationsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4187,8 +4191,8 @@ type ProjectsLocationsJobsRunCall struct {
 
 // Run: Triggers creation of a new Execution of this Job.
 //
-//   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+// - name: The full name of the Job. Format:
+//   projects/{projectnumber}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Run(name string, googlecloudrunv2runjobrequest *GoogleCloudRunV2RunJobRequest) *ProjectsLocationsJobsRunCall {
 	c := &ProjectsLocationsJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4331,10 +4335,10 @@ type ProjectsLocationsJobsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM Access control policy for the specified
 // Job. Overwrites any existing policy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsJobsSetIamPolicyCall {
 	c := &ProjectsLocationsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4478,10 +4482,10 @@ type ProjectsLocationsJobsTestIamPermissionsCall struct {
 // specified Project. There are no permissions required for making this
 // API call.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsJobsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4623,9 +4627,9 @@ type ProjectsLocationsJobsExecutionsDeleteCall struct {
 
 // Delete: Delete an Execution.
 //
-//   - name: The name of the Execution to delete. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}.
+// - name: The name of the Execution to delete. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
 func (r *ProjectsLocationsJobsExecutionsService) Delete(name string) *ProjectsLocationsJobsExecutionsDeleteCall {
 	c := &ProjectsLocationsJobsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4784,9 +4788,9 @@ type ProjectsLocationsJobsExecutionsGetCall struct {
 
 // Get: Gets information about a Execution.
 //
-//   - name: The full name of the Execution. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}.
+// - name: The full name of the Execution. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
 func (r *ProjectsLocationsJobsExecutionsService) Get(name string) *ProjectsLocationsJobsExecutionsGetCall {
 	c := &ProjectsLocationsJobsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4932,9 +4936,9 @@ type ProjectsLocationsJobsExecutionsListCall struct {
 
 // List: List Executions from a Job.
 //
-//   - parent: The Execution from which the Executions should be listed.
-//     To list all Executions across Jobs, use "-" instead of Job name.
-//     Format: projects/{project}/locations/{location}/jobs/{job}.
+// - parent: The Execution from which the Executions should be listed.
+//   To list all Executions across Jobs, use "-" instead of Job name.
+//   Format: projects/{project}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsExecutionsService) List(parent string) *ProjectsLocationsJobsExecutionsListCall {
 	c := &ProjectsLocationsJobsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5140,9 +5144,9 @@ type ProjectsLocationsJobsExecutionsTasksGetCall struct {
 
 // Get: Gets information about a Task.
 //
-//   - name: The full name of the Task. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}/tasks/{task}.
+// - name: The full name of the Task. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}/tasks/{task}.
 func (r *ProjectsLocationsJobsExecutionsTasksService) Get(name string) *ProjectsLocationsJobsExecutionsTasksGetCall {
 	c := &ProjectsLocationsJobsExecutionsTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5288,12 +5292,12 @@ type ProjectsLocationsJobsExecutionsTasksListCall struct {
 
 // List: List Tasks from an Execution of a Job.
 //
-//   - parent: The Execution from which the Tasks should be listed. To
-//     list all Tasks across Executions of a Job, use "-" instead of
-//     Execution name. To list all Tasks across Jobs, use "-" instead of
-//     Job name. Format:
-//     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}.
+// - parent: The Execution from which the Tasks should be listed. To
+//   list all Tasks across Executions of a Job, use "-" instead of
+//   Execution name. To list all Tasks across Jobs, use "-" instead of
+//   Job name. Format:
+//   projects/{project}/locations/{location}/jobs/{job}/executions/{execu
+//   tion}.
 func (r *ProjectsLocationsJobsExecutionsTasksService) List(parent string) *ProjectsLocationsJobsExecutionsTasksListCall {
 	c := &ProjectsLocationsJobsExecutionsTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6002,10 +6006,10 @@ type ProjectsLocationsServicesCreateCall struct {
 
 // Create: Creates a new Service in a given project and location.
 //
-//   - parent: The location and project in which this service should be
-//     created. Format: projects/{projectnumber}/locations/{location} Only
-//     lowercase, digits, and hyphens; must begin with letter, and may not
-//     end with hyphen; must contain fewer than 50 characters.
+// - parent: The location and project in which this service should be
+//   created. Format: projects/{projectnumber}/locations/{location} Only
+//   lowercase, digits, and hyphens; must begin with letter, and may not
+//   end with hyphen; must contain fewer than 50 characters.
 func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6173,8 +6177,8 @@ type ProjectsLocationsServicesDeleteCall struct {
 // Delete: Deletes a Service. This will cause the Service to stop
 // serving traffic and will delete all revisions.
 //
-//   - name: The full name of the Service. Format:
-//     projects/{projectnumber}/locations/{location}/services/{service}.
+// - name: The full name of the Service. Format:
+//   projects/{projectnumber}/locations/{location}/services/{service}.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6333,8 +6337,8 @@ type ProjectsLocationsServicesGetCall struct {
 
 // Get: Gets information about a Service.
 //
-//   - name: The full name of the Service. Format:
-//     projects/{projectnumber}/locations/{location}/services/{service}.
+// - name: The full name of the Service. Format:
+//   projects/{projectnumber}/locations/{location}/services/{service}.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6482,10 +6486,10 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // for the given Cloud Run Service. This result does not include any
 // inherited policies.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6655,9 +6659,9 @@ type ProjectsLocationsServicesListCall struct {
 
 // List: List Services.
 //
-//   - parent: The location and project to list resources on. Location
-//     must be a valid GCP region, and may not be the "-" wildcard.
-//     Format: projects/{projectnumber}/locations/{location}.
+// - parent: The location and project to list resources on. Location
+//   must be a valid GCP region, and may not be the "-" wildcard.
+//   Format: projects/{projectnumber}/locations/{location}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6863,11 +6867,11 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates a Service.
 //
-//   - name: The fully qualified name of this Service. In
-//     CreateServiceRequest, this field is ignored, and instead composed
-//     from CreateServiceRequest.parent and
-//     CreateServiceRequest.service_id. Format:
-//     projects/{project}/locations/{location}/services/{service_id}.
+// - name: The fully qualified name of this Service. In
+//   CreateServiceRequest, this field is ignored, and instead composed
+//   from CreateServiceRequest.parent and
+//   CreateServiceRequest.service_id. Format:
+//   projects/{project}/locations/{location}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7037,10 +7041,10 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM Access control policy for the specified
 // Service. Overwrites any existing policy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7184,10 +7188,10 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // specified Project. There are no permissions required for making this
 // API call.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7329,9 +7333,9 @@ type ProjectsLocationsServicesRevisionsDeleteCall struct {
 
 // Delete: Delete a Revision.
 //
-//   - name: The name of the Revision to delete. Format:
-//     projects/{project}/locations/{location}/services/{service}/revisions
-//     /{revision}.
+// - name: The name of the Revision to delete. Format:
+//   projects/{project}/locations/{location}/services/{service}/revisions
+//   /{revision}.
 func (r *ProjectsLocationsServicesRevisionsService) Delete(name string) *ProjectsLocationsServicesRevisionsDeleteCall {
 	c := &ProjectsLocationsServicesRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7490,9 +7494,9 @@ type ProjectsLocationsServicesRevisionsGetCall struct {
 
 // Get: Gets information about a Revision.
 //
-//   - name: The full name of the Revision. Format:
-//     projects/{project}/locations/{location}/services/{service}/revisions
-//     /{revision}.
+// - name: The full name of the Revision. Format:
+//   projects/{project}/locations/{location}/services/{service}/revisions
+//   /{revision}.
 func (r *ProjectsLocationsServicesRevisionsService) Get(name string) *ProjectsLocationsServicesRevisionsGetCall {
 	c := &ProjectsLocationsServicesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7638,10 +7642,10 @@ type ProjectsLocationsServicesRevisionsListCall struct {
 
 // List: List Revisions from a given Service, or from a given location.
 //
-//   - parent: The Service from which the Revisions should be listed. To
-//     list all Revisions across Services, use "-" instead of Service
-//     name. Format:
-//     projects/{project}/locations/{location}/services/{service}.
+// - parent: The Service from which the Revisions should be listed. To
+//   list all Revisions across Services, use "-" instead of Service
+//   name. Format:
+//   projects/{project}/locations/{location}/services/{service}.
 func (r *ProjectsLocationsServicesRevisionsService) List(parent string) *ProjectsLocationsServicesRevisionsListCall {
 	c := &ProjectsLocationsServicesRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/appengine/docs/admin-api/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/appengine/v1alpha"
-//	...
-//	ctx := context.Background()
-//	appengineService, err := appengine.NewService(ctx)
+//   import "google.golang.org/api/appengine/v1alpha"
+//   ...
+//   ctx := context.Background()
+//   appengineService, err := appengine.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	appengineService, err := appengine.NewService(ctx, option.WithScopes(appengine.CloudPlatformReadOnlyScope))
+//   appengineService, err := appengine.NewService(ctx, option.WithScopes(appengine.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
+//   appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package appengine // import "google.golang.org/api/appengine/v1alpha"
@@ -1319,8 +1319,8 @@ type AppsAuthorizedCertificatesCreateCall struct {
 
 // Create: Uploads the specified SSL certificate.
 //
-//   - appsId: Part of `parent`. Name of the parent Application resource.
-//     Example: apps/myapp.
+// - appsId: Part of `parent`. Name of the parent Application resource.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedCertificatesService) Create(appsId string, authorizedcertificate *AuthorizedCertificate) *AppsAuthorizedCertificatesCreateCall {
 	c := &AppsAuthorizedCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -1461,10 +1461,10 @@ type AppsAuthorizedCertificatesDeleteCall struct {
 
 // Delete: Deletes the specified SSL certificate.
 //
-//   - appsId: Part of `name`. Name of the resource to delete. Example:
-//     apps/myapp/authorizedCertificates/12345.
-//   - authorizedCertificatesId: Part of `name`. See documentation of
-//     `appsId`.
+// - appsId: Part of `name`. Name of the resource to delete. Example:
+//   apps/myapp/authorizedCertificates/12345.
+// - authorizedCertificatesId: Part of `name`. See documentation of
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Delete(appsId string, authorizedCertificatesId string) *AppsAuthorizedCertificatesDeleteCall {
 	c := &AppsAuthorizedCertificatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -1606,10 +1606,10 @@ type AppsAuthorizedCertificatesGetCall struct {
 
 // Get: Gets the specified SSL certificate.
 //
-//   - appsId: Part of `name`. Name of the resource requested. Example:
-//     apps/myapp/authorizedCertificates/12345.
-//   - authorizedCertificatesId: Part of `name`. See documentation of
-//     `appsId`.
+// - appsId: Part of `name`. Name of the resource requested. Example:
+//   apps/myapp/authorizedCertificates/12345.
+// - authorizedCertificatesId: Part of `name`. See documentation of
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Get(appsId string, authorizedCertificatesId string) *AppsAuthorizedCertificatesGetCall {
 	c := &AppsAuthorizedCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -1621,13 +1621,9 @@ func (r *AppsAuthorizedCertificatesService) Get(appsId string, authorizedCertifi
 // returned in the GET response.
 //
 // Possible values:
-//
-//	"BASIC_CERTIFICATE" - Basic certificate information, including
-//
+//   "BASIC_CERTIFICATE" - Basic certificate information, including
 // applicable domains and expiration date.
-//
-//	"FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
-//
+//   "FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
 // detailed information on the domain mappings that have this
 // certificate mapped.
 func (c *AppsAuthorizedCertificatesGetCall) View(view string) *AppsAuthorizedCertificatesGetCall {
@@ -1797,8 +1793,8 @@ type AppsAuthorizedCertificatesListCall struct {
 // List: Lists all SSL certificates the user is authorized to
 // administer.
 //
-//   - appsId: Part of `parent`. Name of the parent Application resource.
-//     Example: apps/myapp.
+// - appsId: Part of `parent`. Name of the parent Application resource.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedCertificatesService) List(appsId string) *AppsAuthorizedCertificatesListCall {
 	c := &AppsAuthorizedCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -1823,13 +1819,9 @@ func (c *AppsAuthorizedCertificatesListCall) PageToken(pageToken string) *AppsAu
 // returned in the LIST response.
 //
 // Possible values:
-//
-//	"BASIC_CERTIFICATE" - Basic certificate information, including
-//
+//   "BASIC_CERTIFICATE" - Basic certificate information, including
 // applicable domains and expiration date.
-//
-//	"FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
-//
+//   "FULL_CERTIFICATE" - The information from BASIC_CERTIFICATE, plus
 // detailed information on the domain mappings that have this
 // certificate mapped.
 func (c *AppsAuthorizedCertificatesListCall) View(view string) *AppsAuthorizedCertificatesListCall {
@@ -2028,10 +2020,10 @@ type AppsAuthorizedCertificatesPatchCall struct {
 // same domains as the original certificate. The certificate
 // display_name may also be updated.
 //
-//   - appsId: Part of `name`. Name of the resource to update. Example:
-//     apps/myapp/authorizedCertificates/12345.
-//   - authorizedCertificatesId: Part of `name`. See documentation of
-//     `appsId`.
+// - appsId: Part of `name`. Name of the resource to update. Example:
+//   apps/myapp/authorizedCertificates/12345.
+// - authorizedCertificatesId: Part of `name`. See documentation of
+//   `appsId`.
 func (r *AppsAuthorizedCertificatesService) Patch(appsId string, authorizedCertificatesId string, authorizedcertificate *AuthorizedCertificate) *AppsAuthorizedCertificatesPatchCall {
 	c := &AppsAuthorizedCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2195,8 +2187,8 @@ type AppsAuthorizedDomainsListCall struct {
 
 // List: Lists all domains the user is authorized to administer.
 //
-//   - appsId: Part of `parent`. Name of the parent Application resource.
-//     Example: apps/myapp.
+// - appsId: Part of `parent`. Name of the parent Application resource.
+//   Example: apps/myapp.
 func (r *AppsAuthorizedDomainsService) List(appsId string) *AppsAuthorizedDomainsListCall {
 	c := &AppsAuthorizedDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2392,8 +2384,8 @@ type AppsDomainMappingsCreateCall struct {
 // of available authorized domains, see
 // AuthorizedDomains.ListAuthorizedDomains.
 //
-//   - appsId: Part of `parent`. Name of the parent Application resource.
-//     Example: apps/myapp.
+// - appsId: Part of `parent`. Name of the parent Application resource.
+//   Example: apps/myapp.
 func (r *AppsDomainMappingsService) Create(appsId string, domainmapping *DomainMapping) *AppsDomainMappingsCreateCall {
 	c := &AppsDomainMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2417,18 +2409,12 @@ func (c *AppsDomainMappingsCreateCall) NoManagedCertificate(noManagedCertificate
 // this domain. By default, overrides are rejected.
 //
 // Possible values:
-//
-//	"UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY" - Strategy unspecified.
-//
+//   "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY" - Strategy unspecified.
 // Defaults to STRICT.
-//
-//	"STRICT" - Overrides not allowed. If a mapping already exists for
-//
+//   "STRICT" - Overrides not allowed. If a mapping already exists for
 // the specified domain, the request will return an ALREADY_EXISTS
 // (409).
-//
-//	"OVERRIDE" - Overrides allowed. If a mapping already exists for the
-//
+//   "OVERRIDE" - Overrides allowed. If a mapping already exists for the
 // specified domain, the request will overwrite it. Note that this might
 // stop another Google product from serving. For example, if the domain
 // is mapped to another App Engine application, that app will no longer
@@ -2593,9 +2579,9 @@ type AppsDomainMappingsDeleteCall struct {
 // authorized to administer the associated domain in order to delete a
 // DomainMapping resource.
 //
-//   - appsId: Part of `name`. Name of the resource to delete. Example:
-//     apps/myapp/domainMappings/example.com.
-//   - domainMappingsId: Part of `name`. See documentation of `appsId`.
+// - appsId: Part of `name`. Name of the resource to delete. Example:
+//   apps/myapp/domainMappings/example.com.
+// - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Delete(appsId string, domainMappingsId string) *AppsDomainMappingsDeleteCall {
 	c := &AppsDomainMappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2737,9 +2723,9 @@ type AppsDomainMappingsGetCall struct {
 
 // Get: Gets the specified domain mapping.
 //
-//   - appsId: Part of `name`. Name of the resource requested. Example:
-//     apps/myapp/domainMappings/example.com.
-//   - domainMappingsId: Part of `name`. See documentation of `appsId`.
+// - appsId: Part of `name`. Name of the resource requested. Example:
+//   apps/myapp/domainMappings/example.com.
+// - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Get(appsId string, domainMappingsId string) *AppsDomainMappingsGetCall {
 	c := &AppsDomainMappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2895,8 +2881,8 @@ type AppsDomainMappingsListCall struct {
 
 // List: Lists the domain mappings on an application.
 //
-//   - appsId: Part of `parent`. Name of the parent Application resource.
-//     Example: apps/myapp.
+// - appsId: Part of `parent`. Name of the parent Application resource.
+//   Example: apps/myapp.
 func (r *AppsDomainMappingsService) List(appsId string) *AppsDomainMappingsListCall {
 	c := &AppsDomainMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3094,9 +3080,9 @@ type AppsDomainMappingsPatchCall struct {
 // administer the associated domain in order to update a DomainMapping
 // resource.
 //
-//   - appsId: Part of `name`. Name of the resource to update. Example:
-//     apps/myapp/domainMappings/example.com.
-//   - domainMappingsId: Part of `name`. See documentation of `appsId`.
+// - appsId: Part of `name`. Name of the resource to update. Example:
+//   apps/myapp/domainMappings/example.com.
+// - domainMappingsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsDomainMappingsService) Patch(appsId string, domainMappingsId string, domainmapping *DomainMapping) *AppsDomainMappingsPatchCall {
 	c := &AppsDomainMappingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3435,8 +3421,8 @@ type AppsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - appsId: Part of `name`. The resource that owns the locations
-//     collection, if applicable.
+// - appsId: Part of `name`. The resource that owns the locations
+//   collection, if applicable.
 func (r *AppsLocationsService) List(appsId string) *AppsLocationsListCall {
 	c := &AppsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3813,8 +3799,8 @@ type AppsOperationsListCall struct {
 // the name binding is the parent resource, without the operations
 // collection id.
 //
-//   - appsId: Part of `name`. The name of the operation's parent
-//     resource.
+// - appsId: Part of `name`. The name of the operation's parent
+//   resource.
 func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	c := &AppsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4178,8 +4164,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - projectsId: Part of `name`. The resource that owns the locations
-//     collection, if applicable.
+// - projectsId: Part of `name`. The resource that owns the locations
+//   collection, if applicable.
 func (r *ProjectsLocationsService) List(projectsId string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -4568,9 +4554,9 @@ type ProjectsLocationsOperationsListCall struct {
 // the name binding is the parent resource, without the operations
 // collection id.
 //
-//   - locationsId: Part of `name`. See documentation of `projectsId`.
-//   - projectsId: Part of `name`. The name of the operation's parent
-//     resource.
+// - locationsId: Part of `name`. See documentation of `projectsId`.
+// - projectsId: Part of `name`. The name of the operation's parent
+//   resource.
 func (r *ProjectsLocationsOperationsService) List(projectsId string, locationsId string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId

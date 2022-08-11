@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/database-migration/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/datamigration/v1beta1"
-//	...
-//	ctx := context.Background()
-//	datamigrationService, err := datamigration.NewService(ctx)
+//   import "google.golang.org/api/datamigration/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   datamigrationService, err := datamigration.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	datamigrationService, err := datamigration.NewService(ctx, option.WithAPIKey("AIza..."))
+//   datamigrationService, err := datamigration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	datamigrationService, err := datamigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   datamigrationService, err := datamigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datamigration // import "google.golang.org/api/datamigration/v1beta1"
@@ -2095,8 +2095,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2304,8 +2304,8 @@ type ProjectsLocationsConnectionProfilesCreateCall struct {
 // Create: Creates a new connection profile in a given project and
 // location.
 //
-//   - parent: The parent, which owns this collection of connection
-//     profiles.
+// - parent: The parent, which owns this collection of connection
+//   profiles.
 func (r *ProjectsLocationsConnectionProfilesService) Create(parent string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesCreateCall {
 	c := &ProjectsLocationsConnectionProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2786,10 +2786,10 @@ type ProjectsLocationsConnectionProfilesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) GetIamPolicy(resource string) *ProjectsLocationsConnectionProfilesGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionProfilesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2960,8 +2960,8 @@ type ProjectsLocationsConnectionProfilesListCall struct {
 // List: Retrieve a list of all connection profiles in a given project
 // and location.
 //
-//   - parent: The parent, which owns this collection of connection
-//     profiles.
+// - parent: The parent, which owns this collection of connection
+//   profiles.
 func (r *ProjectsLocationsConnectionProfilesService) List(parent string) *ProjectsLocationsConnectionProfilesListCall {
 	c := &ProjectsLocationsConnectionProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3191,9 +3191,9 @@ type ProjectsLocationsConnectionProfilesPatchCall struct {
 
 // Patch: Update the configuration of a single connection profile.
 //
-//   - name: The name of this connection profile resource in the form of
-//     projects/{project}/locations/{location}/connectionProfiles/{connecti
-//     onProfile}.
+// - name: The name of this connection profile resource in the form of
+//   projects/{project}/locations/{location}/connectionProfiles/{connecti
+//   onProfile}.
 func (r *ProjectsLocationsConnectionProfilesService) Patch(name string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesPatchCall {
 	c := &ProjectsLocationsConnectionProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3367,10 +3367,10 @@ type ProjectsLocationsConnectionProfilesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionProfilesSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionProfilesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3517,10 +3517,10 @@ type ProjectsLocationsConnectionProfilesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionProfilesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionProfilesTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionProfilesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3995,8 +3995,8 @@ type ProjectsLocationsMigrationJobsGenerateSshScriptCall struct {
 // GenerateSshScript: Generate a SSH configuration script to configure
 // the reverse SSH connectivity.
 //
-//   - migrationJob: Name of the migration job resource to generate the
-//     SSH script.
+// - migrationJob: Name of the migration job resource to generate the
+//   SSH script.
 func (r *ProjectsLocationsMigrationJobsService) GenerateSshScript(migrationJob string, generatesshscriptrequest *GenerateSshScriptRequest) *ProjectsLocationsMigrationJobsGenerateSshScriptCall {
 	c := &ProjectsLocationsMigrationJobsGenerateSshScriptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.migrationJob = migrationJob
@@ -4286,10 +4286,10 @@ type ProjectsLocationsMigrationJobsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMigrationJobsService) GetIamPolicy(resource string) *ProjectsLocationsMigrationJobsGetIamPolicyCall {
 	c := &ProjectsLocationsMigrationJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4690,10 +4690,10 @@ type ProjectsLocationsMigrationJobsPatchCall struct {
 
 // Patch: Updates the parameters of a single migration job.
 //
-//   - name: The name (URI) of this migration job resource, in the form
-//     of:
-//     projects/{project}/locations/{location}/migrationJobs/{migrationJob}
-//     .
+// - name: The name (URI) of this migration job resource, in the form
+//   of:
+//   projects/{project}/locations/{location}/migrationJobs/{migrationJob}
+//   .
 func (r *ProjectsLocationsMigrationJobsService) Patch(name string, migrationjob *MigrationJob) *ProjectsLocationsMigrationJobsPatchCall {
 	c := &ProjectsLocationsMigrationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5298,10 +5298,10 @@ type ProjectsLocationsMigrationJobsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMigrationJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMigrationJobsSetIamPolicyCall {
 	c := &ProjectsLocationsMigrationJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5732,10 +5732,10 @@ type ProjectsLocationsMigrationJobsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsMigrationJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMigrationJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsMigrationJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

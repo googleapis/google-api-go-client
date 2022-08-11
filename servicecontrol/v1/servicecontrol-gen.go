@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/service-control/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/servicecontrol/v1"
-//	...
-//	ctx := context.Background()
-//	servicecontrolService, err := servicecontrol.NewService(ctx)
+//   import "google.golang.org/api/servicecontrol/v1"
+//   ...
+//   ctx := context.Background()
+//   servicecontrolService, err := servicecontrol.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithScopes(servicecontrol.ServicecontrolScope))
+//   servicecontrolService, err := servicecontrol.NewService(ctx, option.WithScopes(servicecontrol.ServicecontrolScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithAPIKey("AIza..."))
+//   servicecontrolService, err := servicecontrol.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	servicecontrolService, err := servicecontrol.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   servicecontrolService, err := servicecontrol.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicecontrol // import "google.golang.org/api/servicecontrol/v1"
@@ -3288,9 +3288,9 @@ type ServicesAllocateQuotaCall struct {
 // the server may inject these errors to prohibit any hard dependency on
 // the quota functionality.
 //
-//   - serviceName: Name of the service as specified in the service
-//     configuration. For example, "pubsub.googleapis.com". See
-//     google.api.Service for the definition of a service name.
+// - serviceName: Name of the service as specified in the service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service for the definition of a service name.
 func (r *ServicesService) AllocateQuota(serviceName string, allocatequotarequest *AllocateQuotaRequest) *ServicesAllocateQuotaCall {
 	c := &ServicesAllocateQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3444,11 +3444,11 @@ type ServicesCheckCall struct {
 // service. For more information, see Cloud IAM
 // (https://cloud.google.com/iam).
 //
-//   - serviceName: The service name as specified in its service
-//     configuration. For example, "pubsub.googleapis.com". See
-//     google.api.Service
-//     (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
-//     for the definition of a service name.
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3600,11 +3600,11 @@ type ServicesReportCall struct {
 // the specified service. For more information, see Google Cloud IAM
 // (https://cloud.google.com/iam).
 //
-//   - serviceName: The service name as specified in its service
-//     configuration. For example, "pubsub.googleapis.com". See
-//     google.api.Service
-//     (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
-//     for the definition of a service name.
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName

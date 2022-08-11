@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/api-keys/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/apikeys/v2"
-//	...
-//	ctx := context.Background()
-//	apikeysService, err := apikeys.NewService(ctx)
+//   import "google.golang.org/api/apikeys/v2"
+//   ...
+//   ctx := context.Background()
+//   apikeysService, err := apikeys.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	apikeysService, err := apikeys.NewService(ctx, option.WithScopes(apikeys.CloudPlatformReadOnlyScope))
+//   apikeysService, err := apikeys.NewService(ctx, option.WithScopes(apikeys.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	apikeysService, err := apikeys.NewService(ctx, option.WithAPIKey("AIza..."))
+//   apikeysService, err := apikeys.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	apikeysService, err := apikeys.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   apikeysService, err := apikeys.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package apikeys // import "google.golang.org/api/apikeys/v2"
@@ -1860,11 +1860,11 @@ type ProjectsLocationsKeysPatchCall struct {
 // the API key isn't included in the response. NOTE: Key is a global
 // resource; hence the only supported value for location is `global`.
 //
-//   - name: Output only. The resource name of the key. The `name` has the
-//     form: `projects//locations/global/keys/`. For example:
-//     `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd
-//     -3855ee9b5dd2` NOTE: Key is a global resource; hence the only
-//     supported value for location is `global`.
+// - name: Output only. The resource name of the key. The `name` has the
+//   form: `projects//locations/global/keys/`. For example:
+//   `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd
+//   -3855ee9b5dd2` NOTE: Key is a global resource; hence the only
+//   supported value for location is `global`.
 func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *ProjectsLocationsKeysPatchCall {
 	c := &ProjectsLocationsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

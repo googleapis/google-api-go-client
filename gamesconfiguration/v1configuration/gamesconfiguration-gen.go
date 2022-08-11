@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/games/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/gamesconfiguration/v1configuration"
-//	...
-//	ctx := context.Background()
-//	gamesconfigurationService, err := gamesconfiguration.NewService(ctx)
+//   import "google.golang.org/api/gamesconfiguration/v1configuration"
+//   ...
+//   ctx := context.Background()
+//   gamesconfigurationService, err := gamesconfiguration.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	gamesconfigurationService, err := gamesconfiguration.NewService(ctx, option.WithAPIKey("AIza..."))
+//   gamesconfigurationService, err := gamesconfiguration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	gamesconfigurationService, err := gamesconfiguration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   gamesconfigurationService, err := gamesconfiguration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gamesconfiguration // import "google.golang.org/api/gamesconfiguration/v1configuration"
@@ -940,8 +940,8 @@ type AchievementConfigurationsInsertCall struct {
 
 // Insert: Insert a new achievement configuration in this application.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *AchievementConfigurationsService) Insert(applicationId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsInsertCall {
 	c := &AchievementConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1083,8 +1083,8 @@ type AchievementConfigurationsListCall struct {
 // List: Returns a list of the achievement configurations in this
 // application.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *AchievementConfigurationsService) List(applicationId string) *AchievementConfigurationsListCall {
 	c := &AchievementConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -1903,8 +1903,8 @@ type LeaderboardConfigurationsInsertCall struct {
 
 // Insert: Insert a new leaderboard configuration in this application.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsInsertCall {
 	c := &LeaderboardConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -2046,8 +2046,8 @@ type LeaderboardConfigurationsListCall struct {
 // List: Returns a list of the leaderboard configurations in this
 // application.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *LeaderboardConfigurationsService) List(applicationId string) *LeaderboardConfigurationsListCall {
 	c := &LeaderboardConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId

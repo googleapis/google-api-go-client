@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/streetview/publish/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/streetviewpublish/v1"
-//	...
-//	ctx := context.Background()
-//	streetviewpublishService, err := streetviewpublish.NewService(ctx)
+//   import "google.golang.org/api/streetviewpublish/v1"
+//   ...
+//   ctx := context.Background()
+//   streetviewpublishService, err := streetviewpublish.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	streetviewpublishService, err := streetviewpublish.NewService(ctx, option.WithAPIKey("AIza..."))
+//   streetviewpublishService, err := streetviewpublish.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	streetviewpublishService, err := streetviewpublish.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   streetviewpublishService, err := streetviewpublish.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package streetviewpublish // import "google.golang.org/api/streetviewpublish/v1"
@@ -1818,13 +1818,9 @@ func (c *PhotoGetCall) LanguageCode(languageCode string) *PhotoGetCall {
 // response.
 //
 // Possible values:
-//
-//	"BASIC" - Server responses do not include the download URL for the
-//
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
-//
-//	"INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
-//
+//   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
 func (c *PhotoGetCall) View(view string) *PhotoGetCall {
 	c.urlParams_.Set("view", view)
@@ -2314,13 +2310,10 @@ func (r *PhotoSequenceService) Create(photosequence *PhotoSequence) *PhotoSequen
 // input form of PhotoSequence.
 //
 // Possible values:
-//
-//	"INPUT_TYPE_UNSPECIFIED" - Not specified. Server will return
-//
+//   "INPUT_TYPE_UNSPECIFIED" - Not specified. Server will return
 // google.rpc.Code.INVALID_ARGUMENT.
-//
-//	"VIDEO" - 360 Video.
-//	"XDM" - Extensible Device Metadata, http://www.xdm.org
+//   "VIDEO" - 360 Video.
+//   "XDM" - Extensible Device Metadata, http://www.xdm.org
 func (c *PhotoSequenceCreateCall) InputType(inputType string) *PhotoSequenceCreateCall {
 	c.urlParams_.Set("inputType", inputType)
 	return c
@@ -2631,13 +2624,9 @@ func (c *PhotoSequenceGetCall) Filter(filter string) *PhotoSequenceGetCall {
 // not implemented.
 //
 // Possible values:
-//
-//	"BASIC" - Server responses do not include the download URL for the
-//
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
-//
-//	"INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
-//
+//   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
 func (c *PhotoSequenceGetCall) View(view string) *PhotoSequenceGetCall {
 	c.urlParams_.Set("view", view)
@@ -3291,13 +3280,9 @@ func (c *PhotosBatchGetCall) PhotoIds(photoIds ...string) *PhotosBatchGetCall {
 // response.
 //
 // Possible values:
-//
-//	"BASIC" - Server responses do not include the download URL for the
-//
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
-//
-//	"INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
-//
+//   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
 func (c *PhotosBatchGetCall) View(view string) *PhotosBatchGetCall {
 	c.urlParams_.Set("view", view)
@@ -3640,13 +3625,9 @@ func (c *PhotosListCall) PageToken(pageToken string) *PhotosListCall {
 // response.
 //
 // Possible values:
-//
-//	"BASIC" - Server responses do not include the download URL for the
-//
+//   "BASIC" - Server responses do not include the download URL for the
 // photo bytes. The default value.
-//
-//	"INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
-//
+//   "INCLUDE_DOWNLOAD_URL" - Server responses include the download URL
 // for the photo bytes.
 func (c *PhotosListCall) View(view string) *PhotosListCall {
 	c.urlParams_.Set("view", view)

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/support/docs/apis
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/cloudsupport/v2beta"
-//	...
-//	ctx := context.Background()
-//	cloudsupportService, err := cloudsupport.NewService(ctx)
+//   import "google.golang.org/api/cloudsupport/v2beta"
+//   ...
+//   ctx := context.Background()
+//   cloudsupportService, err := cloudsupport.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	cloudsupportService, err := cloudsupport.NewService(ctx, option.WithAPIKey("AIza..."))
+//   cloudsupportService, err := cloudsupport.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	cloudsupportService, err := cloudsupport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   cloudsupportService, err := cloudsupport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudsupport // import "google.golang.org/api/cloudsupport/v2beta"
@@ -1427,8 +1427,8 @@ type AttachmentsCreateCall struct {
 
 // Create: Create a file attachment on a case or Cloud resource.
 //
-//   - parent: The resource name of the case to which attachment should be
-//     attached.
+// - parent: The resource name of the case to which attachment should be
+//   attached.
 func (r *AttachmentsService) Create(parent string, createattachmentrequest *CreateAttachmentRequest) *AttachmentsCreateCall {
 	c := &AttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1908,8 +1908,8 @@ type CasesCreateCall struct {
 // Create: Create a new case and associate it with the given Cloud
 // resource.
 //
-//   - parent: The name of the Cloud resource under which the case should
-//     be created.
+// - parent: The name of the Cloud resource under which the case should
+//   be created.
 func (r *CasesService) Create(parent string, case_ *Case) *CasesCreateCall {
 	c := &CasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2056,8 +2056,8 @@ type CasesEscalateCall struct {
 // escalations' in the feature list to find out which tiers are able to
 // perform escalations.
 //
-//   - name: The fully qualified name of the Case resource to be
-//     escalated.
+// - name: The fully qualified name of the Case resource to be
+//   escalated.
 func (r *CasesService) Escalate(name string, escalatecaserequest *EscalateCaseRequest) *CasesEscalateCall {
 	c := &CasesEscalateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2349,8 +2349,8 @@ type CasesListCall struct {
 // including cases parented by projects under that organization, use
 // `cases.search`.
 //
-//   - parent: The fully qualified name of parent resource to list cases
-//     under.
+// - parent: The fully qualified name of parent resource to list cases
+//   under.
 func (r *CasesService) List(parent string) *CasesListCall {
 	c := &CasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2940,8 +2940,8 @@ type CasesAttachmentsListCall struct {
 
 // List: Retrieve all attachments associated with a support case.
 //
-//   - parent: The resource name of Case object for which attachments
-//     should be listed.
+// - parent: The resource name of Case object for which attachments
+//   should be listed.
 func (r *CasesAttachmentsService) List(parent string) *CasesAttachmentsListCall {
 	c := &CasesAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3135,8 +3135,8 @@ type CasesCommentsCreateCall struct {
 
 // Create: Add a new comment to the specified Case.
 //
-//   - parent: The resource name of Case to which this comment should be
-//     added.
+// - parent: The resource name of Case to which this comment should be
+//   added.
 func (r *CasesCommentsService) Create(parent string, comment *Comment) *CasesCommentsCreateCall {
 	c := &CasesCommentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3278,8 +3278,8 @@ type CasesCommentsListCall struct {
 
 // List: Retrieve all Comments associated with the Case object.
 //
-//   - parent: The resource name of Case object for which comments should
-//     be listed.
+// - parent: The resource name of Case object for which comments should
+//   be listed.
 func (r *CasesCommentsService) List(parent string) *CasesCommentsListCall {
 	c := &CasesCommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3638,8 +3638,8 @@ type MediaUploadCall struct {
 
 // Upload: Create a file attachment on a case or Cloud resource.
 //
-//   - parent: The resource name of the case to which attachment should be
-//     attached.
+// - parent: The resource name of the case to which attachment should be
+//   attached.
 func (r *MediaService) Upload(parent string, createattachmentrequest *CreateAttachmentRequest) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

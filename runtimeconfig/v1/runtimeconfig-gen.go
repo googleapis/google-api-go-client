@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/deployment-manager/runtime-configurator/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/runtimeconfig/v1"
-//	...
-//	ctx := context.Background()
-//	runtimeconfigService, err := runtimeconfig.NewService(ctx)
+//   import "google.golang.org/api/runtimeconfig/v1"
+//   ...
+//   ctx := context.Background()
+//   runtimeconfigService, err := runtimeconfig.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithScopes(runtimeconfig.CloudruntimeconfigScope))
+//   runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithScopes(runtimeconfig.CloudruntimeconfigScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithAPIKey("AIza..."))
+//   runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   runtimeconfigService, err := runtimeconfig.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package runtimeconfig // import "google.golang.org/api/runtimeconfig/v1"

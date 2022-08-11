@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/error-reporting/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/clouderrorreporting/v1beta1"
-//	...
-//	ctx := context.Background()
-//	clouderrorreportingService, err := clouderrorreporting.NewService(ctx)
+//   import "google.golang.org/api/clouderrorreporting/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   clouderrorreportingService, err := clouderrorreporting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithAPIKey("AIza..."))
+//   clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   clouderrorreportingService, err := clouderrorreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package clouderrorreporting // import "google.golang.org/api/clouderrorreporting/v1beta1"
@@ -827,11 +827,11 @@ type ProjectsDeleteEventsCall struct {
 
 // DeleteEvents: Deletes all error events of a given project.
 //
-//   - projectName: The resource name of the Google Cloud Platform
-//     project. Written as `projects/{projectID}`, where `{projectID}` is
-//     the Google Cloud Platform project ID
-//     (https://support.google.com/cloud/answer/6158840). Example:
-//     `projects/my-project-123`.
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsService) DeleteEvents(projectName string) *ProjectsDeleteEventsCall {
 	c := &ProjectsDeleteEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -964,11 +964,11 @@ type ProjectsEventsListCall struct {
 
 // List: Lists the specified events.
 //
-//   - projectName: The resource name of the Google Cloud Platform
-//     project. Written as `projects/{projectID}`, where `{projectID}` is
-//     the Google Cloud Platform project ID
-//     (https://support.google.com/cloud/answer/6158840). Example:
-//     `projects/my-project-123`.
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall {
 	c := &ProjectsEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1030,26 +1030,16 @@ func (c *ProjectsEventsListCall) ServiceFilterVersion(serviceFilterVersion strin
 // Restricts the query to the specified time range.
 //
 // Possible values:
-//
-//	"PERIOD_UNSPECIFIED" - Do not use.
-//	"PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
-//
+//   "PERIOD_UNSPECIFIED" - Do not use.
+//   "PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
 // minimum timed count duration: 1 min.
-//
-//	"PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
-//
+//   "PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
 // minimum timed count duration: 10 min.
-//
-//	"PERIOD_1_DAY" - Retrieve data for the last day. Recommended
-//
+//   "PERIOD_1_DAY" - Retrieve data for the last day. Recommended
 // minimum timed count duration: 1 hour.
-//
-//	"PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
-//
+//   "PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
 // minimum timed count duration: 6 hours.
-//
-//	"PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
-//
+//   "PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
 // minimum timed count duration: 1 day.
 func (c *ProjectsEventsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsEventsListCall {
 	c.urlParams_.Set("timeRange.period", timeRangePeriod)
@@ -1279,11 +1269,11 @@ type ProjectsEventsReportCall struct {
 // information, see [Using Error Reporting with regionalized logs]
 // (https://cloud.google.com/error-reporting/docs/regionalization).
 //
-//   - projectName: The resource name of the Google Cloud Platform
-//     project. Written as `projects/{projectId}`, where `{projectId}` is
-//     the Google Cloud Platform project ID
-//     (https://support.google.com/cloud/answer/6158840). Example: //
-//     `projects/my-project-123`.
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectId}`, where `{projectId}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example: //
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1425,12 +1415,12 @@ type ProjectsGroupStatsListCall struct {
 
 // List: Lists the specified groups.
 //
-//   - projectName: The resource name of the Google Cloud Platform
-//     project. Written as `projects/{projectID}` or
-//     `projects/{projectNumber}`, where `{projectID}` and
-//     `{projectNumber}` can be found in the Google Cloud console
-//     (https://support.google.com/cloud/answer/6158840). Examples:
-//     `projects/my-project-123`, `projects/5551234`.
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}` or
+//   `projects/{projectNumber}`, where `{projectID}` and
+//   `{projectNumber}` can be found in the Google Cloud console
+//   (https://support.google.com/cloud/answer/6158840). Examples:
+//   `projects/my-project-123`, `projects/5551234`.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
 	c := &ProjectsGroupStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1441,19 +1431,15 @@ func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStats
 // the timed counts to be returned. Default is `ALIGNMENT_EQUAL_AT_END`.
 //
 // Possible values:
-//
-//	"ERROR_COUNT_ALIGNMENT_UNSPECIFIED" - No alignment specified.
-//	"ALIGNMENT_EQUAL_ROUNDED" - The time periods shall be consecutive,
-//
+//   "ERROR_COUNT_ALIGNMENT_UNSPECIFIED" - No alignment specified.
+//   "ALIGNMENT_EQUAL_ROUNDED" - The time periods shall be consecutive,
 // have width equal to the requested duration, and be aligned at the
 // alignment_time provided in the request. The alignment_time does not
 // have to be inside the query period but even if it is outside, only
 // time periods are returned which overlap with the query period. A
 // rounded alignment will typically result in a different size of the
 // first or the last time period.
-//
-//	"ALIGNMENT_EQUAL_AT_END" - The time periods shall be consecutive,
-//
+//   "ALIGNMENT_EQUAL_AT_END" - The time periods shall be consecutive,
 // have width equal to the requested duration, and be aligned at the end
 // of the requested time period. This can result in a different size of
 // the first time period.
@@ -1481,22 +1467,14 @@ func (c *ProjectsGroupStatsListCall) GroupId(groupId ...string) *ProjectsGroupSt
 // the results are returned. Default is `COUNT_DESC`.
 //
 // Possible values:
-//
-//	"GROUP_ORDER_UNSPECIFIED" - No group order specified.
-//	"COUNT_DESC" - Total count of errors in the given time window in
-//
+//   "GROUP_ORDER_UNSPECIFIED" - No group order specified.
+//   "COUNT_DESC" - Total count of errors in the given time window in
 // descending order.
-//
-//	"LAST_SEEN_DESC" - Timestamp when the group was last seen in the
-//
+//   "LAST_SEEN_DESC" - Timestamp when the group was last seen in the
 // given time window in descending order.
-//
-//	"CREATED_DESC" - Timestamp when the group was created in descending
-//
+//   "CREATED_DESC" - Timestamp when the group was created in descending
 // order.
-//
-//	"AFFECTED_USERS_DESC" - Number of affected users in the given time
-//
+//   "AFFECTED_USERS_DESC" - Number of affected users in the given time
 // window in descending order.
 func (c *ProjectsGroupStatsListCall) Order(order string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("order", order)
@@ -1553,26 +1531,16 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterVersion(serviceFilterVersion s
 // Restricts the query to the specified time range.
 //
 // Possible values:
-//
-//	"PERIOD_UNSPECIFIED" - Do not use.
-//	"PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
-//
+//   "PERIOD_UNSPECIFIED" - Do not use.
+//   "PERIOD_1_HOUR" - Retrieve data for the last hour. Recommended
 // minimum timed count duration: 1 min.
-//
-//	"PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
-//
+//   "PERIOD_6_HOURS" - Retrieve data for the last 6 hours. Recommended
 // minimum timed count duration: 10 min.
-//
-//	"PERIOD_1_DAY" - Retrieve data for the last day. Recommended
-//
+//   "PERIOD_1_DAY" - Retrieve data for the last day. Recommended
 // minimum timed count duration: 1 hour.
-//
-//	"PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
-//
+//   "PERIOD_1_WEEK" - Retrieve data for the last week. Recommended
 // minimum timed count duration: 6 hours.
-//
-//	"PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
-//
+//   "PERIOD_30_DAYS" - Retrieve data for the last 30 days. Recommended
 // minimum timed count duration: 1 day.
 func (c *ProjectsGroupStatsListCall) TimeRangePeriod(timeRangePeriod string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("timeRange.period", timeRangePeriod)
@@ -1846,10 +1814,10 @@ type ProjectsGroupsGetCall struct {
 
 // Get: Get the specified group.
 //
-//   - groupName: The group resource name. Written as
-//     `projects/{projectID}/groups/{group_name}`. Call groupStats.list to
-//     return a list of groups belonging to this project. Example:
-//     `projects/my-project-123/groups/my-group`.
+// - groupName: The group resource name. Written as
+//   `projects/{projectID}/groups/{group_name}`. Call groupStats.list to
+//   return a list of groups belonging to this project. Example:
+//   `projects/my-project-123/groups/my-group`.
 func (r *ProjectsGroupsService) Get(groupName string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupName = groupName
@@ -1996,8 +1964,8 @@ type ProjectsGroupsUpdateCall struct {
 // Update: Replace the data for the specified group. Fails if the group
 // does not exist.
 //
-//   - name: The group resource name. Example:
-//     projects/my-project-123/groups/CNSgkpnppqKCUw.
+// - name: The group resource name. Example:
+//   projects/my-project-123/groups/CNSgkpnppqKCUw.
 func (r *ProjectsGroupsService) Update(name string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

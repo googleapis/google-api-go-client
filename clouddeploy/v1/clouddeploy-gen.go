@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/deploy/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/clouddeploy/v1"
-//	...
-//	ctx := context.Background()
-//	clouddeployService, err := clouddeploy.NewService(ctx)
+//   import "google.golang.org/api/clouddeploy/v1"
+//   ...
+//   ctx := context.Background()
+//   clouddeployService, err := clouddeploy.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	clouddeployService, err := clouddeploy.NewService(ctx, option.WithAPIKey("AIza..."))
+//   clouddeployService, err := clouddeploy.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	clouddeployService, err := clouddeploy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   clouddeployService, err := clouddeploy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package clouddeploy // import "google.golang.org/api/clouddeploy/v1"
@@ -2767,8 +2767,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2976,9 +2976,9 @@ type ProjectsLocationsDeliveryPipelinesCreateCall struct {
 // Create: Creates a new DeliveryPipeline in a given project and
 // location.
 //
-//   - parent: The parent collection in which the `DeliveryPipeline`
-//     should be created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+// - parent: The parent collection in which the `DeliveryPipeline`
+//   should be created. Format should be
+//   projects/{project_id}/locations/{location_name}.
 func (r *ProjectsLocationsDeliveryPipelinesService) Create(parent string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3166,10 +3166,10 @@ type ProjectsLocationsDeliveryPipelinesDeleteCall struct {
 
 // Delete: Deletes a single DeliveryPipeline.
 //
-//   - name: The name of the `DeliveryPipeline` to delete. Format should
-//     be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+// - name: The name of the `DeliveryPipeline` to delete. Format should
+//   be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}.
 func (r *ProjectsLocationsDeliveryPipelinesService) Delete(name string) *ProjectsLocationsDeliveryPipelinesDeleteCall {
 	c := &ProjectsLocationsDeliveryPipelinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3377,9 +3377,9 @@ type ProjectsLocationsDeliveryPipelinesGetCall struct {
 
 // Get: Gets details of a single DeliveryPipeline.
 //
-//   - name: Name of the `DeliveryPipeline`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+// - name: Name of the `DeliveryPipeline`. Format must be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}.
 func (r *ProjectsLocationsDeliveryPipelinesService) Get(name string) *ProjectsLocationsDeliveryPipelinesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3527,10 +3527,10 @@ type ProjectsLocationsDeliveryPipelinesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) GetIamPolicy(resource string) *ProjectsLocationsDeliveryPipelinesGetIamPolicyCall {
 	c := &ProjectsLocationsDeliveryPipelinesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3700,8 +3700,8 @@ type ProjectsLocationsDeliveryPipelinesListCall struct {
 
 // List: Lists DeliveryPipelines in a given project and location.
 //
-//   - parent: The parent, which owns this collection of pipelines. Format
-//     must be projects/{project_id}/locations/{location_name}.
+// - parent: The parent, which owns this collection of pipelines. Format
+//   must be projects/{project_id}/locations/{location_name}.
 func (r *ProjectsLocationsDeliveryPipelinesService) List(parent string) *ProjectsLocationsDeliveryPipelinesListCall {
 	c := &ProjectsLocationsDeliveryPipelinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3921,9 +3921,9 @@ type ProjectsLocationsDeliveryPipelinesPatchCall struct {
 
 // Patch: Updates the parameters of a single DeliveryPipeline.
 //
-//   - name: Optional. Name of the `DeliveryPipeline`. Format is
-//     projects/{project}/
-//     locations/{location}/deliveryPipelines/a-z{0,62}.
+// - name: Optional. Name of the `DeliveryPipeline`. Format is
+//   projects/{project}/
+//   locations/{location}/deliveryPipelines/a-z{0,62}.
 func (r *ProjectsLocationsDeliveryPipelinesService) Patch(name string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4132,10 +4132,10 @@ type ProjectsLocationsDeliveryPipelinesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDeliveryPipelinesSetIamPolicyCall {
 	c := &ProjectsLocationsDeliveryPipelinesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4282,10 +4282,10 @@ type ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsDeliveryPipelinesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall {
 	c := &ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4427,9 +4427,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesAbandonCall struct {
 
 // Abandon: Abandons a Release in the Delivery Pipeline.
 //
-//   - name: Name of the Release. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}.
+// - name: Name of the Release. Format is
+//   projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
+//   ipeline}/ releases/{release}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Abandon(name string, abandonreleaserequest *AbandonReleaseRequest) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesAbandonCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4571,10 +4571,10 @@ type ProjectsLocationsDeliveryPipelinesReleasesCreateCall struct {
 
 // Create: Creates a new Release in a given project and location.
 //
-//   - parent: The parent collection in which the `Release` should be
-//     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+// - parent: The parent collection in which the `Release` should be
+//   created. Format should be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Create(parent string, release *Release) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4763,9 +4763,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesGetCall struct {
 
 // Get: Gets details of a single Release.
 //
-//   - name: Name of the `Release`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+// - name: Name of the `Release`. Format must be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}/releases/{release_name}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4911,8 +4911,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesListCall struct {
 
 // List: Lists Releases in a given project and location.
 //
-//   - parent: The `DeliveryPipeline` which owns this collection of
-//     `Release` objects.
+// - parent: The `DeliveryPipeline` which owns this collection of
+//   `Release` objects.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) List(parent string) *ProjectsLocationsDeliveryPipelinesReleasesListCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5133,9 +5133,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall struct {
 
 // Approve: Approves a Rollout.
 //
-//   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+// - name: Name of the Rollout. Format is
+//   projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
+//   ipeline}/ releases/{release}/rollouts/{rollout}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Approve(name string, approverolloutrequest *ApproveRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5277,10 +5277,10 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall struct {
 
 // Create: Creates a new Rollout in a given project and location.
 //
-//   - parent: The parent collection in which the `Rollout` should be
-//     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+// - parent: The parent collection in which the `Rollout` should be
+//   created. Format should be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}/releases/{release_name}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(parent string, rollout *Rollout) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5469,9 +5469,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall struct {
 
 // Get: Gets details of a single Rollout.
 //
-//   - name: Name of the `Rollout`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}.
+// - name: Name of the `Rollout`. Format must be
+//   projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//   ipeline_name}/releases/{release_name}/rollouts/{rollout_name}.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5617,8 +5617,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall struct {
 
 // List: Lists Rollouts in a given project and location.
 //
-//   - parent: The `Release` which owns this collection of `Rollout`
-//     objects.
+// - parent: The `Release` which owns this collection of `Rollout`
+//   objects.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) List(parent string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6486,9 +6486,9 @@ type ProjectsLocationsTargetsCreateCall struct {
 
 // Create: Creates a new Target in a given project and location.
 //
-//   - parent: The parent collection in which the `Target` should be
-//     created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+// - parent: The parent collection in which the `Target` should be
+//   created. Format should be
+//   projects/{project_id}/locations/{location_name}.
 func (r *ProjectsLocationsTargetsService) Create(parent string, target *Target) *ProjectsLocationsTargetsCreateCall {
 	c := &ProjectsLocationsTargetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6676,9 +6676,9 @@ type ProjectsLocationsTargetsDeleteCall struct {
 
 // Delete: Deletes a single Target.
 //
-//   - name: The name of the `Target` to delete. Format should be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+// - name: The name of the `Target` to delete. Format should be
+//   projects/{project_id}/locations/{location_name}/targets/{target_name
+//   }.
 func (r *ProjectsLocationsTargetsService) Delete(name string) *ProjectsLocationsTargetsDeleteCall {
 	c := &ProjectsLocationsTargetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6873,9 +6873,9 @@ type ProjectsLocationsTargetsGetCall struct {
 
 // Get: Gets details of a single Target.
 //
-//   - name: Name of the `Target`. Format must be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+// - name: Name of the `Target`. Format must be
+//   projects/{project_id}/locations/{location_name}/targets/{target_name
+//   }.
 func (r *ProjectsLocationsTargetsService) Get(name string) *ProjectsLocationsTargetsGetCall {
 	c := &ProjectsLocationsTargetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7023,10 +7023,10 @@ type ProjectsLocationsTargetsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) GetIamPolicy(resource string) *ProjectsLocationsTargetsGetIamPolicyCall {
 	c := &ProjectsLocationsTargetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7196,8 +7196,8 @@ type ProjectsLocationsTargetsListCall struct {
 
 // List: Lists Targets in a given project and location.
 //
-//   - parent: The parent, which owns this collection of targets. Format
-//     must be projects/{project_id}/locations/{location_name}.
+// - parent: The parent, which owns this collection of targets. Format
+//   must be projects/{project_id}/locations/{location_name}.
 func (r *ProjectsLocationsTargetsService) List(parent string) *ProjectsLocationsTargetsListCall {
 	c := &ProjectsLocationsTargetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7417,8 +7417,8 @@ type ProjectsLocationsTargetsPatchCall struct {
 
 // Patch: Updates the parameters of a single Target.
 //
-//   - name: Optional. Name of the `Target`. Format is
-//     projects/{project}/locations/{location}/targets/a-z{0,62}.
+// - name: Optional. Name of the `Target`. Format is
+//   projects/{project}/locations/{location}/targets/a-z{0,62}.
 func (r *ProjectsLocationsTargetsService) Patch(name string, target *Target) *ProjectsLocationsTargetsPatchCall {
 	c := &ProjectsLocationsTargetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7627,10 +7627,10 @@ type ProjectsLocationsTargetsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTargetsSetIamPolicyCall {
 	c := &ProjectsLocationsTargetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7777,10 +7777,10 @@ type ProjectsLocationsTargetsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTargetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTargetsTestIamPermissionsCall {
 	c := &ProjectsLocationsTargetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

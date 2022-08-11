@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/app-check
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/firebaseappcheck/v1beta"
-//	...
-//	ctx := context.Background()
-//	firebaseappcheckService, err := firebaseappcheck.NewService(ctx)
+//   import "google.golang.org/api/firebaseappcheck/v1beta"
+//   ...
+//   ctx := context.Background()
+//   firebaseappcheckService, err := firebaseappcheck.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithScopes(firebaseappcheck.FirebaseScope))
+//   firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithScopes(firebaseappcheck.FirebaseScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithAPIKey("AIza..."))
+//   firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   firebaseappcheckService, err := firebaseappcheck.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebaseappcheck // import "google.golang.org/api/firebaseappcheck/v1beta"
@@ -1866,8 +1866,8 @@ type JwksGetCall struct {
 // Check tokens. Exactly one of the public keys in the returned set will
 // successfully validate any App Check token that is currently valid.
 //
-//   - name: The relative resource name to the public JWK set. Must always
-//     be exactly the string `jwks`.
+// - name: The relative resource name to the public JWK set. Must always
+//   be exactly the string `jwks`.
 func (r *JwksService) Get(name string) *JwksGetCall {
 	c := &JwksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2018,11 +2018,11 @@ type ProjectsAppsExchangeAppAttestAssertionCall struct {
 // artifact previously obtained from ExchangeAppAttestAttestation and
 // verifies those with Apple. If valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the iOS app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c := &ProjectsAppsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2172,11 +2172,11 @@ type ProjectsAppsExchangeAppAttestAttestationCall struct {
 // convenience and performance, this method's response object will also
 // contain an AppCheckToken (if the verification is successful).
 //
-//   - app: The relative resource name of the iOS app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c := &ProjectsAppsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2324,11 +2324,11 @@ type ProjectsAppsExchangeCustomTokenCall struct {
 // project's Admin SDK service account credentials. If valid, returns an
 // AppCheckToken.
 //
-//   - app: The relative resource name of the app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeCustomToken(appid string, googlefirebaseappcheckv1betaexchangecustomtokenrequest *GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest) *ProjectsAppsExchangeCustomTokenCall {
 	c := &ProjectsAppsExchangeCustomTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2476,11 +2476,11 @@ type ProjectsAppsExchangeDebugTokenCall struct {
 // AppCheckToken. Note that a restrictive quota is enforced on this
 // method to prevent accidental exposure of the app to abuse.
 //
-//   - app: The relative resource name of the app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1betaexchangedebugtokenrequest *GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest) *ProjectsAppsExchangeDebugTokenCall {
 	c := &ProjectsAppsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2628,11 +2628,11 @@ type ProjectsAppsExchangeDeviceCheckTokenCall struct {
 // issued by DeviceCheck, and attempts to validate it with Apple. If
 // valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the iOS app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeDeviceCheckToken(appid string, googlefirebaseappcheckv1betaexchangedevicechecktokenrequest *GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest) *ProjectsAppsExchangeDeviceCheckTokenCall {
 	c := &ProjectsAppsExchangeDeviceCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2780,11 +2780,11 @@ type ProjectsAppsExchangePlayIntegrityTokenCall struct {
 // (https://developer.android.com/google/play/integrity/verdict#decrypt-verify).
 // If valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the Android app, in the format:
-//     ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the Android app, in the format:
+//   ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangePlayIntegrityToken(appid string, googlefirebaseappcheckv1betaexchangeplayintegritytokenrequest *GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest) *ProjectsAppsExchangePlayIntegrityTokenCall {
 	c := &ProjectsAppsExchangePlayIntegrityTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2932,11 +2932,11 @@ type ProjectsAppsExchangeRecaptchaEnterpriseTokenCall struct {
 // (https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token).
 // If valid, returns an App Check token AppCheckToken.
 //
-//   - app: The relative resource name of the web app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the web app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeRecaptchaEnterpriseToken(appid string, googlefirebaseappcheckv1betaexchangerecaptchaenterprisetokenrequest *GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest) *ProjectsAppsExchangeRecaptchaEnterpriseTokenCall {
 	c := &ProjectsAppsExchangeRecaptchaEnterpriseTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3083,11 +3083,11 @@ type ProjectsAppsExchangeRecaptchaTokenCall struct {
 // (https://developers.google.com/recaptcha/docs/v3). If valid, returns
 // an AppCheckToken.
 //
-//   - app: The relative resource name of the web app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the web app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeRecaptchaToken(appid string, googlefirebaseappcheckv1betaexchangerecaptchatokenrequest *GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest) *ProjectsAppsExchangeRecaptchaTokenCall {
 	c := &ProjectsAppsExchangeRecaptchaTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3234,11 +3234,11 @@ type ProjectsAppsExchangeRecaptchaV3TokenCall struct {
 // (https://developers.google.com/recaptcha/docs/v3). If valid, returns
 // an AppCheckToken.
 //
-//   - app: The relative resource name of the web app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the web app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeRecaptchaV3Token(appid string, googlefirebaseappcheckv1betaexchangerecaptchav3tokenrequest *GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest) *ProjectsAppsExchangeRecaptchaV3TokenCall {
 	c := &ProjectsAppsExchangeRecaptchaV3TokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3385,11 +3385,11 @@ type ProjectsAppsExchangeSafetyNetTokenCall struct {
 // (https://developer.android.com/training/safetynet/attestation#request-attestation-step).
 // If valid, returns an AppCheckToken.
 //
-//   - app: The relative resource name of the Android app, in the format:
-//     ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the Android app, in the format:
+//   ``` projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) ExchangeSafetyNetToken(appid string, googlefirebaseappcheckv1betaexchangesafetynettokenrequest *GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest) *ProjectsAppsExchangeSafetyNetTokenCall {
 	c := &ProjectsAppsExchangeSafetyNetTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3537,11 +3537,11 @@ type ProjectsAppsGenerateAppAttestChallengeCall struct {
 // ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A
 // challenge should not be reused for multiple calls.
 //
-//   - app: The relative resource name of the iOS app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c := &ProjectsAppsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3692,11 +3692,11 @@ type ProjectsAppsGeneratePlayIntegrityChallengeCall struct {
 // verify the presence and validity of the challenge. A challenge should
 // not be reused for multiple calls.
 //
-//   - app: The relative resource name of the app, in the format: ```
-//     projects/{project_number}/apps/{app_id} ``` If necessary, the
-//     `project_number` element can be replaced with the project ID of the
-//     Firebase project. Learn more about using project identifiers in
-//     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+// - app: The relative resource name of the app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
 func (r *ProjectsAppsService) GeneratePlayIntegrityChallenge(appid string, googlefirebaseappcheckv1betagenerateplayintegritychallengerequest *GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest) *ProjectsAppsGeneratePlayIntegrityChallengeCall {
 	c := &ProjectsAppsGeneratePlayIntegrityChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3843,10 +3843,10 @@ type ProjectsAppsAppAttestConfigBatchGetCall struct {
 // BatchGet: Atomically gets the AppAttestConfigs for the specified list
 // of apps.
 //
-//   - parent: The parent project name shared by all AppAttestConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all AppAttestConfigs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsAppAttestConfigService) BatchGet(parent string) *ProjectsAppsAppAttestConfigBatchGetCall {
 	c := &ProjectsAppsAppAttestConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4011,9 +4011,9 @@ type ProjectsAppsAppAttestConfigGetCall struct {
 
 // Get: Gets the AppAttestConfig for the specified app.
 //
-//   - name: The relative resource name of the AppAttestConfig, in the
-//     format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig
-//     ```.
+// - name: The relative resource name of the AppAttestConfig, in the
+//   format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig
+//   ```.
 func (r *ProjectsAppsAppAttestConfigService) Get(name string) *ProjectsAppsAppAttestConfigGetCall {
 	c := &ProjectsAppsAppAttestConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4164,9 +4164,9 @@ type ProjectsAppsAppAttestConfigPatchCall struct {
 // configuration is incomplete or invalid, the app will be unable to
 // exchange AppAttest tokens for App Check tokens.
 //
-//   - name: The relative resource name of the App Attest configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/appAttestConfig ```.
+// - name: The relative resource name of the App Attest configuration
+//   object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/appAttestConfig ```.
 func (r *ProjectsAppsAppAttestConfigService) Patch(name string, googlefirebaseappcheckv1betaappattestconfig *GoogleFirebaseAppcheckV1betaAppAttestConfig) *ProjectsAppsAppAttestConfigPatchCall {
 	c := &ProjectsAppsAppAttestConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4329,9 +4329,9 @@ type ProjectsAppsDebugTokensCreateCall struct {
 // using DeleteDebugToken. Each app can have a maximum of 20 debug
 // tokens.
 //
-//   - parent: The relative resource name of the parent app in which the
-//     specified DebugToken will be created, in the format: ```
-//     projects/{project_number}/apps/{app_id} ```.
+// - parent: The relative resource name of the parent app in which the
+//   specified DebugToken will be created, in the format: ```
+//   projects/{project_number}/apps/{app_id} ```.
 func (r *ProjectsAppsDebugTokensService) Create(parent string, googlefirebaseappcheckv1betadebugtoken *GoogleFirebaseAppcheckV1betaDebugToken) *ProjectsAppsDebugTokensCreateCall {
 	c := &ProjectsAppsDebugTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4477,10 +4477,10 @@ type ProjectsAppsDebugTokensDeleteCall struct {
 // when you suspect the secret `token` has been compromised or when you
 // no longer need the debug token.
 //
-//   - name: The relative resource name of the DebugToken to delete, in
-//     the format: ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+// - name: The relative resource name of the DebugToken to delete, in
+//   the format: ```
+//   projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
+//    ```.
 func (r *ProjectsAppsDebugTokensService) Delete(name string) *ProjectsAppsDebugTokensDeleteCall {
 	c := &ProjectsAppsDebugTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4615,10 +4615,10 @@ type ProjectsAppsDebugTokensGetCall struct {
 // Get: Gets the specified DebugToken. For security reasons, the `token`
 // field is never populated in the response.
 //
-//   - name: The relative resource name of the debug token, in the format:
-//     ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+// - name: The relative resource name of the debug token, in the format:
+//   ```
+//   projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
+//    ```.
 func (r *ProjectsAppsDebugTokensService) Get(name string) *ProjectsAppsDebugTokensGetCall {
 	c := &ProjectsAppsDebugTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4767,9 +4767,9 @@ type ProjectsAppsDebugTokensListCall struct {
 // List: Lists all DebugTokens for the specified app. For security
 // reasons, the `token` field is never populated in the response.
 //
-//   - parent: The relative resource name of the parent app for which to
-//     list each associated DebugToken, in the format: ```
-//     projects/{project_number}/apps/{app_id} ```.
+// - parent: The relative resource name of the parent app for which to
+//   list each associated DebugToken, in the format: ```
+//   projects/{project_number}/apps/{app_id} ```.
 func (r *ProjectsAppsDebugTokensService) List(parent string) *ProjectsAppsDebugTokensListCall {
 	c := &ProjectsAppsDebugTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4973,10 +4973,10 @@ type ProjectsAppsDebugTokensPatchCall struct {
 // `token` field cannot be updated, nor will it be populated in the
 // response, but you can revoke the debug token using DeleteDebugToken.
 //
-//   - name: The relative resource name of the debug token, in the format:
-//     ```
-//     projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
-//     ```.
+// - name: The relative resource name of the debug token, in the format:
+//   ```
+//   projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
+//    ```.
 func (r *ProjectsAppsDebugTokensService) Patch(name string, googlefirebaseappcheckv1betadebugtoken *GoogleFirebaseAppcheckV1betaDebugToken) *ProjectsAppsDebugTokensPatchCall {
 	c := &ProjectsAppsDebugTokensPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5136,10 +5136,10 @@ type ProjectsAppsDeviceCheckConfigBatchGetCall struct {
 // list of apps. For security reasons, the `private_key` field is never
 // populated in the response.
 //
-//   - parent: The parent project name shared by all DeviceCheckConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all DeviceCheckConfigs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsDeviceCheckConfigService) BatchGet(parent string) *ProjectsAppsDeviceCheckConfigBatchGetCall {
 	c := &ProjectsAppsDeviceCheckConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5305,9 +5305,9 @@ type ProjectsAppsDeviceCheckConfigGetCall struct {
 // Get: Gets the DeviceCheckConfig for the specified app. For security
 // reasons, the `private_key` field is never populated in the response.
 //
-//   - name: The relative resource name of the DeviceCheckConfig, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
+// - name: The relative resource name of the DeviceCheckConfig, in the
+//   format: ```
+//   projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
 func (r *ProjectsAppsDeviceCheckConfigService) Get(name string) *ProjectsAppsDeviceCheckConfigGetCall {
 	c := &ProjectsAppsDeviceCheckConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5459,9 +5459,9 @@ type ProjectsAppsDeviceCheckConfigPatchCall struct {
 // to exchange DeviceCheck tokens for App Check tokens. For security
 // reasons, the `private_key` field is never populated in the response.
 //
-//   - name: The relative resource name of the DeviceCheck configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
+// - name: The relative resource name of the DeviceCheck configuration
+//   object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/deviceCheckConfig ```.
 func (r *ProjectsAppsDeviceCheckConfigService) Patch(name string, googlefirebaseappcheckv1betadevicecheckconfig *GoogleFirebaseAppcheckV1betaDeviceCheckConfig) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c := &ProjectsAppsDeviceCheckConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5621,10 +5621,10 @@ type ProjectsAppsPlayIntegrityConfigBatchGetCall struct {
 // BatchGet: Atomically gets the PlayIntegrityConfigs for the specified
 // list of apps.
 //
-//   - parent: The parent project name shared by all PlayIntegrityConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all PlayIntegrityConfigs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsPlayIntegrityConfigService) BatchGet(parent string) *ProjectsAppsPlayIntegrityConfigBatchGetCall {
 	c := &ProjectsAppsPlayIntegrityConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5789,9 +5789,9 @@ type ProjectsAppsPlayIntegrityConfigGetCall struct {
 
 // Get: Gets the PlayIntegrityConfig for the specified app.
 //
-//   - name: The relative resource name of the PlayIntegrityConfig, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
+// - name: The relative resource name of the PlayIntegrityConfig, in the
+//   format: ```
+//   projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
 func (r *ProjectsAppsPlayIntegrityConfigService) Get(name string) *ProjectsAppsPlayIntegrityConfigGetCall {
 	c := &ProjectsAppsPlayIntegrityConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5864,9 +5864,7 @@ func (c *ProjectsAppsPlayIntegrityConfigGetCall) doRequest(alt string) (*http.Re
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleFirebaseAppcheckV1betaPlayIntegrityConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
+//  or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -5944,9 +5942,9 @@ type ProjectsAppsPlayIntegrityConfigPatchCall struct {
 // this configuration is incomplete or invalid, the app will be unable
 // to exchange Play Integrity tokens for App Check tokens.
 //
-//   - name: The relative resource name of the Play Integrity
-//     configuration object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
+// - name: The relative resource name of the Play Integrity
+//   configuration object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/playIntegrityConfig ```.
 func (r *ProjectsAppsPlayIntegrityConfigService) Patch(name string, googlefirebaseappcheckv1betaplayintegrityconfig *GoogleFirebaseAppcheckV1betaPlayIntegrityConfig) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c := &ProjectsAppsPlayIntegrityConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6020,9 +6018,7 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) doRequest(alt string) (*http.
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleFirebaseAppcheckV1betaPlayIntegrityConfig.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
+//  or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -6109,10 +6105,10 @@ type ProjectsAppsRecaptchaConfigBatchGetCall struct {
 // of apps. For security reasons, the `site_secret` field is never
 // populated in the response.
 //
-//   - parent: The parent project name shared by all RecaptchaConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all RecaptchaConfigs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsRecaptchaConfigService) BatchGet(parent string) *ProjectsAppsRecaptchaConfigBatchGetCall {
 	c := &ProjectsAppsRecaptchaConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6278,9 +6274,9 @@ type ProjectsAppsRecaptchaConfigGetCall struct {
 // Get: Gets the RecaptchaConfig for the specified app. For security
 // reasons, the `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the RecaptchaConfig, in the
-//     format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig
-//     ```.
+// - name: The relative resource name of the RecaptchaConfig, in the
+//   format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig
+//   ```.
 func (r *ProjectsAppsRecaptchaConfigService) Get(name string) *ProjectsAppsRecaptchaConfigGetCall {
 	c := &ProjectsAppsRecaptchaConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6432,9 +6428,9 @@ type ProjectsAppsRecaptchaConfigPatchCall struct {
 // exchange reCAPTCHA tokens for App Check tokens. For security reasons,
 // the `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the reCAPTCHA v3 configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaConfig ```.
+// - name: The relative resource name of the reCAPTCHA v3 configuration
+//   object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/recaptchaConfig ```.
 func (r *ProjectsAppsRecaptchaConfigService) Patch(name string, googlefirebaseappcheckv1betarecaptchaconfig *GoogleFirebaseAppcheckV1betaRecaptchaConfig) *ProjectsAppsRecaptchaConfigPatchCall {
 	c := &ProjectsAppsRecaptchaConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6594,11 +6590,11 @@ type ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall struct {
 // BatchGet: Atomically gets the RecaptchaEnterpriseConfigs for the
 // specified list of apps.
 //
-//   - parent: The parent project name shared by all
-//     RecaptchaEnterpriseConfigs being retrieved, in the format ```
-//     projects/{project_number} ``` The parent collection in the `name`
-//     field of any resource being retrieved must match this field, or the
-//     entire batch fails.
+// - parent: The parent project name shared by all
+//   RecaptchaEnterpriseConfigs being retrieved, in the format ```
+//   projects/{project_number} ``` The parent collection in the `name`
+//   field of any resource being retrieved must match this field, or the
+//   entire batch fails.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) BatchGet(parent string) *ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6764,10 +6760,10 @@ type ProjectsAppsRecaptchaEnterpriseConfigGetCall struct {
 
 // Get: Gets the RecaptchaEnterpriseConfig for the specified app.
 //
-//   - name: The relative resource name of the RecaptchaEnterpriseConfig,
-//     in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
-//     ```.
+// - name: The relative resource name of the RecaptchaEnterpriseConfig,
+//   in the format: ```
+//   projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
+//   ```.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Get(name string) *ProjectsAppsRecaptchaEnterpriseConfigGetCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6918,10 +6914,10 @@ type ProjectsAppsRecaptchaEnterpriseConfigPatchCall struct {
 // While this configuration is incomplete or invalid, the app will be
 // unable to exchange reCAPTCHA Enterprise tokens for App Check tokens.
 //
-//   - name: The relative resource name of the reCAPTCHA Enterprise
-//     configuration object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
-//     ```.
+// - name: The relative resource name of the reCAPTCHA Enterprise
+//   configuration object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig
+//   ```.
 func (r *ProjectsAppsRecaptchaEnterpriseConfigService) Patch(name string, googlefirebaseappcheckv1betarecaptchaenterpriseconfig *GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig) *ProjectsAppsRecaptchaEnterpriseConfigPatchCall {
 	c := &ProjectsAppsRecaptchaEnterpriseConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7082,10 +7078,10 @@ type ProjectsAppsRecaptchaV3ConfigBatchGetCall struct {
 // list of apps. For security reasons, the `site_secret` field is never
 // populated in the response.
 //
-//   - parent: The parent project name shared by all RecaptchaV3Configs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all RecaptchaV3Configs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsRecaptchaV3ConfigService) BatchGet(parent string) *ProjectsAppsRecaptchaV3ConfigBatchGetCall {
 	c := &ProjectsAppsRecaptchaV3ConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7251,9 +7247,9 @@ type ProjectsAppsRecaptchaV3ConfigGetCall struct {
 // Get: Gets the RecaptchaV3Config for the specified app. For security
 // reasons, the `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the RecaptchaV3Config, in the
-//     format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
+// - name: The relative resource name of the RecaptchaV3Config, in the
+//   format: ```
+//   projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
 func (r *ProjectsAppsRecaptchaV3ConfigService) Get(name string) *ProjectsAppsRecaptchaV3ConfigGetCall {
 	c := &ProjectsAppsRecaptchaV3ConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7405,9 +7401,9 @@ type ProjectsAppsRecaptchaV3ConfigPatchCall struct {
 // to exchange reCAPTCHA V3 tokens for App Check tokens. For security
 // reasons, the `site_secret` field is never populated in the response.
 //
-//   - name: The relative resource name of the reCAPTCHA v3 configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
+// - name: The relative resource name of the reCAPTCHA v3 configuration
+//   object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/recaptchaV3Config ```.
 func (r *ProjectsAppsRecaptchaV3ConfigService) Patch(name string, googlefirebaseappcheckv1betarecaptchav3config *GoogleFirebaseAppcheckV1betaRecaptchaV3Config) *ProjectsAppsRecaptchaV3ConfigPatchCall {
 	c := &ProjectsAppsRecaptchaV3ConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7567,10 +7563,10 @@ type ProjectsAppsSafetyNetConfigBatchGetCall struct {
 // BatchGet: Atomically gets the SafetyNetConfigs for the specified list
 // of apps.
 //
-//   - parent: The parent project name shared by all SafetyNetConfigs
-//     being retrieved, in the format ``` projects/{project_number} ```
-//     The parent collection in the `name` field of any resource being
-//     retrieved must match this field, or the entire batch fails.
+// - parent: The parent project name shared by all SafetyNetConfigs
+//   being retrieved, in the format ``` projects/{project_number} ```
+//   The parent collection in the `name` field of any resource being
+//   retrieved must match this field, or the entire batch fails.
 func (r *ProjectsAppsSafetyNetConfigService) BatchGet(parent string) *ProjectsAppsSafetyNetConfigBatchGetCall {
 	c := &ProjectsAppsSafetyNetConfigBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7735,9 +7731,9 @@ type ProjectsAppsSafetyNetConfigGetCall struct {
 
 // Get: Gets the SafetyNetConfig for the specified app.
 //
-//   - name: The relative resource name of the SafetyNetConfig, in the
-//     format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig
-//     ```.
+// - name: The relative resource name of the SafetyNetConfig, in the
+//   format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig
+//   ```.
 func (r *ProjectsAppsSafetyNetConfigService) Get(name string) *ProjectsAppsSafetyNetConfigGetCall {
 	c := &ProjectsAppsSafetyNetConfigGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7888,9 +7884,9 @@ type ProjectsAppsSafetyNetConfigPatchCall struct {
 // configuration is incomplete or invalid, the app will be unable to
 // exchange SafetyNet tokens for App Check tokens.
 //
-//   - name: The relative resource name of the SafetyNet configuration
-//     object, in the format: ```
-//     projects/{project_number}/apps/{app_id}/safetyNetConfig ```.
+// - name: The relative resource name of the SafetyNet configuration
+//   object, in the format: ```
+//   projects/{project_number}/apps/{app_id}/safetyNetConfig ```.
 func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseappcheckv1betasafetynetconfig *GoogleFirebaseAppcheckV1betaSafetyNetConfig) *ProjectsAppsSafetyNetConfigPatchCall {
 	c := &ProjectsAppsSafetyNetConfigPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8049,11 +8045,11 @@ type ProjectsServicesBatchUpdateCall struct {
 
 // BatchUpdate: Atomically updates the specified Service configurations.
 //
-//   - parent: The parent project name shared by all Service
-//     configurations being updated, in the format ```
-//     projects/{project_number} ``` The parent collection in the `name`
-//     field of any resource being updated must match this field, or the
-//     entire batch fails.
+// - parent: The parent project name shared by all Service
+//   configurations being updated, in the format ```
+//   projects/{project_number} ``` The parent collection in the `name`
+//   field of any resource being updated must match this field, or the
+//   entire batch fails.
 func (r *ProjectsServicesService) BatchUpdate(parent string, googlefirebaseappcheckv1betabatchupdateservicesrequest *GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest) *ProjectsServicesBatchUpdateCall {
 	c := &ProjectsServicesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8199,13 +8195,13 @@ type ProjectsServicesGetCall struct {
 
 // Get: Gets the Service configuration for the specified service name.
 //
-//   - name: The relative resource name of the Service to retrieve, in the
-//     format: ``` projects/{project_number}/services/{service_id} ```
-//     Note that the `service_id` element must be a supported service ID.
-//     Currently, the following service IDs are supported: *
-//     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-//     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-//     `firestore.googleapis.com` (Cloud Firestore).
+// - name: The relative resource name of the Service to retrieve, in the
+//   format: ``` projects/{project_number}/services/{service_id} ```
+//   Note that the `service_id` element must be a supported service ID.
+//   Currently, the following service IDs are supported: *
+//   `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
+//   `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+//   `firestore.googleapis.com` (Cloud Firestore).
 func (r *ProjectsServicesService) Get(name string) *ProjectsServicesGetCall {
 	c := &ProjectsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8355,9 +8351,9 @@ type ProjectsServicesListCall struct {
 // Only Services which were explicitly configured using UpdateService or
 // BatchUpdateServices will be returned.
 //
-//   - parent: The relative resource name of the parent project for which
-//     to list each associated Service, in the format: ```
-//     projects/{project_number} ```.
+// - parent: The relative resource name of the parent project for which
+//   to list each associated Service, in the format: ```
+//   projects/{project_number} ```.
 func (r *ProjectsServicesService) List(parent string) *ProjectsServicesListCall {
 	c := &ProjectsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8559,14 +8555,14 @@ type ProjectsServicesPatchCall struct {
 
 // Patch: Updates the specified Service configuration.
 //
-//   - name: The relative resource name of the service configuration
-//     object, in the format: ```
-//     projects/{project_number}/services/{service_id} ``` Note that the
-//     `service_id` element must be a supported service ID. Currently, the
-//     following service IDs are supported: *
-//     `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
-//     `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
-//     `firestore.googleapis.com` (Cloud Firestore).
+// - name: The relative resource name of the service configuration
+//   object, in the format: ```
+//   projects/{project_number}/services/{service_id} ``` Note that the
+//   `service_id` element must be a supported service ID. Currently, the
+//   following service IDs are supported: *
+//   `firebasestorage.googleapis.com` (Cloud Storage for Firebase) *
+//   `firebasedatabase.googleapis.com` (Firebase Realtime Database) *
+//   `firestore.googleapis.com` (Cloud Firestore).
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1betaservice *GoogleFirebaseAppcheckV1betaService) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

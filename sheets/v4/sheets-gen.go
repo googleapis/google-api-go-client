@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/sheets/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/sheets/v4"
-//	...
-//	ctx := context.Background()
-//	sheetsService, err := sheets.NewService(ctx)
+//   import "google.golang.org/api/sheets/v4"
+//   ...
+//   ctx := context.Background()
+//   sheetsService, err := sheets.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	sheetsService, err := sheets.NewService(ctx, option.WithScopes(sheets.SpreadsheetsReadonlyScope))
+//   sheetsService, err := sheets.NewService(ctx, option.WithScopes(sheets.SpreadsheetsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	sheetsService, err := sheets.NewService(ctx, option.WithAPIKey("AIza..."))
+//   sheetsService, err := sheets.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	sheetsService, err := sheets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   sheetsService, err := sheets.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package sheets // import "google.golang.org/api/sheets/v4"
@@ -3644,12 +3644,12 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -12551,9 +12551,9 @@ type SpreadsheetsSheetsCopyToCall struct {
 // CopyTo: Copies a single sheet from a spreadsheet to another
 // spreadsheet. Returns the properties of the newly created sheet.
 //
-//   - sheetId: The ID of the sheet to copy.
-//   - spreadsheetId: The ID of the spreadsheet containing the sheet to
-//     copy.
+// - sheetId: The ID of the sheet to copy.
+// - spreadsheetId: The ID of the spreadsheet containing the sheet to
+//   copy.
 func (r *SpreadsheetsSheetsService) CopyTo(spreadsheetId string, sheetId int64, copysheettoanotherspreadsheetrequest *CopySheetToAnotherSpreadsheetRequest) *SpreadsheetsSheetsCopyToCall {
 	c := &SpreadsheetsSheetsCopyToCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12717,10 +12717,10 @@ type SpreadsheetsValuesAppendCall struct {
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
 //
-//   - range: The A1 notation (/sheets/api/guides/concepts#cell) of a
-//     range to search for a logical table of data. Values are appended
-//     after the last row of the table.
-//   - spreadsheetId: The ID of the spreadsheet to update.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of a
+//   range to search for a logical table of data. Values are appended
+//   after the last row of the table.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Append(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesAppendCall {
 	c := &SpreadsheetsValuesAppendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -12742,13 +12742,10 @@ func (c *SpreadsheetsValuesAppendCall) IncludeValuesInResponse(includeValuesInRe
 // the input data should be inserted.
 //
 // Possible values:
-//
-//	"OVERWRITE" - The new data overwrites existing data in the areas it
-//
+//   "OVERWRITE" - The new data overwrites existing data in the areas it
 // is written. (Note: adding data to the end of the sheet will still
 // insert new rows or columns so the data can be written.)
-//
-//	"INSERT_ROWS" - Rows are inserted for the new data.
+//   "INSERT_ROWS" - Rows are inserted for the new data.
 func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string) *SpreadsheetsValuesAppendCall {
 	c.urlParams_.Set("insertDataOption", insertDataOption)
 	return c
@@ -12761,9 +12758,7 @@ func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string)
 // render option is SERIAL_NUMBER.
 //
 // Possible values:
-//
-//	"SERIAL_NUMBER" - Instructs date, time, datetime, and duration
-//
+//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
 // fields to be output as doubles in "serial number" format, as
 // popularized by Lotus 1-2-3. The whole number portion of the value
 // (left of the decimal) counts the days since December 30th 1899. The
@@ -12772,9 +12767,7 @@ func (c *SpreadsheetsValuesAppendCall) InsertDataOption(insertDataOption string)
 // 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
-//
-//	"FORMATTED_STRING" - Instructs date, time, datetime, and duration
-//
+//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
 // fields to be output as strings in their given number format (which
 // depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesAppendCall {
@@ -12787,21 +12780,15 @@ func (c *SpreadsheetsValuesAppendCall) ResponseDateTimeRenderOption(responseDate
 // should be rendered. The default render option is FORMATTED_VALUE.
 //
 // Possible values:
-//
-//	"FORMATTED_VALUE" - Values will be calculated & formatted in the
-//
+//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
 // reply according to the cell's formatting. Formatting is based on the
 // spreadsheet's locale, not the requesting user's locale. For example,
 // if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
 // `A2` would return "$1.23".
-//
-//	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
-//
+//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 // in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then `A2` would return the number `1.23`.
-//
-//	"FORMULA" - Values will not be calculated. The reply will include
-//
+//   "FORMULA" - Values will not be calculated. The reply will include
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then A2 would return "=A1".
 func (c *SpreadsheetsValuesAppendCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesAppendCall {
@@ -12813,17 +12800,11 @@ func (c *SpreadsheetsValuesAppendCall) ResponseValueRenderOption(responseValueRe
 // the input data should be interpreted.
 //
 // Possible values:
-//
-//	"INPUT_VALUE_OPTION_UNSPECIFIED" - Default input value. This value
-//
+//   "INPUT_VALUE_OPTION_UNSPECIFIED" - Default input value. This value
 // must not be used.
-//
-//	"RAW" - The values the user has entered will not be parsed and will
-//
+//   "RAW" - The values the user has entered will not be parsed and will
 // be stored as-is.
-//
-//	"USER_ENTERED" - The values will be parsed as if the user typed
-//
+//   "USER_ENTERED" - The values will be parsed as if the user typed
 // them into the UI. Numbers will stay as numbers, but strings may be
 // converted to numbers, dates, etc. following the same rules that are
 // applied when entering text into a cell via the Google Sheets UI.
@@ -13344,9 +13325,7 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
 //
 // Possible values:
-//
-//	"SERIAL_NUMBER" - Instructs date, time, datetime, and duration
-//
+//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
 // fields to be output as doubles in "serial number" format, as
 // popularized by Lotus 1-2-3. The whole number portion of the value
 // (left of the decimal) counts the days since December 30th 1899. The
@@ -13355,9 +13334,7 @@ func (r *SpreadsheetsValuesService) BatchGet(spreadsheetId string) *Spreadsheets
 // 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
-//
-//	"FORMATTED_STRING" - Instructs date, time, datetime, and duration
-//
+//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
 // fields to be output as strings in their given number format (which
 // depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOption string) *SpreadsheetsValuesBatchGetCall {
@@ -13373,10 +13350,9 @@ func (c *SpreadsheetsValuesBatchGetCall) DateTimeRenderOption(dateTimeRenderOpti
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
-//
-//	"DIMENSION_UNSPECIFIED" - The default value, do not use.
-//	"ROWS" - Operates on the rows of a sheet.
-//	"COLUMNS" - Operates on the columns of a sheet.
+//   "DIMENSION_UNSPECIFIED" - The default value, do not use.
+//   "ROWS" - Operates on the rows of a sheet.
+//   "COLUMNS" - Operates on the columns of a sheet.
 func (c *SpreadsheetsValuesBatchGetCall) MajorDimension(majorDimension string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.Set("majorDimension", majorDimension)
 	return c
@@ -13395,21 +13371,15 @@ func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsV
 // option is ValueRenderOption.FORMATTED_VALUE.
 //
 // Possible values:
-//
-//	"FORMATTED_VALUE" - Values will be calculated & formatted in the
-//
+//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
 // reply according to the cell's formatting. Formatting is based on the
 // spreadsheet's locale, not the requesting user's locale. For example,
 // if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
 // `A2` would return "$1.23".
-//
-//	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
-//
+//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 // in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then `A2` would return the number `1.23`.
-//
-//	"FORMULA" - Values will not be calculated. The reply will include
-//
+//   "FORMULA" - Values will not be calculated. The reply will include
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then A2 would return "=A1".
 func (c *SpreadsheetsValuesBatchGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesBatchGetCall {
@@ -14050,9 +14020,9 @@ type SpreadsheetsValuesClearCall struct {
 // properties of the cell (such as formatting, data validation, etc..)
 // are kept.
 //
-//   - range: The A1 notation or R1C1 notation
-//     (/sheets/api/guides/concepts#cell) of the values to clear.
-//   - spreadsheetId: The ID of the spreadsheet to update.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the values to clear.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Clear(spreadsheetId string, range_ string, clearvaluesrequest *ClearValuesRequest) *SpreadsheetsValuesClearCall {
 	c := &SpreadsheetsValuesClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14206,10 +14176,10 @@ type SpreadsheetsValuesGetCall struct {
 // Get: Returns a range of values from a spreadsheet. The caller must
 // specify the spreadsheet ID and a range.
 //
-//   - range: The A1 notation or R1C1 notation
-//     (/sheets/api/guides/concepts#cell) of the range to retrieve values
-//     from.
-//   - spreadsheetId: The ID of the spreadsheet to retrieve data from.
+// - range: The A1 notation or R1C1 notation
+//   (/sheets/api/guides/concepts#cell) of the range to retrieve values
+//   from.
+// - spreadsheetId: The ID of the spreadsheet to retrieve data from.
 func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *SpreadsheetsValuesGetCall {
 	c := &SpreadsheetsValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14223,9 +14193,7 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.
 //
 // Possible values:
-//
-//	"SERIAL_NUMBER" - Instructs date, time, datetime, and duration
-//
+//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
 // fields to be output as doubles in "serial number" format, as
 // popularized by Lotus 1-2-3. The whole number portion of the value
 // (left of the decimal) counts the days since December 30th 1899. The
@@ -14234,9 +14202,7 @@ func (r *SpreadsheetsValuesService) Get(spreadsheetId string, range_ string) *Sp
 // 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
-//
-//	"FORMATTED_STRING" - Instructs date, time, datetime, and duration
-//
+//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
 // fields to be output as strings in their given number format (which
 // depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption string) *SpreadsheetsValuesGetCall {
@@ -14252,10 +14218,9 @@ func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption st
 // `[[1,3],[2,4]]`.
 //
 // Possible values:
-//
-//	"DIMENSION_UNSPECIFIED" - The default value, do not use.
-//	"ROWS" - Operates on the rows of a sheet.
-//	"COLUMNS" - Operates on the columns of a sheet.
+//   "DIMENSION_UNSPECIFIED" - The default value, do not use.
+//   "ROWS" - Operates on the rows of a sheet.
+//   "COLUMNS" - Operates on the columns of a sheet.
 func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *SpreadsheetsValuesGetCall {
 	c.urlParams_.Set("majorDimension", majorDimension)
 	return c
@@ -14266,21 +14231,15 @@ func (c *SpreadsheetsValuesGetCall) MajorDimension(majorDimension string) *Sprea
 // option is FORMATTED_VALUE.
 //
 // Possible values:
-//
-//	"FORMATTED_VALUE" - Values will be calculated & formatted in the
-//
+//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
 // reply according to the cell's formatting. Formatting is based on the
 // spreadsheet's locale, not the requesting user's locale. For example,
 // if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
 // `A2` would return "$1.23".
-//
-//	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
-//
+//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 // in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then `A2` would return the number `1.23`.
-//
-//	"FORMULA" - Values will not be calculated. The reply will include
-//
+//   "FORMULA" - Values will not be calculated. The reply will include
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then A2 would return "=A1".
 func (c *SpreadsheetsValuesGetCall) ValueRenderOption(valueRenderOption string) *SpreadsheetsValuesGetCall {
@@ -14483,9 +14442,9 @@ type SpreadsheetsValuesUpdateCall struct {
 // Update: Sets values in a range of a spreadsheet. The caller must
 // specify the spreadsheet ID, range, and a valueInputOption.
 //
-//   - range: The A1 notation (/sheets/api/guides/concepts#cell) of the
-//     values to update.
-//   - spreadsheetId: The ID of the spreadsheet to update.
+// - range: The A1 notation (/sheets/api/guides/concepts#cell) of the
+//   values to update.
+// - spreadsheetId: The ID of the spreadsheet to update.
 func (r *SpreadsheetsValuesService) Update(spreadsheetId string, range_ string, valuerange *ValueRange) *SpreadsheetsValuesUpdateCall {
 	c := &SpreadsheetsValuesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.spreadsheetId = spreadsheetId
@@ -14513,9 +14472,7 @@ func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInRe
 // render option is SERIAL_NUMBER.
 //
 // Possible values:
-//
-//	"SERIAL_NUMBER" - Instructs date, time, datetime, and duration
-//
+//   "SERIAL_NUMBER" - Instructs date, time, datetime, and duration
 // fields to be output as doubles in "serial number" format, as
 // popularized by Lotus 1-2-3. The whole number portion of the value
 // (left of the decimal) counts the days since December 30th 1899. The
@@ -14524,9 +14481,7 @@ func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInRe
 // 2.5, 2 because it's 2 days after December 30th 1899, and .5 because
 // noon is half a day. February 1st 1900 at 3pm would be 33.625. This
 // correctly treats the year 1900 as not a leap year.
-//
-//	"FORMATTED_STRING" - Instructs date, time, datetime, and duration
-//
+//   "FORMATTED_STRING" - Instructs date, time, datetime, and duration
 // fields to be output as strings in their given number format (which
 // depends on the spreadsheet locale).
 func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDateTimeRenderOption string) *SpreadsheetsValuesUpdateCall {
@@ -14539,21 +14494,15 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseDateTimeRenderOption(responseDate
 // should be rendered. The default render option is FORMATTED_VALUE.
 //
 // Possible values:
-//
-//	"FORMATTED_VALUE" - Values will be calculated & formatted in the
-//
+//   "FORMATTED_VALUE" - Values will be calculated & formatted in the
 // reply according to the cell's formatting. Formatting is based on the
 // spreadsheet's locale, not the requesting user's locale. For example,
 // if `A1` is `1.23` and `A2` is `=A1` and formatted as currency, then
 // `A2` would return "$1.23".
-//
-//	"UNFORMATTED_VALUE" - Values will be calculated, but not formatted
-//
+//   "UNFORMATTED_VALUE" - Values will be calculated, but not formatted
 // in the reply. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then `A2` would return the number `1.23`.
-//
-//	"FORMULA" - Values will not be calculated. The reply will include
-//
+//   "FORMULA" - Values will not be calculated. The reply will include
 // the formulas. For example, if `A1` is `1.23` and `A2` is `=A1` and
 // formatted as currency, then A2 would return "=A1".
 func (c *SpreadsheetsValuesUpdateCall) ResponseValueRenderOption(responseValueRenderOption string) *SpreadsheetsValuesUpdateCall {
@@ -14565,17 +14514,11 @@ func (c *SpreadsheetsValuesUpdateCall) ResponseValueRenderOption(responseValueRe
 // the input data should be interpreted.
 //
 // Possible values:
-//
-//	"INPUT_VALUE_OPTION_UNSPECIFIED" - Default input value. This value
-//
+//   "INPUT_VALUE_OPTION_UNSPECIFIED" - Default input value. This value
 // must not be used.
-//
-//	"RAW" - The values the user has entered will not be parsed and will
-//
+//   "RAW" - The values the user has entered will not be parsed and will
 // be stored as-is.
-//
-//	"USER_ENTERED" - The values will be parsed as if the user typed
-//
+//   "USER_ENTERED" - The values will be parsed as if the user typed
 // them into the UI. Numbers will stay as numbers, but strings may be
 // converted to numbers, dates, etc. following the same rules that are
 // applied when entering text into a cell via the Google Sheets UI.

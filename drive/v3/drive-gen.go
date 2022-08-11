@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/drive/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/drive/v3"
-//	...
-//	ctx := context.Background()
-//	driveService, err := drive.NewService(ctx)
+//   import "google.golang.org/api/drive/v3"
+//   ...
+//   ctx := context.Background()
+//   driveService, err := drive.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	driveService, err := drive.NewService(ctx, option.WithScopes(drive.DriveScriptsScope))
+//   driveService, err := drive.NewService(ctx, option.WithScopes(drive.DriveScriptsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	driveService, err := drive.NewService(ctx, option.WithAPIKey("AIza..."))
+//   driveService, err := drive.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	driveService, err := drive.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   driveService, err := drive.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package drive // import "google.golang.org/api/drive/v3"
@@ -3713,10 +3713,10 @@ type ChangesListCall struct {
 
 // List: Lists the changes for a user or shared drive.
 //
-//   - pageToken: The token for continuing a previous list request on the
-//     next page. This should be set to the value of 'nextPageToken' from
-//     the previous response or to the response from the getStartPageToken
-//     method.
+// - pageToken: The token for continuing a previous list request on the
+//   next page. This should be set to the value of 'nextPageToken' from
+//   the previous response or to the response from the getStartPageToken
+//   method.
 func (r *ChangesService) List(pageToken string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -4047,10 +4047,10 @@ type ChangesWatchCall struct {
 
 // Watch: Subscribes to changes for a user.
 //
-//   - pageToken: The token for continuing a previous list request on the
-//     next page. This should be set to the value of 'nextPageToken' from
-//     the previous response or to the response from the getStartPageToken
-//     method.
+// - pageToken: The token for continuing a previous list request on the
+//   next page. This should be set to the value of 'nextPageToken' from
+//   the previous response or to the response from the getStartPageToken
+//   method.
 func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatchCall {
 	c := &ChangesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
@@ -5280,12 +5280,12 @@ type DrivesCreateCall struct {
 
 // Create: Creates a new shared drive.
 //
-//   - requestId: An ID, such as a random UUID, which uniquely identifies
-//     this user's request for idempotent creation of a shared drive. A
-//     repeated request by the same user and with the same request ID will
-//     avoid creating duplicates by attempting to create the same shared
-//     drive. If the shared drive already exists a 409 error will be
-//     returned.
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a shared drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same shared
+//   drive. If the shared drive already exists a 409 error will be
+//   returned.
 func (r *DrivesService) Create(requestId string, drive *Drive) *DrivesCreateCall {
 	c := &DrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -7761,10 +7761,8 @@ func (c *FilesListCall) Corpora(corpora string) *FilesListCall {
 // list. Deprecated: use 'corpora' instead.
 //
 // Possible values:
-//
-//	"domain" - Files shared to the user's domain.
-//	"user" - Files owned by or shared to the user. If a user has
-//
+//   "domain" - Files shared to the user's domain.
+//   "user" - Files owned by or shared to the user. If a user has
 // permissions on a Shared Drive, the files inside it won't be retrieved
 // unless the user has created, opened, or shared the file.
 func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
@@ -11681,12 +11679,12 @@ type TeamdrivesCreateCall struct {
 
 // Create: Deprecated use drives.create instead.
 //
-//   - requestId: An ID, such as a random UUID, which uniquely identifies
-//     this user's request for idempotent creation of a Team Drive. A
-//     repeated request by the same user and with the same request ID will
-//     avoid creating duplicates by attempting to create the same Team
-//     Drive. If the Team Drive already exists a 409 error will be
-//     returned.
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a Team Drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same Team
+//   Drive. If the Team Drive already exists a 409 error will be
+//   returned.
 func (r *TeamdrivesService) Create(requestId string, teamdrive *TeamDrive) *TeamdrivesCreateCall {
 	c := &TeamdrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)

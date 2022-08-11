@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/container-analysis/docs/on-demand-scanning/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/ondemandscanning/v1"
-//	...
-//	ctx := context.Background()
-//	ondemandscanningService, err := ondemandscanning.NewService(ctx)
+//   import "google.golang.org/api/ondemandscanning/v1"
+//   ...
+//   ctx := context.Background()
+//   ondemandscanningService, err := ondemandscanning.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	ondemandscanningService, err := ondemandscanning.NewService(ctx, option.WithAPIKey("AIza..."))
+//   ondemandscanningService, err := ondemandscanning.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	ondemandscanningService, err := ondemandscanning.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   ondemandscanningService, err := ondemandscanning.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package ondemandscanning // import "google.golang.org/api/ondemandscanning/v1"
@@ -1073,8 +1073,8 @@ type DiscoveryOccurrence struct {
 	//   "ANALYSIS_STATUS_UNSPECIFIED" - Unknown.
 	//   "PENDING" - Resource is known but no action has been taken yet.
 	//   "SCANNING" - Resource is being analyzed.
-	//   "COMPLETE" - Analysis has completed
 	//   "FINISHED_SUCCESS" - Analysis has finished successfully.
+	//   "COMPLETE" - Analysis has completed
 	//   "FINISHED_FAILED" - Analysis has finished unsuccessfully, the
 	// analysis itself is in a bad state.
 	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported.
@@ -4265,8 +4265,8 @@ type ProjectsLocationsScansAnalyzePackagesCall struct {
 
 // AnalyzePackages: Initiates an analysis of the provided packages.
 //
-//   - parent: The parent of the resource for which analysis is requested.
-//     Format: projects/[project_name]/locations/[location].
+// - parent: The parent of the resource for which analysis is requested.
+//   Format: projects/[project_name]/locations/[location].
 func (r *ProjectsLocationsScansService) AnalyzePackages(parent string, analyzepackagesrequestv1 *AnalyzePackagesRequestV1) *ProjectsLocationsScansAnalyzePackagesCall {
 	c := &ProjectsLocationsScansAnalyzePackagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4409,9 +4409,9 @@ type ProjectsLocationsScansVulnerabilitiesListCall struct {
 // List: Lists vulnerabilities resulting from a successfully completed
 // scan.
 //
-//   - parent: The parent of the collection of Vulnerabilities being
-//     requested. Format:
-//     projects/[project_name]/locations/[location]/scans/[scan_id].
+// - parent: The parent of the collection of Vulnerabilities being
+//   requested. Format:
+//   projects/[project_name]/locations/[location]/scans/[scan_id].
 func (r *ProjectsLocationsScansVulnerabilitiesService) List(parent string) *ProjectsLocationsScansVulnerabilitiesListCall {
 	c := &ProjectsLocationsScansVulnerabilitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

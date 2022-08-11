@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/my-business/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/mybusinessbusinesscalls/v1"
-//	...
-//	ctx := context.Background()
-//	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx)
+//   import "google.golang.org/api/mybusinessbusinesscalls/v1"
+//   ...
+//   ctx := context.Background()
+//   mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithAPIKey("AIza..."))
+//   mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package mybusinessbusinesscalls // import "google.golang.org/api/mybusinessbusinesscalls/v1"
@@ -454,9 +454,9 @@ type LocationsGetBusinesscallssettingsCall struct {
 // GetBusinesscallssettings: Returns the Business calls settings
 // resource for the given location.
 //
-//   - name: The BusinessCallsSettings to get. The `name` field is used to
-//     identify the business call settings to get. Format:
-//     locations/{location_id}/businesscallssettings.
+// - name: The BusinessCallsSettings to get. The `name` field is used to
+//   identify the business call settings to get. Format:
+//   locations/{location_id}/businesscallssettings.
 func (r *LocationsService) GetBusinesscallssettings(name string) *LocationsGetBusinesscallssettingsCall {
 	c := &LocationsGetBusinesscallssettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -600,8 +600,8 @@ type LocationsUpdateBusinesscallssettingsCall struct {
 // UpdateBusinesscallssettings: Updates the Business call settings for
 // the specified location.
 //
-//   - name: The resource name of the calls settings. Format:
-//     locations/{location}/businesscallssettings.
+// - name: The resource name of the calls settings. Format:
+//   locations/{location}/businesscallssettings.
 func (r *LocationsService) UpdateBusinesscallssettings(name string, businesscallssettings *BusinessCallsSettings) *LocationsUpdateBusinesscallssettingsCall {
 	c := &LocationsUpdateBusinesscallssettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -753,8 +753,8 @@ type LocationsBusinesscallsinsightsListCall struct {
 
 // List: Returns insights for Business calls for a location.
 //
-//   - parent: The parent location to fetch calls insights for. Format:
-//     locations/{location_id}.
+// - parent: The parent location to fetch calls insights for. Format:
+//   locations/{location_id}.
 func (r *LocationsBusinesscallsinsightsService) List(parent string) *LocationsBusinesscallsinsightsListCall {
 	c := &LocationsBusinesscallsinsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/spectrum-access-system/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/prod_tt_sasportal/v1alpha1"
-//	...
-//	ctx := context.Background()
-//	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx)
+//   import "google.golang.org/api/prod_tt_sasportal/v1alpha1"
+//   ...
+//   ctx := context.Background()
+//   prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithScopes(prod_tt_sasportal.UserinfoEmailScope))
+//   prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithScopes(prod_tt_sasportal.UserinfoEmailScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithAPIKey("AIza..."))
+//   prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package prod_tt_sasportal // import "google.golang.org/api/prod_tt_sasportal/v1alpha1"
@@ -2425,8 +2425,8 @@ type CustomersDeploymentsCreateCall struct {
 
 // Create: Creates a new deployment.
 //
-//   - parent: The parent resource name where the deployment is to be
-//     created.
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *CustomersDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *CustomersDeploymentsCreateCall {
 	c := &CustomersDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2849,8 +2849,8 @@ type CustomersDeploymentsListCall struct {
 
 // List: Lists deployments.
 //
-//   - parent: The parent resource name, for example, "nodes/1",
-//     customer/1/nodes/2.
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *CustomersDeploymentsService) List(parent string) *CustomersDeploymentsListCall {
 	c := &CustomersDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6142,8 +6142,8 @@ type CustomersNodesDeploymentsCreateCall struct {
 
 // Create: Creates a new deployment.
 //
-//   - parent: The parent resource name where the deployment is to be
-//     created.
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *CustomersNodesDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *CustomersNodesDeploymentsCreateCall {
 	c := &CustomersNodesDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6286,8 +6286,8 @@ type CustomersNodesDeploymentsListCall struct {
 
 // List: Lists deployments.
 //
-//   - parent: The parent resource name, for example, "nodes/1",
-//     customer/1/nodes/2.
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *CustomersNodesDeploymentsService) List(parent string) *CustomersNodesDeploymentsListCall {
 	c := &CustomersNodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9035,8 +9035,8 @@ type NodesDeploymentsListCall struct {
 
 // List: Lists deployments.
 //
-//   - parent: The parent resource name, for example, "nodes/1",
-//     customer/1/nodes/2.
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *NodesDeploymentsService) List(parent string) *NodesDeploymentsListCall {
 	c := &NodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12328,8 +12328,8 @@ type NodesNodesDeploymentsCreateCall struct {
 
 // Create: Creates a new deployment.
 //
-//   - parent: The parent resource name where the deployment is to be
-//     created.
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *NodesNodesDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *NodesNodesDeploymentsCreateCall {
 	c := &NodesNodesDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12472,8 +12472,8 @@ type NodesNodesDeploymentsListCall struct {
 
 // List: Lists deployments.
 //
-//   - parent: The parent resource name, for example, "nodes/1",
-//     customer/1/nodes/2.
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *NodesNodesDeploymentsService) List(parent string) *NodesNodesDeploymentsListCall {
 	c := &NodesNodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

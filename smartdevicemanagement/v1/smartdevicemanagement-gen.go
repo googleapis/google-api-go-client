@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/nest/device-access
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/smartdevicemanagement/v1"
-//	...
-//	ctx := context.Background()
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx)
+//   import "google.golang.org/api/smartdevicemanagement/v1"
+//   ...
+//   ctx := context.Background()
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmThermostatServiceScope))
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmThermostatServiceScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package smartdevicemanagement // import "google.golang.org/api/smartdevicemanagement/v1"
@@ -538,8 +538,8 @@ type EnterprisesDevicesExecuteCommandCall struct {
 // ExecuteCommand: Executes a command to device managed by the
 // enterprise.
 //
-//   - name: The name of the device requested. For example:
-//     "enterprises/XYZ/devices/123".
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) ExecuteCommand(name string, googlehomeenterprisesdmv1executedevicecommandrequest *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) *EnterprisesDevicesExecuteCommandCall {
 	c := &EnterprisesDevicesExecuteCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -684,8 +684,8 @@ type EnterprisesDevicesGetCall struct {
 
 // Get: Gets a device managed by the enterprise.
 //
-//   - name: The name of the device requested. For example:
-//     "enterprises/XYZ/devices/123".
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -832,8 +832,8 @@ type EnterprisesDevicesListCall struct {
 
 // List: Lists devices managed by the enterprise.
 //
-//   - parent: The parent enterprise to list devices under. E.g.
-//     "enterprises/XYZ".
+// - parent: The parent enterprise to list devices under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1042,8 +1042,8 @@ type EnterprisesStructuresGetCall struct {
 
 // Get: Gets a structure managed by the enterprise.
 //
-//   - name: The name of the structure requested. For example:
-//     "enterprises/XYZ/structures/ABC".
+// - name: The name of the structure requested. For example:
+//   "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresService) Get(name string) *EnterprisesStructuresGetCall {
 	c := &EnterprisesStructuresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1191,8 +1191,8 @@ type EnterprisesStructuresListCall struct {
 
 // List: Lists structures managed by the enterprise.
 //
-//   - parent: The parent enterprise to list structures under. E.g.
-//     "enterprises/XYZ".
+// - parent: The parent enterprise to list structures under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructuresListCall {
 	c := &EnterprisesStructuresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1287,9 +1287,7 @@ func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, e
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleHomeEnterpriseSdmV1ListStructuresResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
+//  or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -1402,8 +1400,8 @@ type EnterprisesStructuresRoomsGetCall struct {
 
 // Get: Gets a room managed by the enterprise.
 //
-//   - name: The name of the room requested. For example:
-//     "enterprises/XYZ/structures/ABC/rooms/123".
+// - name: The name of the room requested. For example:
+//   "enterprises/XYZ/structures/ABC/rooms/123".
 func (r *EnterprisesStructuresRoomsService) Get(name string) *EnterprisesStructuresRoomsGetCall {
 	c := &EnterprisesStructuresRoomsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1550,8 +1548,8 @@ type EnterprisesStructuresRoomsListCall struct {
 
 // List: Lists rooms managed by the enterprise.
 //
-//   - parent: The parent resource name of the rooms requested. For
-//     example: "enterprises/XYZ/structures/ABC".
+// - parent: The parent resource name of the rooms requested. For
+//   example: "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStructuresRoomsListCall {
 	c := &EnterprisesStructuresRoomsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

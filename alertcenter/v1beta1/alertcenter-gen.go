@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/alertcenter/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/alertcenter/v1beta1"
-//	...
-//	ctx := context.Background()
-//	alertcenterService, err := alertcenter.NewService(ctx)
+//   import "google.golang.org/api/alertcenter/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   alertcenterService, err := alertcenter.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	alertcenterService, err := alertcenter.NewService(ctx, option.WithAPIKey("AIza..."))
+//   alertcenterService, err := alertcenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	alertcenterService, err := alertcenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   alertcenterService, err := alertcenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package alertcenter // import "google.golang.org/api/alertcenter/v1beta1"
@@ -3770,8 +3770,8 @@ type AlertsFeedbackListCall struct {
 // List: Lists all the feedback for an alert. Attempting to list
 // feedbacks for a non-existent alert returns `NOT_FOUND` error.
 //
-//   - alertId: The alert identifier. The "-" wildcard could be used to
-//     represent all alerts.
+// - alertId: The alert identifier. The "-" wildcard could be used to
+//   represent all alerts.
 func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 	c := &AlertsFeedbackListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId

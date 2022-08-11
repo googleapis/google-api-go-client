@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/admin/directory/v1"
-//	...
-//	ctx := context.Background()
-//	adminService, err := admin.NewService(ctx)
+//   import "google.golang.org/api/admin/directory/v1"
+//   ...
+//   ctx := context.Background()
+//   adminService, err := admin.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	adminService, err := admin.NewService(ctx, option.WithScopes(admin.CloudPlatformScope))
+//   adminService, err := admin.NewService(ctx, option.WithScopes(admin.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
+//   adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package admin // import "google.golang.org/api/admin/directory/v1"
@@ -1326,7 +1326,9 @@ type Channel struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Params: Additional parameters controlling delivery channel behavior.
-	// Optional.
+	// Optional. For example, `params.ttl` specifies the time-to-live in
+	// seconds for the notification channel, where the default is 2 hours
+	// and the maximum TTL is 2 days.
 	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
@@ -3076,6 +3078,48 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GroupAlias: The Directory API manages aliases, which are alternative
+// email addresses.
+type GroupAlias struct {
+	// Alias: The alias email address.
+	Alias string `json:"alias,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID of the group.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of the API resource. For Alias resources, the value is
+	// `admin#directory#alias`.
+	Kind string `json:"kind,omitempty"`
+
+	// PrimaryEmail: The primary email address of the group.
+	PrimaryEmail string `json:"primaryEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupAlias
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Groups struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -4624,7 +4668,7 @@ type User struct {
 
 	// HashFunction: Stores the hash format of the `password` property. The
 	// following `hashFunction` values are allowed: * `MD5` - Accepts simple
-	// hex-encoded values. * `SHA1` - Accepts simple hex-encoded values. *
+	// hex-encoded values. * `SHA-1` - Accepts simple hex-encoded values. *
 	// `crypt` - Compliant with the C crypt library
 	// (https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5
 	// (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash
@@ -4912,6 +4956,48 @@ type UserAddress struct {
 
 func (s *UserAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod UserAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserAlias: The Directory API manages aliases, which are alternative
+// email addresses.
+type UserAlias struct {
+	// Alias: The alias email address.
+	Alias string `json:"alias,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID for the user.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of the API resource. For Alias resources, the value is
+	// `admin#directory#alias`.
+	Kind string `json:"kind,omitempty"`
+
+	// PrimaryEmail: The user's primary email address.
+	PrimaryEmail string `json:"primaryEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod UserAlias
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5781,10 +5867,10 @@ type AspsDeleteCall struct {
 
 // Delete: Deletes an ASP issued by a user.
 //
-//   - codeId: The unique ID of the ASP to be deleted.
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - codeId: The unique ID of the ASP to be deleted.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) Delete(userKey string, codeId int64) *AspsDeleteCall {
 	c := &AspsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -5899,10 +5985,10 @@ type AspsGetCall struct {
 
 // Get: Gets information about an ASP issued by a user.
 //
-//   - codeId: The unique ID of the ASP.
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - codeId: The unique ID of the ASP.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) Get(userKey string, codeId int64) *AspsGetCall {
 	c := &AspsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -6057,9 +6143,9 @@ type AspsListCall struct {
 
 // List: Lists the ASPs issued by a user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *AspsService) List(userKey string) *AspsListCall {
 	c := &AspsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -6316,14 +6402,14 @@ type ChromeosdevicesActionCall struct {
 // devices, visit the help center
 // (https://support.google.com/chrome/a/answer/3523633).
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - resourceId: The unique ID of the device. The `resourceId`s are
-//     returned in the response from the chromeosdevices.list
-//     (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID of the device. The `resourceId`s are
+//   returned in the response from the chromeosdevices.list
+//   (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Action(customerId string, resourceId string, chromeosdeviceaction *ChromeOsDeviceAction) *ChromeosdevicesActionCall {
 	c := &ChromeosdevicesActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6446,14 +6532,14 @@ type ChromeosdevicesGetCall struct {
 
 // Get: Retrieves a Chrome OS device's properties.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - deviceId: The unique ID of the device. The `deviceId`s are returned
-//     in the response from the chromeosdevices.list
-//     (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/directory/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *ChromeosdevicesGetCall {
 	c := &ChromeosdevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6466,12 +6552,9 @@ func (r *ChromeosdevicesService) Get(customerId string, deviceId string) *Chrome
 // subset.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesGetCall) Projection(projection string) *ChromeosdevicesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -6638,11 +6721,11 @@ type ChromeosdevicesListCall struct {
 // List: Retrieves a paginated list of Chrome OS devices within an
 // account.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCall {
 	c := &ChromeosdevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -6669,28 +6752,18 @@ func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesL
 // for sorting results.
 //
 // Possible values:
-//
-//	"annotatedLocation" - Chrome device location as annotated by the
-//
+//   "annotatedLocation" - Chrome device location as annotated by the
 // administrator.
-//
-//	"annotatedUser" - Chromebook user as annotated by administrator.
-//	"lastSync" - The date and time the Chrome device was last
-//
+//   "annotatedUser" - Chromebook user as annotated by administrator.
+//   "lastSync" - The date and time the Chrome device was last
 // synchronized with the policy settings in the Admin console.
-//
-//	"notes" - Chrome device notes as annotated by the administrator.
-//	"serialNumber" - The Chrome device serial number entered when the
-//
+//   "notes" - Chrome device notes as annotated by the administrator.
+//   "serialNumber" - The Chrome device serial number entered when the
 // device was enabled.
-//
-//	"status" - Chrome device status. For more information, see the <a
-//
+//   "status" - Chrome device status. For more information, see the <a
 // [chromeosdevices](/admin-sdk/directory/v1/reference/chromeosdevices.ht
 // ml).
-//
-//	"supportEndDate" - Chrome device support end date. This is
-//
+//   "supportEndDate" - Chrome device support end date. This is
 // applicable only for devices purchased directly from Google.
 func (c *ChromeosdevicesListCall) OrderBy(orderBy string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -6717,12 +6790,9 @@ func (c *ChromeosdevicesListCall) PageToken(pageToken string) *ChromeosdevicesLi
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesListCall) Projection(projection string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -6741,9 +6811,8 @@ func (c *ChromeosdevicesListCall) Query(query string) *ChromeosdevicesListCall {
 // `orderBy` parameter.
 //
 // Possible values:
-//
-//	"ASCENDING" - Ascending order.
-//	"DESCENDING" - Descending order.
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *ChromeosdevicesListCall) SortOrder(sortOrder string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -7113,14 +7182,14 @@ type ChromeosdevicesPatchCall struct {
 // `annotatedAssetId`. This method supports patch semantics
 // (/admin-sdk/directory/v1/guides/performance#patch).
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - deviceId: The unique ID of the device. The `deviceId`s are returned
-//     in the response from the chromeosdevices.list
-//     (/admin-sdk/v1/reference/chromeosdevices/list) method.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesPatchCall {
 	c := &ChromeosdevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7133,12 +7202,9 @@ func (r *ChromeosdevicesService) Patch(customerId string, deviceId string, chrom
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesPatchCall) Projection(projection string) *ChromeosdevicesPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -7301,14 +7367,14 @@ type ChromeosdevicesUpdateCall struct {
 // `annotatedUser`, `annotatedLocation`, `notes`, `orgUnitPath`, or
 // `annotatedAssetId`.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - deviceId: The unique ID of the device. The `deviceId`s are returned
-//     in the response from the chromeosdevices.list
-//     (/admin-sdk/v1/reference/chromeosdevices/list) method.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - deviceId: The unique ID of the device. The `deviceId`s are returned
+//   in the response from the chromeosdevices.list
+//   (/admin-sdk/v1/reference/chromeosdevices/list) method.
 func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chromeosdevice *ChromeOsDevice) *ChromeosdevicesUpdateCall {
 	c := &ChromeosdevicesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7321,12 +7387,9 @@ func (r *ChromeosdevicesService) Update(customerId string, deviceId string, chro
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // serialNumber, status, and user)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *ChromeosdevicesUpdateCall) Projection(projection string) *ChromeosdevicesUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -7487,9 +7550,9 @@ type CustomerDevicesChromeosIssueCommandCall struct {
 
 // IssueCommand: Issues a command for the device to execute.
 //
-//   - customerId: Immutable. Immutable ID of the Google Workspace
-//     account.
-//   - deviceId: Immutable. Immutable ID of Chrome OS Device.
+// - customerId: Immutable. Immutable ID of the Google Workspace
+//   account.
+// - deviceId: Immutable. Immutable ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosService) IssueCommand(customerId string, deviceId string, directorychromeosdevicesissuecommandrequest *DirectoryChromeosdevicesIssueCommandRequest) *CustomerDevicesChromeosIssueCommandCall {
 	c := &CustomerDevicesChromeosIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7643,10 +7706,10 @@ type CustomerDevicesChromeosCommandsGetCall struct {
 
 // Get: Gets command data a specific command issued to the device.
 //
-//   - commandId: Immutable. Immutable ID of Chrome OS Device Command.
-//   - customerId: Immutable. Immutable ID of the Google Workspace
-//     account.
-//   - deviceId: Immutable. Immutable ID of Chrome OS Device.
+// - commandId: Immutable. Immutable ID of Chrome OS Device Command.
+// - customerId: Immutable. Immutable ID of the Google Workspace
+//   account.
+// - deviceId: Immutable. Immutable ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosCommandsService) Get(customerId string, deviceId string, commandId int64) *CustomerDevicesChromeosCommandsGetCall {
 	c := &CustomerDevicesChromeosCommandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -8664,8 +8727,8 @@ type CustomersChromePrintersDeleteCall struct {
 
 // Delete: Deletes a `Printer`.
 //
-//   - name: The name of the printer to be updated. Format:
-//     customers/{customer_id}/chrome/printers/{printer_id}.
+// - name: The name of the printer to be updated. Format:
+//   customers/{customer_id}/chrome/printers/{printer_id}.
 func (r *CustomersChromePrintersService) Delete(name string) *CustomersChromePrintersDeleteCall {
 	c := &CustomersChromePrintersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8798,8 +8861,8 @@ type CustomersChromePrintersGetCall struct {
 
 // Get: Returns a `Printer` resource (printer's config).
 //
-//   - name: The name of the printer to retrieve. Format:
-//     customers/{customer_id}/chrome/printers/{printer_id}.
+// - name: The name of the printer to retrieve. Format:
+//   customers/{customer_id}/chrome/printers/{printer_id}.
 func (r *CustomersChromePrintersService) Get(name string) *CustomersChromePrintersGetCall {
 	c := &CustomersChromePrintersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8946,8 +9009,8 @@ type CustomersChromePrintersListCall struct {
 
 // List: List printers configs.
 //
-//   - parent: The name of the customer who owns this collection of
-//     printers. Format: customers/{customer_id}.
+// - parent: The name of the customer who owns this collection of
+//   printers. Format: customers/{customer_id}.
 func (r *CustomersChromePrintersService) List(parent string) *CustomersChromePrintersListCall {
 	c := &CustomersChromePrintersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9185,8 +9248,8 @@ type CustomersChromePrintersListPrinterModelsCall struct {
 
 // ListPrinterModels: Lists the supported printer models.
 //
-//   - parent: The name of the customer who owns this collection of
-//     printers. Format: customers/{customer_id}.
+// - parent: The name of the customer who owns this collection of
+//   printers. Format: customers/{customer_id}.
 func (r *CustomersChromePrintersService) ListPrinterModels(parent string) *CustomersChromePrintersListPrinterModelsCall {
 	c := &CustomersChromePrintersListPrinterModelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9393,9 +9456,9 @@ type CustomersChromePrintersPatchCall struct {
 
 // Patch: Updates a `Printer` resource.
 //
-//   - name: The resource name of the Printer object, in the format
-//     customers/{customer-id}/printers/{printer-id} (During printer
-//     creation leave empty).
+// - name: The resource name of the Printer object, in the format
+//   customers/{customer-id}/printers/{printer-id} (During printer
+//   creation leave empty).
 func (r *CustomersChromePrintersService) Patch(name string, printer *Printer) *CustomersChromePrintersPatchCall {
 	c := &CustomersChromePrintersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10692,8 +10755,8 @@ type GroupsDeleteCall struct {
 
 // Delete: Deletes a group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Delete(groupKey string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -10797,8 +10860,8 @@ type GroupsGetCall struct {
 
 // Get: Retrieves a group's properties.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Get(groupKey string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -11105,8 +11168,7 @@ func (c *GroupsListCall) MaxResults(maxResults int64) *GroupsListCall {
 // sorting results
 //
 // Possible values:
-//
-//	"email" - Email of the group.
+//   "email" - Email of the group.
 func (c *GroupsListCall) OrderBy(orderBy string) *GroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -11132,9 +11194,8 @@ func (c *GroupsListCall) Query(query string) *GroupsListCall {
 // also used
 //
 // Possible values:
-//
-//	"ASCENDING" - Ascending order.
-//	"DESCENDING" - Descending order.
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *GroupsListCall) SortOrder(sortOrder string) *GroupsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -11356,8 +11417,8 @@ type GroupsPatchCall struct {
 // Patch: Updates a group's properties. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch).
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Patch(groupKey string, group *Group) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -11498,8 +11559,8 @@ type GroupsUpdateCall struct {
 
 // Update: Updates a group's properties.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsService) Update(groupKey string, group *Group) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -11640,9 +11701,9 @@ type GroupsAliasesDeleteCall struct {
 
 // Delete: Removes an alias.
 //
-//   - alias: The alias to be removed.
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - alias: The alias to be removed.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) Delete(groupKey string, alias string) *GroupsAliasesDeleteCall {
 	c := &GroupsAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -11755,8 +11816,8 @@ type GroupsAliasesInsertCall struct {
 
 // Insert: Adds an alias for the group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) Insert(groupKey string, alias *Alias) *GroupsAliasesInsertCall {
 	c := &GroupsAliasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -11897,8 +11958,8 @@ type GroupsAliasesListCall struct {
 
 // List: Lists all aliases for a group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *GroupsAliasesService) List(groupKey string) *GroupsAliasesListCall {
 	c := &GroupsAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12044,12 +12105,12 @@ type MembersDeleteCall struct {
 
 // Delete: Removes a member from a group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
-//   - memberKey: Identifies the group member in the API request. A group
-//     member can be a user or another group. The value can be the
-//     member's (group or user) primary email address, alias, or unique
-//     ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Delete(groupKey string, memberKey string) *MembersDeleteCall {
 	c := &MembersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12164,12 +12225,12 @@ type MembersGetCall struct {
 
 // Get: Retrieves a group member's properties.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
-//   - memberKey: Identifies the group member in the API request. A group
-//     member can be a user or another group. The value can be the
-//     member's (group or user) primary email address, alias, or unique
-//     ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Get(groupKey string, memberKey string) *MembersGetCall {
 	c := &MembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12328,10 +12389,10 @@ type MembersHasMemberCall struct {
 // HasMember: Checks whether the given user is a member of the group.
 // Membership can be direct or nested.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
-//   - memberKey: Identifies the user member in the API request. The value
-//     can be the user's primary email address, alias, or unique ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the user member in the API request. The value
+//   can be the user's primary email address, alias, or unique ID.
 func (r *MembersService) HasMember(groupKey string, memberKey string) *MembersHasMemberCall {
 	c := &MembersHasMemberCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12488,8 +12549,8 @@ type MembersInsertCall struct {
 
 // Insert: Adds a user to the specified group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *MembersService) Insert(groupKey string, member *Member) *MembersInsertCall {
 	c := &MembersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12631,8 +12692,8 @@ type MembersListCall struct {
 
 // List: Retrieves a paginated list of all members in a group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
 func (r *MembersService) List(groupKey string) *MembersListCall {
 	c := &MembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -12857,12 +12918,12 @@ type MembersPatchCall struct {
 // group. This method supports patch semantics
 // (/admin-sdk/directory/v1/guides/performance#patch).
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
-//   - memberKey: Identifies the group member in the API request. A group
-//     member can be a user or another group. The value can be the
-//     member's (group or user) primary email address, alias, or unique
-//     ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Patch(groupKey string, memberKey string, member *Member) *MembersPatchCall {
 	c := &MembersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -13014,12 +13075,12 @@ type MembersUpdateCall struct {
 
 // Update: Updates the membership of a user in the specified group.
 //
-//   - groupKey: Identifies the group in the API request. The value can be
-//     the group's email address, group alias, or the unique group ID.
-//   - memberKey: Identifies the group member in the API request. A group
-//     member can be a user or another group. The value can be the
-//     member's (group or user) primary email address, alias, or unique
-//     ID.
+// - groupKey: Identifies the group in the API request. The value can be
+//   the group's email address, group alias, or the unique group ID.
+// - memberKey: Identifies the group member in the API request. A group
+//   member can be a user or another group. The value can be the
+//   member's (group or user) primary email address, alias, or unique
+//   ID.
 func (r *MembersService) Update(groupKey string, memberKey string, member *Member) *MembersUpdateCall {
 	c := &MembersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupKey = groupKey
@@ -13172,13 +13233,13 @@ type MobiledevicesActionCall struct {
 // Action: Takes an action that affects a mobile device. For example,
 // remotely wiping a device.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - resourceId: The unique ID the API service uses to identify the
-//     mobile device.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Action(customerId string, resourceId string, mobiledeviceaction *MobileDeviceAction) *MobiledevicesActionCall {
 	c := &MobiledevicesActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -13301,13 +13362,13 @@ type MobiledevicesDeleteCall struct {
 
 // Delete: Removes a mobile device.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - resourceId: The unique ID the API service uses to identify the
-//     mobile device.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Delete(customerId string, resourceId string) *MobiledevicesDeleteCall {
 	c := &MobiledevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -13421,13 +13482,13 @@ type MobiledevicesGetCall struct {
 
 // Get: Retrieves a mobile device's properties.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - resourceId: The unique ID the API service uses to identify the
-//     mobile device.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - resourceId: The unique ID the API service uses to identify the
+//   mobile device.
 func (r *MobiledevicesService) Get(customerId string, resourceId string) *MobiledevicesGetCall {
 	c := &MobiledevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -13439,12 +13500,9 @@ func (r *MobiledevicesService) Get(customerId string, resourceId string) *Mobile
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // model, status, type, and status)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *MobiledevicesGetCall) Projection(projection string) *MobiledevicesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -13615,11 +13673,11 @@ type MobiledevicesListCall struct {
 // (https://cloud.google.com/identity/docs/concepts/overview-devices)
 // instead.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *MobiledevicesService) List(customerId string) *MobiledevicesListCall {
 	c := &MobiledevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -13637,18 +13695,15 @@ func (c *MobiledevicesListCall) MaxResults(maxResults int64) *MobiledevicesListC
 // for sorting results.
 //
 // Possible values:
-//
-//	"deviceId" - The serial number for a Google Sync mobile device. For
-//
+//   "deviceId" - The serial number for a Google Sync mobile device. For
 // Android devices, this is a software generated unique identifier.
-//
-//	"email" - The device owner's email address.
-//	"lastSync" - Last policy settings sync date time of the device.
-//	"model" - The mobile device's model.
-//	"name" - The device owner's user name.
-//	"os" - The device's operating system.
-//	"status" - The device status.
-//	"type" - Type of the device.
+//   "email" - The device owner's email address.
+//   "lastSync" - Last policy settings sync date time of the device.
+//   "model" - The mobile device's model.
+//   "name" - The device owner's user name.
+//   "os" - The device's operating system.
+//   "status" - The device status.
+//   "type" - Type of the device.
 func (c *MobiledevicesListCall) OrderBy(orderBy string) *MobiledevicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -13665,12 +13720,9 @@ func (c *MobiledevicesListCall) PageToken(pageToken string) *MobiledevicesListCa
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"BASIC" - Includes only the basic metadata fields (e.g., deviceId,
-//
+//   "BASIC" - Includes only the basic metadata fields (e.g., deviceId,
 // model, status, type, and status)
-//
-//	"FULL" - Includes all metadata fields
+//   "FULL" - Includes all metadata fields
 func (c *MobiledevicesListCall) Projection(projection string) *MobiledevicesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -13689,9 +13741,8 @@ func (c *MobiledevicesListCall) Query(query string) *MobiledevicesListCall {
 // `orderBy` parameter.
 //
 // Possible values:
-//
-//	"ASCENDING" - Ascending order.
-//	"DESCENDING" - Descending order.
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *MobiledevicesListCall) SortOrder(sortOrder string) *MobiledevicesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -13928,13 +13979,13 @@ type OrgunitsDeleteCall struct {
 
 // Delete: Removes an organizational unit.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - orgUnitPath: The full path of the organizational unit (minus the
-//     leading `/`) or its unique ID.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit (minus the
+//   leading `/`) or its unique ID.
 func (r *OrgunitsService) Delete(customerId string, orgUnitPath string) *OrgunitsDeleteCall {
 	c := &OrgunitsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -14049,13 +14100,13 @@ type OrgunitsGetCall struct {
 
 // Get: Retrieves an organizational unit.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - orgUnitPath: The full path of the organizational unit (minus the
-//     leading `/`) or its unique ID.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit (minus the
+//   leading `/`) or its unique ID.
 func (r *OrgunitsService) Get(customerId string, orgUnitPath string) *OrgunitsGetCall {
 	c := &OrgunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -14211,11 +14262,11 @@ type OrgunitsInsertCall struct {
 
 // Insert: Adds an organizational unit.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *OrgunitsService) Insert(customerId string, orgunit *OrgUnit) *OrgunitsInsertCall {
 	c := &OrgunitsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -14356,11 +14407,11 @@ type OrgunitsListCall struct {
 
 // List: Retrieves a list of all organizational units for an account.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
 func (r *OrgunitsService) List(customerId string) *OrgunitsListCall {
 	c := &OrgunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -14379,9 +14430,8 @@ func (c *OrgunitsListCall) OrgUnitPath(orgUnitPath string) *OrgunitsListCall {
 // sub-organizations or just immediate children.
 //
 // Possible values:
-//
-//	"all" - All sub-organizational units.
-//	"children" - Immediate children only (default).
+//   "all" - All sub-organizational units.
+//   "children" - Immediate children only (default).
 func (c *OrgunitsListCall) Type(type_ string) *OrgunitsListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -14547,13 +14597,13 @@ type OrgunitsPatchCall struct {
 // Patch: Updates an organizational unit. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch)
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - orgUnitPath: The full path of the organizational unit (minus the
-//     leading `/`) or its unique ID.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit (minus the
+//   leading `/`) or its unique ID.
 func (r *OrgunitsService) Patch(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsPatchCall {
 	c := &OrgunitsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -14705,13 +14755,13 @@ type OrgunitsUpdateCall struct {
 
 // Update: Updates an organizational unit.
 //
-//   - customerId: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's `customerId`. The
-//     `customerId` is also returned as part of the Users resource
-//     (/admin-sdk/directory/v1/reference/users).
-//   - orgUnitPath: The full path of the organizational unit (minus the
-//     leading `/`) or its unique ID.
+// - customerId: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's `customerId`. The
+//   `customerId` is also returned as part of the Users resource
+//   (/admin-sdk/directory/v1/reference/users).
+// - orgUnitPath: The full path of the organizational unit (minus the
+//   leading `/`) or its unique ID.
 func (r *OrgunitsService) Update(customerId string, orgUnitPath string, orgunit *OrgUnit) *OrgunitsUpdateCall {
 	c := &OrgunitsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -15008,10 +15058,10 @@ type ResourcesBuildingsDeleteCall struct {
 
 // Delete: Deletes a building.
 //
-//   - buildingId: The id of the building to delete.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - buildingId: The id of the building to delete.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Delete(customer string, buildingId string) *ResourcesBuildingsDeleteCall {
 	c := &ResourcesBuildingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15125,10 +15175,10 @@ type ResourcesBuildingsGetCall struct {
 
 // Get: Retrieves a building.
 //
-//   - buildingId: The unique ID of the building to retrieve.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - buildingId: The unique ID of the building to retrieve.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Get(customer string, buildingId string) *ResourcesBuildingsGetCall {
 	c := &ResourcesBuildingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15283,9 +15333,9 @@ type ResourcesBuildingsInsertCall struct {
 
 // Insert: Inserts a building.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Insert(customer string, building *Building) *ResourcesBuildingsInsertCall {
 	c := &ResourcesBuildingsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15297,17 +15347,11 @@ func (r *ResourcesBuildingsService) Insert(customer string, building *Building) 
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//
-//	"CLIENT_SPECIFIED" - Building.coordinates are set to the
-//
+//   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
-//
-//	"RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
-//
+//   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
 // populated based on the postal address.
-//
-//	"SOURCE_UNSPECIFIED" (default) - Defaults to
-//
+//   "SOURCE_UNSPECIFIED" (default) - Defaults to
 // `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise,
 // defaults to `CLIENT_SPECIFIED` if coordinates are provided.
 func (c *ResourcesBuildingsInsertCall) CoordinatesSource(coordinatesSource string) *ResourcesBuildingsInsertCall {
@@ -15464,9 +15508,9 @@ type ResourcesBuildingsListCall struct {
 
 // List: Retrieves a list of buildings for an account.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) List(customer string) *ResourcesBuildingsListCall {
 	c := &ResourcesBuildingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15661,10 +15705,10 @@ type ResourcesBuildingsPatchCall struct {
 
 // Patch: Patches a building.
 //
-//   - buildingId: The id of the building to update.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - buildingId: The id of the building to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Patch(customer string, buildingId string, building *Building) *ResourcesBuildingsPatchCall {
 	c := &ResourcesBuildingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15677,17 +15721,11 @@ func (r *ResourcesBuildingsService) Patch(customer string, buildingId string, bu
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//
-//	"CLIENT_SPECIFIED" - Building.coordinates are set to the
-//
+//   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
-//
-//	"RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
-//
+//   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
 // populated based on the postal address.
-//
-//	"SOURCE_UNSPECIFIED" (default) - Defaults to
-//
+//   "SOURCE_UNSPECIFIED" (default) - Defaults to
 // `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise,
 // defaults to `CLIENT_SPECIFIED` if coordinates are provided.
 func (c *ResourcesBuildingsPatchCall) CoordinatesSource(coordinatesSource string) *ResourcesBuildingsPatchCall {
@@ -15853,10 +15891,10 @@ type ResourcesBuildingsUpdateCall struct {
 
 // Update: Updates a building.
 //
-//   - buildingId: The id of the building to update.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - buildingId: The id of the building to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesBuildingsService) Update(customer string, buildingId string, building *Building) *ResourcesBuildingsUpdateCall {
 	c := &ResourcesBuildingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -15869,17 +15907,11 @@ func (r *ResourcesBuildingsService) Update(customer string, buildingId string, b
 // Source from which Building.coordinates are derived.
 //
 // Possible values:
-//
-//	"CLIENT_SPECIFIED" - Building.coordinates are set to the
-//
+//   "CLIENT_SPECIFIED" - Building.coordinates are set to the
 // coordinates included in the request.
-//
-//	"RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
-//
+//   "RESOLVED_FROM_ADDRESS" - Building.coordinates are automatically
 // populated based on the postal address.
-//
-//	"SOURCE_UNSPECIFIED" (default) - Defaults to
-//
+//   "SOURCE_UNSPECIFIED" (default) - Defaults to
 // `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise,
 // defaults to `CLIENT_SPECIFIED` if coordinates are provided.
 func (c *ResourcesBuildingsUpdateCall) CoordinatesSource(coordinatesSource string) *ResourcesBuildingsUpdateCall {
@@ -16044,11 +16076,11 @@ type ResourcesCalendarsDeleteCall struct {
 
 // Delete: Deletes a calendar resource.
 //
-//   - calendarResourceId: The unique ID of the calendar resource to
-//     delete.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - calendarResourceId: The unique ID of the calendar resource to
+//   delete.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Delete(customer string, calendarResourceId string) *ResourcesCalendarsDeleteCall {
 	c := &ResourcesCalendarsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16162,11 +16194,11 @@ type ResourcesCalendarsGetCall struct {
 
 // Get: Retrieves a calendar resource.
 //
-//   - calendarResourceId: The unique ID of the calendar resource to
-//     retrieve.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - calendarResourceId: The unique ID of the calendar resource to
+//   retrieve.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Get(customer string, calendarResourceId string) *ResourcesCalendarsGetCall {
 	c := &ResourcesCalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16321,9 +16353,9 @@ type ResourcesCalendarsInsertCall struct {
 
 // Insert: Inserts a calendar resource.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Insert(customer string, calendarresource *CalendarResource) *ResourcesCalendarsInsertCall {
 	c := &ResourcesCalendarsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16464,9 +16496,9 @@ type ResourcesCalendarsListCall struct {
 
 // List: Retrieves a list of calendar resources for an account.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) List(customer string) *ResourcesCalendarsListCall {
 	c := &ResourcesCalendarsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16701,11 +16733,11 @@ type ResourcesCalendarsPatchCall struct {
 
 // Patch: Patches a calendar resource.
 //
-//   - calendarResourceId: The unique ID of the calendar resource to
-//     update.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - calendarResourceId: The unique ID of the calendar resource to
+//   update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Patch(customer string, calendarResourceId string, calendarresource *CalendarResource) *ResourcesCalendarsPatchCall {
 	c := &ResourcesCalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16858,11 +16890,11 @@ type ResourcesCalendarsUpdateCall struct {
 // semantics, meaning you only need to include the fields you wish to
 // update. Fields that are not present in the request will be preserved.
 //
-//   - calendarResourceId: The unique ID of the calendar resource to
-//     update.
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - calendarResourceId: The unique ID of the calendar resource to
+//   update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesCalendarsService) Update(customer string, calendarResourceId string, calendarresource *CalendarResource) *ResourcesCalendarsUpdateCall {
 	c := &ResourcesCalendarsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17012,10 +17044,10 @@ type ResourcesFeaturesDeleteCall struct {
 
 // Delete: Deletes a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
-//   - featureKey: The unique ID of the feature to delete.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to delete.
 func (r *ResourcesFeaturesService) Delete(customer string, featureKey string) *ResourcesFeaturesDeleteCall {
 	c := &ResourcesFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17129,10 +17161,10 @@ type ResourcesFeaturesGetCall struct {
 
 // Get: Retrieves a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
-//   - featureKey: The unique ID of the feature to retrieve.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to retrieve.
 func (r *ResourcesFeaturesService) Get(customer string, featureKey string) *ResourcesFeaturesGetCall {
 	c := &ResourcesFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17287,9 +17319,9 @@ type ResourcesFeaturesInsertCall struct {
 
 // Insert: Inserts a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesFeaturesService) Insert(customer string, feature *Feature) *ResourcesFeaturesInsertCall {
 	c := &ResourcesFeaturesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17430,9 +17462,9 @@ type ResourcesFeaturesListCall struct {
 
 // List: Retrieves a list of features for an account.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
 func (r *ResourcesFeaturesService) List(customer string) *ResourcesFeaturesListCall {
 	c := &ResourcesFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17627,10 +17659,10 @@ type ResourcesFeaturesPatchCall struct {
 
 // Patch: Patches a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
-//   - featureKey: The unique ID of the feature to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to update.
 func (r *ResourcesFeaturesService) Patch(customer string, featureKey string, feature *Feature) *ResourcesFeaturesPatchCall {
 	c := &ResourcesFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17781,10 +17813,10 @@ type ResourcesFeaturesRenameCall struct {
 
 // Rename: Renames a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
-//   - oldName: The unique ID of the feature to rename.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - oldName: The unique ID of the feature to rename.
 func (r *ResourcesFeaturesService) Rename(customer string, oldName string, featurerename *FeatureRename) *ResourcesFeaturesRenameCall {
 	c := &ResourcesFeaturesRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -17907,10 +17939,10 @@ type ResourcesFeaturesUpdateCall struct {
 
 // Update: Updates a feature.
 //
-//   - customer: The unique ID for the customer's Google Workspace
-//     account. As an account administrator, you can also use the
-//     `my_customer` alias to represent your account's customer ID.
-//   - featureKey: The unique ID of the feature to update.
+// - customer: The unique ID for the customer's Google Workspace
+//   account. As an account administrator, you can also use the
+//   `my_customer` alias to represent your account's customer ID.
+// - featureKey: The unique ID of the feature to update.
 func (r *ResourcesFeaturesService) Update(customer string, featureKey string, feature *Feature) *ResourcesFeaturesUpdateCall {
 	c := &ResourcesFeaturesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -20465,10 +20497,10 @@ type TokensDeleteCall struct {
 // Delete: Deletes all access tokens issued by a user for an
 // application.
 //
-//   - clientId: The Client ID of the application the token is issued to.
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - clientId: The Client ID of the application the token is issued to.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) Delete(userKey string, clientId string) *TokensDeleteCall {
 	c := &TokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20582,10 +20614,10 @@ type TokensGetCall struct {
 
 // Get: Gets information about an access token issued by a user.
 //
-//   - clientId: The Client ID of the application the token is issued to.
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - clientId: The Client ID of the application the token is issued to.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) Get(userKey string, clientId string) *TokensGetCall {
 	c := &TokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20740,9 +20772,9 @@ type TokensListCall struct {
 // List: Returns the set of tokens specified user has issued to 3rd
 // party applications.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TokensService) List(userKey string) *TokensListCall {
 	c := &TokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20886,9 +20918,9 @@ type TwoStepVerificationTurnOffCall struct {
 
 // TurnOff: Turns off 2-Step Verification for user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *TwoStepVerificationService) TurnOff(userKey string) *TwoStepVerificationTurnOffCall {
 	c := &TwoStepVerificationTurnOffCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -20991,9 +21023,9 @@ type UsersDeleteCall struct {
 
 // Delete: Deletes a user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Delete(userKey string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21097,9 +21129,9 @@ type UsersGetCall struct {
 
 // Get: Retrieves a user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Get(userKey string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21118,13 +21150,10 @@ func (c *UsersGetCall) CustomFieldMask(customFieldMask string) *UsersGetCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//
-//	"basic" (default) - Do not include any custom fields for the user.
-//	"custom" - Include custom fields from schemas requested in
-//
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas requested in
 // `customFieldMask`.
-//
-//	"full" - Include all fields associated with this user.
+//   "full" - Include all fields associated with this user.
 func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -21137,13 +21166,9 @@ func (c *UsersGetCall) Projection(projection string) *UsersGetCall {
 // .
 //
 // Possible values:
-//
-//	"admin_view" (default) - Results include both administrator-only
-//
+//   "admin_view" (default) - Results include both administrator-only
 // and domain-public fields for the user.
-//
-//	"domain_public" - Results only include fields for the user that are
-//
+//   "domain_public" - Results only include fields for the user that are
 // publicly visible to other users in the domain.
 func (c *UsersGetCall) ViewType(viewType string) *UsersGetCall {
 	c.urlParams_.Set("viewType", viewType)
@@ -21486,12 +21511,11 @@ func (c *UsersListCall) Domain(domain string) *UsersListCall {
 // subscription is intended (if subscribing)
 //
 // Possible values:
-//
-//	"add" - User Created Event
-//	"delete" - User Deleted Event
-//	"makeAdmin" - User Admin Status Change Event
-//	"undelete" - User Undeleted Event
-//	"update" - User Updated Event
+//   "add" - User Created Event
+//   "delete" - User Deleted Event
+//   "makeAdmin" - User Admin Status Change Event
+//   "undelete" - User Undeleted Event
+//   "update" - User Updated Event
 func (c *UsersListCall) Event(event string) *UsersListCall {
 	c.urlParams_.Set("event", event)
 	return c
@@ -21508,10 +21532,9 @@ func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
 // sorting results.
 //
 // Possible values:
-//
-//	"email" - Primary email of the user.
-//	"familyName" - User's family name.
-//	"givenName" - User's given name.
+//   "email" - Primary email of the user.
+//   "familyName" - User's family name.
+//   "givenName" - User's given name.
 func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -21528,13 +21551,10 @@ func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//
-//	"basic" (default) - Do not include any custom fields for the user.
-//	"custom" - Include custom fields from schemas requested in
-//
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas requested in
 // `customFieldMask`.
-//
-//	"full" - Include all fields associated with this user.
+//   "full" - Include all fields associated with this user.
 func (c *UsersListCall) Projection(projection string) *UsersListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -21559,9 +21579,8 @@ func (c *UsersListCall) ShowDeleted(showDeleted string) *UsersListCall {
 // results in ascending or descending order, ignoring case.
 //
 // Possible values:
-//
-//	"ASCENDING" - Ascending order.
-//	"DESCENDING" - Descending order.
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -21574,13 +21593,9 @@ func (c *UsersListCall) SortOrder(sortOrder string) *UsersListCall {
 // .
 //
 // Possible values:
-//
-//	"admin_view" (default) - Results include both administrator-only
-//
+//   "admin_view" (default) - Results include both administrator-only
 // and domain-public fields for the user.
-//
-//	"domain_public" - Results only include fields for the user that are
-//
+//   "domain_public" - Results only include fields for the user that are
 // publicly visible to other users in the domain.
 func (c *UsersListCall) ViewType(viewType string) *UsersListCall {
 	c.urlParams_.Set("viewType", viewType)
@@ -21853,9 +21868,9 @@ type UsersMakeAdminCall struct {
 
 // MakeAdmin: Makes a user a super administrator.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) MakeAdmin(userKey string, usermakeadmin *UserMakeAdmin) *UsersMakeAdminCall {
 	c := &UsersMakeAdminCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -21972,9 +21987,9 @@ type UsersPatchCall struct {
 // contain repeated objects (`addresses`, `phones`, etc). Use the update
 // method instead.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Patch(userKey string, user *User) *UsersPatchCall {
 	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -22116,9 +22131,9 @@ type UsersSignOutCall struct {
 // their sign-in cookies. User will have to sign in by authenticating
 // again.
 //
-//   - userKey: Identifies the target user in the API request. The value
-//     can be the user's primary email address, alias email address, or
-//     unique user ID.
+// - userKey: Identifies the target user in the API request. The value
+//   can be the user's primary email address, alias email address, or
+//   unique user ID.
 func (r *UsersService) SignOut(userKey string) *UsersSignOutCall {
 	c := &UsersSignOutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -22338,9 +22353,9 @@ type UsersUpdateCall struct {
 // are not present in the request will be preserved, and fields set to
 // `null` will be cleared.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersService) Update(userKey string, user *User) *UsersUpdateCall {
 	c := &UsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -22512,12 +22527,11 @@ func (c *UsersWatchCall) Domain(domain string) *UsersWatchCall {
 // Event sets the optional parameter "event": Events to watch for.
 //
 // Possible values:
-//
-//	"add" - User Created Event
-//	"delete" - User Deleted Event
-//	"makeAdmin" - User Admin Status Change Event
-//	"undelete" - User Undeleted Event
-//	"update" - User Updated Event
+//   "add" - User Created Event
+//   "delete" - User Deleted Event
+//   "makeAdmin" - User Admin Status Change Event
+//   "undelete" - User Undeleted Event
+//   "update" - User Updated Event
 func (c *UsersWatchCall) Event(event string) *UsersWatchCall {
 	c.urlParams_.Set("event", event)
 	return c
@@ -22534,10 +22548,9 @@ func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
 // sorting results
 //
 // Possible values:
-//
-//	"email" - Primary email of the user.
-//	"familyName" - User's family name.
-//	"givenName" - User's given name.
+//   "email" - Primary email of the user.
+//   "familyName" - User's family name.
+//   "givenName" - User's given name.
 func (c *UsersWatchCall) OrderBy(orderBy string) *UsersWatchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -22554,13 +22567,10 @@ func (c *UsersWatchCall) PageToken(pageToken string) *UsersWatchCall {
 // fields to fetch for this user.
 //
 // Possible values:
-//
-//	"basic" (default) - Do not include any custom fields for the user.
-//	"custom" - Include custom fields from schemas mentioned in
-//
+//   "basic" (default) - Do not include any custom fields for the user.
+//   "custom" - Include custom fields from schemas mentioned in
 // customFieldMask.
-//
-//	"full" - Include all fields associated with this user.
+//   "full" - Include all fields associated with this user.
 func (c *UsersWatchCall) Projection(projection string) *UsersWatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -22585,9 +22595,8 @@ func (c *UsersWatchCall) ShowDeleted(showDeleted string) *UsersWatchCall {
 // results in ascending or descending order.
 //
 // Possible values:
-//
-//	"ASCENDING" - Ascending order.
-//	"DESCENDING" - Descending order.
+//   "ASCENDING" - Ascending order.
+//   "DESCENDING" - Descending order.
 func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -22600,13 +22609,9 @@ func (c *UsersWatchCall) SortOrder(sortOrder string) *UsersWatchCall {
 // .
 //
 // Possible values:
-//
-//	"admin_view" (default) - Results include both administrator-only
-//
+//   "admin_view" (default) - Results include both administrator-only
 // and domain-public fields.
-//
-//	"domain_public" - Results only include fields for the user that are
-//
+//   "domain_public" - Results only include fields for the user that are
 // publicly visible to other users in the domain.
 func (c *UsersWatchCall) ViewType(viewType string) *UsersWatchCall {
 	c.urlParams_.Set("viewType", viewType)
@@ -22853,10 +22858,10 @@ type UsersAliasesDeleteCall struct {
 
 // Delete: Removes an alias.
 //
-//   - alias: The alias to be removed.
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - alias: The alias to be removed.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) Delete(userKey string, alias string) *UsersAliasesDeleteCall {
 	c := &UsersAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -22970,9 +22975,9 @@ type UsersAliasesInsertCall struct {
 
 // Insert: Adds an alias.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) Insert(userKey string, alias *Alias) *UsersAliasesInsertCall {
 	c := &UsersAliasesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -23114,9 +23119,9 @@ type UsersAliasesListCall struct {
 
 // List: Lists all aliases for a user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersAliasesService) List(userKey string) *UsersAliasesListCall {
 	c := &UsersAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -23126,9 +23131,8 @@ func (r *UsersAliasesService) List(userKey string) *UsersAliasesListCall {
 // Event sets the optional parameter "event": Events to watch for.
 //
 // Possible values:
-//
-//	"add" - Alias Created Event
-//	"delete" - Alias Deleted Event
+//   "add" - Alias Created Event
+//   "delete" - Alias Deleted Event
 func (c *UsersAliasesListCall) Event(event string) *UsersAliasesListCall {
 	c.urlParams_.Set("event", event)
 	return c
@@ -23299,9 +23303,8 @@ func (r *UsersAliasesService) Watch(userKey string, channel *Channel) *UsersAlia
 // Event sets the optional parameter "event": Events to watch for.
 //
 // Possible values:
-//
-//	"add" - Alias Created Event
-//	"delete" - Alias Deleted Event
+//   "add" - Alias Created Event
+//   "delete" - Alias Deleted Event
 func (c *UsersAliasesWatchCall) Event(event string) *UsersAliasesWatchCall {
 	c.urlParams_.Set("event", event)
 	return c
@@ -23455,9 +23458,9 @@ type UsersPhotosDeleteCall struct {
 
 // Delete: Removes the user's photo.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Delete(userKey string) *UsersPhotosDeleteCall {
 	c := &UsersPhotosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -23561,9 +23564,9 @@ type UsersPhotosGetCall struct {
 
 // Get: Retrieves the user's photo.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Get(userKey string) *UsersPhotosGetCall {
 	c := &UsersPhotosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -23710,9 +23713,9 @@ type UsersPhotosPatchCall struct {
 // Patch: Adds a photo for the user. This method supports patch
 // semantics (/admin-sdk/directory/v1/guides/performance#patch).
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Patch(userKey string, userphoto *UserPhoto) *UsersPhotosPatchCall {
 	c := &UsersPhotosPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -23853,9 +23856,9 @@ type UsersPhotosUpdateCall struct {
 
 // Update: Adds a photo for the user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *UsersPhotosService) Update(userKey string, userphoto *UserPhoto) *UsersPhotosUpdateCall {
 	c := &UsersPhotosUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -24204,9 +24207,9 @@ type VerificationCodesListCall struct {
 // List: Returns the current set of valid backup verification codes for
 // the specified user.
 //
-//   - userKey: Identifies the user in the API request. The value can be
-//     the user's primary email address, alias email address, or unique
-//     user ID.
+// - userKey: Identifies the user in the API request. The value can be
+//   the user's primary email address, alias email address, or unique
+//   user ID.
 func (r *VerificationCodesService) List(userKey string) *VerificationCodesListCall {
 	c := &VerificationCodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey

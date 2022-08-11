@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://firebase.google.com
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/firebaseml/v1beta2"
-//	...
-//	ctx := context.Background()
-//	firebasemlService, err := firebaseml.NewService(ctx)
+//   import "google.golang.org/api/firebaseml/v1beta2"
+//   ...
+//   ctx := context.Background()
+//   firebasemlService, err := firebaseml.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	firebasemlService, err := firebaseml.NewService(ctx, option.WithAPIKey("AIza..."))
+//   firebasemlService, err := firebaseml.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	firebasemlService, err := firebaseml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   firebasemlService, err := firebaseml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebaseml // import "google.golang.org/api/firebaseml/v1beta2"
@@ -574,8 +574,8 @@ type ProjectsModelsCreateCall struct {
 // Create: Creates a model in Firebase ML. The longrunning operation
 // will eventually return a Model
 //
-//   - parent: The parent project resource where the model is to be
-//     created. The parent must have the form `projects/{project_id}`.
+// - parent: The parent project resource where the model is to be
+//   created. The parent must have the form `projects/{project_id}`.
 func (r *ProjectsModelsService) Create(parent string, model *Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -716,8 +716,8 @@ type ProjectsModelsDeleteCall struct {
 
 // Delete: Deletes a model
 //
-//   - name: The name of the model to delete. The name must have the form
-//     `projects/{project_id}/models/{model_id}`.
+// - name: The name of the model to delete. The name must have the form
+//   `projects/{project_id}/models/{model_id}`.
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -852,8 +852,8 @@ type ProjectsModelsDownloadCall struct {
 // downloading model resources onto devices. It gives very limited
 // information about the model.
 //
-//   - name: The name of the model to download. The name must have the
-//     form `projects/{project}/models/{model}`.
+// - name: The name of the model to download. The name must have the
+//   form `projects/{project}/models/{model}`.
 func (r *ProjectsModelsService) Download(name string) *ProjectsModelsDownloadCall {
 	c := &ProjectsModelsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -996,8 +996,8 @@ type ProjectsModelsGetCall struct {
 
 // Get: Gets a model resource.
 //
-//   - name: The name of the model to get. The name must have the form
-//     `projects/{project_id}/models/{model_id}`.
+// - name: The name of the model to get. The name must have the form
+//   `projects/{project_id}/models/{model_id}`.
 func (r *ProjectsModelsService) Get(name string) *ProjectsModelsGetCall {
 	c := &ProjectsModelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1143,8 +1143,8 @@ type ProjectsModelsListCall struct {
 
 // List: Lists the models
 //
-//   - parent: The name of the parent to list models for. The parent must
-//     have the form `projects/{project_id}'.
+// - parent: The name of the parent to list models for. The parent must
+//   have the form `projects/{project_id}'.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1349,9 +1349,9 @@ type ProjectsModelsPatchCall struct {
 // Patch: Updates a model. The longrunning operation will eventually
 // return a Model.
 //
-//   - name: The resource name of the Model. Model names have the form
-//     `projects/{project_id}/models/{model_id}` The name is ignored when
-//     creating a model.
+// - name: The resource name of the Model. Model names have the form
+//   `projects/{project_id}/models/{model_id}` The name is ignored when
+//   creating a model.
 func (r *ProjectsModelsService) Patch(name string, model *Model) *ProjectsModelsPatchCall {
 	c := &ProjectsModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

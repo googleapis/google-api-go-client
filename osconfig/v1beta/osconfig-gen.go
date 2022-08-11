@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/compute/docs/osconfig/rest
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/osconfig/v1beta"
-//	...
-//	ctx := context.Background()
-//	osconfigService, err := osconfig.NewService(ctx)
+//   import "google.golang.org/api/osconfig/v1beta"
+//   ...
+//   ctx := context.Background()
+//   osconfigService, err := osconfig.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	osconfigService, err := osconfig.NewService(ctx, option.WithAPIKey("AIza..."))
+//   osconfigService, err := osconfig.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	osconfigService, err := osconfig.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   osconfigService, err := osconfig.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package osconfig // import "google.golang.org/api/osconfig/v1beta"
@@ -3025,8 +3025,8 @@ type ProjectsGuestPoliciesCreateCall struct {
 
 // Create: Create an OS Config guest policy.
 //
-//   - parent: The resource name of the parent using one of the following
-//     forms: `projects/{project_number}`.
+// - parent: The resource name of the parent using one of the following
+//   forms: `projects/{project_number}`.
 func (r *ProjectsGuestPoliciesService) Create(parent string, guestpolicy *GuestPolicy) *ProjectsGuestPoliciesCreateCall {
 	c := &ProjectsGuestPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3183,9 +3183,9 @@ type ProjectsGuestPoliciesDeleteCall struct {
 
 // Delete: Delete an OS Config guest policy.
 //
-//   - name: The resource name of the guest policy using one of the
-//     following forms:
-//     `projects/{project_number}/guestPolicies/{guest_policy_id}`.
+// - name: The resource name of the guest policy using one of the
+//   following forms:
+//   `projects/{project_number}/guestPolicies/{guest_policy_id}`.
 func (r *ProjectsGuestPoliciesService) Delete(name string) *ProjectsGuestPoliciesDeleteCall {
 	c := &ProjectsGuestPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3318,9 +3318,9 @@ type ProjectsGuestPoliciesGetCall struct {
 
 // Get: Get an OS Config guest policy.
 //
-//   - name: The resource name of the guest policy using one of the
-//     following forms:
-//     `projects/{project_number}/guestPolicies/{guest_policy_id}`.
+// - name: The resource name of the guest policy using one of the
+//   following forms:
+//   `projects/{project_number}/guestPolicies/{guest_policy_id}`.
 func (r *ProjectsGuestPoliciesService) Get(name string) *ProjectsGuestPoliciesGetCall {
 	c := &ProjectsGuestPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3466,8 +3466,8 @@ type ProjectsGuestPoliciesListCall struct {
 
 // List: Get a page of OS Config guest policies.
 //
-//   - parent: The resource name of the parent using one of the following
-//     forms: `projects/{project_number}`.
+// - parent: The resource name of the parent using one of the following
+//   forms: `projects/{project_number}`.
 func (r *ProjectsGuestPoliciesService) List(parent string) *ProjectsGuestPoliciesListCall {
 	c := &ProjectsGuestPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3660,9 +3660,9 @@ type ProjectsGuestPoliciesPatchCall struct {
 
 // Patch: Update an OS Config guest policy.
 //
-//   - name: Unique name of the resource in this project using one of the
-//     following forms:
-//     `projects/{project_number}/guestPolicies/{guest_policy_id}`.
+// - name: Unique name of the resource in this project using one of the
+//   following forms:
+//   `projects/{project_number}/guestPolicies/{guest_policy_id}`.
 func (r *ProjectsGuestPoliciesService) Patch(name string, guestpolicy *GuestPolicy) *ProjectsGuestPoliciesPatchCall {
 	c := &ProjectsGuestPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3817,8 +3817,8 @@ type ProjectsPatchDeploymentsCreateCall struct {
 
 // Create: Create an OS Config patch deployment.
 //
-//   - parent: The project to apply this patch deployment to in the form
-//     `projects/*`.
+// - parent: The project to apply this patch deployment to in the form
+//   `projects/*`.
 func (r *ProjectsPatchDeploymentsService) Create(parent string, patchdeployment *PatchDeployment) *ProjectsPatchDeploymentsCreateCall {
 	c := &ProjectsPatchDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3975,8 +3975,8 @@ type ProjectsPatchDeploymentsDeleteCall struct {
 
 // Delete: Delete an OS Config patch deployment.
 //
-//   - name: The resource name of the patch deployment in the form
-//     `projects/*/patchDeployments/*`.
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Delete(name string) *ProjectsPatchDeploymentsDeleteCall {
 	c := &ProjectsPatchDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4109,8 +4109,8 @@ type ProjectsPatchDeploymentsGetCall struct {
 
 // Get: Get an OS Config patch deployment.
 //
-//   - name: The resource name of the patch deployment in the form
-//     `projects/*/patchDeployments/*`.
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Get(name string) *ProjectsPatchDeploymentsGetCall {
 	c := &ProjectsPatchDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4449,10 +4449,10 @@ type ProjectsPatchDeploymentsPatchCall struct {
 
 // Patch: Update an OS Config patch deployment.
 //
-//   - name: Unique name for the patch deployment resource in a project.
-//     The patch deployment name is in the form:
-//     `projects/{project_id}/patchDeployments/{patch_deployment_id}`.
-//     This field is ignored when you create a new patch deployment.
+// - name: Unique name for the patch deployment resource in a project.
+//   The patch deployment name is in the form:
+//   `projects/{project_id}/patchDeployments/{patch_deployment_id}`.
+//   This field is ignored when you create a new patch deployment.
 func (r *ProjectsPatchDeploymentsService) Patch(name string, patchdeployment *PatchDeployment) *ProjectsPatchDeploymentsPatchCall {
 	c := &ProjectsPatchDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4608,8 +4608,8 @@ type ProjectsPatchDeploymentsPauseCall struct {
 // Pause: Change state of patch deployment to "PAUSED". Patch deployment
 // in paused state doesn't generate patch jobs.
 //
-//   - name: The resource name of the patch deployment in the form
-//     `projects/*/patchDeployments/*`.
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Pause(name string, pausepatchdeploymentrequest *PausePatchDeploymentRequest) *ProjectsPatchDeploymentsPauseCall {
 	c := &ProjectsPatchDeploymentsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4752,8 +4752,8 @@ type ProjectsPatchDeploymentsResumeCall struct {
 // Resume: Change state of patch deployment back to "ACTIVE". Patch
 // deployment in active state continues to generate patch jobs.
 //
-//   - name: The resource name of the patch deployment in the form
-//     `projects/*/patchDeployments/*`.
+// - name: The resource name of the patch deployment in the form
+//   `projects/*/patchDeployments/*`.
 func (r *ProjectsPatchDeploymentsService) Resume(name string, resumepatchdeploymentrequest *ResumePatchDeploymentRequest) *ProjectsPatchDeploymentsResumeCall {
 	c := &ProjectsPatchDeploymentsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5038,8 +5038,8 @@ type ProjectsPatchJobsExecuteCall struct {
 
 // Execute: Patch VM instances by creating and running a patch job.
 //
-//   - parent: The project in which to run this patch in the form
-//     `projects/*`.
+// - parent: The project in which to run this patch in the form
+//   `projects/*`.
 func (r *ProjectsPatchJobsService) Execute(parent string, executepatchjobrequest *ExecutePatchJobRequest) *ProjectsPatchJobsExecuteCall {
 	c := &ProjectsPatchJobsExecuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5535,8 +5535,8 @@ type ProjectsPatchJobsInstanceDetailsListCall struct {
 
 // List: Get a list of instance details for a given patch job.
 //
-//   - parent: The parent for the instances are in the form of
-//     `projects/*/patchJobs/*`.
+// - parent: The parent for the instances are in the form of
+//   `projects/*/patchJobs/*`.
 func (r *ProjectsPatchJobsInstanceDetailsService) List(parent string) *ProjectsPatchJobsInstanceDetailsListCall {
 	c := &ProjectsPatchJobsInstanceDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

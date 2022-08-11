@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/tag-manager
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/tagmanager/v1"
-//	...
-//	ctx := context.Background()
-//	tagmanagerService, err := tagmanager.NewService(ctx)
+//   import "google.golang.org/api/tagmanager/v1"
+//   ...
+//   ctx := context.Background()
+//   tagmanagerService, err := tagmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package tagmanager // import "google.golang.org/api/tagmanager/v1"
@@ -8035,10 +8035,10 @@ type AccountsContainersVersionsGetCall struct {
 
 // Get: Gets a Container Version.
 //
-//   - accountId: The GTM Account ID.
-//   - containerId: The GTM Container ID.
-//   - containerVersionId: The GTM Container Version ID. Specify published
-//     to retrieve the currently published version.
+// - accountId: The GTM Account ID.
+// - containerId: The GTM Container ID.
+// - containerVersionId: The GTM Container Version ID. Specify published
+//   to retrieve the currently published version.
 func (r *AccountsContainersVersionsService) Get(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId

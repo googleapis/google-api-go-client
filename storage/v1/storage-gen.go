@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://developers.google.com/storage/docs/json_api/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/storage/v1"
-//	...
-//	ctx := context.Background()
-//	storageService, err := storage.NewService(ctx)
+//   import "google.golang.org/api/storage/v1"
+//   ...
+//   ctx := context.Background()
+//   storageService, err := storage.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	storageService, err := storage.NewService(ctx, option.WithScopes(storage.DevstorageReadWriteScope))
+//   storageService, err := storage.NewService(ctx, option.WithScopes(storage.DevstorageReadWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	storageService, err := storage.NewService(ctx, option.WithAPIKey("AIza..."))
+//   storageService, err := storage.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	storageService, err := storage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   storageService, err := storage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package storage // import "google.golang.org/api/storage/v1"
@@ -2484,10 +2484,10 @@ type BucketAccessControlsDeleteCall struct {
 // Delete: Permanently deletes the ACL entry for the specified entity on
 // the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Delete(bucket string, entity string) *BucketAccessControlsDeleteCall {
 	c := &BucketAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -2614,10 +2614,10 @@ type BucketAccessControlsGetCall struct {
 // Get: Returns the ACL entry for the specified entity on the specified
 // bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Get(bucket string, entity string) *BucketAccessControlsGetCall {
 	c := &BucketAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3094,10 +3094,10 @@ type BucketAccessControlsPatchCall struct {
 
 // Patch: Patches an ACL entry on the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Patch(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) *BucketAccessControlsPatchCall {
 	c := &BucketAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3260,10 +3260,10 @@ type BucketAccessControlsUpdateCall struct {
 
 // Update: Updates an ACL entry on the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *BucketAccessControlsService) Update(bucket string, entity string, bucketaccesscontrol *BucketAccessControl) *BucketAccessControlsUpdateCall {
 	c := &BucketAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -3598,9 +3598,8 @@ func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 // properties to return. Defaults to noAcl.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
+//   "full" - Include all properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsGetCall) Projection(projection string) *BucketsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -3969,22 +3968,14 @@ func (r *BucketsService) Insert(projectid string, bucket *Bucket) *BucketsInsert
 // predefined set of access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Project team owners get OWNER access, and
-//
+//   "authenticatedRead" - Project team owners get OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"private" - Project team owners get OWNER access.
-//	"projectPrivate" - Project team members get access according to
-//
+//   "private" - Project team owners get OWNER access.
+//   "projectPrivate" - Project team members get access according to
 // their roles.
-//
-//	"publicRead" - Project team owners get OWNER access, and allUsers
-//
+//   "publicRead" - Project team owners get OWNER access, and allUsers
 // get READER access.
-//
-//	"publicReadWrite" - Project team owners get OWNER access, and
-//
+//   "publicReadWrite" - Project team owners get OWNER access, and
 // allUsers get WRITER access.
 func (c *BucketsInsertCall) PredefinedAcl(predefinedAcl string) *BucketsInsertCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -3996,26 +3987,16 @@ func (c *BucketsInsertCall) PredefinedAcl(predefinedAcl string) *BucketsInsertCa
 // object access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *BucketsInsertCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsInsertCall {
 	c.urlParams_.Set("predefinedDefaultObjectAcl", predefinedDefaultObjectAcl)
@@ -4028,9 +4009,8 @@ func (c *BucketsInsertCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 // full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
+//   "full" - Include all properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -4265,9 +4245,8 @@ func (c *BucketsListCall) Prefix(prefix string) *BucketsListCall {
 // properties to return. Defaults to noAcl.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
+//   "full" - Include all properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsListCall) Projection(projection string) *BucketsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -4474,9 +4453,9 @@ type BucketsLockRetentionPolicyCall struct {
 
 // LockRetentionPolicy: Locks retention policy on a bucket.
 //
-//   - bucket: Name of a bucket.
-//   - ifMetagenerationMatch: Makes the operation conditional on whether
-//     bucket's current metageneration matches the given value.
+// - bucket: Name of a bucket.
+// - ifMetagenerationMatch: Makes the operation conditional on whether
+//   bucket's current metageneration matches the given value.
 func (r *BucketsService) LockRetentionPolicy(bucket string, ifMetagenerationMatch int64) *BucketsLockRetentionPolicyCall {
 	c := &BucketsLockRetentionPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -4662,22 +4641,14 @@ func (c *BucketsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int
 // predefined set of access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Project team owners get OWNER access, and
-//
+//   "authenticatedRead" - Project team owners get OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"private" - Project team owners get OWNER access.
-//	"projectPrivate" - Project team members get access according to
-//
+//   "private" - Project team owners get OWNER access.
+//   "projectPrivate" - Project team members get access according to
 // their roles.
-//
-//	"publicRead" - Project team owners get OWNER access, and allUsers
-//
+//   "publicRead" - Project team owners get OWNER access, and allUsers
 // get READER access.
-//
-//	"publicReadWrite" - Project team owners get OWNER access, and
-//
+//   "publicReadWrite" - Project team owners get OWNER access, and
 // allUsers get WRITER access.
 func (c *BucketsPatchCall) PredefinedAcl(predefinedAcl string) *BucketsPatchCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -4689,26 +4660,16 @@ func (c *BucketsPatchCall) PredefinedAcl(predefinedAcl string) *BucketsPatchCall
 // object access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *BucketsPatchCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsPatchCall {
 	c.urlParams_.Set("predefinedDefaultObjectAcl", predefinedDefaultObjectAcl)
@@ -4719,9 +4680,8 @@ func (c *BucketsPatchCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl
 // properties to return. Defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
+//   "full" - Include all properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsPatchCall) Projection(projection string) *BucketsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -5293,22 +5253,14 @@ func (c *BucketsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 // predefined set of access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Project team owners get OWNER access, and
-//
+//   "authenticatedRead" - Project team owners get OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"private" - Project team owners get OWNER access.
-//	"projectPrivate" - Project team members get access according to
-//
+//   "private" - Project team owners get OWNER access.
+//   "projectPrivate" - Project team members get access according to
 // their roles.
-//
-//	"publicRead" - Project team owners get OWNER access, and allUsers
-//
+//   "publicRead" - Project team owners get OWNER access, and allUsers
 // get READER access.
-//
-//	"publicReadWrite" - Project team owners get OWNER access, and
-//
+//   "publicReadWrite" - Project team owners get OWNER access, and
 // allUsers get WRITER access.
 func (c *BucketsUpdateCall) PredefinedAcl(predefinedAcl string) *BucketsUpdateCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -5320,26 +5272,16 @@ func (c *BucketsUpdateCall) PredefinedAcl(predefinedAcl string) *BucketsUpdateCa
 // object access controls to this bucket.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *BucketsUpdateCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAcl string) *BucketsUpdateCall {
 	c.urlParams_.Set("predefinedDefaultObjectAcl", predefinedDefaultObjectAcl)
@@ -5350,9 +5292,8 @@ func (c *BucketsUpdateCall) PredefinedDefaultObjectAcl(predefinedDefaultObjectAc
 // properties to return. Defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit owner, acl and defaultObjectAcl properties.
+//   "full" - Include all properties.
+//   "noAcl" - Omit owner, acl and defaultObjectAcl properties.
 func (c *BucketsUpdateCall) Projection(projection string) *BucketsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -5668,10 +5609,10 @@ type DefaultObjectAccessControlsDeleteCall struct {
 // Delete: Permanently deletes the default object ACL entry for the
 // specified entity on the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Delete(bucket string, entity string) *DefaultObjectAccessControlsDeleteCall {
 	c := &DefaultObjectAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -5798,10 +5739,10 @@ type DefaultObjectAccessControlsGetCall struct {
 // Get: Returns the default object ACL entry for the specified entity on
 // the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Get(bucket string, entity string) *DefaultObjectAccessControlsGetCall {
 	c := &DefaultObjectAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6308,10 +6249,10 @@ type DefaultObjectAccessControlsPatchCall struct {
 
 // Patch: Patches a default object ACL entry on the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Patch(bucket string, entity string, objectaccesscontrol *ObjectAccessControl) *DefaultObjectAccessControlsPatchCall {
 	c := &DefaultObjectAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -6474,10 +6415,10 @@ type DefaultObjectAccessControlsUpdateCall struct {
 
 // Update: Updates a default object ACL entry on the specified bucket.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
 func (r *DefaultObjectAccessControlsService) Update(bucket string, entity string, objectaccesscontrol *ObjectAccessControl) *DefaultObjectAccessControlsUpdateCall {
 	c := &DefaultObjectAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7254,12 +7195,12 @@ type ObjectAccessControlsDeleteCall struct {
 // Delete: Permanently deletes the ACL entry for the specified entity on
 // the specified object.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Delete(bucket string, object string, entity string) *ObjectAccessControlsDeleteCall {
 	c := &ObjectAccessControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7410,12 +7351,12 @@ type ObjectAccessControlsGetCall struct {
 // Get: Returns the ACL entry for the specified entity on the specified
 // object.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Get(bucket string, object string, entity string) *ObjectAccessControlsGetCall {
 	c := &ObjectAccessControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7605,9 +7546,9 @@ type ObjectAccessControlsInsertCall struct {
 
 // Insert: Creates a new ACL entry on the specified object.
 //
-//   - bucket: Name of a bucket.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Insert(bucket string, object string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsInsertCall {
 	c := &ObjectAccessControlsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7784,9 +7725,9 @@ type ObjectAccessControlsListCall struct {
 
 // List: Retrieves ACL entries on the specified object.
 //
-//   - bucket: Name of a bucket.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) List(bucket string, object string) *ObjectAccessControlsListCall {
 	c := &ObjectAccessControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -7968,12 +7909,12 @@ type ObjectAccessControlsPatchCall struct {
 
 // Patch: Patches an ACL entry on the specified object.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Patch(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsPatchCall {
 	c := &ObjectAccessControlsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -8160,12 +8101,12 @@ type ObjectAccessControlsUpdateCall struct {
 
 // Update: Updates an ACL entry on the specified object.
 //
-//   - bucket: Name of a bucket.
-//   - entity: The entity holding the permission. Can be user-userId,
-//     user-emailAddress, group-groupId, group-emailAddress, allUsers, or
-//     allAuthenticatedUsers.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of a bucket.
+// - entity: The entity holding the permission. Can be user-userId,
+//   user-emailAddress, group-groupId, group-emailAddress, allUsers, or
+//   allAuthenticatedUsers.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectAccessControlsService) Update(bucket string, object string, entity string, objectaccesscontrol *ObjectAccessControl) *ObjectAccessControlsUpdateCall {
 	c := &ObjectAccessControlsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -8352,11 +8293,11 @@ type ObjectsComposeCall struct {
 // Compose: Concatenates a list of existing objects into a new object in
 // the same bucket.
 //
-//   - destinationBucket: Name of the bucket containing the source
-//     objects. The destination object is stored in this bucket.
-//   - destinationObject: Name of the new object. For information about
-//     how to URL encode object names to be path safe, see Encoding URI
-//     Path Parts.
+// - destinationBucket: Name of the bucket containing the source
+//   objects. The destination object is stored in this bucket.
+// - destinationObject: Name of the new object. For information about
+//   how to URL encode object names to be path safe, see Encoding URI
+//   Path Parts.
 func (r *ObjectsService) Compose(destinationBucket string, destinationObject string, composerequest *ComposeRequest) *ObjectsComposeCall {
 	c := &ObjectsComposeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.destinationBucket = destinationBucket
@@ -8370,26 +8311,16 @@ func (r *ObjectsService) Compose(destinationBucket string, destinationObject str
 // to the destination object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsComposeCall) DestinationPredefinedAcl(destinationPredefinedAcl string) *ObjectsComposeCall {
 	c.urlParams_.Set("destinationPredefinedAcl", destinationPredefinedAcl)
@@ -8416,9 +8347,7 @@ func (c *ObjectsComposeCall) IfMetagenerationMatch(ifMetagenerationMatch int64) 
 // KmsKeyName sets the optional parameter "kmsKeyName": Resource name of
 // the Cloud KMS key, of the form
 // projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//
-//	that will be used to encrypt the object. Overrides the object
-//
+//  that will be used to encrypt the object. Overrides the object
 // metadata's kms_key_name value, if any.
 func (c *ObjectsComposeCall) KmsKeyName(kmsKeyName string) *ObjectsComposeCall {
 	c.urlParams_.Set("kmsKeyName", kmsKeyName)
@@ -8621,18 +8550,18 @@ type ObjectsCopyCall struct {
 // Copy: Copies a source object to a destination object. Optionally
 // overrides metadata.
 //
-//   - destinationBucket: Name of the bucket in which to store the new
-//     object. Overrides the provided object metadata's bucket value, if
-//     any.For information about how to URL encode object names to be path
-//     safe, see Encoding URI Path Parts.
-//   - destinationObject: Name of the new object. Required when the object
-//     metadata is not otherwise provided. Overrides the object metadata's
-//     name value, if any.
-//   - sourceBucket: Name of the bucket in which to find the source
-//     object.
-//   - sourceObject: Name of the source object. For information about how
-//     to URL encode object names to be path safe, see Encoding URI Path
-//     Parts.
+// - destinationBucket: Name of the bucket in which to store the new
+//   object. Overrides the provided object metadata's bucket value, if
+//   any.For information about how to URL encode object names to be path
+//   safe, see Encoding URI Path Parts.
+// - destinationObject: Name of the new object. Required when the object
+//   metadata is not otherwise provided. Overrides the object metadata's
+//   name value, if any.
+// - sourceBucket: Name of the bucket in which to find the source
+//   object.
+// - sourceObject: Name of the source object. For information about how
+//   to URL encode object names to be path safe, see Encoding URI Path
+//   Parts.
 func (r *ObjectsService) Copy(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsCopyCall {
 	c := &ObjectsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceBucket = sourceBucket
@@ -8647,9 +8576,7 @@ func (r *ObjectsService) Copy(sourceBucket string, sourceObject string, destinat
 // "destinationKmsKeyName": Resource name of the Cloud KMS key, of the
 // form
 // projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//
-//	that will be used to encrypt the object. Overrides the object
-//
+//  that will be used to encrypt the object. Overrides the object
 // metadata's kms_key_name value, if any.
 func (c *ObjectsCopyCall) DestinationKmsKeyName(destinationKmsKeyName string) *ObjectsCopyCall {
 	c.urlParams_.Set("destinationKmsKeyName", destinationKmsKeyName)
@@ -8661,26 +8588,16 @@ func (c *ObjectsCopyCall) DestinationKmsKeyName(destinationKmsKeyName string) *O
 // to the destination object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsCopyCall) DestinationPredefinedAcl(destinationPredefinedAcl string) *ObjectsCopyCall {
 	c.urlParams_.Set("destinationPredefinedAcl", destinationPredefinedAcl)
@@ -8765,9 +8682,8 @@ func (c *ObjectsCopyCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationN
 // specifies the acl property, when it defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsCopyCall) Projection(projection string) *ObjectsCopyCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -9046,9 +8962,9 @@ type ObjectsDeleteCall struct {
 // if versioning is not enabled for the bucket, or if the generation
 // parameter is used.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Delete(bucket string, object string) *ObjectsDeleteCall {
 	c := &ObjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9249,9 +9165,9 @@ type ObjectsGetCall struct {
 
 // Get: Retrieves an object or its metadata.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 	c := &ObjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9307,9 +9223,8 @@ func (c *ObjectsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64
 // properties to return. Defaults to noAcl.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsGetCall) Projection(projection string) *ObjectsGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -9538,9 +9453,9 @@ type ObjectsGetIamPolicyCall struct {
 
 // GetIamPolicy: Returns an IAM policy for the specified object.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) GetIamPolicy(bucket string, object string) *ObjectsGetIamPolicyCall {
 	c := &ObjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9725,8 +9640,8 @@ type ObjectsInsertCall struct {
 
 // Insert: Stores a new object and metadata.
 //
-//   - bucket: Name of the bucket in which to store the new object.
-//     Overrides the provided object metadata's bucket value, if any.
+// - bucket: Name of the bucket in which to store the new object.
+//   Overrides the provided object metadata's bucket value, if any.
 func (r *ObjectsService) Insert(bucket string, object *Object) *ObjectsInsertCall {
 	c := &ObjectsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -9784,9 +9699,7 @@ func (c *ObjectsInsertCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 // KmsKeyName sets the optional parameter "kmsKeyName": Resource name of
 // the Cloud KMS key, of the form
 // projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//
-//	that will be used to encrypt the object. Overrides the object
-//
+//  that will be used to encrypt the object. Overrides the object
 // metadata's kms_key_name value, if any.
 func (c *ObjectsInsertCall) KmsKeyName(kmsKeyName string) *ObjectsInsertCall {
 	c.urlParams_.Set("kmsKeyName", kmsKeyName)
@@ -9806,26 +9719,16 @@ func (c *ObjectsInsertCall) Name(name string) *ObjectsInsertCall {
 // predefined set of access controls to this object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsInsertCall) PredefinedAcl(predefinedAcl string) *ObjectsInsertCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -9837,9 +9740,8 @@ func (c *ObjectsInsertCall) PredefinedAcl(predefinedAcl string) *ObjectsInsertCa
 // specifies the acl property, when it defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsInsertCall) Projection(projection string) *ObjectsInsertCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10245,9 +10147,8 @@ func (c *ObjectsListCall) Prefix(prefix string) *ObjectsListCall {
 // properties to return. Defaults to noAcl.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10502,9 +10403,9 @@ type ObjectsPatchCall struct {
 
 // Patch: Patches an object's metadata.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *ObjectsPatchCall {
 	c := &ObjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -10561,26 +10462,16 @@ func (c *ObjectsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int
 // predefined set of access controls to this object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsPatchCall) PredefinedAcl(predefinedAcl string) *ObjectsPatchCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -10591,9 +10482,8 @@ func (c *ObjectsPatchCall) PredefinedAcl(predefinedAcl string) *ObjectsPatchCall
 // properties to return. Defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsPatchCall) Projection(projection string) *ObjectsPatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10820,18 +10710,18 @@ type ObjectsRewriteCall struct {
 // Rewrite: Rewrites a source object to a destination object. Optionally
 // overrides metadata.
 //
-//   - destinationBucket: Name of the bucket in which to store the new
-//     object. Overrides the provided object metadata's bucket value, if
-//     any.
-//   - destinationObject: Name of the new object. Required when the object
-//     metadata is not otherwise provided. Overrides the object metadata's
-//     name value, if any. For information about how to URL encode object
-//     names to be path safe, see Encoding URI Path Parts.
-//   - sourceBucket: Name of the bucket in which to find the source
-//     object.
-//   - sourceObject: Name of the source object. For information about how
-//     to URL encode object names to be path safe, see Encoding URI Path
-//     Parts.
+// - destinationBucket: Name of the bucket in which to store the new
+//   object. Overrides the provided object metadata's bucket value, if
+//   any.
+// - destinationObject: Name of the new object. Required when the object
+//   metadata is not otherwise provided. Overrides the object metadata's
+//   name value, if any. For information about how to URL encode object
+//   names to be path safe, see Encoding URI Path Parts.
+// - sourceBucket: Name of the bucket in which to find the source
+//   object.
+// - sourceObject: Name of the source object. For information about how
+//   to URL encode object names to be path safe, see Encoding URI Path
+//   Parts.
 func (r *ObjectsService) Rewrite(sourceBucket string, sourceObject string, destinationBucket string, destinationObject string, object *Object) *ObjectsRewriteCall {
 	c := &ObjectsRewriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceBucket = sourceBucket
@@ -10846,9 +10736,7 @@ func (r *ObjectsService) Rewrite(sourceBucket string, sourceObject string, desti
 // "destinationKmsKeyName": Resource name of the Cloud KMS key, of the
 // form
 // projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
-//
-//	that will be used to encrypt the object. Overrides the object
-//
+//  that will be used to encrypt the object. Overrides the object
 // metadata's kms_key_name value, if any.
 func (c *ObjectsRewriteCall) DestinationKmsKeyName(destinationKmsKeyName string) *ObjectsRewriteCall {
 	c.urlParams_.Set("destinationKmsKeyName", destinationKmsKeyName)
@@ -10860,26 +10748,16 @@ func (c *ObjectsRewriteCall) DestinationKmsKeyName(destinationKmsKeyName string)
 // to the destination object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsRewriteCall) DestinationPredefinedAcl(destinationPredefinedAcl string) *ObjectsRewriteCall {
 	c.urlParams_.Set("destinationPredefinedAcl", destinationPredefinedAcl)
@@ -10977,9 +10855,8 @@ func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall i
 // specifies the acl property, when it defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsRewriteCall) Projection(projection string) *ObjectsRewriteCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -11279,9 +11156,9 @@ type ObjectsSetIamPolicyCall struct {
 
 // SetIamPolicy: Updates an IAM policy for the specified object.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) SetIamPolicy(bucket string, object string, policy *Policy) *ObjectsSetIamPolicyCall {
 	c := &ObjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -11460,10 +11337,10 @@ type ObjectsTestIamPermissionsCall struct {
 // TestIamPermissions: Tests a set of permissions on the given object to
 // see which, if any, are held by the caller.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
-//   - permissions: Permissions to test.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
+// - permissions: Permissions to test.
 func (r *ObjectsService) TestIamPermissions(bucket string, object string, permissions []string) *ObjectsTestIamPermissionsCall {
 	c := &ObjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -11656,9 +11533,9 @@ type ObjectsUpdateCall struct {
 
 // Update: Updates an object's metadata.
 //
-//   - bucket: Name of the bucket in which the object resides.
-//   - object: Name of the object. For information about how to URL encode
-//     object names to be path safe, see Encoding URI Path Parts.
+// - bucket: Name of the bucket in which the object resides.
+// - object: Name of the object. For information about how to URL encode
+//   object names to be path safe, see Encoding URI Path Parts.
 func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *ObjectsUpdateCall {
 	c := &ObjectsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bucket = bucket
@@ -11715,26 +11592,16 @@ func (c *ObjectsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 // predefined set of access controls to this object.
 //
 // Possible values:
-//
-//	"authenticatedRead" - Object owner gets OWNER access, and
-//
+//   "authenticatedRead" - Object owner gets OWNER access, and
 // allAuthenticatedUsers get READER access.
-//
-//	"bucketOwnerFullControl" - Object owner gets OWNER access, and
-//
+//   "bucketOwnerFullControl" - Object owner gets OWNER access, and
 // project team owners get OWNER access.
-//
-//	"bucketOwnerRead" - Object owner gets OWNER access, and project
-//
+//   "bucketOwnerRead" - Object owner gets OWNER access, and project
 // team owners get READER access.
-//
-//	"private" - Object owner gets OWNER access.
-//	"projectPrivate" - Object owner gets OWNER access, and project team
-//
+//   "private" - Object owner gets OWNER access.
+//   "projectPrivate" - Object owner gets OWNER access, and project team
 // members get access according to their roles.
-//
-//	"publicRead" - Object owner gets OWNER access, and allUsers get
-//
+//   "publicRead" - Object owner gets OWNER access, and allUsers get
 // READER access.
 func (c *ObjectsUpdateCall) PredefinedAcl(predefinedAcl string) *ObjectsUpdateCall {
 	c.urlParams_.Set("predefinedAcl", predefinedAcl)
@@ -11745,9 +11612,8 @@ func (c *ObjectsUpdateCall) PredefinedAcl(predefinedAcl string) *ObjectsUpdateCa
 // properties to return. Defaults to full.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsUpdateCall) Projection(projection string) *ObjectsUpdateCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -12036,9 +11902,8 @@ func (c *ObjectsWatchAllCall) Prefix(prefix string) *ObjectsWatchAllCall {
 // properties to return. Defaults to noAcl.
 //
 // Possible values:
-//
-//	"full" - Include all properties.
-//	"noAcl" - Omit the owner, acl property.
+//   "full" - Include all properties.
+//   "noAcl" - Omit the owner, acl property.
 func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -12547,9 +12412,9 @@ type ProjectsHmacKeysGetCall struct {
 
 // Get: Retrieves an HMAC key's metadata
 //
-//   - accessId: Name of the HMAC key.
-//   - projectId: Project ID owning the service account of the requested
-//     key.
+// - accessId: Name of the HMAC key.
+// - projectId: Project ID owning the service account of the requested
+//   key.
 func (r *ProjectsHmacKeysService) Get(projectId string, accessId string) *ProjectsHmacKeysGetCall {
 	c := &ProjectsHmacKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12957,9 +12822,9 @@ type ProjectsHmacKeysUpdateCall struct {
 // Update: Updates the state of an HMAC key. See the HMAC Key resource
 // descriptor for valid states.
 //
-//   - accessId: Name of the HMAC key being updated.
-//   - projectId: Project ID owning the service account of the updated
-//     key.
+// - accessId: Name of the HMAC key being updated.
+// - projectId: Project ID owning the service account of the updated
+//   key.
 func (r *ProjectsHmacKeysService) Update(projectId string, accessId string, hmackeymetadata *HmacKeyMetadata) *ProjectsHmacKeysUpdateCall {
 	c := &ProjectsHmacKeysUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

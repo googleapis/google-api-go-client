@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/drive/labels
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/drivelabels/v2beta"
-//	...
-//	ctx := context.Background()
-//	drivelabelsService, err := drivelabels.NewService(ctx)
+//   import "google.golang.org/api/drivelabels/v2beta"
+//   ...
+//   ctx := context.Background()
+//   drivelabelsService, err := drivelabels.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	drivelabelsService, err := drivelabels.NewService(ctx, option.WithAPIKey("AIza..."))
+//   drivelabelsService, err := drivelabels.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	drivelabelsService, err := drivelabels.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   drivelabelsService, err := drivelabels.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package drivelabels // import "google.golang.org/api/drivelabels/v2beta"
@@ -642,8 +642,7 @@ func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoice
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest:
-//
-//	Request to disable the Field.
+//  Request to disable the Field.
 type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest struct {
 	// DisabledPolicy: Required. Field Disabled Policy.
 	DisabledPolicy *GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy `json:"disabledPolicy,omitempty"`
@@ -3450,12 +3449,12 @@ type GoogleProtobufEmpty struct {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -4331,9 +4330,9 @@ type LabelsGetCall struct {
 // `labels/{id}@{revision_id}` - Gets the label at the specified
 // revision ID.
 //
-//   - name: Label resource name. May be any of: * `labels/{id}`
-//     (equivalent to labels/{id}@latest) * `labels/{id}@latest` *
-//     `labels/{id}@published` * `labels/{id}@{revision_id}`.
+// - name: Label resource name. May be any of: * `labels/{id}`
+//   (equivalent to labels/{id}@latest) * `labels/{id}@latest` *
+//   `labels/{id}@published` * `labels/{id}@{revision_id}`.
 func (r *LabelsService) Get(name string) *LabelsGetCall {
 	c := &LabelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4361,12 +4360,9 @@ func (c *LabelsGetCall) UseAdminAccess(useAdminAccess bool) *LabelsGetCall {
 // fields belonging to the indicated view are returned.
 //
 // Possible values:
-//
-//	"LABEL_VIEW_BASIC" - Implies the field mask:
-//
+//   "LABEL_VIEW_BASIC" - Implies the field mask:
 // `name,id,revision_id,label_type,properties.*`
-//
-//	"LABEL_VIEW_FULL" - All possible fields.
+//   "LABEL_VIEW_FULL" - All possible fields.
 func (c *LabelsGetCall) View(view string) *LabelsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4547,22 +4543,14 @@ func (c *LabelsListCall) LanguageCode(languageCode string) *LabelsListCall {
 // minimum role a user must have on a label. Defaults to `READER`.
 //
 // Possible values:
-//
-//	"LABEL_ROLE_UNSPECIFIED" - Unknown role.
-//	"READER" - A reader can read the label and associated metadata
-//
+//   "LABEL_ROLE_UNSPECIFIED" - Unknown role.
+//   "READER" - A reader can read the label and associated metadata
 // applied to Drive items.
-//
-//	"APPLIER" - An applier can write associated metadata on Drive items
-//
+//   "APPLIER" - An applier can write associated metadata on Drive items
 // in which they also have write access to. Implies `READER`.
-//
-//	"ORGANIZER" - An organizer can pin this label in shared drives they
-//
+//   "ORGANIZER" - An organizer can pin this label in shared drives they
 // manage and add new appliers to the label.
-//
-//	"EDITOR" - Editors can make any update including deleting the label
-//
+//   "EDITOR" - Editors can make any update including deleting the label
 // which also deletes the associated Drive item metadata. Implies
 // `APPLIER`.
 func (c *LabelsListCall) MinimumRole(minimumRole string) *LabelsListCall {
@@ -4609,12 +4597,9 @@ func (c *LabelsListCall) UseAdminAccess(useAdminAccess bool) *LabelsListCall {
 // fields belonging to the indicated view are returned.
 //
 // Possible values:
-//
-//	"LABEL_VIEW_BASIC" - Implies the field mask:
-//
+//   "LABEL_VIEW_BASIC" - Implies the field mask:
 // `name,id,revision_id,label_type,properties.*`
-//
-//	"LABEL_VIEW_FULL" - All possible fields.
+//   "LABEL_VIEW_FULL" - All possible fields.
 func (c *LabelsListCall) View(view string) *LabelsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5452,10 +5437,10 @@ type LabelsPermissionsBatchUpdateCall struct {
 // Label resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions
-//     being updated. Format: labels/{label} If this is set, the parent
-//     field in the UpdateLabelPermissionRequest messages must either be
-//     empty or match this field.
+// - parent: The parent Label resource name shared by all permissions
+//   being updated. Format: labels/{label} If this is set, the parent
+//   field in the UpdateLabelPermissionRequest messages must either be
+//   empty or match this field.
 func (r *LabelsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2betabatchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) *LabelsPermissionsBatchUpdateCall {
 	c := &LabelsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5601,8 +5586,8 @@ type LabelsPermissionsCreateCall struct {
 // Label resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-//   - parent: The parent Label resource name on the Label Permission is
-//     created. Format: labels/{label}.
+// - parent: The parent Label resource name on the Label Permission is
+//   created. Format: labels/{label}.
 func (r *LabelsPermissionsService) Create(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsPermissionsCreateCall {
 	c := &LabelsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5900,8 +5885,8 @@ type LabelsPermissionsListCall struct {
 
 // List: Lists a Label's permissions.
 //
-//   - parent: The parent Label resource name on which Label Permission
-//     are listed. Format: labels/{label}.
+// - parent: The parent Label resource name on which Label Permission
+//   are listed. Format: labels/{label}.
 func (r *LabelsPermissionsService) List(parent string) *LabelsPermissionsListCall {
 	c := &LabelsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6608,10 +6593,10 @@ type LabelsRevisionsPermissionsBatchUpdateCall struct {
 // Label resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-//   - parent: The parent Label resource name shared by all permissions
-//     being updated. Format: labels/{label} If this is set, the parent
-//     field in the UpdateLabelPermissionRequest messages must either be
-//     empty or match this field.
+// - parent: The parent Label resource name shared by all permissions
+//   being updated. Format: labels/{label} If this is set, the parent
+//   field in the UpdateLabelPermissionRequest messages must either be
+//   empty or match this field.
 func (r *LabelsRevisionsPermissionsService) BatchUpdate(parent string, googleappsdrivelabelsv2betabatchupdatelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchUpdateCall {
 	c := &LabelsRevisionsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6757,8 +6742,8 @@ type LabelsRevisionsPermissionsCreateCall struct {
 // Label resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-//   - parent: The parent Label resource name on the Label Permission is
-//     created. Format: labels/{label}.
+// - parent: The parent Label resource name on the Label Permission is
+//   created. Format: labels/{label}.
 func (r *LabelsRevisionsPermissionsService) Create(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsPermissionsCreateCall {
 	c := &LabelsRevisionsPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7056,8 +7041,8 @@ type LabelsRevisionsPermissionsListCall struct {
 
 // List: Lists a Label's permissions.
 //
-//   - parent: The parent Label resource name on which Label Permission
-//     are listed. Format: labels/{label}.
+// - parent: The parent Label resource name on which Label Permission
+//   are listed. Format: labels/{label}.
 func (r *LabelsRevisionsPermissionsService) List(parent string) *LabelsRevisionsPermissionsListCall {
 	c := &LabelsRevisionsPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7562,8 +7547,8 @@ type UsersGetCapabilitiesCall struct {
 
 // GetCapabilities: Gets the user capabilities.
 //
-//   - name: The resource name of the user. Only "users/me/capabilities"
-//     is supported.
+// - name: The resource name of the user. Only "users/me/capabilities"
+//   is supported.
 func (r *UsersService) GetCapabilities(name string) *UsersGetCapabilitiesCall {
 	c := &UsersGetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

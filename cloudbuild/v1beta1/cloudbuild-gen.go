@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/cloud-build/docs/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/cloudbuild/v1beta1"
-//	...
-//	ctx := context.Background()
-//	cloudbuildService, err := cloudbuild.NewService(ctx)
+//   import "google.golang.org/api/cloudbuild/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   cloudbuildService, err := cloudbuild.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
+//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudbuild // import "google.golang.org/api/cloudbuild/v1beta1"
@@ -3254,8 +3254,8 @@ type ProjectsLocationsWorkerPoolsCreateCall struct {
 // worker pool. NOTE: As of now, this method returns an `Operation` that
 // is always complete.
 //
-//   - parent: The parent resource where this worker pool will be created.
-//     Format: `projects/{project}/locations/{location}`.
+// - parent: The parent resource where this worker pool will be created.
+//   Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsWorkerPoolsService) Create(parent string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsCreateCall {
 	c := &ProjectsLocationsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3411,9 +3411,9 @@ type ProjectsLocationsWorkerPoolsDeleteCall struct {
 // Delete: Deletes a `WorkerPool`. NOTE: As of now, this method returns
 // an `Operation` that is always complete.
 //
-//   - name: The name of the `WorkerPool` to delete. Format:
-//     `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`
-//     .
+// - name: The name of the `WorkerPool` to delete. Format:
+//   `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`
+//   .
 func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocationsWorkerPoolsDeleteCall {
 	c := &ProjectsLocationsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3559,8 +3559,8 @@ type ProjectsLocationsWorkerPoolsGetCall struct {
 
 // Get: Returns details of a `WorkerPool`.
 //
-//   - name: The name of the `WorkerPool` to retrieve. Format:
-//     `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+// - name: The name of the `WorkerPool` to retrieve. Format:
+//   `projects/{project}/locations/{location}/workerPools/{workerPool}`.
 func (r *ProjectsLocationsWorkerPoolsService) Get(name string) *ProjectsLocationsWorkerPoolsGetCall {
 	c := &ProjectsLocationsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3706,8 +3706,8 @@ type ProjectsLocationsWorkerPoolsListCall struct {
 
 // List: Lists `WorkerPool`s in the given project.
 //
-//   - parent: The parent of the collection of `WorkerPools`. Format:
-//     `projects/{project}/locations/location`.
+// - parent: The parent of the collection of `WorkerPools`. Format:
+//   `projects/{project}/locations/location`.
 func (r *ProjectsLocationsWorkerPoolsService) List(parent string) *ProjectsLocationsWorkerPoolsListCall {
 	c := &ProjectsLocationsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3854,12 +3854,12 @@ type ProjectsLocationsWorkerPoolsPatchCall struct {
 // Patch: Updates a `WorkerPool`. NOTE: As of now, this method returns
 // an `Operation` that is always complete.
 //
-//   - name: Output only. The resource name of the `WorkerPool`, with
-//     format
-//     `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
-//     The value of `{worker_pool}` is provided by `worker_pool_id` in
-//     `CreateWorkerPool` request and the value of `{location}` is
-//     determined by the endpoint accessed.
+// - name: Output only. The resource name of the `WorkerPool`, with
+//   format
+//   `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+//    The value of `{worker_pool}` is provided by `worker_pool_id` in
+//   `CreateWorkerPool` request and the value of `{location}` is
+//   determined by the endpoint accessed.
 func (r *ProjectsLocationsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsPatchCall {
 	c := &ProjectsLocationsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

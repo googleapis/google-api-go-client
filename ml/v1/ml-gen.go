@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/ml/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/ml/v1"
-//	...
-//	ctx := context.Background()
-//	mlService, err := ml.NewService(ctx)
+//   import "google.golang.org/api/ml/v1"
+//   ...
+//   ctx := context.Background()
+//   mlService, err := ml.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	mlService, err := ml.NewService(ctx, option.WithScopes(ml.CloudPlatformReadOnlyScope))
+//   mlService, err := ml.NewService(ctx, option.WithScopes(ml.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	mlService, err := ml.NewService(ctx, option.WithAPIKey("AIza..."))
+//   mlService, err := ml.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	mlService, err := ml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   mlService, err := ml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package ml // import "google.golang.org/api/ml/v1"
@@ -4763,8 +4763,8 @@ type ProjectsExplainCall struct {
 // Explain: Performs explanation on the data in the request. {% dynamic
 // include "/ai-platform/includes/___explain-request" %}
 //
-//   - name: The resource name of a model or a version. Authorization:
-//     requires the `predict` permission on the specified resource.
+// - name: The resource name of a model or a version. Authorization:
+//   requires the `predict` permission on the specified resource.
 func (r *ProjectsService) Explain(name string, googlecloudmlv1__explainrequest *GoogleCloudMlV1__ExplainRequest) *ProjectsExplainCall {
 	c := &ProjectsExplainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5058,8 +5058,8 @@ type ProjectsPredictCall struct {
 // Predict: Performs online prediction on the data in the request. {%
 // dynamic include "/ai-platform/includes/___predict-request" %}
 //
-//   - name: The resource name of a model or a version. Authorization:
-//     requires the `predict` permission on the specified resource.
+// - name: The resource name of a model or a version. Authorization:
+//   requires the `predict` permission on the specified resource.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5639,10 +5639,10 @@ type ProjectsJobsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
 	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6196,10 +6196,10 @@ type ProjectsJobsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6346,10 +6346,10 @@ type ProjectsJobsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsJobsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
 	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6641,9 +6641,9 @@ type ProjectsLocationsListCall struct {
 // List: List all locations that provides at least one type of CMLE
 // capability.
 //
-//   - parent: The name of the project for which available locations are
-//     to be listed (since some locations might be whitelisted for
-//     specific projects).
+// - parent: The name of the project for which available locations are
+//   to be listed (since some locations might be whitelisted for
+//   specific projects).
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7130,8 +7130,8 @@ type ProjectsLocationsStudiesCreateCall struct {
 
 // Create: Creates a study.
 //
-//   - parent: The project and location that the study belongs to. Format:
-//     projects/{project}/locations/{location}.
+// - parent: The project and location that the study belongs to. Format:
+//   projects/{project}/locations/{location}.
 func (r *ProjectsLocationsStudiesService) Create(parent string, googlecloudmlv1__study *GoogleCloudMlV1__Study) *ProjectsLocationsStudiesCreateCall {
 	c := &ProjectsLocationsStudiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7564,8 +7564,8 @@ type ProjectsLocationsStudiesListCall struct {
 
 // List: Lists all the studies in a region for an associated project.
 //
-//   - parent: The project and location that the study belongs to. Format:
-//     projects/{project}/locations/{location}.
+// - parent: The project and location that the study belongs to. Format:
+//   projects/{project}/locations/{location}.
 func (r *ProjectsLocationsStudiesService) List(parent string) *ProjectsLocationsStudiesListCall {
 	c := &ProjectsLocationsStudiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8712,8 +8712,8 @@ type ProjectsLocationsStudiesTrialsListOptimalTrialsCall struct {
 // study. The definition of pareto-optimal can be checked in wiki page.
 // https://en.wikipedia.org/wiki/Pareto_efficiency
 //
-//   - parent: The name of the study that the pareto-optimal trial belongs
-//     to.
+// - parent: The name of the study that the pareto-optimal trial belongs
+//   to.
 func (r *ProjectsLocationsStudiesTrialsService) ListOptimalTrials(parent string, googlecloudmlv1__listoptimaltrialsrequest *GoogleCloudMlV1__ListOptimalTrialsRequest) *ProjectsLocationsStudiesTrialsListOptimalTrialsCall {
 	c := &ProjectsLocationsStudiesTrialsListOptimalTrialsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9575,10 +9575,10 @@ type ProjectsModelsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGetIamPolicyCall {
 	c := &ProjectsModelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10127,10 +10127,10 @@ type ProjectsModelsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10277,10 +10277,10 @@ type ProjectsModelsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsModelsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsModelsTestIamPermissionsCall {
 	c := &ProjectsModelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10574,8 +10574,8 @@ type ProjectsModelsVersionsDeleteCall struct {
 // set as the default version of the model unless it is the only
 // remaining version.
 //
-//   - name: The name of the version. You can get the names of all the
-//     versions of a model by calling projects.models.versions.list.
+// - name: The name of the version. You can get the names of all the
+//   versions of a model by calling projects.models.versions.list.
 func (r *ProjectsModelsVersionsService) Delete(name string) *ProjectsModelsVersionsDeleteCall {
 	c := &ProjectsModelsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11243,9 +11243,9 @@ type ProjectsModelsVersionsSetDefaultCall struct {
 // subsequent changes to the default version setting manually using this
 // method.
 //
-//   - name: The name of the version to make the default for the model.
-//     You can get the names of all the versions of a model by calling
-//     projects.models.versions.list.
+// - name: The name of the version to make the default for the model.
+//   You can get the names of all the versions of a model by calling
+//   projects.models.versions.list.
 func (r *ProjectsModelsVersionsService) SetDefault(name string, googlecloudmlv1__setdefaultversionrequest *GoogleCloudMlV1__SetDefaultVersionRequest) *ProjectsModelsVersionsSetDefaultCall {
 	c := &ProjectsModelsVersionsSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

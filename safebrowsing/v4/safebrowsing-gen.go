@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/safe-browsing/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/safebrowsing/v4"
-//	...
-//	ctx := context.Background()
-//	safebrowsingService, err := safebrowsing.NewService(ctx)
+//   import "google.golang.org/api/safebrowsing/v4"
+//   ...
+//   ctx := context.Background()
+//   safebrowsingService, err := safebrowsing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	safebrowsingService, err := safebrowsing.NewService(ctx, option.WithAPIKey("AIza..."))
+//   safebrowsingService, err := safebrowsing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	safebrowsingService, err := safebrowsing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   safebrowsingService, err := safebrowsing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package safebrowsing // import "google.golang.org/api/safebrowsing/v4"

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/iam/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/policytroubleshooter/v1beta"
-//	...
-//	ctx := context.Background()
-//	policytroubleshooterService, err := policytroubleshooter.NewService(ctx)
+//   import "google.golang.org/api/policytroubleshooter/v1beta"
+//   ...
+//   ctx := context.Background()
+//   policytroubleshooterService, err := policytroubleshooter.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	policytroubleshooterService, err := policytroubleshooter.NewService(ctx, option.WithAPIKey("AIza..."))
+//   policytroubleshooterService, err := policytroubleshooter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	policytroubleshooterService, err := policytroubleshooter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   policytroubleshooterService, err := policytroubleshooter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package policytroubleshooter // import "google.golang.org/api/policytroubleshooter/v1beta"

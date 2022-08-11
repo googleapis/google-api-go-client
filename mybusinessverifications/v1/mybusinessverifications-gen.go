@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/my-business/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/mybusinessverifications/v1"
-//	...
-//	ctx := context.Background()
-//	mybusinessverificationsService, err := mybusinessverifications.NewService(ctx)
+//   import "google.golang.org/api/mybusinessverifications/v1"
+//   ...
+//   ctx := context.Background()
+//   mybusinessverificationsService, err := mybusinessverifications.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	mybusinessverificationsService, err := mybusinessverifications.NewService(ctx, option.WithAPIKey("AIza..."))
+//   mybusinessverificationsService, err := mybusinessverifications.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	mybusinessverificationsService, err := mybusinessverifications.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   mybusinessverificationsService, err := mybusinessverifications.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package mybusinessverifications // import "google.golang.org/api/mybusinessverifications/v1"
@@ -1673,8 +1673,8 @@ type LocationsVerificationsListCall struct {
 
 // List: List verifications of a location, ordered by create time.
 //
-//   - parent: Resource name of the location that verification requests
-//     belong to.
+// - parent: Resource name of the location that verification requests
+//   belong to.
 func (r *LocationsVerificationsService) List(parent string) *LocationsVerificationsListCall {
 	c := &LocationsVerificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

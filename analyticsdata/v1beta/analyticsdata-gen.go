@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/analytics/devguides/reporting/data/v1/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/analyticsdata/v1beta"
-//	...
-//	ctx := context.Background()
-//	analyticsdataService, err := analyticsdata.NewService(ctx)
+//   import "google.golang.org/api/analyticsdata/v1beta"
+//   ...
+//   ctx := context.Background()
+//   analyticsdataService, err := analyticsdata.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithScopes(analyticsdata.AnalyticsReadonlyScope))
+//   analyticsdataService, err := analyticsdata.NewService(ctx, option.WithScopes(analyticsdata.AnalyticsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithAPIKey("AIza..."))
+//   analyticsdataService, err := analyticsdata.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	analyticsdataService, err := analyticsdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   analyticsdataService, err := analyticsdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package analyticsdata // import "google.golang.org/api/analyticsdata/v1beta"
@@ -2713,13 +2713,13 @@ type PropertiesBatchRunPivotReportsCall struct {
 // BatchRunPivotReports: Returns multiple pivot reports in a batch. All
 // reports must be for the same GA4 Property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     This property must be specified for the batch. The property within
-//     RunPivotReportRequest may either be unspecified or consistent with
-//     this property. Example: properties/1234.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   This property must be specified for the batch. The property within
+//   RunPivotReportRequest may either be unspecified or consistent with
+//   this property. Example: properties/1234.
 func (r *PropertiesService) BatchRunPivotReports(propertyid string, batchrunpivotreportsrequest *BatchRunPivotReportsRequest) *PropertiesBatchRunPivotReportsCall {
 	c := &PropertiesBatchRunPivotReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -2863,13 +2863,13 @@ type PropertiesBatchRunReportsCall struct {
 // BatchRunReports: Returns multiple reports in a batch. All reports
 // must be for the same GA4 Property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     This property must be specified for the batch. The property within
-//     RunReportRequest may either be unspecified or consistent with this
-//     property. Example: properties/1234.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   This property must be specified for the batch. The property within
+//   RunReportRequest may either be unspecified or consistent with this
+//   property. Example: properties/1234.
 func (r *PropertiesService) BatchRunReports(propertyid string, batchrunreportsrequest *BatchRunReportsRequest) *PropertiesBatchRunReportsCall {
 	c := &PropertiesBatchRunReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3020,14 +3020,14 @@ type PropertiesCheckCompatibilityCall struct {
 // have different compatibility rules. This method checks compatibility
 // for Core reports.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. To learn more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     `property` should be the same value as in your `runReport` request.
-//     Example: properties/1234 Set the Property ID to 0 for compatibility
-//     checking on dimensions and metrics common to all properties. In
-//     this special mode, this method will not return custom dimensions
-//     and metrics.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. To learn more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   `property` should be the same value as in your `runReport` request.
+//   Example: properties/1234 Set the Property ID to 0 for compatibility
+//   checking on dimensions and metrics common to all properties. In
+//   this special mode, this method will not return custom dimensions
+//   and metrics.
 func (r *PropertiesService) CheckCompatibility(propertyid string, checkcompatibilityrequest *CheckCompatibilityRequest) *PropertiesCheckCompatibilityCall {
 	c := &PropertiesCheckCompatibilityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3179,14 +3179,14 @@ type PropertiesGetMetadataCall struct {
 // metrics applicable to any property such as `country` and
 // `totalUsers`.
 //
-//   - name: The resource name of the metadata to retrieve. This name
-//     field is specified in the URL path and not URL parameters. Property
-//     is a numeric Google Analytics GA4 Property identifier. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Example: properties/1234/metadata Set the Property ID to 0 for
-//     dimensions and metrics common to all properties. In this special
-//     mode, this method will not return custom dimensions and metrics.
+// - name: The resource name of the metadata to retrieve. This name
+//   field is specified in the URL path and not URL parameters. Property
+//   is a numeric Google Analytics GA4 Property identifier. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Example: properties/1234/metadata Set the Property ID to 0 for
+//   dimensions and metrics common to all properties. In this special
+//   mode, this method will not return custom dimensions and metrics.
 func (r *PropertiesService) GetMetadata(nameid string) *PropertiesGetMetadataCall {
 	c := &PropertiesGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3337,13 +3337,13 @@ type PropertiesRunPivotReportCall struct {
 // visible if they are included in a pivot. Multiple pivots can be
 // specified to further dissect your data.
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Within a batch request, this property should either be unspecified
-//     or consistent with the batch-level property. Example:
-//     properties/1234.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Within a batch request, this property should either be unspecified
+//   or consistent with the batch-level property. Example:
+//   properties/1234.
 func (r *PropertiesService) RunPivotReport(propertyid string, runpivotreportrequest *RunPivotReportRequest) *PropertiesRunPivotReportCall {
 	c := &PropertiesRunPivotReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3493,11 +3493,11 @@ type PropertiesRunRealtimeReportCall struct {
 // requests & understanding responses, see Creating a Realtime Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Example: properties/1234.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Example: properties/1234.
 func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimereportrequest *RunRealtimeReportRequest) *PropertiesRunRealtimeReportCall {
 	c := &PropertiesRunRealtimeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid
@@ -3649,13 +3649,13 @@ type PropertiesRunReportCall struct {
 // Creating a Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events
-//     are tracked. Specified in the URL path and not the body. To learn
-//     more, see where to find your Property ID
-//     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
-//     Within a batch request, this property should either be unspecified
-//     or consistent with the batch-level property. Example:
-//     properties/1234.
+// - property: A Google Analytics GA4 property identifier whose events
+//   are tracked. Specified in the URL path and not the body. To learn
+//   more, see where to find your Property ID
+//   (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
+//   Within a batch request, this property should either be unspecified
+//   or consistent with the batch-level property. Example:
+//   properties/1234.
 func (r *PropertiesService) RunReport(propertyid string, runreportrequest *RunReportRequest) *PropertiesRunReportCall {
 	c := &PropertiesRunReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.propertyid = propertyid

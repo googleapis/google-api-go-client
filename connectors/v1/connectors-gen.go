@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/connectors/v1"
-//	...
-//	ctx := context.Background()
-//	connectorsService, err := connectors.NewService(ctx)
+//   import "google.golang.org/api/connectors/v1"
+//   ...
+//   ctx := context.Background()
+//   connectorsService, err := connectors.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	connectorsService, err := connectors.NewService(ctx, option.WithAPIKey("AIza..."))
+//   connectorsService, err := connectors.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	connectorsService, err := connectors.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   connectorsService, err := connectors.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package connectors // import "google.golang.org/api/connectors/v1"
@@ -3020,8 +3020,8 @@ type ProjectsLocationsGetRuntimeConfigCall struct {
 // GetRuntimeConfig: Gets the runtimeConfig of a location. RuntimeConfig
 // is a singleton resource for each location.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/runtimeConfig`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/runtimeConfig`.
 func (r *ProjectsLocationsService) GetRuntimeConfig(name string) *ProjectsLocationsGetRuntimeConfigCall {
 	c := &ProjectsLocationsGetRuntimeConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3168,8 +3168,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3376,8 +3376,8 @@ type ProjectsLocationsConnectionsCreateCall struct {
 
 // Create: Creates a new Connection in a given project and location.
 //
-//   - parent: Parent resource of the Connection, of the form:
-//     `projects/*/locations/*`.
+// - parent: Parent resource of the Connection, of the form:
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *Connection) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3531,8 +3531,8 @@ type ProjectsLocationsConnectionsDeleteCall struct {
 
 // Delete: Deletes a single Connection.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/connections/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/connections/*`.
 func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocationsConnectionsDeleteCall {
 	c := &ProjectsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3665,8 +3665,8 @@ type ProjectsLocationsConnectionsGetCall struct {
 
 // Get: Gets details of a single Connection.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/connections/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/connections/*`.
 func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocationsConnectionsGetCall {
 	c := &ProjectsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3678,10 +3678,9 @@ func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocation
 // view.
 //
 // Possible values:
-//
-//	"CONNECTION_VIEW_UNSPECIFIED" - CONNECTION_UNSPECIFIED.
-//	"BASIC" - Do not include runtime required configs.
-//	"FULL" - Include runtime required configs.
+//   "CONNECTION_VIEW_UNSPECIFIED" - CONNECTION_UNSPECIFIED.
+//   "BASIC" - Do not include runtime required configs.
+//   "FULL" - Include runtime required configs.
 func (c *ProjectsLocationsConnectionsGetCall) View(view string) *ProjectsLocationsConnectionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3842,9 +3841,9 @@ type ProjectsLocationsConnectionsGetConnectionSchemaMetadataCall struct {
 // GetConnectionSchemaMetadata: Gets schema metadata of a connection.
 // SchemaMetadata is a singleton resource for each connection.
 //
-//   - name: Connection name Format:
-//     projects/{project}/locations/{location}/connections/{connection}/con
-//     nectionSchemaMetadata.
+// - name: Connection name Format:
+//   projects/{project}/locations/{location}/connections/{connection}/con
+//   nectionSchemaMetadata.
 func (r *ProjectsLocationsConnectionsService) GetConnectionSchemaMetadata(name string) *ProjectsLocationsConnectionsGetConnectionSchemaMetadataCall {
 	c := &ProjectsLocationsConnectionsGetConnectionSchemaMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3992,10 +3991,10 @@ type ProjectsLocationsConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4165,8 +4164,8 @@ type ProjectsLocationsConnectionsListCall struct {
 
 // List: Lists Connections in a given project and location.
 //
-//   - parent: Parent resource of the Connection, of the form:
-//     `projects/*/locations/*`.
+// - parent: Parent resource of the Connection, of the form:
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4202,10 +4201,9 @@ func (c *ProjectsLocationsConnectionsListCall) PageToken(pageToken string) *Proj
 // view.
 //
 // Possible values:
-//
-//	"CONNECTION_VIEW_UNSPECIFIED" - CONNECTION_UNSPECIFIED.
-//	"BASIC" - Do not include runtime required configs.
-//	"FULL" - Include runtime required configs.
+//   "CONNECTION_VIEW_UNSPECIFIED" - CONNECTION_UNSPECIFIED.
+//   "BASIC" - Do not include runtime required configs.
+//   "FULL" - Include runtime required configs.
 func (c *ProjectsLocationsConnectionsListCall) View(view string) *ProjectsLocationsConnectionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4407,8 +4405,8 @@ type ProjectsLocationsConnectionsPatchCall struct {
 
 // Patch: Updates the parameters of a single Connection.
 //
-//   - name: Output only. Resource name of the Connection. Format:
-//     projects/{project}/locations/{location}/connections/{connection}.
+// - name: Output only. Resource name of the Connection. Format:
+//   projects/{project}/locations/{location}/connections/{connection}.
 func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Connection) *ProjectsLocationsConnectionsPatchCall {
 	c := &ProjectsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4569,10 +4567,10 @@ type ProjectsLocationsConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4719,10 +4717,10 @@ type ProjectsLocationsConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4864,8 +4862,8 @@ type ProjectsLocationsConnectionsRuntimeActionSchemasListCall struct {
 
 // List: List schema of a runtime actions filtered by action name.
 //
-//   - parent: Parent resource of RuntimeActionSchema Format:
-//     projects/{project}/locations/{location}/connections/{connection}.
+// - parent: Parent resource of RuntimeActionSchema Format:
+//   projects/{project}/locations/{location}/connections/{connection}.
 func (r *ProjectsLocationsConnectionsRuntimeActionSchemasService) List(parent string) *ProjectsLocationsConnectionsRuntimeActionSchemasListCall {
 	c := &ProjectsLocationsConnectionsRuntimeActionSchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5069,8 +5067,8 @@ type ProjectsLocationsConnectionsRuntimeEntitySchemasListCall struct {
 
 // List: List schema of a runtime entities filtered by entity name.
 //
-//   - parent: Parent resource of RuntimeEntitySchema Format:
-//     projects/{project}/locations/{location}/connections/{connection}.
+// - parent: Parent resource of RuntimeEntitySchema Format:
+//   projects/{project}/locations/{location}/connections/{connection}.
 func (r *ProjectsLocationsConnectionsRuntimeEntitySchemasService) List(parent string) *ProjectsLocationsConnectionsRuntimeEntitySchemasListCall {
 	c := &ProjectsLocationsConnectionsRuntimeEntitySchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5274,8 +5272,8 @@ type ProjectsLocationsGlobalProvidersGetCall struct {
 
 // Get: Gets details of a single Provider.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/providers/*`.
 func (r *ProjectsLocationsGlobalProvidersService) Get(name string) *ProjectsLocationsGlobalProvidersGetCall {
 	c := &ProjectsLocationsGlobalProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5421,8 +5419,8 @@ type ProjectsLocationsGlobalProvidersListCall struct {
 
 // List: Lists Providers in a given project and location.
 //
-//   - parent: Parent resource of the API, of the form:
-//     `projects/*/locations/*`.
+// - parent: Parent resource of the API, of the form:
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGlobalProvidersService) List(parent string) *ProjectsLocationsGlobalProvidersListCall {
 	c := &ProjectsLocationsGlobalProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5612,8 +5610,8 @@ type ProjectsLocationsGlobalProvidersConnectorsGetCall struct {
 
 // Get: Gets details of a single Connector.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*/connectors/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/providers/*/connectors/*`.
 func (r *ProjectsLocationsGlobalProvidersConnectorsService) Get(name string) *ProjectsLocationsGlobalProvidersConnectorsGetCall {
 	c := &ProjectsLocationsGlobalProvidersConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5759,8 +5757,8 @@ type ProjectsLocationsGlobalProvidersConnectorsListCall struct {
 
 // List: Lists Connectors in a given project and location.
 //
-//   - parent: Parent resource of the connectors, of the form:
-//     `projects/*/locations/*/providers/*`.
+// - parent: Parent resource of the connectors, of the form:
+//   `projects/*/locations/*/providers/*`.
 func (r *ProjectsLocationsGlobalProvidersConnectorsService) List(parent string) *ProjectsLocationsGlobalProvidersConnectorsListCall {
 	c := &ProjectsLocationsGlobalProvidersConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5950,8 +5948,8 @@ type ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall struct {
 
 // Get: Gets details of a single connector version.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*/connectors/*/versions/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/providers/*/connectors/*/versions/*`.
 func (r *ProjectsLocationsGlobalProvidersConnectorsVersionsService) Get(name string) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
 	c := &ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5963,13 +5961,10 @@ func (r *ProjectsLocationsGlobalProvidersConnectorsVersionsService) Get(name str
 // `CUSTOMER` view.
 //
 // Possible values:
-//
-//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
-//
+//   "CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
 // CONNECTOR_VERSION_VIEW_UNSPECIFIED.
-//
-//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
-//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
+//   "CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
+//   "CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
 func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) View(view string) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6129,8 +6124,8 @@ type ProjectsLocationsGlobalProvidersConnectorsVersionsListCall struct {
 
 // List: Lists Connector Versions in a given project and location.
 //
-//   - parent: Parent resource of the connectors, of the form:
-//     `projects/*/locations/*/providers/*/connectors/*`.
+// - parent: Parent resource of the connectors, of the form:
+//   `projects/*/locations/*/providers/*/connectors/*`.
 func (r *ProjectsLocationsGlobalProvidersConnectorsVersionsService) List(parent string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
 	c := &ProjectsLocationsGlobalProvidersConnectorsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6154,13 +6149,10 @@ func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) PageToken(p
 // `CUSTOMER` view.
 //
 // Possible values:
-//
-//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
-//
+//   "CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
 // CONNECTOR_VERSION_VIEW_UNSPECIFIED.
-//
-//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
-//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
+//   "CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
+//   "CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
 func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) View(view string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7001,10 +6993,10 @@ type ProjectsLocationsProvidersGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) GetIamPolicy(resource string) *ProjectsLocationsProvidersGetIamPolicyCall {
 	c := &ProjectsLocationsProvidersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7176,10 +7168,10 @@ type ProjectsLocationsProvidersSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsProvidersSetIamPolicyCall {
 	c := &ProjectsLocationsProvidersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7326,10 +7318,10 @@ type ProjectsLocationsProvidersTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsProvidersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsProvidersTestIamPermissionsCall {
 	c := &ProjectsLocationsProvidersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

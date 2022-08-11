@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/data-fusion/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/datafusion/v1beta1"
-//	...
-//	ctx := context.Background()
-//	datafusionService, err := datafusion.NewService(ctx)
+//   import "google.golang.org/api/datafusion/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   datafusionService, err := datafusion.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	datafusionService, err := datafusion.NewService(ctx, option.WithAPIKey("AIza..."))
+//   datafusionService, err := datafusion.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	datafusionService, err := datafusion.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   datafusionService, err := datafusion.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datafusion // import "google.golang.org/api/datafusion/v1beta1"
@@ -1763,8 +1763,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1985,8 +1985,8 @@ type ProjectsLocationsRemoveIamPolicyCall struct {
 // RemoveIamPolicy: Remove IAM policy that is currently set on the given
 // resource.
 //
-//   - resource: The resource on which IAM policy to be removed is
-//     attached to.
+// - resource: The resource on which IAM policy to be removed is
+//   attached to.
 func (r *ProjectsLocationsService) RemoveIamPolicy(resource string, removeiampolicyrequest *RemoveIamPolicyRequest) *ProjectsLocationsRemoveIamPolicyCall {
 	c := &ProjectsLocationsRemoveIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2129,8 +2129,8 @@ type ProjectsLocationsInstancesCreateCall struct {
 // Create: Creates a new Data Fusion instance in the specified project
 // and location.
 //
-//   - parent: The instance's project and location in the format
-//     projects/{project}/locations/{location}.
+// - parent: The instance's project and location in the format
+//   projects/{project}/locations/{location}.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2283,8 +2283,8 @@ type ProjectsLocationsInstancesDeleteCall struct {
 
 // Delete: Deletes a single Data Fusion instance.
 //
-//   - name: The instance resource name in the format
-//     projects/{project}/locations/{location}/instances/{instance}.
+// - name: The instance resource name in the format
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2417,8 +2417,8 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets details of a single Data Fusion instance.
 //
-//   - name: The instance resource name in the format
-//     projects/{project}/locations/{location}/instances/{instance}.
+// - name: The instance resource name in the format
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2566,10 +2566,10 @@ type ProjectsLocationsInstancesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2740,11 +2740,11 @@ type ProjectsLocationsInstancesListCall struct {
 // List: Lists Data Fusion instances in the specified project and
 // location.
 //
-//   - parent: The project and location for which to retrieve instance
-//     information in the format projects/{project}/locations/{location}.
-//     If the location is specified as '-' (wildcard), then all regions
-//     available to the project are queried, and the results are
-//     aggregated.
+// - parent: The project and location for which to retrieve instance
+//   information in the format projects/{project}/locations/{location}.
+//   If the location is specified as '-' (wildcard), then all regions
+//   available to the project are queried, and the results are
+//   aggregated.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2960,8 +2960,8 @@ type ProjectsLocationsInstancesPatchCall struct {
 
 // Patch: Updates a single Data Fusion instance.
 //
-//   - name: Output only. The name of this instance is in the form of
-//     projects/{project}/locations/{location}/instances/{instance}.
+// - name: Output only. The name of this instance is in the form of
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3122,9 +3122,9 @@ type ProjectsLocationsInstancesRestartCall struct {
 // Restart: Restart a single Data Fusion instance. At the end of an
 // operation instance is fully restarted.
 //
-//   - name: Name of the Data Fusion instance which need to be restarted
-//     in the form of
-//     projects/{project}/locations/{location}/instances/{instance}.
+// - name: Name of the Data Fusion instance which need to be restarted
+//   in the form of
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesService) Restart(name string, restartinstancerequest *RestartInstanceRequest) *ProjectsLocationsInstancesRestartCall {
 	c := &ProjectsLocationsInstancesRestartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3268,10 +3268,10 @@ type ProjectsLocationsInstancesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3418,10 +3418,10 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3564,11 +3564,11 @@ type ProjectsLocationsInstancesUpgradeCall struct {
 // Upgrade: Upgrade a single Data Fusion instance. At the end of an
 // operation instance is fully upgraded.
 //
-//   - name: Name of the Data Fusion instance which need to be upgraded in
-//     the form of
-//     projects/{project}/locations/{location}/instances/{instance}
-//     Instance will be upgraded with the latest stable version of the
-//     Data Fusion.
+// - name: Name of the Data Fusion instance which need to be upgraded in
+//   the form of
+//   projects/{project}/locations/{location}/instances/{instance}
+//   Instance will be upgraded with the latest stable version of the
+//   Data Fusion.
 func (r *ProjectsLocationsInstancesService) Upgrade(name string, upgradeinstancerequest *UpgradeInstanceRequest) *ProjectsLocationsInstancesUpgradeCall {
 	c := &ProjectsLocationsInstancesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3863,9 +3863,9 @@ type ProjectsLocationsInstancesDnsPeeringsDeleteCall struct {
 
 // Delete: Deletes DNS peering on the given resource.
 //
-//   - name: The name of the DNS peering zone to delete. Format:
-//     projects/{project}/locations/{location}/instances/{instance}/dnsPeer
-//     ings/{dns_peering}.
+// - name: The name of the DNS peering zone to delete. Format:
+//   projects/{project}/locations/{location}/instances/{instance}/dnsPeer
+//   ings/{dns_peering}.
 func (r *ProjectsLocationsInstancesDnsPeeringsService) Delete(name string) *ProjectsLocationsInstancesDnsPeeringsDeleteCall {
 	c := &ProjectsLocationsInstancesDnsPeeringsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3998,9 +3998,9 @@ type ProjectsLocationsInstancesDnsPeeringsListCall struct {
 
 // List: Lists DNS peerings for a given resource.
 //
-//   - parent: The parent, which owns this collection of dns peerings.
-//     Format:
-//     projects/{project}/locations/{location}/instances/{instance}.
+// - parent: The parent, which owns this collection of dns peerings.
+//   Format:
+//   projects/{project}/locations/{location}/instances/{instance}.
 func (r *ProjectsLocationsInstancesDnsPeeringsService) List(parent string) *ProjectsLocationsInstancesDnsPeeringsListCall {
 	c := &ProjectsLocationsInstancesDnsPeeringsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4199,10 +4199,10 @@ type ProjectsLocationsInstancesNamespacesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) GetIamPolicy(resource string) *ProjectsLocationsInstancesNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsInstancesNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4400,16 +4400,11 @@ func (c *ProjectsLocationsInstancesNamespacesListCall) PageToken(pageToken strin
 // with a namespace gets returned (e.g. IAM policy set on the namespace)
 //
 // Possible values:
-//
-//	"NAMESPACE_VIEW_UNSPECIFIED" - Default/unset value, which will use
-//
+//   "NAMESPACE_VIEW_UNSPECIFIED" - Default/unset value, which will use
 // BASIC view.
-//
-//	"NAMESPACE_VIEW_BASIC" - Show the most basic metadata of a
-//
+//   "NAMESPACE_VIEW_BASIC" - Show the most basic metadata of a
 // namespace
-//
-//	"NAMESPACE_VIEW_FULL" - Returns all metadata of a namespace
+//   "NAMESPACE_VIEW_FULL" - Returns all metadata of a namespace
 func (c *ProjectsLocationsInstancesNamespacesListCall) View(view string) *ProjectsLocationsInstancesNamespacesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4603,10 +4598,10 @@ type ProjectsLocationsInstancesNamespacesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsInstancesNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsInstancesNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4753,10 +4748,10 @@ type ProjectsLocationsInstancesNamespacesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsInstancesNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsInstancesNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsInstancesNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5546,8 +5541,8 @@ type ProjectsLocationsVersionsListCall struct {
 // List: Lists possible versions for Data Fusion instances in the
 // specified project and location.
 //
-//   - parent: The project and location for which to retrieve instance
-//     information in the format projects/{project}/locations/{location}.
+// - parent: The project and location for which to retrieve instance
+//   information in the format projects/{project}/locations/{location}.
 func (r *ProjectsLocationsVersionsService) List(parent string) *ProjectsLocationsVersionsListCall {
 	c := &ProjectsLocationsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

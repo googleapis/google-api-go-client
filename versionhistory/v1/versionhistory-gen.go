@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.chrome.com/versionhistory
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/versionhistory/v1"
-//	...
-//	ctx := context.Background()
-//	versionhistoryService, err := versionhistory.NewService(ctx)
+//   import "google.golang.org/api/versionhistory/v1"
+//   ...
+//   ctx := context.Background()
+//   versionhistoryService, err := versionhistory.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	versionhistoryService, err := versionhistory.NewService(ctx, option.WithAPIKey("AIza..."))
+//   versionhistoryService, err := versionhistory.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	versionhistoryService, err := versionhistory.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   versionhistoryService, err := versionhistory.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package versionhistory // import "google.golang.org/api/versionhistory/v1"
@@ -567,8 +567,8 @@ type PlatformsListCall struct {
 // List: Returns list of platforms that are available for a given
 // product. The resource "product" has no resource name in its name.
 //
-//   - parent: The product, which owns this collection of platforms.
-//     Format: {product}.
+// - parent: The product, which owns this collection of platforms.
+//   Format: {product}.
 func (r *PlatformsService) List(parent string) *PlatformsListCall {
 	c := &PlatformsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -760,8 +760,8 @@ type PlatformsChannelsListCall struct {
 // List: Returns list of channels that are available for a given
 // platform.
 //
-//   - parent: The platform, which owns this collection of channels.
-//     Format: {product}/platforms/{platform}.
+// - parent: The platform, which owns this collection of channels.
+//   Format: {product}/platforms/{platform}.
 func (r *PlatformsChannelsService) List(parent string) *PlatformsChannelsListCall {
 	c := &PlatformsChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -952,8 +952,8 @@ type PlatformsChannelsVersionsListCall struct {
 
 // List: Returns list of version for the given platform/channel.
 //
-//   - parent: The channel, which owns this collection of versions.
-//     Format: {product}/platforms/{platform}/channels/{channel}.
+// - parent: The channel, which owns this collection of versions.
+//   Format: {product}/platforms/{platform}/channels/{channel}.
 func (r *PlatformsChannelsVersionsService) List(parent string) *PlatformsChannelsVersionsListCall {
 	c := &PlatformsChannelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1187,9 +1187,9 @@ type PlatformsChannelsVersionsReleasesListCall struct {
 
 // List: Returns list of releases of the given version.
 //
-//   - parent: The version, which owns this collection of releases.
-//     Format:
-//     {product}/platforms/{platform}/channels/{channel}/versions/{version}.
+// - parent: The version, which owns this collection of releases.
+//   Format:
+//   {product}/platforms/{platform}/channels/{channel}/versions/{version}.
 func (r *PlatformsChannelsVersionsReleasesService) List(parent string) *PlatformsChannelsVersionsReleasesListCall {
 	c := &PlatformsChannelsVersionsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

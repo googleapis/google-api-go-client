@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://code.google.com/apis/books/docs/v1/getting_started.html
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/books/v1"
-//	...
-//	ctx := context.Background()
-//	booksService, err := books.NewService(ctx)
+//   import "google.golang.org/api/books/v1"
+//   ...
+//   ctx := context.Background()
+//   booksService, err := books.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	booksService, err := books.NewService(ctx, option.WithAPIKey("AIza..."))
+//   booksService, err := books.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	booksService, err := books.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   booksService, err := books.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package books // import "google.golang.org/api/books/v1"
@@ -6838,11 +6838,11 @@ type LayersAnnotationDataGetCall struct {
 
 // Get: Gets the annotation data.
 //
-//   - annotationDataId: The ID of the annotation data to retrieve.
-//   - contentVersion: The content version for the volume you are trying
-//     to retrieve.
-//   - layerId: The ID for the layer to get the annotations.
-//   - volumeId: The volume to retrieve annotations for.
+// - annotationDataId: The ID of the annotation data to retrieve.
+// - contentVersion: The content version for the volume you are trying
+//   to retrieve.
+// - layerId: The ID for the layer to get the annotations.
+// - volumeId: The volume to retrieve annotations for.
 func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
 	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -8079,9 +8079,9 @@ type MyconfigReleaseDownloadAccessCall struct {
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
 //
-//   - cpksver: The device/version ID from which to release the
-//     restriction.
-//   - volumeIds: The volume(s) to release restrictions for.
+// - cpksver: The device/version ID from which to release the
+//   restriction.
+// - volumeIds: The volume(s) to release restrictions for.
 func (r *MyconfigService) ReleaseDownloadAccess(cpksver string, volumeIds []string) *MyconfigReleaseDownloadAccessCall {
 	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8241,12 +8241,12 @@ type MyconfigRequestAccessCall struct {
 
 // RequestAccess: Request concurrent and download access restrictions.
 //
-//   - cpksver: The device/version ID from which to request the
-//     restrictions.
-//   - nonce: The client nonce value.
-//   - source: String to identify the originator of this request.
-//   - volumeId: The volume to request concurrent/download restrictions
-//     for.
+// - cpksver: The device/version ID from which to request the
+//   restrictions.
+// - nonce: The client nonce value.
+// - source: String to identify the originator of this request.
+// - volumeId: The volume to request concurrent/download restrictions
+//   for.
 func (r *MyconfigService) RequestAccess(cpksver string, nonce string, source string, volumeId string) *MyconfigRequestAccessCall {
 	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8260,11 +8260,10 @@ func (r *MyconfigService) RequestAccess(cpksver string, nonce string, source str
 // access license to request. If not specified, the default is BOTH.
 //
 // Possible values:
-//
-//	"LICENSE_TYPES_UNDEFINED"
-//	"BOTH" - Both concurrent and download licenses.
-//	"CONCURRENT" - Concurrent access license.
-//	"DOWNLOAD" - Offline download access license.
+//   "LICENSE_TYPES_UNDEFINED"
+//   "BOTH" - Both concurrent and download licenses.
+//   "CONCURRENT" - Concurrent access license.
+//   "DOWNLOAD" - Offline download access license.
 func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("licenseTypes", licenseTypes)
 	return c
@@ -8441,10 +8440,10 @@ type MyconfigSyncVolumeLicensesCall struct {
 // SyncVolumeLicenses: Request downloaded content access for specified
 // volumes on the My eBooks shelf.
 //
-//   - cpksver: The device/version ID from which to release the
-//     restriction.
-//   - nonce: The client nonce value.
-//   - source: String to identify the originator of this request.
+// - cpksver: The device/version ID from which to release the
+//   restriction.
+// - nonce: The client nonce value.
+// - source: String to identify the originator of this request.
 func (r *MyconfigService) SyncVolumeLicenses(cpksver string, nonce string, source string) *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
@@ -8457,9 +8456,8 @@ func (r *MyconfigService) SyncVolumeLicenses(cpksver string, nonce string, sourc
 // supported by the client, i.e., 'RENTALS'
 //
 // Possible values:
-//
-//	"FEATURES_UNDEFINED"
-//	"RENTALS" - Client supports rentals.
+//   "FEATURES_UNDEFINED"
+//   "RENTALS" - Client supports rentals.
 func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
@@ -9690,11 +9688,10 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 // book is added to the library.
 //
 // Possible values:
-//
-//	"REASON_UNDEFINED"
-//	"IOS_PREX" - Volumes added from the PREX flow on iOS.
-//	"IOS_SEARCH" - Volumes added from the Search flow on iOS.
-//	"ONBOARDING" - Volumes added from the Onboarding flow.
+//   "REASON_UNDEFINED"
+//   "IOS_PREX" - Volumes added from the PREX flow on iOS.
+//   "IOS_SEARCH" - Volumes added from the Search flow on iOS.
+//   "ONBOARDING" - Volumes added from the Onboarding flow.
 func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -10304,11 +10301,11 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 
 // MoveVolume: Moves a volume within a bookshelf.
 //
-//   - shelf: ID of bookshelf with the volume.
-//   - volumeId: ID of volume to move.
-//   - volumePosition: Position on shelf to move the item (0 puts the item
-//     before the current first item, 1 puts it between the first and the
-//     second and so on.).
+// - shelf: ID of bookshelf with the volume.
+// - volumeId: ID of volume to move.
+// - volumePosition: Position on shelf to move the item (0 puts the item
+//   before the current first item, 1 puts it between the first and the
+//   second and so on.).
 func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
@@ -10481,9 +10478,8 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 // book is removed from the library.
 //
 // Possible values:
-//
-//	"REASON_UNDEFINED"
-//	"ONBOARDING" - Samples removed from the Onboarding flow.
+//   "REASON_UNDEFINED"
+//   "ONBOARDING" - Samples removed from the Onboarding flow.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("reason", reason)
 	return c
@@ -10671,10 +10667,9 @@ func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *Myli
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"PROJECTION_UNDEFINED"
-//	"FULL" - Includes all volume data.
-//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -11063,10 +11058,10 @@ type MylibraryReadingpositionsSetPositionCall struct {
 
 // SetPosition: Sets my reading position information for a volume.
 //
-//   - position: Position string for the new volume reading position.
-//   - timestamp: RFC 3339 UTC format timestamp associated with this
-//     reading position.
-//   - volumeId: ID of volume for which to update the reading position.
+// - position: Position string for the new volume reading position.
+// - timestamp: RFC 3339 UTC format timestamp associated with this
+//   reading position.
+// - volumeId: ID of volume for which to update the reading position.
 func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, position string, timestamp string) *MylibraryReadingpositionsSetPositionCall {
 	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
@@ -11079,14 +11074,13 @@ func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, position
 // reading position to be set.
 //
 // Possible values:
-//
-//	"ACTION_UNDEFINED"
-//	"bookmark" - User chose bookmark within volume.
-//	"chapter" - User selected chapter from list.
-//	"next-page" - Next page event.
-//	"prev-page" - Previous page event.
-//	"scroll" - User navigated to page.
-//	"search" - User chose search results within volume.
+//   "ACTION_UNDEFINED"
+//   "bookmark" - User chose bookmark within volume.
+//   "chapter" - User selected chapter from list.
+//   "next-page" - Next page event.
+//   "prev-page" - Previous page event.
+//   "scroll" - User navigated to page.
+//   "search" - User chose search results within volume.
 func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -11622,10 +11616,9 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 // out.
 //
 // Possible values:
-//
-//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//	"MATURE" - Show books which are rated mature or lower.
-//	"not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -11847,10 +11840,9 @@ func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGet
 // filtered out.
 //
 // Possible values:
-//
-//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//	"MATURE" - Show books which are rated mature or lower.
-//	"not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -12952,10 +12944,9 @@ func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"PROJECTION_UNDEFINED"
-//	"FULL" - Includes all volume data.
-//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -13162,9 +13153,8 @@ func (r *VolumesService) List(q string) *VolumesListCall {
 // by download availability.
 //
 // Possible values:
-//
-//	"DOWNLOAD_UNDEFINED"
-//	"EPUB" - All volumes with epub.
+//   "DOWNLOAD_UNDEFINED"
+//   "EPUB" - All volumes with epub.
 func (c *VolumesListCall) Download(download string) *VolumesListCall {
 	c.urlParams_.Set("download", download)
 	return c
@@ -13173,13 +13163,12 @@ func (c *VolumesListCall) Download(download string) *VolumesListCall {
 // Filter sets the optional parameter "filter": Filter search results.
 //
 // Possible values:
-//
-//	"FILTER_UNDEFINED"
-//	"ebooks" - All Google eBooks.
-//	"free-ebooks" - Google eBook with full volume text viewability.
-//	"full" - Public can view entire volume text.
-//	"paid-ebooks" - Google eBook with a price.
-//	"partial" - Public able to see parts of text.
+//   "FILTER_UNDEFINED"
+//   "ebooks" - All Google eBooks.
+//   "free-ebooks" - Google eBook with full volume text viewability.
+//   "full" - Public can view entire volume text.
+//   "paid-ebooks" - Google eBook with a price.
+//   "partial" - Public able to see parts of text.
 func (c *VolumesListCall) Filter(filter string) *VolumesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -13196,10 +13185,9 @@ func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
 // Restrict search to this user's library.
 //
 // Possible values:
-//
-//	"LIBRARY_RESTRICT_UNDEFINED"
-//	"my-library" - Restrict to the user's library, any shelf.
-//	"no-restrict" - Do not restrict based on user's library.
+//   "LIBRARY_RESTRICT_UNDEFINED"
+//   "my-library" - Restrict to the user's library, any shelf.
+//   "no-restrict" - Do not restrict based on user's library.
 func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
 	c.urlParams_.Set("libraryRestrict", libraryRestrict)
 	return c
@@ -13211,10 +13199,9 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 // filtered out.
 //
 // Possible values:
-//
-//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//	"MATURE" - Show books which are rated mature or lower.
-//	"not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13230,10 +13217,9 @@ func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results.
 //
 // Possible values:
-//
-//	"ORDER_BY_UNDEFINED"
-//	"newest" - Most recently published.
-//	"relevance" - Relevance to search terms.
+//   "ORDER_BY_UNDEFINED"
+//   "newest" - Most recently published.
+//   "relevance" - Relevance to search terms.
 func (c *VolumesListCall) OrderBy(orderBy string) *VolumesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -13250,11 +13236,10 @@ func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
 // or magazines.
 //
 // Possible values:
-//
-//	"PRINT_TYPE_UNDEFINED"
-//	"ALL" - All volume content types.
-//	"BOOKS" - Just books.
-//	"MAGAZINES" - Just magazines.
+//   "PRINT_TYPE_UNDEFINED"
+//   "ALL" - All volume content types.
+//   "BOOKS" - Just books.
+//   "MAGAZINES" - Just magazines.
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 	c.urlParams_.Set("printType", printType)
 	return c
@@ -13264,10 +13249,9 @@ func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 // information returned to a set of selected fields.
 //
 // Possible values:
-//
-//	"PROJECTION_UNDEFINED"
-//	"FULL" - Includes all volume data.
-//	"LITE" - Includes a subset of fields in volumeInfo and accessInfo.
+//   "PROJECTION_UNDEFINED"
+//   "FULL" - Includes all volume data.
+//   "LITE" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -13586,11 +13570,10 @@ func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListC
 // type.
 //
 // Possible values:
-//
-//	"ASSOCIATION_UNDEFINED"
-//	"end-of-sample" - Recommendations for display end-of-sample.
-//	"end-of-volume" - Recommendations for display end-of-volume.
-//	"related-for-play" - Related volumes for Play Store.
+//   "ASSOCIATION_UNDEFINED"
+//   "end-of-sample" - Recommendations for display end-of-sample.
+//   "end-of-volume" - Recommendations for display end-of-volume.
+//   "related-for-play" - Related volumes for Play Store.
 func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("association", association)
 	return c
@@ -13610,10 +13593,9 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 // filtered out.
 //
 // Possible values:
-//
-//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//	"MATURE" - Show books which are rated mature or lower.
-//	"not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -13813,16 +13795,15 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 // book was acquired
 //
 // Possible values:
-//
-//	"ACQUIRE_METHOD_UNDEFINED"
-//	"FAMILY_SHARED" - Books acquired via Family Sharing
-//	"PREORDERED" - Preordered books (not yet available)
-//	"PREVIOUSLY_RENTED" - User-rented books past their expiration time
-//	"PUBLIC_DOMAIN" - Public domain books
-//	"PURCHASED" - Purchased books
-//	"RENTED" - User-rented books
-//	"SAMPLE" - Sample books
-//	"UPLOADED" - User uploaded books
+//   "ACQUIRE_METHOD_UNDEFINED"
+//   "FAMILY_SHARED" - Books acquired via Family Sharing
+//   "PREORDERED" - Preordered books (not yet available)
+//   "PREVIOUSLY_RENTED" - User-rented books past their expiration time
+//   "PUBLIC_DOMAIN" - Public domain books
+//   "PURCHASED" - Purchased books
+//   "RENTED" - User-rented books
+//   "SAMPLE" - Sample books
+//   "UPLOADED" - User uploaded books
 func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
@@ -13855,11 +13836,10 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 // Applicable only if the UPLOADED is specified in the acquireMethod.
 //
 // Possible values:
-//
-//	"PROCESSING_STATE_UNDEFINED"
-//	"COMPLETED_FAILED" - The volume processing hase failed.
-//	"COMPLETED_SUCCESS" - The volume processing was completed.
-//	"RUNNING" - The volume processing is not completed.
+//   "PROCESSING_STATE_UNDEFINED"
+//   "COMPLETED_FAILED" - The volume processing hase failed.
+//   "COMPLETED_SUCCESS" - The volume processing was completed.
+//   "RUNNING" - The volume processing is not completed.
 func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
@@ -14099,10 +14079,9 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 // filtered out.
 //
 // Possible values:
-//
-//	"MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
-//	"MATURE" - Show books which are rated mature or lower.
-//	"not-mature" - Show books which are rated not mature.
+//   "MAX_ALLOWED_MATURITY_RATING_UNDEFINED"
+//   "MATURE" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
 func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
 	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
 	return c
@@ -14461,11 +14440,10 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 // processing state of the user uploaded volumes to be returned.
 //
 // Possible values:
-//
-//	"PROCESSING_STATE_UNDEFINED"
-//	"COMPLETED_FAILED" - The volume processing hase failed.
-//	"COMPLETED_SUCCESS" - The volume processing was completed.
-//	"RUNNING" - The volume processing is not completed.
+//   "PROCESSING_STATE_UNDEFINED"
+//   "COMPLETED_FAILED" - The volume processing hase failed.
+//   "COMPLETED_SUCCESS" - The volume processing was completed.
+//   "RUNNING" - The volume processing is not completed.
 func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c

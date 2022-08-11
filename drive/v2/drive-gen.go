@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/drive/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/drive/v2"
-//	...
-//	ctx := context.Background()
-//	driveService, err := drive.NewService(ctx)
+//   import "google.golang.org/api/drive/v2"
+//   ...
+//   ctx := context.Background()
+//   driveService, err := drive.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	driveService, err := drive.NewService(ctx, option.WithScopes(drive.DriveScriptsScope))
+//   driveService, err := drive.NewService(ctx, option.WithScopes(drive.DriveScriptsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	driveService, err := drive.NewService(ctx, option.WithAPIKey("AIza..."))
+//   driveService, err := drive.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	driveService, err := drive.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   driveService, err := drive.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package drive // import "google.golang.org/api/drive/v2"
@@ -8173,12 +8173,12 @@ type DrivesInsertCall struct {
 
 // Insert: Creates a new shared drive.
 //
-//   - requestId: An ID, such as a random UUID, which uniquely identifies
-//     this user's request for idempotent creation of a shared drive. A
-//     repeated request by the same user and with the same request ID will
-//     avoid creating duplicates by attempting to create the same shared
-//     drive. If the shared drive already exists a 409 error will be
-//     returned.
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a shared drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same shared
+//   drive. If the shared drive already exists a 409 error will be
+//   returned.
 func (r *DrivesService) Insert(requestId string, drive *Drive) *DrivesInsertCall {
 	c := &DrivesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -8901,12 +8901,9 @@ func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopy
 // not a native Google Doc and convert=false.
 //
 // Possible values:
-//
-//	"DEFAULT" (default) - The visibility of the new file is determined
-//
+//   "DEFAULT" (default) - The visibility of the new file is determined
 // by the user's default visibility/sharing policies.
-//
-//	"PRIVATE" - The new file will be visible to only the owner.
+//   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesCopyCall) Visibility(visibility string) *FilesCopyCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c
@@ -9730,9 +9727,8 @@ func (c *FilesGetCall) IncludePermissionsForView(includePermissionsForView strin
 // is deprecated and has no function.
 //
 // Possible values:
-//
-//	"BASIC" - Deprecated
-//	"FULL" - Deprecated
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -10083,12 +10079,9 @@ func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bo
 // of the new file. This parameter is only relevant when convert=false.
 //
 // Possible values:
-//
-//	"DEFAULT" (default) - The visibility of the new file is determined
-//
+//   "DEFAULT" (default) - The visibility of the new file is determined
 // by the user's default visibility/sharing policies.
-//
-//	"PRIVATE" - The new file will be visible to only the owner.
+//   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesInsertCall) Visibility(visibility string) *FilesInsertCall {
 	c.urlParams_.Set("visibility", visibility)
 	return c
@@ -10404,9 +10397,8 @@ func (c *FilesListCall) Corpora(corpora string) *FilesListCall {
 // 'corpora' instead.
 //
 // Possible values:
-//
-//	"DEFAULT" - The items that the user has accessed.
-//	"DOMAIN" - Items shared to the user's domain.
+//   "DEFAULT" - The items that the user has accessed.
+//   "DOMAIN" - Items shared to the user's domain.
 func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
 	c.urlParams_.Set("corpus", corpus)
 	return c
@@ -10485,9 +10477,8 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 // is deprecated and has no function.
 //
 // Possible values:
-//
-//	"BASIC" - Deprecated
-//	"FULL" - Deprecated
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesListCall) Projection(projection string) *FilesListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -11180,23 +11171,15 @@ func (c *FilesPatchCall) IncludePermissionsForView(includePermissionsForView str
 // is updated. This overrides setModifiedDate.
 //
 // Possible values:
-//
-//	"fromBody" - Set modifiedDate to the value provided in the body of
-//
+//   "fromBody" - Set modifiedDate to the value provided in the body of
 // the request. No change if no value was provided.
-//
-//	"fromBodyIfNeeded" - Set modifiedDate to the value provided in the
-//
+//   "fromBodyIfNeeded" - Set modifiedDate to the value provided in the
 // body of the request depending on other contents of the update.
-//
-//	"fromBodyOrNow" - Set modifiedDate to the value provided in the
-//
+//   "fromBodyOrNow" - Set modifiedDate to the value provided in the
 // body of the request, or to the current time if no value was provided.
-//
-//	"noChange" - Maintain the previous value of modifiedDate.
-//	"now" - Set modifiedDate to the current time.
-//	"nowIfNeeded" - Set modifiedDate to the current time depending on
-//
+//   "noChange" - Maintain the previous value of modifiedDate.
+//   "now" - Set modifiedDate to the current time.
+//   "nowIfNeeded" - Set modifiedDate to the current time depending on
 // contents of the update.
 func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesPatchCall {
 	c.urlParams_.Set("modifiedDateBehavior", modifiedDateBehavior)
@@ -12180,23 +12163,15 @@ func (c *FilesUpdateCall) IncludePermissionsForView(includePermissionsForView st
 // is updated. This overrides setModifiedDate.
 //
 // Possible values:
-//
-//	"fromBody" - Set modifiedDate to the value provided in the body of
-//
+//   "fromBody" - Set modifiedDate to the value provided in the body of
 // the request. No change if no value was provided.
-//
-//	"fromBodyIfNeeded" - Set modifiedDate to the value provided in the
-//
+//   "fromBodyIfNeeded" - Set modifiedDate to the value provided in the
 // body of the request depending on other contents of the update.
-//
-//	"fromBodyOrNow" - Set modifiedDate to the value provided in the
-//
+//   "fromBodyOrNow" - Set modifiedDate to the value provided in the
 // body of the request, or to the current time if no value was provided.
-//
-//	"noChange" - Maintain the previous value of modifiedDate.
-//	"now" - Set modifiedDate to the current time.
-//	"nowIfNeeded" - Set modifiedDate to the current time depending on
-//
+//   "noChange" - Maintain the previous value of modifiedDate.
+//   "now" - Set modifiedDate to the current time.
+//   "nowIfNeeded" - Set modifiedDate to the current time depending on
 // contents of the update.
 func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesUpdateCall {
 	c.urlParams_.Set("modifiedDateBehavior", modifiedDateBehavior)
@@ -12677,9 +12652,8 @@ func (c *FilesWatchCall) IncludePermissionsForView(includePermissionsForView str
 // is deprecated and has no function.
 //
 // Possible values:
-//
-//	"BASIC" - Deprecated
-//	"FULL" - Deprecated
+//   "BASIC" - Deprecated
+//   "FULL" - Deprecated
 func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -17995,12 +17969,12 @@ type TeamdrivesInsertCall struct {
 
 // Insert: Deprecated use drives.insert instead.
 //
-//   - requestId: An ID, such as a random UUID, which uniquely identifies
-//     this user's request for idempotent creation of a Team Drive. A
-//     repeated request by the same user and with the same request ID will
-//     avoid creating duplicates by attempting to create the same Team
-//     Drive. If the Team Drive already exists a 409 error will be
-//     returned.
+// - requestId: An ID, such as a random UUID, which uniquely identifies
+//   this user's request for idempotent creation of a Team Drive. A
+//   repeated request by the same user and with the same request ID will
+//   avoid creating duplicates by attempting to create the same Team
+//   Drive. If the Team Drive already exists a 409 error will be
+//   returned.
 func (r *TeamdrivesService) Insert(requestId string, teamdrive *TeamDrive) *TeamdrivesInsertCall {
 	c := &TeamdrivesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)

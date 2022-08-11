@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/adsense/host/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/adsensehost/v4.1"
-//	...
-//	ctx := context.Background()
-//	adsensehostService, err := adsensehost.NewService(ctx)
+//   import "google.golang.org/api/adsensehost/v4.1"
+//   ...
+//   ctx := context.Background()
+//   adsensehostService, err := adsensehost.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	adsensehostService, err := adsensehost.NewService(ctx, option.WithAPIKey("AIza..."))
+//   adsensehostService, err := adsensehost.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	adsensehostService, err := adsensehost.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   adsensehostService, err := adsensehost.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adsensehost // import "google.golang.org/api/adsensehost/v4.1"
@@ -2931,11 +2931,11 @@ type AccountsReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 //
-//   - accountId: Hosted account upon which to report.
-//   - endDate: End of the date range to report on in "YYYY-MM-DD" format,
-//     inclusive.
-//   - startDate: Start of the date range to report on in "YYYY-MM-DD"
-//     format, inclusive.
+// - accountId: Hosted account upon which to report.
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4163,8 +4163,8 @@ type CustomchannelsInsertCall struct {
 
 // Insert: Add a new custom channel to the host AdSense account.
 //
-//   - adClientId: Ad client to which the new custom channel will be
-//     added.
+// - adClientId: Ad client to which the new custom channel will be
+//   added.
 func (r *CustomchannelsService) Insert(adClientId string, customchannel *CustomChannel) *CustomchannelsInsertCall {
 	c := &CustomchannelsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -4790,10 +4790,10 @@ type ReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 //
-//   - endDate: End of the date range to report on in "YYYY-MM-DD" format,
-//     inclusive.
-//   - startDate: Start of the date range to report on in "YYYY-MM-DD"
-//     format, inclusive.
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
 	c := &ReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("startDate", startDate)

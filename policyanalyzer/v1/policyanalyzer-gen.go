@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://www.google.com
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/policyanalyzer/v1"
-//	...
-//	ctx := context.Background()
-//	policyanalyzerService, err := policyanalyzer.NewService(ctx)
+//   import "google.golang.org/api/policyanalyzer/v1"
+//   ...
+//   ctx := context.Background()
+//   policyanalyzerService, err := policyanalyzer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	policyanalyzerService, err := policyanalyzer.NewService(ctx, option.WithAPIKey("AIza..."))
+//   policyanalyzerService, err := policyanalyzer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	policyanalyzerService, err := policyanalyzer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   policyanalyzerService, err := policyanalyzer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package policyanalyzer // import "google.golang.org/api/policyanalyzer/v1"
@@ -308,11 +308,11 @@ type ProjectsLocationsActivityTypesActivitiesQueryCall struct {
 
 // Query: Queries policy activities on Google Cloud resources.
 //
-//   - parent: The container resource on which to execute the request.
-//     Acceptable formats:
-//     `projects/[PROJECT_ID|PROJECT_NUMBER]/locations/[LOCATION]/activityT
-//     ypes/[ACTIVITY_TYPE]` LOCATION here refers to Google Cloud
-//     Locations: https://cloud.google.com/about/locations/.
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats:
+//   `projects/[PROJECT_ID|PROJECT_NUMBER]/locations/[LOCATION]/activityT
+//   ypes/[ACTIVITY_TYPE]` LOCATION here refers to Google Cloud
+//   Locations: https://cloud.google.com/about/locations/.
 func (r *ProjectsLocationsActivityTypesActivitiesService) Query(parent string) *ProjectsLocationsActivityTypesActivitiesQueryCall {
 	c := &ProjectsLocationsActivityTypesActivitiesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

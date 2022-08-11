@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/genomics
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/genomics/v2alpha1"
-//	...
-//	ctx := context.Background()
-//	genomicsService, err := genomics.NewService(ctx)
+//   import "google.golang.org/api/genomics/v2alpha1"
+//   ...
+//   ctx := context.Background()
+//   genomicsService, err := genomics.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	genomicsService, err := genomics.NewService(ctx, option.WithScopes(genomics.GenomicsScope))
+//   genomicsService, err := genomics.NewService(ctx, option.WithScopes(genomics.GenomicsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	genomicsService, err := genomics.NewService(ctx, option.WithAPIKey("AIza..."))
+//   genomicsService, err := genomics.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	genomicsService, err := genomics.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   genomicsService, err := genomics.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package genomics // import "google.golang.org/api/genomics/v2alpha1"
@@ -2550,8 +2550,8 @@ type ProjectsWorkersCheckInCall struct {
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
 //
-//   - id: The VM identity token for authenticating the VM instance.
-//     https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *ProjectsWorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *ProjectsWorkersCheckInCall {
 	c := &ProjectsWorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -2695,8 +2695,8 @@ type WorkersCheckInCall struct {
 // CheckIn: The worker uses this method to retrieve the assigned
 // operation and provide periodic status updates.
 //
-//   - id: The VM identity token for authenticating the VM instance.
-//     https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
+// - id: The VM identity token for authenticating the VM instance.
+//   https://cloud.google.com/compute/docs/instances/verifying-instance-identity.
 func (r *WorkersService) CheckIn(id string, checkinrequest *CheckInRequest) *WorkersCheckInCall {
 	c := &WorkersCheckInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id

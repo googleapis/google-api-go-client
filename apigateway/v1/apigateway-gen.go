@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/api-gateway/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/apigateway/v1"
-//	...
-//	ctx := context.Background()
-//	apigatewayService, err := apigateway.NewService(ctx)
+//   import "google.golang.org/api/apigateway/v1"
+//   ...
+//   ctx := context.Background()
+//   apigatewayService, err := apigateway.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	apigatewayService, err := apigateway.NewService(ctx, option.WithAPIKey("AIza..."))
+//   apigatewayService, err := apigateway.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	apigatewayService, err := apigateway.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   apigatewayService, err := apigateway.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package apigateway // import "google.golang.org/api/apigateway/v1"
@@ -1595,8 +1595,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1803,8 +1803,8 @@ type ProjectsLocationsApisCreateCall struct {
 
 // Create: Creates a new Api in a given project and location.
 //
-//   - parent: Parent resource of the API, of the form:
-//     `projects/*/locations/global`.
+// - parent: Parent resource of the API, of the form:
+//   `projects/*/locations/global`.
 func (r *ProjectsLocationsApisService) Create(parent string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisCreateCall {
 	c := &ProjectsLocationsApisCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1958,8 +1958,8 @@ type ProjectsLocationsApisDeleteCall struct {
 
 // Delete: Deletes a single Api.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/global/apis/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisService) Delete(name string) *ProjectsLocationsApisDeleteCall {
 	c := &ProjectsLocationsApisDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2092,8 +2092,8 @@ type ProjectsLocationsApisGetCall struct {
 
 // Get: Gets details of a single Api.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/global/apis/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisService) Get(name string) *ProjectsLocationsApisGetCall {
 	c := &ProjectsLocationsApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2241,10 +2241,10 @@ type ProjectsLocationsApisGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisService) GetIamPolicy(resource string) *ProjectsLocationsApisGetIamPolicyCall {
 	c := &ProjectsLocationsApisGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2414,8 +2414,8 @@ type ProjectsLocationsApisListCall struct {
 
 // List: Lists Apis in a given project and location.
 //
-//   - parent: Parent resource of the API, of the form:
-//     `projects/*/locations/global`.
+// - parent: Parent resource of the API, of the form:
+//   `projects/*/locations/global`.
 func (r *ProjectsLocationsApisService) List(parent string) *ProjectsLocationsApisListCall {
 	c := &ProjectsLocationsApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2627,8 +2627,8 @@ type ProjectsLocationsApisPatchCall struct {
 
 // Patch: Updates the parameters of a single Api.
 //
-//   - name: Output only. Resource name of the API. Format:
-//     projects/{project}/locations/global/apis/{api}.
+// - name: Output only. Resource name of the API. Format:
+//   projects/{project}/locations/global/apis/{api}.
 func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisPatchCall {
 	c := &ProjectsLocationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2789,10 +2789,10 @@ type ProjectsLocationsApisSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisSetIamPolicyCall {
 	c := &ProjectsLocationsApisSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2939,10 +2939,10 @@ type ProjectsLocationsApisTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisTestIamPermissionsCall {
 	c := &ProjectsLocationsApisTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3085,8 +3085,8 @@ type ProjectsLocationsApisConfigsCreateCall struct {
 
 // Create: Creates a new ApiConfig in a given project and location.
 //
-//   - parent: Parent resource of the API Config, of the form:
-//     `projects/*/locations/global/apis/*`.
+// - parent: Parent resource of the API Config, of the form:
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisConfigsService) Create(parent string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsCreateCall {
 	c := &ProjectsLocationsApisConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3240,8 +3240,8 @@ type ProjectsLocationsApisConfigsDeleteCall struct {
 
 // Delete: Deletes a single ApiConfig.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/global/apis/*/configs/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/global/apis/*/configs/*`.
 func (r *ProjectsLocationsApisConfigsService) Delete(name string) *ProjectsLocationsApisConfigsDeleteCall {
 	c := &ProjectsLocationsApisConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3374,8 +3374,8 @@ type ProjectsLocationsApisConfigsGetCall struct {
 
 // Get: Gets details of a single ApiConfig.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/global/apis/*/configs/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/global/apis/*/configs/*`.
 func (r *ProjectsLocationsApisConfigsService) Get(name string) *ProjectsLocationsApisConfigsGetCall {
 	c := &ProjectsLocationsApisConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3387,10 +3387,9 @@ func (r *ProjectsLocationsApisConfigsService) Get(name string) *ProjectsLocation
 // view.
 //
 // Possible values:
-//
-//	"CONFIG_VIEW_UNSPECIFIED"
-//	"BASIC" - Do not include configuration source files.
-//	"FULL" - Include configuration source files.
+//   "CONFIG_VIEW_UNSPECIFIED"
+//   "BASIC" - Do not include configuration source files.
+//   "FULL" - Include configuration source files.
 func (c *ProjectsLocationsApisConfigsGetCall) View(view string) *ProjectsLocationsApisConfigsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3552,10 +3551,10 @@ type ProjectsLocationsApisConfigsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisConfigsService) GetIamPolicy(resource string) *ProjectsLocationsApisConfigsGetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3725,8 +3724,8 @@ type ProjectsLocationsApisConfigsListCall struct {
 
 // List: Lists ApiConfigs in a given project and location.
 //
-//   - parent: Parent resource of the API Config, of the form:
-//     `projects/*/locations/global/apis/*`.
+// - parent: Parent resource of the API Config, of the form:
+//   `projects/*/locations/global/apis/*`.
 func (r *ProjectsLocationsApisConfigsService) List(parent string) *ProjectsLocationsApisConfigsListCall {
 	c := &ProjectsLocationsApisConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3938,8 +3937,8 @@ type ProjectsLocationsApisConfigsPatchCall struct {
 
 // Patch: Updates the parameters of a single ApiConfig.
 //
-//   - name: Output only. Resource name of the API Config. Format:
-//     projects/{project}/locations/global/apis/{api}/configs/{api_config}.
+// - name: Output only. Resource name of the API Config. Format:
+//   projects/{project}/locations/global/apis/{api}/configs/{api_config}.
 func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsPatchCall {
 	c := &ProjectsLocationsApisConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4100,10 +4099,10 @@ type ProjectsLocationsApisConfigsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisConfigsService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsApisConfigsSetIamPolicyCall {
 	c := &ProjectsLocationsApisConfigsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4250,10 +4249,10 @@ type ProjectsLocationsApisConfigsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsApisConfigsService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsApisConfigsTestIamPermissionsCall {
 	c := &ProjectsLocationsApisConfigsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4396,8 +4395,8 @@ type ProjectsLocationsGatewaysCreateCall struct {
 
 // Create: Creates a new Gateway in a given project and location.
 //
-//   - parent: Parent resource of the Gateway, of the form:
-//     `projects/*/locations/*`.
+// - parent: Parent resource of the Gateway, of the form:
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) Create(parent string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysCreateCall {
 	c := &ProjectsLocationsGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4551,8 +4550,8 @@ type ProjectsLocationsGatewaysDeleteCall struct {
 
 // Delete: Deletes a single Gateway.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/gateways/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Delete(name string) *ProjectsLocationsGatewaysDeleteCall {
 	c := &ProjectsLocationsGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4685,8 +4684,8 @@ type ProjectsLocationsGatewaysGetCall struct {
 
 // Get: Gets details of a single Gateway.
 //
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/gateways/*`.
+// - name: Resource name of the form:
+//   `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Get(name string) *ProjectsLocationsGatewaysGetCall {
 	c := &ProjectsLocationsGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4834,10 +4833,10 @@ type ProjectsLocationsGatewaysGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5007,8 +5006,8 @@ type ProjectsLocationsGatewaysListCall struct {
 
 // List: Lists Gateways in a given project and location.
 //
-//   - parent: Parent resource of the Gateway, of the form:
-//     `projects/*/locations/*`.
+// - parent: Parent resource of the Gateway, of the form:
+//   `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) List(parent string) *ProjectsLocationsGatewaysListCall {
 	c := &ProjectsLocationsGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5220,8 +5219,8 @@ type ProjectsLocationsGatewaysPatchCall struct {
 
 // Patch: Updates the parameters of a single Gateway.
 //
-//   - name: Output only. Resource name of the Gateway. Format:
-//     projects/{project}/locations/{location}/gateways/{gateway}.
+// - name: Output only. Resource name of the Gateway. Format:
+//   projects/{project}/locations/{location}/gateways/{gateway}.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5382,10 +5381,10 @@ type ProjectsLocationsGatewaysSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) SetIamPolicy(resource string, apigatewaysetiampolicyrequest *ApigatewaySetIamPolicyRequest) *ProjectsLocationsGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5532,10 +5531,10 @@ type ProjectsLocationsGatewaysTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) TestIamPermissions(resource string, apigatewaytestiampermissionsrequest *ApigatewayTestIamPermissionsRequest) *ProjectsLocationsGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

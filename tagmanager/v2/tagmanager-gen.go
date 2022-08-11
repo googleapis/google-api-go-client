@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/tag-manager
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/tagmanager/v2"
-//	...
-//	ctx := context.Background()
-//	tagmanagerService, err := tagmanager.NewService(ctx)
+//   import "google.golang.org/api/tagmanager/v2"
+//   ...
+//   ctx := context.Background()
+//   tagmanagerService, err := tagmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithScopes(tagmanager.TagmanagerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   tagmanagerService, err := tagmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package tagmanager // import "google.golang.org/api/tagmanager/v2"
@@ -3566,8 +3566,8 @@ type AccountsGetCall struct {
 
 // Get: Gets a GTM Account.
 //
-//   - path: GTM Accounts's API relative path. Example:
-//     accounts/{account_id}.
+// - path: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsService) Get(path string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3880,8 +3880,8 @@ type AccountsUpdateCall struct {
 
 // Update: Updates a GTM Account.
 //
-//   - path: GTM Accounts's API relative path. Example:
-//     accounts/{account_id}.
+// - path: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsService) Update(path string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4036,8 +4036,8 @@ type AccountsContainersCreateCall struct {
 
 // Create: Creates a Container.
 //
-//   - parent: GTM Account's API relative path. Example:
-//     accounts/{account_id}.
+// - parent: GTM Account's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsContainersService) Create(parent string, container *Container) *AccountsContainersCreateCall {
 	c := &AccountsContainersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4178,8 +4178,8 @@ type AccountsContainersDeleteCall struct {
 
 // Delete: Deletes a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Delete(path string) *AccountsContainersDeleteCall {
 	c := &AccountsContainersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4284,8 +4284,8 @@ type AccountsContainersGetCall struct {
 
 // Get: Gets a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Get(path string) *AccountsContainersGetCall {
 	c := &AccountsContainersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4432,8 +4432,8 @@ type AccountsContainersListCall struct {
 
 // List: Lists all Containers that belongs to a GTM Account.
 //
-//   - parent: GTM Accounts's API relative path. Example:
-//     accounts/{account_id}.
+// - parent: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsContainersService) List(parent string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4613,8 +4613,8 @@ type AccountsContainersUpdateCall struct {
 
 // Update: Updates a Container.
 //
-//   - path: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Update(path string, container *Container) *AccountsContainersUpdateCall {
 	c := &AccountsContainersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4769,8 +4769,8 @@ type AccountsContainersEnvironmentsCreateCall struct {
 
 // Create: Creates a GTM Environment.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) Create(parent string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
 	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4911,9 +4911,9 @@ type AccountsContainersEnvironmentsDeleteCall struct {
 
 // Delete: Deletes a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{enviro
-//     nment_id}.
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Delete(path string) *AccountsContainersEnvironmentsDeleteCall {
 	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5018,9 +5018,9 @@ type AccountsContainersEnvironmentsGetCall struct {
 
 // Get: Gets a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{enviro
-//     nment_id}.
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Get(path string) *AccountsContainersEnvironmentsGetCall {
 	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5167,8 +5167,8 @@ type AccountsContainersEnvironmentsListCall struct {
 
 // List: Lists all GTM Environments of a GTM Container.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) List(parent string) *AccountsContainersEnvironmentsListCall {
 	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5349,9 +5349,9 @@ type AccountsContainersEnvironmentsReauthorizeCall struct {
 // Reauthorize: Re-generates the authorization code for a GTM
 // Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{enviro
-//     nment_id}.
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Reauthorize(path string, environment *Environment) *AccountsContainersEnvironmentsReauthorizeCall {
 	c := &AccountsContainersEnvironmentsReauthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5493,9 +5493,9 @@ type AccountsContainersEnvironmentsUpdateCall struct {
 
 // Update: Updates a GTM Environment.
 //
-//   - path: GTM Environment's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/environments/{enviro
-//     nment_id}.
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Update(path string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
 	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5650,8 +5650,8 @@ type AccountsContainersVersionHeadersLatestCall struct {
 
 // Latest: Gets the latest container version header
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) Latest(parent string) *AccountsContainersVersionHeadersLatestCall {
 	c := &AccountsContainersVersionHeadersLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5798,8 +5798,8 @@ type AccountsContainersVersionHeadersListCall struct {
 
 // List: Lists all Container Versions of a GTM Container.
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) List(parent string) *AccountsContainersVersionHeadersListCall {
 	c := &AccountsContainersVersionHeadersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5991,9 +5991,9 @@ type AccountsContainersVersionsDeleteCall struct {
 
 // Delete: Deletes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Delete(path string) *AccountsContainersVersionsDeleteCall {
 	c := &AccountsContainersVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6098,9 +6098,9 @@ type AccountsContainersVersionsGetCall struct {
 
 // Get: Gets a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Get(path string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6261,8 +6261,8 @@ type AccountsContainersVersionsLiveCall struct {
 
 // Live: Gets the live (i.e. published) container version
 //
-//   - parent: GTM Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionsService) Live(parent string) *AccountsContainersVersionsLiveCall {
 	c := &AccountsContainersVersionsLiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6408,9 +6408,9 @@ type AccountsContainersVersionsPublishCall struct {
 
 // Publish: Publishes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Publish(path string) *AccountsContainersVersionsPublishCall {
 	c := &AccountsContainersVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6556,9 +6556,9 @@ type AccountsContainersVersionsSetLatestCall struct {
 // SetLatest: Sets the latest version used for synchronization of
 // workspaces when detecting conflicts and errors.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) SetLatest(path string) *AccountsContainersVersionsSetLatestCall {
 	c := &AccountsContainersVersionsSetLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6690,9 +6690,9 @@ type AccountsContainersVersionsUndeleteCall struct {
 
 // Undelete: Undeletes a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Undelete(path string) *AccountsContainersVersionsUndeleteCall {
 	c := &AccountsContainersVersionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6825,9 +6825,9 @@ type AccountsContainersVersionsUpdateCall struct {
 
 // Update: Updates a Container Version.
 //
-//   - path: GTM ContainerVersion's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/versions/{version_id
-//     }.
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Update(path string, containerversion *ContainerVersion) *AccountsContainersVersionsUpdateCall {
 	c := &AccountsContainersVersionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6982,8 +6982,8 @@ type AccountsContainersWorkspacesCreateCall struct {
 
 // Create: Creates a Workspace.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) Create(parent string, workspace *Workspace) *AccountsContainersWorkspacesCreateCall {
 	c := &AccountsContainersWorkspacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7127,9 +7127,9 @@ type AccountsContainersWorkspacesCreateVersionCall struct {
 // in the workspace, deletes the workspace, and sets the base container
 // version to the newly created version.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) CreateVersion(path string, createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions) *AccountsContainersWorkspacesCreateVersionCall {
 	c := &AccountsContainersWorkspacesCreateVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7270,9 +7270,9 @@ type AccountsContainersWorkspacesDeleteCall struct {
 
 // Delete: Deletes a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Delete(path string) *AccountsContainersWorkspacesDeleteCall {
 	c := &AccountsContainersWorkspacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7377,9 +7377,9 @@ type AccountsContainersWorkspacesGetCall struct {
 
 // Get: Gets a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Get(path string) *AccountsContainersWorkspacesGetCall {
 	c := &AccountsContainersWorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7526,9 +7526,9 @@ type AccountsContainersWorkspacesGetStatusCall struct {
 
 // GetStatus: Finds conflicting and modified entities in the workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) GetStatus(path string) *AccountsContainersWorkspacesGetStatusCall {
 	c := &AccountsContainersWorkspacesGetStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7675,8 +7675,8 @@ type AccountsContainersWorkspacesListCall struct {
 
 // List: Lists all Workspaces that belong to a GTM Container.
 //
-//   - parent: GTM parent Container's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}.
+// - parent: GTM parent Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) List(parent string) *AccountsContainersWorkspacesListCall {
 	c := &AccountsContainersWorkspacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7856,9 +7856,9 @@ type AccountsContainersWorkspacesQuickPreviewCall struct {
 // QuickPreview: Quick previews a workspace by creating a fake container
 // version from all entities in the provided workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) QuickPreview(path string) *AccountsContainersWorkspacesQuickPreviewCall {
 	c := &AccountsContainersWorkspacesQuickPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7992,9 +7992,9 @@ type AccountsContainersWorkspacesResolveConflictCall struct {
 // ResolveConflict: Resolves a merge conflict for a workspace entity by
 // updating it to the resolved entity passed in the request.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) ResolveConflict(path string, entity *Entity) *AccountsContainersWorkspacesResolveConflictCall {
 	c := &AccountsContainersWorkspacesResolveConflictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8122,9 +8122,9 @@ type AccountsContainersWorkspacesSyncCall struct {
 // all unmodified workspace entities and displaying conflicts for
 // modified entities.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Sync(path string) *AccountsContainersWorkspacesSyncCall {
 	c := &AccountsContainersWorkspacesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8257,9 +8257,9 @@ type AccountsContainersWorkspacesUpdateCall struct {
 
 // Update: Updates a Workspace.
 //
-//   - path: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Update(path string, workspace *Workspace) *AccountsContainersWorkspacesUpdateCall {
 	c := &AccountsContainersWorkspacesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8413,9 +8413,9 @@ type AccountsContainersWorkspacesBuiltInVariablesCreateCall struct {
 
 // Create: Creates one or more GTM Built-In Variables.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8426,120 +8426,119 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent stri
 // variables to enable.
 //
 // Possible values:
-//
-//	"builtInVariableTypeUnspecified"
-//	"pageUrl"
-//	"pageHostname"
-//	"pagePath"
-//	"referrer"
-//	"event" - For web or mobile.
-//	"clickElement"
-//	"clickClasses"
-//	"clickId"
-//	"clickTarget"
-//	"clickUrl"
-//	"clickText"
-//	"firstPartyServingUrl"
-//	"formElement"
-//	"formClasses"
-//	"formId"
-//	"formTarget"
-//	"formUrl"
-//	"formText"
-//	"errorMessage"
-//	"errorUrl"
-//	"errorLine"
-//	"newHistoryUrl"
-//	"oldHistoryUrl"
-//	"newHistoryFragment"
-//	"oldHistoryFragment"
-//	"newHistoryState"
-//	"oldHistoryState"
-//	"historySource"
-//	"containerVersion" - For web or mobile.
-//	"debugMode"
-//	"randomNumber" - For web or mobile.
-//	"containerId" - For web or mobile.
-//	"appId"
-//	"appName"
-//	"appVersionCode"
-//	"appVersionName"
-//	"language"
-//	"osVersion"
-//	"platform"
-//	"sdkVersion"
-//	"deviceName"
-//	"resolution"
-//	"advertiserId"
-//	"advertisingTrackingEnabled"
-//	"htmlId"
-//	"environmentName"
-//	"ampBrowserLanguage"
-//	"ampCanonicalPath"
-//	"ampCanonicalUrl"
-//	"ampCanonicalHost"
-//	"ampReferrer"
-//	"ampTitle"
-//	"ampClientId"
-//	"ampClientTimezone"
-//	"ampClientTimestamp"
-//	"ampClientScreenWidth"
-//	"ampClientScreenHeight"
-//	"ampClientScrollX"
-//	"ampClientScrollY"
-//	"ampClientMaxScrollX"
-//	"ampClientMaxScrollY"
-//	"ampTotalEngagedTime"
-//	"ampPageViewId"
-//	"ampPageLoadTime"
-//	"ampPageDownloadTime"
-//	"ampGtmEvent"
-//	"eventName"
-//	"firebaseEventParameterCampaign"
-//	"firebaseEventParameterCampaignAclid"
-//	"firebaseEventParameterCampaignAnid"
-//	"firebaseEventParameterCampaignClickTimestamp"
-//	"firebaseEventParameterCampaignContent"
-//	"firebaseEventParameterCampaignCp1"
-//	"firebaseEventParameterCampaignGclid"
-//	"firebaseEventParameterCampaignSource"
-//	"firebaseEventParameterCampaignTerm"
-//	"firebaseEventParameterCurrency"
-//	"firebaseEventParameterDynamicLinkAcceptTime"
-//	"firebaseEventParameterDynamicLinkLinkid"
-//	"firebaseEventParameterNotificationMessageDeviceTime"
-//	"firebaseEventParameterNotificationMessageId"
-//	"firebaseEventParameterNotificationMessageName"
-//	"firebaseEventParameterNotificationMessageTime"
-//	"firebaseEventParameterNotificationTopic"
-//	"firebaseEventParameterPreviousAppVersion"
-//	"firebaseEventParameterPreviousOsVersion"
-//	"firebaseEventParameterPrice"
-//	"firebaseEventParameterProductId"
-//	"firebaseEventParameterQuantity"
-//	"firebaseEventParameterValue"
-//	"videoProvider"
-//	"videoUrl"
-//	"videoTitle"
-//	"videoDuration"
-//	"videoPercent"
-//	"videoVisible"
-//	"videoStatus"
-//	"videoCurrentTime"
-//	"scrollDepthThreshold"
-//	"scrollDepthUnits"
-//	"scrollDepthDirection"
-//	"elementVisibilityRatio"
-//	"elementVisibilityTime"
-//	"elementVisibilityFirstTime"
-//	"elementVisibilityRecentTime"
-//	"requestPath"
-//	"requestMethod"
-//	"clientName"
-//	"queryString"
-//	"serverPageLocationUrl"
-//	"serverPageLocationPath"
-//	"serverPageLocationHostname"
+//   "builtInVariableTypeUnspecified"
+//   "pageUrl"
+//   "pageHostname"
+//   "pagePath"
+//   "referrer"
+//   "event" - For web or mobile.
+//   "clickElement"
+//   "clickClasses"
+//   "clickId"
+//   "clickTarget"
+//   "clickUrl"
+//   "clickText"
+//   "firstPartyServingUrl"
+//   "formElement"
+//   "formClasses"
+//   "formId"
+//   "formTarget"
+//   "formUrl"
+//   "formText"
+//   "errorMessage"
+//   "errorUrl"
+//   "errorLine"
+//   "newHistoryUrl"
+//   "oldHistoryUrl"
+//   "newHistoryFragment"
+//   "oldHistoryFragment"
+//   "newHistoryState"
+//   "oldHistoryState"
+//   "historySource"
+//   "containerVersion" - For web or mobile.
+//   "debugMode"
+//   "randomNumber" - For web or mobile.
+//   "containerId" - For web or mobile.
+//   "appId"
+//   "appName"
+//   "appVersionCode"
+//   "appVersionName"
+//   "language"
+//   "osVersion"
+//   "platform"
+//   "sdkVersion"
+//   "deviceName"
+//   "resolution"
+//   "advertiserId"
+//   "advertisingTrackingEnabled"
+//   "htmlId"
+//   "environmentName"
+//   "ampBrowserLanguage"
+//   "ampCanonicalPath"
+//   "ampCanonicalUrl"
+//   "ampCanonicalHost"
+//   "ampReferrer"
+//   "ampTitle"
+//   "ampClientId"
+//   "ampClientTimezone"
+//   "ampClientTimestamp"
+//   "ampClientScreenWidth"
+//   "ampClientScreenHeight"
+//   "ampClientScrollX"
+//   "ampClientScrollY"
+//   "ampClientMaxScrollX"
+//   "ampClientMaxScrollY"
+//   "ampTotalEngagedTime"
+//   "ampPageViewId"
+//   "ampPageLoadTime"
+//   "ampPageDownloadTime"
+//   "ampGtmEvent"
+//   "eventName"
+//   "firebaseEventParameterCampaign"
+//   "firebaseEventParameterCampaignAclid"
+//   "firebaseEventParameterCampaignAnid"
+//   "firebaseEventParameterCampaignClickTimestamp"
+//   "firebaseEventParameterCampaignContent"
+//   "firebaseEventParameterCampaignCp1"
+//   "firebaseEventParameterCampaignGclid"
+//   "firebaseEventParameterCampaignSource"
+//   "firebaseEventParameterCampaignTerm"
+//   "firebaseEventParameterCurrency"
+//   "firebaseEventParameterDynamicLinkAcceptTime"
+//   "firebaseEventParameterDynamicLinkLinkid"
+//   "firebaseEventParameterNotificationMessageDeviceTime"
+//   "firebaseEventParameterNotificationMessageId"
+//   "firebaseEventParameterNotificationMessageName"
+//   "firebaseEventParameterNotificationMessageTime"
+//   "firebaseEventParameterNotificationTopic"
+//   "firebaseEventParameterPreviousAppVersion"
+//   "firebaseEventParameterPreviousOsVersion"
+//   "firebaseEventParameterPrice"
+//   "firebaseEventParameterProductId"
+//   "firebaseEventParameterQuantity"
+//   "firebaseEventParameterValue"
+//   "videoProvider"
+//   "videoUrl"
+//   "videoTitle"
+//   "videoDuration"
+//   "videoPercent"
+//   "videoVisible"
+//   "videoStatus"
+//   "videoCurrentTime"
+//   "scrollDepthThreshold"
+//   "scrollDepthUnits"
+//   "scrollDepthDirection"
+//   "elementVisibilityRatio"
+//   "elementVisibilityTime"
+//   "elementVisibilityFirstTime"
+//   "elementVisibilityRecentTime"
+//   "requestPath"
+//   "requestMethod"
+//   "clientName"
+//   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -8906,9 +8905,9 @@ type AccountsContainersWorkspacesBuiltInVariablesDeleteCall struct {
 
 // Delete: Deletes one or more GTM Built-In Variables.
 //
-//   - path: GTM BuiltInVariable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/built_in_variables.
+// - path: GTM BuiltInVariable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8919,120 +8918,119 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string
 // variables to delete.
 //
 // Possible values:
-//
-//	"builtInVariableTypeUnspecified"
-//	"pageUrl"
-//	"pageHostname"
-//	"pagePath"
-//	"referrer"
-//	"event" - For web or mobile.
-//	"clickElement"
-//	"clickClasses"
-//	"clickId"
-//	"clickTarget"
-//	"clickUrl"
-//	"clickText"
-//	"firstPartyServingUrl"
-//	"formElement"
-//	"formClasses"
-//	"formId"
-//	"formTarget"
-//	"formUrl"
-//	"formText"
-//	"errorMessage"
-//	"errorUrl"
-//	"errorLine"
-//	"newHistoryUrl"
-//	"oldHistoryUrl"
-//	"newHistoryFragment"
-//	"oldHistoryFragment"
-//	"newHistoryState"
-//	"oldHistoryState"
-//	"historySource"
-//	"containerVersion" - For web or mobile.
-//	"debugMode"
-//	"randomNumber" - For web or mobile.
-//	"containerId" - For web or mobile.
-//	"appId"
-//	"appName"
-//	"appVersionCode"
-//	"appVersionName"
-//	"language"
-//	"osVersion"
-//	"platform"
-//	"sdkVersion"
-//	"deviceName"
-//	"resolution"
-//	"advertiserId"
-//	"advertisingTrackingEnabled"
-//	"htmlId"
-//	"environmentName"
-//	"ampBrowserLanguage"
-//	"ampCanonicalPath"
-//	"ampCanonicalUrl"
-//	"ampCanonicalHost"
-//	"ampReferrer"
-//	"ampTitle"
-//	"ampClientId"
-//	"ampClientTimezone"
-//	"ampClientTimestamp"
-//	"ampClientScreenWidth"
-//	"ampClientScreenHeight"
-//	"ampClientScrollX"
-//	"ampClientScrollY"
-//	"ampClientMaxScrollX"
-//	"ampClientMaxScrollY"
-//	"ampTotalEngagedTime"
-//	"ampPageViewId"
-//	"ampPageLoadTime"
-//	"ampPageDownloadTime"
-//	"ampGtmEvent"
-//	"eventName"
-//	"firebaseEventParameterCampaign"
-//	"firebaseEventParameterCampaignAclid"
-//	"firebaseEventParameterCampaignAnid"
-//	"firebaseEventParameterCampaignClickTimestamp"
-//	"firebaseEventParameterCampaignContent"
-//	"firebaseEventParameterCampaignCp1"
-//	"firebaseEventParameterCampaignGclid"
-//	"firebaseEventParameterCampaignSource"
-//	"firebaseEventParameterCampaignTerm"
-//	"firebaseEventParameterCurrency"
-//	"firebaseEventParameterDynamicLinkAcceptTime"
-//	"firebaseEventParameterDynamicLinkLinkid"
-//	"firebaseEventParameterNotificationMessageDeviceTime"
-//	"firebaseEventParameterNotificationMessageId"
-//	"firebaseEventParameterNotificationMessageName"
-//	"firebaseEventParameterNotificationMessageTime"
-//	"firebaseEventParameterNotificationTopic"
-//	"firebaseEventParameterPreviousAppVersion"
-//	"firebaseEventParameterPreviousOsVersion"
-//	"firebaseEventParameterPrice"
-//	"firebaseEventParameterProductId"
-//	"firebaseEventParameterQuantity"
-//	"firebaseEventParameterValue"
-//	"videoProvider"
-//	"videoUrl"
-//	"videoTitle"
-//	"videoDuration"
-//	"videoPercent"
-//	"videoVisible"
-//	"videoStatus"
-//	"videoCurrentTime"
-//	"scrollDepthThreshold"
-//	"scrollDepthUnits"
-//	"scrollDepthDirection"
-//	"elementVisibilityRatio"
-//	"elementVisibilityTime"
-//	"elementVisibilityFirstTime"
-//	"elementVisibilityRecentTime"
-//	"requestPath"
-//	"requestMethod"
-//	"clientName"
-//	"queryString"
-//	"serverPageLocationUrl"
-//	"serverPageLocationPath"
-//	"serverPageLocationHostname"
+//   "builtInVariableTypeUnspecified"
+//   "pageUrl"
+//   "pageHostname"
+//   "pagePath"
+//   "referrer"
+//   "event" - For web or mobile.
+//   "clickElement"
+//   "clickClasses"
+//   "clickId"
+//   "clickTarget"
+//   "clickUrl"
+//   "clickText"
+//   "firstPartyServingUrl"
+//   "formElement"
+//   "formClasses"
+//   "formId"
+//   "formTarget"
+//   "formUrl"
+//   "formText"
+//   "errorMessage"
+//   "errorUrl"
+//   "errorLine"
+//   "newHistoryUrl"
+//   "oldHistoryUrl"
+//   "newHistoryFragment"
+//   "oldHistoryFragment"
+//   "newHistoryState"
+//   "oldHistoryState"
+//   "historySource"
+//   "containerVersion" - For web or mobile.
+//   "debugMode"
+//   "randomNumber" - For web or mobile.
+//   "containerId" - For web or mobile.
+//   "appId"
+//   "appName"
+//   "appVersionCode"
+//   "appVersionName"
+//   "language"
+//   "osVersion"
+//   "platform"
+//   "sdkVersion"
+//   "deviceName"
+//   "resolution"
+//   "advertiserId"
+//   "advertisingTrackingEnabled"
+//   "htmlId"
+//   "environmentName"
+//   "ampBrowserLanguage"
+//   "ampCanonicalPath"
+//   "ampCanonicalUrl"
+//   "ampCanonicalHost"
+//   "ampReferrer"
+//   "ampTitle"
+//   "ampClientId"
+//   "ampClientTimezone"
+//   "ampClientTimestamp"
+//   "ampClientScreenWidth"
+//   "ampClientScreenHeight"
+//   "ampClientScrollX"
+//   "ampClientScrollY"
+//   "ampClientMaxScrollX"
+//   "ampClientMaxScrollY"
+//   "ampTotalEngagedTime"
+//   "ampPageViewId"
+//   "ampPageLoadTime"
+//   "ampPageDownloadTime"
+//   "ampGtmEvent"
+//   "eventName"
+//   "firebaseEventParameterCampaign"
+//   "firebaseEventParameterCampaignAclid"
+//   "firebaseEventParameterCampaignAnid"
+//   "firebaseEventParameterCampaignClickTimestamp"
+//   "firebaseEventParameterCampaignContent"
+//   "firebaseEventParameterCampaignCp1"
+//   "firebaseEventParameterCampaignGclid"
+//   "firebaseEventParameterCampaignSource"
+//   "firebaseEventParameterCampaignTerm"
+//   "firebaseEventParameterCurrency"
+//   "firebaseEventParameterDynamicLinkAcceptTime"
+//   "firebaseEventParameterDynamicLinkLinkid"
+//   "firebaseEventParameterNotificationMessageDeviceTime"
+//   "firebaseEventParameterNotificationMessageId"
+//   "firebaseEventParameterNotificationMessageName"
+//   "firebaseEventParameterNotificationMessageTime"
+//   "firebaseEventParameterNotificationTopic"
+//   "firebaseEventParameterPreviousAppVersion"
+//   "firebaseEventParameterPreviousOsVersion"
+//   "firebaseEventParameterPrice"
+//   "firebaseEventParameterProductId"
+//   "firebaseEventParameterQuantity"
+//   "firebaseEventParameterValue"
+//   "videoProvider"
+//   "videoUrl"
+//   "videoTitle"
+//   "videoDuration"
+//   "videoPercent"
+//   "videoVisible"
+//   "videoStatus"
+//   "videoCurrentTime"
+//   "scrollDepthThreshold"
+//   "scrollDepthUnits"
+//   "scrollDepthDirection"
+//   "elementVisibilityRatio"
+//   "elementVisibilityTime"
+//   "elementVisibilityFirstTime"
+//   "elementVisibilityRecentTime"
+//   "requestPath"
+//   "requestMethod"
+//   "clientName"
+//   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -9372,9 +9370,9 @@ type AccountsContainersWorkspacesBuiltInVariablesListCall struct {
 
 // List: Lists all the enabled Built-In Variables of a GTM Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) List(parent string) *AccountsContainersWorkspacesBuiltInVariablesListCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9555,9 +9553,9 @@ type AccountsContainersWorkspacesBuiltInVariablesRevertCall struct {
 // Revert: Reverts changes to a GTM Built-In Variables in a GTM
 // Workspace.
 //
-//   - path: GTM BuiltInVariable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/built_in_variables.
+// - path: GTM BuiltInVariable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9568,120 +9566,119 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string
 // variable to revert.
 //
 // Possible values:
-//
-//	"builtInVariableTypeUnspecified"
-//	"pageUrl"
-//	"pageHostname"
-//	"pagePath"
-//	"referrer"
-//	"event" - For web or mobile.
-//	"clickElement"
-//	"clickClasses"
-//	"clickId"
-//	"clickTarget"
-//	"clickUrl"
-//	"clickText"
-//	"firstPartyServingUrl"
-//	"formElement"
-//	"formClasses"
-//	"formId"
-//	"formTarget"
-//	"formUrl"
-//	"formText"
-//	"errorMessage"
-//	"errorUrl"
-//	"errorLine"
-//	"newHistoryUrl"
-//	"oldHistoryUrl"
-//	"newHistoryFragment"
-//	"oldHistoryFragment"
-//	"newHistoryState"
-//	"oldHistoryState"
-//	"historySource"
-//	"containerVersion" - For web or mobile.
-//	"debugMode"
-//	"randomNumber" - For web or mobile.
-//	"containerId" - For web or mobile.
-//	"appId"
-//	"appName"
-//	"appVersionCode"
-//	"appVersionName"
-//	"language"
-//	"osVersion"
-//	"platform"
-//	"sdkVersion"
-//	"deviceName"
-//	"resolution"
-//	"advertiserId"
-//	"advertisingTrackingEnabled"
-//	"htmlId"
-//	"environmentName"
-//	"ampBrowserLanguage"
-//	"ampCanonicalPath"
-//	"ampCanonicalUrl"
-//	"ampCanonicalHost"
-//	"ampReferrer"
-//	"ampTitle"
-//	"ampClientId"
-//	"ampClientTimezone"
-//	"ampClientTimestamp"
-//	"ampClientScreenWidth"
-//	"ampClientScreenHeight"
-//	"ampClientScrollX"
-//	"ampClientScrollY"
-//	"ampClientMaxScrollX"
-//	"ampClientMaxScrollY"
-//	"ampTotalEngagedTime"
-//	"ampPageViewId"
-//	"ampPageLoadTime"
-//	"ampPageDownloadTime"
-//	"ampGtmEvent"
-//	"eventName"
-//	"firebaseEventParameterCampaign"
-//	"firebaseEventParameterCampaignAclid"
-//	"firebaseEventParameterCampaignAnid"
-//	"firebaseEventParameterCampaignClickTimestamp"
-//	"firebaseEventParameterCampaignContent"
-//	"firebaseEventParameterCampaignCp1"
-//	"firebaseEventParameterCampaignGclid"
-//	"firebaseEventParameterCampaignSource"
-//	"firebaseEventParameterCampaignTerm"
-//	"firebaseEventParameterCurrency"
-//	"firebaseEventParameterDynamicLinkAcceptTime"
-//	"firebaseEventParameterDynamicLinkLinkid"
-//	"firebaseEventParameterNotificationMessageDeviceTime"
-//	"firebaseEventParameterNotificationMessageId"
-//	"firebaseEventParameterNotificationMessageName"
-//	"firebaseEventParameterNotificationMessageTime"
-//	"firebaseEventParameterNotificationTopic"
-//	"firebaseEventParameterPreviousAppVersion"
-//	"firebaseEventParameterPreviousOsVersion"
-//	"firebaseEventParameterPrice"
-//	"firebaseEventParameterProductId"
-//	"firebaseEventParameterQuantity"
-//	"firebaseEventParameterValue"
-//	"videoProvider"
-//	"videoUrl"
-//	"videoTitle"
-//	"videoDuration"
-//	"videoPercent"
-//	"videoVisible"
-//	"videoStatus"
-//	"videoCurrentTime"
-//	"scrollDepthThreshold"
-//	"scrollDepthUnits"
-//	"scrollDepthDirection"
-//	"elementVisibilityRatio"
-//	"elementVisibilityTime"
-//	"elementVisibilityFirstTime"
-//	"elementVisibilityRecentTime"
-//	"requestPath"
-//	"requestMethod"
-//	"clientName"
-//	"queryString"
-//	"serverPageLocationUrl"
-//	"serverPageLocationPath"
-//	"serverPageLocationHostname"
+//   "builtInVariableTypeUnspecified"
+//   "pageUrl"
+//   "pageHostname"
+//   "pagePath"
+//   "referrer"
+//   "event" - For web or mobile.
+//   "clickElement"
+//   "clickClasses"
+//   "clickId"
+//   "clickTarget"
+//   "clickUrl"
+//   "clickText"
+//   "firstPartyServingUrl"
+//   "formElement"
+//   "formClasses"
+//   "formId"
+//   "formTarget"
+//   "formUrl"
+//   "formText"
+//   "errorMessage"
+//   "errorUrl"
+//   "errorLine"
+//   "newHistoryUrl"
+//   "oldHistoryUrl"
+//   "newHistoryFragment"
+//   "oldHistoryFragment"
+//   "newHistoryState"
+//   "oldHistoryState"
+//   "historySource"
+//   "containerVersion" - For web or mobile.
+//   "debugMode"
+//   "randomNumber" - For web or mobile.
+//   "containerId" - For web or mobile.
+//   "appId"
+//   "appName"
+//   "appVersionCode"
+//   "appVersionName"
+//   "language"
+//   "osVersion"
+//   "platform"
+//   "sdkVersion"
+//   "deviceName"
+//   "resolution"
+//   "advertiserId"
+//   "advertisingTrackingEnabled"
+//   "htmlId"
+//   "environmentName"
+//   "ampBrowserLanguage"
+//   "ampCanonicalPath"
+//   "ampCanonicalUrl"
+//   "ampCanonicalHost"
+//   "ampReferrer"
+//   "ampTitle"
+//   "ampClientId"
+//   "ampClientTimezone"
+//   "ampClientTimestamp"
+//   "ampClientScreenWidth"
+//   "ampClientScreenHeight"
+//   "ampClientScrollX"
+//   "ampClientScrollY"
+//   "ampClientMaxScrollX"
+//   "ampClientMaxScrollY"
+//   "ampTotalEngagedTime"
+//   "ampPageViewId"
+//   "ampPageLoadTime"
+//   "ampPageDownloadTime"
+//   "ampGtmEvent"
+//   "eventName"
+//   "firebaseEventParameterCampaign"
+//   "firebaseEventParameterCampaignAclid"
+//   "firebaseEventParameterCampaignAnid"
+//   "firebaseEventParameterCampaignClickTimestamp"
+//   "firebaseEventParameterCampaignContent"
+//   "firebaseEventParameterCampaignCp1"
+//   "firebaseEventParameterCampaignGclid"
+//   "firebaseEventParameterCampaignSource"
+//   "firebaseEventParameterCampaignTerm"
+//   "firebaseEventParameterCurrency"
+//   "firebaseEventParameterDynamicLinkAcceptTime"
+//   "firebaseEventParameterDynamicLinkLinkid"
+//   "firebaseEventParameterNotificationMessageDeviceTime"
+//   "firebaseEventParameterNotificationMessageId"
+//   "firebaseEventParameterNotificationMessageName"
+//   "firebaseEventParameterNotificationMessageTime"
+//   "firebaseEventParameterNotificationTopic"
+//   "firebaseEventParameterPreviousAppVersion"
+//   "firebaseEventParameterPreviousOsVersion"
+//   "firebaseEventParameterPrice"
+//   "firebaseEventParameterProductId"
+//   "firebaseEventParameterQuantity"
+//   "firebaseEventParameterValue"
+//   "videoProvider"
+//   "videoUrl"
+//   "videoTitle"
+//   "videoDuration"
+//   "videoPercent"
+//   "videoVisible"
+//   "videoStatus"
+//   "videoCurrentTime"
+//   "scrollDepthThreshold"
+//   "scrollDepthUnits"
+//   "scrollDepthDirection"
+//   "elementVisibilityRatio"
+//   "elementVisibilityTime"
+//   "elementVisibilityFirstTime"
+//   "elementVisibilityRecentTime"
+//   "requestPath"
+//   "requestMethod"
+//   "clientName"
+//   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Type(type_ string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -10048,9 +10045,9 @@ type AccountsContainersWorkspacesClientsCreateCall struct {
 
 // Create: Creates a GTM Client.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesClientsService) Create(parent string, client *Client) *AccountsContainersWorkspacesClientsCreateCall {
 	c := &AccountsContainersWorkspacesClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10191,9 +10188,9 @@ type AccountsContainersWorkspacesClientsDeleteCall struct {
 
 // Delete: Deletes a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/clients/{client_id}.
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
 func (r *AccountsContainersWorkspacesClientsService) Delete(path string) *AccountsContainersWorkspacesClientsDeleteCall {
 	c := &AccountsContainersWorkspacesClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10298,9 +10295,9 @@ type AccountsContainersWorkspacesClientsGetCall struct {
 
 // Get: Gets a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/clients/{client_id}.
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
 func (r *AccountsContainersWorkspacesClientsService) Get(path string) *AccountsContainersWorkspacesClientsGetCall {
 	c := &AccountsContainersWorkspacesClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10447,9 +10444,9 @@ type AccountsContainersWorkspacesClientsListCall struct {
 
 // List: Lists all GTM Clients of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesClientsService) List(parent string) *AccountsContainersWorkspacesClientsListCall {
 	c := &AccountsContainersWorkspacesClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10628,9 +10625,9 @@ type AccountsContainersWorkspacesClientsRevertCall struct {
 
 // Revert: Reverts changes to a GTM Client in a GTM Workspace.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/clients/{client_id}.
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
 func (r *AccountsContainersWorkspacesClientsService) Revert(path string) *AccountsContainersWorkspacesClientsRevertCall {
 	c := &AccountsContainersWorkspacesClientsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10775,9 +10772,9 @@ type AccountsContainersWorkspacesClientsUpdateCall struct {
 
 // Update: Updates a GTM Client.
 //
-//   - path: GTM Client's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/clients/{client_id}.
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
 func (r *AccountsContainersWorkspacesClientsService) Update(path string, client *Client) *AccountsContainersWorkspacesClientsUpdateCall {
 	c := &AccountsContainersWorkspacesClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10931,9 +10928,9 @@ type AccountsContainersWorkspacesFoldersCreateCall struct {
 
 // Create: Creates a GTM Folder.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Create(parent string, folder *Folder) *AccountsContainersWorkspacesFoldersCreateCall {
 	c := &AccountsContainersWorkspacesFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11074,9 +11071,9 @@ type AccountsContainersWorkspacesFoldersDeleteCall struct {
 
 // Delete: Deletes a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Delete(path string) *AccountsContainersWorkspacesFoldersDeleteCall {
 	c := &AccountsContainersWorkspacesFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11180,9 +11177,9 @@ type AccountsContainersWorkspacesFoldersEntitiesCall struct {
 
 // Entities: List all entities in a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Entities(path string) *AccountsContainersWorkspacesFoldersEntitiesCall {
 	c := &AccountsContainersWorkspacesFoldersEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11349,9 +11346,9 @@ type AccountsContainersWorkspacesFoldersGetCall struct {
 
 // Get: Gets a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Get(path string) *AccountsContainersWorkspacesFoldersGetCall {
 	c := &AccountsContainersWorkspacesFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11498,9 +11495,9 @@ type AccountsContainersWorkspacesFoldersListCall struct {
 
 // List: Lists all GTM Folders of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) List(parent string) *AccountsContainersWorkspacesFoldersListCall {
 	c := &AccountsContainersWorkspacesFoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11680,9 +11677,9 @@ type AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall struct {
 
 // MoveEntitiesToFolder: Moves entities to a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) MoveEntitiesToFolder(path string, folder *Folder) *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall {
 	c := &AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11834,9 +11831,9 @@ type AccountsContainersWorkspacesFoldersRevertCall struct {
 
 // Revert: Reverts changes to a GTM Folder in a GTM Workspace.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Revert(path string) *AccountsContainersWorkspacesFoldersRevertCall {
 	c := &AccountsContainersWorkspacesFoldersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11981,9 +11978,9 @@ type AccountsContainersWorkspacesFoldersUpdateCall struct {
 
 // Update: Updates a GTM Folder.
 //
-//   - path: GTM Folder's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/folders/{folder_id}.
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Update(path string, folder *Folder) *AccountsContainersWorkspacesFoldersUpdateCall {
 	c := &AccountsContainersWorkspacesFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12137,9 +12134,9 @@ type AccountsContainersWorkspacesTagsCreateCall struct {
 
 // Create: Creates a GTM Tag.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) Create(parent string, tag *Tag) *AccountsContainersWorkspacesTagsCreateCall {
 	c := &AccountsContainersWorkspacesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12280,9 +12277,9 @@ type AccountsContainersWorkspacesTagsDeleteCall struct {
 
 // Delete: Deletes a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/tags/{tag_id}.
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Delete(path string) *AccountsContainersWorkspacesTagsDeleteCall {
 	c := &AccountsContainersWorkspacesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12387,9 +12384,9 @@ type AccountsContainersWorkspacesTagsGetCall struct {
 
 // Get: Gets a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/tags/{tag_id}.
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Get(path string) *AccountsContainersWorkspacesTagsGetCall {
 	c := &AccountsContainersWorkspacesTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12536,9 +12533,9 @@ type AccountsContainersWorkspacesTagsListCall struct {
 
 // List: Lists all GTM Tags of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) List(parent string) *AccountsContainersWorkspacesTagsListCall {
 	c := &AccountsContainersWorkspacesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12717,9 +12714,9 @@ type AccountsContainersWorkspacesTagsRevertCall struct {
 
 // Revert: Reverts changes to a GTM Tag in a GTM Workspace.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/tags/{tag_id}.
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Revert(path string) *AccountsContainersWorkspacesTagsRevertCall {
 	c := &AccountsContainersWorkspacesTagsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12864,9 +12861,9 @@ type AccountsContainersWorkspacesTagsUpdateCall struct {
 
 // Update: Updates a GTM Tag.
 //
-//   - path: GTM Tag's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/tags/{tag_id}.
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Update(path string, tag *Tag) *AccountsContainersWorkspacesTagsUpdateCall {
 	c := &AccountsContainersWorkspacesTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13020,9 +13017,9 @@ type AccountsContainersWorkspacesTemplatesCreateCall struct {
 
 // Create: Creates a GTM Custom Template.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Create(parent string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesCreateCall {
 	c := &AccountsContainersWorkspacesTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13163,9 +13160,9 @@ type AccountsContainersWorkspacesTemplatesDeleteCall struct {
 
 // Delete: Deletes a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/templates/{template_id}.
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Delete(path string) *AccountsContainersWorkspacesTemplatesDeleteCall {
 	c := &AccountsContainersWorkspacesTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13270,9 +13267,9 @@ type AccountsContainersWorkspacesTemplatesGetCall struct {
 
 // Get: Gets a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/templates/{template_id}.
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Get(path string) *AccountsContainersWorkspacesTemplatesGetCall {
 	c := &AccountsContainersWorkspacesTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13419,9 +13416,9 @@ type AccountsContainersWorkspacesTemplatesListCall struct {
 
 // List: Lists all GTM Templates of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) List(parent string) *AccountsContainersWorkspacesTemplatesListCall {
 	c := &AccountsContainersWorkspacesTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13600,9 +13597,9 @@ type AccountsContainersWorkspacesTemplatesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Template in a GTM Workspace.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/templates/{template_id}.
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Revert(path string) *AccountsContainersWorkspacesTemplatesRevertCall {
 	c := &AccountsContainersWorkspacesTemplatesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13748,9 +13745,9 @@ type AccountsContainersWorkspacesTemplatesUpdateCall struct {
 
 // Update: Updates a GTM Template.
 //
-//   - path: GTM Custom Template's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/templates/{template_id}.
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Update(path string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesUpdateCall {
 	c := &AccountsContainersWorkspacesTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13905,9 +13902,9 @@ type AccountsContainersWorkspacesTriggersCreateCall struct {
 
 // Create: Creates a GTM Trigger.
 //
-//   - parent: GTM Workspaces's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspaces's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Create(parent string, trigger *Trigger) *AccountsContainersWorkspacesTriggersCreateCall {
 	c := &AccountsContainersWorkspacesTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14048,9 +14045,9 @@ type AccountsContainersWorkspacesTriggersDeleteCall struct {
 
 // Delete: Deletes a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/triggers/{trigger_id}.
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Delete(path string) *AccountsContainersWorkspacesTriggersDeleteCall {
 	c := &AccountsContainersWorkspacesTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14155,9 +14152,9 @@ type AccountsContainersWorkspacesTriggersGetCall struct {
 
 // Get: Gets a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/triggers/{trigger_id}.
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Get(path string) *AccountsContainersWorkspacesTriggersGetCall {
 	c := &AccountsContainersWorkspacesTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14304,9 +14301,9 @@ type AccountsContainersWorkspacesTriggersListCall struct {
 
 // List: Lists all GTM Triggers of a Container.
 //
-//   - parent: GTM Workspaces's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspaces's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) List(parent string) *AccountsContainersWorkspacesTriggersListCall {
 	c := &AccountsContainersWorkspacesTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14485,9 +14482,9 @@ type AccountsContainersWorkspacesTriggersRevertCall struct {
 
 // Revert: Reverts changes to a GTM Trigger in a GTM Workspace.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/triggers/{trigger_id}.
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Revert(path string) *AccountsContainersWorkspacesTriggersRevertCall {
 	c := &AccountsContainersWorkspacesTriggersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14633,9 +14630,9 @@ type AccountsContainersWorkspacesTriggersUpdateCall struct {
 
 // Update: Updates a GTM Trigger.
 //
-//   - path: GTM Trigger's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/triggers/{trigger_id}.
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Update(path string, trigger *Trigger) *AccountsContainersWorkspacesTriggersUpdateCall {
 	c := &AccountsContainersWorkspacesTriggersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14790,9 +14787,9 @@ type AccountsContainersWorkspacesVariablesCreateCall struct {
 
 // Create: Creates a GTM Variable.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Create(parent string, variable *Variable) *AccountsContainersWorkspacesVariablesCreateCall {
 	c := &AccountsContainersWorkspacesVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14933,9 +14930,9 @@ type AccountsContainersWorkspacesVariablesDeleteCall struct {
 
 // Delete: Deletes a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/variables/{variable_id}.
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Delete(path string) *AccountsContainersWorkspacesVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15040,9 +15037,9 @@ type AccountsContainersWorkspacesVariablesGetCall struct {
 
 // Get: Gets a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/variables/{variable_id}.
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Get(path string) *AccountsContainersWorkspacesVariablesGetCall {
 	c := &AccountsContainersWorkspacesVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15189,9 +15186,9 @@ type AccountsContainersWorkspacesVariablesListCall struct {
 
 // List: Lists all GTM Variables of a Container.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) List(parent string) *AccountsContainersWorkspacesVariablesListCall {
 	c := &AccountsContainersWorkspacesVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15370,9 +15367,9 @@ type AccountsContainersWorkspacesVariablesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Variable in a GTM Workspace.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/variables/{variable_id}.
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Revert(path string) *AccountsContainersWorkspacesVariablesRevertCall {
 	c := &AccountsContainersWorkspacesVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15518,9 +15515,9 @@ type AccountsContainersWorkspacesVariablesUpdateCall struct {
 
 // Update: Updates a GTM Variable.
 //
-//   - path: GTM Variable's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/variables/{variable_id}.
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Update(path string, variable *Variable) *AccountsContainersWorkspacesVariablesUpdateCall {
 	c := &AccountsContainersWorkspacesVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15675,9 +15672,9 @@ type AccountsContainersWorkspacesZonesCreateCall struct {
 
 // Create: Creates a GTM Zone.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) Create(parent string, zone *Zone) *AccountsContainersWorkspacesZonesCreateCall {
 	c := &AccountsContainersWorkspacesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15818,9 +15815,9 @@ type AccountsContainersWorkspacesZonesDeleteCall struct {
 
 // Delete: Deletes a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/zones/{zone_id}.
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Delete(path string) *AccountsContainersWorkspacesZonesDeleteCall {
 	c := &AccountsContainersWorkspacesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15925,9 +15922,9 @@ type AccountsContainersWorkspacesZonesGetCall struct {
 
 // Get: Gets a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/zones/{zone_id}.
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Get(path string) *AccountsContainersWorkspacesZonesGetCall {
 	c := &AccountsContainersWorkspacesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16074,9 +16071,9 @@ type AccountsContainersWorkspacesZonesListCall struct {
 
 // List: Lists all GTM Zones of a GTM container workspace.
 //
-//   - parent: GTM Workspace's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}.
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) List(parent string) *AccountsContainersWorkspacesZonesListCall {
 	c := &AccountsContainersWorkspacesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16255,9 +16252,9 @@ type AccountsContainersWorkspacesZonesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Zone in a GTM Workspace.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/zones/{zone_id}.
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Revert(path string) *AccountsContainersWorkspacesZonesRevertCall {
 	c := &AccountsContainersWorkspacesZonesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16402,9 +16399,9 @@ type AccountsContainersWorkspacesZonesUpdateCall struct {
 
 // Update: Updates a GTM Zone.
 //
-//   - path: GTM Zone's API relative path. Example:
-//     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
-//     e_id}/zones/{zone_id}.
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Update(path string, zone *Zone) *AccountsContainersWorkspacesZonesUpdateCall {
 	c := &AccountsContainersWorkspacesZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16558,8 +16555,8 @@ type AccountsUserPermissionsCreateCall struct {
 
 // Create: Creates a user's Account & Container access.
 //
-//   - parent: GTM Account's API relative path. Example:
-//     accounts/{account_id}.
+// - parent: GTM Account's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) Create(parent string, userpermission *UserPermission) *AccountsUserPermissionsCreateCall {
 	c := &AccountsUserPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16701,8 +16698,8 @@ type AccountsUserPermissionsDeleteCall struct {
 // Delete: Removes a user from the account, revoking access to it and
 // all of its containers.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Delete(path string) *AccountsUserPermissionsDeleteCall {
 	c := &AccountsUserPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16807,8 +16804,8 @@ type AccountsUserPermissionsGetCall struct {
 
 // Get: Gets a user's Account & Container access.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Get(path string) *AccountsUserPermissionsGetCall {
 	c := &AccountsUserPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -16955,8 +16952,8 @@ type AccountsUserPermissionsListCall struct {
 // List: List all users that have access to the account along with
 // Account and Container user access granted to each of them.
 //
-//   - parent: GTM Accounts's API relative path. Example:
-//     accounts/{account_id}.
+// - parent: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) List(parent string) *AccountsUserPermissionsListCall {
 	c := &AccountsUserPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17135,8 +17132,8 @@ type AccountsUserPermissionsUpdateCall struct {
 
 // Update: Updates a user's Account & Container access.
 //
-//   - path: GTM UserPermission's API relative path. Example:
-//     accounts/{account_id}/user_permissions/{user_permission_id}.
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Update(path string, userpermission *UserPermission) *AccountsUserPermissionsUpdateCall {
 	c := &AccountsUserPermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path

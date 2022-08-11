@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/workflows
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/workflowexecutions/v1"
-//	...
-//	ctx := context.Background()
-//	workflowexecutionsService, err := workflowexecutions.NewService(ctx)
+//   import "google.golang.org/api/workflowexecutions/v1"
+//   ...
+//   ctx := context.Background()
+//   workflowexecutionsService, err := workflowexecutions.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithAPIKey("AIza..."))
+//   workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   workflowexecutionsService, err := workflowexecutions.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package workflowexecutions // import "google.golang.org/api/workflowexecutions/v1"
@@ -561,9 +561,9 @@ type ProjectsLocationsWorkflowsTriggerPubsubExecutionCall struct {
 // TriggerPubsubExecution: Triggers a new execution using the latest
 // revision of the given workflow by a Pub/Sub push notification.
 //
-//   - workflow: Name of the workflow for which an execution should be
-//     created. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow}.
+// - workflow: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsService) TriggerPubsubExecution(workflow string, triggerpubsubexecutionrequest *TriggerPubsubExecutionRequest) *ProjectsLocationsWorkflowsTriggerPubsubExecutionCall {
 	c := &ProjectsLocationsWorkflowsTriggerPubsubExecutionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.workflow = workflow
@@ -705,9 +705,9 @@ type ProjectsLocationsWorkflowsExecutionsCancelCall struct {
 
 // Cancel: Cancels an execution of the given name.
 //
-//   - name: Name of the execution to be cancelled. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow}/executi
-//     ons/{execution}.
+// - name: Name of the execution to be cancelled. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Cancel(name string, cancelexecutionrequest *CancelExecutionRequest) *ProjectsLocationsWorkflowsExecutionsCancelCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -850,10 +850,10 @@ type ProjectsLocationsWorkflowsExecutionsCreateCall struct {
 // Create: Creates a new execution using the latest revision of the
 // given workflow.
 //
-//   - parent: Name of the workflow for which an execution should be
-//     created. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow} The
-//     latest revision of the workflow will be used.
+// - parent: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow} The
+//   latest revision of the workflow will be used.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Create(parent string, execution *Execution) *ProjectsLocationsWorkflowsExecutionsCreateCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -995,9 +995,9 @@ type ProjectsLocationsWorkflowsExecutionsGetCall struct {
 
 // Get: Returns an execution of the given name.
 //
-//   - name: Name of the execution to be retrieved. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow}/executi
-//     ons/{execution}.
+// - name: Name of the execution to be retrieved. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *ProjectsLocationsWorkflowsExecutionsGetCall {
 	c := &ProjectsLocationsWorkflowsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1009,14 +1009,11 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *Projects
 // the FULL view.
 //
 // Possible values:
-//
-//	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
-//
+//   "EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
+//   "BASIC" - Includes only basic metadata about the execution.
 // Following fields are returned: name, start_time, end_time, state and
 // workflow_revision_id.
-//
-//	"FULL" - Includes all data.
+//   "FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -1179,9 +1176,9 @@ type ProjectsLocationsWorkflowsExecutionsListCall struct {
 // revisions. Returned executions are ordered by their start time
 // (newest first).
 //
-//   - parent: Name of the workflow for which the executions should be
-//     listed. Format:
-//     projects/{project}/locations/{location}/workflows/{workflow}.
+// - parent: Name of the workflow for which the executions should be
+//   listed. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1214,14 +1211,11 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken strin
 // the BASIC view.
 //
 // Possible values:
-//
-//	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
-//	"BASIC" - Includes only basic metadata about the execution.
-//
+//   "EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
+//   "BASIC" - Includes only basic metadata about the execution.
 // Following fields are returned: name, start_time, end_time, state and
 // workflow_revision_id.
-//
-//	"FULL" - Includes all data.
+//   "FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("view", view)
 	return c

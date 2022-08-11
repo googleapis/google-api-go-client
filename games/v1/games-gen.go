@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/games/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/games/v1"
-//	...
-//	ctx := context.Background()
-//	gamesService, err := games.NewService(ctx)
+//   import "google.golang.org/api/games/v1"
+//   ...
+//   ctx := context.Background()
+//   gamesService, err := games.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	gamesService, err := games.NewService(ctx, option.WithScopes(games.GamesScope))
+//   gamesService, err := games.NewService(ctx, option.WithScopes(games.GamesScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	gamesService, err := games.NewService(ctx, option.WithAPIKey("AIza..."))
+//   gamesService, err := games.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	gamesService, err := games.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   gamesService, err := games.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package games // import "google.golang.org/api/games/v1"
@@ -3543,8 +3543,8 @@ type AchievementsListCall struct {
 // List: Lists the progress for all your application's achievements for
 // the currently authenticated player.
 //
-//   - playerId: A player ID. A value of `me` may be used in place of the
-//     authenticated player's ID.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *AchievementsService) List(playerId string) *AchievementsListCall {
 	c := &AchievementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -3579,11 +3579,10 @@ func (c *AchievementsListCall) PageToken(pageToken string) *AchievementsListCall
 // specified, all achievements are returned.
 //
 // Possible values:
-//
-//	"ALL" - List all achievements. This is the default.
-//	"HIDDEN" - List only hidden achievements.
-//	"REVEALED" - List only revealed achievements.
-//	"UNLOCKED" - List only unlocked achievements.
+//   "ALL" - List all achievements. This is the default.
+//   "HIDDEN" - List only hidden achievements.
+//   "REVEALED" - List only revealed achievements.
+//   "UNLOCKED" - List only unlocked achievements.
 func (c *AchievementsListCall) State(state string) *AchievementsListCall {
 	c.urlParams_.Set("state", state)
 	return c
@@ -4320,8 +4319,8 @@ type ApplicationsGetCall struct {
 // `platformType`, the returned response will not include any instance
 // data.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Get(applicationId string) *ApplicationsGetCall {
 	c := &ApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -4339,12 +4338,10 @@ func (c *ApplicationsGetCall) Language(language string) *ApplicationsGetCall {
 // application details returned to the specific platform.
 //
 // Possible values:
-//
-//	"PLATFORM_TYPE_UNSPECIFIED" - Default value, don't use.
-//	"ANDROID" - Retrieve applications that can be played on Android.
-//	"IOS" - Retrieve applications that can be played on iOS.
-//	"WEB_APP" - Retrieve applications that can be played on desktop
-//
+//   "PLATFORM_TYPE_UNSPECIFIED" - Default value, don't use.
+//   "ANDROID" - Retrieve applications that can be played on Android.
+//   "IOS" - Retrieve applications that can be played on iOS.
+//   "WEB_APP" - Retrieve applications that can be played on desktop
 // web.
 func (c *ApplicationsGetCall) PlatformType(platformType string) *ApplicationsGetCall {
 	c.urlParams_.Set("platformType", platformType)
@@ -4524,10 +4521,9 @@ func (c *ApplicationsGetEndPointCall) ApplicationId(applicationId string) *Appli
 // endpoint being requested.
 //
 // Possible values:
-//
-//	"END_POINT_TYPE_UNSPECIFIED" - Default value. This value is unused.
-//	"PROFILE_CREATION" - Request a URL to create a new profile.
-//	"PROFILE_SETTINGS" - Request a URL for the Settings view.
+//   "END_POINT_TYPE_UNSPECIFIED" - Default value. This value is unused.
+//   "PROFILE_CREATION" - Request a URL to create a new profile.
+//   "PROFILE_SETTINGS" - Request a URL for the Settings view.
 func (c *ApplicationsGetEndPointCall) EndPointType(endPointType string) *ApplicationsGetEndPointCall {
 	c.urlParams_.Set("endPointType", endPointType)
 	return c
@@ -4757,8 +4753,8 @@ type ApplicationsVerifyCall struct {
 // application with the specified ID, and returns the ID of the player
 // it was granted for.
 //
-//   - applicationId: The application ID from the Google Play developer
-//     console.
+// - applicationId: The application ID from the Google Play developer
+//   console.
 func (r *ApplicationsService) Verify(applicationId string) *ApplicationsVerifyCall {
 	c := &ApplicationsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
@@ -5903,10 +5899,10 @@ type MetagameListCategoriesByPlayerCall struct {
 // ListCategoriesByPlayer: List play data aggregated per category for
 // the player corresponding to `playerId`.
 //
-//   - collection: The collection of categories for which data will be
-//     returned.
-//   - playerId: A player ID. A value of `me` may be used in place of the
-//     authenticated player's ID.
+// - collection: The collection of categories for which data will be
+//   returned.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *MetagameService) ListCategoriesByPlayer(playerId string, collection string) *MetagameListCategoriesByPlayerCall {
 	c := &MetagameListCategoriesByPlayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6129,8 +6125,8 @@ type PlayersGetCall struct {
 // Get: Retrieves the Player resource with the given ID. To retrieve the
 // player for the currently authenticated user, set `playerId` to `me`.
 //
-//   - playerId: A player ID. A value of `me` may be used in place of the
-//     authenticated player's ID.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *PlayersService) Get(playerId string) *PlayersGetCall {
 	c := &PlayersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6647,11 +6643,11 @@ type RevisionsCheckCall struct {
 
 // Check: Checks whether the games client is out of date.
 //
-//   - clientRevision: The revision of the client SDK used by your
-//     application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible
-//     values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the
-//     Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` -
-//     Client is running as a Web App.
+// - clientRevision: The revision of the client SDK used by your
+//   application. Format: `[PLATFORM_TYPE]:[VERSION_NUMBER]`. Possible
+//   values of `PLATFORM_TYPE` are: * `ANDROID` - Client is running the
+//   Android SDK. * `IOS` - Client is running the iOS SDK. * `WEB_APP` -
+//   Client is running as a Web App.
 func (r *RevisionsService) Check(clientRevision string) *RevisionsCheckCall {
 	c := &RevisionsCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("clientRevision", clientRevision)
@@ -6800,11 +6796,11 @@ type ScoresGetCall struct {
 // leaderboards and 'ALL' timeSpans in the same request; only one
 // parameter may be set to 'ALL'.
 //
-//   - leaderboardId: The ID of the leaderboard. Can be set to 'ALL' to
-//     retrieve data for all leaderboards for this application.
-//   - playerId: A player ID. A value of `me` may be used in place of the
-//     authenticated player's ID.
-//   - timeSpan: The time span for the scores and ranks you're requesting.
+// - leaderboardId: The ID of the leaderboard. Can be set to 'ALL' to
+//   retrieve data for all leaderboards for this application.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
+// - timeSpan: The time span for the scores and ranks you're requesting.
 func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan string) *ScoresGetCall {
 	c := &ScoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId
@@ -6818,18 +6814,13 @@ func (r *ScoresService) Get(playerId string, leaderboardId string, timeSpan stri
 // be returned.
 //
 // Possible values:
-//
-//	"INCLUDE_RANK_TYPE_UNSPECIFIED" - Default value. Should be unused.
-//	"ALL" - Retrieve all supported ranks. In HTTP, this parameter value
-//
+//   "INCLUDE_RANK_TYPE_UNSPECIFIED" - Default value. Should be unused.
+//   "ALL" - Retrieve all supported ranks. In HTTP, this parameter value
 // can also be specified as `ALL`.
-//
-//	"PUBLIC" - Retrieve public ranks, if the player is sharing their
-//
+//   "PUBLIC" - Retrieve public ranks, if the player is sharing their
 // gameplay activity publicly.
-//
-//	"SOCIAL" - (Obsolete) Retrieve the social rank.
-//	"FRIENDS" - Retrieve the rank on the friends collection.
+//   "SOCIAL" - (Obsolete) Retrieve the social rank.
+//   "FRIENDS" - Retrieve the rank on the friends collection.
 func (c *ScoresGetCall) IncludeRankType(includeRankType string) *ScoresGetCall {
 	c.urlParams_.Set("includeRankType", includeRankType)
 	return c
@@ -7610,14 +7601,14 @@ type ScoresSubmitCall struct {
 
 // Submit: Submits a score to the specified leaderboard.
 //
-//   - leaderboardId: The ID of the leaderboard.
-//   - score: The score you're submitting. The submitted score is ignored
-//     if it is worse than a previously submitted score, where worse
-//     depends on the leaderboard sort order. The meaning of the score
-//     value depends on the leaderboard format type. For fixed-point, the
-//     score represents the raw value. For time, the score represents
-//     elapsed time in milliseconds. For currency, the score represents a
-//     value in micro units.
+// - leaderboardId: The ID of the leaderboard.
+// - score: The score you're submitting. The submitted score is ignored
+//   if it is worse than a previously submitted score, where worse
+//   depends on the leaderboard sort order. The meaning of the score
+//   value depends on the leaderboard format type. For fixed-point, the
+//   score represents the raw value. For time, the score represents
+//   elapsed time in milliseconds. For currency, the score represents a
+//   value in micro units.
 func (r *ScoresService) Submit(leaderboardId string, score int64) *ScoresSubmitCall {
 	c := &ScoresSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
@@ -8082,8 +8073,8 @@ type SnapshotsListCall struct {
 // List: Retrieves a list of snapshots created by your application for
 // the player corresponding to the player ID.
 //
-//   - playerId: A player ID. A value of `me` may be used in place of the
-//     authenticated player's ID.
+// - playerId: A player ID. A value of `me` may be used in place of the
+//   authenticated player's ID.
 func (r *SnapshotsService) List(playerId string) *SnapshotsListCall {
 	c := &SnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.playerId = playerId

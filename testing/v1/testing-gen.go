@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/cloud-test-lab/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/testing/v1"
-//	...
-//	ctx := context.Background()
-//	testingService, err := testing.NewService(ctx)
+//   import "google.golang.org/api/testing/v1"
+//   ...
+//   ctx := context.Background()
+//   testingService, err := testing.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
+//   testingService, err := testing.NewService(ctx, option.WithScopes(testing.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
+//   testingService, err := testing.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   testingService, err := testing.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package testing // import "google.golang.org/api/testing/v1"
@@ -1966,10 +1966,12 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 // InstrumentationTest is invalid.
 type ManualSharding struct {
 	// TestTargetsForShard: Required. Group of packages, classes, and/or
-	// test methods to be run for each shard. When any physical devices are
-	// selected, the number of test_targets_for_shard must be >= 1 and <=
-	// 50. When no physical devices are selected, the number must be >= 1
-	// and <= 500.
+	// test methods to be run for each manually-created shard. You must
+	// specify at least one shard if this field is present. When you select
+	// one or more physical devices, the number of repeated
+	// test_targets_for_shard must be <= 50. When you select one or more ARM
+	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// devices, it must be <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargetsForShard")
@@ -3187,16 +3189,19 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 }
 
 // UniformSharding: Uniformly shards test cases given a total number of
-// shards. For Instrumentation test, it will be translated to "-e
-// numShard" "-e shardIndex" AndroidJUnitRunner arguments. Based on the
+// shards. For instrumentation tests, it will be translated to "-e
+// numShard" and "-e shardIndex" AndroidJUnitRunner arguments. With
+// uniform sharding enabled, specifying either of these sharding
+// arguments via `environment_variables` is invalid. Based on the
 // sharding mechanism AndroidJUnitRunner uses, there is no guarantee
-// that test cases will be distributed uniformly across all shards. With
-// uniform sharding enabled, specifying these sharding arguments via
-// environment_variables is invalid.
+// that test cases will be distributed uniformly across all shards.
 type UniformSharding struct {
-	// NumShards: Required. Total number of shards. When any physical
-	// devices are selected, the number must be >= 1 and <= 50. When no
-	// physical devices are selected, the number must be >= 1 and <= 500.
+	// NumShards: Required. The total number of shards to create. This must
+	// always be a positive number that is no greater than the total number
+	// of test cases. When you select one or more physical devices, the
+	// number of shards must be <= 50. When you select one or more ARM
+	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// devices, it must be <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
@@ -3705,9 +3710,9 @@ type ProjectsTestMatricesGetCall struct {
 // not authorized to read project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the Test Matrix does not exist
 //
-//   - projectId: Cloud project that owns the test matrix.
-//   - testMatrixId: Unique test matrix id which was assigned by the
-//     service.
+// - projectId: Cloud project that owns the test matrix.
+// - testMatrixId: Unique test matrix id which was assigned by the
+//   service.
 func (r *ProjectsTestMatricesService) Get(projectId string, testMatrixId string) *ProjectsTestMatricesGetCall {
 	c := &ProjectsTestMatricesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/storage-transfer/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/storagetransfer/v1"
-//	...
-//	ctx := context.Background()
-//	storagetransferService, err := storagetransfer.NewService(ctx)
+//   import "google.golang.org/api/storagetransfer/v1"
+//   ...
+//   ctx := context.Background()
+//   storagetransferService, err := storagetransfer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
+//   storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package storagetransfer // import "google.golang.org/api/storagetransfer/v1"
@@ -2229,8 +2229,8 @@ type GoogleServiceAccountsGetCall struct {
 // Storage Transfer Service and can only be used by Storage Transfer
 // Service.
 //
-//   - projectId: The ID of the Google Cloud project that the Google
-//     service account is associated with.
+// - projectId: The ID of the Google Cloud project that the Google
+//   service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2375,8 +2375,8 @@ type ProjectsAgentPoolsCreateCall struct {
 
 // Create: Creates an agent pool resource.
 //
-//   - projectId: The ID of the Google Cloud project that owns the agent
-//     pool.
+// - projectId: The ID of the Google Cloud project that owns the agent
+//   pool.
 func (r *ProjectsAgentPoolsService) Create(projectId string, agentpool *AgentPool) *ProjectsAgentPoolsCreateCall {
 	c := &ProjectsAgentPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3023,8 +3023,8 @@ type ProjectsAgentPoolsPatchCall struct {
 
 // Patch: Updates an existing agent pool resource.
 //
-//   - name: Specifies a unique string that identifies the agent pool.
-//     Format: `projects/{project_id}/agentPools/{agent_pool_id}`.
+// - name: Specifies a unique string that identifies the agent pool.
+//   Format: `projects/{project_id}/agentPools/{agent_pool_id}`.
 func (r *ProjectsAgentPoolsService) Patch(name string, agentpool *AgentPool) *ProjectsAgentPoolsPatchCall {
 	c := &ProjectsAgentPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3460,14 +3460,14 @@ type TransferJobsListCall struct {
 
 // List: Lists transfer jobs.
 //
-//   - filter: A list of query parameters specified as JSON text in the
-//     form of: `{"projectId":"my_project_id",
-//     "jobNames":["jobid1","jobid2",...],
-//     "jobStatuses":["status1","status2",...]}` Since `jobNames` and
-//     `jobStatuses` support multiple values, their values must be
-//     specified with array notation. `projectId` is required. `jobNames`
-//     and `jobStatuses` are optional. The valid values for `jobStatuses`
-//     are case-insensitive: ENABLED, DISABLED, and DELETED.
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "jobStatuses":["status1","status2",...]}` Since `jobNames` and
+//   `jobStatuses` support multiple values, their values must be
+//   specified with array notation. `projectId` is required. `jobNames`
+//   and `jobStatuses` are optional. The valid values for `jobStatuses`
+//   are case-insensitive: ENABLED, DISABLED, and DELETED.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)
@@ -4254,19 +4254,19 @@ type TransferOperationsListCall struct {
 // List: Lists transfer operations. Operations are ordered by their
 // creation time in reverse chronological order.
 //
-//   - filter: A list of query parameters specified as JSON text in the
-//     form of: `{"projectId":"my_project_id",
-//     "jobNames":["jobid1","jobid2",...],
-//     "operationNames":["opid1","opid2",...],
-//     "transferStatuses":["status1","status2",...]}` Since `jobNames`,
-//     `operationNames`, and `transferStatuses` support multiple values,
-//     they must be specified with array notation. `projectId` is
-//     required. `jobNames`, `operationNames`, and `transferStatuses` are
-//     optional. The valid values for `transferStatuses` are
-//     case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
-//     ABORTED.
-//   - name: The name of the type being listed; must be
-//     `transferOperations`.
+// - filter: A list of query parameters specified as JSON text in the
+//   form of: `{"projectId":"my_project_id",
+//   "jobNames":["jobid1","jobid2",...],
+//   "operationNames":["opid1","opid2",...],
+//   "transferStatuses":["status1","status2",...]}` Since `jobNames`,
+//   `operationNames`, and `transferStatuses` support multiple values,
+//   they must be specified with array notation. `projectId` is
+//   required. `jobNames`, `operationNames`, and `transferStatuses` are
+//   optional. The valid values for `transferStatuses` are
+//   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
+//   ABORTED.
+// - name: The name of the type being listed; must be
+//   `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

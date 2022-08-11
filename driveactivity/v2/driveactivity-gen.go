@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/drive/activity/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/driveactivity/v2"
-//	...
-//	ctx := context.Background()
-//	driveactivityService, err := driveactivity.NewService(ctx)
+//   import "google.golang.org/api/driveactivity/v2"
+//   ...
+//   ctx := context.Background()
+//   driveactivityService, err := driveactivity.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	driveactivityService, err := driveactivity.NewService(ctx, option.WithScopes(driveactivity.DriveActivityReadonlyScope))
+//   driveactivityService, err := driveactivity.NewService(ctx, option.WithScopes(driveactivity.DriveActivityReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	driveactivityService, err := driveactivity.NewService(ctx, option.WithAPIKey("AIza..."))
+//   driveactivityService, err := driveactivity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	driveactivityService, err := driveactivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   driveactivityService, err := driveactivity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package driveactivity // import "google.golang.org/api/driveactivity/v2"

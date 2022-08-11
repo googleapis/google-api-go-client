@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/composer/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/composer/v1"
-//	...
-//	ctx := context.Background()
-//	composerService, err := composer.NewService(ctx)
+//   import "google.golang.org/api/composer/v1"
+//   ...
+//   ctx := context.Background()
+//   composerService, err := composer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	composerService, err := composer.NewService(ctx, option.WithAPIKey("AIza..."))
+//   composerService, err := composer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	composerService, err := composer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   composerService, err := composer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package composer // import "google.golang.org/api/composer/v1"
@@ -1746,8 +1746,8 @@ type ProjectsLocationsEnvironmentsCreateCall struct {
 
 // Create: Create a new environment.
 //
-//   - parent: The parent must be of the form
-//     "projects/{projectId}/locations/{locationId}".
+// - parent: The parent must be of the form
+//   "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) Create(parent string, environment *Environment) *ProjectsLocationsEnvironmentsCreateCall {
 	c := &ProjectsLocationsEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1888,9 +1888,9 @@ type ProjectsLocationsEnvironmentsDeleteCall struct {
 
 // Delete: Delete an environment.
 //
-//   - name: The environment to delete, in the form:
-//     "projects/{projectId}/locations/{locationId}/environments/{environme
-//     ntId}".
+// - name: The environment to delete, in the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Delete(name string) *ProjectsLocationsEnvironmentsDeleteCall {
 	c := &ProjectsLocationsEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2023,9 +2023,9 @@ type ProjectsLocationsEnvironmentsGetCall struct {
 
 // Get: Get an existing environment.
 //
-//   - name: The resource name of the environment to get, in the form:
-//     "projects/{projectId}/locations/{locationId}/environments/{environme
-//     ntId}".
+// - name: The resource name of the environment to get, in the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Get(name string) *ProjectsLocationsEnvironmentsGetCall {
 	c := &ProjectsLocationsEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2171,8 +2171,8 @@ type ProjectsLocationsEnvironmentsListCall struct {
 
 // List: List environments.
 //
-//   - parent: List environments in the given project and location, in the
-//     form: "projects/{projectId}/locations/{locationId}".
+// - parent: List environments in the given project and location, in the
+//   form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsEnvironmentsService) List(parent string) *ProjectsLocationsEnvironmentsListCall {
 	c := &ProjectsLocationsEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2364,10 +2364,10 @@ type ProjectsLocationsEnvironmentsPatchCall struct {
 
 // Patch: Update an environment.
 //
-//   - name: The relative resource name of the environment to update, in
-//     the form:
-//     "projects/{projectId}/locations/{locationId}/environments/{environme
-//     ntId}".
+// - name: The relative resource name of the environment to update, in
+//   the form:
+//   "projects/{projectId}/locations/{locationId}/environments/{environme
+//   ntId}".
 func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *Environment) *ProjectsLocationsEnvironmentsPatchCall {
 	c := &ProjectsLocationsEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2603,8 +2603,8 @@ type ProjectsLocationsImageVersionsListCall struct {
 
 // List: List ImageVersions for provided location.
 //
-//   - parent: List ImageVersions in the given project and location, in
-//     the form: "projects/{projectId}/locations/{locationId}".
+// - parent: List ImageVersions in the given project and location, in
+//   the form: "projects/{projectId}/locations/{locationId}".
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

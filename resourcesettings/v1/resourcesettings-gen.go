@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/resource-manager/docs/resource-settings/overview
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/resourcesettings/v1"
-//	...
-//	ctx := context.Background()
-//	resourcesettingsService, err := resourcesettings.NewService(ctx)
+//   import "google.golang.org/api/resourcesettings/v1"
+//   ...
+//   ctx := context.Background()
+//   resourcesettingsService, err := resourcesettings.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	resourcesettingsService, err := resourcesettings.NewService(ctx, option.WithAPIKey("AIza..."))
+//   resourcesettingsService, err := resourcesettings.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	resourcesettingsService, err := resourcesettings.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   resourcesettingsService, err := resourcesettings.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package resourcesettings // import "google.golang.org/api/resourcesettings/v1"
@@ -511,8 +511,8 @@ type FoldersSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming
+//   requirements.
 func (r *FoldersSettingsService) Get(name string) *FoldersSettingsGetCall {
 	c := &FoldersSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -523,21 +523,13 @@ func (r *FoldersSettingsService) Get(name string) *FoldersSettingsGetCall {
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *FoldersSettingsGetCall) View(view string) *FoldersSettingsGetCall {
 	c.urlParams_.Set("view", view)
@@ -702,10 +694,10 @@ type FoldersSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+// - parent: The project, folder, or organization that is the parent
+//   resource for this setting. Must be in one of the following forms: *
+//   `projects/{project_number}` * `projects/{project_id}` *
+//   `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *FoldersSettingsService) List(parent string) *FoldersSettingsListCall {
 	c := &FoldersSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -730,21 +722,13 @@ func (c *FoldersSettingsListCall) PageToken(pageToken string) *FoldersSettingsLi
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *FoldersSettingsListCall) View(view string) *FoldersSettingsListCall {
 	c.urlParams_.Set("view", view)
@@ -951,12 +935,12 @@ type FoldersSettingsPatchCall struct {
 // Note: the supplied setting will perform a full overwrite of the
 // `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
-//     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+// - name: The resource name of the setting. Must be in one of the
+//   following forms: *
+//   `projects/{project_number}/settings/{setting_name}` *
+//   `folders/{folder_id}/settings/{setting_name}` *
+//   `organizations/{organization_id}/settings/{setting_name}` For
+//   example, "/projects/123/settings/gcp-enableMyFeature".
 func (r *FoldersSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *FoldersSettingsPatchCall {
 	c := &FoldersSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1100,8 +1084,8 @@ type OrganizationsSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming
+//   requirements.
 func (r *OrganizationsSettingsService) Get(name string) *OrganizationsSettingsGetCall {
 	c := &OrganizationsSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1112,21 +1096,13 @@ func (r *OrganizationsSettingsService) Get(name string) *OrganizationsSettingsGe
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *OrganizationsSettingsGetCall) View(view string) *OrganizationsSettingsGetCall {
 	c.urlParams_.Set("view", view)
@@ -1291,10 +1267,10 @@ type OrganizationsSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+// - parent: The project, folder, or organization that is the parent
+//   resource for this setting. Must be in one of the following forms: *
+//   `projects/{project_number}` * `projects/{project_id}` *
+//   `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *OrganizationsSettingsService) List(parent string) *OrganizationsSettingsListCall {
 	c := &OrganizationsSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1319,21 +1295,13 @@ func (c *OrganizationsSettingsListCall) PageToken(pageToken string) *Organizatio
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *OrganizationsSettingsListCall) View(view string) *OrganizationsSettingsListCall {
 	c.urlParams_.Set("view", view)
@@ -1540,12 +1508,12 @@ type OrganizationsSettingsPatchCall struct {
 // Note: the supplied setting will perform a full overwrite of the
 // `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
-//     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+// - name: The resource name of the setting. Must be in one of the
+//   following forms: *
+//   `projects/{project_number}/settings/{setting_name}` *
+//   `folders/{folder_id}/settings/{setting_name}` *
+//   `organizations/{organization_id}/settings/{setting_name}` For
+//   example, "/projects/123/settings/gcp-enableMyFeature".
 func (r *OrganizationsSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *OrganizationsSettingsPatchCall {
 	c := &OrganizationsSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1689,8 +1657,8 @@ type ProjectsSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming
+//   requirements.
 func (r *ProjectsSettingsService) Get(name string) *ProjectsSettingsGetCall {
 	c := &ProjectsSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1701,21 +1669,13 @@ func (r *ProjectsSettingsService) Get(name string) *ProjectsSettingsGetCall {
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *ProjectsSettingsGetCall) View(view string) *ProjectsSettingsGetCall {
 	c.urlParams_.Set("view", view)
@@ -1880,10 +1840,10 @@ type ProjectsSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+// - parent: The project, folder, or organization that is the parent
+//   resource for this setting. Must be in one of the following forms: *
+//   `projects/{project_number}` * `projects/{project_id}` *
+//   `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *ProjectsSettingsService) List(parent string) *ProjectsSettingsListCall {
 	c := &ProjectsSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1908,21 +1868,13 @@ func (c *ProjectsSettingsListCall) PageToken(pageToken string) *ProjectsSettings
 // request.
 //
 // Possible values:
-//
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
-//
+//   "SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
 // will default to the SETTING_VIEW_BASIC view.
-//
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
-//
+//   "SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
 // This is the default value (for both ListSettings and GetSetting).
-//
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
+//   "SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
 // but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
-//
+//   "SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
 // nothing else.
 func (c *ProjectsSettingsListCall) View(view string) *ProjectsSettingsListCall {
 	c.urlParams_.Set("view", view)
@@ -2129,12 +2081,12 @@ type ProjectsSettingsPatchCall struct {
 // Note: the supplied setting will perform a full overwrite of the
 // `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
-//     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+// - name: The resource name of the setting. Must be in one of the
+//   following forms: *
+//   `projects/{project_number}/settings/{setting_name}` *
+//   `folders/{folder_id}/settings/{setting_name}` *
+//   `organizations/{organization_id}/settings/{setting_name}` For
+//   example, "/projects/123/settings/gcp-enableMyFeature".
 func (r *ProjectsSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *ProjectsSettingsPatchCall {
 	c := &ProjectsSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

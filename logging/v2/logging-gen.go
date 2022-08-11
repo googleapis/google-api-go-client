@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/logging/docs/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/logging/v2"
-//	...
-//	ctx := context.Background()
-//	loggingService, err := logging.NewService(ctx)
+//   import "google.golang.org/api/logging/v2"
+//   ...
+//   ctx := context.Background()
+//   loggingService, err := logging.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	loggingService, err := logging.NewService(ctx, option.WithScopes(logging.LoggingWriteScope))
+//   loggingService, err := logging.NewService(ctx, option.WithScopes(logging.LoggingWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
+//   loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package logging // import "google.golang.org/api/logging/v2"
@@ -3856,16 +3856,16 @@ type BillingAccountsGetCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve CMEK settings.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
-//     organization, it applies to all projects and folders in the Google
-//     Cloud organization.
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can be configured for Google Cloud projects, folders,
+//   organizations and billing accounts. Once configured for an
+//   organization, it applies to all projects and folders in the Google
+//   Cloud organization.
 func (r *BillingAccountsService) GetCmekSettings(name string) *BillingAccountsGetCmekSettingsCall {
 	c := &BillingAccountsGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4022,16 +4022,16 @@ type BillingAccountsGetSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve settings.
-//     "projects/[PROJECT_ID]/settings"
-//     "organizations/[ORGANIZATION_ID]/settings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
-//     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+// - name: The resource for which to retrieve settings.
+//   "projects/[PROJECT_ID]/settings"
+//   "organizations/[ORGANIZATION_ID]/settings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
+//   "folders/[FOLDER_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can be get for Google Cloud projects, folders, organizations
+//   and billing accounts. Currently it can only be configured for
+//   organizations. Once configured for an organization, it applies to
+//   all projects and folders in the Google Cloud organization.
 func (r *BillingAccountsService) GetSettings(name string) *BillingAccountsGetSettingsCall {
 	c := &BillingAccountsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4182,10 +4182,10 @@ type BillingAccountsExclusionsCreateCall struct {
 // parent resource. Only log entries belonging to that resource can be
 // excluded. You can have up to 10 exclusions in a resource.
 //
-//   - parent: The parent resource in which to create the exclusion:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-logging-project" "organizations/123456789".
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-logging-project" "organizations/123456789".
 func (r *BillingAccountsExclusionsService) Create(parent string, logexclusion *LogExclusion) *BillingAccountsExclusionsCreateCall {
 	c := &BillingAccountsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4327,12 +4327,12 @@ type BillingAccountsExclusionsDeleteCall struct {
 
 // Delete: Deletes an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion to delete:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *BillingAccountsExclusionsService) Delete(name string) *BillingAccountsExclusionsDeleteCall {
 	c := &BillingAccountsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4466,12 +4466,12 @@ type BillingAccountsExclusionsGetCall struct {
 
 // Get: Gets the description of an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *BillingAccountsExclusionsService) Get(name string) *BillingAccountsExclusionsGetCall {
 	c := &BillingAccountsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4621,9 +4621,9 @@ type BillingAccountsExclusionsListCall struct {
 // List: Lists all the exclusions on the _Default sink in a parent
 // resource.
 //
-//   - parent: The parent resource whose exclusions are to be listed.
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *BillingAccountsExclusionsService) List(parent string) *BillingAccountsExclusionsListCall {
 	c := &BillingAccountsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4824,12 +4824,12 @@ type BillingAccountsExclusionsPatchCall struct {
 // Patch: Changes one or more properties of an existing exclusion in the
 // _Default sink.
 //
-//   - name: The resource name of the exclusion to update:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *BillingAccountsExclusionsService) Patch(name string, logexclusion *LogExclusion) *BillingAccountsExclusionsPatchCall {
 	c := &BillingAccountsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5140,8 +5140,8 @@ type BillingAccountsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLocationsListCall {
 	c := &BillingAccountsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5353,9 +5353,9 @@ type BillingAccountsLocationsBucketsCreateCall struct {
 // After a bucket has been created, the bucket's location cannot be
 // changed.
 //
-//   - parent: The resource in which to create the log bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
-//     example:"projects/my-project/locations/global".
+// - parent: The resource in which to create the log bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   example:"projects/my-project/locations/global".
 func (r *BillingAccountsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *BillingAccountsLocationsBucketsCreateCall {
 	c := &BillingAccountsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5513,15 +5513,15 @@ type BillingAccountsLocationsBucketsDeleteCall struct {
 // the DELETE_REQUESTED state. After 7 days, the bucket will be purged
 // and all log entries in the bucket will be permanently deleted.
 //
-//   - name: The full resource name of the bucket to delete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *BillingAccountsLocationsBucketsService) Delete(name string) *BillingAccountsLocationsBucketsDeleteCall {
 	c := &BillingAccountsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5655,15 +5655,15 @@ type BillingAccountsLocationsBucketsGetCall struct {
 
 // Get: Gets a log bucket.
 //
-//   - name: The resource name of the bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *BillingAccountsLocationsBucketsService) Get(name string) *BillingAccountsLocationsBucketsGetCall {
 	c := &BillingAccountsLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5812,13 +5812,13 @@ type BillingAccountsLocationsBucketsListCall struct {
 
 // List: Lists log buckets.
 //
-//   - parent: The parent resource whose buckets are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
-//     portion of the resource must be specified, but supplying the
-//     character - in place of LOCATION_ID will return all buckets.
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *BillingAccountsLocationsBucketsService) List(parent string) *BillingAccountsLocationsBucketsListCall {
 	c := &BillingAccountsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6024,15 +6024,15 @@ type BillingAccountsLocationsBucketsPatchCall struct {
 // returned.After a bucket has been created, the bucket's location
 // cannot be changed.
 //
-//   - name: The full resource name of the bucket to update.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *BillingAccountsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *BillingAccountsLocationsBucketsPatchCall {
 	c := &BillingAccountsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6194,15 +6194,15 @@ type BillingAccountsLocationsBucketsUndeleteCall struct {
 // Undelete: Undeletes a log bucket. A bucket that has been deleted can
 // be undeleted within the grace period of 7 days.
 //
-//   - name: The full resource name of the bucket to undelete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *BillingAccountsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *BillingAccountsLocationsBucketsUndeleteCall {
 	c := &BillingAccountsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6346,10 +6346,10 @@ type BillingAccountsLocationsBucketsViewsCreateCall struct {
 // Create: Creates a view over log entries in a log bucket. A bucket may
 // contain a maximum of 30 views.
 //
-//   - parent: The bucket in which to create the view
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     ` For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   ` For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *BillingAccountsLocationsBucketsViewsService) Create(parent string, logview *LogView) *BillingAccountsLocationsBucketsViewsCreateCall {
 	c := &BillingAccountsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6505,11 +6505,11 @@ type BillingAccountsLocationsBucketsViewsDeleteCall struct {
 // returned, this indicates that system is not in a state where it can
 // delete the view. If this occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *BillingAccountsLocationsBucketsViewsService) Delete(name string) *BillingAccountsLocationsBucketsViewsDeleteCall {
 	c := &BillingAccountsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6643,11 +6643,11 @@ type BillingAccountsLocationsBucketsViewsGetCall struct {
 
 // Get: Gets a view on a log bucket..
 //
-//   - name: The resource name of the policy:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *BillingAccountsLocationsBucketsViewsService) Get(name string) *BillingAccountsLocationsBucketsViewsGetCall {
 	c := &BillingAccountsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6796,8 +6796,8 @@ type BillingAccountsLocationsBucketsViewsListCall struct {
 
 // List: Lists views on a log bucket.
 //
-//   - parent: The bucket whose views are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *BillingAccountsLocationsBucketsViewsService) List(parent string) *BillingAccountsLocationsBucketsViewsListCall {
 	c := &BillingAccountsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7001,11 +7001,11 @@ type BillingAccountsLocationsBucketsViewsPatchCall struct {
 // system is not in a state where it can update the view. If this
 // occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to update
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *BillingAccountsLocationsBucketsViewsService) Patch(name string, logview *LogView) *BillingAccountsLocationsBucketsViewsPatchCall {
 	c := &BillingAccountsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7167,9 +7167,9 @@ type BillingAccountsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *BillingAccountsLocationsBucketsViewsLogsService) List(parent string) *BillingAccountsLocationsBucketsViewsLogsListCall {
 	c := &BillingAccountsLocationsBucketsViewsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7914,14 +7914,14 @@ type BillingAccountsLogsDeleteCall struct {
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
 //
-//   - logName: The resource name of the log to delete:
-//     projects/[PROJECT_ID]/logs/[LOG_ID]
-//     organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
-//     folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
-//     example, "projects/my-project-id/logs/syslog",
-//     "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
-//     more information about log names, see LogEntry.
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog",
+//   "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
+//   more information about log names, see LogEntry.
 func (r *BillingAccountsLogsService) Delete(logName string) *BillingAccountsLogsDeleteCall {
 	c := &BillingAccountsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -8056,9 +8056,9 @@ type BillingAccountsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *BillingAccountsLogsService) List(parent string) *BillingAccountsLogsListCall {
 	c := &BillingAccountsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8285,10 +8285,10 @@ type BillingAccountsSinksCreateCall struct {
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
 //
-//   - parent: The resource in which to create the sink:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-project" "organizations/123456789".
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-project" "organizations/123456789".
 func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *BillingAccountsSinksCreateCall {
 	c := &BillingAccountsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8453,13 +8453,13 @@ type BillingAccountsSinksDeleteCall struct {
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
 //
-//   - sinkName: The full resource name of the sink to delete, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *BillingAccountsSinksService) Delete(sinkNameid string) *BillingAccountsSinksDeleteCall {
 	c := &BillingAccountsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -8593,12 +8593,12 @@ type BillingAccountsSinksGetCall struct {
 
 // Get: Gets a sink.
 //
-//   - sinkName: The resource name of the sink:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *BillingAccountsSinksService) Get(sinkName string) *BillingAccountsSinksGetCall {
 	c := &BillingAccountsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -8747,9 +8747,9 @@ type BillingAccountsSinksListCall struct {
 
 // List: Lists sinks.
 //
-//   - parent: The parent resource whose sinks are to be listed:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *BillingAccountsSinksService) List(parent string) *BillingAccountsSinksListCall {
 	c := &BillingAccountsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8952,13 +8952,13 @@ type BillingAccountsSinksPatchCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink) *BillingAccountsSinksPatchCall {
 	c := &BillingAccountsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -9145,13 +9145,13 @@ type BillingAccountsSinksUpdateCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink) *BillingAccountsSinksUpdateCall {
 	c := &BillingAccountsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -9877,10 +9877,10 @@ type ExclusionsCreateCall struct {
 // parent resource. Only log entries belonging to that resource can be
 // excluded. You can have up to 10 exclusions in a resource.
 //
-//   - parent: The parent resource in which to create the exclusion:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-logging-project" "organizations/123456789".
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-logging-project" "organizations/123456789".
 func (r *ExclusionsService) Create(parent string, logexclusion *LogExclusion) *ExclusionsCreateCall {
 	c := &ExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10022,12 +10022,12 @@ type ExclusionsDeleteCall struct {
 
 // Delete: Deletes an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion to delete:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ExclusionsService) Delete(name string) *ExclusionsDeleteCall {
 	c := &ExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10161,12 +10161,12 @@ type ExclusionsGetCall struct {
 
 // Get: Gets the description of an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ExclusionsService) Get(name string) *ExclusionsGetCall {
 	c := &ExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10316,9 +10316,9 @@ type ExclusionsListCall struct {
 // List: Lists all the exclusions on the _Default sink in a parent
 // resource.
 //
-//   - parent: The parent resource whose exclusions are to be listed.
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ExclusionsService) List(parent string) *ExclusionsListCall {
 	c := &ExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10519,12 +10519,12 @@ type ExclusionsPatchCall struct {
 // Patch: Changes one or more properties of an existing exclusion in the
 // _Default sink.
 //
-//   - name: The resource name of the exclusion to update:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ExclusionsService) Patch(name string, logexclusion *LogExclusion) *ExclusionsPatchCall {
 	c := &ExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10692,16 +10692,16 @@ type FoldersGetCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve CMEK settings.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
-//     organization, it applies to all projects and folders in the Google
-//     Cloud organization.
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can be configured for Google Cloud projects, folders,
+//   organizations and billing accounts. Once configured for an
+//   organization, it applies to all projects and folders in the Google
+//   Cloud organization.
 func (r *FoldersService) GetCmekSettings(name string) *FoldersGetCmekSettingsCall {
 	c := &FoldersGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10858,16 +10858,16 @@ type FoldersGetSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve settings.
-//     "projects/[PROJECT_ID]/settings"
-//     "organizations/[ORGANIZATION_ID]/settings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
-//     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+// - name: The resource for which to retrieve settings.
+//   "projects/[PROJECT_ID]/settings"
+//   "organizations/[ORGANIZATION_ID]/settings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
+//   "folders/[FOLDER_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can be get for Google Cloud projects, folders, organizations
+//   and billing accounts. Currently it can only be configured for
+//   organizations. Once configured for an organization, it applies to
+//   all projects and folders in the Google Cloud organization.
 func (r *FoldersService) GetSettings(name string) *FoldersGetSettingsCall {
 	c := &FoldersGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11027,12 +11027,12 @@ type FoldersUpdateSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+// - name: The resource name for the settings to update.
+//   "organizations/[ORGANIZATION_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
 func (r *FoldersService) UpdateSettings(name string, settings *Settings) *FoldersUpdateSettingsCall {
 	c := &FoldersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11193,10 +11193,10 @@ type FoldersExclusionsCreateCall struct {
 // parent resource. Only log entries belonging to that resource can be
 // excluded. You can have up to 10 exclusions in a resource.
 //
-//   - parent: The parent resource in which to create the exclusion:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-logging-project" "organizations/123456789".
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-logging-project" "organizations/123456789".
 func (r *FoldersExclusionsService) Create(parent string, logexclusion *LogExclusion) *FoldersExclusionsCreateCall {
 	c := &FoldersExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11338,12 +11338,12 @@ type FoldersExclusionsDeleteCall struct {
 
 // Delete: Deletes an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion to delete:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *FoldersExclusionsService) Delete(name string) *FoldersExclusionsDeleteCall {
 	c := &FoldersExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11477,12 +11477,12 @@ type FoldersExclusionsGetCall struct {
 
 // Get: Gets the description of an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *FoldersExclusionsService) Get(name string) *FoldersExclusionsGetCall {
 	c := &FoldersExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11632,9 +11632,9 @@ type FoldersExclusionsListCall struct {
 // List: Lists all the exclusions on the _Default sink in a parent
 // resource.
 //
-//   - parent: The parent resource whose exclusions are to be listed.
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *FoldersExclusionsService) List(parent string) *FoldersExclusionsListCall {
 	c := &FoldersExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11835,12 +11835,12 @@ type FoldersExclusionsPatchCall struct {
 // Patch: Changes one or more properties of an existing exclusion in the
 // _Default sink.
 //
-//   - name: The resource name of the exclusion to update:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *FoldersExclusionsService) Patch(name string, logexclusion *LogExclusion) *FoldersExclusionsPatchCall {
 	c := &FoldersExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12151,8 +12151,8 @@ type FoldersLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
 	c := &FoldersLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12364,9 +12364,9 @@ type FoldersLocationsBucketsCreateCall struct {
 // After a bucket has been created, the bucket's location cannot be
 // changed.
 //
-//   - parent: The resource in which to create the log bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
-//     example:"projects/my-project/locations/global".
+// - parent: The resource in which to create the log bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   example:"projects/my-project/locations/global".
 func (r *FoldersLocationsBucketsService) Create(parent string, logbucket *LogBucket) *FoldersLocationsBucketsCreateCall {
 	c := &FoldersLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12524,15 +12524,15 @@ type FoldersLocationsBucketsDeleteCall struct {
 // the DELETE_REQUESTED state. After 7 days, the bucket will be purged
 // and all log entries in the bucket will be permanently deleted.
 //
-//   - name: The full resource name of the bucket to delete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *FoldersLocationsBucketsService) Delete(name string) *FoldersLocationsBucketsDeleteCall {
 	c := &FoldersLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12666,15 +12666,15 @@ type FoldersLocationsBucketsGetCall struct {
 
 // Get: Gets a log bucket.
 //
-//   - name: The resource name of the bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *FoldersLocationsBucketsService) Get(name string) *FoldersLocationsBucketsGetCall {
 	c := &FoldersLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12823,13 +12823,13 @@ type FoldersLocationsBucketsListCall struct {
 
 // List: Lists log buckets.
 //
-//   - parent: The parent resource whose buckets are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
-//     portion of the resource must be specified, but supplying the
-//     character - in place of LOCATION_ID will return all buckets.
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *FoldersLocationsBucketsService) List(parent string) *FoldersLocationsBucketsListCall {
 	c := &FoldersLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13035,15 +13035,15 @@ type FoldersLocationsBucketsPatchCall struct {
 // returned.After a bucket has been created, the bucket's location
 // cannot be changed.
 //
-//   - name: The full resource name of the bucket to update.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *FoldersLocationsBucketsService) Patch(name string, logbucket *LogBucket) *FoldersLocationsBucketsPatchCall {
 	c := &FoldersLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13205,15 +13205,15 @@ type FoldersLocationsBucketsUndeleteCall struct {
 // Undelete: Undeletes a log bucket. A bucket that has been deleted can
 // be undeleted within the grace period of 7 days.
 //
-//   - name: The full resource name of the bucket to undelete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *FoldersLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *FoldersLocationsBucketsUndeleteCall {
 	c := &FoldersLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13357,10 +13357,10 @@ type FoldersLocationsBucketsViewsCreateCall struct {
 // Create: Creates a view over log entries in a log bucket. A bucket may
 // contain a maximum of 30 views.
 //
-//   - parent: The bucket in which to create the view
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     ` For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   ` For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *FoldersLocationsBucketsViewsService) Create(parent string, logview *LogView) *FoldersLocationsBucketsViewsCreateCall {
 	c := &FoldersLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13516,11 +13516,11 @@ type FoldersLocationsBucketsViewsDeleteCall struct {
 // returned, this indicates that system is not in a state where it can
 // delete the view. If this occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *FoldersLocationsBucketsViewsService) Delete(name string) *FoldersLocationsBucketsViewsDeleteCall {
 	c := &FoldersLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13654,11 +13654,11 @@ type FoldersLocationsBucketsViewsGetCall struct {
 
 // Get: Gets a view on a log bucket..
 //
-//   - name: The resource name of the policy:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *FoldersLocationsBucketsViewsService) Get(name string) *FoldersLocationsBucketsViewsGetCall {
 	c := &FoldersLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13807,8 +13807,8 @@ type FoldersLocationsBucketsViewsListCall struct {
 
 // List: Lists views on a log bucket.
 //
-//   - parent: The bucket whose views are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *FoldersLocationsBucketsViewsService) List(parent string) *FoldersLocationsBucketsViewsListCall {
 	c := &FoldersLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14012,11 +14012,11 @@ type FoldersLocationsBucketsViewsPatchCall struct {
 // system is not in a state where it can update the view. If this
 // occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to update
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *FoldersLocationsBucketsViewsService) Patch(name string, logview *LogView) *FoldersLocationsBucketsViewsPatchCall {
 	c := &FoldersLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14178,9 +14178,9 @@ type FoldersLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *FoldersLocationsBucketsViewsLogsService) List(parent string) *FoldersLocationsBucketsViewsLogsListCall {
 	c := &FoldersLocationsBucketsViewsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14925,14 +14925,14 @@ type FoldersLogsDeleteCall struct {
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
 //
-//   - logName: The resource name of the log to delete:
-//     projects/[PROJECT_ID]/logs/[LOG_ID]
-//     organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
-//     folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
-//     example, "projects/my-project-id/logs/syslog",
-//     "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
-//     more information about log names, see LogEntry.
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog",
+//   "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
+//   more information about log names, see LogEntry.
 func (r *FoldersLogsService) Delete(logName string) *FoldersLogsDeleteCall {
 	c := &FoldersLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -15067,9 +15067,9 @@ type FoldersLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *FoldersLogsService) List(parent string) *FoldersLogsListCall {
 	c := &FoldersLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15296,10 +15296,10 @@ type FoldersSinksCreateCall struct {
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
 //
-//   - parent: The resource in which to create the sink:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-project" "organizations/123456789".
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-project" "organizations/123456789".
 func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSinksCreateCall {
 	c := &FoldersSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15464,13 +15464,13 @@ type FoldersSinksDeleteCall struct {
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
 //
-//   - sinkName: The full resource name of the sink to delete, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *FoldersSinksService) Delete(sinkNameid string) *FoldersSinksDeleteCall {
 	c := &FoldersSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -15604,12 +15604,12 @@ type FoldersSinksGetCall struct {
 
 // Get: Gets a sink.
 //
-//   - sinkName: The resource name of the sink:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *FoldersSinksService) Get(sinkName string) *FoldersSinksGetCall {
 	c := &FoldersSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -15758,9 +15758,9 @@ type FoldersSinksListCall struct {
 
 // List: Lists sinks.
 //
-//   - parent: The parent resource whose sinks are to be listed:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *FoldersSinksService) List(parent string) *FoldersSinksListCall {
 	c := &FoldersSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15963,13 +15963,13 @@ type FoldersSinksPatchCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *FoldersSinksPatchCall {
 	c := &FoldersSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -16156,13 +16156,13 @@ type FoldersSinksUpdateCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *FoldersSinksUpdateCall {
 	c := &FoldersSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -16496,8 +16496,8 @@ type LocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *LocationsService) List(name string) *LocationsListCall {
 	c := &LocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16709,9 +16709,9 @@ type LocationsBucketsCreateCall struct {
 // After a bucket has been created, the bucket's location cannot be
 // changed.
 //
-//   - parent: The resource in which to create the log bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
-//     example:"projects/my-project/locations/global".
+// - parent: The resource in which to create the log bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   example:"projects/my-project/locations/global".
 func (r *LocationsBucketsService) Create(parent string, logbucket *LogBucket) *LocationsBucketsCreateCall {
 	c := &LocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16869,15 +16869,15 @@ type LocationsBucketsDeleteCall struct {
 // the DELETE_REQUESTED state. After 7 days, the bucket will be purged
 // and all log entries in the bucket will be permanently deleted.
 //
-//   - name: The full resource name of the bucket to delete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *LocationsBucketsService) Delete(name string) *LocationsBucketsDeleteCall {
 	c := &LocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17011,15 +17011,15 @@ type LocationsBucketsGetCall struct {
 
 // Get: Gets a log bucket.
 //
-//   - name: The resource name of the bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *LocationsBucketsService) Get(name string) *LocationsBucketsGetCall {
 	c := &LocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17168,13 +17168,13 @@ type LocationsBucketsListCall struct {
 
 // List: Lists log buckets.
 //
-//   - parent: The parent resource whose buckets are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
-//     portion of the resource must be specified, but supplying the
-//     character - in place of LOCATION_ID will return all buckets.
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *LocationsBucketsService) List(parent string) *LocationsBucketsListCall {
 	c := &LocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17380,15 +17380,15 @@ type LocationsBucketsPatchCall struct {
 // returned.After a bucket has been created, the bucket's location
 // cannot be changed.
 //
-//   - name: The full resource name of the bucket to update.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *LocationsBucketsService) Patch(name string, logbucket *LogBucket) *LocationsBucketsPatchCall {
 	c := &LocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17550,15 +17550,15 @@ type LocationsBucketsUndeleteCall struct {
 // Undelete: Undeletes a log bucket. A bucket that has been deleted can
 // be undeleted within the grace period of 7 days.
 //
-//   - name: The full resource name of the bucket to undelete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *LocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *LocationsBucketsUndeleteCall {
 	c := &LocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17702,10 +17702,10 @@ type LocationsBucketsViewsCreateCall struct {
 // Create: Creates a view over log entries in a log bucket. A bucket may
 // contain a maximum of 30 views.
 //
-//   - parent: The bucket in which to create the view
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     ` For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   ` For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *LocationsBucketsViewsService) Create(parent string, logview *LogView) *LocationsBucketsViewsCreateCall {
 	c := &LocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17861,11 +17861,11 @@ type LocationsBucketsViewsDeleteCall struct {
 // returned, this indicates that system is not in a state where it can
 // delete the view. If this occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *LocationsBucketsViewsService) Delete(name string) *LocationsBucketsViewsDeleteCall {
 	c := &LocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17999,11 +17999,11 @@ type LocationsBucketsViewsGetCall struct {
 
 // Get: Gets a view on a log bucket..
 //
-//   - name: The resource name of the policy:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *LocationsBucketsViewsService) Get(name string) *LocationsBucketsViewsGetCall {
 	c := &LocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18152,8 +18152,8 @@ type LocationsBucketsViewsListCall struct {
 
 // List: Lists views on a log bucket.
 //
-//   - parent: The bucket whose views are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *LocationsBucketsViewsService) List(parent string) *LocationsBucketsViewsListCall {
 	c := &LocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18357,11 +18357,11 @@ type LocationsBucketsViewsPatchCall struct {
 // system is not in a state where it can update the view. If this
 // occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to update
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *LocationsBucketsViewsService) Patch(name string, logview *LogView) *LocationsBucketsViewsPatchCall {
 	c := &LocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19044,14 +19044,14 @@ type LogsDeleteCall struct {
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
 //
-//   - logName: The resource name of the log to delete:
-//     projects/[PROJECT_ID]/logs/[LOG_ID]
-//     organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
-//     folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
-//     example, "projects/my-project-id/logs/syslog",
-//     "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
-//     more information about log names, see LogEntry.
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog",
+//   "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
+//   more information about log names, see LogEntry.
 func (r *LogsService) Delete(logName string) *LogsDeleteCall {
 	c := &LogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -19186,9 +19186,9 @@ type LogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *LogsService) List(parent string) *LogsListCall {
 	c := &LogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19605,16 +19605,16 @@ type OrganizationsGetCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve CMEK settings.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
-//     organization, it applies to all projects and folders in the Google
-//     Cloud organization.
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can be configured for Google Cloud projects, folders,
+//   organizations and billing accounts. Once configured for an
+//   organization, it applies to all projects and folders in the Google
+//   Cloud organization.
 func (r *OrganizationsService) GetCmekSettings(name string) *OrganizationsGetCmekSettingsCall {
 	c := &OrganizationsGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19771,16 +19771,16 @@ type OrganizationsGetSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve settings.
-//     "projects/[PROJECT_ID]/settings"
-//     "organizations/[ORGANIZATION_ID]/settings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
-//     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+// - name: The resource for which to retrieve settings.
+//   "projects/[PROJECT_ID]/settings"
+//   "organizations/[ORGANIZATION_ID]/settings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
+//   "folders/[FOLDER_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can be get for Google Cloud projects, folders, organizations
+//   and billing accounts. Currently it can only be configured for
+//   organizations. Once configured for an organization, it applies to
+//   all projects and folders in the Google Cloud organization.
 func (r *OrganizationsService) GetSettings(name string) *OrganizationsGetSettingsCall {
 	c := &OrganizationsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19939,15 +19939,15 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource name for the CMEK settings to update.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+// - name: The resource name for the CMEK settings to update.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
 func (r *OrganizationsService) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *OrganizationsUpdateCmekSettingsCall {
 	c := &OrganizationsUpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20117,12 +20117,12 @@ type OrganizationsUpdateSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+// - name: The resource name for the settings to update.
+//   "organizations/[ORGANIZATION_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
 func (r *OrganizationsService) UpdateSettings(name string, settings *Settings) *OrganizationsUpdateSettingsCall {
 	c := &OrganizationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20283,10 +20283,10 @@ type OrganizationsExclusionsCreateCall struct {
 // parent resource. Only log entries belonging to that resource can be
 // excluded. You can have up to 10 exclusions in a resource.
 //
-//   - parent: The parent resource in which to create the exclusion:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-logging-project" "organizations/123456789".
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-logging-project" "organizations/123456789".
 func (r *OrganizationsExclusionsService) Create(parent string, logexclusion *LogExclusion) *OrganizationsExclusionsCreateCall {
 	c := &OrganizationsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20428,12 +20428,12 @@ type OrganizationsExclusionsDeleteCall struct {
 
 // Delete: Deletes an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion to delete:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *OrganizationsExclusionsService) Delete(name string) *OrganizationsExclusionsDeleteCall {
 	c := &OrganizationsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20567,12 +20567,12 @@ type OrganizationsExclusionsGetCall struct {
 
 // Get: Gets the description of an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *OrganizationsExclusionsService) Get(name string) *OrganizationsExclusionsGetCall {
 	c := &OrganizationsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20722,9 +20722,9 @@ type OrganizationsExclusionsListCall struct {
 // List: Lists all the exclusions on the _Default sink in a parent
 // resource.
 //
-//   - parent: The parent resource whose exclusions are to be listed.
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *OrganizationsExclusionsService) List(parent string) *OrganizationsExclusionsListCall {
 	c := &OrganizationsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20925,12 +20925,12 @@ type OrganizationsExclusionsPatchCall struct {
 // Patch: Changes one or more properties of an existing exclusion in the
 // _Default sink.
 //
-//   - name: The resource name of the exclusion to update:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *OrganizationsExclusionsService) Patch(name string, logexclusion *LogExclusion) *OrganizationsExclusionsPatchCall {
 	c := &OrganizationsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21241,8 +21241,8 @@ type OrganizationsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
 	c := &OrganizationsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21454,9 +21454,9 @@ type OrganizationsLocationsBucketsCreateCall struct {
 // After a bucket has been created, the bucket's location cannot be
 // changed.
 //
-//   - parent: The resource in which to create the log bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
-//     example:"projects/my-project/locations/global".
+// - parent: The resource in which to create the log bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   example:"projects/my-project/locations/global".
 func (r *OrganizationsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *OrganizationsLocationsBucketsCreateCall {
 	c := &OrganizationsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21614,15 +21614,15 @@ type OrganizationsLocationsBucketsDeleteCall struct {
 // the DELETE_REQUESTED state. After 7 days, the bucket will be purged
 // and all log entries in the bucket will be permanently deleted.
 //
-//   - name: The full resource name of the bucket to delete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *OrganizationsLocationsBucketsService) Delete(name string) *OrganizationsLocationsBucketsDeleteCall {
 	c := &OrganizationsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21756,15 +21756,15 @@ type OrganizationsLocationsBucketsGetCall struct {
 
 // Get: Gets a log bucket.
 //
-//   - name: The resource name of the bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *OrganizationsLocationsBucketsService) Get(name string) *OrganizationsLocationsBucketsGetCall {
 	c := &OrganizationsLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21913,13 +21913,13 @@ type OrganizationsLocationsBucketsListCall struct {
 
 // List: Lists log buckets.
 //
-//   - parent: The parent resource whose buckets are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
-//     portion of the resource must be specified, but supplying the
-//     character - in place of LOCATION_ID will return all buckets.
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *OrganizationsLocationsBucketsService) List(parent string) *OrganizationsLocationsBucketsListCall {
 	c := &OrganizationsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22125,15 +22125,15 @@ type OrganizationsLocationsBucketsPatchCall struct {
 // returned.After a bucket has been created, the bucket's location
 // cannot be changed.
 //
-//   - name: The full resource name of the bucket to update.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *OrganizationsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *OrganizationsLocationsBucketsPatchCall {
 	c := &OrganizationsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22295,15 +22295,15 @@ type OrganizationsLocationsBucketsUndeleteCall struct {
 // Undelete: Undeletes a log bucket. A bucket that has been deleted can
 // be undeleted within the grace period of 7 days.
 //
-//   - name: The full resource name of the bucket to undelete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *OrganizationsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *OrganizationsLocationsBucketsUndeleteCall {
 	c := &OrganizationsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22447,10 +22447,10 @@ type OrganizationsLocationsBucketsViewsCreateCall struct {
 // Create: Creates a view over log entries in a log bucket. A bucket may
 // contain a maximum of 30 views.
 //
-//   - parent: The bucket in which to create the view
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     ` For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   ` For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *OrganizationsLocationsBucketsViewsService) Create(parent string, logview *LogView) *OrganizationsLocationsBucketsViewsCreateCall {
 	c := &OrganizationsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22606,11 +22606,11 @@ type OrganizationsLocationsBucketsViewsDeleteCall struct {
 // returned, this indicates that system is not in a state where it can
 // delete the view. If this occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *OrganizationsLocationsBucketsViewsService) Delete(name string) *OrganizationsLocationsBucketsViewsDeleteCall {
 	c := &OrganizationsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22744,11 +22744,11 @@ type OrganizationsLocationsBucketsViewsGetCall struct {
 
 // Get: Gets a view on a log bucket..
 //
-//   - name: The resource name of the policy:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *OrganizationsLocationsBucketsViewsService) Get(name string) *OrganizationsLocationsBucketsViewsGetCall {
 	c := &OrganizationsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22897,8 +22897,8 @@ type OrganizationsLocationsBucketsViewsListCall struct {
 
 // List: Lists views on a log bucket.
 //
-//   - parent: The bucket whose views are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *OrganizationsLocationsBucketsViewsService) List(parent string) *OrganizationsLocationsBucketsViewsListCall {
 	c := &OrganizationsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23102,11 +23102,11 @@ type OrganizationsLocationsBucketsViewsPatchCall struct {
 // system is not in a state where it can update the view. If this
 // occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to update
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *OrganizationsLocationsBucketsViewsService) Patch(name string, logview *LogView) *OrganizationsLocationsBucketsViewsPatchCall {
 	c := &OrganizationsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23268,9 +23268,9 @@ type OrganizationsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *OrganizationsLocationsBucketsViewsLogsService) List(parent string) *OrganizationsLocationsBucketsViewsLogsListCall {
 	c := &OrganizationsLocationsBucketsViewsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24015,14 +24015,14 @@ type OrganizationsLogsDeleteCall struct {
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
 //
-//   - logName: The resource name of the log to delete:
-//     projects/[PROJECT_ID]/logs/[LOG_ID]
-//     organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
-//     folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
-//     example, "projects/my-project-id/logs/syslog",
-//     "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
-//     more information about log names, see LogEntry.
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog",
+//   "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
+//   more information about log names, see LogEntry.
 func (r *OrganizationsLogsService) Delete(logName string) *OrganizationsLogsDeleteCall {
 	c := &OrganizationsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -24157,9 +24157,9 @@ type OrganizationsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *OrganizationsLogsService) List(parent string) *OrganizationsLogsListCall {
 	c := &OrganizationsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24386,10 +24386,10 @@ type OrganizationsSinksCreateCall struct {
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
 //
-//   - parent: The resource in which to create the sink:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-project" "organizations/123456789".
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-project" "organizations/123456789".
 func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *OrganizationsSinksCreateCall {
 	c := &OrganizationsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24554,13 +24554,13 @@ type OrganizationsSinksDeleteCall struct {
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
 //
-//   - sinkName: The full resource name of the sink to delete, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *OrganizationsSinksService) Delete(sinkNameid string) *OrganizationsSinksDeleteCall {
 	c := &OrganizationsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -24694,12 +24694,12 @@ type OrganizationsSinksGetCall struct {
 
 // Get: Gets a sink.
 //
-//   - sinkName: The resource name of the sink:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *OrganizationsSinksService) Get(sinkName string) *OrganizationsSinksGetCall {
 	c := &OrganizationsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -24848,9 +24848,9 @@ type OrganizationsSinksListCall struct {
 
 // List: Lists sinks.
 //
-//   - parent: The parent resource whose sinks are to be listed:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *OrganizationsSinksService) List(parent string) *OrganizationsSinksListCall {
 	c := &OrganizationsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25053,13 +25053,13 @@ type OrganizationsSinksPatchCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *OrganizationsSinksPatchCall {
 	c := &OrganizationsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -25246,13 +25246,13 @@ type OrganizationsSinksUpdateCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) *OrganizationsSinksUpdateCall {
 	c := &OrganizationsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -25443,16 +25443,16 @@ type ProjectsGetCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve CMEK settings.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
-//     organization, it applies to all projects and folders in the Google
-//     Cloud organization.
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can be configured for Google Cloud projects, folders,
+//   organizations and billing accounts. Once configured for an
+//   organization, it applies to all projects and folders in the Google
+//   Cloud organization.
 func (r *ProjectsService) GetCmekSettings(name string) *ProjectsGetCmekSettingsCall {
 	c := &ProjectsGetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25609,16 +25609,16 @@ type ProjectsGetSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve settings.
-//     "projects/[PROJECT_ID]/settings"
-//     "organizations/[ORGANIZATION_ID]/settings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
-//     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+// - name: The resource for which to retrieve settings.
+//   "projects/[PROJECT_ID]/settings"
+//   "organizations/[ORGANIZATION_ID]/settings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
+//   "folders/[FOLDER_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can be get for Google Cloud projects, folders, organizations
+//   and billing accounts. Currently it can only be configured for
+//   organizations. Once configured for an organization, it applies to
+//   all projects and folders in the Google Cloud organization.
 func (r *ProjectsService) GetSettings(name string) *ProjectsGetSettingsCall {
 	c := &ProjectsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25769,10 +25769,10 @@ type ProjectsExclusionsCreateCall struct {
 // parent resource. Only log entries belonging to that resource can be
 // excluded. You can have up to 10 exclusions in a resource.
 //
-//   - parent: The parent resource in which to create the exclusion:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-logging-project" "organizations/123456789".
+// - parent: The parent resource in which to create the exclusion:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-logging-project" "organizations/123456789".
 func (r *ProjectsExclusionsService) Create(parent string, logexclusion *LogExclusion) *ProjectsExclusionsCreateCall {
 	c := &ProjectsExclusionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25914,12 +25914,12 @@ type ProjectsExclusionsDeleteCall struct {
 
 // Delete: Deletes an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion to delete:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion to delete:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ProjectsExclusionsService) Delete(name string) *ProjectsExclusionsDeleteCall {
 	c := &ProjectsExclusionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26053,12 +26053,12 @@ type ProjectsExclusionsGetCall struct {
 
 // Get: Gets the description of an exclusion in the _Default sink.
 //
-//   - name: The resource name of an existing exclusion:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of an existing exclusion:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ProjectsExclusionsService) Get(name string) *ProjectsExclusionsGetCall {
 	c := &ProjectsExclusionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26208,9 +26208,9 @@ type ProjectsExclusionsListCall struct {
 // List: Lists all the exclusions on the _Default sink in a parent
 // resource.
 //
-//   - parent: The parent resource whose exclusions are to be listed.
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose exclusions are to be listed.
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ProjectsExclusionsService) List(parent string) *ProjectsExclusionsListCall {
 	c := &ProjectsExclusionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -26411,12 +26411,12 @@ type ProjectsExclusionsPatchCall struct {
 // Patch: Changes one or more properties of an existing exclusion in the
 // _Default sink.
 //
-//   - name: The resource name of the exclusion to update:
-//     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
-//     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-//     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
-//     example:"projects/my-project/exclusions/my-exclusion".
+// - name: The resource name of the exclusion to update:
+//   "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+//   "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
+//   "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" For
+//   example:"projects/my-project/exclusions/my-exclusion".
 func (r *ProjectsExclusionsService) Patch(name string, logexclusion *LogExclusion) *ProjectsExclusionsPatchCall {
 	c := &ProjectsExclusionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26727,8 +26727,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26940,9 +26940,9 @@ type ProjectsLocationsBucketsCreateCall struct {
 // After a bucket has been created, the bucket's location cannot be
 // changed.
 //
-//   - parent: The resource in which to create the log bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
-//     example:"projects/my-project/locations/global".
+// - parent: The resource in which to create the log bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+//   example:"projects/my-project/locations/global".
 func (r *ProjectsLocationsBucketsService) Create(parent string, logbucket *LogBucket) *ProjectsLocationsBucketsCreateCall {
 	c := &ProjectsLocationsBucketsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27100,15 +27100,15 @@ type ProjectsLocationsBucketsDeleteCall struct {
 // the DELETE_REQUESTED state. After 7 days, the bucket will be purged
 // and all log entries in the bucket will be permanently deleted.
 //
-//   - name: The full resource name of the bucket to delete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to delete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *ProjectsLocationsBucketsService) Delete(name string) *ProjectsLocationsBucketsDeleteCall {
 	c := &ProjectsLocationsBucketsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27242,15 +27242,15 @@ type ProjectsLocationsBucketsGetCall struct {
 
 // Get: Gets a log bucket.
 //
-//   - name: The resource name of the bucket:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The resource name of the bucket:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *ProjectsLocationsBucketsService) Get(name string) *ProjectsLocationsBucketsGetCall {
 	c := &ProjectsLocationsBucketsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27399,13 +27399,13 @@ type ProjectsLocationsBucketsListCall struct {
 
 // List: Lists log buckets.
 //
-//   - parent: The parent resource whose buckets are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
-//     portion of the resource must be specified, but supplying the
-//     character - in place of LOCATION_ID will return all buckets.
+// - parent: The parent resource whose buckets are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations
+//   portion of the resource must be specified, but supplying the
+//   character - in place of LOCATION_ID will return all buckets.
 func (r *ProjectsLocationsBucketsService) List(parent string) *ProjectsLocationsBucketsListCall {
 	c := &ProjectsLocationsBucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27611,15 +27611,15 @@ type ProjectsLocationsBucketsPatchCall struct {
 // returned.After a bucket has been created, the bucket's location
 // cannot be changed.
 //
-//   - name: The full resource name of the bucket to update.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to update.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *ProjectsLocationsBucketsService) Patch(name string, logbucket *LogBucket) *ProjectsLocationsBucketsPatchCall {
 	c := &ProjectsLocationsBucketsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27781,15 +27781,15 @@ type ProjectsLocationsBucketsUndeleteCall struct {
 // Undelete: Undeletes a log bucket. A bucket that has been deleted can
 // be undeleted within the grace period of 7 days.
 //
-//   - name: The full resource name of the bucket to undelete.
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
-//     CKET_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
-//     s/[BUCKET_ID]"
-//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - name: The full resource name of the bucket to undelete.
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BU
+//   CKET_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/bucket
+//   s/[BUCKET_ID]"
+//   "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *ProjectsLocationsBucketsService) Undelete(name string, undeletebucketrequest *UndeleteBucketRequest) *ProjectsLocationsBucketsUndeleteCall {
 	c := &ProjectsLocationsBucketsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27933,10 +27933,10 @@ type ProjectsLocationsBucketsViewsCreateCall struct {
 // Create: Creates a view over log entries in a log bucket. A bucket may
 // contain a maximum of 30 views.
 //
-//   - parent: The bucket in which to create the view
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
-//     ` For
-//     example:"projects/my-project/locations/global/buckets/my-bucket".
+// - parent: The bucket in which to create the view
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+//   ` For
+//   example:"projects/my-project/locations/global/buckets/my-bucket".
 func (r *ProjectsLocationsBucketsViewsService) Create(parent string, logview *LogView) *ProjectsLocationsBucketsViewsCreateCall {
 	c := &ProjectsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28092,11 +28092,11 @@ type ProjectsLocationsBucketsViewsDeleteCall struct {
 // returned, this indicates that system is not in a state where it can
 // delete the view. If this occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to delete:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to delete:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *ProjectsLocationsBucketsViewsService) Delete(name string) *ProjectsLocationsBucketsViewsDeleteCall {
 	c := &ProjectsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28230,11 +28230,11 @@ type ProjectsLocationsBucketsViewsGetCall struct {
 
 // Get: Gets a view on a log bucket..
 //
-//   - name: The resource name of the policy:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The resource name of the policy:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *ProjectsLocationsBucketsViewsService) Get(name string) *ProjectsLocationsBucketsViewsGetCall {
 	c := &ProjectsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28383,8 +28383,8 @@ type ProjectsLocationsBucketsViewsListCall struct {
 
 // List: Lists views on a log bucket.
 //
-//   - parent: The bucket whose views are to be listed:
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
+// - parent: The bucket whose views are to be listed:
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]".
 func (r *ProjectsLocationsBucketsViewsService) List(parent string) *ProjectsLocationsBucketsViewsListCall {
 	c := &ProjectsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28588,11 +28588,11 @@ type ProjectsLocationsBucketsViewsPatchCall struct {
 // system is not in a state where it can update the view. If this
 // occurs, please try again in a few minutes.
 //
-//   - name: The full resource name of the view to update
-//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
-//     iews/[VIEW_ID]" For
-//     example:"projects/my-project/locations/global/buckets/my-bucket/view
-//     s/my-view".
+// - name: The full resource name of the view to update
+//   "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
+//   iews/[VIEW_ID]" For
+//   example:"projects/my-project/locations/global/buckets/my-bucket/view
+//   s/my-view".
 func (r *ProjectsLocationsBucketsViewsService) Patch(name string, logview *LogView) *ProjectsLocationsBucketsViewsPatchCall {
 	c := &ProjectsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28754,9 +28754,9 @@ type ProjectsLocationsBucketsViewsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *ProjectsLocationsBucketsViewsLogsService) List(parent string) *ProjectsLocationsBucketsViewsLogsListCall {
 	c := &ProjectsLocationsBucketsViewsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29501,14 +29501,14 @@ type ProjectsLogsDeleteCall struct {
 // Entries received after the delete operation with a timestamp before
 // the operation will be deleted.
 //
-//   - logName: The resource name of the log to delete:
-//     projects/[PROJECT_ID]/logs/[LOG_ID]
-//     organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
-//     folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
-//     example, "projects/my-project-id/logs/syslog",
-//     "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
-//     more information about log names, see LogEntry.
+// - logName: The resource name of the log to delete:
+//   projects/[PROJECT_ID]/logs/[LOG_ID]
+//   organizations/[ORGANIZATION_ID]/logs/[LOG_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]
+//   folders/[FOLDER_ID]/logs/[LOG_ID][LOG_ID] must be URL-encoded. For
+//   example, "projects/my-project-id/logs/syslog",
+//   "organizations/123/logs/cloudaudit.googleapis.com%2Factivity".For
+//   more information about log names, see LogEntry.
 func (r *ProjectsLogsService) Delete(logName string) *ProjectsLogsDeleteCall {
 	c := &ProjectsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.logName = logName
@@ -29643,9 +29643,9 @@ type ProjectsLogsListCall struct {
 // List: Lists the logs in projects, organizations, folders, or billing
 // accounts. Only logs that have entries are listed.
 //
-//   - parent: The resource name that owns the logs: projects/[PROJECT_ID]
-//     organizations/[ORGANIZATION_ID]
-//     billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
+// - parent: The resource name that owns the logs: projects/[PROJECT_ID]
+//   organizations/[ORGANIZATION_ID]
+//   billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID].
 func (r *ProjectsLogsService) List(parent string) *ProjectsLogsListCall {
 	c := &ProjectsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29868,9 +29868,9 @@ type ProjectsMetricsCreateCall struct {
 
 // Create: Creates a logs-based metric.
 //
-//   - parent: The resource name of the project in which to create the
-//     metric: "projects/[PROJECT_ID]" The new metric must be provided in
-//     the request.
+// - parent: The resource name of the project in which to create the
+//   metric: "projects/[PROJECT_ID]" The new metric must be provided in
+//   the request.
 func (r *ProjectsMetricsService) Create(parent string, logmetric *LogMetric) *ProjectsMetricsCreateCall {
 	c := &ProjectsMetricsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30013,8 +30013,8 @@ type ProjectsMetricsDeleteCall struct {
 
 // Delete: Deletes a logs-based metric.
 //
-//   - metricName: The resource name of the metric to delete:
-//     "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
+// - metricName: The resource name of the metric to delete:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
 func (r *ProjectsMetricsService) Delete(metricName string) *ProjectsMetricsDeleteCall {
 	c := &ProjectsMetricsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -30149,8 +30149,8 @@ type ProjectsMetricsGetCall struct {
 
 // Get: Gets a logs-based metric.
 //
-//   - metricName: The resource name of the desired metric:
-//     "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
+// - metricName: The resource name of the desired metric:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]".
 func (r *ProjectsMetricsService) Get(metricName string) *ProjectsMetricsGetCall {
 	c := &ProjectsMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -30299,8 +30299,8 @@ type ProjectsMetricsListCall struct {
 
 // List: Lists logs-based metrics.
 //
-//   - parent: The name of the project containing the metrics:
-//     "projects/[PROJECT_ID]".
+// - parent: The name of the project containing the metrics:
+//   "projects/[PROJECT_ID]".
 func (r *ProjectsMetricsService) List(parent string) *ProjectsMetricsListCall {
 	c := &ProjectsMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30500,11 +30500,11 @@ type ProjectsMetricsUpdateCall struct {
 
 // Update: Creates or updates a logs-based metric.
 //
-//   - metricName: The resource name of the metric to update:
-//     "projects/[PROJECT_ID]/metrics/[METRIC_ID]" The updated metric must
-//     be provided in the request and it's name field must be the same as
-//     [METRIC_ID] If the metric does not exist in [PROJECT_ID], then a
-//     new metric is created.
+// - metricName: The resource name of the metric to update:
+//   "projects/[PROJECT_ID]/metrics/[METRIC_ID]" The updated metric must
+//   be provided in the request and it's name field must be the same as
+//   [METRIC_ID] If the metric does not exist in [PROJECT_ID], then a
+//   new metric is created.
 func (r *ProjectsMetricsService) Update(metricName string, logmetric *LogMetric) *ProjectsMetricsUpdateCall {
 	c := &ProjectsMetricsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metricName = metricName
@@ -30652,10 +30652,10 @@ type ProjectsSinksCreateCall struct {
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
 //
-//   - parent: The resource in which to create the sink:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-project" "organizations/123456789".
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-project" "organizations/123456789".
 func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *ProjectsSinksCreateCall {
 	c := &ProjectsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -30820,13 +30820,13 @@ type ProjectsSinksDeleteCall struct {
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
 //
-//   - sinkName: The full resource name of the sink to delete, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *ProjectsSinksService) Delete(sinkNameid string) *ProjectsSinksDeleteCall {
 	c := &ProjectsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -30960,12 +30960,12 @@ type ProjectsSinksGetCall struct {
 
 // Get: Gets a sink.
 //
-//   - sinkName: The resource name of the sink:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *ProjectsSinksService) Get(sinkName string) *ProjectsSinksGetCall {
 	c := &ProjectsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -31114,9 +31114,9 @@ type ProjectsSinksListCall struct {
 
 // List: Lists sinks.
 //
-//   - parent: The parent resource whose sinks are to be listed:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *ProjectsSinksService) List(parent string) *ProjectsSinksListCall {
 	c := &ProjectsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31319,13 +31319,13 @@ type ProjectsSinksPatchCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *ProjectsSinksPatchCall {
 	c := &ProjectsSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -31512,13 +31512,13 @@ type ProjectsSinksUpdateCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *ProjectsSinksUpdateCall {
 	c := &ProjectsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -31706,10 +31706,10 @@ type SinksCreateCall struct {
 // write to the destination. A sink can export log entries only from the
 // resource owning the sink.
 //
-//   - parent: The resource in which to create the sink:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
-//     examples:"projects/my-project" "organizations/123456789".
+// - parent: The resource in which to create the sink:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" For
+//   examples:"projects/my-project" "organizations/123456789".
 func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall {
 	c := &SinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -31874,13 +31874,13 @@ type SinksDeleteCall struct {
 // Delete: Deletes a sink. If the sink has a unique writer_identity,
 // then that service account is also deleted.
 //
-//   - sinkName: The full resource name of the sink to delete, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to delete, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *SinksService) Delete(sinkNameid string) *SinksDeleteCall {
 	c := &SinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -32014,12 +32014,12 @@ type SinksGetCall struct {
 
 // Get: Gets a sink.
 //
-//   - sinkName: The resource name of the sink:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The resource name of the sink:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *SinksService) Get(sinkName string) *SinksGetCall {
 	c := &SinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkName = sinkName
@@ -32168,9 +32168,9 @@ type SinksListCall struct {
 
 // List: Lists sinks.
 //
-//   - parent: The parent resource whose sinks are to be listed:
-//     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
+// - parent: The parent resource whose sinks are to be listed:
+//   "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]".
 func (r *SinksService) List(parent string) *SinksListCall {
 	c := &SinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32373,13 +32373,13 @@ type SinksUpdateCall struct {
 // filter.The updated sink might also have a new writer_identity; see
 // the unique_writer_identity field.
 //
-//   - sinkName: The full resource name of the sink to update, including
-//     the parent resource and the sink identifier:
-//     "projects/[PROJECT_ID]/sinks/[SINK_ID]"
-//     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-//     "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
-//     example:"projects/my-project/sinks/my-sink".
+// - sinkName: The full resource name of the sink to update, including
+//   the parent resource and the sink identifier:
+//   "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+//   "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
+//   "folders/[FOLDER_ID]/sinks/[SINK_ID]" For
+//   example:"projects/my-project/sinks/my-sink".
 func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateCall {
 	c := &SinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sinkNameid = sinkNameid
@@ -32570,16 +32570,16 @@ type V2GetCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve CMEK settings.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
-//     organization, it applies to all projects and folders in the Google
-//     Cloud organization.
+// - name: The resource for which to retrieve CMEK settings.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can be configured for Google Cloud projects, folders,
+//   organizations and billing accounts. Once configured for an
+//   organization, it applies to all projects and folders in the Google
+//   Cloud organization.
 func (r *V2Service) GetCmekSettings(name string) *V2GetCmekSettingsCall {
 	c := &V2GetCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32736,16 +32736,16 @@ type V2GetSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource for which to retrieve settings.
-//     "projects/[PROJECT_ID]/settings"
-//     "organizations/[ORGANIZATION_ID]/settings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
-//     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+// - name: The resource for which to retrieve settings.
+//   "projects/[PROJECT_ID]/settings"
+//   "organizations/[ORGANIZATION_ID]/settings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
+//   "folders/[FOLDER_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can be get for Google Cloud projects, folders, organizations
+//   and billing accounts. Currently it can only be configured for
+//   organizations. Once configured for an organization, it applies to
+//   all projects and folders in the Google Cloud organization.
 func (r *V2Service) GetSettings(name string) *V2GetSettingsCall {
 	c := &V2GetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32904,15 +32904,15 @@ type V2UpdateCmekSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource name for the CMEK settings to update.
-//     "projects/[PROJECT_ID]/cmekSettings"
-//     "organizations/[ORGANIZATION_ID]/cmekSettings"
-//     "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
-//     "folders/[FOLDER_ID]/cmekSettings" For
-//     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+// - name: The resource name for the CMEK settings to update.
+//   "projects/[PROJECT_ID]/cmekSettings"
+//   "organizations/[ORGANIZATION_ID]/cmekSettings"
+//   "billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings"
+//   "folders/[FOLDER_ID]/cmekSettings" For
+//   example:"organizations/12345/cmekSettings"Note: CMEK for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
 func (r *V2Service) UpdateCmekSettings(name string, cmeksettings *CmekSettings) *V2UpdateCmekSettingsCall {
 	c := &V2UpdateCmekSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33082,12 +33082,12 @@ type V2UpdateSettingsCall struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
-//   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+// - name: The resource name for the settings to update.
+//   "organizations/[ORGANIZATION_ID]/settings" For
+//   example:"organizations/12345/settings"Note: Settings for the Log
+//   Router can currently only be configured for Google Cloud
+//   organizations. Once configured, it applies to all projects and
+//   folders in the Google Cloud organization.
 func (r *V2Service) UpdateSettings(name string, settings *Settings) *V2UpdateSettingsCall {
 	c := &V2UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

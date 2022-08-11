@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/cloud-messaging
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/fcm/v1"
-//	...
-//	ctx := context.Background()
-//	fcmService, err := fcm.NewService(ctx)
+//   import "google.golang.org/api/fcm/v1"
+//   ...
+//   ctx := context.Background()
+//   fcmService, err := fcm.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	fcmService, err := fcm.NewService(ctx, option.WithScopes(fcm.FirebaseMessagingScope))
+//   fcmService, err := fcm.NewService(ctx, option.WithScopes(fcm.FirebaseMessagingScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	fcmService, err := fcm.NewService(ctx, option.WithAPIKey("AIza..."))
+//   fcmService, err := fcm.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	fcmService, err := fcm.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   fcmService, err := fcm.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package fcm // import "google.golang.org/api/fcm/v1"
@@ -632,12 +632,12 @@ func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -1015,11 +1015,11 @@ type ProjectsMessagesSendCall struct {
 // Send: Send a message to specified target (a registration token, topic
 // or condition).
 //
-//   - parent: It contains the Firebase project id (i.e. the unique
-//     identifier for your Firebase project), in the format of
-//     `projects/{project_id}`. For legacy support, the numeric project
-//     number with no padding is also supported in the format of
-//     `projects/{project_number}`.
+// - parent: It contains the Firebase project id (i.e. the unique
+//   identifier for your Firebase project), in the format of
+//   `projects/{project_id}`. For legacy support, the numeric project
+//   number with no padding is also supported in the format of
+//   `projects/{project_number}`.
 func (r *ProjectsMessagesService) Send(parentid string, sendmessagerequest *SendMessageRequest) *ProjectsMessagesSendCall {
 	c := &ProjectsMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid

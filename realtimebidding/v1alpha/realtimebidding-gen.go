@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/realtimebidding/v1alpha"
-//	...
-//	ctx := context.Background()
-//	realtimebiddingService, err := realtimebidding.NewService(ctx)
+//   import "google.golang.org/api/realtimebidding/v1alpha"
+//   ...
+//   ctx := context.Background()
+//   realtimebiddingService, err := realtimebidding.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
+//   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package realtimebidding // import "google.golang.org/api/realtimebidding/v1alpha"
@@ -383,9 +383,9 @@ type BiddersBiddingFunctionsActivateCall struct {
 // function is available for invocation for the server-side TURTLEDOVE
 // simulations.
 //
-//   - name: The name of the bidding function to activate. Format:
-//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
-//     `.
+// - name: The name of the bidding function to activate. Format:
+//   `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
+//   `.
 func (r *BiddersBiddingFunctionsService) Activate(name string, activatebiddingfunctionrequest *ActivateBiddingFunctionRequest) *BiddersBiddingFunctionsActivateCall {
 	c := &BiddersBiddingFunctionsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -529,9 +529,9 @@ type BiddersBiddingFunctionsArchiveCall struct {
 // will not be available for function invocation for the server-side
 // TURTLEDOVE simulations unless it is activated.
 //
-//   - name: The name of the bidding function to archive. Format:
-//     `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
-//     `.
+// - name: The name of the bidding function to archive. Format:
+//   `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}
+//   `.
 func (r *BiddersBiddingFunctionsService) Archive(name string, archivebiddingfunctionrequest *ArchiveBiddingFunctionRequest) *BiddersBiddingFunctionsArchiveCall {
 	c := &BiddersBiddingFunctionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -673,8 +673,8 @@ type BiddersBiddingFunctionsCreateCall struct {
 
 // Create: Creates a new bidding function.
 //
-//   - parent: The name of the bidder for which to create the bidding
-//     function. Format: `bidders/{bidderAccountId}`.
+// - parent: The name of the bidder for which to create the bidding
+//   function. Format: `bidders/{bidderAccountId}`.
 func (r *BiddersBiddingFunctionsService) Create(parent string, biddingfunction *BiddingFunction) *BiddersBiddingFunctionsCreateCall {
 	c := &BiddersBiddingFunctionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -817,8 +817,8 @@ type BiddersBiddingFunctionsListCall struct {
 // List: Lists the bidding functions that a bidder currently has
 // registered.
 //
-//   - parent: Name of the bidder whose bidding functions will be listed.
-//     Format: `bidders/{bidder_account_id}`.
+// - parent: Name of the bidder whose bidding functions will be listed.
+//   Format: `bidders/{bidder_account_id}`.
 func (r *BiddersBiddingFunctionsService) List(parent string) *BiddersBiddingFunctionsListCall {
 	c := &BiddersBiddingFunctionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

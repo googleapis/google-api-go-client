@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://code.google.com/apis/language/translate/v2/getting_started.html
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/translate/v2"
-//	...
-//	ctx := context.Background()
-//	translateService, err := translate.NewService(ctx)
+//   import "google.golang.org/api/translate/v2"
+//   ...
+//   ctx := context.Background()
+//   translateService, err := translate.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	translateService, err := translate.NewService(ctx, option.WithScopes(translate.CloudTranslationScope))
+//   translateService, err := translate.NewService(ctx, option.WithScopes(translate.CloudTranslationScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	translateService, err := translate.NewService(ctx, option.WithAPIKey("AIza..."))
+//   translateService, err := translate.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	translateService, err := translate.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   translateService, err := translate.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package translate // import "google.golang.org/api/translate/v2"
@@ -661,9 +661,9 @@ type DetectionsListCall struct {
 
 // List: Detects the language of text within a request.
 //
-//   - q: The input text upon which to perform language detection. Repeat
-//     this
-//     parameter to perform language detection on multiple text inputs.
+// - q: The input text upon which to perform language detection. Repeat
+//   this
+//   parameter to perform language detection on multiple text inputs.
 func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	c := &DetectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("q", append([]string{}, q...))
@@ -963,13 +963,11 @@ type TranslationsListCall struct {
 
 // List: Translates input text, returning translated text.
 //
-//   - q: The input text to translate. Repeat this parameter to perform
-//     translation
-//
+// - q: The input text to translate. Repeat this parameter to perform
+//   translation
 // operations on multiple text inputs.
-//   - target: The language to use for translation of the input text, set
-//     to one of the
-//
+// - target: The language to use for translation of the input text, set
+//   to one of the
 // language codes listed in Language Support.
 func (r *TranslationsService) List(q []string, target string) *TranslationsListCall {
 	c := &TranslationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -991,9 +989,8 @@ func (c *TranslationsListCall) Cid(cid ...string) *TranslationsListCall {
 // plain-text.
 //
 // Possible values:
-//
-//	"html" - Specifies the input is in HTML
-//	"text" - Specifies the input is in plain textual format
+//   "html" - Specifies the input is in HTML
+//   "text" - Specifies the input is in plain textual format
 func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
 	c.urlParams_.Set("format", format)
 	return c

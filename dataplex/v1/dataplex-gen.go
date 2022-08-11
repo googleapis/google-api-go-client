@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/dataplex/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/dataplex/v1"
-//	...
-//	ctx := context.Background()
-//	dataplexService, err := dataplex.NewService(ctx)
+//   import "google.golang.org/api/dataplex/v1"
+//   ...
+//   ctx := context.Background()
+//   dataplexService, err := dataplex.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	dataplexService, err := dataplex.NewService(ctx, option.WithAPIKey("AIza..."))
+//   dataplexService, err := dataplex.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	dataplexService, err := dataplex.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   dataplexService, err := dataplex.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package dataplex // import "google.golang.org/api/dataplex/v1"
@@ -4821,8 +4821,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5031,9 +5031,9 @@ type ProjectsLocationsLakesCreateCall struct {
 
 // Create: Creates a lake resource.
 //
-//   - parent: The resource name of the lake location, of the form:
-//     projects/{project_number}/locations/{location_id} where location_id
-//     refers to a GCP region.
+// - parent: The resource name of the lake location, of the form:
+//   projects/{project_number}/locations/{location_id} where location_id
+//   refers to a GCP region.
 func (r *ProjectsLocationsLakesService) Create(parent string, googleclouddataplexv1lake *GoogleCloudDataplexV1Lake) *ProjectsLocationsLakesCreateCall {
 	c := &ProjectsLocationsLakesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5205,8 +5205,8 @@ type ProjectsLocationsLakesDeleteCall struct {
 // Delete: Deletes a lake resource. All zones within the lake must be
 // deleted before the lake can be deleted.
 //
-//   - name: The resource name of the lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - name: The resource name of the lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesService) Delete(name string) *ProjectsLocationsLakesDeleteCall {
 	c := &ProjectsLocationsLakesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5339,8 +5339,8 @@ type ProjectsLocationsLakesGetCall struct {
 
 // Get: Retrieves a lake resource.
 //
-//   - name: The resource name of the lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - name: The resource name of the lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesService) Get(name string) *ProjectsLocationsLakesGetCall {
 	c := &ProjectsLocationsLakesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5488,10 +5488,10 @@ type ProjectsLocationsLakesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesService) GetIamPolicy(resource string) *ProjectsLocationsLakesGetIamPolicyCall {
 	c := &ProjectsLocationsLakesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5661,9 +5661,9 @@ type ProjectsLocationsLakesListCall struct {
 
 // List: Lists lake resources in a project and location.
 //
-//   - parent: The resource name of the lake location, of the form:
-//     projects/{project_number}/locations/{location_id} where location_id
-//     refers to a GCP region.
+// - parent: The resource name of the lake location, of the form:
+//   projects/{project_number}/locations/{location_id} where location_id
+//   refers to a GCP region.
 func (r *ProjectsLocationsLakesService) List(parent string) *ProjectsLocationsLakesListCall {
 	c := &ProjectsLocationsLakesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5883,9 +5883,9 @@ type ProjectsLocationsLakesPatchCall struct {
 
 // Patch: Updates a lake resource.
 //
-//   - name: Output only. The relative resource name of the lake, of the
-//     form:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - name: Output only. The relative resource name of the lake, of the
+//   form:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesService) Patch(name string, googleclouddataplexv1lake *GoogleCloudDataplexV1Lake) *ProjectsLocationsLakesPatchCall {
 	c := &ProjectsLocationsLakesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6055,10 +6055,10 @@ type ProjectsLocationsLakesSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesSetIamPolicyCall {
 	c := &ProjectsLocationsLakesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6205,10 +6205,10 @@ type ProjectsLocationsLakesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6351,8 +6351,8 @@ type ProjectsLocationsLakesActionsListCall struct {
 
 // List: Lists action resources in a lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesActionsService) List(parent string) *ProjectsLocationsLakesActionsListCall {
 	c := &ProjectsLocationsLakesActionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6551,8 +6551,8 @@ type ProjectsLocationsLakesContentCreateCall struct {
 
 // Create: Create a content.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesContentService) Create(parent string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentCreateCall {
 	c := &ProjectsLocationsLakesContentCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6706,9 +6706,9 @@ type ProjectsLocationsLakesContentDeleteCall struct {
 
 // Delete: Delete a content.
 //
-//   - name: The resource name of the content:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentService) Delete(name string) *ProjectsLocationsLakesContentDeleteCall {
 	c := &ProjectsLocationsLakesContentDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6841,9 +6841,9 @@ type ProjectsLocationsLakesContentGetCall struct {
 
 // Get: Get a content resource.
 //
-//   - name: The resource name of the content:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentService) Get(name string) *ProjectsLocationsLakesContentGetCall {
 	c := &ProjectsLocationsLakesContentGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6854,13 +6854,10 @@ func (r *ProjectsLocationsLakesContentService) Get(name string) *ProjectsLocatio
 // a partial request.
 //
 // Possible values:
-//
-//	"CONTENT_VIEW_UNSPECIFIED" - Content view not specified. Defaults
-//
+//   "CONTENT_VIEW_UNSPECIFIED" - Content view not specified. Defaults
 // to BASIC. The API will default to the BASIC view.
-//
-//	"BASIC" - Will not return the data_text field.
-//	"FULL" - Returns the complete proto.
+//   "BASIC" - Will not return the data_text field.
+//   "FULL" - Returns the complete proto.
 func (c *ProjectsLocationsLakesContentGetCall) View(view string) *ProjectsLocationsLakesContentGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7024,10 +7021,10 @@ type ProjectsLocationsLakesContentGetIamPolicyCall struct {
 // not have a policy set on it.Caller must have Google IAM
 // dataplex.content.getIamPolicy permission on the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentService) GetIamPolicy(resource string) *ProjectsLocationsLakesContentGetIamPolicyCall {
 	c := &ProjectsLocationsLakesContentGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7197,8 +7194,8 @@ type ProjectsLocationsLakesContentListCall struct {
 
 // List: List content.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesContentService) List(parent string) *ProjectsLocationsLakesContentListCall {
 	c := &ProjectsLocationsLakesContentListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7410,10 +7407,10 @@ type ProjectsLocationsLakesContentPatchCall struct {
 
 // Patch: Update a content. Only supports full resource update.
 //
-//   - name: Output only. The relative resource name of the content, of
-//     the form:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: Output only. The relative resource name of the content, of
+//   the form:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentService) Patch(name string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentPatchCall {
 	c := &ProjectsLocationsLakesContentPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7583,10 +7580,10 @@ type ProjectsLocationsLakesContentSetIamPolicyCall struct {
 // contentitem resource. Replaces any existing policy.Caller must have
 // Google IAM dataplex.content.setIamPolicy permission on the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesContentSetIamPolicyCall {
 	c := &ProjectsLocationsLakesContentSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7734,10 +7731,10 @@ type ProjectsLocationsLakesContentTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesContentTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesContentTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7880,8 +7877,8 @@ type ProjectsLocationsLakesContentitemsCreateCall struct {
 
 // Create: Create a content.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesContentitemsService) Create(parent string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentitemsCreateCall {
 	c := &ProjectsLocationsLakesContentitemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8035,9 +8032,9 @@ type ProjectsLocationsLakesContentitemsDeleteCall struct {
 
 // Delete: Delete a content.
 //
-//   - name: The resource name of the content:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentitemsService) Delete(name string) *ProjectsLocationsLakesContentitemsDeleteCall {
 	c := &ProjectsLocationsLakesContentitemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8170,9 +8167,9 @@ type ProjectsLocationsLakesContentitemsGetCall struct {
 
 // Get: Get a content resource.
 //
-//   - name: The resource name of the content:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: The resource name of the content:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentitemsService) Get(name string) *ProjectsLocationsLakesContentitemsGetCall {
 	c := &ProjectsLocationsLakesContentitemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8183,13 +8180,10 @@ func (r *ProjectsLocationsLakesContentitemsService) Get(name string) *ProjectsLo
 // a partial request.
 //
 // Possible values:
-//
-//	"CONTENT_VIEW_UNSPECIFIED" - Content view not specified. Defaults
-//
+//   "CONTENT_VIEW_UNSPECIFIED" - Content view not specified. Defaults
 // to BASIC. The API will default to the BASIC view.
-//
-//	"BASIC" - Will not return the data_text field.
-//	"FULL" - Returns the complete proto.
+//   "BASIC" - Will not return the data_text field.
+//   "FULL" - Returns the complete proto.
 func (c *ProjectsLocationsLakesContentitemsGetCall) View(view string) *ProjectsLocationsLakesContentitemsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8353,10 +8347,10 @@ type ProjectsLocationsLakesContentitemsGetIamPolicyCall struct {
 // not have a policy set on it.Caller must have Google IAM
 // dataplex.content.getIamPolicy permission on the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentitemsService) GetIamPolicy(resource string) *ProjectsLocationsLakesContentitemsGetIamPolicyCall {
 	c := &ProjectsLocationsLakesContentitemsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8526,8 +8520,8 @@ type ProjectsLocationsLakesContentitemsListCall struct {
 
 // List: List content.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesContentitemsService) List(parent string) *ProjectsLocationsLakesContentitemsListCall {
 	c := &ProjectsLocationsLakesContentitemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8739,10 +8733,10 @@ type ProjectsLocationsLakesContentitemsPatchCall struct {
 
 // Patch: Update a content. Only supports full resource update.
 //
-//   - name: Output only. The relative resource name of the content, of
-//     the form:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
-//     t/{content_id}.
+// - name: Output only. The relative resource name of the content, of
+//   the form:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/conten
+//   t/{content_id}.
 func (r *ProjectsLocationsLakesContentitemsService) Patch(name string, googleclouddataplexv1content *GoogleCloudDataplexV1Content) *ProjectsLocationsLakesContentitemsPatchCall {
 	c := &ProjectsLocationsLakesContentitemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8912,10 +8906,10 @@ type ProjectsLocationsLakesContentitemsSetIamPolicyCall struct {
 // contentitem resource. Replaces any existing policy.Caller must have
 // Google IAM dataplex.content.setIamPolicy permission on the resource.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentitemsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesContentitemsSetIamPolicyCall {
 	c := &ProjectsLocationsLakesContentitemsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9063,10 +9057,10 @@ type ProjectsLocationsLakesContentitemsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesContentitemsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesContentitemsTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesContentitemsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9209,8 +9203,8 @@ type ProjectsLocationsLakesEnvironmentsCreateCall struct {
 
 // Create: Create an environment resource.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) Create(parent string, googleclouddataplexv1environment *GoogleCloudDataplexV1Environment) *ProjectsLocationsLakesEnvironmentsCreateCall {
 	c := &ProjectsLocationsLakesEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9380,9 +9374,9 @@ type ProjectsLocationsLakesEnvironmentsDeleteCall struct {
 // Delete: Delete the environment resource. All the child resources must
 // have been deleted before environment deletion can be initiated.
 //
-//   - name: The resource name of the environment:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
-//     nments/{environment_id}.
+// - name: The resource name of the environment:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
+//   nments/{environment_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) Delete(name string) *ProjectsLocationsLakesEnvironmentsDeleteCall {
 	c := &ProjectsLocationsLakesEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9515,9 +9509,9 @@ type ProjectsLocationsLakesEnvironmentsGetCall struct {
 
 // Get: Get environment resource.
 //
-//   - name: The resource name of the environment:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
-//     nments/{environment_id}.
+// - name: The resource name of the environment:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
+//   nments/{environment_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) Get(name string) *ProjectsLocationsLakesEnvironmentsGetCall {
 	c := &ProjectsLocationsLakesEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9665,10 +9659,10 @@ type ProjectsLocationsLakesEnvironmentsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesEnvironmentsService) GetIamPolicy(resource string) *ProjectsLocationsLakesEnvironmentsGetIamPolicyCall {
 	c := &ProjectsLocationsLakesEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9838,8 +9832,8 @@ type ProjectsLocationsLakesEnvironmentsListCall struct {
 
 // List: Lists environments under the given lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) List(parent string) *ProjectsLocationsLakesEnvironmentsListCall {
 	c := &ProjectsLocationsLakesEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10061,10 +10055,10 @@ type ProjectsLocationsLakesEnvironmentsPatchCall struct {
 
 // Patch: Update the environment resource.
 //
-//   - name: Output only. The relative resource name of the environment,
-//     of the form:
-//     projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
-//     nment/{environment_id}.
+// - name: Output only. The relative resource name of the environment,
+//   of the form:
+//   projects/{project_id}/locations/{location_id}/lakes/{lake_id}/enviro
+//   nment/{environment_id}.
 func (r *ProjectsLocationsLakesEnvironmentsService) Patch(name string, googleclouddataplexv1environment *GoogleCloudDataplexV1Environment) *ProjectsLocationsLakesEnvironmentsPatchCall {
 	c := &ProjectsLocationsLakesEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10234,10 +10228,10 @@ type ProjectsLocationsLakesEnvironmentsSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesEnvironmentsSetIamPolicyCall {
 	c := &ProjectsLocationsLakesEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10384,10 +10378,10 @@ type ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesEnvironmentsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesEnvironmentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10530,9 +10524,9 @@ type ProjectsLocationsLakesEnvironmentsSessionsListCall struct {
 
 // List: Lists session resources in an environment.
 //
-//   - parent: The resource name of the parent environment:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/en
-//     vironment/{environment_id}.
+// - parent: The resource name of the parent environment:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/en
+//   vironment/{environment_id}.
 func (r *ProjectsLocationsLakesEnvironmentsSessionsService) List(parent string) *ProjectsLocationsLakesEnvironmentsSessionsListCall {
 	c := &ProjectsLocationsLakesEnvironmentsSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10748,8 +10742,8 @@ type ProjectsLocationsLakesTasksCreateCall struct {
 
 // Create: Creates a task resource within a lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesTasksService) Create(parent string, googleclouddataplexv1task *GoogleCloudDataplexV1Task) *ProjectsLocationsLakesTasksCreateCall {
 	c := &ProjectsLocationsLakesTasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10915,9 +10909,9 @@ type ProjectsLocationsLakesTasksDeleteCall struct {
 
 // Delete: Delete the task resource.
 //
-//   - name: The resource name of the task:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
-//     sk/{task_id}.
+// - name: The resource name of the task:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sk/{task_id}.
 func (r *ProjectsLocationsLakesTasksService) Delete(name string) *ProjectsLocationsLakesTasksDeleteCall {
 	c := &ProjectsLocationsLakesTasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11050,9 +11044,9 @@ type ProjectsLocationsLakesTasksGetCall struct {
 
 // Get: Get task resource.
 //
-//   - name: The resource name of the task:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
-//     sks/{tasks_id}.
+// - name: The resource name of the task:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sks/{tasks_id}.
 func (r *ProjectsLocationsLakesTasksService) Get(name string) *ProjectsLocationsLakesTasksGetCall {
 	c := &ProjectsLocationsLakesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11200,10 +11194,10 @@ type ProjectsLocationsLakesTasksGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesTasksService) GetIamPolicy(resource string) *ProjectsLocationsLakesTasksGetIamPolicyCall {
 	c := &ProjectsLocationsLakesTasksGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11373,8 +11367,8 @@ type ProjectsLocationsLakesTasksListCall struct {
 
 // List: Lists tasks under the given lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesTasksService) List(parent string) *ProjectsLocationsLakesTasksListCall {
 	c := &ProjectsLocationsLakesTasksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11594,10 +11588,10 @@ type ProjectsLocationsLakesTasksPatchCall struct {
 
 // Patch: Update the task resource.
 //
-//   - name: Output only. The relative resource name of the task, of the
-//     form:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/
-//     tasks/{task_id}.
+// - name: Output only. The relative resource name of the task, of the
+//   form:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/
+//   tasks/{task_id}.
 func (r *ProjectsLocationsLakesTasksService) Patch(name string, googleclouddataplexv1task *GoogleCloudDataplexV1Task) *ProjectsLocationsLakesTasksPatchCall {
 	c := &ProjectsLocationsLakesTasksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11767,10 +11761,10 @@ type ProjectsLocationsLakesTasksSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesTasksService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesTasksSetIamPolicyCall {
 	c := &ProjectsLocationsLakesTasksSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11917,10 +11911,10 @@ type ProjectsLocationsLakesTasksTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesTasksService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesTasksTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesTasksTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12063,9 +12057,9 @@ type ProjectsLocationsLakesTasksJobsCancelCall struct {
 
 // Cancel: Cancel jobs running for the task resource.
 //
-//   - name: The resource name of the job:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
-//     sk/{task_id}/job/{job_id}.
+// - name: The resource name of the job:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sk/{task_id}/job/{job_id}.
 func (r *ProjectsLocationsLakesTasksJobsService) Cancel(name string, googleclouddataplexv1canceljobrequest *GoogleCloudDataplexV1CancelJobRequest) *ProjectsLocationsLakesTasksJobsCancelCall {
 	c := &ProjectsLocationsLakesTasksJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12207,9 +12201,9 @@ type ProjectsLocationsLakesTasksJobsGetCall struct {
 
 // Get: Get job resource.
 //
-//   - name: The resource name of the job:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
-//     sks/{task_id}/jobs/{job_id}.
+// - name: The resource name of the job:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sks/{task_id}/jobs/{job_id}.
 func (r *ProjectsLocationsLakesTasksJobsService) Get(name string) *ProjectsLocationsLakesTasksJobsGetCall {
 	c := &ProjectsLocationsLakesTasksJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12355,9 +12349,9 @@ type ProjectsLocationsLakesTasksJobsListCall struct {
 
 // List: Lists Jobs under the given task.
 //
-//   - parent: The resource name of the parent environment:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
-//     sks/{task_id}.
+// - parent: The resource name of the parent environment:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//   sks/{task_id}.
 func (r *ProjectsLocationsLakesTasksJobsService) List(parent string) *ProjectsLocationsLakesTasksJobsListCall {
 	c := &ProjectsLocationsLakesTasksJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12554,8 +12548,8 @@ type ProjectsLocationsLakesZonesCreateCall struct {
 
 // Create: Creates a zone resource within a lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesZonesService) Create(parent string, googleclouddataplexv1zone *GoogleCloudDataplexV1Zone) *ProjectsLocationsLakesZonesCreateCall {
 	c := &ProjectsLocationsLakesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12728,9 +12722,9 @@ type ProjectsLocationsLakesZonesDeleteCall struct {
 // Delete: Deletes a zone resource. All assets within a zone must be
 // deleted before the zone can be deleted.
 //
-//   - name: The resource name of the zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - name: The resource name of the zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesService) Delete(name string) *ProjectsLocationsLakesZonesDeleteCall {
 	c := &ProjectsLocationsLakesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12863,9 +12857,9 @@ type ProjectsLocationsLakesZonesGetCall struct {
 
 // Get: Retrieves a zone resource.
 //
-//   - name: The resource name of the zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - name: The resource name of the zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesService) Get(name string) *ProjectsLocationsLakesZonesGetCall {
 	c := &ProjectsLocationsLakesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13013,10 +13007,10 @@ type ProjectsLocationsLakesZonesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesService) GetIamPolicy(resource string) *ProjectsLocationsLakesZonesGetIamPolicyCall {
 	c := &ProjectsLocationsLakesZonesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13186,8 +13180,8 @@ type ProjectsLocationsLakesZonesListCall struct {
 
 // List: Lists zone resources in a lake.
 //
-//   - parent: The resource name of the parent lake:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+// - parent: The resource name of the parent lake:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 func (r *ProjectsLocationsLakesZonesService) List(parent string) *ProjectsLocationsLakesZonesListCall {
 	c := &ProjectsLocationsLakesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13407,10 +13401,10 @@ type ProjectsLocationsLakesZonesPatchCall struct {
 
 // Patch: Updates a zone resource.
 //
-//   - name: Output only. The relative resource name of the zone, of the
-//     form:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - name: Output only. The relative resource name of the zone, of the
+//   form:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesService) Patch(name string, googleclouddataplexv1zone *GoogleCloudDataplexV1Zone) *ProjectsLocationsLakesZonesPatchCall {
 	c := &ProjectsLocationsLakesZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13580,10 +13574,10 @@ type ProjectsLocationsLakesZonesSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesZonesSetIamPolicyCall {
 	c := &ProjectsLocationsLakesZonesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13730,10 +13724,10 @@ type ProjectsLocationsLakesZonesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesZonesTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesZonesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13876,9 +13870,9 @@ type ProjectsLocationsLakesZonesActionsListCall struct {
 
 // List: Lists action resources in a zone.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesActionsService) List(parent string) *ProjectsLocationsLakesZonesActionsListCall {
 	c := &ProjectsLocationsLakesZonesActionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14077,9 +14071,9 @@ type ProjectsLocationsLakesZonesAssetsCreateCall struct {
 
 // Create: Creates an asset resource.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Create(parent string, googleclouddataplexv1asset *GoogleCloudDataplexV1Asset) *ProjectsLocationsLakesZonesAssetsCreateCall {
 	c := &ProjectsLocationsLakesZonesAssetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14251,9 +14245,9 @@ type ProjectsLocationsLakesZonesAssetsDeleteCall struct {
 // detached (default) or deleted based on the associated Lifecycle
 // policy.
 //
-//   - name: The resource name of the asset:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/assets/{asset_id}.
+// - name: The resource name of the asset:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Delete(name string) *ProjectsLocationsLakesZonesAssetsDeleteCall {
 	c := &ProjectsLocationsLakesZonesAssetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14386,9 +14380,9 @@ type ProjectsLocationsLakesZonesAssetsGetCall struct {
 
 // Get: Retrieves an asset resource.
 //
-//   - name: The resource name of the asset:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/assets/{asset_id}.
+// - name: The resource name of the asset:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Get(name string) *ProjectsLocationsLakesZonesAssetsGetCall {
 	c := &ProjectsLocationsLakesZonesAssetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14536,10 +14530,10 @@ type ProjectsLocationsLakesZonesAssetsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesAssetsService) GetIamPolicy(resource string) *ProjectsLocationsLakesZonesAssetsGetIamPolicyCall {
 	c := &ProjectsLocationsLakesZonesAssetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14709,9 +14703,9 @@ type ProjectsLocationsLakesZonesAssetsListCall struct {
 
 // List: Lists asset resources in a zone.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) List(parent string) *ProjectsLocationsLakesZonesAssetsListCall {
 	c := &ProjectsLocationsLakesZonesAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14931,10 +14925,10 @@ type ProjectsLocationsLakesZonesAssetsPatchCall struct {
 
 // Patch: Updates an asset resource.
 //
-//   - name: Output only. The relative resource name of the asset, of the
-//     form:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/assets/{asset_id}.
+// - name: Output only. The relative resource name of the asset, of the
+//   form:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsService) Patch(name string, googleclouddataplexv1asset *GoogleCloudDataplexV1Asset) *ProjectsLocationsLakesZonesAssetsPatchCall {
 	c := &ProjectsLocationsLakesZonesAssetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15104,10 +15098,10 @@ type ProjectsLocationsLakesZonesAssetsSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesAssetsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsLakesZonesAssetsSetIamPolicyCall {
 	c := &ProjectsLocationsLakesZonesAssetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15254,10 +15248,10 @@ type ProjectsLocationsLakesZonesAssetsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsLakesZonesAssetsService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsLakesZonesAssetsTestIamPermissionsCall {
 	c := &ProjectsLocationsLakesZonesAssetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15400,9 +15394,9 @@ type ProjectsLocationsLakesZonesAssetsActionsListCall struct {
 
 // List: Lists action resources in an asset.
 //
-//   - parent: The resource name of the parent asset:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/assets/{asset_id}.
+// - parent: The resource name of the parent asset:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/assets/{asset_id}.
 func (r *ProjectsLocationsLakesZonesAssetsActionsService) List(parent string) *ProjectsLocationsLakesZonesAssetsActionsListCall {
 	c := &ProjectsLocationsLakesZonesAssetsActionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15601,9 +15595,9 @@ type ProjectsLocationsLakesZonesEntitiesCreateCall struct {
 
 // Create: Create a metadata entity.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesService) Create(parent string, googleclouddataplexv1entity *GoogleCloudDataplexV1Entity) *ProjectsLocationsLakesZonesEntitiesCreateCall {
 	c := &ProjectsLocationsLakesZonesEntitiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15757,9 +15751,9 @@ type ProjectsLocationsLakesZonesEntitiesDeleteCall struct {
 
 // Delete: Delete a metadata entity.
 //
-//   - name: The resource name of the entity:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}.
+// - name: The resource name of the entity:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesService) Delete(name string) *ProjectsLocationsLakesZonesEntitiesDeleteCall {
 	c := &ProjectsLocationsLakesZonesEntitiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15905,9 +15899,9 @@ type ProjectsLocationsLakesZonesEntitiesGetCall struct {
 
 // Get: Get a metadata entity.
 //
-//   - name: The resource name of the entity:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}.
+// - name: The resource name of the entity:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesService) Get(name string) *ProjectsLocationsLakesZonesEntitiesGetCall {
 	c := &ProjectsLocationsLakesZonesEntitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15918,12 +15912,10 @@ func (r *ProjectsLocationsLakesZonesEntitiesService) Get(name string) *ProjectsL
 // entity information to return. Defaults to BASIC.
 //
 // Possible values:
-//
-//	"ENTITY_VIEW_UNSPECIFIED" - The API will default to the BASIC view.
-//	"BASIC" - Minimal view that does not include the schema.
-//	"SCHEMA" - Include basic information and schema.
-//	"FULL" - Include everything. Currently, this is the same as the
-//
+//   "ENTITY_VIEW_UNSPECIFIED" - The API will default to the BASIC view.
+//   "BASIC" - Minimal view that does not include the schema.
+//   "SCHEMA" - Include basic information and schema.
+//   "FULL" - Include everything. Currently, this is the same as the
 // SCHEMA view.
 func (c *ProjectsLocationsLakesZonesEntitiesGetCall) View(view string) *ProjectsLocationsLakesZonesEntitiesGetCall {
 	c.urlParams_.Set("view", view)
@@ -16086,9 +16078,9 @@ type ProjectsLocationsLakesZonesEntitiesListCall struct {
 
 // List: List metadata entities in a zone.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesService) List(parent string) *ProjectsLocationsLakesZonesEntitiesListCall {
 	c := &ProjectsLocationsLakesZonesEntitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16128,13 +16120,10 @@ func (c *ProjectsLocationsLakesZonesEntitiesListCall) PageToken(pageToken string
 // view to make a partial list request.
 //
 // Possible values:
-//
-//	"ENTITY_VIEW_UNSPECIFIED" - The default unset value. Return both
-//
+//   "ENTITY_VIEW_UNSPECIFIED" - The default unset value. Return both
 // table and fileset entities if unspecified.
-//
-//	"TABLES" - Only list table entities.
-//	"FILESETS" - Only list fileset entities.
+//   "TABLES" - Only list table entities.
+//   "FILESETS" - Only list fileset entities.
 func (c *ProjectsLocationsLakesZonesEntitiesListCall) View(view string) *ProjectsLocationsLakesZonesEntitiesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -16333,9 +16322,9 @@ type ProjectsLocationsLakesZonesEntitiesUpdateCall struct {
 
 // Update: Update a metadata entity. Only supports full resource update.
 //
-//   - name: Output only. The resource name of the entity, of the form:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{id}.
+// - name: Output only. The resource name of the entity, of the form:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{id}.
 func (r *ProjectsLocationsLakesZonesEntitiesService) Update(name string, googleclouddataplexv1entity *GoogleCloudDataplexV1Entity) *ProjectsLocationsLakesZonesEntitiesUpdateCall {
 	c := &ProjectsLocationsLakesZonesEntitiesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16490,9 +16479,9 @@ type ProjectsLocationsLakesZonesEntitiesPartitionsCreateCall struct {
 
 // Create: Create a metadata partition.
 //
-//   - parent: The resource name of the parent zone:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}.
+// - parent: The resource name of the parent zone:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) Create(parent string, googleclouddataplexv1partition *GoogleCloudDataplexV1Partition) *ProjectsLocationsLakesZonesEntitiesPartitionsCreateCall {
 	c := &ProjectsLocationsLakesZonesEntitiesPartitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16646,12 +16635,12 @@ type ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall struct {
 
 // Delete: Delete a metadata partition.
 //
-//   - name: The resource name of the partition. format:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}/partitions/{partition_value_path}
-//     . The {partition_value_path} segment consists of an ordered
-//     sequence of partition values separated by "/". All values must be
-//     provided.
+// - name: The resource name of the partition. format:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}/partitions/{partition_value_path}
+//   . The {partition_value_path} segment consists of an ordered
+//   sequence of partition values separated by "/". All values must be
+//   provided.
 func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) Delete(name string) *ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall {
 	c := &ProjectsLocationsLakesZonesEntitiesPartitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16796,12 +16785,12 @@ type ProjectsLocationsLakesZonesEntitiesPartitionsGetCall struct {
 
 // Get: Get a metadata partition of an entity.
 //
-//   - name: The resource name of the partition:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}/partitions/{partition_value_path}
-//     . The {partition_value_path} segment consists of an ordered
-//     sequence of partition values separated by "/". All values must be
-//     provided.
+// - name: The resource name of the partition:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}/partitions/{partition_value_path}
+//   . The {partition_value_path} segment consists of an ordered
+//   sequence of partition values separated by "/". All values must be
+//   provided.
 func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) Get(name string) *ProjectsLocationsLakesZonesEntitiesPartitionsGetCall {
 	c := &ProjectsLocationsLakesZonesEntitiesPartitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16947,9 +16936,9 @@ type ProjectsLocationsLakesZonesEntitiesPartitionsListCall struct {
 
 // List: List metadata partitions of an entity.
 //
-//   - parent: The resource name of the parent entity:
-//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
-//     nes/{zone_id}/entities/{entity_id}.
+// - parent: The resource name of the parent entity:
+//   projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zo
+//   nes/{zone_id}/entities/{entity_id}.
 func (r *ProjectsLocationsLakesZonesEntitiesPartitionsService) List(parent string) *ProjectsLocationsLakesZonesEntitiesPartitionsListCall {
 	c := &ProjectsLocationsLakesZonesEntitiesPartitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

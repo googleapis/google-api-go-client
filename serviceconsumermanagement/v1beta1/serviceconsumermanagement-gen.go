@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/service-consumer-management/docs/overview
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/serviceconsumermanagement/v1beta1"
-//	...
-//	ctx := context.Background()
-//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx)
+//   import "google.golang.org/api/serviceconsumermanagement/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package serviceconsumermanagement // import "google.golang.org/api/serviceconsumermanagement/v1beta1"
@@ -4363,10 +4363,10 @@ type ServicesConsumerQuotaMetricsGetCall struct {
 // Get: Retrieves a summary of quota information for a specific quota
 // metric.
 //
-//   - name: The resource name of the quota metric, returned by a
-//     ListConsumerQuotaMetrics call. An example name would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus`.
+// - name: The resource name of the quota metric, returned by a
+//   ListConsumerQuotaMetrics call. An example name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus`.
 func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumerQuotaMetricsGetCall {
 	c := &ServicesConsumerQuotaMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4377,14 +4377,10 @@ func (r *ServicesConsumerQuotaMetricsService) Get(name string) *ServicesConsumer
 // detail for quota information in the response.
 //
 // Possible values:
-//
-//	"QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
-//
+//   "QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
 // do not specify a quota view will typically default to the BASIC view.
-//
-//	"BASIC" - Only buckets with overrides are shown in the response.
-//	"FULL" - Include per-location buckets even if they do not have
-//
+//   "BASIC" - Only buckets with overrides are shown in the response.
+//   "FULL" - Include per-location buckets even if they do not have
 // overrides. When the view is FULL, and a limit has regional or zonal
 // quota, the limit will include buckets for all regions or zones that
 // could support overrides, even if none are currently present. In some
@@ -4552,8 +4548,8 @@ type ServicesConsumerQuotaMetricsImportProducerOverridesCall struct {
 // or limits. The name field in the quota override message should not be
 // set.
 //
-//   - parent: The resource name of the consumer. An example name would
-//     be: `services/compute.googleapis.com/projects/123`.
+// - parent: The resource name of the consumer. An example name would
+//   be: `services/compute.googleapis.com/projects/123`.
 func (r *ServicesConsumerQuotaMetricsService) ImportProducerOverrides(parent string, v1beta1importproduceroverridesrequest *V1Beta1ImportProducerOverridesRequest) *ServicesConsumerQuotaMetricsImportProducerOverridesCall {
 	c := &ServicesConsumerQuotaMetricsImportProducerOverridesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4700,8 +4696,8 @@ type ServicesConsumerQuotaMetricsListCall struct {
 // configuration (quota unit, preciseness, default value), the current
 // effective limit value, and all of the overrides applied to the limit.
 //
-//   - parent: Parent of the quotas resource. An example parent would be:
-//     `services/serviceconsumermanagement.googleapis.com/projects/123`.
+// - parent: Parent of the quotas resource. An example parent would be:
+//   `services/serviceconsumermanagement.googleapis.com/projects/123`.
 func (r *ServicesConsumerQuotaMetricsService) List(parent string) *ServicesConsumerQuotaMetricsListCall {
 	c := &ServicesConsumerQuotaMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4726,14 +4722,10 @@ func (c *ServicesConsumerQuotaMetricsListCall) PageToken(pageToken string) *Serv
 // detail for quota information in the response.
 //
 // Possible values:
-//
-//	"QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
-//
+//   "QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
 // do not specify a quota view will typically default to the BASIC view.
-//
-//	"BASIC" - Only buckets with overrides are shown in the response.
-//	"FULL" - Include per-location buckets even if they do not have
-//
+//   "BASIC" - Only buckets with overrides are shown in the response.
+//   "FULL" - Include per-location buckets even if they do not have
 // overrides. When the view is FULL, and a limit has regional or zonal
 // quota, the limit will include buckets for all regions or zones that
 // could support overrides, even if none are currently present. In some
@@ -4932,11 +4924,11 @@ type ServicesConsumerQuotaMetricsLimitsGetCall struct {
 // Get: Retrieves a summary of quota information for a specific quota
 // limit.
 //
-//   - name: The resource name of the quota limit, returned by a
-//     ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-//     name would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
+// - name: The resource name of the quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesConsumerQuotaMetricsLimitsGetCall {
 	c := &ServicesConsumerQuotaMetricsLimitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4947,14 +4939,10 @@ func (r *ServicesConsumerQuotaMetricsLimitsService) Get(name string) *ServicesCo
 // detail for quota information in the response.
 //
 // Possible values:
-//
-//	"QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
-//
+//   "QUOTA_VIEW_UNSPECIFIED" - No quota view specified. Requests that
 // do not specify a quota view will typically default to the BASIC view.
-//
-//	"BASIC" - Only buckets with overrides are shown in the response.
-//	"FULL" - Include per-location buckets even if they do not have
-//
+//   "BASIC" - Only buckets with overrides are shown in the response.
+//   "FULL" - Include per-location buckets even if they do not have
 // overrides. When the view is FULL, and a limit has regional or zonal
 // quota, the limit will include buckets for all regions or zones that
 // could support overrides, even if none are currently present. In some
@@ -5126,11 +5114,11 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall struct {
 // already present ("upsert" semantics), use ImportProducerOverrides
 // instead.
 //
-//   - parent: The resource name of the parent quota limit, returned by a
-//     ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-//     name would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
+// - parent: The resource name of the parent quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Create(parent string, v1beta1quotaoverride *V1Beta1QuotaOverride) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5154,15 +5142,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Force(fo
 // enforced. The 'force' and 'force_only' fields cannot both be set.
 //
 // Possible values:
-//
-//	"QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
-//	"LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
-//
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
 // would not cause the consumer's effective limit to be lower than the
 // consumer's quota usage.
-//
-//	"LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
-//
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
 // mutation would not cause the consumer's effective limit to decrease
 // by more than 10 percent.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
@@ -5324,11 +5308,11 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall struct {
 
 // Delete: Deletes a producer override.
 //
-//   - name: The resource name of the override to delete. An example name
-//     would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
-//     rides/4a3f2c1d`.
+// - name: The resource name of the override to delete. An example name
+//   would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Delete(name string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5351,15 +5335,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Force(fo
 // enforced. The 'force' and 'force_only' fields cannot both be set.
 //
 // Possible values:
-//
-//	"QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
-//	"LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
-//
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
 // would not cause the consumer's effective limit to be lower than the
 // consumer's quota usage.
-//
-//	"LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
-//
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
 // mutation would not cause the consumer's effective limit to decrease
 // by more than 10 percent.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
@@ -5514,11 +5494,11 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall struct {
 
 // List: Lists all producer overrides on this limit.
 //
-//   - parent: The resource name of the parent quota limit, returned by a
-//     ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
-//     name would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
+// - parent: The resource name of the parent quota limit, returned by a
+//   ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example
+//   name would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) List(parent string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5711,11 +5691,11 @@ type ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall struct {
 
 // Patch: Updates a producer override.
 //
-//   - name: The resource name of the override to update. An example name
-//     would be:
-//     `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
-//     ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
-//     rides/4a3f2c1d`.
+// - name: The resource name of the override to update. An example name
+//   would be:
+//   `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/c
+//   ompute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+//   rides/4a3f2c1d`.
 func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Patch(name string, v1beta1quotaoverride *V1Beta1QuotaOverride) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
 	c := &ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5739,15 +5719,11 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Force(for
 // enforced. The 'force' and 'force_only' fields cannot both be set.
 //
 // Possible values:
-//
-//	"QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
-//	"LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
-//
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
 // would not cause the consumer's effective limit to be lower than the
 // consumer's quota usage.
-//
-//	"LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
-//
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
 // mutation would not cause the consumer's effective limit to decrease
 // by more than 10 percent.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {

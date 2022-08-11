@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/security-command-center
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/securitycenter/v1beta1"
-//	...
-//	ctx := context.Background()
-//	securitycenterService, err := securitycenter.NewService(ctx)
+//   import "google.golang.org/api/securitycenter/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   securitycenterService, err := securitycenter.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	securitycenterService, err := securitycenter.NewService(ctx, option.WithAPIKey("AIza..."))
+//   securitycenterService, err := securitycenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	securitycenterService, err := securitycenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   securitycenterService, err := securitycenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package securitycenter // import "google.golang.org/api/securitycenter/v1beta1"
@@ -540,16 +540,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -979,6 +983,57 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Database: Represents database access information, such as queries. A
+// database may be a sub-resource of an instance (as in the case of
+// CloudSQL instances or Cloud Spanner instances), or the database
+// instance itself. Some database resources may not have the full
+// resource name populated because these resource types are not yet
+// supported by Cloud Asset Inventory (e.g. CloudSQL databases). In
+// these cases only the display name will be provided.
+type Database struct {
+	// DisplayName: The human readable name of the database the user
+	// connected to.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Grantees: The target usernames/roles/groups of a SQL privilege grant
+	// (not an IAM policy change).
+	Grantees []string `json:"grantees,omitempty"`
+
+	// Name: The full resource name of the database the user connected to,
+	// if it is supported by CAI.
+	// (https://google.aip.dev/122#full-resource-names)
+	Name string `json:"name,omitempty"`
+
+	// Query: The SQL statement associated with the relevant access.
+	Query string `json:"query,omitempty"`
+
+	// UserName: The username used to connect to the DB. This may not
+	// necessarily be an IAM principal, and has no required format.
+	UserName string `json:"userName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Database) MarshalJSON() ([]byte, error) {
+	type NoMethod Database
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Detection: Memory hash detection contributing to the binary family
 // match.
 type Detection struct {
@@ -1302,6 +1357,9 @@ type Finding struct {
 	// CreateTime: The time at which the finding was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// Database: Database associated with the finding.
+	Database *Database `json:"database,omitempty"`
 
 	// Description: Contains more detail about the finding.
 	Description string `json:"description,omitempty"`
@@ -4334,9 +4392,9 @@ type OrganizationsGetOrganizationSettingsCall struct {
 
 // GetOrganizationSettings: Gets the settings for an organization.
 //
-//   - name: Name of the organization to get organization settings for.
-//     Its format is
-//     "organizations/[organization_id]/organizationSettings".
+// - name: Name of the organization to get organization settings for.
+//   Its format is
+//   "organizations/[organization_id]/organizationSettings".
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4482,9 +4540,9 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 
 // UpdateOrganizationSettings: Updates an organization's settings.
 //
-//   - name: The relative resource name of the settings. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example: "organizations/{organization_id}/organizationSettings".
+// - name: The relative resource name of the settings. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/organizationSettings".
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4640,8 +4698,8 @@ type OrganizationsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
-//     "organizations/[organization_id]".
+// - parent: Name of the organization to groupBy. Its format is
+//   "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4804,8 +4862,8 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id]".
+// - parent: Name of the organization assets should belong to. Its
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5107,8 +5165,8 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // frequency for an organization. If it is called too frequently the
 // caller will receive a TOO_MANY_REQUESTS error.
 //
-//   - parent: Name of the organization to run asset discovery for. Its
-//     format is "organizations/[organization_id]".
+// - parent: Name of the organization to run asset discovery for. Its
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5250,12 +5308,12 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-//   - name: The relative resource name of the SecurityMarks. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Examples:
-//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}/securityMarks".
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1beta1securitymarks *GoogleCloudSecuritycenterV1beta1SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6072,8 +6130,8 @@ type OrganizationsSourcesCreateCall struct {
 
 // Create: Creates a source.
 //
-//   - parent: Resource name of the new source's parent. Its format should
-//     be "organizations/[organization_id]".
+// - parent: Resource name of the new source's parent. Its format should
+//   be "organizations/[organization_id]".
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6215,8 +6273,8 @@ type OrganizationsSourcesGetCall struct {
 
 // Get: Gets a source.
 //
-//   - name: Relative resource name of the source. Its format is
-//     "organizations/[organization_id]/source/[source_id]".
+// - name: Relative resource name of the source. Its format is
+//   "organizations/[organization_id]/source/[source_id]".
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6362,10 +6420,10 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy on the specified Source.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6507,8 +6565,8 @@ type OrganizationsSourcesListCall struct {
 
 // List: Lists all sources belonging to an organization.
 //
-//   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id]".
+// - parent: Resource name of the parent of sources to list. Its format
+//   should be "organizations/[organization_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6703,9 +6761,9 @@ type OrganizationsSourcesPatchCall struct {
 
 // Patch: Updates a source.
 //
-//   - name: The relative resource name of this source. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example: "organizations/{organization_id}/sources/{source_id}".
+// - name: The relative resource name of this source. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/sources/{source_id}".
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6860,10 +6918,10 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on the specified Source.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7006,10 +7064,10 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns the permissions that a caller has on the
 // specified source.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7152,8 +7210,8 @@ type OrganizationsSourcesFindingsCreateCall struct {
 // Create: Creates a finding. The corresponding source must exist for
 // finding creation to succeed.
 //
-//   - parent: Resource name of the new finding's parent. Its format
-//     should be "organizations/[organization_id]/sources/[source_id]".
+// - parent: Resource name of the new finding's parent. Its format
+//   should be "organizations/[organization_id]/sources/[source_id]".
 func (r *OrganizationsSourcesFindingsService) Create(parent string, googlecloudsecuritycenterv1beta1finding *GoogleCloudSecuritycenterV1beta1Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7313,10 +7371,10 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // `-` as the source id. Example:
 // /v1beta1/organizations/{organization_id}/sources/-/findings
 //
-//   - parent: Name of the source to groupBy. Its format is
-//     "organizations/[organization_id]/sources/[source_id]". To groupBy
-//     across all sources provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-.
+// - parent: Name of the source to groupBy. Its format is
+//   "organizations/[organization_id]/sources/[source_id]". To groupBy
+//   across all sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7481,10 +7539,10 @@ type OrganizationsSourcesFindingsListCall struct {
 // sources provide a `-` as the source id. Example:
 // /v1beta1/organizations/{organization_id}/sources/-/findings
 //
-//   - parent: Name of the source the findings belong to. Its format is
-//     "organizations/[organization_id]/sources/[source_id]". To list
-//     across all sources provide a source_id of `-`. For example:
-//     organizations/{organization_id}/sources/-.
+// - parent: Name of the source the findings belong to. Its format is
+//   "organizations/[organization_id]/sources/[source_id]". To list
+//   across all sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7752,11 +7810,11 @@ type OrganizationsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-//   - name: The relative resource name of this finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+// - name: The relative resource name of this finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, googlecloudsecuritycenterv1beta1finding *GoogleCloudSecuritycenterV1beta1Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7913,11 +7971,11 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+// - name: The relative resource name of the finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8060,12 +8118,12 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-//   - name: The relative resource name of the SecurityMarks. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Examples:
-//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}/securityMarks".
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, googlecloudsecuritycenterv1beta1securitymarks *GoogleCloudSecuritycenterV1beta1SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

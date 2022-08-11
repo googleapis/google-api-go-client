@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/custom-search/v1/introduction
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/customsearch/v1"
-//	...
-//	ctx := context.Background()
-//	customsearchService, err := customsearch.NewService(ctx)
+//   import "google.golang.org/api/customsearch/v1"
+//   ...
+//   ctx := context.Background()
+//   customsearchService, err := customsearch.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	customsearchService, err := customsearch.NewService(ctx, option.WithAPIKey("AIza..."))
+//   customsearchService, err := customsearch.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	customsearchService, err := customsearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   customsearchService, err := customsearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package customsearch // import "google.golang.org/api/customsearch/v1"
@@ -1470,12 +1470,11 @@ func (c *CseListCall) Hq(hq string) *CseListCall {
 // "trans": transparent background
 //
 // Possible values:
-//
-//	"imgColorTypeUndefined" - No image color type specified.
-//	"mono" - Black and white images only.
-//	"gray" - Grayscale images only.
-//	"color" - Color images only.
-//	"trans" - Images with transparent background
+//   "imgColorTypeUndefined" - No image color type specified.
+//   "mono" - Black and white images only.
+//   "gray" - Grayscale images only.
+//   "color" - Color images only.
+//   "trans" - Images with transparent background
 func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
 	c.urlParams_.Set("imgColorType", imgColorType)
 	return c
@@ -1487,20 +1486,19 @@ func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
 // * "pink" * "purple" * "red" * "teal" * "white" * "yellow"
 //
 // Possible values:
-//
-//	"imgDominantColorUndefined" - No dominant color specified.
-//	"black" - Predominantly black images only.
-//	"blue" - Predominantly blue images only.
-//	"brown" - Predominantly brown images only.
-//	"gray" - Predominantly gray images only.
-//	"green" - Predominantly green images only.
-//	"orange" - Predominantly orange images only.
-//	"pink" - Predominantly pink images only.
-//	"purple" - Predominantly purple images only.
-//	"red" - Predominantly red images only.
-//	"teal" - Predominantly teal images only.
-//	"white" - Predominantly white images only.
-//	"yellow" - Predominantly yellow images only.
+//   "imgDominantColorUndefined" - No dominant color specified.
+//   "black" - Predominantly black images only.
+//   "blue" - Predominantly blue images only.
+//   "brown" - Predominantly brown images only.
+//   "gray" - Predominantly gray images only.
+//   "green" - Predominantly green images only.
+//   "orange" - Predominantly orange images only.
+//   "pink" - Predominantly pink images only.
+//   "purple" - Predominantly purple images only.
+//   "red" - Predominantly red images only.
+//   "teal" - Predominantly teal images only.
+//   "white" - Predominantly white images only.
+//   "yellow" - Predominantly yellow images only.
 func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
 	c.urlParams_.Set("imgDominantColor", imgDominantColor)
 	return c
@@ -1511,15 +1509,14 @@ func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
 // "large" * "medium" * "small" * "xlarge" * "xxlarge"
 //
 // Possible values:
-//
-//	"imgSizeUndefined" - No image size specified.
-//	"HUGE" - Only the largest possible images.
-//	"ICON" - Only very small icon-sized images.
-//	"LARGE" - Only large images.
-//	"MEDIUM" - Only medium images.
-//	"SMALL" - Only small images.
-//	"XLARGE" - Only very large images.
-//	"XXLARGE" - Only extremely large images.
+//   "imgSizeUndefined" - No image size specified.
+//   "HUGE" - Only the largest possible images.
+//   "ICON" - Only very small icon-sized images.
+//   "LARGE" - Only large images.
+//   "MEDIUM" - Only medium images.
+//   "SMALL" - Only small images.
+//   "XLARGE" - Only very large images.
+//   "XXLARGE" - Only extremely large images.
 func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
 	c.urlParams_.Set("imgSize", imgSize)
 	return c
@@ -1530,14 +1527,13 @@ func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
 // "stock" * "photo" * "animated"
 //
 // Possible values:
-//
-//	"imgTypeUndefined" - No image type specified.
-//	"clipart" - Clipart-style images only.
-//	"face" - Images of faces only.
-//	"lineart" - Line art images only.
-//	"stock" - Stock images only.
-//	"photo" - Photo images only.
-//	"animated" - Animated images only.
+//   "imgTypeUndefined" - No image type specified.
+//   "clipart" - Clipart-style images only.
+//   "face" - Images of faces only.
+//   "lineart" - Line art images only.
+//   "stock" - Stock images only.
+//   "photo" - Photo images only.
+//   "animated" - Animated images only.
 func (c *CseListCall) ImgType(imgType string) *CseListCall {
 	c.urlParams_.Set("imgType", imgType)
 	return c
@@ -1625,15 +1621,12 @@ func (c *CseListCall) Rights(rights string) *CseListCall {
 // "off": Disables SafeSearch filtering. (default)
 //
 // Possible values:
-//
-//	"safeUndefined" - SafeSearch mode unspecified. (Falls back to
-//
+//   "safeUndefined" - SafeSearch mode unspecified. (Falls back to
 // engine's configuration.)
-//
-//	"active" - Turn SafeSearch on.
-//	"high" - Deprecated, equivalent to "active".
-//	"medium" - Deprecated, equivalent to "active".
-//	"off" - Turn SafeSearch off.
+//   "active" - Turn SafeSearch on.
+//   "high" - Deprecated, equivalent to "active".
+//   "medium" - Deprecated, equivalent to "active".
+//   "off" - Turn SafeSearch off.
 func (c *CseListCall) Safe(safe string) *CseListCall {
 	c.urlParams_.Set("safe", safe)
 	return c
@@ -1644,12 +1637,9 @@ func (c *CseListCall) Safe(safe string) *CseListCall {
 // webpages. Acceptable values are: * "image": custom image search.
 //
 // Possible values:
-//
-//	"searchTypeUndefined" - Search type unspecified (defaults to web
-//
+//   "searchTypeUndefined" - Search type unspecified (defaults to web
 // search).
-//
-//	"image" - Image search.
+//   "image" - Image search.
 func (c *CseListCall) SearchType(searchType string) *CseListCall {
 	c.urlParams_.Set("searchType", searchType)
 	return c
@@ -1669,10 +1659,9 @@ func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
 // "i": include
 //
 // Possible values:
-//
-//	"siteSearchFilterUndefined" - Filter mode unspecified.
-//	"e" - Exclude results from the listed sites.
-//	"i" - Include only results from the listed sites.
+//   "siteSearchFilterUndefined" - Filter mode unspecified.
+//   "e" - Exclude results from the listed sites.
+//   "i" - Include only results from the listed sites.
 func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
 	c.urlParams_.Set("siteSearchFilter", siteSearchFilter)
 	return c
@@ -2243,12 +2232,11 @@ func (c *CseSiterestrictListCall) Hq(hq string) *CseSiterestrictListCall {
 // "trans": transparent background
 //
 // Possible values:
-//
-//	"imgColorTypeUndefined" - No image color type specified.
-//	"mono" - Black and white images only.
-//	"gray" - Grayscale images only.
-//	"color" - Color images only.
-//	"trans" - Images with transparent background
+//   "imgColorTypeUndefined" - No image color type specified.
+//   "mono" - Black and white images only.
+//   "gray" - Grayscale images only.
+//   "color" - Color images only.
+//   "trans" - Images with transparent background
 func (c *CseSiterestrictListCall) ImgColorType(imgColorType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgColorType", imgColorType)
 	return c
@@ -2260,20 +2248,19 @@ func (c *CseSiterestrictListCall) ImgColorType(imgColorType string) *CseSiterest
 // * "pink" * "purple" * "red" * "teal" * "white" * "yellow"
 //
 // Possible values:
-//
-//	"imgDominantColorUndefined" - No dominant color specified.
-//	"black" - Predominantly black images only.
-//	"blue" - Predominantly blue images only.
-//	"brown" - Predominantly brown images only.
-//	"gray" - Predominantly gray images only.
-//	"green" - Predominantly green images only.
-//	"orange" - Predominantly orange images only.
-//	"pink" - Predominantly pink images only.
-//	"purple" - Predominantly purple images only.
-//	"red" - Predominantly red images only.
-//	"teal" - Predominantly teal images only.
-//	"white" - Predominantly white images only.
-//	"yellow" - Predominantly yellow images only.
+//   "imgDominantColorUndefined" - No dominant color specified.
+//   "black" - Predominantly black images only.
+//   "blue" - Predominantly blue images only.
+//   "brown" - Predominantly brown images only.
+//   "gray" - Predominantly gray images only.
+//   "green" - Predominantly green images only.
+//   "orange" - Predominantly orange images only.
+//   "pink" - Predominantly pink images only.
+//   "purple" - Predominantly purple images only.
+//   "red" - Predominantly red images only.
+//   "teal" - Predominantly teal images only.
+//   "white" - Predominantly white images only.
+//   "yellow" - Predominantly yellow images only.
 func (c *CseSiterestrictListCall) ImgDominantColor(imgDominantColor string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgDominantColor", imgDominantColor)
 	return c
@@ -2284,15 +2271,14 @@ func (c *CseSiterestrictListCall) ImgDominantColor(imgDominantColor string) *Cse
 // "large" * "medium" * "small" * "xlarge" * "xxlarge"
 //
 // Possible values:
-//
-//	"imgSizeUndefined" - No image size specified.
-//	"HUGE" - Only the largest possible images.
-//	"ICON" - Only very small icon-sized images.
-//	"LARGE" - Only large images.
-//	"MEDIUM" - Only medium images.
-//	"SMALL" - Only small images.
-//	"XLARGE" - Only very large images.
-//	"XXLARGE" - Only extremely large images.
+//   "imgSizeUndefined" - No image size specified.
+//   "HUGE" - Only the largest possible images.
+//   "ICON" - Only very small icon-sized images.
+//   "LARGE" - Only large images.
+//   "MEDIUM" - Only medium images.
+//   "SMALL" - Only small images.
+//   "XLARGE" - Only very large images.
+//   "XXLARGE" - Only extremely large images.
 func (c *CseSiterestrictListCall) ImgSize(imgSize string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgSize", imgSize)
 	return c
@@ -2303,14 +2289,13 @@ func (c *CseSiterestrictListCall) ImgSize(imgSize string) *CseSiterestrictListCa
 // "stock" * "photo" * "animated"
 //
 // Possible values:
-//
-//	"imgTypeUndefined" - No image type specified.
-//	"clipart" - Clipart-style images only.
-//	"face" - Images of faces only.
-//	"lineart" - Line art images only.
-//	"stock" - Stock images only.
-//	"photo" - Photo images only.
-//	"animated" - Animated images only.
+//   "imgTypeUndefined" - No image type specified.
+//   "clipart" - Clipart-style images only.
+//   "face" - Images of faces only.
+//   "lineart" - Line art images only.
+//   "stock" - Stock images only.
+//   "photo" - Photo images only.
+//   "animated" - Animated images only.
 func (c *CseSiterestrictListCall) ImgType(imgType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("imgType", imgType)
 	return c
@@ -2398,15 +2383,12 @@ func (c *CseSiterestrictListCall) Rights(rights string) *CseSiterestrictListCall
 // "off": Disables SafeSearch filtering. (default)
 //
 // Possible values:
-//
-//	"safeUndefined" - SafeSearch mode unspecified. (Falls back to
-//
+//   "safeUndefined" - SafeSearch mode unspecified. (Falls back to
 // engine's configuration.)
-//
-//	"active" - Turn SafeSearch on.
-//	"high" - Deprecated, equivalent to "active".
-//	"medium" - Deprecated, equivalent to "active".
-//	"off" - Turn SafeSearch off.
+//   "active" - Turn SafeSearch on.
+//   "high" - Deprecated, equivalent to "active".
+//   "medium" - Deprecated, equivalent to "active".
+//   "off" - Turn SafeSearch off.
 func (c *CseSiterestrictListCall) Safe(safe string) *CseSiterestrictListCall {
 	c.urlParams_.Set("safe", safe)
 	return c
@@ -2417,12 +2399,9 @@ func (c *CseSiterestrictListCall) Safe(safe string) *CseSiterestrictListCall {
 // webpages. Acceptable values are: * "image": custom image search.
 //
 // Possible values:
-//
-//	"searchTypeUndefined" - Search type unspecified (defaults to web
-//
+//   "searchTypeUndefined" - Search type unspecified (defaults to web
 // search).
-//
-//	"image" - Image search.
+//   "image" - Image search.
 func (c *CseSiterestrictListCall) SearchType(searchType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("searchType", searchType)
 	return c
@@ -2442,10 +2421,9 @@ func (c *CseSiterestrictListCall) SiteSearch(siteSearch string) *CseSiterestrict
 // "i": include
 //
 // Possible values:
-//
-//	"siteSearchFilterUndefined" - Filter mode unspecified.
-//	"e" - Exclude results from the listed sites.
-//	"i" - Include only results from the listed sites.
+//   "siteSearchFilterUndefined" - Filter mode unspecified.
+//   "e" - Exclude results from the listed sites.
+//   "i" - Include only results from the listed sites.
 func (c *CseSiterestrictListCall) SiteSearchFilter(siteSearchFilter string) *CseSiterestrictListCall {
 	c.urlParams_.Set("siteSearchFilter", siteSearchFilter)
 	return c

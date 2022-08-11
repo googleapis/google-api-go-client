@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/cloud-messaging
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/fcmdata/v1beta1"
-//	...
-//	ctx := context.Background()
-//	fcmdataService, err := fcmdata.NewService(ctx)
+//   import "google.golang.org/api/fcmdata/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   fcmdataService, err := fcmdata.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	fcmdataService, err := fcmdata.NewService(ctx, option.WithAPIKey("AIza..."))
+//   fcmdataService, err := fcmdata.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	fcmdataService, err := fcmdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   fcmdataService, err := fcmdata.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package fcmdata // import "google.golang.org/api/fcmdata/v1beta1"
@@ -575,8 +575,8 @@ type ProjectsAndroidAppsDeliveryDataListCall struct {
 
 // List: List aggregate delivery data for the given Android application.
 //
-//   - parent: The application for which to list delivery data. Format:
-//     `projects/{project_id}/androidApps/{app_id}`.
+// - parent: The application for which to list delivery data. Format:
+//   `projects/{project_id}/androidApps/{app_id}`.
 func (r *ProjectsAndroidAppsDeliveryDataService) List(parent string) *ProjectsAndroidAppsDeliveryDataListCall {
 	c := &ProjectsAndroidAppsDeliveryDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/cloud-provider-access-management/access-approval/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/accessapproval/v1"
-//	...
-//	ctx := context.Background()
-//	accessapprovalService, err := accessapproval.NewService(ctx)
+//   import "google.golang.org/api/accessapproval/v1"
+//   ...
+//   ctx := context.Background()
+//   accessapprovalService, err := accessapproval.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	accessapprovalService, err := accessapproval.NewService(ctx, option.WithAPIKey("AIza..."))
+//   accessapprovalService, err := accessapproval.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	accessapprovalService, err := accessapproval.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   accessapprovalService, err := accessapproval.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package accessapproval // import "google.golang.org/api/accessapproval/v1"
@@ -947,8 +947,8 @@ type FoldersGetAccessApprovalSettingsCall struct {
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
 //
-//   - name: The name of the AccessApprovalSettings to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
+// - name: The name of the AccessApprovalSettings to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *FoldersService) GetAccessApprovalSettings(name string) *FoldersGetAccessApprovalSettingsCall {
 	c := &FoldersGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1244,10 +1244,10 @@ type FoldersUpdateAccessApprovalSettingsCall struct {
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
 //
-//   - name: The resource name of the settings. Format is one of: *
-//     "projects/{project}/accessApprovalSettings" *
-//     "folders/{folder}/accessApprovalSettings" *
-//     "organizations/{organization}/accessApprovalSettings".
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *FoldersService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *FoldersUpdateAccessApprovalSettingsCall {
 	c := &FoldersUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1702,9 +1702,9 @@ type FoldersApprovalRequestsGetCall struct {
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
 //
-//   - name: The name of the approval request to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
-//     quest}".
+// - name: The name of the approval request to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//   quest}".
 func (r *FoldersApprovalRequestsService) Get(name string) *FoldersApprovalRequestsGetCall {
 	c := &FoldersApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1998,8 +1998,8 @@ type FoldersApprovalRequestsListCall struct {
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
 //
-//   - parent: The parent resource. This may be "projects/{project}",
-//     "folders/{folder}", or "organizations/{organization}".
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *FoldersApprovalRequestsService) List(parent string) *FoldersApprovalRequestsListCall {
 	c := &FoldersApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2348,8 +2348,8 @@ type OrganizationsGetAccessApprovalSettingsCall struct {
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
 //
-//   - name: The name of the AccessApprovalSettings to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
+// - name: The name of the AccessApprovalSettings to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *OrganizationsService) GetAccessApprovalSettings(name string) *OrganizationsGetAccessApprovalSettingsCall {
 	c := &OrganizationsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2645,10 +2645,10 @@ type OrganizationsUpdateAccessApprovalSettingsCall struct {
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
 //
-//   - name: The resource name of the settings. Format is one of: *
-//     "projects/{project}/accessApprovalSettings" *
-//     "folders/{folder}/accessApprovalSettings" *
-//     "organizations/{organization}/accessApprovalSettings".
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *OrganizationsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *OrganizationsUpdateAccessApprovalSettingsCall {
 	c := &OrganizationsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3103,9 +3103,9 @@ type OrganizationsApprovalRequestsGetCall struct {
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
 //
-//   - name: The name of the approval request to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
-//     quest}".
+// - name: The name of the approval request to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//   quest}".
 func (r *OrganizationsApprovalRequestsService) Get(name string) *OrganizationsApprovalRequestsGetCall {
 	c := &OrganizationsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3399,8 +3399,8 @@ type OrganizationsApprovalRequestsListCall struct {
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
 //
-//   - parent: The parent resource. This may be "projects/{project}",
-//     "folders/{folder}", or "organizations/{organization}".
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *OrganizationsApprovalRequestsService) List(parent string) *OrganizationsApprovalRequestsListCall {
 	c := &OrganizationsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3749,8 +3749,8 @@ type ProjectsGetAccessApprovalSettingsCall struct {
 // GetAccessApprovalSettings: Gets the settings associated with a
 // project, folder, or organization.
 //
-//   - name: The name of the AccessApprovalSettings to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/accessApprovalSettings".
+// - name: The name of the AccessApprovalSettings to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/accessApprovalSettings".
 func (r *ProjectsService) GetAccessApprovalSettings(name string) *ProjectsGetAccessApprovalSettingsCall {
 	c := &ProjectsGetAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4046,10 +4046,10 @@ type ProjectsUpdateAccessApprovalSettingsCall struct {
 // project, folder, or organization. Settings to update are determined
 // by the value of field_mask.
 //
-//   - name: The resource name of the settings. Format is one of: *
-//     "projects/{project}/accessApprovalSettings" *
-//     "folders/{folder}/accessApprovalSettings" *
-//     "organizations/{organization}/accessApprovalSettings".
+// - name: The resource name of the settings. Format is one of: *
+//   "projects/{project}/accessApprovalSettings" *
+//   "folders/{folder}/accessApprovalSettings" *
+//   "organizations/{organization}/accessApprovalSettings".
 func (r *ProjectsService) UpdateAccessApprovalSettings(name string, accessapprovalsettings *AccessApprovalSettings) *ProjectsUpdateAccessApprovalSettingsCall {
 	c := &ProjectsUpdateAccessApprovalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4504,9 +4504,9 @@ type ProjectsApprovalRequestsGetCall struct {
 // Get: Gets an approval request. Returns NOT_FOUND if the request does
 // not exist.
 //
-//   - name: The name of the approval request to retrieve. Format:
-//     "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
-//     quest}".
+// - name: The name of the approval request to retrieve. Format:
+//   "{projects|folders|organizations}/{id}/approvalRequests/{approval_re
+//   quest}".
 func (r *ProjectsApprovalRequestsService) Get(name string) *ProjectsApprovalRequestsGetCall {
 	c := &ProjectsApprovalRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4800,8 +4800,8 @@ type ProjectsApprovalRequestsListCall struct {
 // organization. Approval requests can be filtered by state (pending,
 // active, dismissed). The order is reverse chronological.
 //
-//   - parent: The parent resource. This may be "projects/{project}",
-//     "folders/{folder}", or "organizations/{organization}".
+// - parent: The parent resource. This may be "projects/{project}",
+//   "folders/{folder}", or "organizations/{organization}".
 func (r *ProjectsApprovalRequestsService) List(parent string) *ProjectsApprovalRequestsListCall {
 	c := &ProjectsApprovalRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

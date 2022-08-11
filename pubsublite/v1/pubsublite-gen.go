@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/pubsub/lite/docs
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/pubsublite/v1"
-//	...
-//	ctx := context.Background()
-//	pubsubliteService, err := pubsublite.NewService(ctx)
+//   import "google.golang.org/api/pubsublite/v1"
+//   ...
+//   ctx := context.Background()
+//   pubsubliteService, err := pubsublite.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	pubsubliteService, err := pubsublite.NewService(ctx, option.WithAPIKey("AIza..."))
+//   pubsubliteService, err := pubsublite.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	pubsubliteService, err := pubsublite.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   pubsubliteService, err := pubsublite.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package pubsublite // import "google.golang.org/api/pubsublite/v1"
@@ -2188,8 +2188,8 @@ type AdminProjectsLocationsReservationsCreateCall struct {
 
 // Create: Creates a new reservation.
 //
-//   - parent: The parent location in which to create the reservation.
-//     Structured like `projects/{project_number}/locations/{location}`.
+// - parent: The parent location in which to create the reservation.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsReservationsService) Create(parent string, reservation *Reservation) *AdminProjectsLocationsReservationsCreateCall {
 	c := &AdminProjectsLocationsReservationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2344,9 +2344,9 @@ type AdminProjectsLocationsReservationsDeleteCall struct {
 
 // Delete: Deletes the specified reservation.
 //
-//   - name: The name of the reservation to delete. Structured like:
-//     projects/{project_number}/locations/{location}/reservations/{reserva
-//     tion_id}.
+// - name: The name of the reservation to delete. Structured like:
+//   projects/{project_number}/locations/{location}/reservations/{reserva
+//   tion_id}.
 func (r *AdminProjectsLocationsReservationsService) Delete(name string) *AdminProjectsLocationsReservationsDeleteCall {
 	c := &AdminProjectsLocationsReservationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2479,10 +2479,10 @@ type AdminProjectsLocationsReservationsGetCall struct {
 
 // Get: Returns the reservation configuration.
 //
-//   - name: The name of the reservation whose configuration to return.
-//     Structured like:
-//     projects/{project_number}/locations/{location}/reservations/{reserva
-//     tion_id}.
+// - name: The name of the reservation whose configuration to return.
+//   Structured like:
+//   projects/{project_number}/locations/{location}/reservations/{reserva
+//   tion_id}.
 func (r *AdminProjectsLocationsReservationsService) Get(name string) *AdminProjectsLocationsReservationsGetCall {
 	c := &AdminProjectsLocationsReservationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2628,8 +2628,8 @@ type AdminProjectsLocationsReservationsListCall struct {
 
 // List: Returns the list of reservations for the given project.
 //
-//   - parent: The parent whose reservations are to be listed. Structured
-//     like `projects/{project_number}/locations/{location}`.
+// - parent: The parent whose reservations are to be listed. Structured
+//   like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsReservationsService) List(parent string) *AdminProjectsLocationsReservationsListCall {
 	c := &AdminProjectsLocationsReservationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2826,9 +2826,9 @@ type AdminProjectsLocationsReservationsPatchCall struct {
 
 // Patch: Updates properties of the specified reservation.
 //
-//   - name: The name of the reservation. Structured like:
-//     projects/{project_number}/locations/{location}/reservations/{reserva
-//     tion_id}.
+// - name: The name of the reservation. Structured like:
+//   projects/{project_number}/locations/{location}/reservations/{reserva
+//   tion_id}.
 func (r *AdminProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *AdminProjectsLocationsReservationsPatchCall {
 	c := &AdminProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2983,10 +2983,10 @@ type AdminProjectsLocationsReservationsTopicsListCall struct {
 
 // List: Lists the topics attached to the specified reservation.
 //
-//   - name: The name of the reservation whose topics to list. Structured
-//     like:
-//     projects/{project_number}/locations/{location}/reservations/{reserva
-//     tion_id}.
+// - name: The name of the reservation whose topics to list. Structured
+//   like:
+//   projects/{project_number}/locations/{location}/reservations/{reserva
+//   tion_id}.
 func (r *AdminProjectsLocationsReservationsTopicsService) List(name string) *AdminProjectsLocationsReservationsTopicsListCall {
 	c := &AdminProjectsLocationsReservationsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3182,8 +3182,8 @@ type AdminProjectsLocationsSubscriptionsCreateCall struct {
 
 // Create: Creates a new subscription.
 //
-//   - parent: The parent location in which to create the subscription.
-//     Structured like `projects/{project_number}/locations/{location}`.
+// - parent: The parent location in which to create the subscription.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) Create(parent string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsCreateCall {
 	c := &AdminProjectsLocationsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3631,8 +3631,8 @@ type AdminProjectsLocationsSubscriptionsListCall struct {
 
 // List: Returns the list of subscriptions for the given project.
 //
-//   - parent: The parent whose subscriptions are to be listed. Structured
-//     like `projects/{project_number}/locations/{location}`.
+// - parent: The parent whose subscriptions are to be listed. Structured
+//   like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsSubscriptionsService) List(parent string) *AdminProjectsLocationsSubscriptionsListCall {
 	c := &AdminProjectsLocationsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3829,9 +3829,9 @@ type AdminProjectsLocationsSubscriptionsPatchCall struct {
 
 // Patch: Updates properties of the specified subscription.
 //
-//   - name: The name of the subscription. Structured like:
-//     projects/{project_number}/locations/{location}/subscriptions/{subscr
-//     iption_id}.
+// - name: The name of the subscription. Structured like:
+//   projects/{project_number}/locations/{location}/subscriptions/{subscr
+//   iption_id}.
 func (r *AdminProjectsLocationsSubscriptionsService) Patch(name string, subscription *Subscription) *AdminProjectsLocationsSubscriptionsPatchCall {
 	c := &AdminProjectsLocationsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4144,8 +4144,8 @@ type AdminProjectsLocationsTopicsCreateCall struct {
 
 // Create: Creates a new topic.
 //
-//   - parent: The parent location in which to create the topic.
-//     Structured like `projects/{project_number}/locations/{location}`.
+// - parent: The parent location in which to create the topic.
+//   Structured like `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) Create(parent string, topic *Topic) *AdminProjectsLocationsTopicsCreateCall {
 	c := &AdminProjectsLocationsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4725,8 +4725,8 @@ type AdminProjectsLocationsTopicsListCall struct {
 
 // List: Returns the list of topics for the given project.
 //
-//   - parent: The parent whose topics are to be listed. Structured like
-//     `projects/{project_number}/locations/{location}`.
+// - parent: The parent whose topics are to be listed. Structured like
+//   `projects/{project_number}/locations/{location}`.
 func (r *AdminProjectsLocationsTopicsService) List(parent string) *AdminProjectsLocationsTopicsListCall {
 	c := &AdminProjectsLocationsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4921,8 +4921,8 @@ type AdminProjectsLocationsTopicsPatchCall struct {
 
 // Patch: Updates properties of the specified topic.
 //
-//   - name: The name of the topic. Structured like:
-//     projects/{project_number}/locations/{location}/topics/{topic_id}.
+// - name: The name of the topic. Structured like:
+//   projects/{project_number}/locations/{location}/topics/{topic_id}.
 func (r *AdminProjectsLocationsTopicsService) Patch(name string, topic *Topic) *AdminProjectsLocationsTopicsPatchCall {
 	c := &AdminProjectsLocationsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5416,10 +5416,10 @@ type CursorProjectsLocationsSubscriptionsCursorsListCall struct {
 
 // List: Returns all committed cursor information for a subscription.
 //
-//   - parent: The subscription for which to retrieve cursors. Structured
-//     like
-//     `projects/{project_number}/locations/{location}/subscriptions/{subsc
-//     ription_id}`.
+// - parent: The subscription for which to retrieve cursors. Structured
+//   like
+//   `projects/{project_number}/locations/{location}/subscriptions/{subsc
+//   ription_id}`.
 func (r *CursorProjectsLocationsSubscriptionsCursorsService) List(parent string) *CursorProjectsLocationsSubscriptionsCursorsListCall {
 	c := &CursorProjectsLocationsSubscriptionsCursorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

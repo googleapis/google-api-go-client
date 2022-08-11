@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/search-ads
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/doubleclicksearch/v2"
-//	...
-//	ctx := context.Background()
-//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx)
+//   import "google.golang.org/api/doubleclicksearch/v2"
+//   ...
+//   ctx := context.Background()
+//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithAPIKey("AIza..."))
+//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   doubleclicksearchService, err := doubleclicksearch.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package doubleclicksearch // import "google.golang.org/api/doubleclicksearch/v2"
@@ -1089,16 +1089,16 @@ type ConversionGetCall struct {
 // Get: Retrieves a list of conversions from a DoubleClick Search engine
 // account.
 //
-//   - advertiserId: Numeric ID of the advertiser.
-//   - agencyId: Numeric ID of the agency.
-//   - endDate: Last date (inclusive) on which to retrieve conversions.
-//     Format is yyyymmdd.
-//   - engineAccountId: Numeric ID of the engine account.
-//   - rowCount: The number of conversions to return per call.
-//   - startDate: First date (inclusive) on which to retrieve conversions.
-//     Format is yyyymmdd.
-//   - startRow: The 0-based starting index for retrieving conversions
-//     results.
+// - advertiserId: Numeric ID of the advertiser.
+// - agencyId: Numeric ID of the agency.
+// - endDate: Last date (inclusive) on which to retrieve conversions.
+//   Format is yyyymmdd.
+// - engineAccountId: Numeric ID of the engine account.
+// - rowCount: The number of conversions to return per call.
+// - startDate: First date (inclusive) on which to retrieve conversions.
+//   Format is yyyymmdd.
+// - startRow: The 0-based starting index for retrieving conversions
+//   results.
 func (r *ConversionService) Get(agencyId int64, advertiserId int64, engineAccountId int64, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetCall {
 	c := &ConversionGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agencyId = agencyId

@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/identity/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/cloudidentity/v1beta1"
-//	...
-//	ctx := context.Background()
-//	cloudidentityService, err := cloudidentity.NewService(ctx)
+//   import "google.golang.org/api/cloudidentity/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   cloudidentityService, err := cloudidentity.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	cloudidentityService, err := cloudidentity.NewService(ctx, option.WithScopes(cloudidentity.CloudPlatformScope))
+//   cloudidentityService, err := cloudidentity.NewService(ctx, option.WithScopes(cloudidentity.CloudPlatformScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	cloudidentityService, err := cloudidentity.NewService(ctx, option.WithAPIKey("AIza..."))
+//   cloudidentityService, err := cloudidentity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	cloudidentityService, err := cloudidentity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   cloudidentityService, err := cloudidentity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudidentity // import "google.golang.org/api/cloudidentity/v1beta1"
@@ -2066,9 +2066,6 @@ func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() (
 // collection of entities, where each entity is either a user, another
 // group, or a service account.
 type Group struct {
-	// AdditionalGroupKeys: Additional entity key aliases for a Group.
-	AdditionalGroupKeys []*EntityKey `json:"additionalGroupKeys,omitempty"`
-
 	// CreateTime: Output only. The time when the `Group` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2122,21 +2119,20 @@ type Group struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AdditionalGroupKeys")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AdditionalGroupKeys") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3674,8 +3670,8 @@ type CustomersUserinvitationsCancelCall struct {
 
 // Cancel: Cancels a UserInvitation that was already sent.
 //
-//   - name: `UserInvitation` name in the format
-//     `customers/{customer}/userinvitations/{user_email_address}`.
+// - name: `UserInvitation` name in the format
+//   `customers/{customer}/userinvitations/{user_email_address}`.
 func (r *CustomersUserinvitationsService) Cancel(name string, canceluserinvitationrequest *CancelUserInvitationRequest) *CustomersUserinvitationsCancelCall {
 	c := &CustomersUserinvitationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3820,8 +3816,8 @@ type CustomersUserinvitationsGetCall struct {
 // previous 48 hours will not appear in the result. This delay also
 // applies to newly-verified domains.
 //
-//   - name: `UserInvitation` name in the format
-//     `customers/{customer}/userinvitations/{user_email_address}`.
+// - name: `UserInvitation` name in the format
+//   `customers/{customer}/userinvitations/{user_email_address}`.
 func (r *CustomersUserinvitationsService) Get(name string) *CustomersUserinvitationsGetCall {
 	c := &CustomersUserinvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3975,8 +3971,8 @@ type CustomersUserinvitationsIsInvitableUserCall struct {
 // user is eligible. **Note:** This method is not supported for
 // Workspace Essentials customers.
 //
-//   - name: `UserInvitation` name in the format
-//     `customers/{customer}/userinvitations/{user_email_address}`.
+// - name: `UserInvitation` name in the format
+//   `customers/{customer}/userinvitations/{user_email_address}`.
 func (r *CustomersUserinvitationsService) IsInvitableUser(name string) *CustomersUserinvitationsIsInvitableUserCall {
 	c := &CustomersUserinvitationsIsInvitableUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4126,8 +4122,8 @@ type CustomersUserinvitationsListCall struct {
 // the previous 48 hours will not appear in the result. This delay also
 // applies to newly-verified domains.
 //
-//   - parent: The customer ID of the Google Workspace or Cloud Identity
-//     account the UserInvitation resources are associated with.
+// - parent: The customer ID of the Google Workspace or Cloud Identity
+//   account the UserInvitation resources are associated with.
 func (r *CustomersUserinvitationsService) List(parent string) *CustomersUserinvitationsListCall {
 	c := &CustomersUserinvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4361,8 +4357,8 @@ type CustomersUserinvitationsSendCall struct {
 // accounts if you know the unmanaged email address and
 // IsInvitableUser==True.
 //
-//   - name: `UserInvitation` name in the format
-//     `customers/{customer}/userinvitations/{user_email_address}`.
+// - name: `UserInvitation` name in the format
+//   `customers/{customer}/userinvitations/{user_email_address}`.
 func (r *CustomersUserinvitationsService) Send(name string, senduserinvitationrequest *SendUserInvitationRequest) *CustomersUserinvitationsSendCall {
 	c := &CustomersUserinvitationsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4506,10 +4502,10 @@ type DevicesCancelWipeCall struct {
 // used to cancel device wipe in the gap between the wipe operation
 // returning success and the device being wiped.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}`, where device_id is the unique ID
-//     assigned to the Device.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}`, where device_id is the unique ID
+//   assigned to the Device.
 func (r *DevicesService) CancelWipe(name string, cancelwipedevicerequest *CancelWipeDeviceRequest) *DevicesCancelWipeCall {
 	c := &DevicesCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4780,10 +4776,10 @@ type DevicesDeleteCall struct {
 
 // Delete: Deletes the specified device.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}`, where device_id is the unique ID
-//     assigned to the Device.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}`, where device_id is the unique ID
+//   assigned to the Device.
 func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
 	c := &DevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4917,10 +4913,10 @@ type DevicesGetCall struct {
 
 // Get: Retrieves the specified device.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}`, where device_id is the unique ID
-//     assigned to the Device.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}`, where device_id is the unique ID
+//   assigned to the Device.
 func (r *DevicesService) Get(name string) *DevicesGetCall {
 	c := &DevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5114,16 +5110,12 @@ func (c *DevicesListCall) PageToken(pageToken string) *DevicesListCall {
 // request.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Default value. The value is unused.
-//	"COMPANY_INVENTORY" - This view contains all devices imported by
-//
+//   "VIEW_UNSPECIFIED" - Default value. The value is unused.
+//   "COMPANY_INVENTORY" - This view contains all devices imported by
 // the company admin. Each device in the response contains all
 // information specified by the company admin when importing the device
 // (i.e. asset tags).
-//
-//	"USER_ASSIGNED_DEVICES" - This view contains all devices with at
-//
+//   "USER_ASSIGNED_DEVICES" - This view contains all devices with at
 // least one user registered on the device. Each device in the response
 // contains all device information, except for asset tags.
 func (c *DevicesListCall) View(view string) *DevicesListCall {
@@ -5317,11 +5309,11 @@ type DevicesWipeCall struct {
 
 // Wipe: Wipes all data on the specified device.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesService) Wipe(name string, wipedevicerequest *WipeDeviceRequest) *DevicesWipeCall {
 	c := &DevicesWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5464,11 +5456,11 @@ type DevicesDeviceUsersApproveCall struct {
 
 // Approve: Approves device to access user data.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Approve(name string, approvedeviceuserrequest *ApproveDeviceUserRequest) *DevicesDeviceUsersApproveCall {
 	c := &DevicesDeviceUsersApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5611,11 +5603,11 @@ type DevicesDeviceUsersBlockCall struct {
 
 // Block: Blocks device from accessing user data
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Block(name string, blockdeviceuserrequest *BlockDeviceUserRequest) *DevicesDeviceUsersBlockCall {
 	c := &DevicesDeviceUsersBlockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5760,11 +5752,11 @@ type DevicesDeviceUsersCancelWipeCall struct {
 // can be used to cancel device wipe in the gap between the wipe
 // operation returning success and the device being wiped.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) CancelWipe(name string, cancelwipedeviceuserrequest *CancelWipeDeviceUserRequest) *DevicesDeviceUsersCancelWipeCall {
 	c := &DevicesDeviceUsersCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5907,11 +5899,11 @@ type DevicesDeviceUsersDeleteCall struct {
 // Delete: Deletes the specified DeviceUser. This also revokes the
 // user's access to device data.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDeleteCall {
 	c := &DevicesDeviceUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6045,11 +6037,11 @@ type DevicesDeviceUsersGetCall struct {
 
 // Get: Retrieves the specified DeviceUser
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall {
 	c := &DevicesDeviceUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6197,9 +6189,9 @@ type DevicesDeviceUsersListCall struct {
 
 // List: Lists/Searches DeviceUsers.
 //
-//   - parent: To list all DeviceUsers, set this to "devices/-". To list
-//     all DeviceUsers owned by a device, set this to the resource name of
-//     the device. Format: devices/{device}.
+// - parent: To list all DeviceUsers, set this to "devices/-". To list
+//   all DeviceUsers owned by a device, set this to the resource name of
+//   the device. Format: devices/{device}.
 func (r *DevicesDeviceUsersService) List(parent string) *DevicesDeviceUsersListCall {
 	c := &DevicesDeviceUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6437,8 +6429,8 @@ type DevicesDeviceUsersLookupCall struct {
 // - Android: Specifying the 'android_id' field is required. - Desktop:
 // Specifying the 'raw_resource_id' field is required.
 //
-//   - parent: Must be set to "devices/-/deviceUsers" to search across all
-//     DeviceUser belonging to the user.
+// - parent: Must be set to "devices/-/deviceUsers" to search across all
+//   DeviceUser belonging to the user.
 func (r *DevicesDeviceUsersService) Lookup(parent string) *DevicesDeviceUsersLookupCall {
 	c := &DevicesDeviceUsersLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6678,11 +6670,11 @@ type DevicesDeviceUsersWipeCall struct {
 
 // Wipe: Wipes the user's account on a device.
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the Device
-//     in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//     where device_id is the unique ID assigned to the Device, and
-//     device_user_id is the unique ID assigned to the User.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the Device
+//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
+//   where device_id is the unique ID assigned to the Device, and
+//   device_user_id is the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Wipe(name string, wipedeviceuserrequest *WipeDeviceUserRequest) *DevicesDeviceUsersWipeCall {
 	c := &DevicesDeviceUsersWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6825,23 +6817,23 @@ type DevicesDeviceUsersClientStatesGetCall struct {
 
 // Get: Gets the client state for the device user
 //
-//   - name: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     ClientState in format:
-//     `devices/{device_id}/deviceUsers/{device_user_id}/clientStates/{part
-//     ner_id}`, where `device_id` is the unique ID assigned to the
-//     Device, `device_user_id` is the unique ID assigned to the User and
-//     `partner_id` identifies the partner storing the data. To get the
-//     client state for devices belonging to your own organization, the
-//     `partnerId` is in the format: `customerId-*anystring*`. Where the
-//     `customerId` is your organization's customer ID and `anystring` is
-//     any suffix. This suffix is used in setting up Custom Access Levels
-//     in Context-Aware Access. You may use `my_customer` instead of the
-//     customer ID for devices managed by your own organization. You may
-//     specify `-` in place of the `{device_id}`, so the ClientState
-//     resource name can be:
-//     `devices/-/deviceUsers/{device_user_resource_id}/clientStates/{partn
-//     er_id}`.
+// - name: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   ClientState in format:
+//   `devices/{device_id}/deviceUsers/{device_user_id}/clientStates/{part
+//   ner_id}`, where `device_id` is the unique ID assigned to the
+//   Device, `device_user_id` is the unique ID assigned to the User and
+//   `partner_id` identifies the partner storing the data. To get the
+//   client state for devices belonging to your own organization, the
+//   `partnerId` is in the format: `customerId-*anystring*`. Where the
+//   `customerId` is your organization's customer ID and `anystring` is
+//   any suffix. This suffix is used in setting up Custom Access Levels
+//   in Context-Aware Access. You may use `my_customer` instead of the
+//   customer ID for devices managed by your own organization. You may
+//   specify `-` in place of the `{device_id}`, so the ClientState
+//   resource name can be:
+//   `devices/-/deviceUsers/{device_user_resource_id}/clientStates/{partn
+//   er_id}`.
 func (r *DevicesDeviceUsersClientStatesService) Get(name string) *DevicesDeviceUsersClientStatesGetCall {
 	c := &DevicesDeviceUsersClientStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7008,12 +7000,12 @@ type DevicesDeviceUsersClientStatesPatchCall struct {
 // SKUs: Enterprise Standard, Enterprise Plus, Enterprise for Education,
 // and Cloud Identity Premium
 //
-//   - name: Output only. Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     ClientState in format:
-//     `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partn
-//     er_id}`, where partner_id corresponds to the partner storing the
-//     data.
+// - name: Output only. Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   ClientState in format:
+//   `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partn
+//   er_id}`, where partner_id corresponds to the partner storing the
+//   data.
 func (r *DevicesDeviceUsersClientStatesService) Patch(name string, clientstate *ClientState) *DevicesDeviceUsersClientStatesPatchCall {
 	c := &DevicesDeviceUsersClientStatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7194,14 +7186,10 @@ func (r *GroupsService) Create(group *Group) *GroupsCreateCall {
 // Required. The initial configuration option for the `Group`.
 //
 // Possible values:
-//
-//	"INITIAL_GROUP_CONFIG_UNSPECIFIED" - Default. Should not be used.
-//	"WITH_INITIAL_OWNER" - The end user making the request will be
-//
+//   "INITIAL_GROUP_CONFIG_UNSPECIFIED" - Default. Should not be used.
+//   "WITH_INITIAL_OWNER" - The end user making the request will be
 // added as the initial owner of the `Group`.
-//
-//	"EMPTY" - An empty group is created without any initial owners.
-//
+//   "EMPTY" - An empty group is created without any initial owners.
 // This can only be used by admins of the domain.
 func (c *GroupsCreateCall) InitialGroupConfig(initialGroupConfig string) *GroupsCreateCall {
 	c.urlParams_.Set("initialGroupConfig", initialGroupConfig)
@@ -7346,9 +7334,9 @@ type GroupsDeleteCall struct {
 
 // Delete: Deletes a `Group`.
 //
-//   - name: The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Group` to retrieve. Must be of the form `groups/{group_id}`.
+// - name: The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Group` to retrieve. Must be of the form `groups/{group_id}`.
 func (r *GroupsService) Delete(name string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7483,9 +7471,9 @@ type GroupsGetCall struct {
 
 // Get: Retrieves a `Group`.
 //
-//   - name: The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Group` to retrieve. Must be of the form `groups/{group_id}`.
+// - name: The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Group` to retrieve. Must be of the form `groups/{group_id}`.
 func (r *GroupsService) Get(name string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7634,8 +7622,8 @@ type GroupsGetSecuritySettingsCall struct {
 
 // GetSecuritySettings: Get Security Settings
 //
-//   - name: The security settings to retrieve. Format:
-//     `groups/{group_id}/securitySettings`.
+// - name: The security settings to retrieve. Format:
+//   `groups/{group_id}/securitySettings`.
 func (r *GroupsService) GetSecuritySettings(name string) *GroupsGetSecuritySettingsCall {
 	c := &GroupsGetSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7838,10 +7826,9 @@ func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 // returned. If unspecified, defaults to `View.BASIC`.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Default. Should not be used.
-//	"BASIC" - Only basic resource information is returned.
-//	"FULL" - All resource information is returned.
+//   "VIEW_UNSPECIFIED" - Default. Should not be used.
+//   "BASIC" - Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsListCall) View(view string) *GroupsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8196,9 +8183,9 @@ type GroupsPatchCall struct {
 
 // Patch: Updates a `Group`.
 //
-//   - name: Output only. The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Group`. Shall be of the form `groups/{group_id}`.
+// - name: Output only. The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Group`. Shall be of the form `groups/{group_id}`.
 func (r *GroupsService) Patch(name string, group *Group) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8397,9 +8384,8 @@ func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 // returned. If unspecified, defaults to `View.BASIC`.
 //
 // Possible values:
-//
-//	"BASIC" - Default. Only basic resource information is returned.
-//	"FULL" - All resource information is returned.
+//   "BASIC" - Default. Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsSearchCall) View(view string) *GroupsSearchCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -8585,8 +8571,8 @@ type GroupsUpdateSecuritySettingsCall struct {
 
 // UpdateSecuritySettings: Update Security Settings
 //
-//   - name: Output only. The resource name of the security settings.
-//     Shall be of the form `groups/{group_id}/securitySettings`.
+// - name: Output only. The resource name of the security settings.
+//   Shall be of the form `groups/{group_id}/securitySettings`.
 func (r *GroupsService) UpdateSecuritySettings(name string, securitysettings *SecuritySettings) *GroupsUpdateSecuritySettingsCall {
 	c := &GroupsUpdateSecuritySettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8751,11 +8737,11 @@ type GroupsMembershipsCheckTransitiveMembershipCall struct {
 // permissions to at least one transitive membership between the member
 // and group.
 //
-//   - parent: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the group
-//     to check the transitive membership in. Format: `groups/{group_id}`,
-//     where `group_id` is the unique id assigned to the Group to which
-//     the Membership belongs to.
+// - parent: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the group
+//   to check the transitive membership in. Format: `groups/{group_id}`,
+//   where `group_id` is the unique id assigned to the Group to which
+//   the Membership belongs to.
 func (r *GroupsMembershipsService) CheckTransitiveMembership(parent string) *GroupsMembershipsCheckTransitiveMembershipCall {
 	c := &GroupsMembershipsCheckTransitiveMembershipCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8921,8 +8907,8 @@ type GroupsMembershipsCreateCall struct {
 
 // Create: Creates a `Membership`.
 //
-//   - parent: The parent `Group` resource under which to create the
-//     `Membership`. Must be of the form `groups/{group_id}`.
+// - parent: The parent `Group` resource under which to create the
+//   `Membership`. Must be of the form `groups/{group_id}`.
 func (r *GroupsMembershipsService) Create(parent string, membership *Membership) *GroupsMembershipsCreateCall {
 	c := &GroupsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9065,10 +9051,10 @@ type GroupsMembershipsDeleteCall struct {
 
 // Delete: Deletes a `Membership`.
 //
-//   - name: The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Membership` to delete. Must be of the form
-//     `groups/{group_id}/memberships/{membership_id}`.
+// - name: The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Membership` to delete. Must be of the form
+//   `groups/{group_id}/memberships/{membership_id}`.
 func (r *GroupsMembershipsService) Delete(name string) *GroupsMembershipsDeleteCall {
 	c := &GroupsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9203,10 +9189,10 @@ type GroupsMembershipsGetCall struct {
 
 // Get: Retrieves a `Membership`.
 //
-//   - name: The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Membership` to retrieve. Must be of the form
-//     `groups/{group_id}/memberships/{membership_id}`.
+// - name: The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Membership` to retrieve. Must be of the form
+//   `groups/{group_id}/memberships/{membership_id}`.
 func (r *GroupsMembershipsService) Get(name string) *GroupsMembershipsGetCall {
 	c := &GroupsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9361,15 +9347,15 @@ type GroupsMembershipsGetMembershipGraphCall struct {
 // both a group and a member, the response will contain all membership
 // paths between the group and the member.
 //
-//   - parent: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the group
-//     to search transitive memberships in. Format: `groups/{group_id}`,
-//     where `group_id` is the unique ID assigned to the Group to which
-//     the Membership belongs to. group_id can be a wildcard collection id
-//     "-". When a group_id is specified, the membership graph will be
-//     constrained to paths between the member (defined in the query) and
-//     the parent. If a wildcard collection is provided, all membership
-//     paths connected to the member will be returned.
+// - parent: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the group
+//   to search transitive memberships in. Format: `groups/{group_id}`,
+//   where `group_id` is the unique ID assigned to the Group to which
+//   the Membership belongs to. group_id can be a wildcard collection id
+//   "-". When a group_id is specified, the membership graph will be
+//   constrained to paths between the member (defined in the query) and
+//   the parent. If a wildcard collection is provided, all membership
+//   paths connected to the member will be returned.
 func (r *GroupsMembershipsService) GetMembershipGraph(parent string) *GroupsMembershipsGetMembershipGraphCall {
 	c := &GroupsMembershipsGetMembershipGraphCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9534,8 +9520,8 @@ type GroupsMembershipsListCall struct {
 
 // List: Lists the `Membership`s within a `Group`.
 //
-//   - parent: The parent `Group` resource under which to lookup the
-//     `Membership` name. Must be of the form `groups/{group_id}`.
+// - parent: The parent `Group` resource under which to lookup the
+//   `Membership` name. Must be of the form `groups/{group_id}`.
 func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCall {
 	c := &GroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9567,9 +9553,8 @@ func (c *GroupsMembershipsListCall) PageToken(pageToken string) *GroupsMembershi
 // returned. If unspecified, defaults to `MembershipView.BASIC`.
 //
 // Possible values:
-//
-//	"BASIC" - Default. Only basic resource information is returned.
-//	"FULL" - All resource information is returned.
+//   "BASIC" - Default. Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsMembershipsListCall) View(view string) *GroupsMembershipsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9764,8 +9749,8 @@ type GroupsMembershipsLookupCall struct {
 // (https://cloud.google.com/apis/design/resource_names) of a
 // `Membership` by its `EntityKey`.
 //
-//   - parent: The parent `Group` resource under which to lookup the
-//     `Membership` name. Must be of the form `groups/{group_id}`.
+// - parent: The parent `Group` resource under which to lookup the
+//   `Membership` name. Must be of the form `groups/{group_id}`.
 func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLookupCall {
 	c := &GroupsMembershipsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9947,10 +9932,10 @@ type GroupsMembershipsModifyMembershipRolesCall struct {
 // ModifyMembershipRoles: Modifies the `MembershipRole`s of a
 // `Membership`.
 //
-//   - name: The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     `Membership` whose roles are to be modified. Must be of the form
-//     `groups/{group_id}/memberships/{membership_id}`.
+// - name: The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   `Membership` whose roles are to be modified. Must be of the form
+//   `groups/{group_id}/memberships/{membership_id}`.
 func (r *GroupsMembershipsService) ModifyMembershipRoles(name string, modifymembershiprolesrequest *ModifyMembershipRolesRequest) *GroupsMembershipsModifyMembershipRolesCall {
 	c := &GroupsMembershipsModifyMembershipRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10099,11 +10084,11 @@ type GroupsMembershipsSearchTransitiveGroupsCall struct {
 // that has a direct or indirect membership to the member. Actor must
 // have view permissions all transitive groups.
 //
-//   - parent: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the group
-//     to search transitive memberships in. Format: `groups/{group_id}`,
-//     where `group_id` is always '-' as this API will search across all
-//     groups for a given member.
+// - parent: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the group
+//   to search transitive memberships in. Format: `groups/{group_id}`,
+//   where `group_id` is always '-' as this API will search across all
+//   groups for a given member.
 func (r *GroupsMembershipsService) SearchTransitiveGroups(parent string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c := &GroupsMembershipsSearchTransitiveGroupsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10321,10 +10306,10 @@ type GroupsMembershipsSearchTransitiveMembershipsCall struct {
 // direct or indirect membership of a group. Actor must have view
 // permissions to all transitive memberships.
 //
-//   - parent: Resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the group
-//     to search transitive memberships in. Format: `groups/{group_id}`,
-//     where `group_id` is the unique ID assigned to the Group.
+// - parent: Resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the group
+//   to search transitive memberships in. Format: `groups/{group_id}`,
+//   where `group_id` is the unique ID assigned to the Group.
 func (r *GroupsMembershipsService) SearchTransitiveMemberships(parent string) *GroupsMembershipsSearchTransitiveMembershipsCall {
 	c := &GroupsMembershipsSearchTransitiveMembershipsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10523,10 +10508,10 @@ type OrgUnitsMembershipsListCall struct {
 // `orgUnitId` from the Admin SDK `OrgUnit` resource
 // (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits)
 //
-//   - parent: Immutable. OrgUnit which is queried for a list of
-//     memberships. Format: orgUnits/{$orgUnitId} where `$orgUnitId` is
-//     the `orgUnitId` from the Admin SDK `OrgUnit` resource
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
+// - parent: Immutable. OrgUnit which is queried for a list of
+//   memberships. Format: orgUnits/{$orgUnitId} where `$orgUnitId` is
+//   the `orgUnitId` from the Admin SDK `OrgUnit` resource
+//   (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
 func (r *OrgUnitsMembershipsService) List(parent string) *OrgUnitsMembershipsListCall {
 	c := &OrgUnitsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10757,20 +10742,20 @@ type OrgUnitsMembershipsMoveCall struct {
 // resource can only be searched under the destination OrgUnit
 // afterwards.
 //
-//   - name: Immutable. The resource name
-//     (https://cloud.google.com/apis/design/resource_names) of the
-//     OrgMembership. Format:
-//     orgUnits/{$orgUnitId}/memberships/{$membership} The `$orgUnitId` is
-//     the `orgUnitId` from the Admin SDK `OrgUnit` resource
-//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
-//     To manage a Membership without specifying source `orgUnitId`, this
-//     API also supports the wildcard character '-' for `$orgUnitId` per
-//     https://google.aip.dev/159. The `$membership` shall be of the form
-//     `{$entityType};{$memberId}`, where `$entityType` is the enum value
-//     of OrgMembership.EntityType, and `memberId` is the `id` from Drive
-//     API (V3) `Drive` resource
-//     (https://developers.google.com/drive/api/v3/reference/drives#resource)
-//     for OrgMembership.EntityType.SHARED_DRIVE.
+// - name: Immutable. The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   OrgMembership. Format:
+//   orgUnits/{$orgUnitId}/memberships/{$membership} The `$orgUnitId` is
+//   the `orgUnitId` from the Admin SDK `OrgUnit` resource
+//   (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
+//   To manage a Membership without specifying source `orgUnitId`, this
+//   API also supports the wildcard character '-' for `$orgUnitId` per
+//   https://google.aip.dev/159. The `$membership` shall be of the form
+//   `{$entityType};{$memberId}`, where `$entityType` is the enum value
+//   of OrgMembership.EntityType, and `memberId` is the `id` from Drive
+//   API (V3) `Drive` resource
+//   (https://developers.google.com/drive/api/v3/reference/drives#resource)
+//   for OrgMembership.EntityType.SHARED_DRIVE.
 func (r *OrgUnitsMembershipsService) Move(name string, moveorgmembershiprequest *MoveOrgMembershipRequest) *OrgUnitsMembershipsMoveCall {
 	c := &OrgUnitsMembershipsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

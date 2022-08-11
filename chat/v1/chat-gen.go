@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/hangouts/chat
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/chat/v1"
-//	...
-//	ctx := context.Background()
-//	chatService, err := chat.NewService(ctx)
+//   import "google.golang.org/api/chat/v1"
+//   ...
+//   ctx := context.Background()
+//   chatService, err := chat.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
+//   chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	chatService, err := chat.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   chatService, err := chat.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package chat // import "google.golang.org/api/chat/v1"
@@ -854,12 +854,12 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -2183,13 +2183,14 @@ type GoogleAppsCardV1OpenLink struct {
 	// observes it until the window closes. Not supported by Chat apps.
 	//
 	// Possible values:
-	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes.
+	//   "NOTHING" - Default value. The card does not reload; nothing
+	// happens.
 	//   "RELOAD" - Reloads the card after the child window closes. If used
 	// in conjunction with
-	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
-	// openas), the child window acts as a modal dialog and the main card is
-	// blocked until the child window closes.
+	// [OpenAs.OVERLAY](https://developers.google.com/workspace/add-ons/refer
+	// ence/rpc/google.apps.card.v1#openas), the child window acts as a
+	// modal dialog and the parent card is blocked until the child window
+	// closes.
 	OnClose string `json:"onClose,omitempty"`
 
 	// OpenAs: How to open a link. Not supported by Chat apps.
@@ -3847,8 +3848,8 @@ type DmsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4017,8 +4018,8 @@ type DmsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4187,8 +4188,8 @@ type DmsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4357,8 +4358,8 @@ type MediaDownloadCall struct {
 // Download: Downloads media. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
 //
-//   - resourceName: Name of the media that is being downloaded. See
-//     ReadRequest.resource_name.
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4519,8 +4520,8 @@ type RoomsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4689,8 +4690,8 @@ type RoomsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4859,8 +4860,8 @@ type RoomsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5029,8 +5030,8 @@ type SpacesGetCall struct {
 // Get: Returns a space. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the space, in the form "spaces/*". Format:
-//     spaces/{space}.
+// - name: Resource name of the space, in the form "spaces/*". Format:
+//   spaces/{space}.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5350,8 +5351,8 @@ type SpacesWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5520,8 +5521,8 @@ type SpacesMembersGetCall struct {
 // Get: Returns a membership. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the membership to retrieve. Format:
-//     spaces/{space}/members/{member}.
+// - name: Resource name of the membership to retrieve. Format:
+//   spaces/{space}/members/{member}.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5666,8 +5667,8 @@ type SpacesMembersListCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - parent: The resource name of the space for which to fetch a
-//     membership list. Format: spaces/{space}.
+// - parent: The resource name of the space for which to fetch a
+//   membership list. Format: spaces/{space}.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5858,8 +5859,8 @@ type SpacesMessagesCreateCall struct {
 // Create: Creates a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+// - parent: Space resource name, in the form "spaces/*". Example:
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6027,9 +6028,9 @@ type SpacesMessagesDeleteCall struct {
 // Delete: Deletes a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the message to be deleted, in the form
-//     "spaces/*/messages/*" Example:
-//     spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
+// - name: Resource name of the message to be deleted, in the form
+//   "spaces/*/messages/*" Example:
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6160,9 +6161,9 @@ type SpacesMessagesGetCall struct {
 // Get: Returns a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the message to be retrieved, in the form
-//     "spaces/*/messages/*". Example:
-//     spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
+// - name: Resource name of the message to be retrieved, in the form
+//   "spaces/*/messages/*". Example:
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6306,8 +6307,8 @@ type SpacesMessagesUpdateCall struct {
 // Update: Updates a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name in the form `spaces/*/messages/*`. Example:
-//     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
+// - name: Resource name in the form `spaces/*/messages/*`. Example:
+//   `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6464,8 +6465,8 @@ type SpacesMessagesAttachmentsGetCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the attachment, in the form
-//     "spaces/*/messages/*/attachments/*".
+// - name: Resource name of the attachment, in the form
+//   "spaces/*/messages/*/attachments/*".
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -10,31 +10,31 @@
 //
 // For product documentation, see: https://cloud.google.com/memorystore/docs/redis/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/redis/v1beta1"
-//	...
-//	ctx := context.Background()
-//	redisService, err := redis.NewService(ctx)
+//   import "google.golang.org/api/redis/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   redisService, err := redis.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	redisService, err := redis.NewService(ctx, option.WithAPIKey("AIza..."))
+//   redisService, err := redis.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	redisService, err := redis.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   redisService, err := redis.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package redis // import "google.golang.org/api/redis/v1beta1"
@@ -1619,8 +1619,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1835,9 +1835,9 @@ type ProjectsLocationsInstancesCreateCall struct {
 // response field. The returned operation is automatically deleted after
 // a few hours, so there is no need to call DeleteOperation.
 //
-//   - parent: The resource name of the instance location using the form:
-//     `projects/{project_id}/locations/{location_id}` where `location_id`
-//     refers to a GCP region.
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1995,9 +1995,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // Delete: Deletes a specific Redis instance. Instance stops serving and
 // data is deleted.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2133,9 +2133,9 @@ type ProjectsLocationsInstancesExportCall struct {
 // returned operation is automatically deleted after a few hours, so
 // there is no need to call DeleteOperation.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Export(name string, exportinstancerequest *ExportInstanceRequest) *ProjectsLocationsInstancesExportCall {
 	c := &ProjectsLocationsInstancesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2279,9 +2279,9 @@ type ProjectsLocationsInstancesFailoverCall struct {
 // node for a specific STANDARD tier Cloud Memorystore for Redis
 // instance.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Failover(name string, failoverinstancerequest *FailoverInstanceRequest) *ProjectsLocationsInstancesFailoverCall {
 	c := &ProjectsLocationsInstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2423,9 +2423,9 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets the details of a specific Redis instance.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2573,9 +2573,9 @@ type ProjectsLocationsInstancesGetAuthStringCall struct {
 // not enabled for the instance the response will be empty. This
 // information is not included in the details returned to GetInstance.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) GetAuthString(name string) *ProjectsLocationsInstancesGetAuthStringCall {
 	c := &ProjectsLocationsInstancesGetAuthStringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2726,9 +2726,9 @@ type ProjectsLocationsInstancesImportCall struct {
 // returned operation is automatically deleted after a few hours, so
 // there is no need to call DeleteOperation.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Import(name string, importinstancerequest *ImportInstanceRequest) *ProjectsLocationsInstancesImportCall {
 	c := &ProjectsLocationsInstancesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2875,9 +2875,9 @@ type ProjectsLocationsInstancesListCall struct {
 // specified as `-` (wildcard), then all regions available to the
 // project are queried, and the results are aggregated.
 //
-//   - parent: The resource name of the instance location using the form:
-//     `projects/{project_id}/locations/{location_id}` where `location_id`
-//     refers to a GCP region.
+// - parent: The resource name of the instance location using the form:
+//   `projects/{project_id}/locations/{location_id}` where `location_id`
+//   refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3078,14 +3078,14 @@ type ProjectsLocationsInstancesPatchCall struct {
 // automatically deleted after a few hours, so there is no need to call
 // DeleteOperation.
 //
-//   - name: Unique name of the resource in this scope including project
-//     and location using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` Note: Redis instances are managed and addressed at regional
-//     level so location_id here refers to a GCP region; however, users
-//     may choose which specific zone (or collection of zones for
-//     cross-zone instances) an instance should be provisioned in. Refer
-//     to location_id and alternative_location_id fields for more details.
+// - name: Unique name of the resource in this scope including project
+//   and location using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` Note: Redis instances are managed and addressed at regional
+//   level so location_id here refers to a GCP region; however, users
+//   may choose which specific zone (or collection of zones for
+//   cross-zone instances) an instance should be provisioned in. Refer
+//   to location_id and alternative_location_id fields for more details.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3244,9 +3244,9 @@ type ProjectsLocationsInstancesRescheduleMaintenanceCall struct {
 // RescheduleMaintenance: Reschedule maintenance for a given instance in
 // a given project and location.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) RescheduleMaintenance(name string, reschedulemaintenancerequest *RescheduleMaintenanceRequest) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
 	c := &ProjectsLocationsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3389,9 +3389,9 @@ type ProjectsLocationsInstancesUpgradeCall struct {
 // Upgrade: Upgrades Redis instance to the newer Redis version specified
 // in the request.
 //
-//   - name: Redis instance resource name using the form:
-//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//     d}` where `location_id` refers to a GCP region.
+// - name: Redis instance resource name using the form:
+//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//   d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Upgrade(name string, upgradeinstancerequest *UpgradeInstanceRequest) *ProjectsLocationsInstancesUpgradeCall {
 	c := &ProjectsLocationsInstancesUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

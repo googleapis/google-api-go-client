@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://support.google.com/area120-tables/answer/10011390
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/area120tables/v1alpha1"
-//	...
-//	ctx := context.Background()
-//	area120tablesService, err := area120tables.NewService(ctx)
+//   import "google.golang.org/api/area120tables/v1alpha1"
+//   ...
+//   ctx := context.Background()
+//   area120tablesService, err := area120tables.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	area120tablesService, err := area120tables.NewService(ctx, option.WithScopes(area120tables.TablesScope))
+//   area120tablesService, err := area120tables.NewService(ctx, option.WithScopes(area120tables.TablesScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	area120tablesService, err := area120tables.NewService(ctx, option.WithAPIKey("AIza..."))
+//   area120tablesService, err := area120tables.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	area120tablesService, err := area120tables.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   area120tablesService, err := area120tables.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package area120tables // import "google.golang.org/api/area120tables/v1alpha1"
@@ -1276,8 +1276,8 @@ type TablesRowsBatchCreateCall struct {
 
 // BatchCreate: Creates multiple rows.
 //
-//   - parent: The parent table where the rows will be created. Format:
-//     tables/{table}.
+// - parent: The parent table where the rows will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchCreate(parent string, batchcreaterowsrequest *BatchCreateRowsRequest) *TablesRowsBatchCreateCall {
 	c := &TablesRowsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1422,8 +1422,8 @@ type TablesRowsBatchDeleteCall struct {
 
 // BatchDelete: Deletes multiple rows.
 //
-//   - parent: The parent table shared by all rows being deleted. Format:
-//     tables/{table}.
+// - parent: The parent table shared by all rows being deleted. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchDelete(parent string, batchdeleterowsrequest *BatchDeleteRowsRequest) *TablesRowsBatchDeleteCall {
 	c := &TablesRowsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1568,8 +1568,8 @@ type TablesRowsBatchUpdateCall struct {
 
 // BatchUpdate: Updates multiple rows.
 //
-//   - parent: The parent table shared by all rows being updated. Format:
-//     tables/{table}.
+// - parent: The parent table shared by all rows being updated. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchUpdate(parent string, batchupdaterowsrequest *BatchUpdateRowsRequest) *TablesRowsBatchUpdateCall {
 	c := &TablesRowsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1714,8 +1714,8 @@ type TablesRowsCreateCall struct {
 
 // Create: Creates a row.
 //
-//   - parent: The parent table where this row will be created. Format:
-//     tables/{table}.
+// - parent: The parent table where this row will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) Create(parent string, row *Row) *TablesRowsCreateCall {
 	c := &TablesRowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1727,10 +1727,8 @@ func (r *TablesRowsService) Create(parent string, row *Row) *TablesRowsCreateCal
 // in the row. Defaults to user entered name.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Defaults to user entered text.
-//	"COLUMN_ID_VIEW" - Uses internally generated column id to identify
-//
+//   "VIEW_UNSPECIFIED" - Defaults to user entered text.
+//   "COLUMN_ID_VIEW" - Uses internally generated column id to identify
 // values.
 func (c *TablesRowsCreateCall) View(view string) *TablesRowsCreateCall {
 	c.urlParams_.Set("view", view)
@@ -1886,8 +1884,8 @@ type TablesRowsDeleteCall struct {
 
 // Delete: Deletes a row.
 //
-//   - name: The name of the row to delete. Format:
-//     tables/{table}/rows/{row}.
+// - name: The name of the row to delete. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Delete(name string) *TablesRowsDeleteCall {
 	c := &TablesRowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2024,8 +2022,8 @@ type TablesRowsGetCall struct {
 // Get: Gets a row. Returns NOT_FOUND if the row does not exist in the
 // table.
 //
-//   - name: The name of the row to retrieve. Format:
-//     tables/{table}/rows/{row}.
+// - name: The name of the row to retrieve. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Get(name string) *TablesRowsGetCall {
 	c := &TablesRowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2036,10 +2034,8 @@ func (r *TablesRowsService) Get(name string) *TablesRowsGetCall {
 // in the row. Defaults to user entered name.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Defaults to user entered text.
-//	"COLUMN_ID_VIEW" - Uses internally generated column id to identify
-//
+//   "VIEW_UNSPECIFIED" - Defaults to user entered text.
+//   "COLUMN_ID_VIEW" - Uses internally generated column id to identify
 // values.
 func (c *TablesRowsGetCall) View(view string) *TablesRowsGetCall {
 	c.urlParams_.Set("view", view)
@@ -2249,10 +2245,8 @@ func (c *TablesRowsListCall) PageToken(pageToken string) *TablesRowsListCall {
 // in the row. Defaults to user entered name.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Defaults to user entered text.
-//	"COLUMN_ID_VIEW" - Uses internally generated column id to identify
-//
+//   "VIEW_UNSPECIFIED" - Defaults to user entered text.
+//   "COLUMN_ID_VIEW" - Uses internally generated column id to identify
 // values.
 func (c *TablesRowsListCall) View(view string) *TablesRowsListCall {
 	c.urlParams_.Set("view", view)
@@ -2458,9 +2452,9 @@ type TablesRowsPatchCall struct {
 
 // Patch: Updates a row.
 //
-//   - name: The resource name of the row. Row names have the form
-//     `tables/{table}/rows/{row}`. The name is ignored when creating a
-//     row.
+// - name: The resource name of the row. Row names have the form
+//   `tables/{table}/rows/{row}`. The name is ignored when creating a
+//   row.
 func (r *TablesRowsService) Patch(name string, row *Row) *TablesRowsPatchCall {
 	c := &TablesRowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2479,10 +2473,8 @@ func (c *TablesRowsPatchCall) UpdateMask(updateMask string) *TablesRowsPatchCall
 // in the row. Defaults to user entered name.
 //
 // Possible values:
-//
-//	"VIEW_UNSPECIFIED" - Defaults to user entered text.
-//	"COLUMN_ID_VIEW" - Uses internally generated column id to identify
-//
+//   "VIEW_UNSPECIFIED" - Defaults to user entered text.
+//   "COLUMN_ID_VIEW" - Uses internally generated column id to identify
 // values.
 func (c *TablesRowsPatchCall) View(view string) *TablesRowsPatchCall {
 	c.urlParams_.Set("view", view)
@@ -2646,8 +2638,8 @@ type WorkspacesGetCall struct {
 // Get: Gets a workspace. Returns NOT_FOUND if the workspace does not
 // exist.
 //
-//   - name: The name of the workspace to retrieve. Format:
-//     workspaces/{workspace}.
+// - name: The name of the workspace to retrieve. Format:
+//   workspaces/{workspace}.
 func (r *WorkspacesService) Get(name string) *WorkspacesGetCall {
 	c := &WorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

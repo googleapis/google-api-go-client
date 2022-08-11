@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/keep/api
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/keep/v1"
-//	...
-//	ctx := context.Background()
-//	keepService, err := keep.NewService(ctx)
+//   import "google.golang.org/api/keep/v1"
+//   ...
+//   ctx := context.Background()
+//   keepService, err := keep.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	keepService, err := keep.NewService(ctx, option.WithScopes(keep.KeepReadonlyScope))
+//   keepService, err := keep.NewService(ctx, option.WithScopes(keep.KeepReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	keepService, err := keep.NewService(ctx, option.WithAPIKey("AIza..."))
+//   keepService, err := keep.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	keepService, err := keep.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   keepService, err := keep.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package keep // import "google.golang.org/api/keep/v1"
@@ -1505,10 +1505,10 @@ type NotesPermissionsBatchCreateCall struct {
 // permission fails, then the entire request fails and no changes are
 // made.
 //
-//   - parent: The parent resource shared by all Permissions being
-//     created. Format: `notes/{note}` If this is set, the parent field in
-//     the CreatePermission messages must either be empty or match this
-//     field.
+// - parent: The parent resource shared by all Permissions being
+//   created. Format: `notes/{note}` If this is set, the parent field in
+//   the CreatePermission messages must either be empty or match this
+//   field.
 func (r *NotesPermissionsService) BatchCreate(parent string, batchcreatepermissionsrequest *BatchCreatePermissionsRequest) *NotesPermissionsBatchCreateCall {
 	c := &NotesPermissionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1655,10 +1655,10 @@ type NotesPermissionsBatchDeleteCall struct {
 // bad request error if a specified permission does not exist on the
 // note.
 //
-//   - parent: The parent resource shared by all permissions being
-//     deleted. Format: `notes/{note}` If this is set, the parent of all
-//     of the permissions specified in the DeletePermissionRequest
-//     messages must match this field.
+// - parent: The parent resource shared by all permissions being
+//   deleted. Format: `notes/{note}` If this is set, the parent of all
+//   of the permissions specified in the DeletePermissionRequest
+//   messages must match this field.
 func (r *NotesPermissionsService) BatchDelete(parent string, batchdeletepermissionsrequest *BatchDeletePermissionsRequest) *NotesPermissionsBatchDeleteCall {
 	c := &NotesPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

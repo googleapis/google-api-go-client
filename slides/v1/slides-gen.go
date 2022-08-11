@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/slides/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/slides/v1"
-//	...
-//	ctx := context.Background()
-//	slidesService, err := slides.NewService(ctx)
+//   import "google.golang.org/api/slides/v1"
+//   ...
+//   ctx := context.Background()
+//   slidesService, err := slides.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	slidesService, err := slides.NewService(ctx, option.WithScopes(slides.SpreadsheetsReadonlyScope))
+//   slidesService, err := slides.NewService(ctx, option.WithScopes(slides.SpreadsheetsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	slidesService, err := slides.NewService(ctx, option.WithAPIKey("AIza..."))
+//   slidesService, err := slides.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	slidesService, err := slides.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   slidesService, err := slides.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package slides // import "google.golang.org/api/slides/v1"
@@ -7784,9 +7784,9 @@ type PresentationsPagesGetThumbnailCall struct {
 // image. This request counts as an expensive read request
 // (/slides/limits) for quota purposes.
 //
-//   - pageObjectId: The object ID of the page whose thumbnail to
-//     retrieve.
-//   - presentationId: The ID of the presentation to retrieve.
+// - pageObjectId: The object ID of the page whose thumbnail to
+//   retrieve.
+// - presentationId: The ID of the presentation to retrieve.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7800,8 +7800,7 @@ func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObje
 // defaults to PNG.
 //
 // Possible values:
-//
-//	"PNG" - The default mime type.
+//   "PNG" - The default mime type.
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbnailPropertiesMimeType string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.mimeType", thumbnailPropertiesMimeType)
 	return c
@@ -7813,15 +7812,12 @@ func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbna
 // size of the image.
 //
 // Possible values:
-//
-//	"THUMBNAIL_SIZE_UNSPECIFIED" - The default thumbnail image size.
-//
+//   "THUMBNAIL_SIZE_UNSPECIFIED" - The default thumbnail image size.
 // The unspecified thumbnail size implies that the server chooses the
 // size of the image in a way that might vary in the future.
-//
-//	"LARGE" - The thumbnail image width of 1600px.
-//	"MEDIUM" - The thumbnail image width of 800px.
-//	"SMALL" - The thumbnail image width of 200px.
+//   "LARGE" - The thumbnail image width of 1600px.
+//   "MEDIUM" - The thumbnail image width of 800px.
+//   "SMALL" - The thumbnail image width of 200px.
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesThumbnailSize(thumbnailPropertiesThumbnailSize string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.thumbnailSize", thumbnailPropertiesThumbnailSize)
 	return c

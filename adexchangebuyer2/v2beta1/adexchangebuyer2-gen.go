@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/reference/rest/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/adexchangebuyer2/v2beta1"
-//	...
-//	ctx := context.Background()
-//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx)
+//   import "google.golang.org/api/adexchangebuyer2/v2beta1"
+//   ...
+//   ctx := context.Background()
+//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithAPIKey("AIza..."))
+//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   adexchangebuyer2Service, err := adexchangebuyer2.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package adexchangebuyer2 // import "google.golang.org/api/adexchangebuyer2/v2beta1"
@@ -5778,9 +5778,9 @@ type AccountsClientsCreateCall struct {
 
 // Create: Creates a new client buyer.
 //
-//   - accountId: Unique numerical account ID for the buyer of which the
-//     client buyer is a customer; the sponsor buyer to create a client
-//     for. (required).
+// - accountId: Unique numerical account ID for the buyer of which the
+//   client buyer is a customer; the sponsor buyer to create a client
+//   for. (required).
 func (r *AccountsClientsService) Create(accountId int64, client *Client) *AccountsClientsCreateCall {
 	c := &AccountsClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5923,10 +5923,10 @@ type AccountsClientsGetCall struct {
 
 // Get: Gets a client buyer with a given client account ID.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer to
-//     retrieve. (required).
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer to
+//   retrieve. (required).
 func (r *AccountsClientsService) Get(accountId int64, clientAccountId int64) *AccountsClientsGetCall {
 	c := &AccountsClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6082,8 +6082,8 @@ type AccountsClientsListCall struct {
 
 // List: Lists all the clients for the current sponsor buyer.
 //
-//   - accountId: Unique numerical account ID of the sponsor buyer to list
-//     the clients for.
+// - accountId: Unique numerical account ID of the sponsor buyer to list
+//   the clients for.
 func (r *AccountsClientsService) List(accountId int64) *AccountsClientsListCall {
 	c := &AccountsClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6293,11 +6293,11 @@ type AccountsClientsUpdateCall struct {
 
 // Update: Updates an existing client buyer.
 //
-//   - accountId: Unique numerical account ID for the buyer of which the
-//     client buyer is a customer; the sponsor buyer to update a client
-//     for. (required).
-//   - clientAccountId: Unique numerical account ID of the client to
-//     update. (required).
+// - accountId: Unique numerical account ID for the buyer of which the
+//   client buyer is a customer; the sponsor buyer to update a client
+//   for. (required).
+// - clientAccountId: Unique numerical account ID of the client to
+//   update. (required).
 func (r *AccountsClientsService) Update(accountId int64, clientAccountId int64, client *Client) *AccountsClientsUpdateCall {
 	c := &AccountsClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6451,10 +6451,10 @@ type AccountsClientsInvitationsCreateCall struct {
 // Create: Creates and sends out an email invitation to access an Ad
 // Exchange client buyer account.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer that the
-//     user should be associated with. (required).
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user should be associated with. (required).
 func (r *AccountsClientsInvitationsService) Create(accountId int64, clientAccountId int64, clientuserinvitation *ClientUserInvitation) *AccountsClientsInvitationsCreateCall {
 	c := &AccountsClientsInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6608,12 +6608,12 @@ type AccountsClientsInvitationsGetCall struct {
 
 // Get: Retrieves an existing client user invitation.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer that the
-//     user invitation to be retrieved is associated with. (required).
-//   - invitationId: Numerical identifier of the user invitation to
-//     retrieve. (required).
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user invitation to be retrieved is associated with. (required).
+// - invitationId: Numerical identifier of the user invitation to
+//   retrieve. (required).
 func (r *AccountsClientsInvitationsService) Get(accountId int64, clientAccountId int64, invitationId int64) *AccountsClientsInvitationsGetCall {
 	c := &AccountsClientsInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6781,13 +6781,13 @@ type AccountsClientsInvitationsListCall struct {
 // List: Lists all the client users invitations for a client with a
 // given account ID.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer to list
-//     invitations for. (required) You must either specify a string
-//     representation of a numerical account identifier or the `-`
-//     character to list all the invitations for all the clients of a
-//     given sponsor buyer.
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer to list
+//   invitations for. (required) You must either specify a string
+//   representation of a numerical account identifier or the `-`
+//   character to list all the invitations for all the clients of a
+//   given sponsor buyer.
 func (r *AccountsClientsInvitationsService) List(accountId int64, clientAccountId string) *AccountsClientsInvitationsListCall {
 	c := &AccountsClientsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6995,11 +6995,11 @@ type AccountsClientsUsersGetCall struct {
 
 // Get: Retrieves an existing client user.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer that the
-//     user to be retrieved is associated with. (required).
-//   - userId: Numerical identifier of the user to retrieve. (required).
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Get(accountId int64, clientAccountId int64, userId int64) *AccountsClientsUsersGetCall {
 	c := &AccountsClientsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7167,12 +7167,12 @@ type AccountsClientsUsersListCall struct {
 // List: Lists all the known client users for a specified sponsor buyer
 // account ID.
 //
-//   - accountId: Numerical account ID of the sponsor buyer of the client
-//     to list users for. (required).
-//   - clientAccountId: The account ID of the client buyer to list users
-//     for. (required) You must specify either a string representation of
-//     a numerical account identifier or the `-` character to list all the
-//     client users for all the clients of a given sponsor buyer.
+// - accountId: Numerical account ID of the sponsor buyer of the client
+//   to list users for. (required).
+// - clientAccountId: The account ID of the client buyer to list users
+//   for. (required) You must specify either a string representation of
+//   a numerical account identifier or the `-` character to list all the
+//   client users for all the clients of a given sponsor buyer.
 func (r *AccountsClientsUsersService) List(accountId int64, clientAccountId string) *AccountsClientsUsersListCall {
 	c := &AccountsClientsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7379,11 +7379,11 @@ type AccountsClientsUsersUpdateCall struct {
 // Update: Updates an existing client user. Only the user status can be
 // changed on update.
 //
-//   - accountId: Numerical account ID of the client's sponsor buyer.
-//     (required).
-//   - clientAccountId: Numerical account ID of the client buyer that the
-//     user to be retrieved is associated with. (required).
-//   - userId: Numerical identifier of the user to retrieve. (required).
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Update(accountId int64, clientAccountId int64, userId int64, clientuser *ClientUser) *AccountsClientsUsersUpdateCall {
 	c := &AccountsClientsUsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7545,8 +7545,8 @@ type AccountsCreativesCreateCall struct {
 
 // Create: Creates a creative.
 //
-//   - accountId: The account that this creative belongs to. Can be used
-//     to filter the response of the creatives.list method.
+// - accountId: The account that this creative belongs to. Can be used
+//   to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Create(accountId string, creative *Creative) *AccountsCreativesCreateCall {
 	c := &AccountsCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7559,13 +7559,9 @@ func (r *AccountsCreativesService) Create(accountId string, creative *Creative) 
 // NO_DUPLICATES (one ID per creative).
 //
 // Possible values:
-//
-//	"NO_DUPLICATES" - Recommended. This means that an ID will be unique
-//
+//   "NO_DUPLICATES" - Recommended. This means that an ID will be unique
 // to a single creative. Multiple creatives will not share an ID.
-//
-//	"FORCE_ENABLE_DUPLICATE_IDS" - Not recommended. Using this option
-//
+//   "FORCE_ENABLE_DUPLICATE_IDS" - Not recommended. Using this option
 // will allow multiple creatives to share the same ID. Get and Update
 // requests will not be possible for any ID that has more than one
 // creative associated. (List will still function.) This is only
@@ -7878,8 +7874,8 @@ type AccountsCreativesListCall struct {
 
 // List: Lists creatives.
 //
-//   - accountId: The account to list the creatives from. Specify "-" to
-//     list all creatives the current user has access to.
+// - accountId: The account to list the creatives from. Specify "-" to
+//   list all creatives the current user has access to.
 func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesListCall {
 	c := &AccountsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8098,9 +8094,9 @@ type AccountsCreativesStopWatchingCall struct {
 // StopWatching: Stops watching a creative. Will stop push notifications
 // being sent to the topics when the creative changes status.
 //
-//   - accountId: The account of the creative to stop notifications for.
-//   - creativeId: The creative ID of the creative to stop notifications
-//     for. Specify "-" to specify stopping account level notifications.
+// - accountId: The account of the creative to stop notifications for.
+// - creativeId: The creative ID of the creative to stop notifications
+//   for. Specify "-" to specify stopping account level notifications.
 func (r *AccountsCreativesService) StopWatching(accountId string, creativeId string, stopwatchingcreativerequest *StopWatchingCreativeRequest) *AccountsCreativesStopWatchingCall {
 	c := &AccountsCreativesStopWatchingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8251,10 +8247,10 @@ type AccountsCreativesUpdateCall struct {
 
 // Update: Updates a creative.
 //
-//   - accountId: The account that this creative belongs to. Can be used
-//     to filter the response of the creatives.list method.
-//   - creativeId: The buyer-defined creative ID of this creative. Can be
-//     used to filter the response of the creatives.list method.
+// - accountId: The account that this creative belongs to. Can be used
+//   to filter the response of the creatives.list method.
+// - creativeId: The buyer-defined creative ID of this creative. Can be
+//   used to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Update(accountId string, creativeId string, creative *Creative) *AccountsCreativesUpdateCall {
 	c := &AccountsCreativesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8406,12 +8402,12 @@ type AccountsCreativesWatchCall struct {
 // Watch: Watches a creative. Will result in push notifications being
 // sent to the topic when the creative changes status.
 //
-//   - accountId: The account of the creative to watch.
-//   - creativeId: The creative ID to watch for status changes. Specify
-//     "-" to watch all creatives under the above account. If both
-//     creative-level and account-level notifications are sent, only a
-//     single notification will be sent to the creative-level notification
-//     topic.
+// - accountId: The account of the creative to watch.
+// - creativeId: The creative ID to watch for status changes. Specify
+//   "-" to watch all creatives under the above account. If both
+//   creative-level and account-level notifications are sent, only a
+//   single notification will be sent to the creative-level notification
+//   topic.
 func (r *AccountsCreativesService) Watch(accountId string, creativeId string, watchcreativerequest *WatchCreativeRequest) *AccountsCreativesWatchCall {
 	c := &AccountsCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8714,10 +8710,10 @@ type AccountsCreativesDealAssociationsListCall struct {
 
 // List: List all creative-deal associations.
 //
-//   - accountId: The account to list the associations from. Specify "-"
-//     to list all creatives the current user has access to.
-//   - creativeId: The creative ID to list the associations from. Specify
-//     "-" to list all creatives under the above account.
+// - accountId: The account to list the associations from. Specify "-"
+//   to list all creatives the current user has access to.
+// - creativeId: The creative ID to list the associations from. Specify
+//   "-" to list all creatives under the above account.
 func (r *AccountsCreativesDealAssociationsService) List(accountId string, creativeId string) *AccountsCreativesDealAssociationsListCall {
 	c := &AccountsCreativesDealAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9112,18 +9108,12 @@ func (c *AccountsFinalizedProposalsListCall) Filter(filter string) *AccountsFina
 // the future it will be LIST_FILTER.
 //
 // Possible values:
-//
-//	"FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
-//
+//   "FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
 // syntax.
-//
-//	"PQL" - PQL query syntax. Visit
-//
+//   "PQL" - PQL query syntax. Visit
 // https://developers.google.com/ad-manager/api/pqlreference for PQL
 // documentation and examples.
-//
-//	"LIST_FILTER" - API list filtering syntax. Read about syntax and
-//
+//   "LIST_FILTER" - API list filtering syntax. Read about syntax and
 // usage at
 // https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
 func (c *AccountsFinalizedProposalsListCall) FilterSyntax(filterSyntax string) *AccountsFinalizedProposalsListCall {
@@ -10970,18 +10960,12 @@ func (c *AccountsProposalsListCall) Filter(filter string) *AccountsProposalsList
 // the future it will be LIST_FILTER.
 //
 // Possible values:
-//
-//	"FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
-//
+//   "FILTER_SYNTAX_UNSPECIFIED" - A placeholder for an undefined filter
 // syntax.
-//
-//	"PQL" - PQL query syntax. Visit
-//
+//   "PQL" - PQL query syntax. Visit
 // https://developers.google.com/ad-manager/api/pqlreference for PQL
 // documentation and examples.
-//
-//	"LIST_FILTER" - API list filtering syntax. Read about syntax and
-//
+//   "LIST_FILTER" - API list filtering syntax. Read about syntax and
 // usage at
 // https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters.
 func (c *AccountsProposalsListCall) FilterSyntax(filterSyntax string) *AccountsProposalsListCall {
@@ -12018,12 +12002,12 @@ type BiddersAccountsFilterSetsCreateCall struct {
 // Create: Creates the specified filter set for the account with the
 // given account ID.
 //
-//   - ownerName: Name of the owner (bidder or account) of the filter set
-//     to be created. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123` - For an account-level filter set for the
-//     buyer account representing bidder 123: `bidders/123/accounts/123` -
-//     For an account-level filter set for the child seat buyer account
-//     456 whose bidder is 123: `bidders/123/accounts/456`.
+// - ownerName: Name of the owner (bidder or account) of the filter set
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersAccountsFilterSetsCreateCall {
 	c := &BiddersAccountsFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -12179,13 +12163,13 @@ type BiddersAccountsFilterSetsDeleteCall struct {
 // Delete: Deletes the requested filter set from the account with the
 // given account ID.
 //
-//   - name: Full name of the resource to delete. For example: - For a
-//     bidder-level filter set for bidder 123:
-//     `bidders/123/filterSets/abc` - For an account-level filter set for
-//     the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - name: Full name of the resource to delete. For example: - For a
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Delete(name string) *BiddersAccountsFilterSetsDeleteCall {
 	c := &BiddersAccountsFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12319,13 +12303,13 @@ type BiddersAccountsFilterSetsGetCall struct {
 // Get: Retrieves the requested filter set for the account with the
 // given account ID.
 //
-//   - name: Full name of the resource being requested. For example: - For
-//     a bidder-level filter set for bidder 123:
-//     `bidders/123/filterSets/abc` - For an account-level filter set for
-//     the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - name: Full name of the resource being requested. For example: - For
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Get(name string) *BiddersAccountsFilterSetsGetCall {
 	c := &BiddersAccountsFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12472,12 +12456,12 @@ type BiddersAccountsFilterSetsListCall struct {
 // List: Lists all filter sets for the account with the given account
 // ID.
 //
-//   - ownerName: Name of the owner (bidder or account) of the filter sets
-//     to be listed. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123` - For an account-level filter set for the
-//     buyer account representing bidder 123: `bidders/123/accounts/123` -
-//     For an account-level filter set for the child seat buyer account
-//     456 whose bidder is 123: `bidders/123/accounts/456`.
+// - ownerName: Name of the owner (bidder or account) of the filter sets
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) List(ownerName string) *BiddersAccountsFilterSetsListCall {
 	c := &BiddersAccountsFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -12672,13 +12656,13 @@ type BiddersAccountsFilterSetsBidMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of bids.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c := &BiddersAccountsFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12874,13 +12858,13 @@ type BiddersAccountsFilterSetsBidResponseErrorsListCall struct {
 // List: List all errors that occurred in bid responses, with the number
 // of bid responses affected for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c := &BiddersAccountsFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13077,13 +13061,13 @@ type BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall struct {
 // have no applicable bids, with the number of bid responses affected
 // for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13282,13 +13266,13 @@ type BiddersAccountsFilterSetsFilteredBidRequestsListCall struct {
 // an impression, with the number of bid requests not sent for each
 // reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13485,13 +13469,13 @@ type BiddersAccountsFilterSetsFilteredBidsListCall struct {
 // List: List all reasons for which bids were filtered, with the number
 // of bids filtered for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13689,16 +13673,16 @@ type BiddersAccountsFilterSetsFilteredBidsCreativesListCall struct {
 // bids were filtered, with the number of bids filtered for each
 // creative.
 //
-//   - creativeStatusId: The ID of the creative status for which to
-//     retrieve a breakdown by creative. See creative-status-codes
-//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13908,18 +13892,18 @@ type BiddersAccountsFilterSetsFilteredBidsDetailsListCall struct {
 // List: List all details associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each detail.
 //
-//   - creativeStatusId: The ID of the creative status for which to
-//     retrieve a breakdown by detail. See creative-status-codes
-//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-//     Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
-//     and 87.
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14128,13 +14112,13 @@ type BiddersAccountsFilterSetsImpressionMetricsListCall struct {
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c := &BiddersAccountsFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14330,13 +14314,13 @@ type BiddersAccountsFilterSetsLosingBidsListCall struct {
 // List: List all reasons for which bids lost in the auction, with the
 // number of bids that lost for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsLosingBidsService) List(filterSetName string) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c := &BiddersAccountsFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14532,13 +14516,13 @@ type BiddersAccountsFilterSetsNonBillableWinningBidsListCall struct {
 // List: List all reasons for which winning bids were not billable, with
 // the number of bids not billed for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersAccountsFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14736,12 +14720,12 @@ type BiddersFilterSetsCreateCall struct {
 // Create: Creates the specified filter set for the account with the
 // given account ID.
 //
-//   - ownerName: Name of the owner (bidder or account) of the filter set
-//     to be created. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123` - For an account-level filter set for the
-//     buyer account representing bidder 123: `bidders/123/accounts/123` -
-//     For an account-level filter set for the child seat buyer account
-//     456 whose bidder is 123: `bidders/123/accounts/456`.
+// - ownerName: Name of the owner (bidder or account) of the filter set
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersFilterSetsCreateCall {
 	c := &BiddersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14897,13 +14881,13 @@ type BiddersFilterSetsDeleteCall struct {
 // Delete: Deletes the requested filter set from the account with the
 // given account ID.
 //
-//   - name: Full name of the resource to delete. For example: - For a
-//     bidder-level filter set for bidder 123:
-//     `bidders/123/filterSets/abc` - For an account-level filter set for
-//     the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - name: Full name of the resource to delete. For example: - For a
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Delete(name string) *BiddersFilterSetsDeleteCall {
 	c := &BiddersFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15037,13 +15021,13 @@ type BiddersFilterSetsGetCall struct {
 // Get: Retrieves the requested filter set for the account with the
 // given account ID.
 //
-//   - name: Full name of the resource being requested. For example: - For
-//     a bidder-level filter set for bidder 123:
-//     `bidders/123/filterSets/abc` - For an account-level filter set for
-//     the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - name: Full name of the resource being requested. For example: - For
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Get(name string) *BiddersFilterSetsGetCall {
 	c := &BiddersFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15190,12 +15174,12 @@ type BiddersFilterSetsListCall struct {
 // List: Lists all filter sets for the account with the given account
 // ID.
 //
-//   - ownerName: Name of the owner (bidder or account) of the filter sets
-//     to be listed. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123` - For an account-level filter set for the
-//     buyer account representing bidder 123: `bidders/123/accounts/123` -
-//     For an account-level filter set for the child seat buyer account
-//     456 whose bidder is 123: `bidders/123/accounts/456`.
+// - ownerName: Name of the owner (bidder or account) of the filter sets
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) List(ownerName string) *BiddersFilterSetsListCall {
 	c := &BiddersFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -15390,13 +15374,13 @@ type BiddersFilterSetsBidMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of bids.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidMetricsService) List(filterSetName string) *BiddersFilterSetsBidMetricsListCall {
 	c := &BiddersFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15592,13 +15576,13 @@ type BiddersFilterSetsBidResponseErrorsListCall struct {
 // List: List all errors that occurred in bid responses, with the number
 // of bid responses affected for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersFilterSetsBidResponseErrorsListCall {
 	c := &BiddersFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15795,13 +15779,13 @@ type BiddersFilterSetsBidResponsesWithoutBidsListCall struct {
 // have no applicable bids, with the number of bid responses affected
 // for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16000,13 +15984,13 @@ type BiddersFilterSetsFilteredBidRequestsListCall struct {
 // an impression, with the number of bid requests not sent for each
 // reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16203,13 +16187,13 @@ type BiddersFilterSetsFilteredBidsListCall struct {
 // List: List all reasons for which bids were filtered, with the number
 // of bids filtered for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsService) List(filterSetName string) *BiddersFilterSetsFilteredBidsListCall {
 	c := &BiddersFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16407,16 +16391,16 @@ type BiddersFilterSetsFilteredBidsCreativesListCall struct {
 // bids were filtered, with the number of bids filtered for each
 // creative.
 //
-//   - creativeStatusId: The ID of the creative status for which to
-//     retrieve a breakdown by creative. See creative-status-codes
-//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16626,18 +16610,18 @@ type BiddersFilterSetsFilteredBidsDetailsListCall struct {
 // List: List all details associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each detail.
 //
-//   - creativeStatusId: The ID of the creative status for which to
-//     retrieve a breakdown by detail. See creative-status-codes
-//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
-//     Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
-//     and 87.
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16846,13 +16830,13 @@ type BiddersFilterSetsImpressionMetricsListCall struct {
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersFilterSetsImpressionMetricsListCall {
 	c := &BiddersFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -17048,13 +17032,13 @@ type BiddersFilterSetsLosingBidsListCall struct {
 // List: List all reasons for which bids lost in the auction, with the
 // number of bids that lost for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsLosingBidsService) List(filterSetName string) *BiddersFilterSetsLosingBidsListCall {
 	c := &BiddersFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -17250,13 +17234,13 @@ type BiddersFilterSetsNonBillableWinningBidsListCall struct {
 // List: List all reasons for which winning bids were not billable, with
 // the number of bids not billed for each reason.
 //
-//   - filterSetName: Name of the filter set that should be applied to the
-//     requested metrics. For example: - For a bidder-level filter set for
-//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
-//     filter set for the buyer account representing bidder 123:
-//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
-//     filter set for the child seat buyer account 456 whose bidder is
-//     123: `bidders/123/accounts/456/filterSets/abc`.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName

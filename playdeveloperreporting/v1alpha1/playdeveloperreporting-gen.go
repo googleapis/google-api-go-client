@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/play/developer/reporting
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/playdeveloperreporting/v1alpha1"
-//	...
-//	ctx := context.Background()
-//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx)
+//   import "google.golang.org/api/playdeveloperreporting/v1alpha1"
+//   ...
+//   ctx := context.Background()
+//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithAPIKey("AIza..."))
+//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package playdeveloperreporting // import "google.golang.org/api/playdeveloperreporting/v1alpha1"
@@ -2071,8 +2071,8 @@ type AnomaliesListCall struct {
 
 // List: Lists anomalies in any of the datasets.
 //
-//   - parent: Parent app for which anomalies were detected. Format:
-//     apps/{app}.
+// - parent: Parent app for which anomalies were detected. Format:
+//   apps/{app}.
 func (r *AnomaliesService) List(parent string) *AnomaliesListCall {
 	c := &AnomaliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2908,8 +2908,8 @@ type VitalsErrorsCountsGetCall struct {
 
 // Get: Describes the properties of the metrics set.
 //
-//   - name: Name of the errors metric set. Format:
-//     apps/{app}/errorCountMetricSet.
+// - name: Name of the errors metric set. Format:
+//   apps/{app}/errorCountMetricSet.
 func (r *VitalsErrorsCountsService) Get(name string) *VitalsErrorsCountsGetCall {
 	c := &VitalsErrorsCountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3218,8 +3218,8 @@ type VitalsErrorsIssuesSearchCall struct {
 
 // Search: Searches all error issues in which reports have been grouped.
 //
-//   - parent: Parent resource of the error issues, indicating the
-//     application for which they were received. Format: apps/{app}.
+// - parent: Parent resource of the error issues, indicating the
+//   application for which they were received. Format: apps/{app}.
 func (r *VitalsErrorsIssuesService) Search(parent string) *VitalsErrorsIssuesSearchCall {
 	c := &VitalsErrorsIssuesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3737,8 +3737,8 @@ type VitalsErrorsReportsSearchCall struct {
 
 // Search: Searches all error reports received for an app.
 //
-//   - parent: Parent resource of the reports, indicating the application
-//     for which they were received. Format: apps/{app}.
+// - parent: Parent resource of the reports, indicating the application
+//   for which they were received. Format: apps/{app}.
 func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsSearchCall {
 	c := &VitalsErrorsReportsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4259,8 +4259,8 @@ type VitalsExcessivewakeuprateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/excessiveWakeupRateMetricSet.
+// - name: The resource name. Format:
+//   apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Get(name string) *VitalsExcessivewakeuprateGetCall {
 	c := &VitalsExcessivewakeuprateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4406,8 +4406,8 @@ type VitalsExcessivewakeuprateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/excessiveWakeupRateMetricSet.
+// - name: The resource name. Format:
+//   apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Query(name string, googleplaydeveloperreportingv1alpha1queryexcessivewakeupratemetricsetrequest *GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetRequest) *VitalsExcessivewakeuprateQueryCall {
 	c := &VitalsExcessivewakeuprateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4572,8 +4572,8 @@ type VitalsStuckbackgroundwakelockrateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/stuckBackgroundWakelockRateMetricSet.
+// - name: The resource name. Format:
+//   apps/{app}/stuckBackgroundWakelockRateMetricSet.
 func (r *VitalsStuckbackgroundwakelockrateService) Get(name string) *VitalsStuckbackgroundwakelockrateGetCall {
 	c := &VitalsStuckbackgroundwakelockrateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4719,8 +4719,8 @@ type VitalsStuckbackgroundwakelockrateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/stuckBackgroundWakelockRateMetricSet.
+// - name: The resource name. Format:
+//   apps/{app}/stuckBackgroundWakelockRateMetricSet.
 func (r *VitalsStuckbackgroundwakelockrateService) Query(name string, googleplaydeveloperreportingv1alpha1querystuckbackgroundwakelockratemetricsetrequest *GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetRequest) *VitalsStuckbackgroundwakelockrateQueryCall {
 	c := &VitalsStuckbackgroundwakelockrateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

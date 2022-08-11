@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/iam/docs/simulating-access
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/policysimulator/v1beta1"
-//	...
-//	ctx := context.Background()
-//	policysimulatorService, err := policysimulator.NewService(ctx)
+//   import "google.golang.org/api/policysimulator/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   policysimulatorService, err := policysimulator.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	policysimulatorService, err := policysimulator.NewService(ctx, option.WithAPIKey("AIza..."))
+//   policysimulatorService, err := policysimulator.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	policysimulatorService, err := policysimulator.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   policysimulatorService, err := policysimulator.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package policysimulator // import "google.golang.org/api/policysimulator/v1beta1"
@@ -1321,16 +1321,20 @@ type GoogleIamV1Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1743,9 +1747,9 @@ type FoldersLocationsReplaysCreateCall struct {
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
 //
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *FoldersLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *FoldersLocationsReplaysCreateCall {
 	c := &FoldersLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1888,12 +1892,12 @@ type FoldersLocationsReplaysGetCall struct {
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *FoldersLocationsReplaysService) Get(name string) *FoldersLocationsReplaysGetCall {
 	c := &FoldersLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2040,12 +2044,12 @@ type FoldersLocationsReplaysResultsListCall struct {
 
 // List: Lists the results of running a Replay.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *FoldersLocationsReplaysResultsService) List(parent string) *FoldersLocationsReplaysResultsListCall {
 	c := &FoldersLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2602,9 +2606,9 @@ type OrganizationsLocationsReplaysCreateCall struct {
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
 //
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *OrganizationsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *OrganizationsLocationsReplaysCreateCall {
 	c := &OrganizationsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2747,12 +2751,12 @@ type OrganizationsLocationsReplaysGetCall struct {
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *OrganizationsLocationsReplaysService) Get(name string) *OrganizationsLocationsReplaysGetCall {
 	c := &OrganizationsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2899,12 +2903,12 @@ type OrganizationsLocationsReplaysResultsListCall struct {
 
 // List: Lists the results of running a Replay.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *OrganizationsLocationsReplaysResultsService) List(parent string) *OrganizationsLocationsReplaysResultsListCall {
 	c := &OrganizationsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3103,9 +3107,9 @@ type ProjectsLocationsReplaysCreateCall struct {
 
 // Create: Creates and starts a Replay using the given ReplayConfig.
 //
-//   - parent: The parent resource where this Replay will be created. This
-//     resource must be a project, folder, or organization with a
-//     location. Example: `projects/my-example-project/locations/global`.
+// - parent: The parent resource where this Replay will be created. This
+//   resource must be a project, folder, or organization with a
+//   location. Example: `projects/my-example-project/locations/global`.
 func (r *ProjectsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *ProjectsLocationsReplaysCreateCall {
 	c := &ProjectsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3248,12 +3252,12 @@ type ProjectsLocationsReplaysGetCall struct {
 // Get: Gets the specified Replay. Each `Replay` is available for at
 // least 7 days.
 //
-//   - name: The name of the Replay to retrieve, in the following format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}`, where `{resource-id}` is the ID of the project,
-//     folder, or organization that owns the `Replay`. Example:
-//     `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
-//     4d7d-8e03-479ce1833c36`.
+// - name: The name of the Replay to retrieve, in the following format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}`, where `{resource-id}` is the ID of the project,
+//   folder, or organization that owns the `Replay`. Example:
+//   `projects/my-example-project/locations/global/replays/506a5f7f-38ce-
+//   4d7d-8e03-479ce1833c36`.
 func (r *ProjectsLocationsReplaysService) Get(name string) *ProjectsLocationsReplaysGetCall {
 	c := &ProjectsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3400,12 +3404,12 @@ type ProjectsLocationsReplaysResultsListCall struct {
 
 // List: Lists the results of running a Replay.
 //
-//   - parent: The Replay whose results are listed, in the following
-//     format:
-//     `{projects|folders|organizations}/{resource-id}/locations/global/rep
-//     lays/{replay-id}` Example:
-//     `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
-//     3-479ce1833c36`.
+// - parent: The Replay whose results are listed, in the following
+//   format:
+//   `{projects|folders|organizations}/{resource-id}/locations/global/rep
+//   lays/{replay-id}` Example:
+//   `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e0
+//   3-479ce1833c36`.
 func (r *ProjectsLocationsReplaysResultsService) List(parent string) *ProjectsLocationsReplaysResultsListCall {
 	c := &ProjectsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

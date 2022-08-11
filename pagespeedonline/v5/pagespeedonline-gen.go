@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/speed/docs/insights/v5/about
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/pagespeedonline/v5"
-//	...
-//	ctx := context.Background()
-//	pagespeedonlineService, err := pagespeedonline.NewService(ctx)
+//   import "google.golang.org/api/pagespeedonline/v5"
+//   ...
+//   ctx := context.Background()
+//   pagespeedonlineService, err := pagespeedonline.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithAPIKey("AIza..."))
+//   pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   pagespeedonlineService, err := pagespeedonline.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package pagespeedonline // import "google.golang.org/api/pagespeedonline/v5"
@@ -1212,26 +1212,16 @@ func (c *PagespeedapiRunpagespeedCall) CaptchaToken(captchaToken string) *Pagesp
 // run
 //
 // Possible values:
-//
-//	"CATEGORY_UNSPECIFIED" - Default UNDEFINED category.
-//	"ACCESSIBILITY" - Accessibility (a11y), category pertaining to a
-//
+//   "CATEGORY_UNSPECIFIED" - Default UNDEFINED category.
+//   "ACCESSIBILITY" - Accessibility (a11y), category pertaining to a
 // website's capacity to be accessible to all users.
-//
-//	"BEST_PRACTICES" - Best Practices, category pertaining to a
-//
+//   "BEST_PRACTICES" - Best Practices, category pertaining to a
 // website's conformance to web best practice.
-//
-//	"PERFORMANCE" - Performance, category pertaining to a website's
-//
+//   "PERFORMANCE" - Performance, category pertaining to a website's
 // performance.
-//
-//	"PWA" - Progressive Web App (PWA), category pertaining to a
-//
+//   "PWA" - Progressive Web App (PWA), category pertaining to a
 // website's ability to be run as a PWA.
-//
-//	"SEO" - Search Engine Optimization (SEO), category pertaining to a
-//
+//   "SEO" - Search Engine Optimization (SEO), category pertaining to a
 // website's ability to be indexed by search engines.
 func (c *PagespeedapiRunpagespeedCall) Category(category ...string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.SetMulti("category", append([]string{}, category...))
@@ -1249,10 +1239,9 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 // strategy (desktop or mobile) to use, and desktop is the default
 //
 // Possible values:
-//
-//	"STRATEGY_UNSPECIFIED" - UNDEFINED.
-//	"DESKTOP" - Fetch and analyze the URL for desktop browsers.
-//	"MOBILE" - Fetch and analyze the URL for mobile devices.
+//   "STRATEGY_UNSPECIFIED" - UNDEFINED.
+//   "DESKTOP" - Fetch and analyze the URL for desktop browsers.
+//   "MOBILE" - Fetch and analyze the URL for mobile devices.
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
 	return c

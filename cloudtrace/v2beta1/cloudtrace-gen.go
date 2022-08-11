@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/trace
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/cloudtrace/v2beta1"
-//	...
-//	ctx := context.Background()
-//	cloudtraceService, err := cloudtrace.NewService(ctx)
+//   import "google.golang.org/api/cloudtrace/v2beta1"
+//   ...
+//   ctx := context.Background()
+//   cloudtraceService, err := cloudtrace.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithScopes(cloudtrace.TraceReadonlyScope))
+//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithScopes(cloudtrace.TraceReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithAPIKey("AIza..."))
+//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudtrace // import "google.golang.org/api/cloudtrace/v2beta1"
@@ -322,9 +322,9 @@ type ProjectsTraceSinksCreateCall struct {
 // sink can export traces only from the resource owning the sink (the
 // 'parent').
 //
-//   - parent: The resource in which to create the sink (currently only
-//     project sinks are supported): "projects/[PROJECT_ID]" Examples:
-//     "projects/my-trace-project", "projects/123456789".
+// - parent: The resource in which to create the sink (currently only
+//   project sinks are supported): "projects/[PROJECT_ID]" Examples:
+//   "projects/my-trace-project", "projects/123456789".
 func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) *ProjectsTraceSinksCreateCall {
 	c := &ProjectsTraceSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -466,10 +466,10 @@ type ProjectsTraceSinksDeleteCall struct {
 
 // Delete: Deletes a sink.
 //
-//   - name: The full resource name of the sink to delete, including the
-//     parent resource and the sink identifier:
-//     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-//     "projects/12345/traceSinks/my-sink-id".
+// - name: The full resource name of the sink to delete, including the
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Delete(nameid string) *ProjectsTraceSinksDeleteCall {
 	c := &ProjectsTraceSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -604,9 +604,9 @@ type ProjectsTraceSinksGetCall struct {
 // Get: Get a trace sink by name under the parent resource (GCP
 // project).
 //
-//   - name: The resource name of the sink:
-//     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-//     "projects/12345/traceSinks/my-sink-id".
+// - name: The resource name of the sink:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Get(name string) *ProjectsTraceSinksGetCall {
 	c := &ProjectsTraceSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -753,9 +753,9 @@ type ProjectsTraceSinksListCall struct {
 
 // List: List all sinks for the parent resource (GCP project).
 //
-//   - parent: The parent resource whose sinks are to be listed (currently
-//     only project parent resources are supported):
-//     "projects/[PROJECT_ID]".
+// - parent: The parent resource whose sinks are to be listed (currently
+//   only project parent resources are supported):
+//   "projects/[PROJECT_ID]".
 func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListCall {
 	c := &ProjectsTraceSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -955,10 +955,10 @@ type ProjectsTraceSinksPatchCall struct {
 // sink according to the provided update mask. The sink's name cannot be
 // changed nor any output-only fields (e.g. the writer_identity).
 //
-//   - name: The full resource name of the sink to update, including the
-//     parent resource and the sink identifier:
-//     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
-//     "projects/12345/traceSinks/my-sink-id".
+// - name: The full resource name of the sink to update, including the
+//   parent resource and the sink identifier:
+//   "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
+//   "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *ProjectsTraceSinksPatchCall {
 	c := &ProjectsTraceSinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

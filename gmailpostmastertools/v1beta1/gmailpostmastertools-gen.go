@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/gmail/postmaster
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/gmailpostmastertools/v1beta1"
-//	...
-//	ctx := context.Background()
-//	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx)
+//   import "google.golang.org/api/gmailpostmastertools/v1beta1"
+//   ...
+//   ctx := context.Background()
+//   gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithAPIKey("AIza..."))
+//   gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   gmailpostmastertoolsService, err := gmailpostmastertools.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gmailpostmastertools // import "google.golang.org/api/gmailpostmastertools/v1beta1"
@@ -619,9 +619,9 @@ type DomainsGetCall struct {
 // Get: Gets a specific domain registered by the client. Returns
 // NOT_FOUND if the domain does not exist.
 //
-//   - name: The resource name of the domain. It should have the form
-//     `domains/{domain_name}`, where domain_name is the fully qualified
-//     domain name.
+// - name: The resource name of the domain. It should have the form
+//   `domains/{domain_name}`, where domain_name is the fully qualified
+//   domain name.
 func (r *DomainsService) Get(name string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -951,8 +951,8 @@ type DomainsTrafficStatsGetCall struct {
 // PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
 //
-//   - name: The resource name of the traffic statistics to get. E.g.,
-//     domains/mymail.mydomain.com/trafficStats/20160807.
+// - name: The resource name of the traffic statistics to get. E.g.,
+//   domains/mymail.mydomain.com/trafficStats/20160807.
 func (r *DomainsTrafficStatsService) Get(name string) *DomainsTrafficStatsGetCall {
 	c := &DomainsTrafficStatsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1100,9 +1100,9 @@ type DomainsTrafficStatsListCall struct {
 // PERMISSION_DENIED if user does not have permission to access
 // TrafficStats for the domain.
 //
-//   - parent: The resource name of the domain whose traffic statistics
-//     we'd like to list. It should have the form `domains/{domain_name}`,
-//     where domain_name is the fully qualified domain name.
+// - parent: The resource name of the domain whose traffic statistics
+//   we'd like to list. It should have the form `domains/{domain_name}`,
+//   where domain_name is the fully qualified domain name.
 func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsListCall {
 	c := &DomainsTrafficStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

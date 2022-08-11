@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/analytics/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/analytics/v3"
-//	...
-//	ctx := context.Background()
-//	analyticsService, err := analytics.NewService(ctx)
+//   import "google.golang.org/api/analytics/v3"
+//   ...
+//   ctx := context.Background()
+//   analyticsService, err := analytics.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	analyticsService, err := analytics.NewService(ctx, option.WithScopes(analytics.AnalyticsUserDeletionScope))
+//   analyticsService, err := analytics.NewService(ctx, option.WithScopes(analytics.AnalyticsUserDeletionScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	analyticsService, err := analytics.NewService(ctx, option.WithAPIKey("AIza..."))
+//   analyticsService, err := analytics.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	analyticsService, err := analytics.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   analyticsService, err := analytics.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package analytics // import "google.golang.org/api/analytics/v3"
@@ -5907,18 +5907,18 @@ type DataGaGetCall struct {
 
 // Get: Returns Analytics data for a view (profile).
 //
-//   - endDate: End date for fetching Analytics data. Request can should
-//     specify an end date formatted as YYYY-MM-DD, or as a relative date
-//     (e.g., today, yesterday, or 7daysAgo). The default value is
-//     yesterday.
-//   - ids: Unique table ID for retrieving Analytics data. Table ID is of
-//     the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
-//   - metrics: A comma-separated list of Analytics metrics. E.g.,
-//     'ga:sessions,ga:pageviews'. At least one metric must be specified.
-//   - startDate: Start date for fetching Analytics data. Requests can
-//     specify a start date formatted as YYYY-MM-DD, or as a relative date
-//     (e.g., today, yesterday, or 7daysAgo). The default value is
-//     7daysAgo.
+// - endDate: End date for fetching Analytics data. Request can should
+//   specify an end date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   yesterday.
+// - ids: Unique table ID for retrieving Analytics data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of Analytics metrics. E.g.,
+//   'ga:sessions,ga:pageviews'. At least one metric must be specified.
+// - startDate: Start date for fetching Analytics data. Requests can
+//   specify a start date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   7daysAgo.
 func (r *DataGaService) Get(ids string, startDate string, endDate string, metrics string) *DataGaGetCall {
 	c := &DataGaGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -5962,12 +5962,9 @@ func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
 // the response. Default format is JSON.
 //
 // Possible values:
-//
-//	"dataTable" - Returns the response in Google Charts Data Table
-//
+//   "dataTable" - Returns the response in Google Charts Data Table
 // format. This is useful in creating visualization using Google Charts.
-//
-//	"json" - Returns the response in standard JSON format.
+//   "json" - Returns the response in standard JSON format.
 func (c *DataGaGetCall) Output(output string) *DataGaGetCall {
 	c.urlParams_.Set("output", output)
 	return c
@@ -5977,14 +5974,10 @@ func (c *DataGaGetCall) Output(output string) *DataGaGetCall {
 // desired sampling level.
 //
 // Possible values:
-//
-//	"DEFAULT" - Returns response with a sample size that balances speed
-//
+//   "DEFAULT" - Returns response with a sample size that balances speed
 // and accuracy.
-//
-//	"FASTER" - Returns a fast response with a smaller sample size.
-//	"HIGHER_PRECISION" - Returns a more accurate response using a large
-//
+//   "FASTER" - Returns a fast response with a smaller sample size.
+//   "HIGHER_PRECISION" - Returns a more accurate response using a large
 // sample size, but this may result in the response being slower.
 func (c *DataGaGetCall) SamplingLevel(samplingLevel string) *DataGaGetCall {
 	c.urlParams_.Set("samplingLevel", samplingLevel)
@@ -6243,18 +6236,18 @@ type DataMcfGetCall struct {
 // Get: Returns Analytics Multi-Channel Funnels data for a view
 // (profile).
 //
-//   - endDate: End date for fetching Analytics data. Requests can specify
-//     a start date formatted as YYYY-MM-DD, or as a relative date (e.g.,
-//     today, yesterday, or 7daysAgo). The default value is 7daysAgo.
-//   - ids: Unique table ID for retrieving Analytics data. Table ID is of
-//     the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
-//   - metrics: A comma-separated list of Multi-Channel Funnels metrics.
-//     E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one
-//     metric must be specified.
-//   - startDate: Start date for fetching Analytics data. Requests can
-//     specify a start date formatted as YYYY-MM-DD, or as a relative date
-//     (e.g., today, yesterday, or 7daysAgo). The default value is
-//     7daysAgo.
+// - endDate: End date for fetching Analytics data. Requests can specify
+//   a start date formatted as YYYY-MM-DD, or as a relative date (e.g.,
+//   today, yesterday, or 7daysAgo). The default value is 7daysAgo.
+// - ids: Unique table ID for retrieving Analytics data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of Multi-Channel Funnels metrics.
+//   E.g., 'mcf:totalConversions,mcf:totalConversionValue'. At least one
+//   metric must be specified.
+// - startDate: Start date for fetching Analytics data. Requests can
+//   specify a start date formatted as YYYY-MM-DD, or as a relative date
+//   (e.g., today, yesterday, or 7daysAgo). The default value is
+//   7daysAgo.
 func (r *DataMcfService) Get(ids string, startDate string, endDate string, metrics string) *DataMcfGetCall {
 	c := &DataMcfGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -6290,14 +6283,10 @@ func (c *DataMcfGetCall) MaxResults(maxResults int64) *DataMcfGetCall {
 // desired sampling level.
 //
 // Possible values:
-//
-//	"DEFAULT" - Returns response with a sample size that balances speed
-//
+//   "DEFAULT" - Returns response with a sample size that balances speed
 // and accuracy.
-//
-//	"FASTER" - Returns a fast response with a smaller sample size.
-//	"HIGHER_PRECISION" - Returns a more accurate response using a large
-//
+//   "FASTER" - Returns a fast response with a smaller sample size.
+//   "HIGHER_PRECISION" - Returns a more accurate response using a large
 // sample size, but this may result in the response being slower.
 func (c *DataMcfGetCall) SamplingLevel(samplingLevel string) *DataMcfGetCall {
 	c.urlParams_.Set("samplingLevel", samplingLevel)
@@ -6525,10 +6514,10 @@ type DataRealtimeGetCall struct {
 
 // Get: Returns real time data for a view (profile).
 //
-//   - ids: Unique table ID for retrieving real time data. Table ID is of
-//     the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
-//   - metrics: A comma-separated list of real time metrics. E.g.,
-//     'rt:activeUsers'. At least one metric must be specified.
+// - ids: Unique table ID for retrieving real time data. Table ID is of
+//   the form ga:XXXX, where XXXX is the Analytics view (profile) ID.
+// - metrics: A comma-separated list of real time metrics. E.g.,
+//   'rt:activeUsers'. At least one metric must be specified.
 func (r *DataRealtimeService) Get(ids string, metrics string) *DataRealtimeGetCall {
 	c := &DataRealtimeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -7753,9 +7742,9 @@ type ManagementCustomDataSourcesListCall struct {
 
 // List: List custom data sources to which the user has access.
 //
-//   - accountId: Account Id for the custom data sources to retrieve.
-//   - webPropertyId: Web property Id for the custom data sources to
-//     retrieve.
+// - accountId: Account Id for the custom data sources to retrieve.
+// - webPropertyId: Web property Id for the custom data sources to
+//   retrieve.
 func (r *ManagementCustomDataSourcesService) List(accountId string, webPropertyId string) *ManagementCustomDataSourcesListCall {
 	c := &ManagementCustomDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7943,10 +7932,10 @@ type ManagementCustomDimensionsGetCall struct {
 
 // Get: Get a custom dimension to which the user has access.
 //
-//   - accountId: Account ID for the custom dimension to retrieve.
-//   - customDimensionId: The ID of the custom dimension to retrieve.
-//   - webPropertyId: Web property ID for the custom dimension to
-//     retrieve.
+// - accountId: Account ID for the custom dimension to retrieve.
+// - customDimensionId: The ID of the custom dimension to retrieve.
+// - webPropertyId: Web property ID for the custom dimension to
+//   retrieve.
 func (r *ManagementCustomDimensionsService) Get(accountId string, webPropertyId string, customDimensionId string) *ManagementCustomDimensionsGetCall {
 	c := &ManagementCustomDimensionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8261,9 +8250,9 @@ type ManagementCustomDimensionsListCall struct {
 
 // List: Lists custom dimensions to which the user has access.
 //
-//   - accountId: Account ID for the custom dimensions to retrieve.
-//   - webPropertyId: Web property ID for the custom dimensions to
-//     retrieve.
+// - accountId: Account ID for the custom dimensions to retrieve.
+// - webPropertyId: Web property ID for the custom dimensions to
+//   retrieve.
 func (r *ManagementCustomDimensionsService) List(accountId string, webPropertyId string) *ManagementCustomDimensionsListCall {
 	c := &ManagementCustomDimensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8448,10 +8437,10 @@ type ManagementCustomDimensionsPatchCall struct {
 // Patch: Updates an existing custom dimension. This method supports
 // patch semantics.
 //
-//   - accountId: Account ID for the custom dimension to update.
-//   - customDimensionId: Custom dimension ID for the custom dimension to
-//     update.
-//   - webPropertyId: Web property ID for the custom dimension to update.
+// - accountId: Account ID for the custom dimension to update.
+// - customDimensionId: Custom dimension ID for the custom dimension to
+//   update.
+// - webPropertyId: Web property ID for the custom dimension to update.
 func (r *ManagementCustomDimensionsService) Patch(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsPatchCall {
 	c := &ManagementCustomDimensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8626,10 +8615,10 @@ type ManagementCustomDimensionsUpdateCall struct {
 
 // Update: Updates an existing custom dimension.
 //
-//   - accountId: Account ID for the custom dimension to update.
-//   - customDimensionId: Custom dimension ID for the custom dimension to
-//     update.
-//   - webPropertyId: Web property ID for the custom dimension to update.
+// - accountId: Account ID for the custom dimension to update.
+// - customDimensionId: Custom dimension ID for the custom dimension to
+//   update.
+// - webPropertyId: Web property ID for the custom dimension to update.
 func (r *ManagementCustomDimensionsService) Update(accountId string, webPropertyId string, customDimensionId string, customdimension *CustomDimension) *ManagementCustomDimensionsUpdateCall {
 	c := &ManagementCustomDimensionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11941,15 +11930,15 @@ type ManagementGoalsListCall struct {
 
 // List: Lists goals to which the user has access.
 //
-//   - accountId: Account ID to retrieve goals for. Can either be a
-//     specific account ID or '~all', which refers to all the accounts
-//     that user has access to.
-//   - profileId: View (Profile) ID to retrieve goals for. Can either be a
-//     specific view (profile) ID or '~all', which refers to all the views
-//     (profiles) that user has access to.
-//   - webPropertyId: Web property ID to retrieve goals for. Can either be
-//     a specific web property ID or '~all', which refers to all the web
-//     properties that user has access to.
+// - accountId: Account ID to retrieve goals for. Can either be a
+//   specific account ID or '~all', which refers to all the accounts
+//   that user has access to.
+// - profileId: View (Profile) ID to retrieve goals for. Can either be a
+//   specific view (profile) ID or '~all', which refers to all the views
+//   (profiles) that user has access to.
+// - webPropertyId: Web property ID to retrieve goals for. Can either be
+//   a specific web property ID or '~all', which refers to all the web
+//   properties that user has access to.
 func (r *ManagementGoalsService) List(accountId string, webPropertyId string, profileId string) *ManagementGoalsListCall {
 	c := &ManagementGoalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12490,11 +12479,11 @@ type ManagementProfileFilterLinksDeleteCall struct {
 
 // Delete: Delete a profile filter link.
 //
-//   - accountId: Account ID to which the profile filter link belongs.
-//   - linkId: ID of the profile filter link to delete.
-//   - profileId: Profile ID to which the filter link belongs.
-//   - webPropertyId: Web property Id to which the profile filter link
-//     belongs.
+// - accountId: Account ID to which the profile filter link belongs.
+// - linkId: ID of the profile filter link to delete.
+// - profileId: Profile ID to which the filter link belongs.
+// - webPropertyId: Web property Id to which the profile filter link
+//   belongs.
 func (r *ManagementProfileFilterLinksService) Delete(accountId string, webPropertyId string, profileId string, linkId string) *ManagementProfileFilterLinksDeleteCall {
 	c := &ManagementProfileFilterLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -12977,13 +12966,13 @@ type ManagementProfileFilterLinksListCall struct {
 
 // List: Lists all profile filter links for a profile.
 //
-//   - accountId: Account ID to retrieve profile filter links for.
-//   - profileId: Profile ID to retrieve filter links for. Can either be a
-//     specific profile ID or '~all', which refers to all the profiles
-//     that user has access to.
-//   - webPropertyId: Web property Id for profile filter links for. Can
-//     either be a specific web property ID or '~all', which refers to all
-//     the web properties that user has access to.
+// - accountId: Account ID to retrieve profile filter links for.
+// - profileId: Profile ID to retrieve filter links for. Can either be a
+//   specific profile ID or '~all', which refers to all the profiles
+//   that user has access to.
+// - webPropertyId: Web property Id for profile filter links for. Can
+//   either be a specific web property ID or '~all', which refers to all
+//   the web properties that user has access to.
 func (r *ManagementProfileFilterLinksService) List(accountId string, webPropertyId string, profileId string) *ManagementProfileFilterLinksListCall {
 	c := &ManagementProfileFilterLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -13829,13 +13818,13 @@ type ManagementProfileUserLinksListCall struct {
 
 // List: Lists profile-user links for a given view (profile).
 //
-//   - accountId: Account ID which the given view (profile) belongs to.
-//   - profileId: View (Profile) ID to retrieve the profile-user links
-//     for. Can either be a specific profile ID or '~all', which refers to
-//     all the profiles that user has access to.
-//   - webPropertyId: Web Property ID which the given view (profile)
-//     belongs to. Can either be a specific web property ID or '~all',
-//     which refers to all the web properties that user has access to.
+// - accountId: Account ID which the given view (profile) belongs to.
+// - profileId: View (Profile) ID to retrieve the profile-user links
+//   for. Can either be a specific profile ID or '~all', which refers to
+//   all the profiles that user has access to.
+// - webPropertyId: Web Property ID which the given view (profile)
+//   belongs to. Can either be a specific web property ID or '~all',
+//   which refers to all the web properties that user has access to.
 func (r *ManagementProfileUserLinksService) List(accountId string, webPropertyId string, profileId string) *ManagementProfileUserLinksListCall {
 	c := &ManagementProfileUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -14646,12 +14635,12 @@ type ManagementProfilesListCall struct {
 
 // List: Lists views (profiles) to which the user has access.
 //
-//   - accountId: Account ID for the view (profiles) to retrieve. Can
-//     either be a specific account ID or '~all', which refers to all the
-//     accounts to which the user has access.
-//   - webPropertyId: Web property ID for the views (profiles) to
-//     retrieve. Can either be a specific web property ID or '~all', which
-//     refers to all the web properties to which the user has access.
+// - accountId: Account ID for the view (profiles) to retrieve. Can
+//   either be a specific account ID or '~all', which refers to all the
+//   accounts to which the user has access.
+// - webPropertyId: Web property ID for the views (profiles) to
+//   retrieve. Can either be a specific web property ID or '~all', which
+//   refers to all the web properties to which the user has access.
 func (r *ManagementProfilesService) List(accountId string, webPropertyId string) *ManagementProfilesListCall {
 	c := &ManagementProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15160,11 +15149,11 @@ type ManagementRemarketingAudienceDeleteCall struct {
 
 // Delete: Delete a remarketing audience.
 //
-//   - accountId: Account ID to which the remarketing audience belongs.
-//   - remarketingAudienceId: The ID of the remarketing audience to
-//     delete.
-//   - webPropertyId: Web property ID to which the remarketing audience
-//     belongs.
+// - accountId: Account ID to which the remarketing audience belongs.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   delete.
+// - webPropertyId: Web property ID to which the remarketing audience
+//   belongs.
 func (r *ManagementRemarketingAudienceService) Delete(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceDeleteCall {
 	c := &ManagementRemarketingAudienceDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15287,11 +15276,11 @@ type ManagementRemarketingAudienceGetCall struct {
 
 // Get: Gets a remarketing audience to which the user has access.
 //
-//   - accountId: The account ID of the remarketing audience to retrieve.
-//   - remarketingAudienceId: The ID of the remarketing audience to
-//     retrieve.
-//   - webPropertyId: The web property ID of the remarketing audience to
-//     retrieve.
+// - accountId: The account ID of the remarketing audience to retrieve.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   retrieve.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   retrieve.
 func (r *ManagementRemarketingAudienceService) Get(accountId string, webPropertyId string, remarketingAudienceId string) *ManagementRemarketingAudienceGetCall {
 	c := &ManagementRemarketingAudienceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15455,10 +15444,10 @@ type ManagementRemarketingAudienceInsertCall struct {
 
 // Insert: Creates a new remarketing audience.
 //
-//   - accountId: The account ID for which to create the remarketing
-//     audience.
-//   - webPropertyId: Web property ID for which to create the remarketing
-//     audience.
+// - accountId: The account ID for which to create the remarketing
+//   audience.
+// - webPropertyId: Web property ID for which to create the remarketing
+//   audience.
 func (r *ManagementRemarketingAudienceService) Insert(accountId string, webPropertyId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceInsertCall {
 	c := &ManagementRemarketingAudienceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15608,9 +15597,9 @@ type ManagementRemarketingAudienceListCall struct {
 
 // List: Lists remarketing audiences to which the user has access.
 //
-//   - accountId: The account ID of the remarketing audiences to retrieve.
-//   - webPropertyId: The web property ID of the remarketing audiences to
-//     retrieve.
+// - accountId: The account ID of the remarketing audiences to retrieve.
+// - webPropertyId: The web property ID of the remarketing audiences to
+//   retrieve.
 func (r *ManagementRemarketingAudienceService) List(accountId string, webPropertyId string) *ManagementRemarketingAudienceListCall {
 	c := &ManagementRemarketingAudienceListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15806,11 +15795,11 @@ type ManagementRemarketingAudiencePatchCall struct {
 // Patch: Updates an existing remarketing audience. This method supports
 // patch semantics.
 //
-//   - accountId: The account ID of the remarketing audience to update.
-//   - remarketingAudienceId: The ID of the remarketing audience to
-//     update.
-//   - webPropertyId: The web property ID of the remarketing audience to
-//     update.
+// - accountId: The account ID of the remarketing audience to update.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   update.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   update.
 func (r *ManagementRemarketingAudienceService) Patch(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudiencePatchCall {
 	c := &ManagementRemarketingAudiencePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -15970,11 +15959,11 @@ type ManagementRemarketingAudienceUpdateCall struct {
 
 // Update: Updates an existing remarketing audience.
 //
-//   - accountId: The account ID of the remarketing audience to update.
-//   - remarketingAudienceId: The ID of the remarketing audience to
-//     update.
-//   - webPropertyId: The web property ID of the remarketing audience to
-//     update.
+// - accountId: The account ID of the remarketing audience to update.
+// - remarketingAudienceId: The ID of the remarketing audience to
+//   update.
+// - webPropertyId: The web property ID of the remarketing audience to
+//   update.
 func (r *ManagementRemarketingAudienceService) Update(accountId string, webPropertyId string, remarketingAudienceId string, remarketingaudience *RemarketingAudience) *ManagementRemarketingAudienceUpdateCall {
 	c := &ManagementRemarketingAudienceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16769,12 +16758,12 @@ type ManagementUnsampledReportsListCall struct {
 
 // List: Lists unsampled reports to which the user has access.
 //
-//   - accountId: Account ID to retrieve unsampled reports for. Must be a
-//     specific account ID, ~all is not supported.
-//   - profileId: View (Profile) ID to retrieve unsampled reports for.
-//     Must be a specific view (profile) ID, ~all is not supported.
-//   - webPropertyId: Web property ID to retrieve unsampled reports for.
-//     Must be a specific web property ID, ~all is not supported.
+// - accountId: Account ID to retrieve unsampled reports for. Must be a
+//   specific account ID, ~all is not supported.
+// - profileId: View (Profile) ID to retrieve unsampled reports for.
+//   Must be a specific view (profile) ID, ~all is not supported.
+// - webPropertyId: Web property ID to retrieve unsampled reports for.
+//   Must be a specific web property ID, ~all is not supported.
 func (r *ManagementUnsampledReportsService) List(accountId string, webPropertyId string, profileId string) *ManagementUnsampledReportsListCall {
 	c := &ManagementUnsampledReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -16968,10 +16957,10 @@ type ManagementUploadsDeleteUploadDataCall struct {
 
 // DeleteUploadData: Delete data associated with a previous upload.
 //
-//   - accountId: Account Id for the uploads to be deleted.
-//   - customDataSourceId: Custom data source Id for the uploads to be
-//     deleted.
-//   - webPropertyId: Web property Id for the uploads to be deleted.
+// - accountId: Account Id for the uploads to be deleted.
+// - customDataSourceId: Custom data source Id for the uploads to be
+//   deleted.
+// - webPropertyId: Web property Id for the uploads to be deleted.
 func (r *ManagementUploadsService) DeleteUploadData(accountId string, webPropertyId string, customDataSourceId string, analyticsdataimportdeleteuploaddatarequest *AnalyticsDataimportDeleteUploadDataRequest) *ManagementUploadsDeleteUploadDataCall {
 	c := &ManagementUploadsDeleteUploadDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17490,10 +17479,10 @@ type ManagementUploadsUploadDataCall struct {
 
 // UploadData: Upload data for a custom data source.
 //
-//   - accountId: Account Id associated with the upload.
-//   - customDataSourceId: Custom data source Id to which the data being
-//     uploaded belongs.
-//   - webPropertyId: Web property UA-string associated with the upload.
+// - accountId: Account Id associated with the upload.
+// - customDataSourceId: Custom data source Id to which the data being
+//   uploaded belongs.
+// - webPropertyId: Web property UA-string associated with the upload.
 func (r *ManagementUploadsService) UploadData(accountId string, webPropertyId string, customDataSourceId string) *ManagementUploadsUploadDataCall {
 	c := &ManagementUploadsUploadDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17730,10 +17719,10 @@ type ManagementWebPropertyAdWordsLinksDeleteCall struct {
 
 // Delete: Deletes a web property-Google Ads link.
 //
-//   - accountId: ID of the account which the given web property belongs
-//     to.
-//   - webPropertyAdWordsLinkId: Web property Google Ads link ID.
-//   - webPropertyId: Web property ID to delete the Google Ads link for.
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property Google Ads link ID.
+// - webPropertyId: Web property ID to delete the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Delete(accountId string, webPropertyId string, webPropertyAdWordsLinkId string) *ManagementWebPropertyAdWordsLinksDeleteCall {
 	c := &ManagementWebPropertyAdWordsLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -17857,10 +17846,10 @@ type ManagementWebPropertyAdWordsLinksGetCall struct {
 // Get: Returns a web property-Google Ads link to which the user has
 // access.
 //
-//   - accountId: ID of the account which the given web property belongs
-//     to.
-//   - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
-//   - webPropertyId: Web property ID to retrieve the Google Ads link for.
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Get(accountId string, webPropertyId string, webPropertyAdWordsLinkId string) *ManagementWebPropertyAdWordsLinksGetCall {
 	c := &ManagementWebPropertyAdWordsLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18024,9 +18013,9 @@ type ManagementWebPropertyAdWordsLinksInsertCall struct {
 
 // Insert: Creates a webProperty-Google Ads link.
 //
-//   - accountId: ID of the Google Analytics account to create the link
-//     for.
-//   - webPropertyId: Web property ID to create the link for.
+// - accountId: ID of the Google Analytics account to create the link
+//   for.
+// - webPropertyId: Web property ID to create the link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Insert(accountId string, webPropertyId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksInsertCall {
 	c := &ManagementWebPropertyAdWordsLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18176,10 +18165,10 @@ type ManagementWebPropertyAdWordsLinksListCall struct {
 
 // List: Lists webProperty-Google Ads links for a given web property.
 //
-//   - accountId: ID of the account which the given web property belongs
-//     to.
-//   - webPropertyId: Web property ID to retrieve the Google Ads links
-//     for.
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyId: Web property ID to retrieve the Google Ads links
+//   for.
 func (r *ManagementWebPropertyAdWordsLinksService) List(accountId string, webPropertyId string) *ManagementWebPropertyAdWordsLinksListCall {
 	c := &ManagementWebPropertyAdWordsLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18365,10 +18354,10 @@ type ManagementWebPropertyAdWordsLinksPatchCall struct {
 // Patch: Updates an existing webProperty-Google Ads link. This method
 // supports patch semantics.
 //
-//   - accountId: ID of the account which the given web property belongs
-//     to.
-//   - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
-//   - webPropertyId: Web property ID to retrieve the Google Ads link for.
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Patch(accountId string, webPropertyId string, webPropertyAdWordsLinkId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksPatchCall {
 	c := &ManagementWebPropertyAdWordsLinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18528,10 +18517,10 @@ type ManagementWebPropertyAdWordsLinksUpdateCall struct {
 
 // Update: Updates an existing webProperty-Google Ads link.
 //
-//   - accountId: ID of the account which the given web property belongs
-//     to.
-//   - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
-//   - webPropertyId: Web property ID to retrieve the Google Ads link for.
+// - accountId: ID of the account which the given web property belongs
+//   to.
+// - webPropertyAdWordsLinkId: Web property-Google Ads link ID.
+// - webPropertyId: Web property ID to retrieve the Google Ads link for.
 func (r *ManagementWebPropertyAdWordsLinksService) Update(accountId string, webPropertyId string, webPropertyAdWordsLinkId string, entityadwordslink *EntityAdWordsLink) *ManagementWebPropertyAdWordsLinksUpdateCall {
 	c := &ManagementWebPropertyAdWordsLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -18989,9 +18978,9 @@ type ManagementWebpropertiesListCall struct {
 
 // List: Lists web properties to which the user has access.
 //
-//   - accountId: Account ID to retrieve web properties for. Can either be
-//     a specific account ID or '~all', which refers to all the accounts
-//     that user has access to.
+// - accountId: Account ID to retrieve web properties for. Can either be
+//   a specific account ID or '~all', which refers to all the accounts
+//   that user has access to.
 func (r *ManagementWebpropertiesService) List(accountId string) *ManagementWebpropertiesListCall {
 	c := &ManagementWebpropertiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -19744,10 +19733,10 @@ type ManagementWebpropertyUserLinksListCall struct {
 
 // List: Lists webProperty-user links for a given web property.
 //
-//   - accountId: Account ID which the given web property belongs to.
-//   - webPropertyId: Web Property ID for the webProperty-user links to
-//     retrieve. Can either be a specific web property ID or '~all', which
-//     refers to all the web properties that user has access to.
+// - accountId: Account ID which the given web property belongs to.
+// - webPropertyId: Web Property ID for the webProperty-user links to
+//   retrieve. Can either be a specific web property ID or '~all', which
+//   refers to all the web properties that user has access to.
 func (r *ManagementWebpropertyUserLinksService) List(accountId string, webPropertyId string) *ManagementWebpropertyUserLinksListCall {
 	c := &ManagementWebpropertyUserLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -20092,8 +20081,8 @@ type MetadataColumnsListCall struct {
 
 // List: Lists all columns for a report type
 //
-//   - reportType: Report type. Allowed Values: 'ga'. Where 'ga'
-//     corresponds to the Core Reporting API.
+// - reportType: Report type. Allowed Values: 'ga'. Where 'ga'
+//   corresponds to the Core Reporting API.
 func (r *MetadataColumnsService) List(reportType string) *MetadataColumnsListCall {
 	c := &MetadataColumnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportType = reportType

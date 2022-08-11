@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/data-catalog/docs/
 //
-// # Creating a client
+// Creating a client
 //
 // Usage example:
 //
-//	import "google.golang.org/api/datacatalog/v1"
-//	...
-//	ctx := context.Background()
-//	datacatalogService, err := datacatalog.NewService(ctx)
+//   import "google.golang.org/api/datacatalog/v1"
+//   ...
+//   ctx := context.Background()
+//   datacatalogService, err := datacatalog.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// # Other authentication options
+// Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//	datacatalogService, err := datacatalog.NewService(ctx, option.WithAPIKey("AIza..."))
+//   datacatalogService, err := datacatalog.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//	config := &oauth2.Config{...}
-//	// ...
-//	token, err := config.Exchange(ctx, ...)
-//	datacatalogService, err := datacatalog.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   datacatalogService, err := datacatalog.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datacatalog // import "google.golang.org/api/datacatalog/v1"
@@ -310,16 +310,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -970,9 +974,11 @@ func (s *GoogleCloudDatacatalogV1DataSource) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDatacatalogV1DataSourceConnectionSpec: Specification that
 // applies to a data source connection. Valid only for entries with the
-// `DATA_SOURCE_CONNECTION` type.
+// `DATA_SOURCE_CONNECTION` type. Only one of internal specs can be set
+// at the time, and cannot be changed later.
 type GoogleCloudDatacatalogV1DataSourceConnectionSpec struct {
-	// BigqueryConnectionSpec: Fields specific to BigQuery connections.
+	// BigqueryConnectionSpec: Output only. Fields specific to BigQuery
+	// connections.
 	BigqueryConnectionSpec *GoogleCloudDatacatalogV1BigQueryConnectionSpec `json:"bigqueryConnectionSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3942,7 +3948,7 @@ func (c *EntriesLookupCall) LinkedResource(linkedResource string) *EntriesLookup
 // SqlResource sets the optional parameter "sqlResource": The SQL name
 // of the entry. SQL names are case-sensitive. Examples: *
 // `pubsub.topic.{PROJECT_ID}.{TOPIC_ID}` *
-// `pubsub.topic.{PROJECT_ID}.`\“{TOPIC.ID.SEPARATED.WITH.DOTS}`\` *
+// `pubsub.topic.{PROJECT_ID}.`\``{TOPIC.ID.SEPARATED.WITH.DOTS}`\` *
 // `bigquery.table.{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}` *
 // `bigquery.dataset.{PROJECT_ID}.{DATASET_ID}` *
 // `datacatalog.entry.{PROJECT_ID}.{LOCATION_ID}.{ENTRY_GROUP_ID}.{ENTRY_
@@ -4112,10 +4118,10 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 // information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - parent: The names of the project and location that the new entry
-//     group belongs to. Note: The entry group itself and its child
-//     resources might not be stored in the location specified in its
-//     name.
+// - parent: The names of the project and location that the new entry
+//   group belongs to. Note: The entry group itself and its child
+//   resources might not be stored in the location specified in its
+//   name.
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddatacatalogv1entrygroup *GoogleCloudDatacatalogV1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4589,10 +4595,10 @@ type ProjectsLocationsEntryGroupsGetIamPolicyCall struct {
 // policies on tag templates. - `datacatalog.entryGroups.getIamPolicy`
 // to get policies on entry groups.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4734,8 +4740,8 @@ type ProjectsLocationsEntryGroupsListCall struct {
 
 // List: Lists entry groups.
 //
-//   - parent: The name of the location that contains the entry groups to
-//     list. Can be provided as a URL.
+// - parent: The name of the location that contains the entry groups to
+//   list. Can be provided as a URL.
 func (r *ProjectsLocationsEntryGroupsService) List(parent string) *ProjectsLocationsEntryGroupsListCall {
 	c := &ProjectsLocationsEntryGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4824,9 +4830,7 @@ func (c *ProjectsLocationsEntryGroupsListCall) doRequest(alt string) (*http.Resp
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudDatacatalogV1ListEntryGroupsResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
+//  or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -4936,9 +4940,9 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 // more information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: The resource name of the entry group in URL format. Note: The
-//     entry group itself and its child resources might not be stored in
-//     the location specified in its name.
+// - name: The resource name of the entry group in URL format. Note: The
+//   entry group itself and its child resources might not be stored in
+//   the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddatacatalogv1entrygroup *GoogleCloudDatacatalogV1EntryGroup) *ProjectsLocationsEntryGroupsPatchCall {
 	c := &ProjectsLocationsEntryGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5106,10 +5110,10 @@ type ProjectsLocationsEntryGroupsSetIamPolicyCall struct {
 // templates. - `datacatalog.entryGroups.setIamPolicy` to set policies
 // on entry groups.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEntryGroupsSetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5257,10 +5261,10 @@ type ProjectsLocationsEntryGroupsTestIamPermissionsCall struct {
 // Cloud Platform resources ingested into Data Catalog. No Google IAM
 // permissions are required to call this method.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5409,9 +5413,9 @@ type ProjectsLocationsEntryGroupsEntriesCreateCall struct {
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 // An entry group can have a maximum of 100,000 entries.
 //
-//   - parent: The name of the entry group this entry belongs to. Note:
-//     The entry itself and its child resources might not be stored in the
-//     location specified in its name.
+// - parent: The name of the entry group this entry belongs to. Note:
+//   The entry itself and its child resources might not be stored in the
+//   location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googleclouddatacatalogv1entry *GoogleCloudDatacatalogV1Entry) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5858,10 +5862,10 @@ type ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall struct {
 // policies on tag templates. - `datacatalog.entryGroups.getIamPolicy`
 // to get policies on entry groups.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall {
 	c := &ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6005,8 +6009,8 @@ type ProjectsLocationsEntryGroupsEntriesListCall struct {
 // custom entries. To get a list of both custom and automatically
 // created entries, use SearchCatalog.
 //
-//   - parent: The name of the entry group that contains the entries to
-//     list. Can be provided in URL format.
+// - parent: The name of the entry group that contains the entries to
+//   list. Can be provided in URL format.
 func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c := &ProjectsLocationsEntryGroupsEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6511,9 +6515,9 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 // information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: Output only. The resource name of an entry in URL format.
-//     Note: The entry itself and its child resources might not be stored
-//     in the location specified in its name.
+// - name: Output only. The resource name of an entry in URL format.
+//   Note: The entry itself and its child resources might not be stored
+//   in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googleclouddatacatalogv1entry *GoogleCloudDatacatalogV1Entry) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6828,10 +6832,10 @@ type ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall struct {
 // Cloud Platform resources ingested into Data Catalog. No Google IAM
 // permissions are required to call this method.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsEntryGroupsEntriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7126,10 +7130,10 @@ type ProjectsLocationsEntryGroupsEntriesTagsCreateCall struct {
 // (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters)
 // used to create the tag must be in the same organization.
 //
-//   - parent: The name of the resource to attach this tag to. Tags can be
-//     attached to entries or entry groups. An entry can have up to 1000
-//     attached tags. Note: The tag and its child resources might not be
-//     stored in the location specified in its name.
+// - parent: The name of the resource to attach this tag to. Tags can be
+//   attached to entries or entry groups. An entry can have up to 1000
+//   attached tags. Note: The tag and its child resources might not be
+//   stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Create(parent string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsEntriesTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7404,9 +7408,9 @@ type ProjectsLocationsEntryGroupsEntriesTagsListCall struct {
 // List: Lists tags assigned to an Entry. The columns in the response
 // are lowercased.
 //
-//   - parent: The name of the Data Catalog resource to list the tags of.
-//     The resource can be an Entry or an EntryGroup (without
-//     `/entries/{entries}` at the end).
+// - parent: The name of the Data Catalog resource to list the tags of.
+//   The resource can be an Entry or an EntryGroup (without
+//   `/entries/{entries}` at the end).
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) List(parent string) *ProjectsLocationsEntryGroupsEntriesTagsListCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7601,9 +7605,9 @@ type ProjectsLocationsEntryGroupsEntriesTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format where tag ID is a
-//     system-generated identifier. Note: The tag itself might not be
-//     stored in the location specified in its name.
+// - name: The resource name of the tag in URL format where tag ID is a
+//   system-generated identifier. Note: The tag itself might not be
+//   stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Patch(nameid string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsEntriesTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7770,10 +7774,10 @@ type ProjectsLocationsEntryGroupsTagsCreateCall struct {
 // (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters)
 // used to create the tag must be in the same organization.
 //
-//   - parent: The name of the resource to attach this tag to. Tags can be
-//     attached to entries or entry groups. An entry can have up to 1000
-//     attached tags. Note: The tag and its child resources might not be
-//     stored in the location specified in its name.
+// - parent: The name of the resource to attach this tag to. Tags can be
+//   attached to entries or entry groups. An entry can have up to 1000
+//   attached tags. Note: The tag and its child resources might not be
+//   stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsTagsService) Create(parent string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8048,9 +8052,9 @@ type ProjectsLocationsEntryGroupsTagsListCall struct {
 // List: Lists tags assigned to an Entry. The columns in the response
 // are lowercased.
 //
-//   - parent: The name of the Data Catalog resource to list the tags of.
-//     The resource can be an Entry or an EntryGroup (without
-//     `/entries/{entries}` at the end).
+// - parent: The name of the Data Catalog resource to list the tags of.
+//   The resource can be an Entry or an EntryGroup (without
+//   `/entries/{entries}` at the end).
 func (r *ProjectsLocationsEntryGroupsTagsService) List(parent string) *ProjectsLocationsEntryGroupsTagsListCall {
 	c := &ProjectsLocationsEntryGroupsTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8245,9 +8249,9 @@ type ProjectsLocationsEntryGroupsTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format where tag ID is a
-//     system-generated identifier. Note: The tag itself might not be
-//     stored in the location specified in its name.
+// - name: The resource name of the tag in URL format where tag ID is a
+//   system-generated identifier. Note: The tag itself might not be
+//   stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsTagsService) Patch(nameid string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -8409,8 +8413,8 @@ type ProjectsLocationsTagTemplatesCreateCall struct {
 // information, see [Data Catalog resource project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - parent: The name of the project and the template location region
-//     (https://cloud.google.com/data-catalog/docs/concepts/regions).
+// - parent: The name of the project and the template location region
+//   (https://cloud.google.com/data-catalog/docs/concepts/regions).
 func (r *ProjectsLocationsTagTemplatesService) Create(parent string, googleclouddatacatalogv1tagtemplate *GoogleCloudDatacatalogV1TagTemplate) *ProjectsLocationsTagTemplatesCreateCall {
 	c := &ProjectsLocationsTagTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8872,10 +8876,10 @@ type ProjectsLocationsTagTemplatesGetIamPolicyCall struct {
 // policies on tag templates. - `datacatalog.entryGroups.getIamPolicy`
 // to get policies on entry groups.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTagTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9022,9 +9026,9 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // For more information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: The resource name of the tag template in URL format. Note:
-//     The tag template itself and its child resources might not be stored
-//     in the location specified in its name.
+// - name: The resource name of the tag template in URL format. Note:
+//   The tag template itself and its child resources might not be stored
+//   in the location specified in its name.
 func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddatacatalogv1tagtemplate *GoogleCloudDatacatalogV1TagTemplate) *ProjectsLocationsTagTemplatesPatchCall {
 	c := &ProjectsLocationsTagTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9194,10 +9198,10 @@ type ProjectsLocationsTagTemplatesSetIamPolicyCall struct {
 // templates. - `datacatalog.entryGroups.setIamPolicy` to set policies
 // on entry groups.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTagTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsTagTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9345,10 +9349,10 @@ type ProjectsLocationsTagTemplatesTestIamPermissionsCall struct {
 // Cloud Platform resources ingested into Data Catalog. No Google IAM
 // permissions are required to call this method.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTagTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTagTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsTagTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9493,8 +9497,8 @@ type ProjectsLocationsTagTemplatesFieldsCreateCall struct {
 // more information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - parent: The name of the project and the template location region
-//     (https://cloud.google.com/data-catalog/docs/concepts/regions).
+// - parent: The name of the project and the template location region
+//   (https://cloud.google.com/data-catalog/docs/concepts/regions).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Create(parent string, googleclouddatacatalogv1tagtemplatefield *GoogleCloudDatacatalogV1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsCreateCall {
 	c := &ProjectsLocationsTagTemplatesFieldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10267,8 +10271,8 @@ type ProjectsLocationsTaxonomiesCreateCall struct {
 // Create: Creates a taxonomy in a specified project. The taxonomy is
 // initially empty, that is, it doesn't contain policy tags.
 //
-//   - parent: Resource name of the project that the taxonomy will belong
-//     to.
+// - parent: Resource name of the project that the taxonomy will belong
+//   to.
 func (r *ProjectsLocationsTaxonomiesService) Create(parent string, googleclouddatacatalogv1taxonomy *GoogleCloudDatacatalogV1Taxonomy) *ProjectsLocationsTaxonomiesCreateCall {
 	c := &ProjectsLocationsTaxonomiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10411,8 +10415,8 @@ type ProjectsLocationsTaxonomiesDeleteCall struct {
 // taxonomy, their associated policies, and the policy tags references
 // from BigQuery columns.
 //
-//   - name: Resource name of the taxonomy to delete. Note: All policy
-//     tags in this taxonomy are also deleted.
+// - name: Resource name of the taxonomy to delete. Note: All policy
+//   tags in this taxonomy are also deleted.
 func (r *ProjectsLocationsTaxonomiesService) Delete(name string) *ProjectsLocationsTaxonomiesDeleteCall {
 	c := &ProjectsLocationsTaxonomiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10549,8 +10553,8 @@ type ProjectsLocationsTaxonomiesExportCall struct {
 // buffers with nested policy tags that can be used as input for
 // `ImportTaxonomies` calls.
 //
-//   - parent: Resource name of the project that the exported taxonomies
-//     belong to.
+// - parent: Resource name of the project that the exported taxonomies
+//   belong to.
 func (r *ProjectsLocationsTaxonomiesService) Export(parent string) *ProjectsLocationsTaxonomiesExportCall {
 	c := &ProjectsLocationsTaxonomiesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10870,10 +10874,10 @@ type ProjectsLocationsTaxonomiesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM policy for a policy tag or a taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11020,8 +11024,8 @@ type ProjectsLocationsTaxonomiesImportCall struct {
 // and policy tags are created in bulk using nested protocol buffer
 // structures.
 //
-//   - parent: Resource name of project that the imported taxonomies will
-//     belong to.
+// - parent: Resource name of project that the imported taxonomies will
+//   belong to.
 func (r *ProjectsLocationsTaxonomiesService) Import(parent string, googleclouddatacatalogv1importtaxonomiesrequest *GoogleCloudDatacatalogV1ImportTaxonomiesRequest) *ProjectsLocationsTaxonomiesImportCall {
 	c := &ProjectsLocationsTaxonomiesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11364,8 +11368,8 @@ type ProjectsLocationsTaxonomiesPatchCall struct {
 // Patch: Updates a taxonomy, including its display name, description,
 // and activated policy types.
 //
-//   - name: Output only. Resource name of this taxonomy in URL format.
-//     Note: Policy tag manager generates unique taxonomy IDs.
+// - name: Output only. Resource name of this taxonomy in URL format.
+//   Note: Policy tag manager generates unique taxonomy IDs.
 func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatacatalogv1taxonomy *GoogleCloudDatacatalogV1Taxonomy) *ProjectsLocationsTaxonomiesPatchCall {
 	c := &ProjectsLocationsTaxonomiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11671,10 +11675,10 @@ type ProjectsLocationsTaxonomiesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM policy for a policy tag or a taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11817,10 +11821,10 @@ type ProjectsLocationsTaxonomiesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns your permissions on a specified policy
 // tag or taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11962,8 +11966,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsCreateCall struct {
 
 // Create: Creates a policy tag in a taxonomy.
 //
-//   - parent: Resource name of the taxonomy that the policy tag will
-//     belong to.
+// - parent: Resource name of the taxonomy that the policy tag will
+//   belong to.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Create(parent string, googleclouddatacatalogv1policytag *GoogleCloudDatacatalogV1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsCreateCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12108,8 +12112,8 @@ type ProjectsLocationsTaxonomiesPolicyTagsDeleteCall struct {
 // policy tag and its descendants * References from BigQuery table
 // schema of the policy tag and its descendants
 //
-//   - name: Resource name of the policy tag to delete. Note: All of its
-//     descendant policy tags are also deleted.
+// - name: Resource name of the policy tag to delete. Note: All of its
+//   descendant policy tags are also deleted.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Delete(name string) *ProjectsLocationsTaxonomiesPolicyTagsDeleteCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12389,10 +12393,10 @@ type ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM policy for a policy tag or a taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12731,9 +12735,9 @@ type ProjectsLocationsTaxonomiesPolicyTagsPatchCall struct {
 // Patch: Updates a policy tag, including its display name, description,
 // and parent policy tag.
 //
-//   - name: Output only. Resource name of this policy tag in the URL
-//     format. The policy tag manager generates unique taxonomy IDs and
-//     policy tag IDs.
+// - name: Output only. Resource name of this policy tag in the URL
+//   format. The policy tag manager generates unique taxonomy IDs and
+//   policy tag IDs.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, googleclouddatacatalogv1policytag *GoogleCloudDatacatalogV1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12892,10 +12896,10 @@ type ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM policy for a policy tag or a taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13038,10 +13042,10 @@ type ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall struct {
 // TestIamPermissions: Returns your permissions on a specified policy
 // tag or taxonomy.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall {
 	c := &ProjectsLocationsTaxonomiesPolicyTagsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

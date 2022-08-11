@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/eventarc
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/eventarc/v1"
-//   ...
-//   ctx := context.Background()
-//   eventarcService, err := eventarc.NewService(ctx)
+//	import "google.golang.org/api/eventarc/v1"
+//	...
+//	ctx := context.Background()
+//	eventarcService, err := eventarc.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   eventarcService, err := eventarc.NewService(ctx, option.WithAPIKey("AIza..."))
+//	eventarcService, err := eventarc.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   eventarcService, err := eventarc.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	eventarcService, err := eventarc.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package eventarc // import "google.golang.org/api/eventarc/v1"
@@ -2216,8 +2216,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2424,8 +2424,8 @@ type ProjectsLocationsUpdateGoogleChannelConfigCall struct {
 
 // UpdateGoogleChannelConfig: Update a single GoogleChannelConfig
 //
-// - name: The resource name of the config. Must be in the format of,
-//   `projects/{project}/locations/{location}/googleChannelConfig`.
+//   - name: The resource name of the config. Must be in the format of,
+//     `projects/{project}/locations/{location}/googleChannelConfig`.
 func (r *ProjectsLocationsService) UpdateGoogleChannelConfig(name string, googlechannelconfig *GoogleChannelConfig) *ProjectsLocationsUpdateGoogleChannelConfigCall {
 	c := &ProjectsLocationsUpdateGoogleChannelConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2583,8 +2583,8 @@ type ProjectsLocationsChannelConnectionsCreateCall struct {
 // Create: Create a new ChannelConnection in a particular project and
 // location.
 //
-// - parent: The parent collection in which to add this channel
-//   connection.
+//   - parent: The parent collection in which to add this channel
+//     connection.
 func (r *ProjectsLocationsChannelConnectionsService) Create(parent string, channelconnection *ChannelConnection) *ProjectsLocationsChannelConnectionsCreateCall {
 	c := &ProjectsLocationsChannelConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3019,10 +3019,10 @@ type ProjectsLocationsChannelConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsChannelConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3192,8 +3192,8 @@ type ProjectsLocationsChannelConnectionsListCall struct {
 
 // List: List channel connections.
 //
-// - parent: The parent collection from which to list channel
-//   connections.
+//   - parent: The parent collection from which to list channel
+//     connections.
 func (r *ProjectsLocationsChannelConnectionsService) List(parent string) *ProjectsLocationsChannelConnectionsListCall {
 	c := &ProjectsLocationsChannelConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3391,10 +3391,10 @@ type ProjectsLocationsChannelConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsChannelConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3541,10 +3541,10 @@ type ProjectsLocationsChannelConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsChannelConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4144,10 +4144,10 @@ type ProjectsLocationsChannelsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) GetIamPolicy(resource string) *ProjectsLocationsChannelsGetIamPolicyCall {
 	c := &ProjectsLocationsChannelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4527,10 +4527,10 @@ type ProjectsLocationsChannelsPatchCall struct {
 
 // Patch: Update a single channel.
 //
-// - name: The resource name of the channel. Must be unique within the
-//   location on the project and must be in
-//   `projects/{project}/locations/{location}/channels/{channel_id}`
-//   format.
+//   - name: The resource name of the channel. Must be unique within the
+//     location on the project and must be in
+//     `projects/{project}/locations/{location}/channels/{channel_id}`
+//     format.
 func (r *ProjectsLocationsChannelsService) Patch(name string, channel *Channel) *ProjectsLocationsChannelsPatchCall {
 	c := &ProjectsLocationsChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4701,10 +4701,10 @@ type ProjectsLocationsChannelsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelsSetIamPolicyCall {
 	c := &ProjectsLocationsChannelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4851,10 +4851,10 @@ type ProjectsLocationsChannelsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelsTestIamPermissionsCall {
 	c := &ProjectsLocationsChannelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6496,10 +6496,10 @@ type ProjectsLocationsTriggersGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) GetIamPolicy(resource string) *ProjectsLocationsTriggersGetIamPolicyCall {
 	c := &ProjectsLocationsTriggersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6894,10 +6894,10 @@ type ProjectsLocationsTriggersPatchCall struct {
 
 // Patch: Update a single trigger.
 //
-// - name: The resource name of the trigger. Must be unique within the
-//   location of the project and must be in
-//   `projects/{project}/locations/{location}/triggers/{trigger}`
-//   format.
+//   - name: The resource name of the trigger. Must be unique within the
+//     location of the project and must be in
+//     `projects/{project}/locations/{location}/triggers/{trigger}`
+//     format.
 func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) *ProjectsLocationsTriggersPatchCall {
 	c := &ProjectsLocationsTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7081,10 +7081,10 @@ type ProjectsLocationsTriggersSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTriggersSetIamPolicyCall {
 	c := &ProjectsLocationsTriggersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7231,10 +7231,10 @@ type ProjectsLocationsTriggersTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTriggersTestIamPermissionsCall {
 	c := &ProjectsLocationsTriggersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

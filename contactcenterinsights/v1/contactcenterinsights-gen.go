@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/contact-center/insights/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/contactcenterinsights/v1"
-//   ...
-//   ctx := context.Background()
-//   contactcenterinsightsService, err := contactcenterinsights.NewService(ctx)
+//	import "google.golang.org/api/contactcenterinsights/v1"
+//	...
+//	ctx := context.Background()
+//	contactcenterinsightsService, err := contactcenterinsights.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   contactcenterinsightsService, err := contactcenterinsights.NewService(ctx, option.WithAPIKey("AIza..."))
+//	contactcenterinsightsService, err := contactcenterinsights.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   contactcenterinsightsService, err := contactcenterinsights.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	contactcenterinsightsService, err := contactcenterinsights.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package contactcenterinsights // import "google.golang.org/api/contactcenterinsights/v1"
@@ -4230,8 +4230,8 @@ type ProjectsLocationsUpdateSettingsCall struct {
 
 // UpdateSettings: Updates project-level settings.
 //
-// - name: Immutable. The resource name of the settings resource.
-//   Format: projects/{project}/locations/{location}/settings.
+//   - name: Immutable. The resource name of the settings resource.
+//     Format: projects/{project}/locations/{location}/settings.
 func (r *ProjectsLocationsService) UpdateSettings(name string, googlecloudcontactcenterinsightsv1settings *GoogleCloudContactcenterinsightsV1Settings) *ProjectsLocationsUpdateSettingsCall {
 	c := &ProjectsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4866,11 +4866,15 @@ func (r *ProjectsLocationsConversationsService) Get(name string) *ProjectsLocati
 // conversation. Default is `FULL`.
 //
 // Possible values:
-//   "CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not
+//
+//	"CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not
+//
 // specified. * Defaults to `FULL` in `GetConversationRequest`. *
 // Defaults to `BASIC` in `ListConversationsRequest`.
-//   "FULL" - Populates all fields in the conversation.
-//   "BASIC" - Populates all fields in the conversation except the
+//
+//	"FULL" - Populates all fields in the conversation.
+//	"BASIC" - Populates all fields in the conversation except the
+//
 // transcript.
 func (c *ProjectsLocationsConversationsGetCall) View(view string) *ProjectsLocationsConversationsGetCall {
 	c.urlParams_.Set("view", view)
@@ -5071,11 +5075,15 @@ func (c *ProjectsLocationsConversationsListCall) PageToken(pageToken string) *Pr
 // conversation. Default is `BASIC`.
 //
 // Possible values:
-//   "CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not
+//
+//	"CONVERSATION_VIEW_UNSPECIFIED" - The conversation view is not
+//
 // specified. * Defaults to `FULL` in `GetConversationRequest`. *
 // Defaults to `BASIC` in `ListConversationsRequest`.
-//   "FULL" - Populates all fields in the conversation.
-//   "BASIC" - Populates all fields in the conversation except the
+//
+//	"FULL" - Populates all fields in the conversation.
+//	"BASIC" - Populates all fields in the conversation except the
+//
 // transcript.
 func (c *ProjectsLocationsConversationsListCall) View(view string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("view", view)
@@ -5276,8 +5284,8 @@ type ProjectsLocationsConversationsPatchCall struct {
 
 // Patch: Updates a conversation.
 //
-// - name: Immutable. The resource name of the conversation. Format:
-//   projects/{project}/locations/{location}/conversations/{conversation}.
+//   - name: Immutable. The resource name of the conversation. Format:
+//     projects/{project}/locations/{location}/conversations/{conversation}.
 func (r *ProjectsLocationsConversationsService) Patch(name string, googlecloudcontactcenterinsightsv1conversation *GoogleCloudContactcenterinsightsV1Conversation) *ProjectsLocationsConversationsPatchCall {
 	c := &ProjectsLocationsConversationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7077,8 +7085,8 @@ type ProjectsLocationsIssueModelsPatchCall struct {
 
 // Patch: Updates an issue model.
 //
-// - name: Immutable. The resource name of the issue model. Format:
-//   projects/{project}/locations/{location}/issueModels/{issue_model}.
+//   - name: Immutable. The resource name of the issue model. Format:
+//     projects/{project}/locations/{location}/issueModels/{issue_model}.
 func (r *ProjectsLocationsIssueModelsService) Patch(name string, googlecloudcontactcenterinsightsv1issuemodel *GoogleCloudContactcenterinsightsV1IssueModel) *ProjectsLocationsIssueModelsPatchCall {
 	c := &ProjectsLocationsIssueModelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7673,9 +7681,9 @@ type ProjectsLocationsIssueModelsIssuesPatchCall struct {
 
 // Patch: Updates an issue.
 //
-// - name: Immutable. The resource name of the issue. Format:
-//   projects/{project}/locations/{location}/issueModels/{issue_model}/is
-//   sues/{issue}.
+//   - name: Immutable. The resource name of the issue. Format:
+//     projects/{project}/locations/{location}/issueModels/{issue_model}/is
+//     sues/{issue}.
 func (r *ProjectsLocationsIssueModelsIssuesService) Patch(name string, googlecloudcontactcenterinsightsv1issue *GoogleCloudContactcenterinsightsV1Issue) *ProjectsLocationsIssueModelsIssuesPatchCall {
 	c := &ProjectsLocationsIssueModelsIssuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8334,9 +8342,9 @@ type ProjectsLocationsPhraseMatchersCreateCall struct {
 
 // Create: Creates a phrase matcher.
 //
-// - parent: The parent resource of the phrase matcher. Required. The
-//   location to create a phrase matcher for. Format:
-//   `projects//locations/` or `projects//locations/`.
+//   - parent: The parent resource of the phrase matcher. Required. The
+//     location to create a phrase matcher for. Format:
+//     `projects//locations/` or `projects//locations/`.
 func (r *ProjectsLocationsPhraseMatchersService) Create(parent string, googlecloudcontactcenterinsightsv1phrasematcher *GoogleCloudContactcenterinsightsV1PhraseMatcher) *ProjectsLocationsPhraseMatchersCreateCall {
 	c := &ProjectsLocationsPhraseMatchersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8402,7 +8410,9 @@ func (c *ProjectsLocationsPhraseMatchersCreateCall) doRequest(alt string) (*http
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudContactcenterinsightsV1PhraseMatcher.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -8685,7 +8695,9 @@ func (c *ProjectsLocationsPhraseMatchersGetCall) doRequest(alt string) (*http.Re
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudContactcenterinsightsV1PhraseMatcher.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -8973,9 +8985,9 @@ type ProjectsLocationsPhraseMatchersPatchCall struct {
 
 // Patch: Updates a phrase matcher.
 //
-// - name: The resource name of the phrase matcher. Format:
-//   projects/{project}/locations/{location}/phraseMatchers/{phrase_match
-//   er}.
+//   - name: The resource name of the phrase matcher. Format:
+//     projects/{project}/locations/{location}/phraseMatchers/{phrase_match
+//     er}.
 func (r *ProjectsLocationsPhraseMatchersService) Patch(name string, googlecloudcontactcenterinsightsv1phrasematcher *GoogleCloudContactcenterinsightsV1PhraseMatcher) *ProjectsLocationsPhraseMatchersPatchCall {
 	c := &ProjectsLocationsPhraseMatchersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9048,7 +9060,9 @@ func (c *ProjectsLocationsPhraseMatchersPatchCall) doRequest(alt string) (*http.
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudContactcenterinsightsV1PhraseMatcher.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -9132,9 +9146,9 @@ type ProjectsLocationsViewsCreateCall struct {
 
 // Create: Creates a view.
 //
-// - parent: The parent resource of the view. Required. The location to
-//   create a view for. Format: `projects//locations/` or
-//   `projects//locations/`.
+//   - parent: The parent resource of the view. Required. The location to
+//     create a view for. Format: `projects//locations/` or
+//     `projects//locations/`.
 func (r *ProjectsLocationsViewsService) Create(parent string, googlecloudcontactcenterinsightsv1view *GoogleCloudContactcenterinsightsV1View) *ProjectsLocationsViewsCreateCall {
 	c := &ProjectsLocationsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9755,8 +9769,8 @@ type ProjectsLocationsViewsPatchCall struct {
 
 // Patch: Updates a view.
 //
-// - name: Immutable. The resource name of the view. Format:
-//   projects/{project}/locations/{location}/views/{view}.
+//   - name: Immutable. The resource name of the view. Format:
+//     projects/{project}/locations/{location}/views/{view}.
 func (r *ProjectsLocationsViewsService) Patch(name string, googlecloudcontactcenterinsightsv1view *GoogleCloudContactcenterinsightsV1View) *ProjectsLocationsViewsPatchCall {
 	c := &ProjectsLocationsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

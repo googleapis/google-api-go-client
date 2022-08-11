@@ -8,35 +8,35 @@
 //
 // For product documentation, see: http://developers.google.com/chrome/management/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/chromemanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   chromemanagementService, err := chromemanagement.NewService(ctx)
+//	import "google.golang.org/api/chromemanagement/v1"
+//	...
+//	ctx := context.Background()
+//	chromemanagementService, err := chromemanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithScopes(chromemanagement.ChromeManagementTelemetryReadonlyScope))
+//	chromemanagementService, err := chromemanagement.NewService(ctx, option.WithScopes(chromemanagement.ChromeManagementTelemetryReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	chromemanagementService, err := chromemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	chromemanagementService, err := chromemanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package chromemanagement // import "google.golang.org/api/chromemanagement/v1"
@@ -2497,8 +2497,8 @@ type CustomersAppsCountChromeAppRequestsCall struct {
 // CountChromeAppRequests: Generate summary of app installation
 // requests.
 //
-// - customer: Customer id or "my_customer" to use the customer
-//   associated to the account making the request.
+//   - customer: Customer id or "my_customer" to use the customer
+//     associated to the account making the request.
 func (r *CustomersAppsService) CountChromeAppRequests(customer string) *CustomersAppsCountChromeAppRequestsCall {
 	c := &CustomersAppsCountChromeAppRequestsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -2718,11 +2718,11 @@ type CustomersAppsAndroidGetCall struct {
 
 // Get: Get a specific app for a customer by its resource name.
 //
-// - name: The app for which details are being queried. Examples:
-//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
-//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
-//   "customers/my_customer/apps/android/com.google.android.apps.docs"
-//   for the Google Drive Android app's latest version.
+//   - name: The app for which details are being queried. Examples:
+//     "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//     2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//     "customers/my_customer/apps/android/com.google.android.apps.docs"
+//     for the Google Drive Android app's latest version.
 func (r *CustomersAppsAndroidService) Get(name string) *CustomersAppsAndroidGetCall {
 	c := &CustomersAppsAndroidGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2869,11 +2869,11 @@ type CustomersAppsChromeGetCall struct {
 
 // Get: Get a specific app for a customer by its resource name.
 //
-// - name: The app for which details are being queried. Examples:
-//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
-//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
-//   "customers/my_customer/apps/android/com.google.android.apps.docs"
-//   for the Google Drive Android app's latest version.
+//   - name: The app for which details are being queried. Examples:
+//     "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//     2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//     "customers/my_customer/apps/android/com.google.android.apps.docs"
+//     for the Google Drive Android app's latest version.
 func (r *CustomersAppsChromeService) Get(name string) *CustomersAppsChromeGetCall {
 	c := &CustomersAppsChromeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3020,11 +3020,11 @@ type CustomersAppsWebGetCall struct {
 
 // Get: Get a specific app for a customer by its resource name.
 //
-// - name: The app for which details are being queried. Examples:
-//   "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
-//   2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
-//   "customers/my_customer/apps/android/com.google.android.apps.docs"
-//   for the Google Drive Android app's latest version.
+//   - name: The app for which details are being queried. Examples:
+//     "customers/my_customer/apps/chrome/gmbmikajjgmnabiglmofipeabaddhgne@
+//     2.1.2" for the Save to Google Drive Chrome extension version 2.1.2,
+//     "customers/my_customer/apps/android/com.google.android.apps.docs"
+//     for the Google Drive Android app's latest version.
 func (r *CustomersAppsWebService) Get(name string) *CustomersAppsWebGetCall {
 	c := &CustomersAppsWebGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3175,8 +3175,8 @@ type CustomersReportsCountChromeDevicesReachingAutoExpirationDateCall struct {
 // information can be found here
 // (https://support.google.com/chrome/a/answer/10564947).
 //
-// - customer: The customer ID or "my_customer" prefixed with
-//   "customers/".
+//   - customer: The customer ID or "my_customer" prefixed with
+//     "customers/".
 func (r *CustomersReportsService) CountChromeDevicesReachingAutoExpirationDate(customer string) *CustomersReportsCountChromeDevicesReachingAutoExpirationDateCall {
 	c := &CustomersReportsCountChromeDevicesReachingAutoExpirationDateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -3368,8 +3368,8 @@ type CustomersReportsCountChromeDevicesThatNeedAttentionCall struct {
 // days, are out of date, or are not complaint. Further information can
 // be found here https://support.google.com/chrome/a/answer/10564947
 //
-// - customer: The customer ID or "my_customer" prefixed with
-//   "customers/".
+//   - customer: The customer ID or "my_customer" prefixed with
+//     "customers/".
 func (r *CustomersReportsService) CountChromeDevicesThatNeedAttention(customer string) *CustomersReportsCountChromeDevicesThatNeedAttentionCall {
 	c := &CustomersReportsCountChromeDevicesThatNeedAttentionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -3543,8 +3543,8 @@ type CustomersReportsCountChromeVersionsCall struct {
 
 // CountChromeVersions: Generate report of installed Chrome versions.
 //
-// - customer: Customer id or "my_customer" to use the customer
-//   associated to the account making the request.
+//   - customer: Customer id or "my_customer" to use the customer
+//     associated to the account making the request.
 func (r *CustomersReportsService) CountChromeVersions(customer string) *CustomersReportsCountChromeVersionsCall {
 	c := &CustomersReportsCountChromeVersionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -3764,8 +3764,8 @@ type CustomersReportsCountInstalledAppsCall struct {
 
 // CountInstalledApps: Generate report of app installations.
 //
-// - customer: Customer id or "my_customer" to use the customer
-//   associated to the account making the request.
+//   - customer: Customer id or "my_customer" to use the customer
+//     associated to the account making the request.
 func (r *CustomersReportsService) CountInstalledApps(customer string) *CustomersReportsCountInstalledAppsCall {
 	c := &CustomersReportsCountInstalledAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -4000,8 +4000,8 @@ type CustomersReportsFindInstalledAppDevicesCall struct {
 // FindInstalledAppDevices: Generate report of devices that have a
 // specified app installed.
 //
-// - customer: Customer id or "my_customer" to use the customer
-//   associated to the account making the request.
+//   - customer: Customer id or "my_customer" to use the customer
+//     associated to the account making the request.
 func (r *CustomersReportsService) FindInstalledAppDevices(customer string) *CustomersReportsFindInstalledAppDevicesCall {
 	c := &CustomersReportsFindInstalledAppDevicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -4020,12 +4020,13 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) AppId(appId string) *Custo
 // AppType sets the optional parameter "appType": Type of the app.
 //
 // Possible values:
-//   "APP_TYPE_UNSPECIFIED" - App type not specified.
-//   "EXTENSION" - Chrome extension.
-//   "APP" - Chrome app.
-//   "THEME" - Chrome theme.
-//   "HOSTED_APP" - Chrome hosted app.
-//   "ANDROID_APP" - ARC++ app.
+//
+//	"APP_TYPE_UNSPECIFIED" - App type not specified.
+//	"EXTENSION" - Chrome extension.
+//	"APP" - Chrome app.
+//	"THEME" - Chrome theme.
+//	"HOSTED_APP" - Chrome hosted app.
+//	"ANDROID_APP" - ARC++ app.
 func (c *CustomersReportsFindInstalledAppDevicesCall) AppType(appType string) *CustomersReportsFindInstalledAppDevicesCall {
 	c.urlParams_.Set("appType", appType)
 	return c
@@ -4443,8 +4444,8 @@ type CustomersTelemetryDevicesListCall struct {
 
 // List: List all telemetry devices.
 //
-// - parent: Customer id or "my_customer" to use the customer associated
-//   to the account making the request.
+//   - parent: Customer id or "my_customer" to use the customer associated
+//     to the account making the request.
 func (r *CustomersTelemetryDevicesService) List(parent string) *CustomersTelemetryDevicesListCall {
 	c := &CustomersTelemetryDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

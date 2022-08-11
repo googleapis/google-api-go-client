@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/bare-metal
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/baremetalsolution/v2"
-//   ...
-//   ctx := context.Background()
-//   baremetalsolutionService, err := baremetalsolution.NewService(ctx)
+//	import "google.golang.org/api/baremetalsolution/v2"
+//	...
+//	ctx := context.Background()
+//	baremetalsolutionService, err := baremetalsolution.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithAPIKey("AIza..."))
+//	baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	baremetalsolutionService, err := baremetalsolution.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package baremetalsolution // import "google.golang.org/api/baremetalsolution/v2"
@@ -2668,8 +2668,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2877,8 +2877,8 @@ type ProjectsLocationsInstanceProvisioningSettingsFetchCall struct {
 // Fetch: Get instance provisioning settings for a given project. This
 // is hidden method used by UI only.
 //
-// - location: The parent project and location containing the
-//   ProvisioningSettings.
+//   - location: The parent project and location containing the
+//     ProvisioningSettings.
 func (r *ProjectsLocationsInstanceProvisioningSettingsService) Fetch(location string) *ProjectsLocationsInstanceProvisioningSettingsFetchCall {
 	c := &ProjectsLocationsInstanceProvisioningSettingsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -3660,10 +3660,10 @@ type ProjectsLocationsInstancesPatchCall struct {
 
 // Patch: Update details of a single server.
 //
-// - name: Immutable. The resource name of this `Instance`. Resource
-//   names are schemeless URIs that follow the conventions in
-//   https://cloud.google.com/apis/design/resource_names. Format:
-//   `projects/{project}/locations/{location}/instances/{instance}`.
+//   - name: Immutable. The resource name of this `Instance`. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. Format:
+//     `projects/{project}/locations/{location}/instances/{instance}`.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4743,10 +4743,10 @@ type ProjectsLocationsNetworksPatchCall struct {
 
 // Patch: Update details of a single network.
 //
-// - name: Output only. The resource name of this `Network`. Resource
-//   names are schemeless URIs that follow the conventions in
-//   https://cloud.google.com/apis/design/resource_names. Format:
-//   `projects/{project}/locations/{location}/networks/{network}`.
+//   - name: Output only. The resource name of this `Network`. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. Format:
+//     `projects/{project}/locations/{location}/networks/{network}`.
 func (r *ProjectsLocationsNetworksService) Patch(name string, network *Network) *ProjectsLocationsNetworksPatchCall {
 	c := &ProjectsLocationsNetworksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5554,8 +5554,8 @@ type ProjectsLocationsProvisioningConfigsCreateCall struct {
 
 // Create: Create new ProvisioningConfig.
 //
-// - parent: The parent project and location containing the
-//   ProvisioningConfig.
+//   - parent: The parent project and location containing the
+//     ProvisioningConfig.
 func (r *ProjectsLocationsProvisioningConfigsService) Create(parent string, provisioningconfig *ProvisioningConfig) *ProjectsLocationsProvisioningConfigsCreateCall {
 	c := &ProjectsLocationsProvisioningConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6022,8 +6022,8 @@ type ProjectsLocationsProvisioningConfigsSubmitCall struct {
 
 // Submit: Submit a provisiong configuration for a given project.
 //
-// - parent: The parent project and location containing the
-//   ProvisioningConfig.
+//   - parent: The parent project and location containing the
+//     ProvisioningConfig.
 func (r *ProjectsLocationsProvisioningConfigsService) Submit(parent string, submitprovisioningconfigrequest *SubmitProvisioningConfigRequest) *ProjectsLocationsProvisioningConfigsSubmitCall {
 	c := &ProjectsLocationsProvisioningConfigsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6711,10 +6711,10 @@ type ProjectsLocationsVolumesPatchCall struct {
 
 // Patch: Update details of a single storage volume.
 //
-// - name: Output only. The resource name of this `Volume`. Resource
-//   names are schemeless URIs that follow the conventions in
-//   https://cloud.google.com/apis/design/resource_names. Format:
-//   `projects/{project}/locations/{location}/volumes/{volume}`.
+//   - name: Output only. The resource name of this `Volume`. Resource
+//     names are schemeless URIs that follow the conventions in
+//     https://cloud.google.com/apis/design/resource_names. Format:
+//     `projects/{project}/locations/{location}/volumes/{volume}`.
 func (r *ProjectsLocationsVolumesService) Patch(name string, volume *Volume) *ProjectsLocationsVolumesPatchCall {
 	c := &ProjectsLocationsVolumesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

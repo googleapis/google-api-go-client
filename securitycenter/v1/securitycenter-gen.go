@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/security-command-center
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/securitycenter/v1"
-//   ...
-//   ctx := context.Background()
-//   securitycenterService, err := securitycenter.NewService(ctx)
+//	import "google.golang.org/api/securitycenter/v1"
+//	...
+//	ctx := context.Background()
+//	securitycenterService, err := securitycenter.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   securitycenterService, err := securitycenter.NewService(ctx, option.WithAPIKey("AIza..."))
+//	securitycenterService, err := securitycenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   securitycenterService, err := securitycenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	securitycenterService, err := securitycenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package securitycenter // import "google.golang.org/api/securitycenter/v1"
@@ -5049,9 +5049,9 @@ type FoldersAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-// - parent: Name of the organization to groupBy. Its format is
-//   "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization to groupBy. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5214,9 +5214,9 @@ type FoldersAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-// - parent: Name of the organization assets should belong to. Its
-//   format is "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization assets should belong to. Its
+//     format is "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5545,12 +5545,12 @@ type FoldersAssetsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *FoldersAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersAssetsUpdateSecurityMarksCall {
 	c := &FoldersAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5723,9 +5723,9 @@ type FoldersBigQueryExportsCreateCall struct {
 
 // Create: Creates a big query export.
 //
-// - parent: Resource name of the new big query export's parent. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   or "projects/[project_id]".
+//   - parent: Resource name of the new big query export's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
 	c := &FoldersBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5883,10 +5883,10 @@ type FoldersBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing big query export.
 //
-// - name: Name of the big query export to delete. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to delete. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *FoldersBigQueryExportsService) Delete(name string) *FoldersBigQueryExportsDeleteCall {
 	c := &FoldersBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6019,10 +6019,10 @@ type FoldersBigQueryExportsGetCall struct {
 
 // Get: Gets a big query export.
 //
-// - name: Name of the big query export to retrieve. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to retrieve. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *FoldersBigQueryExportsService) Get(name string) *FoldersBigQueryExportsGetCall {
 	c := &FoldersBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6174,9 +6174,9 @@ type FoldersBigQueryExportsListCall struct {
 // BigQuery exports immediately under the folder plus the ones created
 // under the projects within the folder are returned.
 //
-// - parent: The parent, which owns the collection of BigQuery exports.
-//   Its format is "organizations/[organization_id]",
-//   "folders/[folder_id]", "projects/[project_id]".
+//   - parent: The parent, which owns the collection of BigQuery exports.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", "projects/[project_id]".
 func (r *FoldersBigQueryExportsService) List(parent string) *FoldersBigQueryExportsListCall {
 	c := &FoldersBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6373,14 +6373,14 @@ type FoldersBigQueryExportsPatchCall struct {
 
 // Patch: Updates a BigQuery export.
 //
-// - name: The relative resource name of this export. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name.
-//   Example format:
-//   "organizations/{organization_id}/bigQueryExports/{export_id}"
-//   Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
-//   Example format: "projects/{project_id}/bigQueryExports/{export_id}"
-//   This field is provided in responses, and is ignored when provided
-//   in create requests.
+//   - name: The relative resource name of this export. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name.
+//     Example format:
+//     "organizations/{organization_id}/bigQueryExports/{export_id}"
+//     Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
+//     Example format: "projects/{project_id}/bigQueryExports/{export_id}"
+//     This field is provided in responses, and is ignored when provided
+//     in create requests.
 func (r *FoldersBigQueryExportsService) Patch(name string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsPatchCall {
 	c := &FoldersBigQueryExportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6540,9 +6540,9 @@ type FoldersFindingsBulkMuteCall struct {
 // project. The findings matched by the filter will be muted after the
 // LRO is done.
 //
-// - parent: The parent, at which bulk action needs to be applied. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, at which bulk action needs to be applied. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *FoldersFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *FoldersFindingsBulkMuteCall {
 	c := &FoldersFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6684,9 +6684,9 @@ type FoldersMuteConfigsCreateCall struct {
 
 // Create: Creates a mute config.
 //
-// - parent: Resource name of the new mute configs's parent. Its format
-//   is "organizations/[organization_id]", "folders/[folder_id]", or
-//   "projects/[project_id]".
+//   - parent: Resource name of the new mute configs's parent. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *FoldersMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsCreateCall {
 	c := &FoldersMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6843,10 +6843,10 @@ type FoldersMuteConfigsDeleteCall struct {
 
 // Delete: Deletes an existing mute config.
 //
-// - name: Name of the mute config to delete. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to delete. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *FoldersMuteConfigsService) Delete(name string) *FoldersMuteConfigsDeleteCall {
 	c := &FoldersMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6979,10 +6979,10 @@ type FoldersMuteConfigsGetCall struct {
 
 // Get: Gets a mute config.
 //
-// - name: Name of the mute config to retrieve. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to retrieve. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *FoldersMuteConfigsService) Get(name string) *FoldersMuteConfigsGetCall {
 	c := &FoldersMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7129,9 +7129,9 @@ type FoldersMuteConfigsListCall struct {
 
 // List: Lists mute configs.
 //
-// - parent: The parent, which owns the collection of mute configs. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, which owns the collection of mute configs. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *FoldersMuteConfigsService) List(parent string) *FoldersMuteConfigsListCall {
 	c := &FoldersMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7328,10 +7328,10 @@ type FoldersMuteConfigsPatchCall struct {
 
 // Patch: Updates a mute config.
 //
-// - name: This field will be ignored if provided on config creation.
-//   Format "organizations/{organization}/muteConfigs/{mute_config}"
-//   "folders/{folder}/muteConfigs/{mute_config}"
-//   "projects/{project}/muteConfigs/{mute_config}".
+//   - name: This field will be ignored if provided on config creation.
+//     Format "organizations/{organization}/muteConfigs/{mute_config}"
+//     "folders/{folder}/muteConfigs/{mute_config}"
+//     "projects/{project}/muteConfigs/{mute_config}".
 func (r *FoldersMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersMuteConfigsPatchCall {
 	c := &FoldersMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7487,9 +7487,9 @@ type FoldersSourcesListCall struct {
 
 // List: Lists all sources belonging to an organization.
 //
-// - parent: Resource name of the parent of sources to list. Its format
-//   should be "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Resource name of the parent of sources to list. Its format
+//     should be "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7689,13 +7689,13 @@ type FoldersSourcesFindingsGroupCall struct {
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
 //
-// - parent: Name of the source to groupBy. Its format is
-//   "organizations/[organization_id]/sources/[source_id]",
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]. To groupBy across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
+//   - parent: Name of the source to groupBy. Its format is
+//     "organizations/[organization_id]/sources/[source_id]",
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]. To groupBy across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
 	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7860,13 +7860,13 @@ type FoldersSourcesFindingsListCall struct {
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
 //
-// - parent: Name of the source the findings belong to. Its format is
-//   "organizations/[organization_id]/sources/[source_id],
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]". To list across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
+//   - parent: Name of the source the findings belong to. Its format is
+//     "organizations/[organization_id]/sources/[source_id],
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]". To list across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
 	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8187,11 +8187,11 @@ type FoldersSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-// - name: The relative resource name of this finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}".
+//   - name: The relative resource name of this finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
 	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8350,13 +8350,13 @@ type FoldersSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}",
-//   "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//   "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}",
+//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
 func (r *FoldersSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *FoldersSourcesFindingsSetMuteCall {
 	c := &FoldersSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8498,11 +8498,11 @@ type FoldersSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8644,12 +8644,12 @@ type FoldersSourcesFindingsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *FoldersSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersSourcesFindingsUpdateSecurityMarksCall {
 	c := &FoldersSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8822,10 +8822,10 @@ type FoldersSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-// - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: External System Name e.g. jira, demisto, etc. e.g.:
+//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *FoldersSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *FoldersSourcesFindingsExternalSystemsPatchCall {
 	c := &FoldersSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8983,9 +8983,9 @@ type OrganizationsGetOrganizationSettingsCall struct {
 
 // GetOrganizationSettings: Gets the settings for an organization.
 //
-// - name: Name of the organization to get organization settings for.
-//   Its format is
-//   "organizations/[organization_id]/organizationSettings".
+//   - name: Name of the organization to get organization settings for.
+//     Its format is
+//     "organizations/[organization_id]/organizationSettings".
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9131,9 +9131,9 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 
 // UpdateOrganizationSettings: Updates an organization's settings.
 //
-// - name: The relative resource name of the settings. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example: "organizations/{organization_id}/organizationSettings".
+//   - name: The relative resource name of the settings. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example: "organizations/{organization_id}/organizationSettings".
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9290,9 +9290,9 @@ type OrganizationsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-// - parent: Name of the organization to groupBy. Its format is
-//   "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization to groupBy. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9455,9 +9455,9 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-// - parent: Name of the organization assets should belong to. Its
-//   format is "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization assets should belong to. Its
+//     format is "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9789,8 +9789,8 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // frequency for an organization. If it is called too frequently the
 // caller will receive a TOO_MANY_REQUESTS error.
 //
-// - parent: Name of the organization to run asset discovery for. Its
-//   format is "organizations/[organization_id]".
+//   - parent: Name of the organization to run asset discovery for. Its
+//     format is "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9932,12 +9932,12 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10110,9 +10110,9 @@ type OrganizationsBigQueryExportsCreateCall struct {
 
 // Create: Creates a big query export.
 //
-// - parent: Resource name of the new big query export's parent. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   or "projects/[project_id]".
+//   - parent: Resource name of the new big query export's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
 	c := &OrganizationsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10270,10 +10270,10 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing big query export.
 //
-// - name: Name of the big query export to delete. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to delete. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *OrganizationsBigQueryExportsService) Delete(name string) *OrganizationsBigQueryExportsDeleteCall {
 	c := &OrganizationsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10406,10 +10406,10 @@ type OrganizationsBigQueryExportsGetCall struct {
 
 // Get: Gets a big query export.
 //
-// - name: Name of the big query export to retrieve. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to retrieve. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *OrganizationsBigQueryExportsService) Get(name string) *OrganizationsBigQueryExportsGetCall {
 	c := &OrganizationsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10561,9 +10561,9 @@ type OrganizationsBigQueryExportsListCall struct {
 // BigQuery exports immediately under the folder plus the ones created
 // under the projects within the folder are returned.
 //
-// - parent: The parent, which owns the collection of BigQuery exports.
-//   Its format is "organizations/[organization_id]",
-//   "folders/[folder_id]", "projects/[project_id]".
+//   - parent: The parent, which owns the collection of BigQuery exports.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", "projects/[project_id]".
 func (r *OrganizationsBigQueryExportsService) List(parent string) *OrganizationsBigQueryExportsListCall {
 	c := &OrganizationsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10760,14 +10760,14 @@ type OrganizationsBigQueryExportsPatchCall struct {
 
 // Patch: Updates a BigQuery export.
 //
-// - name: The relative resource name of this export. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name.
-//   Example format:
-//   "organizations/{organization_id}/bigQueryExports/{export_id}"
-//   Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
-//   Example format: "projects/{project_id}/bigQueryExports/{export_id}"
-//   This field is provided in responses, and is ignored when provided
-//   in create requests.
+//   - name: The relative resource name of this export. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name.
+//     Example format:
+//     "organizations/{organization_id}/bigQueryExports/{export_id}"
+//     Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
+//     Example format: "projects/{project_id}/bigQueryExports/{export_id}"
+//     This field is provided in responses, and is ignored when provided
+//     in create requests.
 func (r *OrganizationsBigQueryExportsService) Patch(name string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsPatchCall {
 	c := &OrganizationsBigQueryExportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10927,9 +10927,9 @@ type OrganizationsFindingsBulkMuteCall struct {
 // project. The findings matched by the filter will be muted after the
 // LRO is done.
 //
-// - parent: The parent, at which bulk action needs to be applied. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, at which bulk action needs to be applied. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *OrganizationsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *OrganizationsFindingsBulkMuteCall {
 	c := &OrganizationsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11071,9 +11071,9 @@ type OrganizationsMuteConfigsCreateCall struct {
 
 // Create: Creates a mute config.
 //
-// - parent: Resource name of the new mute configs's parent. Its format
-//   is "organizations/[organization_id]", "folders/[folder_id]", or
-//   "projects/[project_id]".
+//   - parent: Resource name of the new mute configs's parent. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *OrganizationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsCreateCall {
 	c := &OrganizationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11230,10 +11230,10 @@ type OrganizationsMuteConfigsDeleteCall struct {
 
 // Delete: Deletes an existing mute config.
 //
-// - name: Name of the mute config to delete. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to delete. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *OrganizationsMuteConfigsService) Delete(name string) *OrganizationsMuteConfigsDeleteCall {
 	c := &OrganizationsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11366,10 +11366,10 @@ type OrganizationsMuteConfigsGetCall struct {
 
 // Get: Gets a mute config.
 //
-// - name: Name of the mute config to retrieve. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to retrieve. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *OrganizationsMuteConfigsService) Get(name string) *OrganizationsMuteConfigsGetCall {
 	c := &OrganizationsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11516,9 +11516,9 @@ type OrganizationsMuteConfigsListCall struct {
 
 // List: Lists mute configs.
 //
-// - parent: The parent, which owns the collection of mute configs. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, which owns the collection of mute configs. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *OrganizationsMuteConfigsService) List(parent string) *OrganizationsMuteConfigsListCall {
 	c := &OrganizationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11715,10 +11715,10 @@ type OrganizationsMuteConfigsPatchCall struct {
 
 // Patch: Updates a mute config.
 //
-// - name: This field will be ignored if provided on config creation.
-//   Format "organizations/{organization}/muteConfigs/{mute_config}"
-//   "folders/{folder}/muteConfigs/{mute_config}"
-//   "projects/{project}/muteConfigs/{mute_config}".
+//   - name: This field will be ignored if provided on config creation.
+//     Format "organizations/{organization}/muteConfigs/{mute_config}"
+//     "folders/{folder}/muteConfigs/{mute_config}"
+//     "projects/{project}/muteConfigs/{mute_config}".
 func (r *OrganizationsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsMuteConfigsPatchCall {
 	c := &OrganizationsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11874,9 +11874,9 @@ type OrganizationsNotificationConfigsCreateCall struct {
 
 // Create: Creates a notification config.
 //
-// - parent: Resource name of the new notification config's parent. Its
-//   format is "organizations/[organization_id]" or
-//   "projects/[project_id]".
+//   - parent: Resource name of the new notification config's parent. Its
+//     format is "organizations/[organization_id]" or
+//     "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12031,8 +12031,8 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 
 // Delete: Deletes a notification config.
 //
-// - name: Name of the notification config to delete. Its format is
-//   "organizations/[organization_id]/notificationConfigs/[config_id]".
+//   - name: Name of the notification config to delete. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12165,8 +12165,8 @@ type OrganizationsNotificationConfigsGetCall struct {
 
 // Get: Gets a notification config.
 //
-// - name: Name of the notification config to get. Its format is
-//   "organizations/[organization_id]/notificationConfigs/[config_id]".
+//   - name: Name of the notification config to get. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12312,9 +12312,9 @@ type OrganizationsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-// - parent: Name of the organization to list notification configs. Its
-//   format is "organizations/[organization_id]" or
-//   "projects/[project_id]".
+//   - parent: Name of the organization to list notification configs. Its
+//     format is "organizations/[organization_id]" or
+//     "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12510,11 +12510,11 @@ type OrganizationsNotificationConfigsPatchCall struct {
 // Patch:  Updates a notification config. The following update fields
 // are allowed: description, pubsub_topic, streaming_config.filter
 //
-// - name: The relative resource name of this notification config. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/notificationConfigs/notify_public_b
-//   ucket".
+//   - name: The relative resource name of this notification config. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/notificationConfigs/notify_public_b
+//     ucket".
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13307,8 +13307,8 @@ type OrganizationsSourcesCreateCall struct {
 
 // Create: Creates a source.
 //
-// - parent: Resource name of the new source's parent. Its format should
-//   be "organizations/[organization_id]".
+//   - parent: Resource name of the new source's parent. Its format should
+//     be "organizations/[organization_id]".
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13450,8 +13450,8 @@ type OrganizationsSourcesGetCall struct {
 
 // Get: Gets a source.
 //
-// - name: Relative resource name of the source. Its format is
-//   "organizations/[organization_id]/source/[source_id]".
+//   - name: Relative resource name of the source. Its format is
+//     "organizations/[organization_id]/source/[source_id]".
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13597,10 +13597,10 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy on the specified Source.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13742,9 +13742,9 @@ type OrganizationsSourcesListCall struct {
 
 // List: Lists all sources belonging to an organization.
 //
-// - parent: Resource name of the parent of sources to list. Its format
-//   should be "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Resource name of the parent of sources to list. Its format
+//     should be "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13939,9 +13939,9 @@ type OrganizationsSourcesPatchCall struct {
 
 // Patch: Updates a source.
 //
-// - name: The relative resource name of this source. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example: "organizations/{organization_id}/sources/{source_id}".
+//   - name: The relative resource name of this source. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example: "organizations/{organization_id}/sources/{source_id}".
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14097,10 +14097,10 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the access control policy on the specified Source.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14243,10 +14243,10 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns the permissions that a caller has on the
 // specified source.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14389,8 +14389,8 @@ type OrganizationsSourcesFindingsCreateCall struct {
 // Create: Creates a finding. The corresponding source must exist for
 // finding creation to succeed.
 //
-// - parent: Resource name of the new finding's parent. Its format
-//   should be "organizations/[organization_id]/sources/[source_id]".
+//   - parent: Resource name of the new finding's parent. Its format
+//     should be "organizations/[organization_id]/sources/[source_id]".
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14551,13 +14551,13 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
 //
-// - parent: Name of the source to groupBy. Its format is
-//   "organizations/[organization_id]/sources/[source_id]",
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]. To groupBy across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
+//   - parent: Name of the source to groupBy. Its format is
+//     "organizations/[organization_id]/sources/[source_id]",
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]. To groupBy across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14722,13 +14722,13 @@ type OrganizationsSourcesFindingsListCall struct {
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
 //
-// - parent: Name of the source the findings belong to. Its format is
-//   "organizations/[organization_id]/sources/[source_id],
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]". To list across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
+//   - parent: Name of the source the findings belong to. Its format is
+//     "organizations/[organization_id]/sources/[source_id],
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]". To list across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15049,11 +15049,11 @@ type OrganizationsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-// - name: The relative resource name of this finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}".
+//   - name: The relative resource name of this finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15212,13 +15212,13 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}",
-//   "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//   "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}",
+//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *OrganizationsSourcesFindingsSetMuteCall {
 	c := &OrganizationsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15360,11 +15360,11 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15506,12 +15506,12 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15684,10 +15684,10 @@ type OrganizationsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-// - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: External System Name e.g. jira, demisto, etc. e.g.:
+//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *OrganizationsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *OrganizationsSourcesFindingsExternalSystemsPatchCall {
 	c := &OrganizationsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15846,9 +15846,9 @@ type ProjectsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-// - parent: Name of the organization to groupBy. Its format is
-//   "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization to groupBy. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16011,9 +16011,9 @@ type ProjectsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-// - parent: Name of the organization assets should belong to. Its
-//   format is "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Name of the organization assets should belong to. Its
+//     format is "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16342,12 +16342,12 @@ type ProjectsAssetsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *ProjectsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsAssetsUpdateSecurityMarksCall {
 	c := &ProjectsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16520,9 +16520,9 @@ type ProjectsBigQueryExportsCreateCall struct {
 
 // Create: Creates a big query export.
 //
-// - parent: Resource name of the new big query export's parent. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   or "projects/[project_id]".
+//   - parent: Resource name of the new big query export's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
 	c := &ProjectsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16680,10 +16680,10 @@ type ProjectsBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing big query export.
 //
-// - name: Name of the big query export to delete. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to delete. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *ProjectsBigQueryExportsService) Delete(name string) *ProjectsBigQueryExportsDeleteCall {
 	c := &ProjectsBigQueryExportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16816,10 +16816,10 @@ type ProjectsBigQueryExportsGetCall struct {
 
 // Get: Gets a big query export.
 //
-// - name: Name of the big query export to retrieve. Its format is
-//   organizations/{organization}/bigQueryExports/{export_id},
-//   folders/{folder}/bigQueryExports/{export_id}, or
-//   projects/{project}/bigQueryExports/{export_id}.
+//   - name: Name of the big query export to retrieve. Its format is
+//     organizations/{organization}/bigQueryExports/{export_id},
+//     folders/{folder}/bigQueryExports/{export_id}, or
+//     projects/{project}/bigQueryExports/{export_id}.
 func (r *ProjectsBigQueryExportsService) Get(name string) *ProjectsBigQueryExportsGetCall {
 	c := &ProjectsBigQueryExportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16971,9 +16971,9 @@ type ProjectsBigQueryExportsListCall struct {
 // BigQuery exports immediately under the folder plus the ones created
 // under the projects within the folder are returned.
 //
-// - parent: The parent, which owns the collection of BigQuery exports.
-//   Its format is "organizations/[organization_id]",
-//   "folders/[folder_id]", "projects/[project_id]".
+//   - parent: The parent, which owns the collection of BigQuery exports.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", "projects/[project_id]".
 func (r *ProjectsBigQueryExportsService) List(parent string) *ProjectsBigQueryExportsListCall {
 	c := &ProjectsBigQueryExportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17170,14 +17170,14 @@ type ProjectsBigQueryExportsPatchCall struct {
 
 // Patch: Updates a BigQuery export.
 //
-// - name: The relative resource name of this export. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name.
-//   Example format:
-//   "organizations/{organization_id}/bigQueryExports/{export_id}"
-//   Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
-//   Example format: "projects/{project_id}/bigQueryExports/{export_id}"
-//   This field is provided in responses, and is ignored when provided
-//   in create requests.
+//   - name: The relative resource name of this export. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name.
+//     Example format:
+//     "organizations/{organization_id}/bigQueryExports/{export_id}"
+//     Example format: "folders/{folder_id}/bigQueryExports/{export_id}"
+//     Example format: "projects/{project_id}/bigQueryExports/{export_id}"
+//     This field is provided in responses, and is ignored when provided
+//     in create requests.
 func (r *ProjectsBigQueryExportsService) Patch(name string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsPatchCall {
 	c := &ProjectsBigQueryExportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17337,9 +17337,9 @@ type ProjectsFindingsBulkMuteCall struct {
 // project. The findings matched by the filter will be muted after the
 // LRO is done.
 //
-// - parent: The parent, at which bulk action needs to be applied. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, at which bulk action needs to be applied. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *ProjectsFindingsService) BulkMute(parent string, bulkmutefindingsrequest *BulkMuteFindingsRequest) *ProjectsFindingsBulkMuteCall {
 	c := &ProjectsFindingsBulkMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17481,9 +17481,9 @@ type ProjectsMuteConfigsCreateCall struct {
 
 // Create: Creates a mute config.
 //
-// - parent: Resource name of the new mute configs's parent. Its format
-//   is "organizations/[organization_id]", "folders/[folder_id]", or
-//   "projects/[project_id]".
+//   - parent: Resource name of the new mute configs's parent. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *ProjectsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsCreateCall {
 	c := &ProjectsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17640,10 +17640,10 @@ type ProjectsMuteConfigsDeleteCall struct {
 
 // Delete: Deletes an existing mute config.
 //
-// - name: Name of the mute config to delete. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to delete. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *ProjectsMuteConfigsService) Delete(name string) *ProjectsMuteConfigsDeleteCall {
 	c := &ProjectsMuteConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17776,10 +17776,10 @@ type ProjectsMuteConfigsGetCall struct {
 
 // Get: Gets a mute config.
 //
-// - name: Name of the mute config to retrieve. Its format is
-//   organizations/{organization}/muteConfigs/{config_id},
-//   folders/{folder}/muteConfigs/{config_id}, or
-//   projects/{project}/muteConfigs/{config_id}.
+//   - name: Name of the mute config to retrieve. Its format is
+//     organizations/{organization}/muteConfigs/{config_id},
+//     folders/{folder}/muteConfigs/{config_id}, or
+//     projects/{project}/muteConfigs/{config_id}.
 func (r *ProjectsMuteConfigsService) Get(name string) *ProjectsMuteConfigsGetCall {
 	c := &ProjectsMuteConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17926,9 +17926,9 @@ type ProjectsMuteConfigsListCall struct {
 
 // List: Lists mute configs.
 //
-// - parent: The parent, which owns the collection of mute configs. Its
-//   format is "organizations/[organization_id]", "folders/[folder_id]",
-//   "projects/[project_id]".
+//   - parent: The parent, which owns the collection of mute configs. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     "projects/[project_id]".
 func (r *ProjectsMuteConfigsService) List(parent string) *ProjectsMuteConfigsListCall {
 	c := &ProjectsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18125,10 +18125,10 @@ type ProjectsMuteConfigsPatchCall struct {
 
 // Patch: Updates a mute config.
 //
-// - name: This field will be ignored if provided on config creation.
-//   Format "organizations/{organization}/muteConfigs/{mute_config}"
-//   "folders/{folder}/muteConfigs/{mute_config}"
-//   "projects/{project}/muteConfigs/{mute_config}".
+//   - name: This field will be ignored if provided on config creation.
+//     Format "organizations/{organization}/muteConfigs/{mute_config}"
+//     "folders/{folder}/muteConfigs/{mute_config}"
+//     "projects/{project}/muteConfigs/{mute_config}".
 func (r *ProjectsMuteConfigsService) Patch(name string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsMuteConfigsPatchCall {
 	c := &ProjectsMuteConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18284,9 +18284,9 @@ type ProjectsSourcesListCall struct {
 
 // List: Lists all sources belonging to an organization.
 //
-// - parent: Resource name of the parent of sources to list. Its format
-//   should be "organizations/[organization_id], folders/[folder_id], or
-//   projects/[project_id]".
+//   - parent: Resource name of the parent of sources to list. Its format
+//     should be "organizations/[organization_id], folders/[folder_id], or
+//     projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18486,13 +18486,13 @@ type ProjectsSourcesFindingsGroupCall struct {
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
 //
-// - parent: Name of the source to groupBy. Its format is
-//   "organizations/[organization_id]/sources/[source_id]",
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]. To groupBy across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
+//   - parent: Name of the source to groupBy. Its format is
+//     "organizations/[organization_id]/sources/[source_id]",
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]. To groupBy across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
 	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18657,13 +18657,13 @@ type ProjectsSourcesFindingsListCall struct {
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
 //
-// - parent: Name of the source the findings belong to. Its format is
-//   "organizations/[organization_id]/sources/[source_id],
-//   folders/[folder_id]/sources/[source_id], or
-//   projects/[project_id]/sources/[source_id]". To list across all
-//   sources provide a source_id of `-`. For example:
-//   organizations/{organization_id}/sources/-,
-//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
+//   - parent: Name of the source the findings belong to. Its format is
+//     "organizations/[organization_id]/sources/[source_id],
+//     folders/[folder_id]/sources/[source_id], or
+//     projects/[project_id]/sources/[source_id]". To list across all
+//     sources provide a source_id of `-`. For example:
+//     organizations/{organization_id}/sources/-,
+//     folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
 	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18984,11 +18984,11 @@ type ProjectsSourcesFindingsPatchCall struct {
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
 //
-// - name: The relative resource name of this finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}".
+//   - name: The relative resource name of this finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
 	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19147,13 +19147,13 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}",
-//   "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//   "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}",
+//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
 func (r *ProjectsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *ProjectsSourcesFindingsSetMuteCall {
 	c := &ProjectsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19295,11 +19295,11 @@ type ProjectsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: The relative resource name of the finding. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Example:
-//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//   g_id}".
+//   - name: The relative resource name of the finding. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//     g_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19441,12 +19441,12 @@ type ProjectsSourcesFindingsUpdateSecurityMarksCall struct {
 
 // UpdateSecurityMarks: Updates security marks.
 //
-// - name: The relative resource name of the SecurityMarks. See:
-//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//   Examples:
-//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
-//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//   ng_id}/securityMarks".
+//   - name: The relative resource name of the SecurityMarks. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Examples:
+//     "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}/securityMarks".
 func (r *ProjectsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
 	c := &ProjectsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19619,10 +19619,10 @@ type ProjectsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-// - name: External System Name e.g. jira, demisto, etc. e.g.:
-//   `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//   a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//   `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: External System Name e.g. jira, demisto, etc. e.g.:
+//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
+//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
 func (r *ProjectsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *ProjectsSourcesFindingsExternalSystemsPatchCall {
 	c := &ProjectsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

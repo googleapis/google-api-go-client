@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/orgpolicy/docs/reference/rest/index.html
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/orgpolicy/v2"
-//   ...
-//   ctx := context.Background()
-//   orgpolicyService, err := orgpolicy.NewService(ctx)
+//	import "google.golang.org/api/orgpolicy/v2"
+//	...
+//	ctx := context.Background()
+//	orgpolicyService, err := orgpolicy.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   orgpolicyService, err := orgpolicy.NewService(ctx, option.WithAPIKey("AIza..."))
+//	orgpolicyService, err := orgpolicy.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   orgpolicyService, err := orgpolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	orgpolicyService, err := orgpolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package orgpolicy // import "google.golang.org/api/orgpolicy/v2"
@@ -774,10 +774,10 @@ type FoldersConstraintsListCall struct {
 // List: Lists `Constraints` that could be applied on the specified
 // resource.
 //
-// - parent: The Cloud resource that parents the constraint. Must be in
-//   one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *FoldersConstraintsService) List(parent string) *FoldersConstraintsListCall {
 	c := &FoldersConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -976,10 +976,10 @@ type FoldersPoliciesCreateCall struct {
 // a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
 // policy already exists on the given Cloud resource.
 //
-// - parent: The Cloud resource that will parent the new Policy. Must be
-//   in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that will parent the new Policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *FoldersPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *FoldersPoliciesCreateCall {
 	c := &FoldersPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1257,8 +1257,8 @@ type FoldersPoliciesGetCall struct {
 // resource, NOT_FOUND is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a `Policy` during read-modify-write.
 //
-// - name: Resource name of the policy. See `Policy` for naming
-//   requirements.
+//   - name: Resource name of the policy. See `Policy` for naming
+//     requirements.
 func (r *FoldersPoliciesService) Get(name string) *FoldersPoliciesGetCall {
 	c := &FoldersPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1409,8 +1409,8 @@ type FoldersPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-// - name: The effective policy to compute. See `Policy` for naming
-//   rules.
+//   - name: The effective policy to compute. See `Policy` for naming
+//     rules.
 func (r *FoldersPoliciesService) GetEffectivePolicy(name string) *FoldersPoliciesGetEffectivePolicyCall {
 	c := &FoldersPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1557,11 +1557,11 @@ type FoldersPoliciesListCall struct {
 // List: Retrieves all of the `Policies` that exist on a particular
 // resource.
 //
-// - parent: The target Cloud resource that parents the set of
-//   constraints and policies that will be returned from this call. Must
-//   be in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The target Cloud resource that parents the set of
+//     constraints and policies that will be returned from this call. Must
+//     be in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *FoldersPoliciesService) List(parent string) *FoldersPoliciesListCall {
 	c := &FoldersPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1762,16 +1762,16 @@ type FoldersPoliciesPatchCall struct {
 // of the policy Note: the supplied policy will perform a full overwrite
 // of all fields.
 //
-// - name: Immutable. The resource name of the Policy. Must be one of
-//   the following forms, where constraint_name is the name of the
-//   constraint which this Policy configures: *
-//   `projects/{project_number}/policies/{constraint_name}` *
-//   `folders/{folder_id}/policies/{constraint_name}` *
-//   `organizations/{organization_id}/policies/{constraint_name}` For
-//   example, "projects/123/policies/compute.disableSerialPortAccess".
-//   Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//   acceptable name for API requests, but responses will return the
-//   name using the equivalent project number.
+//   - name: Immutable. The resource name of the Policy. Must be one of
+//     the following forms, where constraint_name is the name of the
+//     constraint which this Policy configures: *
+//     `projects/{project_number}/policies/{constraint_name}` *
+//     `folders/{folder_id}/policies/{constraint_name}` *
+//     `organizations/{organization_id}/policies/{constraint_name}` For
+//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
+//     acceptable name for API requests, but responses will return the
+//     name using the equivalent project number.
 func (r *FoldersPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *FoldersPoliciesPatchCall {
 	c := &FoldersPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1914,10 +1914,10 @@ type OrganizationsConstraintsListCall struct {
 // List: Lists `Constraints` that could be applied on the specified
 // resource.
 //
-// - parent: The Cloud resource that parents the constraint. Must be in
-//   one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *OrganizationsConstraintsService) List(parent string) *OrganizationsConstraintsListCall {
 	c := &OrganizationsConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2116,10 +2116,10 @@ type OrganizationsPoliciesCreateCall struct {
 // a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
 // policy already exists on the given Cloud resource.
 //
-// - parent: The Cloud resource that will parent the new Policy. Must be
-//   in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that will parent the new Policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *OrganizationsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *OrganizationsPoliciesCreateCall {
 	c := &OrganizationsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2397,8 +2397,8 @@ type OrganizationsPoliciesGetCall struct {
 // resource, NOT_FOUND is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a `Policy` during read-modify-write.
 //
-// - name: Resource name of the policy. See `Policy` for naming
-//   requirements.
+//   - name: Resource name of the policy. See `Policy` for naming
+//     requirements.
 func (r *OrganizationsPoliciesService) Get(name string) *OrganizationsPoliciesGetCall {
 	c := &OrganizationsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2549,8 +2549,8 @@ type OrganizationsPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-// - name: The effective policy to compute. See `Policy` for naming
-//   rules.
+//   - name: The effective policy to compute. See `Policy` for naming
+//     rules.
 func (r *OrganizationsPoliciesService) GetEffectivePolicy(name string) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c := &OrganizationsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2697,11 +2697,11 @@ type OrganizationsPoliciesListCall struct {
 // List: Retrieves all of the `Policies` that exist on a particular
 // resource.
 //
-// - parent: The target Cloud resource that parents the set of
-//   constraints and policies that will be returned from this call. Must
-//   be in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The target Cloud resource that parents the set of
+//     constraints and policies that will be returned from this call. Must
+//     be in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *OrganizationsPoliciesService) List(parent string) *OrganizationsPoliciesListCall {
 	c := &OrganizationsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2902,16 +2902,16 @@ type OrganizationsPoliciesPatchCall struct {
 // of the policy Note: the supplied policy will perform a full overwrite
 // of all fields.
 //
-// - name: Immutable. The resource name of the Policy. Must be one of
-//   the following forms, where constraint_name is the name of the
-//   constraint which this Policy configures: *
-//   `projects/{project_number}/policies/{constraint_name}` *
-//   `folders/{folder_id}/policies/{constraint_name}` *
-//   `organizations/{organization_id}/policies/{constraint_name}` For
-//   example, "projects/123/policies/compute.disableSerialPortAccess".
-//   Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//   acceptable name for API requests, but responses will return the
-//   name using the equivalent project number.
+//   - name: Immutable. The resource name of the Policy. Must be one of
+//     the following forms, where constraint_name is the name of the
+//     constraint which this Policy configures: *
+//     `projects/{project_number}/policies/{constraint_name}` *
+//     `folders/{folder_id}/policies/{constraint_name}` *
+//     `organizations/{organization_id}/policies/{constraint_name}` For
+//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
+//     acceptable name for API requests, but responses will return the
+//     name using the equivalent project number.
 func (r *OrganizationsPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *OrganizationsPoliciesPatchCall {
 	c := &OrganizationsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3054,10 +3054,10 @@ type ProjectsConstraintsListCall struct {
 // List: Lists `Constraints` that could be applied on the specified
 // resource.
 //
-// - parent: The Cloud resource that parents the constraint. Must be in
-//   one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *ProjectsConstraintsService) List(parent string) *ProjectsConstraintsListCall {
 	c := &ProjectsConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3256,10 +3256,10 @@ type ProjectsPoliciesCreateCall struct {
 // a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
 // policy already exists on the given Cloud resource.
 //
-// - parent: The Cloud resource that will parent the new Policy. Must be
-//   in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The Cloud resource that will parent the new Policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *ProjectsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *ProjectsPoliciesCreateCall {
 	c := &ProjectsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3537,8 +3537,8 @@ type ProjectsPoliciesGetCall struct {
 // resource, NOT_FOUND is returned. The `etag` value can be used with
 // `UpdatePolicy()` to update a `Policy` during read-modify-write.
 //
-// - name: Resource name of the policy. See `Policy` for naming
-//   requirements.
+//   - name: Resource name of the policy. See `Policy` for naming
+//     requirements.
 func (r *ProjectsPoliciesService) Get(name string) *ProjectsPoliciesGetCall {
 	c := &ProjectsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3689,8 +3689,8 @@ type ProjectsPoliciesGetEffectivePolicyCall struct {
 // resources. Subtrees of Resource Manager resource hierarchy with
 // 'under:' prefix will not be expanded.
 //
-// - name: The effective policy to compute. See `Policy` for naming
-//   rules.
+//   - name: The effective policy to compute. See `Policy` for naming
+//     rules.
 func (r *ProjectsPoliciesService) GetEffectivePolicy(name string) *ProjectsPoliciesGetEffectivePolicyCall {
 	c := &ProjectsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3837,11 +3837,11 @@ type ProjectsPoliciesListCall struct {
 // List: Retrieves all of the `Policies` that exist on a particular
 // resource.
 //
-// - parent: The target Cloud resource that parents the set of
-//   constraints and policies that will be returned from this call. Must
-//   be in one of the following forms: * `projects/{project_number}` *
-//   `projects/{project_id}` * `folders/{folder_id}` *
-//   `organizations/{organization_id}`.
+//   - parent: The target Cloud resource that parents the set of
+//     constraints and policies that will be returned from this call. Must
+//     be in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *ProjectsPoliciesService) List(parent string) *ProjectsPoliciesListCall {
 	c := &ProjectsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4042,16 +4042,16 @@ type ProjectsPoliciesPatchCall struct {
 // of the policy Note: the supplied policy will perform a full overwrite
 // of all fields.
 //
-// - name: Immutable. The resource name of the Policy. Must be one of
-//   the following forms, where constraint_name is the name of the
-//   constraint which this Policy configures: *
-//   `projects/{project_number}/policies/{constraint_name}` *
-//   `folders/{folder_id}/policies/{constraint_name}` *
-//   `organizations/{organization_id}/policies/{constraint_name}` For
-//   example, "projects/123/policies/compute.disableSerialPortAccess".
-//   Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//   acceptable name for API requests, but responses will return the
-//   name using the equivalent project number.
+//   - name: Immutable. The resource name of the Policy. Must be one of
+//     the following forms, where constraint_name is the name of the
+//     constraint which this Policy configures: *
+//     `projects/{project_number}/policies/{constraint_name}` *
+//     `folders/{folder_id}/policies/{constraint_name}` *
+//     `organizations/{organization_id}/policies/{constraint_name}` For
+//     example, "projects/123/policies/compute.disableSerialPortAccess".
+//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
+//     acceptable name for API requests, but responses will return the
+//     name using the equivalent project number.
 func (r *ProjectsPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *ProjectsPoliciesPatchCall {
 	c := &ProjectsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

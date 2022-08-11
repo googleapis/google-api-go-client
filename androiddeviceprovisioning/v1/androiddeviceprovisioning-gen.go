@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/zero-touch/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/androiddeviceprovisioning/v1"
-//   ...
-//   ctx := context.Background()
-//   androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx)
+//	import "google.golang.org/api/androiddeviceprovisioning/v1"
+//	...
+//	ctx := context.Background()
+//	androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx, option.WithAPIKey("AIza..."))
+//	androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	androiddeviceprovisioningService, err := androiddeviceprovisioning.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package androiddeviceprovisioning // import "google.golang.org/api/androiddeviceprovisioning/v1"
@@ -2124,9 +2124,9 @@ type CustomersConfigurationsCreateCall struct {
 // Create: Creates a new configuration. Once created, a customer can
 // apply the configuration to devices.
 //
-// - parent: The customer that manages the configuration. An API
-//   resource name in the format `customers/[CUSTOMER_ID]`. This field
-//   has custom validation in CreateConfigurationRequestValidator.
+//   - parent: The customer that manages the configuration. An API
+//     resource name in the format `customers/[CUSTOMER_ID]`. This field
+//     has custom validation in CreateConfigurationRequestValidator.
 func (r *CustomersConfigurationsService) Create(parent string, configuration *Configuration) *CustomersConfigurationsCreateCall {
 	c := &CustomersConfigurationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2265,9 +2265,9 @@ type CustomersConfigurationsDeleteCall struct {
 // Delete: Deletes an unused configuration. The API call fails if the
 // customer has devices with the configuration applied.
 //
-// - name: The configuration to delete. An API resource name in the
-//   format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
-//   If the configuration is applied to any devices, the API call fails.
+//   - name: The configuration to delete. An API resource name in the
+//     format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
+//     If the configuration is applied to any devices, the API call fails.
 func (r *CustomersConfigurationsService) Delete(name string) *CustomersConfigurationsDeleteCall {
 	c := &CustomersConfigurationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2397,8 +2397,8 @@ type CustomersConfigurationsGetCall struct {
 
 // Get: Gets the details of a configuration.
 //
-// - name: The configuration to get. An API resource name in the format
-//   `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
+//   - name: The configuration to get. An API resource name in the format
+//     `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
 func (r *CustomersConfigurationsService) Get(name string) *CustomersConfigurationsGetCall {
 	c := &CustomersConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2541,8 +2541,8 @@ type CustomersConfigurationsListCall struct {
 
 // List: Lists a customer's configurations.
 //
-// - parent: The customer that manages the listed configurations. An API
-//   resource name in the format `customers/[CUSTOMER_ID]`.
+//   - parent: The customer that manages the listed configurations. An API
+//     resource name in the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersConfigurationsService) List(parent string) *CustomersConfigurationsListCall {
 	c := &CustomersConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2686,9 +2686,9 @@ type CustomersConfigurationsPatchCall struct {
 
 // Patch: Updates a configuration's field values.
 //
-// - name: Output only. The API resource name in the format
-//   `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
-//   Assigned by the server.
+//   - name: Output only. The API resource name in the format
+//     `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
+//     Assigned by the server.
 func (r *CustomersConfigurationsService) Patch(name string, configuration *Configuration) *CustomersConfigurationsPatchCall {
 	c := &CustomersConfigurationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2846,8 +2846,8 @@ type CustomersDevicesApplyConfigurationCall struct {
 // to a device, the device automatically provisions itself on first
 // boot, or next factory reset.
 //
-// - parent: The customer managing the device. An API resource name in
-//   the format `customers/[CUSTOMER_ID]`.
+//   - parent: The customer managing the device. An API resource name in
+//     the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) ApplyConfiguration(parent string, customerapplyconfigurationrequest *CustomerApplyConfigurationRequest) *CustomersDevicesApplyConfigurationCall {
 	c := &CustomersDevicesApplyConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2986,8 +2986,8 @@ type CustomersDevicesGetCall struct {
 
 // Get: Gets the details of a device.
 //
-// - name: The device to get. An API resource name in the format
-//   `customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.
+//   - name: The device to get. An API resource name in the format
+//     `customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.
 func (r *CustomersDevicesService) Get(name string) *CustomersDevicesGetCall {
 	c := &CustomersDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3130,8 +3130,8 @@ type CustomersDevicesListCall struct {
 
 // List: Lists a customer's devices.
 //
-// - parent: The customer managing the devices. An API resource name in
-//   the format `customers/[CUSTOMER_ID]`.
+//   - parent: The customer managing the devices. An API resource name in
+//     the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall {
 	c := &CustomersDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3321,8 +3321,8 @@ type CustomersDevicesRemoveConfigurationCall struct {
 
 // RemoveConfiguration: Removes a configuration from device.
 //
-// - parent: The customer managing the device in the format
-//   `customers/[CUSTOMER_ID]`.
+//   - parent: The customer managing the device in the format
+//     `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) RemoveConfiguration(parent string, customerremoveconfigurationrequest *CustomerRemoveConfigurationRequest) *CustomersDevicesRemoveConfigurationCall {
 	c := &CustomersDevicesRemoveConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3464,8 +3464,8 @@ type CustomersDevicesUnclaimCall struct {
 // contact their reseller to register the device into zero-touch
 // enrollment again.
 //
-// - parent: The customer managing the device. An API resource name in
-//   the format `customers/[CUSTOMER_ID]`.
+//   - parent: The customer managing the device. An API resource name in
+//     the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) Unclaim(parent string, customerunclaimdevicerequest *CustomerUnclaimDeviceRequest) *CustomersDevicesUnclaimCall {
 	c := &CustomersDevicesUnclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3605,8 +3605,8 @@ type CustomersDpcsListCall struct {
 // List: Lists the DPCs (device policy controllers) that support
 // zero-touch enrollment.
 //
-// - parent: The customer that can use the DPCs in configurations. An
-//   API resource name in the format `customers/[CUSTOMER_ID]`.
+//   - parent: The customer that can use the DPCs in configurations. An
+//     API resource name in the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDpcsService) List(parent string) *CustomersDpcsListCall {
 	c := &CustomersDpcsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3898,8 +3898,8 @@ type PartnersCustomersCreateCall struct {
 // enrollment portal. The customer receives an email that welcomes them
 // to zero-touch enrollment and explains how to sign into the portal.
 //
-// - parent: The parent resource ID in the format
-//   `partners/[PARTNER_ID]` that identifies the reseller.
+//   - parent: The parent resource ID in the format
+//     `partners/[PARTNER_ID]` that identifies the reseller.
 func (r *PartnersCustomersService) Create(parent string, createcustomerrequest *CreateCustomerRequest) *PartnersCustomersCreateCall {
 	c := &PartnersCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4844,8 +4844,8 @@ type PartnersDevicesGetCall struct {
 
 // Get: Gets a device.
 //
-// - name: The device API resource name in the format
-//   `partners/[PARTNER_ID]/devices/[DEVICE_ID]`.
+//   - name: The device API resource name in the format
+//     `partners/[PARTNER_ID]/devices/[DEVICE_ID]`.
 func (r *PartnersDevicesService) Get(name string) *PartnersDevicesGetCall {
 	c := &PartnersDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4989,9 +4989,9 @@ type PartnersDevicesMetadataCall struct {
 
 // Metadata: Updates reseller metadata associated with the device.
 //
-// - deviceId: The ID of the device.
-// - metadataOwnerId: The owner of the newly set metadata. Set this to
-//   the partner ID.
+//   - deviceId: The ID of the device.
+//   - metadataOwnerId: The owner of the newly set metadata. Set this to
+//     the partner ID.
 func (r *PartnersDevicesService) Metadata(metadataOwnerId int64, deviceId int64, updatedevicemetadatarequest *UpdateDeviceMetadataRequest) *PartnersDevicesMetadataCall {
 	c := &PartnersDevicesMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metadataOwnerId = metadataOwnerId
@@ -5759,8 +5759,8 @@ type PartnersVendorsCustomersListCall struct {
 
 // List: Lists the customers of the vendor.
 //
-// - parent: The resource name in the format
-//   `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`.
+//   - parent: The resource name in the format
+//     `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`.
 func (r *PartnersVendorsCustomersService) List(parent string) *PartnersVendorsCustomersListCall {
 	c := &PartnersVendorsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

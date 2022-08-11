@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/monitoring/api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/monitoring/v1"
-//   ...
-//   ctx := context.Background()
-//   monitoringService, err := monitoring.NewService(ctx)
+//	import "google.golang.org/api/monitoring/v1"
+//	...
+//	ctx := context.Background()
+//	monitoringService, err := monitoring.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithScopes(monitoring.MonitoringWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
+//	monitoringService, err := monitoring.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	monitoringService, err := monitoring.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package monitoring // import "google.golang.org/api/monitoring/v1"
@@ -2808,8 +2808,8 @@ type LocationsGlobalMetricsScopesGetCall struct {
 // Get: Returns a specific Metrics Scope, including the list of projects
 // monitored by the specified Metrics Scope.
 //
-// - name: The resource name of the Metrics Scope. Example:
-//   locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
+//   - name: The resource name of the Metrics Scope. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
 func (r *LocationsGlobalMetricsScopesService) Get(name string) *LocationsGlobalMetricsScopesGetCall {
 	c := &LocationsGlobalMetricsScopesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3109,9 +3109,9 @@ type LocationsGlobalMetricsScopesProjectsCreateCall struct {
 // Create: Adds a MonitoredProject with the given project ID to the
 // specified Metrics Scope.
 //
-// - parent: The resource name of the existing Metrics Scope that will
-//   monitor this project. Example:
-//   locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
+//   - parent: The resource name of the existing Metrics Scope that will
+//     monitor this project. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
 func (r *LocationsGlobalMetricsScopesProjectsService) Create(parent string, monitoredproject *MonitoredProject) *LocationsGlobalMetricsScopesProjectsCreateCall {
 	c := &LocationsGlobalMetricsScopesProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3254,12 +3254,12 @@ type LocationsGlobalMetricsScopesProjectsDeleteCall struct {
 
 // Delete: Deletes a MonitoredProject from the specified Metrics Scope.
 //
-// - name: The resource name of the MonitoredProject. Example:
-//   locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projec
-//   ts/{MONITORED_PROJECT_ID_OR_NUMBER}Authorization requires the
-//   following Google IAM (https://cloud.google.com/iam) permissions on
-//   both the Metrics Scope and on the MonitoredProject:
-//   monitoring.metricsScopes.link.
+//   - name: The resource name of the MonitoredProject. Example:
+//     locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projec
+//     ts/{MONITORED_PROJECT_ID_OR_NUMBER}Authorization requires the
+//     following Google IAM (https://cloud.google.com/iam) permissions on
+//     both the Metrics Scope and on the MonitoredProject:
+//     monitoring.metricsScopes.link.
 func (r *LocationsGlobalMetricsScopesProjectsService) Delete(name string) *LocationsGlobalMetricsScopesProjectsDeleteCall {
 	c := &LocationsGlobalMetricsScopesProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3549,9 +3549,9 @@ type ProjectsDashboardsCreateCall struct {
 // specified project. For more information about permissions, see Cloud
 // Identity and Access Management (https://cloud.google.com/iam).
 //
-// - parent: The project on which to execute the request. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must
-//   match the dashboard resource name.
+//   - parent: The project on which to execute the request. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must
+//     match the dashboard resource name.
 func (r *ProjectsDashboardsService) Create(parent string, dashboard *Dashboard) *ProjectsDashboardsCreateCall {
 	c := &ProjectsDashboardsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3710,8 +3710,8 @@ type ProjectsDashboardsDeleteCall struct {
 // For more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
 //
-// - name: The resource name of the Dashboard. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID].
+//   - name: The resource name of the Dashboard. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID].
 func (r *ProjectsDashboardsService) Delete(name string) *ProjectsDashboardsDeleteCall {
 	c := &ProjectsDashboardsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3849,10 +3849,10 @@ type ProjectsDashboardsGetCall struct {
 // more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
 //
-// - name: The resource name of the Dashboard. The format is one of:
-//   dashboards/[DASHBOARD_ID] (for system dashboards)
-//   projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for
-//   custom dashboards).
+//   - name: The resource name of the Dashboard. The format is one of:
+//     dashboards/[DASHBOARD_ID] (for system dashboards)
+//     projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for
+//     custom dashboards).
 func (r *ProjectsDashboardsService) Get(name string) *ProjectsDashboardsGetCall {
 	c := &ProjectsDashboardsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4003,8 +4003,8 @@ type ProjectsDashboardsListCall struct {
 // more information, see Cloud Identity and Access Management
 // (https://cloud.google.com/iam).
 //
-// - parent: The scope of the dashboards to list. The format is:
-//   projects/[PROJECT_ID_OR_NUMBER].
+//   - parent: The scope of the dashboards to list. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsDashboardsService) List(parent string) *ProjectsDashboardsListCall {
 	c := &ProjectsDashboardsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4362,12 +4362,12 @@ type ProjectsLocationPrometheusApiV1LabelsCall struct {
 
 // Labels: Lists labels for metrics.
 //
-// - location: Location of the resource information. Has to be "global"
-//   now.
-// - name: The workspace on which to execute the request. It is not part
-//   of the open source API but used as a request path prefix to
-//   distinguish different virtual Prometheus instances of Google
-//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsLocationPrometheusApiV1Service) Labels(name string, location string, listlabelsrequest *ListLabelsRequest) *ProjectsLocationPrometheusApiV1LabelsCall {
 	c := &ProjectsLocationPrometheusApiV1LabelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4521,13 +4521,13 @@ type ProjectsLocationPrometheusApiV1QueryCall struct {
 
 // Query: Evaluate a PromQL query at a single point in time.
 //
-// - location: Location of the resource information. Has to be "global"
-//   now.
-// - name: The project on which to execute the request. Data associcated
-//   with the project's workspace stored under the The format is:
-//   projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
-//   request path prefix to distinguish different virtual Prometheus
-//   instances of Google Prometheus Engine.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
 func (r *ProjectsLocationPrometheusApiV1Service) Query(name string, location string, queryinstantrequest *QueryInstantRequest) *ProjectsLocationPrometheusApiV1QueryCall {
 	c := &ProjectsLocationPrometheusApiV1QueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4681,13 +4681,13 @@ type ProjectsLocationPrometheusApiV1QueryRangeCall struct {
 
 // QueryRange: Evaluate a PromQL query with start, end time range.
 //
-// - location: Location of the resource information. Has to be "global"
-//   now.
-// - name: The project on which to execute the request. Data associcated
-//   with the project's workspace stored under the The format is:
-//   projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
-//   request path prefix to distinguish different virtual Prometheus
-//   instances of Google Prometheus Engine.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
 func (r *ProjectsLocationPrometheusApiV1Service) QueryRange(name string, location string, queryrangerequest *QueryRangeRequest) *ProjectsLocationPrometheusApiV1QueryRangeCall {
 	c := &ProjectsLocationPrometheusApiV1QueryRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4841,12 +4841,12 @@ type ProjectsLocationPrometheusApiV1SeriesCall struct {
 
 // Series: Lists metadata for metrics.
 //
-// - location: Location of the resource information. Has to be "global"
-//   for now.
-// - name: The workspace on which to execute the request. It is not part
-//   of the open source API but used as a request path prefix to
-//   distinguish different virtual Prometheus instances of Google
-//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+//   - location: Location of the resource information. Has to be "global"
+//     for now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsLocationPrometheusApiV1Service) Series(name string, location string, queryseriesrequest *QuerySeriesRequest) *ProjectsLocationPrometheusApiV1SeriesCall {
 	c := &ProjectsLocationPrometheusApiV1SeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5001,13 +5001,13 @@ type ProjectsLocationPrometheusApiV1LabelValuesCall struct {
 
 // Values: Lists possible values for a given label name.
 //
-// - label: The label name for which values are queried.
-// - location: Location of the resource information. Has to be "global"
-//   now.
-// - name: The workspace on which to execute the request. It is not part
-//   of the open source API but used as a request path prefix to
-//   distinguish different virtual Prometheus instances of Google
-//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+//   - label: The label name for which values are queried.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsLocationPrometheusApiV1LabelService) Values(name string, location string, label string) *ProjectsLocationPrometheusApiV1LabelValuesCall {
 	c := &ProjectsLocationPrometheusApiV1LabelValuesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5213,12 +5213,12 @@ type ProjectsLocationPrometheusApiV1LabelsListCall struct {
 
 // List: Lists labels for metrics.
 //
-// - location: Location of the resource information. Has to be "global"
-//   now.
-// - name: The workspace on which to execute the request. It is not part
-//   of the open source API but used as a request path prefix to
-//   distinguish different virtual Prometheus instances of Google
-//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsLocationPrometheusApiV1LabelsService) List(name string, location string) *ProjectsLocationPrometheusApiV1LabelsListCall {
 	c := &ProjectsLocationPrometheusApiV1LabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5415,12 +5415,12 @@ type ProjectsLocationPrometheusApiV1MetadataListCall struct {
 
 // List: Lists metadata for metrics.
 //
-// - location: Location of the resource information. Has to be "global"
-//   for now.
-// - name: The workspace on which to execute the request. It is not part
-//   of the open source API but used as a request path prefix to
-//   distinguish different virtual Prometheus instances of Google
-//   Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
+//   - location: Location of the resource information. Has to be "global"
+//     for now.
+//   - name: The workspace on which to execute the request. It is not part
+//     of the open source API but used as a request path prefix to
+//     distinguish different virtual Prometheus instances of Google
+//     Prometheus Engine. The format is: projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsLocationPrometheusApiV1MetadataService) List(name string, location string) *ProjectsLocationPrometheusApiV1MetadataListCall {
 	c := &ProjectsLocationPrometheusApiV1MetadataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

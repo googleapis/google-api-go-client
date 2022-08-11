@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/servicenetworking/v1beta"
-//   ...
-//   ctx := context.Background()
-//   servicenetworkingService, err := servicenetworking.NewService(ctx)
+//	import "google.golang.org/api/servicenetworking/v1beta"
+//	...
+//	ctx := context.Background()
+//	servicenetworkingService, err := servicenetworking.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithScopes(servicenetworking.ServiceManagementScope))
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithScopes(servicenetworking.ServiceManagementScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithAPIKey("AIza..."))
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicenetworking // import "google.golang.org/api/servicenetworking/v1beta"
@@ -4323,14 +4323,14 @@ type ServicesAddSubnetworkCall struct {
 // needed. The response from the `get` operation will be of type
 // `Subnetwork` if the operation successfully completes.
 //
-// - parent: A tenant project in the service producer organization, in
-//   the following format:
-//   services/{service}/{collection-id}/{resource-id}. {collection-id}
-//   is the cloud resource collection type that represents the tenant
-//   project. Only `projects` are supported. {resource-id} is the tenant
-//   project numeric id, such as `123456`. {service} the name of the
-//   peering service, such as `service-peering.example.com`. This
-//   service must already be enabled in the service consumer's project.
+//   - parent: A tenant project in the service producer organization, in
+//     the following format:
+//     services/{service}/{collection-id}/{resource-id}. {collection-id}
+//     is the cloud resource collection type that represents the tenant
+//     project. Only `projects` are supported. {resource-id} is the tenant
+//     project numeric id, such as `123456`. {service} the name of the
+//     peering service, such as `service-peering.example.com`. This
+//     service must already be enabled in the service consumer's project.
 func (r *ServicesService) AddSubnetwork(parent string, addsubnetworkrequest *AddSubnetworkRequest) *ServicesAddSubnetworkCall {
 	c := &ServicesAddSubnetworkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4479,9 +4479,9 @@ type ServicesSearchRangeCall struct {
 // leading bits of ipv4 network mask, as in CIDR range notation).
 // Operation
 //
-// - parent: This is in a form services/{service}. {service} the name of
-//   the private access management service, for example
-//   'service-peering.example.com'.
+//   - parent: This is in a form services/{service}. {service} the name of
+//     the private access management service, for example
+//     'service-peering.example.com'.
 func (r *ServicesService) SearchRange(parent string, searchrangerequest *SearchRangeRequest) *ServicesSearchRangeCall {
 	c := &ServicesSearchRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4626,10 +4626,10 @@ type ServicesUpdateConnectionsCall struct {
 // a connection. The response from the `get` operation will be of type
 // `Connection` if the operation successfully completes.
 //
-// - name: The service producer peering service that is managing peering
-//   connectivity for a service producer organization. For Google
-//   services that support this functionality, this is
-//   `services/servicenetworking.googleapis.com`.
+//   - name: The service producer peering service that is managing peering
+//     connectivity for a service producer organization. For Google
+//     services that support this functionality, this is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) UpdateConnections(name string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesUpdateConnectionsCall {
 	c := &ServicesUpdateConnectionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4806,10 +4806,10 @@ type ServicesConnectionsCreateCall struct {
 // be invoked once. The response from the `get` operation will be of
 // type `Connection` if the operation successfully completes.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesConnectionsService) Create(parent string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4953,12 +4953,12 @@ type ServicesConnectionsListCall struct {
 // List: List the private connections that are configured in a service
 // consumer's VPC network.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`. If you specify `-` as
-//   the parameter value, all configured public peering services are
-//   listed.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`. If you specify `-` as
+//     the parameter value, all configured public peering services are
+//     listed.
 func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsListCall {
 	c := &ServicesConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

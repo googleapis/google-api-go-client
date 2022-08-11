@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/admin/reports/v1"
-//   ...
-//   ctx := context.Background()
-//   adminService, err := admin.NewService(ctx)
+//	import "google.golang.org/api/admin/reports/v1"
+//	...
+//	ctx := context.Background()
+//	adminService, err := admin.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   adminService, err := admin.NewService(ctx, option.WithScopes(admin.AdminReportsUsageReadonlyScope))
+//	adminService, err := admin.NewService(ctx, option.WithScopes(admin.AdminReportsUsageReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
+//	adminService, err := admin.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	adminService, err := admin.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package admin // import "google.golang.org/api/admin/reports/v1"
@@ -928,14 +928,14 @@ type ActivitiesListCall struct {
 // about the activity report's parameters, see the activity parameters
 // reference guides.
 //
-// - applicationName: Application name for which the events are to be
-//   retrieved.
-// - userKey: Represents the profile ID or the user email for which the
-//   data should be filtered. Can be `all` for all information, or
-//   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address. Must not be a deleted user. For a deleted
-//   user, call `users.list` in Directory API with `showDeleted=true`,
-//   then use the returned `ID` as the `userKey`.
+//   - applicationName: Application name for which the events are to be
+//     retrieved.
+//   - userKey: Represents the profile ID or the user email for which the
+//     data should be filtered. Can be `all` for all information, or
+//     `userKey` for a user's unique Google Workspace profile ID or their
+//     primary email address. Must not be a deleted user. For a deleted
+//     user, call `users.list` in Directory API with `showDeleted=true`,
+//     then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1366,14 +1366,14 @@ type ActivitiesWatchCall struct {
 // Watch: Start receiving notifications for account activities. For more
 // information, see Receiving Push Notifications.
 //
-// - applicationName: Application name for which the events are to be
-//   retrieved.
-// - userKey: Represents the profile ID or the user email for which the
-//   data should be filtered. Can be `all` for all information, or
-//   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address. Must not be a deleted user. For a deleted
-//   user, call `users.list` in Directory API with `showDeleted=true`,
-//   then use the returned `ID` as the `userKey`.
+//   - applicationName: Application name for which the events are to be
+//     retrieved.
+//   - userKey: Represents the profile ID or the user email for which the
+//     data should be filtered. Can be `all` for all information, or
+//     `userKey` for a user's unique Google Workspace profile ID or their
+//     primary email address. Must not be a deleted user. For a deleted
+//     user, call `users.list` in Directory API with `showDeleted=true`,
+//     then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1878,9 +1878,9 @@ type CustomerUsageReportsGetCall struct {
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
 //
-// - date: Represents the date the usage occurred. The timestamp is in
-//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//   account's time zone for this.
+//   - date: Represents the date the usage occurred. The timestamp is in
+//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//     account's time zone for this.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -2108,16 +2108,16 @@ type EntityUsageReportsGetCall struct {
 // information about the entities report's parameters, see the Entities
 // Usage parameters reference guides.
 //
-// - date: Represents the date the usage occurred. The timestamp is in
-//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//   account's time zone for this.
-// - entityKey: Represents the key of the object to filter the data
-//   with. It is a string which can take the value `all` to get activity
-//   events for all users, or any other value for an app-specific
-//   entity. For details on how to obtain the `entityKey` for a
-//   particular `entityType`, see the Entities Usage parameters
-//   reference guides.
-// - entityType: Represents the type of entity for the report.
+//   - date: Represents the date the usage occurred. The timestamp is in
+//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//     account's time zone for this.
+//   - entityKey: Represents the key of the object to filter the data
+//     with. It is a string which can take the value `all` to get activity
+//     events for all users, or any other value for an app-specific
+//     entity. For details on how to obtain the `entityKey` for a
+//     particular `entityType`, see the Entities Usage parameters
+//     reference guides.
+//   - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityType = entityType
@@ -2415,15 +2415,15 @@ type UserUsageReportGetCall struct {
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
 //
-// - date: Represents the date the usage occurred. The timestamp is in
-//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//   account's time zone for this.
-// - userKey: Represents the profile ID or the user email for which the
-//   data should be filtered. Can be `all` for all information, or
-//   `userKey` for a user's unique Google Workspace profile ID or their
-//   primary email address. Must not be a deleted user. For a deleted
-//   user, call `users.list` in Directory API with `showDeleted=true`,
-//   then use the returned `ID` as the `userKey`.
+//   - date: Represents the date the usage occurred. The timestamp is in
+//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//     account's time zone for this.
+//   - userKey: Represents the profile ID or the user email for which the
+//     data should be filtered. Can be `all` for all information, or
+//     `userKey` for a user's unique Google Workspace profile ID or their
+//     primary email address. Must not be a deleted user. For a deleted
+//     user, call `users.list` in Directory API with `showDeleted=true`,
+//     then use the returned `ID` as the `userKey`.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/recommendations
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/retail/v2"
-//   ...
-//   ctx := context.Background()
-//   retailService, err := retail.NewService(ctx)
+//	import "google.golang.org/api/retail/v2"
+//	...
+//	ctx := context.Background()
+//	retailService, err := retail.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   retailService, err := retail.NewService(ctx, option.WithAPIKey("AIza..."))
+//	retailService, err := retail.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   retailService, err := retail.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	retailService, err := retail.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package retail // import "google.golang.org/api/retail/v2"
@@ -6844,9 +6844,9 @@ type ProjectsLocationsCatalogsCompleteQueryCall struct {
 // Search enabled. Please enable Retail Search on Cloud Console before
 // using this feature.
 //
-// - catalog: Catalog for which the completion is performed. Full
-//   resource name of catalog, such as
-//   `projects/*/locations/global/catalogs/default_catalog`.
+//   - catalog: Catalog for which the completion is performed. Full
+//     resource name of catalog, such as
+//     `projects/*/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c := &ProjectsLocationsCatalogsCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.catalog = catalog
@@ -7095,9 +7095,9 @@ type ProjectsLocationsCatalogsGetAttributesConfigCall struct {
 
 // GetAttributesConfig: Gets an AttributesConfig.
 //
-// - name: Full AttributesConfig resource name. Format:
-//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
-//   _id}/attributesConfig`.
+//   - name: Full AttributesConfig resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsService) GetAttributesConfig(name string) *ProjectsLocationsCatalogsGetAttributesConfigCall {
 	c := &ProjectsLocationsCatalogsGetAttributesConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7244,9 +7244,9 @@ type ProjectsLocationsCatalogsGetCompletionConfigCall struct {
 
 // GetCompletionConfig: Gets a CompletionConfig.
 //
-// - name: Full CompletionConfig resource name. Format:
-//   projects/{project_number}/locations/{location_id}/catalogs/{catalog_
-//   id}/completionConfig.
+//   - name: Full CompletionConfig resource name. Format:
+//     projects/{project_number}/locations/{location_id}/catalogs/{catalog_
+//     id}/completionConfig.
 func (r *ProjectsLocationsCatalogsService) GetCompletionConfig(name string) *ProjectsLocationsCatalogsGetCompletionConfigCall {
 	c := &ProjectsLocationsCatalogsGetCompletionConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7395,8 +7395,8 @@ type ProjectsLocationsCatalogsGetDefaultBranchCall struct {
 // CatalogService.SetDefaultBranch method under a specified parent
 // catalog.
 //
-// - catalog: The parent catalog resource name, such as
-//   `projects/*/locations/global/catalogs/default_catalog`.
+//   - catalog: The parent catalog resource name, such as
+//     `projects/*/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsService) GetDefaultBranch(catalog string) *ProjectsLocationsCatalogsGetDefaultBranchCall {
 	c := &ProjectsLocationsCatalogsGetDefaultBranchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.catalog = catalog
@@ -7544,10 +7544,10 @@ type ProjectsLocationsCatalogsListCall struct {
 
 // List: Lists all the Catalogs associated with the project.
 //
-// - parent: The account resource name with an associated location. If
-//   the caller does not have permission to list Catalogs under this
-//   location, regardless of whether or not this location exists, a
-//   PERMISSION_DENIED error is returned.
+//   - parent: The account resource name with an associated location. If
+//     the caller does not have permission to list Catalogs under this
+//     location, regardless of whether or not this location exists, a
+//     PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocationsCatalogsListCall {
 	c := &ProjectsLocationsCatalogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7922,8 +7922,8 @@ type ProjectsLocationsCatalogsSetDefaultBranchCall struct {
 // {newBranch} (if branch is not explicitly set). * UserEventService
 // will only join events with products from branch {newBranch}.
 //
-// - catalog: Full resource name of the catalog, such as
-//   `projects/*/locations/global/catalogs/default_catalog`.
+//   - catalog: Full resource name of the catalog, such as
+//     `projects/*/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsService) SetDefaultBranch(catalog string, googlecloudretailv2setdefaultbranchrequest *GoogleCloudRetailV2SetDefaultBranchRequest) *ProjectsLocationsCatalogsSetDefaultBranchCall {
 	c := &ProjectsLocationsCatalogsSetDefaultBranchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.catalog = catalog
@@ -8072,9 +8072,9 @@ type ProjectsLocationsCatalogsUpdateAttributesConfigCall struct {
 // missing catalog attribute fields, e.g., searchable and dynamic
 // facetable options.
 //
-// - name: Immutable. The fully qualified resource name of the attribute
-//   config. Format:
-//   `projects/*/locations/*/catalogs/*/attributesConfig`.
+//   - name: Immutable. The fully qualified resource name of the attribute
+//     config. Format:
+//     `projects/*/locations/*/catalogs/*/attributesConfig`.
 func (r *ProjectsLocationsCatalogsService) UpdateAttributesConfig(name string, googlecloudretailv2attributesconfig *GoogleCloudRetailV2AttributesConfig) *ProjectsLocationsCatalogsUpdateAttributesConfigCall {
 	c := &ProjectsLocationsCatalogsUpdateAttributesConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8232,8 +8232,8 @@ type ProjectsLocationsCatalogsUpdateCompletionConfigCall struct {
 
 // UpdateCompletionConfig: Updates the CompletionConfigs.
 //
-// - name: Immutable. Fully qualified name
-//   `projects/*/locations/*/catalogs/*/completionConfig`.
+//   - name: Immutable. Fully qualified name
+//     `projects/*/locations/*/catalogs/*/completionConfig`.
 func (r *ProjectsLocationsCatalogsService) UpdateCompletionConfig(name string, googlecloudretailv2completionconfig *GoogleCloudRetailV2CompletionConfig) *ProjectsLocationsCatalogsUpdateCompletionConfigCall {
 	c := &ProjectsLocationsCatalogsUpdateCompletionConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8395,9 +8395,9 @@ type ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall struct {
 // AttributesConfig. If the CatalogAttribute to add already exists, an
 // ALREADY_EXISTS error is returned.
 //
-// - attributesConfig: Full AttributesConfig resource name. Format:
-//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
-//   _id}/attributesConfig`.
+//   - attributesConfig: Full AttributesConfig resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsAttributesConfigService) AddCatalogAttribute(attributesConfig string, googlecloudretailv2addcatalogattributerequest *GoogleCloudRetailV2AddCatalogAttributeRequest) *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall {
 	c := &ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attributesConfig = attributesConfig
@@ -8542,9 +8542,9 @@ type ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall struct 
 // the AttributesConfig. If the CatalogAttribute to remove does not
 // exist, a NOT_FOUND error is returned.
 //
-// - attributesConfig: Full AttributesConfig resource name. Format:
-//   `projects/{project_number}/locations/{location_id}/catalogs/{catalog
-//   _id}/attributesConfig`.
+//   - attributesConfig: Full AttributesConfig resource name. Format:
+//     `projects/{project_number}/locations/{location_id}/catalogs/{catalog
+//     _id}/attributesConfig`.
 func (r *ProjectsLocationsCatalogsAttributesConfigService) RemoveCatalogAttribute(attributesConfig string, googlecloudretailv2removecatalogattributerequest *GoogleCloudRetailV2RemoveCatalogAttributeRequest) *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall {
 	c := &ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attributesConfig = attributesConfig
@@ -8844,11 +8844,11 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // enabled. Please enable Retail Search on Cloud Console before using
 // this feature.
 //
-// - product: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to access the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned.
+//   - product: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to access the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) AddFulfillmentPlaces(product string, googlecloudretailv2addfulfillmentplacesrequest *GoogleCloudRetailV2AddFulfillmentPlacesRequest) *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.product = product
@@ -9002,11 +9002,11 @@ type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - product: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to access the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned.
+//   - product: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to access the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) AddLocalInventories(product string, googlecloudretailv2addlocalinventoriesrequest *GoogleCloudRetailV2AddLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.product = product
@@ -9148,9 +9148,9 @@ type ProjectsLocationsCatalogsBranchesProductsCreateCall struct {
 
 // Create: Creates a Product.
 //
-// - parent: The parent catalog resource name, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch`.
+//   - parent: The parent catalog resource name, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Create(parent string, googlecloudretailv2product *GoogleCloudRetailV2Product) *ProjectsLocationsCatalogsBranchesProductsCreateCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9309,16 +9309,16 @@ type ProjectsLocationsCatalogsBranchesProductsDeleteCall struct {
 
 // Delete: Deletes a Product.
 //
-// - name: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to delete the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned. If the Product to
-//   delete does not exist, a NOT_FOUND error is returned. The Product
-//   to delete can neither be a Product.Type.COLLECTION Product member
-//   nor a Product.Type.PRIMARY Product with more than one variants.
-//   Otherwise, an INVALID_ARGUMENT error is returned. All inventory
-//   information for the named Product will be deleted.
+//   - name: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to delete the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned. If the Product to
+//     delete does not exist, a NOT_FOUND error is returned. The Product
+//     to delete can neither be a Product.Type.COLLECTION Product member
+//     nor a Product.Type.PRIMARY Product with more than one variants.
+//     Otherwise, an INVALID_ARGUMENT error is returned. All inventory
+//     information for the named Product will be deleted.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Delete(name string) *ProjectsLocationsCatalogsBranchesProductsDeleteCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9451,12 +9451,12 @@ type ProjectsLocationsCatalogsBranchesProductsGetCall struct {
 
 // Get: Gets a Product.
 //
-// - name: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to access the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned. If the requested
-//   Product does not exist, a NOT_FOUND error is returned.
+//   - name: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to access the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned. If the requested
+//     Product does not exist, a NOT_FOUND error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Get(name string) *ProjectsLocationsCatalogsBranchesProductsGetCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9604,11 +9604,11 @@ type ProjectsLocationsCatalogsBranchesProductsImportCall struct {
 // synchronous. Non-existing items are created. Note that it is possible
 // for a subset of the Products to be successfully updated.
 //
-// - parent:
-//   `projects/1234/locations/global/catalogs/default_catalog/branches/de
-//   fault_branch` If no updateMask is specified, requires
-//   products.create permission. If updateMask is specified, requires
-//   products.update permission.
+//   - parent:
+//     `projects/1234/locations/global/catalogs/default_catalog/branches/de
+//     fault_branch` If no updateMask is specified, requires
+//     products.create permission. If updateMask is specified, requires
+//     products.update permission.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Import(parent string, googlecloudretailv2importproductsrequest *GoogleCloudRetailV2ImportProductsRequest) *ProjectsLocationsCatalogsBranchesProductsImportCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9750,12 +9750,12 @@ type ProjectsLocationsCatalogsBranchesProductsListCall struct {
 
 // List: Gets a list of Products.
 //
-// - parent: The parent branch resource name, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/0`.
-//   Use `default_branch` as the branch ID, to list products under the
-//   default branch. If the caller does not have permission to list
-//   Products under this branch, regardless of whether or not this
-//   branch exists, a PERMISSION_DENIED error is returned.
+//   - parent: The parent branch resource name, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/0`.
+//     Use `default_branch` as the branch ID, to list products under the
+//     default branch. If the caller does not have permission to list
+//     Products under this branch, regardless of whether or not this
+//     branch exists, a PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) List(parent string) *ProjectsLocationsCatalogsBranchesProductsListCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9995,9 +9995,9 @@ type ProjectsLocationsCatalogsBranchesProductsPatchCall struct {
 
 // Patch: Updates a Product.
 //
-// - name: Immutable. Full resource name of the product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/product_id`.
+//   - name: Immutable. Full resource name of the product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/product_id`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) Patch(name string, googlecloudretailv2product *GoogleCloudRetailV2Product) *ProjectsLocationsCatalogsBranchesProductsPatchCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10181,11 +10181,11 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // enabled. Please enable Retail Search on Cloud Console before using
 // this feature.
 //
-// - product: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to access the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned.
+//   - product: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to access the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) RemoveFulfillmentPlaces(product string, googlecloudretailv2removefulfillmentplacesrequest *GoogleCloudRetailV2RemoveFulfillmentPlacesRequest) *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.product = product
@@ -10337,11 +10337,11 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct 
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - product: Full resource name of Product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/some_product_id`. If the caller does not have
-//   permission to access the Product, regardless of whether or not it
-//   exists, a PERMISSION_DENIED error is returned.
+//   - product: Full resource name of Product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/some_product_id`. If the caller does not have
+//     permission to access the Product, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) RemoveLocalInventories(product string, googlecloudretailv2removelocalinventoriesrequest *GoogleCloudRetailV2RemoveLocalInventoriesRequest) *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.product = product
@@ -10505,9 +10505,9 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // available for users who have Retail Search enabled. Please enable
 // Retail Search on Cloud Console before using this feature.
 //
-// - name: Immutable. Full resource name of the product, such as
-//   `projects/*/locations/global/catalogs/default_catalog/branches/defau
-//   lt_branch/products/product_id`.
+//   - name: Immutable. Full resource name of the product, such as
+//     `projects/*/locations/global/catalogs/default_catalog/branches/defau
+//     lt_branch/products/product_id`.
 func (r *ProjectsLocationsCatalogsBranchesProductsService) SetInventory(name string, googlecloudretailv2setinventoryrequest *GoogleCloudRetailV2SetInventoryRequest) *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall {
 	c := &ProjectsLocationsCatalogsBranchesProductsSetInventoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10655,8 +10655,8 @@ type ProjectsLocationsCatalogsCompletionDataImportCall struct {
 // have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - parent: The catalog which the suggestions dataset belongs to.
-//   Format: `projects/1234/locations/global/catalogs/default_catalog`.
+//   - parent: The catalog which the suggestions dataset belongs to.
+//     Format: `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsCompletionDataService) Import(parent string, googlecloudretailv2importcompletiondatarequest *GoogleCloudRetailV2ImportCompletionDataRequest) *ProjectsLocationsCatalogsCompletionDataImportCall {
 	c := &ProjectsLocationsCatalogsCompletionDataImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11160,19 +11160,19 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 
 // Predict: Makes a recommendation prediction.
 //
-// - placement: Full resource name of the format:
-//   `{placement=projects/*/locations/global/catalogs/default_catalog/ser
-//   vingConfigs/*}` or
-//   `{placement=projects/*/locations/global/catalogs/default_catalog/pla
-//   cements/*}`. We recommend using the `servingConfigs` resource.
-//   `placements` is a legacy resource. The ID of the Recommendations AI
-//   serving config or placement. Before you can request predictions
-//   from your model, you must create at least one serving config or
-//   placement for it. For more information, see [Managing serving
-//   configurations]
-//   (https://cloud.google.com/retail/docs/manage-configs). The full
-//   list of available serving configs can be seen at
-//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
+//   - placement: Full resource name of the format:
+//     `{placement=projects/*/locations/global/catalogs/default_catalog/ser
+//     vingConfigs/*}` or
+//     `{placement=projects/*/locations/global/catalogs/default_catalog/pla
+//     cements/*}`. We recommend using the `servingConfigs` resource.
+//     `placements` is a legacy resource. The ID of the Recommendations AI
+//     serving config or placement. Before you can request predictions
+//     from your model, you must create at least one serving config or
+//     placement for it. For more information, see [Managing serving
+//     configurations]
+//     (https://cloud.google.com/retail/docs/manage-configs). The full
+//     list of available serving configs can be seen at
+//     https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -11317,15 +11317,15 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - placement: The resource name of the Retail Search serving config,
-//   such as
-//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
-//   /default_serving_config` or the name of the legacy placement
-//   resource, such as
-//   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search`. This field is used to identify the serving
-//   configuration name and the set of models that will be used to make
-//   the search.
+//   - placement: The resource name of the Retail Search serving config,
+//     such as
+//     `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//     /default_serving_config` or the name of the legacy placement
+//     resource, such as
+//     `projects/*/locations/global/catalogs/default_catalog/placements/def
+//     ault_search`. This field is used to identify the serving
+//     configuration name and the set of models that will be used to make
+//     the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
 	c := &ProjectsLocationsCatalogsPlacementsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -11489,19 +11489,19 @@ type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
 
 // Predict: Makes a recommendation prediction.
 //
-// - placement: Full resource name of the format:
-//   `{placement=projects/*/locations/global/catalogs/default_catalog/ser
-//   vingConfigs/*}` or
-//   `{placement=projects/*/locations/global/catalogs/default_catalog/pla
-//   cements/*}`. We recommend using the `servingConfigs` resource.
-//   `placements` is a legacy resource. The ID of the Recommendations AI
-//   serving config or placement. Before you can request predictions
-//   from your model, you must create at least one serving config or
-//   placement for it. For more information, see [Managing serving
-//   configurations]
-//   (https://cloud.google.com/retail/docs/manage-configs). The full
-//   list of available serving configs can be seen at
-//   https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
+//   - placement: Full resource name of the format:
+//     `{placement=projects/*/locations/global/catalogs/default_catalog/ser
+//     vingConfigs/*}` or
+//     `{placement=projects/*/locations/global/catalogs/default_catalog/pla
+//     cements/*}`. We recommend using the `servingConfigs` resource.
+//     `placements` is a legacy resource. The ID of the Recommendations AI
+//     serving config or placement. Before you can request predictions
+//     from your model, you must create at least one serving config or
+//     placement for it. For more information, see [Managing serving
+//     configurations]
+//     (https://cloud.google.com/retail/docs/manage-configs). The full
+//     list of available serving configs can be seen at
+//     https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Predict(placement string, googlecloudretailv2predictrequest *GoogleCloudRetailV2PredictRequest) *ProjectsLocationsCatalogsServingConfigsPredictCall {
 	c := &ProjectsLocationsCatalogsServingConfigsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -11646,15 +11646,15 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 // who have Retail Search enabled. Please enable Retail Search on Cloud
 // Console before using this feature.
 //
-// - placement: The resource name of the Retail Search serving config,
-//   such as
-//   `projects/*/locations/global/catalogs/default_catalog/servingConfigs
-//   /default_serving_config` or the name of the legacy placement
-//   resource, such as
-//   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search`. This field is used to identify the serving
-//   configuration name and the set of models that will be used to make
-//   the search.
+//   - placement: The resource name of the Retail Search serving config,
+//     such as
+//     `projects/*/locations/global/catalogs/default_catalog/servingConfigs
+//     /default_serving_config` or the name of the legacy placement
+//     resource, such as
+//     `projects/*/locations/global/catalogs/default_catalog/placements/def
+//     ault_search`. This field is used to identify the serving
+//     configuration name and the set of models that will be used to make
+//     the search.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2searchrequest *GoogleCloudRetailV2SearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
 	c := &ProjectsLocationsCatalogsServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -11821,8 +11821,8 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 // domain. This method is used only by the Retail API JavaScript pixel
 // and Google Tag Manager. Users should not call this method directly.
 //
-// - parent: The parent catalog name, such as
-//   `projects/1234/locations/global/catalogs/default_catalog`.
+//   - parent: The parent catalog name, such as
+//     `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12158,9 +12158,9 @@ type ProjectsLocationsCatalogsUserEventsPurgeCall struct {
 // this operation could take hours or days to complete. To test a
 // filter, use the list command first.
 //
-// - parent: The resource name of the catalog under which the events are
-//   created. The format is
-//   `projects/${projectId}/locations/global/catalogs/${catalogId}`.
+//   - parent: The resource name of the catalog under which the events are
+//     created. The format is
+//     `projects/${projectId}/locations/global/catalogs/${catalogId}`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Purge(parent string, googlecloudretailv2purgeusereventsrequest *GoogleCloudRetailV2PurgeUserEventsRequest) *ProjectsLocationsCatalogsUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12310,8 +12310,8 @@ type ProjectsLocationsCatalogsUserEventsRejoinCall struct {
 // joined with the wrong product catalog. A rejoin operation can take
 // hours or days to complete.
 //
-// - parent: The parent catalog resource name, such as
-//   `projects/1234/locations/global/catalogs/default_catalog`.
+//   - parent: The parent catalog resource name, such as
+//     `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Rejoin(parent string, googlecloudretailv2rejoinusereventsrequest *GoogleCloudRetailV2RejoinUserEventsRequest) *ProjectsLocationsCatalogsUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12453,8 +12453,8 @@ type ProjectsLocationsCatalogsUserEventsWriteCall struct {
 
 // Write: Writes a single user event.
 //
-// - parent: The parent catalog resource name, such as
-//   `projects/1234/locations/global/catalogs/default_catalog`.
+//   - parent: The parent catalog resource name, such as
+//     `projects/1234/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsUserEventsService) Write(parent string, googlecloudretailv2userevent *GoogleCloudRetailV2UserEvent) *ProjectsLocationsCatalogsUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

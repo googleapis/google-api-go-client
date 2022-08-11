@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/translate/docs/quickstarts
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/translate/v3"
-//   ...
-//   ctx := context.Background()
-//   translateService, err := translate.NewService(ctx)
+//	import "google.golang.org/api/translate/v3"
+//	...
+//	ctx := context.Background()
+//	translateService, err := translate.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   translateService, err := translate.NewService(ctx, option.WithScopes(translate.CloudTranslationScope))
+//	translateService, err := translate.NewService(ctx, option.WithScopes(translate.CloudTranslationScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   translateService, err := translate.NewService(ctx, option.WithAPIKey("AIza..."))
+//	translateService, err := translate.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   translateService, err := translate.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	translateService, err := translate.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package translate // import "google.golang.org/api/translate/v3"
@@ -1990,14 +1990,14 @@ type ProjectsDetectLanguageCall struct {
 
 // DetectLanguage: Detects the language of text within a request.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format:
-//   `projects/{project-number-or-id}/locations/{location-id}` or
-//   `projects/{project-number-or-id}`. For global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Only models within the same
-//   region (has same location-id) can be used. Otherwise an
-//   INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Only models within the same
+//     region (has same location-id) can be used. Otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsDetectLanguageCall {
 	c := &ProjectsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2141,15 +2141,15 @@ type ProjectsGetSupportedLanguagesCall struct {
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format: `projects/{project-number-or-id}` or
-//   `projects/{project-number-or-id}/locations/{location-id}`. For
-//   global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Non-global location is required
-//   for AutoML models. Only models within the same region (have same
-//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-//   is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For
+//     global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required
+//     for AutoML models. Only models within the same region (have same
+//     location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//     is returned.
 func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSupportedLanguagesCall {
 	c := &ProjectsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2328,15 +2328,15 @@ type ProjectsTranslateTextCall struct {
 
 // TranslateText: Translates input text and returns translated text.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format: `projects/{project-number-or-id}` or
-//   `projects/{project-number-or-id}/locations/{location-id}`. For
-//   global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Non-global location is required
-//   for requests using AutoML models or custom glossaries. Models and
-//   glossaries must be within the same region (have same location-id),
-//   otherwise an INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For
+//     global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required
+//     for requests using AutoML models or custom glossaries. Models and
+//     glossaries must be within the same region (have same location-id),
+//     otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsTranslateTextCall {
 	c := &ProjectsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2485,12 +2485,12 @@ type ProjectsLocationsBatchTranslateDocumentCall struct {
 // immediately and you can use google.longrunning.Operation.name to poll
 // the status of the call.
 //
-// - parent: Location to make a regional call. Format:
-//   `projects/{project-number-or-id}/locations/{location-id}`. The
-//   `global` location is not supported for batch translation. Only
-//   AutoML Translation models or glossaries within the same region
-//   (have the same location-id) can be used, otherwise an
-//   INVALID_ARGUMENT (400) error is returned.
+//   - parent: Location to make a regional call. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}`. The
+//     `global` location is not supported for batch translation. Only
+//     AutoML Translation models or glossaries within the same region
+//     (have the same location-id) can be used, otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateDocument(parent string, batchtranslatedocumentrequest *BatchTranslateDocumentRequest) *ProjectsLocationsBatchTranslateDocumentCall {
 	c := &ProjectsLocationsBatchTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2638,12 +2638,12 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 // can use google.longrunning.Operation.name to poll the status of the
 // call.
 //
-// - parent: Location to make a call. Must refer to a caller's project.
-//   Format: `projects/{project-number-or-id}/locations/{location-id}`.
-//   The `global` location is not supported for batch translation. Only
-//   AutoML Translation models or glossaries within the same region
-//   (have the same location-id) can be used, otherwise an
-//   INVALID_ARGUMENT (400) error is returned.
+//   - parent: Location to make a call. Must refer to a caller's project.
+//     Format: `projects/{project-number-or-id}/locations/{location-id}`.
+//     The `global` location is not supported for batch translation. Only
+//     AutoML Translation models or glossaries within the same region
+//     (have the same location-id) can be used, otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2785,14 +2785,14 @@ type ProjectsLocationsDetectLanguageCall struct {
 
 // DetectLanguage: Detects the language of text within a request.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format:
-//   `projects/{project-number-or-id}/locations/{location-id}` or
-//   `projects/{project-number-or-id}`. For global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Only models within the same
-//   region (has same location-id) can be used. Otherwise an
-//   INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}` or
+//     `projects/{project-number-or-id}`. For global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Only models within the same
+//     region (has same location-id) can be used. Otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsLocationsDetectLanguageCall {
 	c := &ProjectsLocationsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3083,15 +3083,15 @@ type ProjectsLocationsGetSupportedLanguagesCall struct {
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format: `projects/{project-number-or-id}` or
-//   `projects/{project-number-or-id}/locations/{location-id}`. For
-//   global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Non-global location is required
-//   for AutoML models. Only models within the same region (have same
-//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-//   is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For
+//     global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required
+//     for AutoML models. Only models within the same region (have same
+//     location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//     is returned.
 func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c := &ProjectsLocationsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3271,8 +3271,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3480,15 +3480,15 @@ type ProjectsLocationsTranslateDocumentCall struct {
 
 // TranslateDocument: Translates documents in synchronous mode.
 //
-// - parent: Location to make a regional call. Format:
-//   `projects/{project-number-or-id}/locations/{location-id}`. For
-//   global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Non-global location is required
-//   for requests using AutoML models or custom glossaries. Models and
-//   glossaries must be within the same region (have the same
-//   location-id), otherwise an INVALID_ARGUMENT (400) error is
-//   returned.
+//   - parent: Location to make a regional call. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}`. For
+//     global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required
+//     for requests using AutoML models or custom glossaries. Models and
+//     glossaries must be within the same region (have the same
+//     location-id), otherwise an INVALID_ARGUMENT (400) error is
+//     returned.
 func (r *ProjectsLocationsService) TranslateDocument(parent string, translatedocumentrequest *TranslateDocumentRequest) *ProjectsLocationsTranslateDocumentCall {
 	c := &ProjectsLocationsTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3631,15 +3631,15 @@ type ProjectsLocationsTranslateTextCall struct {
 
 // TranslateText: Translates input text and returns translated text.
 //
-// - parent: Project or location to make a call. Must refer to a
-//   caller's project. Format: `projects/{project-number-or-id}` or
-//   `projects/{project-number-or-id}/locations/{location-id}`. For
-//   global calls, use
-//   `projects/{project-number-or-id}/locations/global` or
-//   `projects/{project-number-or-id}`. Non-global location is required
-//   for requests using AutoML models or custom glossaries. Models and
-//   glossaries must be within the same region (have same location-id),
-//   otherwise an INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a
+//     caller's project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For
+//     global calls, use
+//     `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required
+//     for requests using AutoML models or custom glossaries. Models and
+//     glossaries must be within the same region (have same location-id),
+//     otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsLocationsTranslateTextCall {
 	c := &ProjectsLocationsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4209,8 +4209,8 @@ type ProjectsLocationsGlossariesListCall struct {
 // List: Lists glossaries in a project. Returns NOT_FOUND, if the
 // project doesn't exist.
 //
-// - parent: The name of the project from which to list all of the
-//   glossaries.
+//   - parent: The name of the project from which to list all of the
+//     glossaries.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4434,10 +4434,10 @@ type ProjectsLocationsGlossariesPatchCall struct {
 // Patch: Updates a glossary. A LRO is used since the update can be
 // async if the glossary's entry file is updated.
 //
-// - name: The resource name of the glossary. Glossary names have the
-//   form
-//   `projects/{project-number-or-id}/locations/{location-id}/glossaries/
-//   {glossary-id}`.
+//   - name: The resource name of the glossary. Glossary names have the
+//     form
+//     `projects/{project-number-or-id}/locations/{location-id}/glossaries/
+//     {glossary-id}`.
 func (r *ProjectsLocationsGlossariesService) Patch(name string, glossary *Glossary) *ProjectsLocationsGlossariesPatchCall {
 	c := &ProjectsLocationsGlossariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4593,8 +4593,8 @@ type ProjectsLocationsGlossariesGlossaryEntriesCreateCall struct {
 
 // Create: Creates a glossary entry.
 //
-// - parent: The resource name of the glossary to create the entry
-//   under.
+//   - parent: The resource name of the glossary to create the entry
+//     under.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Create(parent string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesCreateCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5017,8 +5017,8 @@ type ProjectsLocationsGlossariesGlossaryEntriesListCall struct {
 
 // List: List the entries for the glossary.
 //
-// - parent: The parent glossary resource name for listing the
-//   glossary's entries.
+//   - parent: The parent glossary resource name for listing the
+//     glossary's entries.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) List(parent string) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5215,8 +5215,8 @@ type ProjectsLocationsGlossariesGlossaryEntriesPatchCall struct {
 
 // Patch: Updates a glossary entry.
 //
-// - name: The resource name of the entry. Format:
-//   "projects/*/locations/*/glossaries/*/glossaryEntries/*".
+//   - name: The resource name of the entry. Format:
+//     "projects/*/locations/*/glossaries/*/glossaryEntries/*".
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Patch(name string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

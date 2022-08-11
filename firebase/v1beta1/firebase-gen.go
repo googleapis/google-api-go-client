@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://firebase.google.com
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firebase/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   firebaseService, err := firebase.NewService(ctx)
+//	import "google.golang.org/api/firebase/v1beta1"
+//	...
+//	ctx := context.Background()
+//	firebaseService, err := firebase.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firebaseService, err := firebase.NewService(ctx, option.WithScopes(firebase.FirebaseReadonlyScope))
+//	firebaseService, err := firebase.NewService(ctx, option.WithScopes(firebase.FirebaseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firebaseService, err := firebase.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firebaseService, err := firebase.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firebaseService, err := firebase.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firebaseService, err := firebase.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firebase // import "google.golang.org/api/firebase/v1beta1"
@@ -2378,17 +2378,17 @@ type ProjectsAddFirebaseCall struct {
 // `resourcemanager.projects.get`, `serviceusage.services.enable`, and
 // `serviceusage.services.get`.
 //
-// - project: The resource name of the GCP `Project` to which Firebase
-//   resources will be added, in the format: projects/PROJECT_IDENTIFIER
-//   Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values. After calling `AddFirebase`, the unique
-//   Project identifiers ( `projectNumber`
-//   (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_number)
-//   and `projectId`
-//   (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_id))
-//   of the underlying GCP `Project` are also the identifiers of the
-//   FirebaseProject.
+//   - project: The resource name of the GCP `Project` to which Firebase
+//     resources will be added, in the format: projects/PROJECT_IDENTIFIER
+//     Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values. After calling `AddFirebase`, the unique
+//     Project identifiers ( `projectNumber`
+//     (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_number)
+//     and `projectId`
+//     (https://cloud.google.com/resource-manager/reference/rest/v1/projects#Project.FIELDS.project_id))
+//     of the underlying GCP `Project` are also the identifiers of the
+//     FirebaseProject.
 func (r *ProjectsService) AddFirebase(projectid string, addfirebaserequest *AddFirebaseRequest) *ProjectsAddFirebaseCall {
 	c := &ProjectsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectid = projectid
@@ -2569,11 +2569,11 @@ type ProjectsAddGoogleAnalyticsCall struct {
 // `regionCode` in the call to `AddFirebase`
 // (../../v1beta1/projects/addFirebase).
 //
-// - parent: The resource name of the FirebaseProject to link to an
-//   existing Google Analytics account, in the format:
-//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the FirebaseProject to link to an
+//     existing Google Analytics account, in the format:
+//     projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsService) AddGoogleAnalytics(parent string, addgoogleanalyticsrequest *AddGoogleAnalyticsRequest) *ProjectsAddGoogleAnalyticsCall {
 	c := &ProjectsAddGoogleAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2716,10 +2716,10 @@ type ProjectsGetCall struct {
 
 // Get: Gets the specified FirebaseProject.
 //
-// - name: The resource name of the FirebaseProject, in the format:
-//   projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - name: The resource name of the FirebaseProject, in the format:
+//     projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsService) Get(name string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2873,10 +2873,10 @@ type ProjectsGetAdminSdkConfigCall struct {
 // (https://firebase.google.com/docs/admin/setup#initialize_the_sdk)
 // command.
 //
-// - name: The resource name of the FirebaseProject, in the format:
-//   projects/ PROJECT_IDENTIFIER/adminSdkConfig Refer to the
-//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
-//   field for details about PROJECT_IDENTIFIER values.
+//   - name: The resource name of the FirebaseProject, in the format:
+//     projects/ PROJECT_IDENTIFIER/adminSdkConfig Refer to the
+//     `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//     field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) GetAdminSdkConfig(name string) *ProjectsGetAdminSdkConfigCall {
 	c := &ProjectsGetAdminSdkConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3028,10 +3028,10 @@ type ProjectsGetAnalyticsDetailsCall struct {
 // `FirebaseProject` is not yet linked to Google Analytics, then the
 // response to `GetAnalyticsDetails` is `NOT_FOUND`.
 //
-// - name: The resource name of the FirebaseProject, in the format:
-//   projects/ PROJECT_IDENTIFIER/analyticsDetails Refer to the
-//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
-//   field for details about PROJECT_IDENTIFIER values.
+//   - name: The resource name of the FirebaseProject, in the format:
+//     projects/ PROJECT_IDENTIFIER/analyticsDetails Refer to the
+//     `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//     field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) GetAnalyticsDetails(name string) *ProjectsGetAnalyticsDetailsCall {
 	c := &ProjectsGetAnalyticsDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3372,14 +3372,14 @@ type ProjectsPatchCall struct {
 // Patch: Updates the attributes of the specified FirebaseProject. All
 // query parameters (#query-parameters) are required.
 //
-// - name: The resource name of the Project, in the format:
-//   projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
-//   `ProjectNumber` (../projects#FirebaseProject.FIELDS.project_number)
-//   ***(recommended)*** or its `ProjectId`
-//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
-//   using project identifiers in Google's AIP 2510 standard
-//   (https://google.aip.dev/cloud/2510). Note that the value for
-//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`.
+//   - name: The resource name of the Project, in the format:
+//     projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
+//     `ProjectNumber` (../projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//     using project identifiers in Google's AIP 2510 standard
+//     (https://google.aip.dev/cloud/2510). Note that the value for
+//     PROJECT_IDENTIFIER in any response body will be the `ProjectId`.
 func (r *ProjectsService) Patch(nameid string, firebaseproject *FirebaseProject) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3549,11 +3549,11 @@ type ProjectsRemoveAnalyticsCall struct {
 // call `RemoveAnalytics`, a project member must be an Owner for the
 // `FirebaseProject`.
 //
-// - parent: The resource name of the FirebaseProject to unlink from its
-//   Google Analytics account, in the format:
-//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the FirebaseProject to unlink from its
+//     Google Analytics account, in the format:
+//     projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsService) RemoveAnalytics(parent string, removeanalyticsrequest *RemoveAnalyticsRequest) *ProjectsRemoveAnalyticsCall {
 	c := &ProjectsRemoveAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3700,10 +3700,10 @@ type ProjectsSearchAppsCall struct {
 // some tool use-cases require a summary of all known Apps (such as for
 // App selector interfaces).
 //
-// - parent: The parent FirebaseProject for which to list Apps, in the
-//   format: projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject`
-//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values.
+//   - parent: The parent FirebaseProject for which to list Apps, in the
+//     format: projects/ PROJECT_IDENTIFIER Refer to the `FirebaseProject`
+//     `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
 func (r *ProjectsService) SearchApps(parent string) *ProjectsSearchAppsCall {
 	c := &ProjectsSearchAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3950,11 +3950,11 @@ type ProjectsAndroidAppsCreateCall struct {
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
 //
-// - parent: The resource name of the parent FirebaseProject in which to
-//   create an AndroidApp, in the format:
-//   projects/PROJECT_IDENTIFIER/androidApps Refer to the
-//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
-//   field for details about PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject in which to
+//     create an AndroidApp, in the format:
+//     projects/PROJECT_IDENTIFIER/androidApps Refer to the
+//     `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//     field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsAndroidAppsService) Create(parent string, androidapp *AndroidApp) *ProjectsAndroidAppsCreateCall {
 	c := &ProjectsAndroidAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4097,13 +4097,13 @@ type ProjectsAndroidAppsGetCall struct {
 
 // Get: Gets the specified AndroidApp.
 //
-// - name: The resource name of the AndroidApp, in the format: projects/
-//   PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
-//   identifier, the Unique Resource from Sub-Collection access pattern
-//   may be used here, in the format: projects/-/androidApps/APP_ID
-//   Refer to the `AndroidApp` `name`
-//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the AndroidApp, in the format: projects/
+//     PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
+//     identifier, the Unique Resource from Sub-Collection access pattern
+//     may be used here, in the format: projects/-/androidApps/APP_ID
+//     Refer to the `AndroidApp` `name`
+//     (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsService) Get(nameid string) *ProjectsAndroidAppsGetCall {
 	c := &ProjectsAndroidAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4253,14 +4253,14 @@ type ProjectsAndroidAppsGetConfigCall struct {
 // GetConfig: Gets the configuration artifact associated with the
 // specified AndroidApp.
 //
-// - name: The resource name of the AndroidApp configuration to
-//   download, in the format:
-//   projects/PROJECT_IDENTIFIER/androidApps/APP_ID/config Since an
-//   APP_ID is a unique identifier, the Unique Resource from
-//   Sub-Collection access pattern may be used here, in the format:
-//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
-//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the AndroidApp configuration to
+//     download, in the format:
+//     projects/PROJECT_IDENTIFIER/androidApps/APP_ID/config Since an
+//     APP_ID is a unique identifier, the Unique Resource from
+//     Sub-Collection access pattern may be used here, in the format:
+//     projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//     (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsService) GetConfig(nameid string) *ProjectsAndroidAppsGetConfigCall {
 	c := &ProjectsAndroidAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4412,11 +4412,11 @@ type ProjectsAndroidAppsListCall struct {
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
 //
-// - parent: The resource name of the parent FirebaseProject for which
-//   to list each associated AndroidApp, in the format:
-//   projects/PROJECT_IDENTIFIER /androidApps Refer to the
-//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
-//   field for details about PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject for which
+//     to list each associated AndroidApp, in the format:
+//     projects/PROJECT_IDENTIFIER /androidApps Refer to the
+//     `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//     field for details about PROJECT_IDENTIFIER values.
 func (r *ProjectsAndroidAppsService) List(parent string) *ProjectsAndroidAppsListCall {
 	c := &ProjectsAndroidAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4627,18 +4627,18 @@ type ProjectsAndroidAppsPatchCall struct {
 
 // Patch: Updates the attributes of the specified AndroidApp.
 //
-// - name: The resource name of the AndroidApp, in the format: projects/
-//   PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
-//   parent Project's `ProjectNumber`
-//   (../projects#FirebaseProject.FIELDS.project_number)
-//   ***(recommended)*** or its `ProjectId`
-//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
-//   using project identifiers in Google's AIP 2510 standard
-//   (https://google.aip.dev/cloud/2510). Note that the value for
-//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
-//   APP_ID: the globally unique, Firebase-assigned identifier for the
-//   App (see `appId`
-//   (../projects.androidApps#AndroidApp.FIELDS.app_id)).
+//   - name: The resource name of the AndroidApp, in the format: projects/
+//     PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
+//     parent Project's `ProjectNumber`
+//     (../projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//     using project identifiers in Google's AIP 2510 standard
+//     (https://google.aip.dev/cloud/2510). Note that the value for
+//     PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//     APP_ID: the globally unique, Firebase-assigned identifier for the
+//     App (see `appId`
+//     (../projects.androidApps#AndroidApp.FIELDS.app_id)).
 func (r *ProjectsAndroidAppsService) Patch(nameid string, androidapp *AndroidApp) *ProjectsAndroidAppsPatchCall {
 	c := &ProjectsAndroidAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4795,13 +4795,13 @@ type ProjectsAndroidAppsRemoveCall struct {
 
 // Remove: Removes the specified AndroidApp from the project.
 //
-// - name: The resource name of the AndroidApp, in the format: projects/
-//   PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
-//   identifier, the Unique Resource from Sub-Collection access pattern
-//   may be used here, in the format: projects/-/androidApps/APP_ID
-//   Refer to the AndroidApp name
-//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the AndroidApp, in the format: projects/
+//     PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
+//     identifier, the Unique Resource from Sub-Collection access pattern
+//     may be used here, in the format: projects/-/androidApps/APP_ID
+//     Refer to the AndroidApp name
+//     (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsService) Remove(nameid string, removeandroidapprequest *RemoveAndroidAppRequest) *ProjectsAndroidAppsRemoveCall {
 	c := &ProjectsAndroidAppsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4943,14 +4943,14 @@ type ProjectsAndroidAppsShaCreateCall struct {
 
 // Create: Adds a ShaCertificate to the specified AndroidApp.
 //
-// - parent: The resource name of the parent AndroidApp to which to add
-//   a ShaCertificate, in the format:
-//   projects/PROJECT_IDENTIFIER/androidApps/ APP_ID Since an APP_ID is
-//   a unique identifier, the Unique Resource from Sub-Collection access
-//   pattern may be used here, in the format:
-//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
-//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER and APP_ID values.
+//   - parent: The resource name of the parent AndroidApp to which to add
+//     a ShaCertificate, in the format:
+//     projects/PROJECT_IDENTIFIER/androidApps/ APP_ID Since an APP_ID is
+//     a unique identifier, the Unique Resource from Sub-Collection access
+//     pattern may be used here, in the format:
+//     projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//     (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsShaService) Create(parentid string, shacertificate *ShaCertificate) *ProjectsAndroidAppsShaCreateCall {
 	c := &ProjectsAndroidAppsShaCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -5092,16 +5092,16 @@ type ProjectsAndroidAppsShaDeleteCall struct {
 
 // Delete: Removes a ShaCertificate from the specified AndroidApp.
 //
-// - name: The resource name of the ShaCertificate to remove from the
-//   parent AndroidApp, in the format:
-//   projects/PROJECT_IDENTIFIER/androidApps/APP_ID /sha/SHA_HASH Refer
-//   to the `ShaCertificate` `name`
-//   (../projects.androidApps.sha#ShaCertificate.FIELDS.name) field for
-//   details about PROJECT_IDENTIFIER, APP_ID, and SHA_HASH values. You
-//   can obtain the full resource name of the `ShaCertificate` from the
-//   response of `ListShaCertificates`
-//   (../projects.androidApps.sha/list) or the original
-//   `CreateShaCertificate` (../projects.androidApps.sha/create).
+//   - name: The resource name of the ShaCertificate to remove from the
+//     parent AndroidApp, in the format:
+//     projects/PROJECT_IDENTIFIER/androidApps/APP_ID /sha/SHA_HASH Refer
+//     to the `ShaCertificate` `name`
+//     (../projects.androidApps.sha#ShaCertificate.FIELDS.name) field for
+//     details about PROJECT_IDENTIFIER, APP_ID, and SHA_HASH values. You
+//     can obtain the full resource name of the `ShaCertificate` from the
+//     response of `ListShaCertificates`
+//     (../projects.androidApps.sha/list) or the original
+//     `CreateShaCertificate` (../projects.androidApps.sha/create).
 func (r *ProjectsAndroidAppsShaService) Delete(name string) *ProjectsAndroidAppsShaDeleteCall {
 	c := &ProjectsAndroidAppsShaDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5236,14 +5236,14 @@ type ProjectsAndroidAppsShaListCall struct {
 // List: Lists the SHA-1 and SHA-256 certificates for the specified
 // AndroidApp.
 //
-// - parent: The resource name of the parent AndroidApp for which to
-//   list each associated ShaCertificate, in the format:
-//   projects/PROJECT_IDENTIFIER /androidApps/APP_ID Since an APP_ID is
-//   a unique identifier, the Unique Resource from Sub-Collection access
-//   pattern may be used here, in the format:
-//   projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
-//   (../projects.androidApps#AndroidApp.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER and APP_ID values.
+//   - parent: The resource name of the parent AndroidApp for which to
+//     list each associated ShaCertificate, in the format:
+//     projects/PROJECT_IDENTIFIER /androidApps/APP_ID Since an APP_ID is
+//     a unique identifier, the Unique Resource from Sub-Collection access
+//     pattern may be used here, in the format:
+//     projects/-/androidApps/APP_ID Refer to the `AndroidApp` `name`
+//     (../projects.androidApps#AndroidApp.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsAndroidAppsShaService) List(parentid string) *ProjectsAndroidAppsShaListCall {
 	c := &ProjectsAndroidAppsShaListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -5409,13 +5409,13 @@ type ProjectsAvailableLocationsListCall struct {
 // at minimum a Viewer of the Project. Calls without a specified project
 // do not require any specific project permissions.
 //
-// - parent: The FirebaseProject for which to list GCP resource
-//   locations, in the format: projects/PROJECT_IDENTIFIER Refer to the
-//   `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
-//   field for details about PROJECT_IDENTIFIER values. If no unique
-//   project identifier is specified (that is, `projects/-`), the
-//   returned list does not take into account org-specific or
-//   project-specific location restrictions.
+//   - parent: The FirebaseProject for which to list GCP resource
+//     locations, in the format: projects/PROJECT_IDENTIFIER Refer to the
+//     `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+//     field for details about PROJECT_IDENTIFIER values. If no unique
+//     project identifier is specified (that is, `projects/-`), the
+//     returned list does not take into account org-specific or
+//     project-specific location restrictions.
 func (r *ProjectsAvailableLocationsService) List(parentid string) *ProjectsAvailableLocationsListCall {
 	c := &ProjectsAvailableLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -5642,11 +5642,11 @@ type ProjectsDefaultLocationFinalizeCall struct {
 // (#request-body) are required. To call `FinalizeDefaultLocation`, a
 // member must be an Owner of the Project.
 //
-// - parent: The resource name of the FirebaseProject for which the
-//   default GCP resource location will be set, in the format:
-//   projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the FirebaseProject for which the
+//     default GCP resource location will be set, in the format:
+//     projects/PROJECT_IDENTIFIER Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsDefaultLocationService) Finalize(parent string, finalizedefaultlocationrequest *FinalizeDefaultLocationRequest) *ProjectsDefaultLocationFinalizeCall {
 	c := &ProjectsDefaultLocationFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5793,11 +5793,11 @@ type ProjectsIosAppsCreateCall struct {
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
 //
-// - parent: The resource name of the parent FirebaseProject in which to
-//   create an IosApp, in the format:
-//   projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
-//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject in which to
+//     create an IosApp, in the format:
+//     projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
+//     `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
 func (r *ProjectsIosAppsService) Create(parent string, iosapp *IosApp) *ProjectsIosAppsCreateCall {
 	c := &ProjectsIosAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5940,13 +5940,13 @@ type ProjectsIosAppsGetCall struct {
 
 // Get: Gets the specified IosApp.
 //
-// - name: The resource name of the IosApp, in the format:
-//   projects/PROJECT_IDENTIFIER /iosApps/APP_ID Since an APP_ID is a
-//   unique identifier, the Unique Resource from Sub-Collection access
-//   pattern may be used here, in the format: projects/-/iosApps/APP_ID
-//   Refer to the `IosApp` `name`
-//   (../projects.iosApps#IosApp.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the IosApp, in the format:
+//     projects/PROJECT_IDENTIFIER /iosApps/APP_ID Since an APP_ID is a
+//     unique identifier, the Unique Resource from Sub-Collection access
+//     pattern may be used here, in the format: projects/-/iosApps/APP_ID
+//     Refer to the `IosApp` `name`
+//     (../projects.iosApps#IosApp.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsIosAppsService) Get(nameid string) *ProjectsIosAppsGetCall {
 	c := &ProjectsIosAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6096,13 +6096,13 @@ type ProjectsIosAppsGetConfigCall struct {
 // GetConfig: Gets the configuration artifact associated with the
 // specified IosApp.
 //
-// - name: The resource name of the App configuration to download, in
-//   the format: projects/PROJECT_IDENTIFIER/iosApps/APP_ID/config Since
-//   an APP_ID is a unique identifier, the Unique Resource from
-//   Sub-Collection access pattern may be used here, in the format:
-//   projects/-/iosApps/APP_ID Refer to the `IosApp` `name`
-//   (../projects.iosApps#IosApp.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the App configuration to download, in
+//     the format: projects/PROJECT_IDENTIFIER/iosApps/APP_ID/config Since
+//     an APP_ID is a unique identifier, the Unique Resource from
+//     Sub-Collection access pattern may be used here, in the format:
+//     projects/-/iosApps/APP_ID Refer to the `IosApp` `name`
+//     (../projects.iosApps#IosApp.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsIosAppsService) GetConfig(nameid string) *ProjectsIosAppsGetConfigCall {
 	c := &ProjectsIosAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6254,11 +6254,11 @@ type ProjectsIosAppsListCall struct {
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
 //
-// - parent: The resource name of the parent FirebaseProject for which
-//   to list each associated IosApp, in the format:
-//   projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
-//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject for which
+//     to list each associated IosApp, in the format:
+//     projects/PROJECT_IDENTIFIER/iosApps Refer to the `FirebaseProject`
+//     `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
 func (r *ProjectsIosAppsService) List(parent string) *ProjectsIosAppsListCall {
 	c := &ProjectsIosAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6469,17 +6469,17 @@ type ProjectsIosAppsPatchCall struct {
 
 // Patch: Updates the attributes of the specified IosApp.
 //
-// - name: The resource name of the IosApp, in the format:
-//   projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER:
-//   the parent Project's `ProjectNumber`
-//   (../projects#FirebaseProject.FIELDS.project_number)
-//   ***(recommended)*** or its `ProjectId`
-//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
-//   using project identifiers in Google's AIP 2510 standard
-//   (https://google.aip.dev/cloud/2510). Note that the value for
-//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
-//   APP_ID: the globally unique, Firebase-assigned identifier for the
-//   App (see `appId` (../projects.iosApps#IosApp.FIELDS.app_id)).
+//   - name: The resource name of the IosApp, in the format:
+//     projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER:
+//     the parent Project's `ProjectNumber`
+//     (../projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//     using project identifiers in Google's AIP 2510 standard
+//     (https://google.aip.dev/cloud/2510). Note that the value for
+//     PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//     APP_ID: the globally unique, Firebase-assigned identifier for the
+//     App (see `appId` (../projects.iosApps#IosApp.FIELDS.app_id)).
 func (r *ProjectsIosAppsService) Patch(nameid string, iosapp *IosApp) *ProjectsIosAppsPatchCall {
 	c := &ProjectsIosAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6636,12 +6636,12 @@ type ProjectsIosAppsRemoveCall struct {
 
 // Remove: Removes the specified IosApp from the project.
 //
-// - name: The resource name of the IosApp, in the format: projects/
-//   PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique
-//   identifier, the Unique Resource from Sub-Collection access pattern
-//   may be used here, in the format: projects/-/iosApps/APP_ID Refer to
-//   the IosApp name (../projects.iosApps#IosApp.FIELDS.name) field for
-//   details about PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the IosApp, in the format: projects/
+//     PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique
+//     identifier, the Unique Resource from Sub-Collection access pattern
+//     may be used here, in the format: projects/-/iosApps/APP_ID Refer to
+//     the IosApp name (../projects.iosApps#IosApp.FIELDS.name) field for
+//     details about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsIosAppsService) Remove(nameid string, removeiosapprequest *RemoveIosAppRequest) *ProjectsIosAppsRemoveCall {
 	c := &ProjectsIosAppsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6787,11 +6787,11 @@ type ProjectsWebAppsCreateCall struct {
 // automatically deleted after completion, so there is no need to call
 // `DeleteOperation`.
 //
-// - parent: The resource name of the parent FirebaseProject in which to
-//   create a WebApp, in the format: projects/PROJECT_IDENTIFIER/webApps
-//   Refer to the `FirebaseProject` `name`
-//   (../projects#FirebaseProject.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject in which to
+//     create a WebApp, in the format: projects/PROJECT_IDENTIFIER/webApps
+//     Refer to the `FirebaseProject` `name`
+//     (../projects#FirebaseProject.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER values.
 func (r *ProjectsWebAppsService) Create(parent string, webapp *WebApp) *ProjectsWebAppsCreateCall {
 	c := &ProjectsWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6934,13 +6934,13 @@ type ProjectsWebAppsGetCall struct {
 
 // Get: Gets the specified WebApp.
 //
-// - name: The resource name of the WebApp, in the format:
-//   projects/PROJECT_IDENTIFIER /webApps/APP_ID Since an APP_ID is a
-//   unique identifier, the Unique Resource from Sub-Collection access
-//   pattern may be used here, in the format: projects/-/webApps/APP_ID
-//   Refer to the `WebApp` `name`
-//   (../projects.webApps#WebApp.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the WebApp, in the format:
+//     projects/PROJECT_IDENTIFIER /webApps/APP_ID Since an APP_ID is a
+//     unique identifier, the Unique Resource from Sub-Collection access
+//     pattern may be used here, in the format: projects/-/webApps/APP_ID
+//     Refer to the `WebApp` `name`
+//     (../projects.webApps#WebApp.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsWebAppsService) Get(nameid string) *ProjectsWebAppsGetCall {
 	c := &ProjectsWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7090,13 +7090,13 @@ type ProjectsWebAppsGetConfigCall struct {
 // GetConfig: Gets the configuration artifact associated with the
 // specified WebApp.
 //
-// - name: The resource name of the WebApp configuration to download, in
-//   the format: projects/PROJECT_IDENTIFIER/webApps/APP_ID/config Since
-//   an APP_ID is a unique identifier, the Unique Resource from
-//   Sub-Collection access pattern may be used here, in the format:
-//   projects/-/webApps/APP_ID Refer to the `WebApp` `name`
-//   (../projects.webApps#WebApp.FIELDS.name) field for details about
-//   PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the WebApp configuration to download, in
+//     the format: projects/PROJECT_IDENTIFIER/webApps/APP_ID/config Since
+//     an APP_ID is a unique identifier, the Unique Resource from
+//     Sub-Collection access pattern may be used here, in the format:
+//     projects/-/webApps/APP_ID Refer to the `WebApp` `name`
+//     (../projects.webApps#WebApp.FIELDS.name) field for details about
+//     PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsWebAppsService) GetConfig(nameid string) *ProjectsWebAppsGetConfigCall {
 	c := &ProjectsWebAppsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7248,11 +7248,11 @@ type ProjectsWebAppsListCall struct {
 // but will be a consistent view of the Apps when additional requests
 // are made with a `pageToken`.
 //
-// - parent: The resource name of the parent FirebaseProject for which
-//   to list each associated WebApp, in the format:
-//   projects/PROJECT_IDENTIFIER/webApps Refer to the `FirebaseProject`
-//   `name` (../projects#FirebaseProject.FIELDS.name) field for details
-//   about PROJECT_IDENTIFIER values.
+//   - parent: The resource name of the parent FirebaseProject for which
+//     to list each associated WebApp, in the format:
+//     projects/PROJECT_IDENTIFIER/webApps Refer to the `FirebaseProject`
+//     `name` (../projects#FirebaseProject.FIELDS.name) field for details
+//     about PROJECT_IDENTIFIER values.
 func (r *ProjectsWebAppsService) List(parent string) *ProjectsWebAppsListCall {
 	c := &ProjectsWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7463,17 +7463,17 @@ type ProjectsWebAppsPatchCall struct {
 
 // Patch: Updates the attributes of the specified WebApp.
 //
-// - name: The resource name of the WebApp, in the format:
-//   projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER:
-//   the parent Project's `ProjectNumber`
-//   (../projects#FirebaseProject.FIELDS.project_number)
-//   ***(recommended)*** or its `ProjectId`
-//   (../projects#FirebaseProject.FIELDS.project_id). Learn more about
-//   using project identifiers in Google's AIP 2510 standard
-//   (https://google.aip.dev/cloud/2510). Note that the value for
-//   PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
-//   APP_ID: the globally unique, Firebase-assigned identifier for the
-//   App (see `appId` (../projects.webApps#WebApp.FIELDS.app_id)).
+//   - name: The resource name of the WebApp, in the format:
+//     projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER:
+//     the parent Project's `ProjectNumber`
+//     (../projects#FirebaseProject.FIELDS.project_number)
+//     ***(recommended)*** or its `ProjectId`
+//     (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+//     using project identifiers in Google's AIP 2510 standard
+//     (https://google.aip.dev/cloud/2510). Note that the value for
+//     PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+//     APP_ID: the globally unique, Firebase-assigned identifier for the
+//     App (see `appId` (../projects.webApps#WebApp.FIELDS.app_id)).
 func (r *ProjectsWebAppsService) Patch(nameid string, webapp *WebApp) *ProjectsWebAppsPatchCall {
 	c := &ProjectsWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7630,12 +7630,12 @@ type ProjectsWebAppsRemoveCall struct {
 
 // Remove: Removes the specified WebApp from the project.
 //
-// - name: The resource name of the WebApp, in the format: projects/
-//   PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique
-//   identifier, the Unique Resource from Sub-Collection access pattern
-//   may be used here, in the format: projects/-/webApps/APP_ID Refer to
-//   the WebApp name (../projects.webApps#WebApp.FIELDS.name) field for
-//   details about PROJECT_IDENTIFIER and APP_ID values.
+//   - name: The resource name of the WebApp, in the format: projects/
+//     PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique
+//     identifier, the Unique Resource from Sub-Collection access pattern
+//     may be used here, in the format: projects/-/webApps/APP_ID Refer to
+//     the WebApp name (../projects.webApps#WebApp.FIELDS.name) field for
+//     details about PROJECT_IDENTIFIER and APP_ID values.
 func (r *ProjectsWebAppsService) Remove(nameid string, removewebapprequest *RemoveWebAppRequest) *ProjectsWebAppsRemoveCall {
 	c := &ProjectsWebAppsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

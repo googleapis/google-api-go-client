@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/gkehub/v1beta"
-//   ...
-//   ctx := context.Background()
-//   gkehubService, err := gkehub.NewService(ctx)
+//	import "google.golang.org/api/gkehub/v1beta"
+//	...
+//	ctx := context.Background()
+//	gkehubService, err := gkehub.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   gkehubService, err := gkehub.NewService(ctx, option.WithAPIKey("AIza..."))
+//	gkehubService, err := gkehub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   gkehubService, err := gkehub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	gkehubService, err := gkehub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gkehub // import "google.golang.org/api/gkehub/v1beta"
@@ -3753,8 +3753,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3961,8 +3961,8 @@ type ProjectsLocationsFeaturesCreateCall struct {
 
 // Create: Adds a new Feature.
 //
-// - parent: The parent (project and location) where the Feature will be
-//   created. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Feature will be
+//     created. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFeaturesService) Create(parent string, feature *Feature) *ProjectsLocationsFeaturesCreateCall {
 	c := &ProjectsLocationsFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4137,8 +4137,8 @@ type ProjectsLocationsFeaturesDeleteCall struct {
 
 // Delete: Removes a Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Delete(name string) *ProjectsLocationsFeaturesDeleteCall {
 	c := &ProjectsLocationsFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4307,8 +4307,8 @@ type ProjectsLocationsFeaturesGetCall struct {
 
 // Get: Gets details of a single Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Get(name string) *ProjectsLocationsFeaturesGetCall {
 	c := &ProjectsLocationsFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4456,10 +4456,10 @@ type ProjectsLocationsFeaturesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) GetIamPolicy(resource string) *ProjectsLocationsFeaturesGetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4629,8 +4629,8 @@ type ProjectsLocationsFeaturesListCall struct {
 
 // List: Lists Features in a given project and location.
 //
-// - parent: The parent (project and location) where the Features will
-//   be listed. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Features will
+//     be listed. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFeaturesService) List(parent string) *ProjectsLocationsFeaturesListCall {
 	c := &ProjectsLocationsFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4854,8 +4854,8 @@ type ProjectsLocationsFeaturesPatchCall struct {
 
 // Patch: Updates an existing Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Patch(name string, feature *Feature) *ProjectsLocationsFeaturesPatchCall {
 	c := &ProjectsLocationsFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5034,10 +5034,10 @@ type ProjectsLocationsFeaturesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFeaturesSetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5184,10 +5184,10 @@ type ProjectsLocationsFeaturesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFeaturesTestIamPermissionsCall {
 	c := &ProjectsLocationsFeaturesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5331,10 +5331,10 @@ type ProjectsLocationsMembershipsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) GetIamPolicy(resource string) *ProjectsLocationsMembershipsGetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5506,10 +5506,10 @@ type ProjectsLocationsMembershipsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMembershipsSetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5656,10 +5656,10 @@ type ProjectsLocationsMembershipsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMembershipsTestIamPermissionsCall {
 	c := &ProjectsLocationsMembershipsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

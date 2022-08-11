@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/service-consumer-management/docs/overview
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/serviceconsumermanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx)
+//	import "google.golang.org/api/serviceconsumermanagement/v1"
+//	...
+//	ctx := context.Background()
+//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	serviceconsumermanagementService, err := serviceconsumermanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package serviceconsumermanagement // import "google.golang.org/api/serviceconsumermanagement/v1"
@@ -5139,9 +5139,9 @@ type ServicesSearchCall struct {
 
 // Search: Search tenancy units for a managed service.
 //
-// - parent: Service for which search is performed. services/{service}
-//   {service} the name of a service, for example
-//   'service.googleapis.com'.
+//   - parent: Service for which search is performed. services/{service}
+//     {service} the name of a service, for example
+//     'service.googleapis.com'.
 func (r *ServicesService) Search(parent string) *ServicesSearchCall {
 	c := &ServicesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5364,8 +5364,8 @@ type ServicesTenancyUnitsAddProjectCall struct {
 // `RemoveTenantProject` first to resolve them before you can make
 // another call to `AddTenantProject` with the same tag. Operation.
 //
-// - parent: Name of the tenancy unit. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - parent: Name of the tenancy unit. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) AddProject(parent string, addtenantprojectrequest *AddTenantProjectRequest) *ServicesTenancyUnitsAddProjectCall {
 	c := &ServicesTenancyUnitsAddProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5522,8 +5522,8 @@ type ServicesTenancyUnitsApplyProjectConfigCall struct {
 // rollback of already applied configuration changes is attempted.
 // Operation.
 //
-// - name: Name of the tenancy unit. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - name: Name of the tenancy unit. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) ApplyProjectConfig(name string, applytenantprojectconfigrequest *ApplyTenantProjectConfigRequest) *ServicesTenancyUnitsApplyProjectConfigCall {
 	c := &ServicesTenancyUnitsApplyProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5674,9 +5674,9 @@ type ServicesTenancyUnitsAttachProjectCall struct {
 // that project. These two requirements are already met if the project
 // is reserved by calling `AddTenantProject`. Operation.
 //
-// - name: Name of the tenancy unit that the project will be attached
-//   to. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - name: Name of the tenancy unit that the project will be attached
+//     to. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) AttachProject(name string, attachtenantprojectrequest *AttachTenantProjectRequest) *ServicesTenancyUnitsAttachProjectCall {
 	c := &ServicesTenancyUnitsAttachProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5822,13 +5822,13 @@ type ServicesTenancyUnitsCreateCall struct {
 // ListTenancyUnits has to be used to get a complete TenancyUnit with
 // all fields populated.
 //
-// - parent: services/{service}/{collection id}/{resource id}
-//   {collection id} is the cloud resource collection type representing
-//   the service consumer, for example 'projects', or 'organizations'.
-//   {resource id} is the consumer numeric id, such as project number:
-//   '123456'. {service} the name of a managed service, such as
-//   'service.googleapis.com'. Enables service binding using the new
-//   tenancy unit.
+//   - parent: services/{service}/{collection id}/{resource id}
+//     {collection id} is the cloud resource collection type representing
+//     the service consumer, for example 'projects', or 'organizations'.
+//     {resource id} is the consumer numeric id, such as project number:
+//     '123456'. {service} the name of a managed service, such as
+//     'service.googleapis.com'. Enables service binding using the new
+//     tenancy unit.
 func (r *ServicesTenancyUnitsService) Create(parent string, createtenancyunitrequest *CreateTenancyUnitRequest) *ServicesTenancyUnitsCreateCall {
 	c := &ServicesTenancyUnitsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6112,8 +6112,8 @@ type ServicesTenancyUnitsDeleteProjectCall struct {
 // be added if there are existing resources in a DELETED state.
 // Operation.
 //
-// - name: Name of the tenancy unit. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - name: Name of the tenancy unit. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) DeleteProject(name string, deletetenantprojectrequest *DeleteTenantProjectRequest) *ServicesTenancyUnitsDeleteProjectCall {
 	c := &ServicesTenancyUnitsDeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6259,12 +6259,12 @@ type ServicesTenancyUnitsListCall struct {
 // creating VMs. Service producers must persist the tenant project's
 // information after the project is created.
 //
-// - parent: Managed service and service consumer. Required.
-//   services/{service}/{collection id}/{resource id} {collection id} is
-//   the cloud resource collection type representing the service
-//   consumer, for example 'projects', or 'organizations'. {resource id}
-//   is the consumer numeric id, such as project number: '123456'.
-//   {service} the name of a service, such as 'service.googleapis.com'.
+//   - parent: Managed service and service consumer. Required.
+//     services/{service}/{collection id}/{resource id} {collection id} is
+//     the cloud resource collection type representing the service
+//     consumer, for example 'projects', or 'organizations'. {resource id}
+//     is the consumer numeric id, such as project number: '123456'.
+//     {service} the name of a service, such as 'service.googleapis.com'.
 func (r *ServicesTenancyUnitsService) List(parent string) *ServicesTenancyUnitsListCall {
 	c := &ServicesTenancyUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6477,8 +6477,8 @@ type ServicesTenancyUnitsRemoveProjectCall struct {
 // state, resource metadata is permanently removed from the tenancy
 // unit. Operation.
 //
-// - name: Name of the tenancy unit. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - name: Name of the tenancy unit. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) RemoveProject(name string, removetenantprojectrequest *RemoveTenantProjectRequest) *ServicesTenancyUnitsRemoveProjectCall {
 	c := &ServicesTenancyUnitsRemoveProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6625,8 +6625,8 @@ type ServicesTenancyUnitsUndeleteProjectCall struct {
 // update its configuration and then validate all managed service
 // resources. Operation.
 //
-// - name: Name of the tenancy unit. Such as
-//   'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
+//   - name: Name of the tenancy unit. Such as
+//     'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.
 func (r *ServicesTenancyUnitsService) UndeleteProject(name string, undeletetenantprojectrequest *UndeleteTenantProjectRequest) *ServicesTenancyUnitsUndeleteProjectCall {
 	c := &ServicesTenancyUnitsUndeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

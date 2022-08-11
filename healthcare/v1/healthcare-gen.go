@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/healthcare
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/healthcare/v1"
-//   ...
-//   ctx := context.Background()
-//   healthcareService, err := healthcare.NewService(ctx)
+//	import "google.golang.org/api/healthcare/v1"
+//	...
+//	ctx := context.Background()
+//	healthcareService, err := healthcare.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
+//	healthcareService, err := healthcare.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	healthcareService, err := healthcare.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package healthcare // import "google.golang.org/api/healthcare/v1"
@@ -5994,8 +5994,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6205,9 +6205,9 @@ type ProjectsLocationsDatasetsCreateCall struct {
 // which contains a Dataset or `Operation.error`. The metadata field
 // type is OperationMetadata.
 //
-// - parent: The name of the project where the server creates the
-//   dataset. For example,
-//   `projects/{project_id}/locations/{location_id}`.
+//   - parent: The name of the project where the server creates the
+//     dataset. For example,
+//     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Dataset) *ProjectsLocationsDatasetsCreateCall {
 	c := &ProjectsLocationsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6371,9 +6371,9 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // For more information, see Viewing error logs in Cloud Logging
 // (https://cloud.google.com/healthcare/docs/how-tos/logging).
 //
-// - sourceDataset: Source dataset resource name. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   `.
+//   - sourceDataset: Source dataset resource name. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     `.
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -6516,9 +6516,9 @@ type ProjectsLocationsDatasetsDeleteCall struct {
 // in the dataset. Deleting a dataset does not affect the sources from
 // which the dataset was imported (if any).
 //
-// - name: The name of the dataset to delete. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   `.
+//   - name: The name of the dataset to delete. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     `.
 func (r *ProjectsLocationsDatasetsService) Delete(name string) *ProjectsLocationsDatasetsDeleteCall {
 	c := &ProjectsLocationsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6651,9 +6651,9 @@ type ProjectsLocationsDatasetsGetCall struct {
 
 // Get: Gets any metadata associated with a dataset.
 //
-// - name: The name of the dataset to read. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   `.
+//   - name: The name of the dataset to read. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     `.
 func (r *ProjectsLocationsDatasetsService) Get(name string) *ProjectsLocationsDatasetsGetCall {
 	c := &ProjectsLocationsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6801,10 +6801,10 @@ type ProjectsLocationsDatasetsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6974,8 +6974,8 @@ type ProjectsLocationsDatasetsListCall struct {
 
 // List: Lists the health datasets in the current project.
 //
-// - parent: The name of the project whose datasets should be listed.
-//   For example, `projects/{project_id}/locations/{location_id}`.
+//   - parent: The name of the project whose datasets should be listed.
+//     For example, `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsDatasetsService) List(parent string) *ProjectsLocationsDatasetsListCall {
 	c := &ProjectsLocationsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7168,9 +7168,9 @@ type ProjectsLocationsDatasetsPatchCall struct {
 
 // Patch: Updates dataset metadata.
 //
-// - name: Resource name of the dataset, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   `.
+//   - name: Resource name of the dataset, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     `.
 func (r *ProjectsLocationsDatasetsService) Patch(name string, dataset *Dataset) *ProjectsLocationsDatasetsPatchCall {
 	c := &ProjectsLocationsDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7328,10 +7328,10 @@ type ProjectsLocationsDatasetsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7478,10 +7478,10 @@ type ProjectsLocationsDatasetsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7625,10 +7625,10 @@ type ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall struct {
 // mapping in the specified consent store is consented for the specified
 // use.
 //
-// - consentStore: Name of the consent store where the requested data_id
-//   is stored, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}`.
+//   - consentStore: Name of the consent store where the requested data_id
+//     is stored, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}`.
 func (r *ProjectsLocationsDatasetsConsentStoresService) CheckDataAccess(consentStore string, checkdataaccessrequest *CheckDataAccessRequest) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
 	c := &ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -8065,8 +8065,8 @@ type ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall struct {
 // mappings are created or updated and when they are included in
 // EvaluateUserConsents results.
 //
-// - consentStore: Name of the consent store to retrieve User data
-//   mappings from.
+//   - consentStore: Name of the consent store to retrieve User data
+//     mappings from.
 func (r *ProjectsLocationsDatasetsConsentStoresService) EvaluateUserConsents(consentStore string, evaluateuserconsentsrequest *EvaluateUserConsentsRequest) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -8377,10 +8377,10 @@ type ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8756,10 +8756,10 @@ type ProjectsLocationsDatasetsConsentStoresPatchCall struct {
 
 // Patch: Updates the specified consent store.
 //
-// - name: Resource name of the consent store, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}`. Cannot be changed after
-//   creation.
+//   - name: Resource name of the consent store, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}`. Cannot be changed after
+//     creation.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Patch(name string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8946,8 +8946,8 @@ type ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall struct {
 // "healthcare_consent_store" } severity: "ERROR" timestamp: "TIMESTAMP"
 // ```
 //
-// - consentStore: Name of the consent store to retrieve User data
-//   mappings from.
+//   - consentStore: Name of the consent store to retrieve User data
+//     mappings from.
 func (r *ProjectsLocationsDatasetsConsentStoresService) QueryAccessibleData(consentStore string, queryaccessibledatarequest *QueryAccessibleDataRequest) *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall {
 	c := &ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -9091,10 +9091,10 @@ type ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9241,10 +9241,10 @@ type ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsConsentStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9387,8 +9387,8 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall struct
 // Create: Creates a new Attribute definition in the parent consent
 // store.
 //
-// - parent: The name of the consent store that this Attribute
-//   definition belongs to.
+//   - parent: The name of the consent store that this Attribute
+//     definition belongs to.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Create(parent string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9547,10 +9547,10 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall struct
 // Attribute definition is referenced by any User data mapping, or the
 // latest revision of any Consent.
 //
-// - name: The resource name of the Attribute definition to delete. To
-//   preserve referential integrity, Attribute definitions referenced by
-//   a User data mapping or the latest revision of a Consent cannot be
-//   deleted.
+//   - name: The resource name of the Attribute definition to delete. To
+//     preserve referential integrity, Attribute definitions referenced by
+//     a User data mapping or the latest revision of a Consent cannot be
+//     deleted.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9829,8 +9829,8 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall struct {
 
 // List: Lists the Attribute definitions in the specified consent store.
 //
-// - parent: Name of the consent store to retrieve Attribute definitions
-//   from.
+//   - parent: Name of the consent store to retrieve Attribute definitions
+//     from.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10036,10 +10036,10 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall struct 
 
 // Patch: Updates the specified Attribute definition.
 //
-// - name: Resource name of the Attribute definition, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/attributeDefinitions/{attribute_de
-//   finition_id}`. Cannot be changed after creation.
+//   - name: Resource name of the Attribute definition, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/attributeDefinitions/{attribute_de
+//     finition_id}`. Cannot be changed after creation.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Patch(name string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10200,8 +10200,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall struct {
 
 // Create: Creates a new Consent artifact in the parent consent store.
 //
-// - parent: The name of the consent store this Consent artifact belongs
-//   to.
+//   - parent: The name of the consent store this Consent artifact belongs
+//     to.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Create(parent string, consentartifact *ConsentArtifact) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10343,9 +10343,9 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall struct {
 // Delete: Deletes the specified Consent artifact. Fails if the artifact
 // is referenced by the latest revision of any Consent.
 //
-// - name: The resource name of the Consent artifact to delete. To
-//   preserve referential integrity, Consent artifacts referenced by the
-//   latest revision of a Consent cannot be deleted.
+//   - name: The resource name of the Consent artifact to delete. To
+//     preserve referential integrity, Consent artifacts referenced by the
+//     latest revision of a Consent cannot be deleted.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10624,8 +10624,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall struct {
 
 // List: Lists the Consent artifacts in the specified consent store.
 //
-// - parent: Name of the consent store to retrieve consent artifacts
-//   from.
+//   - parent: Name of the consent store to retrieve consent artifacts
+//     from.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10862,11 +10862,11 @@ type ProjectsLocationsDatasetsConsentStoresConsentsActivateCall struct {
 // latest revision of the specified Consent is in the `REJECTED` or
 // `REVOKED` state.
 //
-// - name: The resource name of the Consent to activate, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
-//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-//   name.
+//   - name: The resource name of the Consent to activate, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//     INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//     name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Activate(name string, activateconsentrequest *ActivateConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11152,11 +11152,11 @@ type ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall struct {
 // revision of a Consent, see [DeleteConsentRevision]. This operation
 // does not delete the related Consent artifact.
 //
-// - name: The resource name of the Consent to delete, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
-//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-//   name.
+//   - name: The resource name of the Consent to delete, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//     INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//     name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11290,12 +11290,12 @@ type ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall struct {
 // INVALID_ARGUMENT error occurs if the specified revision is the latest
 // revision.
 //
-// - name: The resource name of the Consent revision to delete, of the
-//   form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
-//   }`. An INVALID_ARGUMENT error occurs if `revision_id` is not
-//   specified in the name.
+//   - name: The resource name of the Consent revision to delete, of the
+//     form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//     }`. An INVALID_ARGUMENT error occurs if `revision_id` is not
+//     specified in the name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) DeleteRevision(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11429,14 +11429,14 @@ type ProjectsLocationsDatasetsConsentStoresConsentsGetCall struct {
 // Get: Gets the specified revision of a Consent, or the latest revision
 // if `revision_id` is not specified in the resource name.
 //
-// - name: The resource name of the Consent to retrieve, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. In order
-//   to retrieve a previous revision of the Consent, also provide the
-//   revision ID:
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
-//   }`.
+//   - name: The resource name of the Consent to retrieve, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. In order
+//     to retrieve a previous revision of the Consent, also provide the
+//     revision ID:
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}@{revision_id
+//     }`.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Get(name string) *ProjectsLocationsDatasetsConsentStoresConsentsGetCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12053,10 +12053,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsPatchCall struct {
 // error occurs if the latest revision of the specified Consent is in
 // the `REJECTED` or `REVOKED` state.
 //
-// - name: Resource name of the Consent, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
-//   changed after creation.
+//   - name: Resource name of the Consent, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
+//     changed after creation.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Patch(name string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12220,11 +12220,11 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRejectCall struct {
 // the latest revision of the specified Consent is in the `ACTIVE` or
 // `REVOKED` state.
 //
-// - name: The resource name of the Consent to reject, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
-//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-//   name.
+//   - name: The resource name of the Consent to reject, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//     INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//     name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Reject(name string, rejectconsentrequest *RejectConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12371,11 +12371,11 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall struct {
 // the latest revision of the given consent is in `DRAFT` or `REJECTED`
 // state.
 //
-// - name: The resource name of the Consent to revoke, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/consents/{consent_id}`. An
-//   INVALID_ARGUMENT error occurs if `revision_id` is specified in the
-//   name.
+//   - name: The resource name of the Consent to revoke, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/consents/{consent_id}`. An
+//     INVALID_ARGUMENT error occurs if `revision_id` is specified in the
+//     name.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Revoke(name string, revokeconsentrequest *RevokeConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13079,8 +13079,8 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall struct {
 
 // List: Lists the User data mappings in the specified consent store.
 //
-// - parent: Name of the consent store to retrieve User data mappings
-//   from.
+//   - parent: Name of the consent store to retrieve User data mappings
+//     from.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13310,10 +13310,10 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall struct {
 
 // Patch: Updates the specified User data mapping.
 //
-// - name: Resource name of the User data mapping, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /consentStores/{consent_store_id}/userDataMappings/{user_data_mappin
-//   g_id}`.
+//   - name: Resource name of the User data mapping, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /consentStores/{consent_store_id}/userDataMappings/{user_data_mappin
+//     g_id}`.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Patch(name string, userdatamapping *UserDataMapping) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13635,9 +13635,9 @@ type ProjectsLocationsDatasetsDicomStoresDeidentifyCall struct {
 // Error details are also logged to Cloud Logging (see Viewing error
 // logs in Cloud Logging (/healthcare/docs/how-tos/logging)).
 //
-// - sourceStore: Source DICOM store resource name. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - sourceStore: Source DICOM store resource name. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Deidentify(sourceStore string, deidentifydicomstorerequest *DeidentifyDicomStoreRequest) *ProjectsLocationsDatasetsDicomStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -13916,10 +13916,10 @@ type ProjectsLocationsDatasetsDicomStoresExportCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
 //
-// - name: The DICOM store resource name from which to export the data.
-//   For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - name: The DICOM store resource name from which to export the data.
+//     For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Export(name string, exportdicomdatarequest *ExportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresExportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14209,10 +14209,10 @@ type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14386,10 +14386,10 @@ type ProjectsLocationsDatasetsDicomStoresImportCall struct {
 // (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
 //
-// - name: The name of the DICOM store resource into which the data is
-//   imported. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - name: The name of the DICOM store resource into which the data is
+//     imported. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Import(name string, importdicomdatarequest *ImportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresImportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14761,9 +14761,9 @@ type ProjectsLocationsDatasetsDicomStoresPatchCall struct {
 
 // Patch: Updates the specified DICOM store.
 //
-// - name: Resource name of the DICOM store, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - name: Resource name of the DICOM store, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Patch(name string, dicomstore *DicomStore) *ProjectsLocationsDatasetsDicomStoresPatchCall {
 	c := &ProjectsLocationsDatasetsDicomStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14929,13 +14929,13 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-//   request. For example, `instances`, `series/{series_uid}/instances`,
-//   or `studies/{study_uid}/instances`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//     request. For example, `instances`, `series/{series_uid}/instances`,
+//     or `studies/{study_uid}/instances`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15068,12 +15068,12 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
-//   example, `series` or `studies/{study_uid}/series`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
+//     example, `series` or `studies/{study_uid}/series`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15206,12 +15206,12 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForStudies DICOMweb request.
-//   For example, `studies`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForStudies DICOMweb request.
+//     For example, `studies`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForStudies(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15336,10 +15336,10 @@ type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15490,13 +15490,13 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 // how to call StoreInstances, see Storing DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 //
-// - dicomWebPath: The path of the StoreInstances DICOMweb request. For
-//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
-//   optional.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
+//     example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//     optional.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15614,10 +15614,10 @@ type ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsDicomStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15766,9 +15766,9 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // DeleteStudy, see Deleting a study, series, or instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
-// - dicomWebPath: The path of the DeleteStudy request. For example,
-//   `studies/{study_uid}`.
-// - parent: .
+//   - dicomWebPath: The path of the DeleteStudy request. For example,
+//     `studies/{study_uid}`.
+//   - parent: .
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15920,12 +15920,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // show how to call RetrieveStudyMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
-// - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
-//   request. For example, `studies/{study_uid}/metadata`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveStudyMetadata DICOMweb
+//     request. For example, `studies/{study_uid}/metadata`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16057,12 +16057,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 // show how to call RetrieveStudy, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
-// - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
-//   example, `studies/{study_uid}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveStudy DICOMweb request. For
+//     example, `studies/{study_uid}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveStudy(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16195,13 +16195,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-//   request. For example, `instances`, `series/{series_uid}/instances`,
-//   or `studies/{study_uid}/instances`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//     request. For example, `instances`, `series/{series_uid}/instances`,
+//     or `studies/{study_uid}/instances`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16334,12 +16334,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 // instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
-//   example, `series` or `studies/{study_uid}/series`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForSeries DICOMweb request. For
+//     example, `series` or `studies/{study_uid}/series`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16471,13 +16471,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 // how to call StoreInstances, see Storing DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 //
-// - dicomWebPath: The path of the StoreInstances DICOMweb request. For
-//   example, `studies/[{study_uid}]`. Note that the `study_uid` is
-//   optional.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the StoreInstances DICOMweb request. For
+//     example, `studies/[{study_uid}]`. Note that the `study_uid` is
+//     optional.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16597,12 +16597,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // to call DeleteSeries, see Deleting a study, series, or instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
-// - dicomWebPath: The path of the DeleteSeries request. For example,
-//   `studies/{study_uid}/series/{series_uid}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the DeleteSeries request. For example,
+//     `studies/{study_uid}/series/{series_uid}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16755,13 +16755,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // show how to call RetrieveSeriesMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
-// - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
-//   request. For example,
-//   `studies/{study_uid}/series/{series_uid}/metadata`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveSeriesMetadata DICOMweb
+//     request. For example,
+//     `studies/{study_uid}/series/{series_uid}/metadata`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16893,12 +16893,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 // show how to call RetrieveSeries, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
-// - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
-//   example, `studies/{study_uid}/series/{series_uid}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveSeries DICOMweb request. For
+//     example, `studies/{study_uid}/series/{series_uid}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17031,13 +17031,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 // series, instances, and frames
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 //
-// - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
-//   request. For example, `instances`, `series/{series_uid}/instances`,
-//   or `studies/{study_uid}/instances`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the SearchForInstancesRequest DICOMweb
+//     request. For example, `instances`, `series/{series_uid}/instances`,
+//     or `studies/{study_uid}/instances`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17166,12 +17166,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // to call DeleteInstance, see Deleting a study, series, or instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 //
-// - dicomWebPath: The path of the DeleteInstance request. For example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the DeleteInstance request. For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17326,13 +17326,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // how to call RetrieveInstance, see Retrieving an instance
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
 //
-// - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
-//   For example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveInstance DICOMweb request.
+//     For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveInstance(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17466,14 +17466,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // show how to call RetrieveInstanceMetadata, see Retrieving metadata
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 //
-// - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
-//   request. For example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/me
-//   tadata`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveInstanceMetadata DICOMweb
+//     request. For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/me
+//     tadata`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17607,14 +17607,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // image formats
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 //
-// - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
-//   request. For example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/re
-//   ndered`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveRenderedInstance DICOMweb
+//     request. For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/re
+//     ndered`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17746,14 +17746,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // to call RetrieveFrames, see Retrieving DICOM data
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 //
-// - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
-//   example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
-//   ames/{frame_list}`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveFrames DICOMweb request. For
+//     example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//     ames/{frame_list}`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveFrames(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17887,14 +17887,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // image formats
 // (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 //
-// - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
-//   request. For example,
-//   `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
-//   ames/{frame_list}/rendered`.
-// - parent: The name of the DICOM store that is being accessed. For
-//   example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /dicomStores/{dicom_store_id}`.
+//   - dicomWebPath: The path of the RetrieveRenderedFrames DICOMweb
+//     request. For example,
+//     `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/fr
+//     ames/{frame_list}/rendered`.
+//   - parent: The name of the DICOM store that is being accessed. For
+//     example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /dicomStores/{dicom_store_id}`.
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -18178,9 +18178,9 @@ type ProjectsLocationsDatasetsFhirStoresDeidentifyCall struct {
 // Cloud Logging
 // (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 //
-// - sourceStore: Source FHIR store resource name. For example,
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /fhirStores/{fhir_store_id}`.
+//   - sourceStore: Source FHIR store resource name. For example,
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Deidentify(sourceStore string, deidentifyfhirstorerequest *DeidentifyFhirStoreRequest) *ProjectsLocationsDatasetsFhirStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -18463,10 +18463,10 @@ type ProjectsLocationsDatasetsFhirStoresExportCall struct {
 // ExportResourcesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
 //
-// - name: The name of the FHIR store to export resource from, in the
-//   format of
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /fhirStores/{fhir_store_id}`.
+//   - name: The name of the FHIR store to export resource from, in the
+//     format of
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Export(name string, exportresourcesrequest *ExportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresExportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18756,10 +18756,10 @@ type ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -18989,10 +18989,10 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // ImportResourcesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
 //
-// - name: The name of the FHIR store to import FHIR resources to, in
-//   the format of
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /fhirStores/{fhir_store_id}`.
+//   - name: The name of the FHIR store to import FHIR resources to, in
+//     the format of
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /fhirStores/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Import(name string, importresourcesrequest *ImportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresImportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19364,9 +19364,9 @@ type ProjectsLocationsDatasetsFhirStoresPatchCall struct {
 
 // Patch: Updates the configuration of the specified FHIR store.
 //
-// - name: Output only. Resource name of the FHIR store, of the form
-//   `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_
-//   id}`.
+//   - name: Output only. Resource name of the FHIR store, of the form
+//     `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_
+//     id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19524,10 +19524,10 @@ type ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19674,10 +19674,10 @@ type ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsFhirStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -19845,8 +19845,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // (/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartme
 // nt_resources).
 //
-// - name: Name of the `Patient` resource for which the information is
-//   required.
+//   - name: Name of the `Patient` resource for which the information is
+//     required.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) PatientEverything(name string) *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20202,16 +20202,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall struct {
 // to a valid API method on a FHIR store, a generic GCP error might be
 // returned instead.
 //
-// - parent: The name of the FHIR store that holds the profiles being
-//   used for validation.
-// - type: The FHIR resource type of the resource being validated. For a
-//   complete list, see the FHIR Resource Index (DSTU2
-//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-//   STU3
-//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
-//   or R4
-//   (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
-//   Must match the resource type in the provided content.
+//   - parent: The name of the FHIR store that holds the profiles being
+//     used for validation.
+//   - type: The FHIR resource type of the resource being validated. For a
+//     complete list, see the FHIR Resource Index (DSTU2
+//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     or R4
+//     (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ResourceValidate(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20486,15 +20486,15 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 // Creating a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).
 //
-// - parent: The name of the FHIR store this resource belongs to.
-// - type: The FHIR resource type to create, such as Patient or
-//   Observation. For a complete list, see the FHIR Resource Index
-//   (DSTU2
-//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-//   STU3
-//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
-//   R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
-//   Must match the resource type in the provided content.
+//   - parent: The name of the FHIR store this resource belongs to.
+//   - type: The FHIR resource type to create, such as Patient or
+//     Observation. For a complete list, see the FHIR Resource Index
+//     (DSTU2
+//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//     Must match the resource type in the provided content.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Create(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20748,8 +20748,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall struct {
 // samples that show how to call `executeBundle`, see Managing FHIR
 // resources using FHIR bundles (/healthcare/docs/how-tos/fhir-bundles).
 //
-// - parent: Name of the FHIR store in which this bundle will be
-//   executed.
+//   - parent: Name of the FHIR store in which this bundle will be
+//     executed.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) ExecuteBundle(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21505,14 +21505,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // (/healthcare/docs/how-tos/fhir-search) and Advanced FHIR search
 // features (/healthcare/docs/how-tos/fhir-advanced-search).
 //
-// - parent: Name of the FHIR store to retrieve resources from.
-// - resourceType: The FHIR resource type to search, such as Patient or
-//   Observation. For a complete list, see the FHIR Resource Index
-//   (DSTU2
-//   (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
-//   STU3
-//   (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
-//   R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
+//   - parent: Name of the FHIR store to retrieve resources from.
+//   - resourceType: The FHIR resource type to search, such as Patient or
+//     Observation. For a complete list, see the FHIR Resource Index
+//     (DSTU2
+//     (http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html),
+//     STU3
+//     (http://hl7.org/implement/standards/fhir/STU3/resourcelist.html),
+//     R4 (http://hl7.org/implement/standards/fhir/R4/resourcelist.html)).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchType(parent string, resourceType string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22178,9 +22178,9 @@ type ProjectsLocationsDatasetsHl7V2StoresExportCall struct {
 // ExportMessagesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
 //
-// - name: The name of the source HL7v2 store, in the format
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /hl7v2Stores/{hl7v2_store_id}`.
+//   - name: The name of the source HL7v2 store, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7v2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Export(name string, exportmessagesrequest *ExportMessagesRequest) *ProjectsLocationsDatasetsHl7V2StoresExportCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22470,10 +22470,10 @@ type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22669,9 +22669,9 @@ type ProjectsLocationsDatasetsHl7V2StoresImportCall struct {
 // ImportMessagesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
 //
-// - name: The name of the target HL7v2 store, in the format
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /hl7v2Stores/{hl7v2_store_id}`.
+//   - name: The name of the target HL7v2 store, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7v2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Import(name string, importmessagesrequest *ImportMessagesRequest) *ProjectsLocationsDatasetsHl7V2StoresImportCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23043,9 +23043,9 @@ type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
 
 // Patch: Updates the HL7v2 store.
 //
-// - name: Resource name of the HL7v2 store, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /hl7V2Stores/{hl7v2_store_id}`.
+//   - name: Resource name of the HL7v2 store, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7V2Stores/{hl7v2_store_id}`.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2store *Hl7V2Store) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23203,10 +23203,10 @@ type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23353,10 +23353,10 @@ type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23789,15 +23789,22 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Get(name string) *
 // equivalent to FULL.
 //
 // Possible values:
-//   "MESSAGE_VIEW_UNSPECIFIED" - Not specified, equivalent to FULL.
-//   "RAW_ONLY" - Server responses include all the message fields except
+//
+//	"MESSAGE_VIEW_UNSPECIFIED" - Not specified, equivalent to FULL.
+//	"RAW_ONLY" - Server responses include all the message fields except
+//
 // parsed_data field, and schematized_data fields.
-//   "PARSED_ONLY" - Server responses include all the message fields
+//
+//	"PARSED_ONLY" - Server responses include all the message fields
+//
 // except data field, and schematized_data fields.
-//   "FULL" - Server responses include all the message fields.
-//   "SCHEMATIZED_ONLY" - Server responses include all the message
+//
+//	"FULL" - Server responses include all the message fields.
+//	"SCHEMATIZED_ONLY" - Server responses include all the message
+//
 // fields except data and parsed_data fields.
-//   "BASIC" - Server responses include only the name field.
+//
+//	"BASIC" - Server responses include only the name field.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) View(view string) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -24204,15 +24211,22 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) PageToken(pageTok
 // the performance of this method.
 //
 // Possible values:
-//   "MESSAGE_VIEW_UNSPECIFIED" - Not specified, equivalent to FULL.
-//   "RAW_ONLY" - Server responses include all the message fields except
+//
+//	"MESSAGE_VIEW_UNSPECIFIED" - Not specified, equivalent to FULL.
+//	"RAW_ONLY" - Server responses include all the message fields except
+//
 // parsed_data field, and schematized_data fields.
-//   "PARSED_ONLY" - Server responses include all the message fields
+//
+//	"PARSED_ONLY" - Server responses include all the message fields
+//
 // except data field, and schematized_data fields.
-//   "FULL" - Server responses include all the message fields.
-//   "SCHEMATIZED_ONLY" - Server responses include all the message
+//
+//	"FULL" - Server responses include all the message fields.
+//	"SCHEMATIZED_ONLY" - Server responses include all the message
+//
 // fields except data and parsed_data fields.
-//   "BASIC" - Server responses include only the name field.
+//
+//	"BASIC" - Server responses include only the name field.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) View(view string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -24425,10 +24439,10 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall struct {
 // the existing set of labels. Existing labels with the same keys are
 // updated.
 //
-// - name: Resource name of the Message, of the form
-//   `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
-//   /hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by
-//   the server.
+//   - name: Resource name of the Message, of the form
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
+//     /hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by
+//     the server.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string, message *Message) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25098,8 +25112,8 @@ type ProjectsLocationsServicesNlpAnalyzeEntitiesCall struct {
 // includes the recognized entity mentions and the relationships between
 // them. AnalyzeEntities uses context aware models to detect entities.
 //
-// - nlpService: The resource name of the service of the form:
-//   "projects/{project_id}/locations/{location_id}/services/nlp".
+//   - nlpService: The resource name of the service of the form:
+//     "projects/{project_id}/locations/{location_id}/services/nlp".
 func (r *ProjectsLocationsServicesNlpService) AnalyzeEntities(nlpService string, analyzeentitiesrequest *AnalyzeEntitiesRequest) *ProjectsLocationsServicesNlpAnalyzeEntitiesCall {
 	c := &ProjectsLocationsServicesNlpAnalyzeEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nlpService = nlpService

@@ -652,6 +652,7 @@ type GoogleCloudWebriskV1SubmitUriMetadata struct {
 	//   "SUCCEEDED" - The operation finished with a success status.
 	//   "CANCELLED" - The operation was cancelled.
 	//   "FAILED" - The operation finished with a failure status.
+	//   "CLOSED" - The operation was closed with no action taken.
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Latest update time of the operation.

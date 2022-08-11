@@ -540,16 +540,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -979,6 +983,57 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Database: Represents database access information, such as queries. A
+// database may be a sub-resource of an instance (as in the case of
+// CloudSQL instances or Cloud Spanner instances), or the database
+// instance itself. Some database resources may not have the full
+// resource name populated because these resource types are not yet
+// supported by Cloud Asset Inventory (e.g. CloudSQL databases). In
+// these cases only the display name will be provided.
+type Database struct {
+	// DisplayName: The human readable name of the database the user
+	// connected to.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Grantees: The target usernames/roles/groups of a SQL privilege grant
+	// (not an IAM policy change).
+	Grantees []string `json:"grantees,omitempty"`
+
+	// Name: The full resource name of the database the user connected to,
+	// if it is supported by CAI.
+	// (https://google.aip.dev/122#full-resource-names)
+	Name string `json:"name,omitempty"`
+
+	// Query: The SQL statement associated with the relevant access.
+	Query string `json:"query,omitempty"`
+
+	// UserName: The username used to connect to the DB. This may not
+	// necessarily be an IAM principal, and has no required format.
+	UserName string `json:"userName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Database) MarshalJSON() ([]byte, error) {
+	type NoMethod Database
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Detection: Memory hash detection contributing to the binary family
 // match.
 type Detection struct {
@@ -1302,6 +1357,9 @@ type Finding struct {
 	// CreateTime: The time at which the finding was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// Database: Database associated with the finding.
+	Database *Database `json:"database,omitempty"`
 
 	// Description: Contains more detail about the finding.
 	Description string `json:"description,omitempty"`

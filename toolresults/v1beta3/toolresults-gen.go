@@ -814,6 +814,11 @@ func (s *CrashDialogError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DetectedAppSplashScreen: A notification that Robo detected a splash
+// screen provided by app (vs. Android OS splash screen).
+type DetectedAppSplashScreen struct {
+}
+
 // DeviceOutOfMemory: A warning that device ran out of memory
 type DeviceOutOfMemory struct {
 }
@@ -4006,6 +4011,8 @@ type TestIssue struct {
 	// don't crash apps).
 	//   "deviceOutOfMemory" - Device running out of memory was detected
 	//   "logcatCollectionError" - Problems detected while collecting logcat
+	//   "detectedAppSplashScreen" - Robo detected a splash screen provided
+	// by app (vs. Android OS splash screen).
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should

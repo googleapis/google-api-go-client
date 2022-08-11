@@ -264,7 +264,7 @@ type BatchDocumentOutputConfig struct {
 	// index.csv will be keeping updated during the process, please make
 	// sure there is no custom retention policy applied on the output bucket
 	// that may avoid file updating.
-	// (https://cloud.google.com/storage/docs/bucket-lock?hl=en#retention-policy)
+	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The naming format of translation output files follows (for target
 	// language code [trg]): `translation_output`:
 	// gs://translation_output/a_b_c_[trg]_translation.[extension]
@@ -861,9 +861,9 @@ type GlossaryInputConfig struct {
 	// column names. - TMX (`.tmx`): TMX file with parallel data defining
 	// source/target term pairs. For equivalent term sets glossaries: - CSV
 	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
-	// multiple languages. The format is defined for Google Translation
-	// Toolkit and documented in Use a glossary
-	// (https://support.google.com/translatortoolkit/answer/6306379?hl=en).
+	// multiple languages. See documentation for more information -
+	// glossaries
+	// (https://cloud.google.com/translate/docs/advanced/glossary).
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
@@ -1255,7 +1255,7 @@ type OutputConfig struct {
 	// keeping updated during the process, please make sure there is no
 	// custom retention policy applied on the output bucket that may avoid
 	// file updating.
-	// (https://cloud.google.com/storage/docs/bucket-lock?hl=en#retention-policy)
+	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The format of translations_file (for target language code 'trg') is:
 	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
 	// input file extension is tsv, the output has the following columns:

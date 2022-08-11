@@ -467,12 +467,23 @@ func (s *AnalyticsProperty) MarshalJSON() ([]byte, error) {
 
 // AndroidApp: Details of a Firebase App for Android.
 type AndroidApp struct {
-	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
-	// set must have no restrictions, or only have restrictions that are
-	// valid for the associated Firebase App. Cannot be set in create
-	// requests, instead an existing valid API Key will be chosen, or if no
-	// valid API Keys exist, one will be provisioned for you. Cannot be set
-	// to an empty value in update requests.
+	// ApiKeyId: The globally unique, Google-assigned identifier (UID) for
+	// the Firebase API key associated with the `AndroidApp`. Be aware that
+	// this value is the UID of the API key, _not_ the `keyString`
+	// (https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string)
+	// of the API key. The `keyString` is the value that can be found in the
+	// App's configuration artifact
+	// (../../rest/v1beta1/projects.androidApps/getConfig). If `api_key_id`
+	// is not set in requests to `androidApps.Create`
+	// (../../rest/v1beta1/projects.androidApps/create), then Firebase
+	// automatically associates an `api_key_id` with the `AndroidApp`. This
+	// auto-associated key may be an existing valid key or, if no valid key
+	// exists, a new one will be provisioned. In patch requests,
+	// `api_key_id` cannot be set to an empty value, and the new UID must
+	// have no restrictions or only have restrictions that are valid for the
+	// associated `AndroidApp`. We recommend using the Google Cloud Console
+	// (https://console.cloud.google.com/apis/credentials) to manage API
+	// keys.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
 	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
@@ -687,12 +698,22 @@ func (s *FinalizeDefaultLocationRequest) MarshalJSON() ([]byte, error) {
 
 // FirebaseAppInfo: A high-level summary of an App.
 type FirebaseAppInfo struct {
-	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
-	// set must have no restrictions, or only have restrictions that are
-	// valid for the associated Firebase App. Cannot be set to an empty
-	// value in update requests. If left unset on create requests, an
-	// existing valid API Key will be chosen, or if no valid API Keys exist,
-	// one will be provisioned for you.
+	// ApiKeyId: The globally unique, Google-assigned identifier (UID) for
+	// the Firebase API key associated with the App. Be aware that this
+	// value is the UID of the API key, _not_ the `keyString`
+	// (https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string)
+	// of the API key. The `keyString` is the value that can be found in the
+	// App's configuration artifact (`AndroidApp`
+	// (../../rest/v1beta1/projects.androidApps/getConfig) | `IosApp`
+	// (../../rest/v1beta1/projects.iosApps/getConfig) | `WebApp`
+	// (../../rest/v1beta1/projects.webApps/getConfig)). If `api_key_id` is
+	// not set in requests to create the App (`AndroidApp`
+	// (../../rest/v1beta1/projects.androidApps/create) | `IosApp`
+	// (../../rest/v1beta1/projects.iosApps/create) | `WebApp`
+	// (../../rest/v1beta1/projects.webApps/create)), then Firebase
+	// automatically associates an `api_key_id` with the App. This
+	// auto-associated key may be an existing valid key or, if no valid key
+	// exists, a new one will be provisioned.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
 	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
@@ -855,12 +876,23 @@ func (s *FirebaseProject) MarshalJSON() ([]byte, error) {
 
 // IosApp: Details of a Firebase App for iOS.
 type IosApp struct {
-	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
-	// set must have no restrictions, or only have restrictions that are
-	// valid for the associated Firebase App. Cannot be set in create
-	// requests, instead an existing valid API Key will be chosen, or if no
-	// valid API Keys exist, one will be provisioned for you. Cannot be set
-	// to an empty value in update requests.
+	// ApiKeyId: The globally unique, Google-assigned identifier (UID) for
+	// the Firebase API key associated with the `IosApp`. Be aware that this
+	// value is the UID of the API key, _not_ the `keyString`
+	// (https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string)
+	// of the API key. The `keyString` is the value that can be found in the
+	// App's configuration artifact
+	// (../../rest/v1beta1/projects.iosApps/getConfig). If `api_key_id` is
+	// not set in requests to `iosApps.Create`
+	// (../../rest/v1beta1/projects.iosApps/create), then Firebase
+	// automatically associates an `api_key_id` with the `IosApp`. This
+	// auto-associated key may be an existing valid key or, if no valid key
+	// exists, a new one will be provisioned. In patch requests,
+	// `api_key_id` cannot be set to an empty value, and the new UID must
+	// have no restrictions or only have restrictions that are valid for the
+	// associated `IosApp`. We recommend using the Google Cloud Console
+	// (https://console.cloud.google.com/apis/credentials) to manage API
+	// keys.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
 	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
@@ -1796,12 +1828,23 @@ func (s *StreamMapping) MarshalJSON() ([]byte, error) {
 
 // WebApp: Details of a Firebase App for the web.
 type WebApp struct {
-	// ApiKeyId: The key_id of the GCP ApiKey associated with this App. If
-	// set must have no restrictions, or only have restrictions that are
-	// valid for the associated Firebase App. Cannot be set in create
-	// requests, instead an existing valid API Key will be chosen, or if no
-	// valid API Keys exist, one will be provisioned for you. Cannot be set
-	// to an empty value in update requests.
+	// ApiKeyId: The globally unique, Google-assigned identifier (UID) for
+	// the Firebase API key associated with the `WebApp`. Be aware that this
+	// value is the UID of the API key, _not_ the `keyString`
+	// (https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string)
+	// of the API key. The `keyString` is the value that can be found in the
+	// App's configuration artifact
+	// (../../rest/v1beta1/projects.webApps/getConfig). If `api_key_id` is
+	// not set in requests to `webApps.Create`
+	// (../../rest/v1beta1/projects.webApps/create), then Firebase
+	// automatically associates an `api_key_id` with the `WebApp`. This
+	// auto-associated key may be an existing valid key or, if no valid key
+	// exists, a new one will be provisioned. In patch requests,
+	// `api_key_id` cannot be set to an empty value, and the new UID must
+	// have no restrictions or only have restrictions that are valid for the
+	// associated `WebApp`. We recommend using the Google Cloud Console
+	// (https://console.cloud.google.com/apis/credentials) to manage API
+	// keys.
 	ApiKeyId string `json:"apiKeyId,omitempty"`
 
 	// AppId: Output only. Immutable. The globally unique, Firebase-assigned
@@ -1877,7 +1920,11 @@ func (s *WebApp) MarshalJSON() ([]byte, error) {
 // WebAppConfig: Configuration metadata of a single Firebase App for the
 // web.
 type WebAppConfig struct {
-	// ApiKey: The API key associated with the `WebApp`.
+	// ApiKey: The `keyString`
+	// (https://cloud.google.com/api-keys/docs/reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string)
+	// of the API key associated with the `WebApp`. Note that this value is
+	// _not_ the `apiKeyId` (../projects.webApps#WebApp.FIELDS.api_key_id)
+	// (the UID) of the API key associated with the `WebApp`.
 	ApiKey string `json:"apiKey,omitempty"`
 
 	// AppId: Immutable. The globally unique, Firebase-assigned identifier

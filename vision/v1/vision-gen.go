@@ -13513,27 +13513,30 @@ func (s *TextAnnotation) MarshalJSON() ([]byte, error) {
 // TextDetectionParams: Parameters for text detections. This is used to
 // control TEXT_DETECTION and DOCUMENT_TEXT_DETECTION features.
 type TextDetectionParams struct {
+	// AdvancedOcrOptions: A list of advanced OCR options to fine-tune OCR
+	// behavior.
+	AdvancedOcrOptions []string `json:"advancedOcrOptions,omitempty"`
+
 	// EnableTextDetectionConfidenceScore: By default, Cloud Vision API only
 	// includes confidence score for DOCUMENT_TEXT_DETECTION result. Set the
 	// flag to true to include confidence score for TEXT_DETECTION as well.
 	EnableTextDetectionConfidenceScore bool `json:"enableTextDetectionConfidenceScore,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableTextDetectionConfidenceScore") to unconditionally include in
-	// API requests. By default, fields with empty or default values are
-	// omitted from API requests. However, any non-pointer, non-interface
-	// field appearing in ForceSendFields will be sent to the server
-	// regardless of whether the field is empty or not. This may be used to
-	// include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdvancedOcrOptions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "EnableTextDetectionConfidenceScore") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdvancedOcrOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -536,6 +536,7 @@ func NewOrganizationsEnvironmentsService(s *Service) *OrganizationsEnvironmentsS
 	rs.References = NewOrganizationsEnvironmentsReferencesService(s)
 	rs.Resourcefiles = NewOrganizationsEnvironmentsResourcefilesService(s)
 	rs.SecurityReports = NewOrganizationsEnvironmentsSecurityReportsService(s)
+	rs.SecurityStats = NewOrganizationsEnvironmentsSecurityStatsService(s)
 	rs.Sharedflows = NewOrganizationsEnvironmentsSharedflowsService(s)
 	rs.Stats = NewOrganizationsEnvironmentsStatsService(s)
 	rs.Targetservers = NewOrganizationsEnvironmentsTargetserversService(s)
@@ -571,6 +572,8 @@ type OrganizationsEnvironmentsService struct {
 	Resourcefiles *OrganizationsEnvironmentsResourcefilesService
 
 	SecurityReports *OrganizationsEnvironmentsSecurityReportsService
+
+	SecurityStats *OrganizationsEnvironmentsSecurityStatsService
 
 	Sharedflows *OrganizationsEnvironmentsSharedflowsService
 
@@ -803,6 +806,15 @@ func NewOrganizationsEnvironmentsSecurityReportsService(s *Service) *Organizatio
 }
 
 type OrganizationsEnvironmentsSecurityReportsService struct {
+	s *Service
+}
+
+func NewOrganizationsEnvironmentsSecurityStatsService(s *Service) *OrganizationsEnvironmentsSecurityStatsService {
+	rs := &OrganizationsEnvironmentsSecurityStatsService{s: s}
+	return rs
+}
+
+type OrganizationsEnvironmentsSecurityStatsService struct {
 	s *Service
 }
 
@@ -4390,6 +4402,9 @@ type GoogleCloudApigeeV1Environment struct {
 	// regular expression `^[.\\p{Alnum}-_]{1,255}$`
 	Name string `json:"name,omitempty"`
 
+	// NodeConfig: Optional. NodeConfig of the environment.
+	NodeConfig *GoogleCloudApigeeV1NodeConfig `json:"nodeConfig,omitempty"`
+
 	// Properties: Optional. Key-value pairs that may be used for
 	// customizing the environment.
 	Properties *GoogleCloudApigeeV1Properties `json:"properties,omitempty"`
@@ -6898,6 +6913,57 @@ func (s *GoogleCloudApigeeV1Metric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1MetricAggregation: The optionally aggregated
+// metric to query with its ordering.
+type GoogleCloudApigeeV1MetricAggregation struct {
+	// Aggregation: Aggregation function associated with the metric.
+	//
+	// Possible values:
+	//   "AGGREGATION_FUNCTION_UNSPECIFIED" - Unspecified Aggregation
+	// function.
+	//   "AVG" - Average.
+	//   "SUM" - Summation.
+	//   "MIN" - Min.
+	//   "MAX" - Max.
+	//   "COUNT_DISTINCT" - Count distinct
+	Aggregation string `json:"aggregation,omitempty"`
+
+	// Name: Name of the metric
+	Name string `json:"name,omitempty"`
+
+	// Order: Ordering for this aggregation in the result. For time series
+	// this is ignored since the ordering of points depends only on the
+	// timestamp, not the values.
+	//
+	// Possible values:
+	//   "ORDER_UNSPECIFIED" - Unspecified order. Default is Descending.
+	//   "ASCENDING" - Ascending sort order.
+	//   "DESCENDING" - Descending sort order.
+	Order string `json:"order,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1MetricAggregation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1MetricAggregation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1MonetizationConfig: Configuration for the
 // Monetization add-on.
 type GoogleCloudApigeeV1MonetizationConfig struct {
@@ -6972,6 +7038,51 @@ type GoogleCloudApigeeV1NatAddress struct {
 
 func (s *GoogleCloudApigeeV1NatAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1NatAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1NodeConfig: NodeConfig for setting the min/max
+// number of nodes associated with the environment.
+type GoogleCloudApigeeV1NodeConfig struct {
+	// CurrentAggregateNodeCount: Output only. The current total number of
+	// gateway nodes that each environment currently has across all
+	// instances.
+	CurrentAggregateNodeCount int64 `json:"currentAggregateNodeCount,omitempty,string"`
+
+	// MaxNodeCount: Optional. The maximum total number of gateway nodes
+	// that the is reserved for all instances that has the specified
+	// environment. If not specified, the default is determined by the
+	// recommended maximum number of nodes for that gateway.
+	MaxNodeCount int64 `json:"maxNodeCount,omitempty,string"`
+
+	// MinNodeCount: Optional. The minimum total number of gateway nodes
+	// that the is reserved for all instances that has the specified
+	// environment. If not specified, the default is determined by the
+	// recommended minimum number of nodes for that gateway.
+	MinNodeCount int64 `json:"minNodeCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentAggregateNodeCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CurrentAggregateNodeCount") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1NodeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1NodeConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7347,6 +7458,7 @@ type GoogleCloudApigeeV1Organization struct {
 	//   "SUBSCRIPTION" - A pre-paid subscription to Apigee.
 	//   "EVALUATION" - Free and limited access to Apigee for evaluation
 	// purposes only. only.
+	//   "PAYG" - Access to Apigee using a Pay-As-You-Go plan.
 	BillingType string `json:"billingType,omitempty"`
 
 	// CaCertificate: Output only. Base64-encoded public certificate for the
@@ -7889,6 +8001,244 @@ type GoogleCloudApigeeV1QueryMetric struct {
 
 func (s *GoogleCloudApigeeV1QueryMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1QueryMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1QueryTabularStatsRequest: Request payload
+// representing the query to be run for fetching security statistics as
+// rows.
+type GoogleCloudApigeeV1QueryTabularStatsRequest struct {
+	// Dimensions: Required. List of dimension names to group the
+	// aggregations by.
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// Filter: Filter further on specific dimension values. Follows the same
+	// grammar as custom report's filter expressions. Example, apiproxy eq
+	// 'foobar'.
+	// https://cloud.google.com/apigee/docs/api-platform/analytics/analytics-reference#filters
+	Filter string `json:"filter,omitempty"`
+
+	// Metrics: Required. List of metrics and their aggregations.
+	Metrics []*GoogleCloudApigeeV1MetricAggregation `json:"metrics,omitempty"`
+
+	// PageSize: Page size represents the number of rows.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Identifies a sequence of rows.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// TimeRange: Time range for the stats.
+	TimeRange *GoogleTypeInterval `json:"timeRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1QueryTabularStatsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1QueryTabularStatsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1QueryTabularStatsResponse: Encapsulates two kinds
+// of stats that are results of the dimensions and aggregations
+// requested. - Tabular rows. - Time series data. Example of tabular
+// rows, Represents security stats results as a row of flat values.
+type GoogleCloudApigeeV1QueryTabularStatsResponse struct {
+	// Columns: Column names corresponding to the same order as the inner
+	// values in the stats field.
+	Columns []string `json:"columns,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Values: Resultant rows from the executed query.
+	Values [][]interface{} `json:"values,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1QueryTabularStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1QueryTabularStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1QueryTimeSeriesStatsRequest:
+// QueryTimeSeriesStatsRequest represents a query that returns a
+// collection of time series sequences grouped by their values.
+type GoogleCloudApigeeV1QueryTimeSeriesStatsRequest struct {
+	// Dimensions: List of dimension names to group the aggregations by. If
+	// no dimensions are passed, a single trend line representing the
+	// requested metric aggregations grouped by environment is returned.
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// Filter: Filter further on specific dimension values. Follows the same
+	// grammar as custom report's filter expressions. Example, apiproxy eq
+	// 'foobar'.
+	// https://cloud.google.com/apigee/docs/api-platform/analytics/analytics-reference#filters
+	Filter string `json:"filter,omitempty"`
+
+	// Metrics: Required. List of metrics and their aggregations.
+	Metrics []*GoogleCloudApigeeV1MetricAggregation `json:"metrics,omitempty"`
+
+	// PageSize: Page size represents the number of time series sequences,
+	// one per unique set of dimensions and their values.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Page token stands for a specific collection of time series
+	// sequences.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// TimeRange: Required. Time range for the stats.
+	TimeRange *GoogleTypeInterval `json:"timeRange,omitempty"`
+
+	// TimestampOrder: Order the sequences in increasing or decreasing order
+	// of timestamps. Default is descending order of timestamps (latest
+	// first).
+	//
+	// Possible values:
+	//   "ORDER_UNSPECIFIED" - Unspecified order. Default is Descending.
+	//   "ASCENDING" - Ascending sort order.
+	//   "DESCENDING" - Descending sort order.
+	TimestampOrder string `json:"timestampOrder,omitempty"`
+
+	// WindowSize: Time buckets to group the stats by.
+	//
+	// Possible values:
+	//   "WINDOW_SIZE_UNSPECIFIED" - Unspecified window size. Default is 1
+	// hour.
+	//   "MINUTE" - 1 Minute window
+	//   "HOUR" - 1 Hour window
+	//   "DAY" - 1 Day window
+	//   "MONTH" - 1 Month window
+	WindowSize string `json:"windowSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1QueryTimeSeriesStatsResponse: Represents security
+// stats result as a collection of time series sequences.
+type GoogleCloudApigeeV1QueryTimeSeriesStatsResponse struct {
+	// Columns: Column names corresponding to the same order as the inner
+	// values in the stats field.
+	Columns []string `json:"columns,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Values: Results of the query returned as a JSON array.
+	Values []*GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence `json:"values,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence: A sequence
+// of time series.
+type GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence struct {
+	// Dimensions: Map of dimensions and their values that uniquely
+	// identifies a time series sequence.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// Points: List of points. First value of each inner list is a
+	// timestamp.
+	Points [][]interface{} `json:"points,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1QueryTimeSeriesStatsResponseSequence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10841,16 +11191,20 @@ type GoogleIamV1Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -29600,6 +29954,164 @@ func (c *OrganizationsEnvironmentsGetTraceConfigCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "apigee.organizations.environments.modifyEnvironment":
+
+type OrganizationsEnvironmentsModifyEnvironmentCall struct {
+	s                              *Service
+	name                           string
+	googlecloudapigeev1environment *GoogleCloudApigeeV1Environment
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// ModifyEnvironment: Updates properties for an Apigee environment with
+// patch semantics using a field mask. **Note:** Not supported for
+// Apigee hybrid.
+//
+//   - name: Name of the environment. Use the following structure in your
+//     request: `organizations/{org}/environments/{environment}`.
+func (r *OrganizationsEnvironmentsService) ModifyEnvironment(name string, googlecloudapigeev1environment *GoogleCloudApigeeV1Environment) *OrganizationsEnvironmentsModifyEnvironmentCall {
+	c := &OrganizationsEnvironmentsModifyEnvironmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1environment = googlecloudapigeev1environment
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields
+// to be updated. Fields that can be updated: node_config.
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) UpdateMask(updateMask string) *OrganizationsEnvironmentsModifyEnvironmentCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsModifyEnvironmentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Context(ctx context.Context) *OrganizationsEnvironmentsModifyEnvironmentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1environment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.modifyEnvironment" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsEnvironmentsModifyEnvironmentCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates properties for an Apigee environment with patch semantics using a field mask. **Note:** Not supported for Apigee hybrid.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "apigee.organizations.environments.modifyEnvironment",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the environment. Use the following structure in your request: `organizations/{org}/environments/{environment}`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "List of fields to be updated. Fields that can be updated: node_config.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apigee.organizations.environments.setIamPolicy":
 
 type OrganizationsEnvironmentsSetIamPolicyCall struct {
@@ -40965,6 +41477,339 @@ func (c *OrganizationsEnvironmentsSecurityReportsListCall) Pages(ctx context.Con
 			return nil
 		}
 		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "apigee.organizations.environments.securityStats.queryTabularStats":
+
+type OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall struct {
+	s                                           *Service
+	orgenv                                      string
+	googlecloudapigeev1querytabularstatsrequest *GoogleCloudApigeeV1QueryTabularStatsRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// QueryTabularStats: Retrieve security statistics as tabular rows.
+//
+// - orgenv: Should be of the form organizations//environments/.
+func (r *OrganizationsEnvironmentsSecurityStatsService) QueryTabularStats(orgenv string, googlecloudapigeev1querytabularstatsrequest *GoogleCloudApigeeV1QueryTabularStatsRequest) *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall {
+	c := &OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.orgenv = orgenv
+	c.googlecloudapigeev1querytabularstatsrequest = googlecloudapigeev1querytabularstatsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1querytabularstatsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+orgenv}/securityStats:queryTabularStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"orgenv": c.orgenv,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityStats.queryTabularStats" call.
+// Exactly one of *GoogleCloudApigeeV1QueryTabularStatsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1QueryTabularStatsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1QueryTabularStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1QueryTabularStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve security statistics as tabular rows.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityStats:queryTabularStats",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityStats.queryTabularStats",
+	//   "parameterOrder": [
+	//     "orgenv"
+	//   ],
+	//   "parameters": {
+	//     "orgenv": {
+	//       "description": "Required. Should be of the form organizations//environments/.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+orgenv}/securityStats:queryTabularStats",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1QueryTabularStatsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1QueryTabularStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTabularStatsCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1QueryTabularStatsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudapigeev1querytabularstatsrequest.PageToken = pt }(c.googlecloudapigeev1querytabularstatsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudapigeev1querytabularstatsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "apigee.organizations.environments.securityStats.queryTimeSeriesStats":
+
+type OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall struct {
+	s                                              *Service
+	orgenv                                         string
+	googlecloudapigeev1querytimeseriesstatsrequest *GoogleCloudApigeeV1QueryTimeSeriesStatsRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// QueryTimeSeriesStats: Retrieve security statistics as a collection of
+// time series.
+//
+// - orgenv: Should be of the form organizations//environments/.
+func (r *OrganizationsEnvironmentsSecurityStatsService) QueryTimeSeriesStats(orgenv string, googlecloudapigeev1querytimeseriesstatsrequest *GoogleCloudApigeeV1QueryTimeSeriesStatsRequest) *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall {
+	c := &OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.orgenv = orgenv
+	c.googlecloudapigeev1querytimeseriesstatsrequest = googlecloudapigeev1querytimeseriesstatsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Fields(s ...googleapi.Field) *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Context(ctx context.Context) *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1querytimeseriesstatsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+orgenv}/securityStats:queryTimeSeriesStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"orgenv": c.orgenv,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.environments.securityStats.queryTimeSeriesStats" call.
+// Exactly one of *GoogleCloudApigeeV1QueryTimeSeriesStatsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1QueryTimeSeriesStatsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1QueryTimeSeriesStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudApigeeV1QueryTimeSeriesStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve security statistics as a collection of time series.",
+	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/securityStats:queryTimeSeriesStats",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.environments.securityStats.queryTimeSeriesStats",
+	//   "parameterOrder": [
+	//     "orgenv"
+	//   ],
+	//   "parameters": {
+	//     "orgenv": {
+	//       "description": "Required. Should be of the form organizations//environments/.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+orgenv}/securityStats:queryTimeSeriesStats",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1QueryTimeSeriesStatsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1QueryTimeSeriesStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsEnvironmentsSecurityStatsQueryTimeSeriesStatsCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1QueryTimeSeriesStatsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudapigeev1querytimeseriesstatsrequest.PageToken = pt }(c.googlecloudapigeev1querytimeseriesstatsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudapigeev1querytimeseriesstatsrequest.PageToken = x.NextPageToken
 	}
 }
 

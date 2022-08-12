@@ -4614,21 +4614,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "run:v1alpha1",
-      "name": "run",
-      "version": "v1alpha1",
-      "title": "Cloud Run Admin API",
-      "description": "Deploy and manage user provided container images that scale automatically based on incoming requests. The Cloud Run Admin API v1 follows the Knative Serving API specification, while v2 is aligned with Google Cloud AIP-based API standards, as described in https://google.aip.dev/.",
-      "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/run/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "run:v1",
       "name": "run",
       "version": "v1",

@@ -1326,7 +1326,9 @@ type Channel struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Params: Additional parameters controlling delivery channel behavior.
-	// Optional.
+	// Optional. For example, `params.ttl` specifies the time-to-live in
+	// seconds for the notification channel, where the default is 2 hours
+	// and the maximum TTL is 2 days.
 	Params map[string]string `json:"params,omitempty"`
 
 	// Payload: A Boolean value to indicate whether payload is wanted.
@@ -3076,6 +3078,48 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GroupAlias: The Directory API manages aliases, which are alternative
+// email addresses.
+type GroupAlias struct {
+	// Alias: The alias email address.
+	Alias string `json:"alias,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID of the group.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of the API resource. For Alias resources, the value is
+	// `admin#directory#alias`.
+	Kind string `json:"kind,omitempty"`
+
+	// PrimaryEmail: The primary email address of the group.
+	PrimaryEmail string `json:"primaryEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupAlias
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Groups struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -4624,7 +4668,7 @@ type User struct {
 
 	// HashFunction: Stores the hash format of the `password` property. The
 	// following `hashFunction` values are allowed: * `MD5` - Accepts simple
-	// hex-encoded values. * `SHA1` - Accepts simple hex-encoded values. *
+	// hex-encoded values. * `SHA-1` - Accepts simple hex-encoded values. *
 	// `crypt` - Compliant with the C crypt library
 	// (https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5
 	// (hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash
@@ -4912,6 +4956,48 @@ type UserAddress struct {
 
 func (s *UserAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod UserAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserAlias: The Directory API manages aliases, which are alternative
+// email addresses.
+type UserAlias struct {
+	// Alias: The alias email address.
+	Alias string `json:"alias,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID for the user.
+	Id string `json:"id,omitempty"`
+
+	// Kind: The type of the API resource. For Alias resources, the value is
+	// `admin#directory#alias`.
+	Kind string `json:"kind,omitempty"`
+
+	// PrimaryEmail: The user's primary email address.
+	PrimaryEmail string `json:"primaryEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod UserAlias
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -555,16 +555,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -606,6 +610,10 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelExecutionRequest: Request message for cancelling an execution.
+type CancelExecutionRequest struct {
 }
 
 // ConfigMapEnvSource: Not supported by Cloud Run ConfigMapEnvSource
@@ -1671,8 +1679,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GRPCAction: Not supported by Cloud Run GRPCAction describes an action
-// involving a GRPC port.
+// GRPCAction: GRPCAction describes an action involving a GRPC port.
 type GRPCAction struct {
 	// Port: Port number of the gRPC service. Number must be in the range 1
 	// to 65535.
@@ -1804,8 +1811,8 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPGetAction: Not supported by Cloud Run HTTPGetAction describes an
-// action based on HTTP Get requests.
+// HTTPGetAction: HTTPGetAction describes an action based on HTTP Get
+// requests.
 type HTTPGetAction struct {
 	// Host: (Optional) Host name to connect to, defaults to the pod IP. You
 	// probably want to set "Host" in httpHeaders instead.
@@ -1845,8 +1852,8 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPHeader: Not supported by Cloud Run HTTPHeader describes a custom
-// header to be used in HTTP probes
+// HTTPHeader: HTTPHeader describes a custom header to be used in HTTP
+// probes
 type HTTPHeader struct {
 	// Name: The header field name
 	Name string `json:"name,omitempty"`
@@ -4051,8 +4058,8 @@ func (s *StatusDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TCPSocketAction: Not supported by Cloud Run TCPSocketAction describes
-// an action based on opening a socket
+// TCPSocketAction: TCPSocketAction describes an action based on opening
+// a socket
 type TCPSocketAction struct {
 	// Host: (Optional) Optional: Host name to connect to, defaults to the
 	// pod IP.
@@ -5838,6 +5845,150 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   "path": "apis/domains.cloudrun.com/v1/{+parent}/domainmappings",
 	//   "response": {
 	//     "$ref": "ListDomainMappingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.namespaces.executions.cancel":
+
+type NamespacesExecutionsCancelCall struct {
+	s                      *APIService
+	name                   string
+	cancelexecutionrequest *CancelExecutionRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Cancel an execution.
+//
+//   - name: The name of the execution to cancel. Replace {namespace} with
+//     the project ID or number. It takes the form namespaces/{namespace}.
+//     For example: namespaces/PROJECT_ID.
+func (r *NamespacesExecutionsService) Cancel(name string, cancelexecutionrequest *CancelExecutionRequest) *NamespacesExecutionsCancelCall {
+	c := &NamespacesExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelexecutionrequest = cancelexecutionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NamespacesExecutionsCancelCall) Fields(s ...googleapi.Field) *NamespacesExecutionsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *NamespacesExecutionsCancelCall) Context(ctx context.Context) *NamespacesExecutionsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *NamespacesExecutionsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NamespacesExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelexecutionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apis/run.googleapis.com/v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.namespaces.executions.cancel" call.
+// Exactly one of *Execution or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Execution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *NamespacesExecutionsCancelCall) Do(opts ...googleapi.CallOption) (*Execution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Execution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel an execution.",
+	//   "flatPath": "apis/run.googleapis.com/v1/namespaces/{namespacesId}/executions/{executionsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "run.namespaces.executions.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the execution to cancel. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID",
+	//       "location": "path",
+	//       "pattern": "^namespaces/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "apis/run.googleapis.com/v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelExecutionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Execution"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

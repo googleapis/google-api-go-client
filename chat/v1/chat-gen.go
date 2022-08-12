@@ -2183,13 +2183,14 @@ type GoogleAppsCardV1OpenLink struct {
 	// observes it until the window closes. Not supported by Chat apps.
 	//
 	// Possible values:
-	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes.
+	//   "NOTHING" - Default value. The card does not reload; nothing
+	// happens.
 	//   "RELOAD" - Reloads the card after the child window closes. If used
 	// in conjunction with
-	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
-	// openas), the child window acts as a modal dialog and the main card is
-	// blocked until the child window closes.
+	// [OpenAs.OVERLAY](https://developers.google.com/workspace/add-ons/refer
+	// ence/rpc/google.apps.card.v1#openas), the child window acts as a
+	// modal dialog and the parent card is blocked until the child window
+	// closes.
 	OnClose string `json:"onClose,omitempty"`
 
 	// OpenAs: How to open a link. Not supported by Chat apps.

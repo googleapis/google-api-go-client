@@ -1448,7 +1448,8 @@ type GoogleCloudRetailV2alphaModel struct {
 	//
 	// Possible values:
 	//   "RECOMMENDATIONS_FILTERING_OPTION_UNSPECIFIED" - Value used when
-	// unset. Defaults to RECOMMENDATIONS_FILTERING_DISABLED.
+	// unset. In this case, server behavior defaults to
+	// RECOMMENDATIONS_FILTERING_DISABLED.
 	//   "RECOMMENDATIONS_FILTERING_DISABLED" - Recommendation filtering is
 	// disabled.
 	//   "RECOMMENDATIONS_FILTERING_ENABLED" - Recommendation filtering is
@@ -2314,8 +2315,9 @@ type GoogleCloudRetailV2betaAttributesConfig struct {
 	// this catalog.
 	//
 	// Possible values:
-	//   "ATTRIBUTE_CONFIG_LEVEL_UNSPECIFIED" - Value used when unset.
-	// Defaults to CATALOG_LEVEL_ATTRIBUTE_CONFIG.
+	//   "ATTRIBUTE_CONFIG_LEVEL_UNSPECIFIED" - Value used when unset. In
+	// this case, server behavior defaults to
+	// CATALOG_LEVEL_ATTRIBUTE_CONFIG.
 	//   "PRODUCT_LEVEL_ATTRIBUTE_CONFIG" - At this level, we honor the
 	// attribute configurations set in Product.attributes.
 	//   "CATALOG_LEVEL_ATTRIBUTE_CONFIG" - At this level, we honor the
@@ -2709,7 +2711,8 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	//
 	// Possible values:
 	//   "RECOMMENDATIONS_FILTERING_OPTION_UNSPECIFIED" - Value used when
-	// unset. Defaults to RECOMMENDATIONS_FILTERING_DISABLED.
+	// unset. In this case, server behavior defaults to
+	// RECOMMENDATIONS_FILTERING_DISABLED.
 	//   "RECOMMENDATIONS_FILTERING_DISABLED" - Recommendation filtering is
 	// disabled.
 	//   "RECOMMENDATIONS_FILTERING_ENABLED" - Recommendation filtering is
@@ -2835,7 +2838,7 @@ type GoogleCloudRetailV2betaCompleteQueryResponse struct {
 	// imported. The recent searches satisfy the follow rules: * They are
 	// ordered from latest to oldest. * They are matched with
 	// CompleteQueryRequest.query case insensitively. * They are transformed
-	// to lower cases. * They are UTF-8 safe. Recent searches are
+	// to lower case. * They are UTF-8 safe. Recent searches are
 	// deduplicated. More recent searches will be reserved when duplication
 	// happens.
 	RecentSearchResults []*GoogleCloudRetailV2betaCompleteQueryResponseRecentSearchResult `json:"recentSearchResults,omitempty"`
@@ -4266,11 +4269,12 @@ type GoogleCloudRetailV2betaMerchantCenterLink struct {
 	BranchId string `json:"branchId,omitempty"`
 
 	// Destinations: String representing the destination to import for, all
-	// if left empty. List of possible values can be found here.
-	// [https://support.google.com/merchants/answer/7501026] List of allowed
-	// string values: "Shopping_ads", "Buy_on_google_listings",
-	// "Display_ads", "Local_inventory _ads", "Free_listings",
-	// "Free_local_listings" NOTE: The string values are case sensitive.
+	// if left empty. List of possible values is given in Included
+	// destination (https://support.google.com/merchants/answer/7501026).
+	// List of allowed string values: "Shopping_ads",
+	// "Buy_on_google_listings", "Display_ads", "Local_inventory _ads",
+	// "Free_listings", "Free_local_listings" NOTE: The string values are
+	// case sensitive.
 	Destinations []string `json:"destinations,omitempty"`
 
 	// LanguageCode: Language of the title/description and other string
@@ -4420,13 +4424,13 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// for more details.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// PageSize: Maximum number of results to return per page. Set this
-	// property to the number of prediction results needed. If zero, the
-	// service will choose a reasonable default. The maximum allowed value
-	// is 100. Values above 100 will be coerced to 100.
+	// PageSize: Maximum number of results to return. Set this property to
+	// the number of prediction results needed. If zero, the service will
+	// choose a reasonable default. The maximum allowed value is 100. Values
+	// above 100 will be coerced to 100.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: This field is not used for now, leave it unset.
+	// PageToken: This field is not used; leave it unset.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Params: Additional domain specific parameters for the predictions.
@@ -5923,10 +5927,10 @@ func (s *GoogleCloudRetailV2betaRuleDoNotAssociateAction) MarshalJSON() ([]byte,
 
 // GoogleCloudRetailV2betaRuleFilterAction: * Rule Condition: - No
 // Condition.query_terms provided is a global match. - 1 or more
-// Condition.query_terms provided is combined with OR operator. * Action
-// Input: The request query and filter that are applied to the retrieved
-// products, in addition to any filters already provided with the
-// SearchRequest. The AND operator is used to combine the query's
+// Condition.query_terms provided are combined with OR operator. *
+// Action Input: The request query and filter that are applied to the
+// retrieved products, in addition to any filters already provided with
+// the SearchRequest. The AND operator is used to combine the query's
 // existing filters with the filter rule(s). NOTE: May result in 0
 // results when filters conflict. * Action Result: Filters the returned
 // objects to be ONLY those that passed the filter.
@@ -6675,7 +6679,8 @@ type GoogleCloudRetailV2betaSearchRequestPersonalizationSpec struct {
 	// Mode: Defaults to Mode.AUTO.
 	//
 	// Possible values:
-	//   "MODE_UNSPECIFIED" - Default value. Defaults to Mode.AUTO.
+	//   "MODE_UNSPECIFIED" - Default value. In this case, server behavior
+	// defaults to Mode.AUTO.
 	//   "AUTO" - Let CRS decide whether to use personalization based on
 	// quality of user event data.
 	//   "DISABLED" - Disable personalization.
@@ -6711,8 +6716,8 @@ type GoogleCloudRetailV2betaSearchRequestQueryExpansionSpec struct {
 	// Default to Condition.DISABLED.
 	//
 	// Possible values:
-	//   "CONDITION_UNSPECIFIED" - Unspecified query expansion condition.
-	// This defaults to Condition.DISABLED.
+	//   "CONDITION_UNSPECIFIED" - Unspecified query expansion condition. In
+	// this case, server behavior defaults to Condition.DISABLED.
 	//   "DISABLED" - Disabled query expansion. Only the exact search query
 	// is used, even if SearchResponse.total_size is zero.
 	//   "AUTO" - Automatic query expansion built by Google Retail Search.
@@ -6753,8 +6758,8 @@ type GoogleCloudRetailV2betaSearchRequestSpellCorrectionSpec struct {
 	// replace the original search query. Default to Mode.AUTO.
 	//
 	// Possible values:
-	//   "MODE_UNSPECIFIED" - Unspecified spell correction mode. This
-	// defaults to Mode.AUTO.
+	//   "MODE_UNSPECIFIED" - Unspecified spell correction mode. In this
+	// case, server behavior defaults to Mode.AUTO.
 	//   "SUGGESTION_ONLY" - Google Retail Search will try to find a spell
 	// suggestion if there is any and put in the
 	// SearchResponse.corrected_query. The spell suggestion will not be used

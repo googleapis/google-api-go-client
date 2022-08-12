@@ -1574,8 +1574,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The error encountered while attempting to process the
-	// document. Empty if there are no errors.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
@@ -3460,6 +3459,12 @@ type GoogleCloudDocumentaiV1DocumentSchemaMetadata struct {
 	// PrefixedNamingOnProperties: If set, all the nested entities must be
 	// prefixed with the parents.
 	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
+
+	// SkipNamingValidation: If set, we will skip the naming format
+	// validation in the schema. So the string values in
+	// `DocumentSchema.EntityType.name` and
+	// `DocumentSchema.EntityType.Property.name` will not be checked.
+	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DocumentAllowMultipleLabels") to unconditionally include in API
@@ -9014,8 +9019,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The error encountered while attempting to process the
-	// document. Empty if there are no errors.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

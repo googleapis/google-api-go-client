@@ -836,7 +836,7 @@
       }
     }
   },
-  "revision": "20220720",
+  "revision": "20220808",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
@@ -1486,7 +1486,7 @@
         },
         "status": {
           "$ref": "GoogleRpcStatus",
-          "description": "The error encountered while attempting to process the document. Empty if there are no errors."
+          "description": "The status processing the document."
         }
       },
       "type": "object"
@@ -4382,7 +4382,7 @@
         },
         "status": {
           "$ref": "GoogleRpcStatus",
-          "description": "The error encountered while attempting to process the document. Empty if there are no errors."
+          "description": "The status processing the document."
         }
       },
       "type": "object"
@@ -5629,6 +5629,10 @@
         },
         "prefixedNamingOnProperties": {
           "description": "If set, all the nested entities must be prefixed with the parents.",
+          "type": "boolean"
+        },
+        "skipNamingValidation": {
+          "description": "If set, we will skip the naming format validation in the schema. So the string values in `DocumentSchema.EntityType.name` and `DocumentSchema.EntityType.Property.name` will not be checked.",
           "type": "boolean"
         }
       },

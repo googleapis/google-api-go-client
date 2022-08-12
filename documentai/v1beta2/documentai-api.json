@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20220720",
+  "revision": "20220808",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
@@ -942,7 +942,7 @@
         },
         "status": {
           "$ref": "GoogleRpcStatus",
-          "description": "The error encountered while attempting to process the document. Empty if there are no errors."
+          "description": "The status processing the document."
         }
       },
       "type": "object"
@@ -3986,7 +3986,7 @@
         },
         "status": {
           "$ref": "GoogleRpcStatus",
-          "description": "The error encountered while attempting to process the document. Empty if there are no errors."
+          "description": "The status processing the document."
         }
       },
       "type": "object"

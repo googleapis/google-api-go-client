@@ -5893,6 +5893,7 @@ type UptimeCheckConfig struct {
 	// the configuration. The following monitored resource types are valid
 	// for this field: uptime_url, gce_instance, gae_app, aws_ec2_instance,
 	// aws_elb_load_balancer k8s_service servicedirectory_service
+	// cloud_run_revision
 	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
 
 	// Name: A unique resource name for this Uptime check configuration. The

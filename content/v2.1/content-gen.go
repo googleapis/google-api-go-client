@@ -3164,7 +3164,8 @@ type CollectionStatus struct {
 
 	// CreationDate: Date on which the collection has been created in ISO
 	// 8601 (http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and
-	// offset, e.g. "2020-01-02T09:00:00+01:00" or "2020-01-02T09:00:00Z"
+	// offset, for example "2020-01-02T09:00:00+01:00" or
+	// "2020-01-02T09:00:00Z"
 	CreationDate string `json:"creationDate,omitempty"`
 
 	// DestinationStatuses: The intended destinations for the collection.
@@ -3175,7 +3176,7 @@ type CollectionStatus struct {
 
 	// LastUpdateDate: Date on which the collection has been last updated in
 	// ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format: Date, time,
-	// and offset, e.g. "2020-01-02T09:00:00+01:00" or
+	// and offset, for example "2020-01-02T09:00:00+01:00" or
 	// "2020-01-02T09:00:00Z"
 	LastUpdateDate string `json:"lastUpdateDate,omitempty"`
 
@@ -3213,7 +3214,8 @@ type CollectionStatusDestinationStatus struct {
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
 
-	// Status: The status for the specified destination.
+	// Status: The status for the specified destination in the collections
+	// target country.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
@@ -12067,6 +12069,10 @@ type Product struct {
 	// attribute if you're a marketplace uploading products for various
 	// sellers to your multi-seller account.
 	ExternalSellerId string `json:"externalSellerId,omitempty"`
+
+	// FeedLabel: Feed label for the item. Either `targetCountry` or
+	// `feedLabel` is required.
+	FeedLabel string `json:"feedLabel,omitempty"`
 
 	// Gender: Target gender of the item.
 	Gender string `json:"gender,omitempty"`

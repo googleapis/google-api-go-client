@@ -479,10 +479,14 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AdUnitAdCode: Representation of the AdSense code for a given ad unit.
+// AdUnitAdCode: Representation of the ad unit code for a given ad unit.
+// For more information, see About the AdSense code
+// (https://support.google.com/adsense/answer/9274634) and Where to
+// place the ad code in your HTML
+// (https://support.google.com/adsense/answer/9190028).
 type AdUnitAdCode struct {
-	// AdCode: Output only. The AdSense code snippet to add to the body of
-	// an HTML page.
+	// AdCode: Output only. The code snippet to add to the body of an HTML
+	// page.
 	AdCode string `json:"adCode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2759,7 +2763,11 @@ type AccountsAdclientsAdunitsGetAdcodeCall struct {
 	header_      http.Header
 }
 
-// GetAdcode: Gets the AdSense code for a given ad unit.
+// GetAdcode: Gets the ad unit code for a given ad unit. For more
+// information, see About the AdSense code
+// (https://support.google.com/adsense/answer/9274634) and Where to
+// place the ad code in your HTML
+// (https://support.google.com/adsense/answer/9190028).
 //
 //   - name: Name of the adunit for which to get the adcode. Format:
 //     accounts/{account}/adclients/{adclient}/adunits/{adunit}.
@@ -2868,7 +2876,7 @@ func (c *AccountsAdclientsAdunitsGetAdcodeCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the AdSense code for a given ad unit.",
+	//   "description": "Gets the ad unit code for a given ad unit. For more information, see [About the AdSense code](https://support.google.com/adsense/answer/9274634) and [Where to place the ad code in your HTML](https://support.google.com/adsense/answer/9190028).",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}/adcode",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.accounts.adclients.adunits.getAdcode",

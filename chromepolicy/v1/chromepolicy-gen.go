@@ -750,8 +750,9 @@ type GoogleChromePolicyV1PolicySchema struct {
 
 	// SchemaName: Output only. The fully qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies or
-	// BatchModifyOrgUnitPolicies
+	// PolicyValue when calling BatchInheritOrgUnitPolicies
+	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
+	// BatchDeleteGroupPolicies.
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
@@ -1007,7 +1008,7 @@ type GoogleChromePolicyV1PolicyTargetKey struct {
 
 	// TargetResource: The target resource on which this policy is applied.
 	// The following resources are supported: * Organizational Unit
-	// ("orgunits/{orgunit_id}")
+	// ("orgunits/{orgunit_id}") * Group ("groups/{group_id}")
 	TargetResource string `json:"targetResource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

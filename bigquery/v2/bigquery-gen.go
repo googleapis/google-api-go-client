@@ -1339,16 +1339,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -5743,6 +5747,8 @@ type Model struct {
 	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
 	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
 	//   "PCA" - Prinpical Component Analysis model.
+	//   "DNN_LINEAR_COMBINED_CLASSIFIER" - Wide-and-deep classifier model.
+	//   "DNN_LINEAR_COMBINED_REGRESSOR" - Wide-and-deep regressor model.
 	//   "AUTOENCODER" - Autoencoder model.
 	//   "ARIMA_PLUS" - New name for the ARIMA model.
 	ModelType string `json:"modelType,omitempty"`
@@ -7004,6 +7010,9 @@ type Routine struct {
 	//   "TABLE_VALUED_FUNCTION" - Non-builtin permanent TVF.
 	RoutineType string `json:"routineType,omitempty"`
 
+	// SparkOptions: Optional. Spark specific options.
+	SparkOptions *SparkOptions `json:"sparkOptions,omitempty"`
+
 	// StrictMode: Optional. Can be set for procedures only. If true
 	// (default), the definition body will be validated in the creation and
 	// the updates of the procedure. For procedures with an argument of ANY
@@ -7432,6 +7441,75 @@ type SnapshotDefinition struct {
 
 func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SparkOptions: Options for a user-defined Spark routine.
+type SparkOptions struct {
+	// ArchiveUris: Archive files to be extracted into the working directory
+	// of each executor. For more information about Apache Spark, see Apache
+	// Spark (https://spark.apache.org/docs/latest/index.html).
+	ArchiveUris []string `json:"archiveUris,omitempty"`
+
+	// Connection: Fully qualified name of the user-provided Spark
+	// connection object. Format:
+	// ``"projects/{project_id}/locations/{location_id}/connections/{connect
+	// ion_id}"``
+	Connection string `json:"connection,omitempty"`
+
+	// ContainerImage: Custom container image for the runtime environment.
+	ContainerImage string `json:"containerImage,omitempty"`
+
+	// FileUris: Files to be placed in the working directory of each
+	// executor. For more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	FileUris []string `json:"fileUris,omitempty"`
+
+	// JarUris: JARs to include on the driver and executor CLASSPATH. For
+	// more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	JarUris []string `json:"jarUris,omitempty"`
+
+	// MainFileUri: The main file URI of the Spark application. Exactly one
+	// of the definition_body field and the main_file_uri field must be set.
+	MainFileUri string `json:"mainFileUri,omitempty"`
+
+	// Properties: Configuration properties as a set of key/value pairs,
+	// which will be passed on to the Spark application. For more
+	// information, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// PyFileUris: Python files to be placed on the PYTHONPATH for PySpark
+	// application. Supported file types: `.py`, `.egg`, and `.zip`. For
+	// more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	PyFileUris []string `json:"pyFileUris,omitempty"`
+
+	// RuntimeVersion: Runtime version. If not specified, the default
+	// runtime version is used.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveUris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SparkOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8626,6 +8704,19 @@ type TrainingOptions struct {
 	// series.
 	CleanSpikesAndDips bool `json:"cleanSpikesAndDips,omitempty"`
 
+	// ColorSpace: Enums for color space, used for processing images in
+	// Object Table. See more details at
+	// https://www.tensorflow.org/io/tutorials/colorspace.
+	//
+	// Possible values:
+	//   "COLOR_SPACE_UNSPECIFIED" - Unspecified color space
+	//   "RGB" - RGB
+	//   "HSV" - HSV
+	//   "YIQ" - YIQ
+	//   "YUV" - YUV
+	//   "GRAYSCALE" - GRAYSCALE
+	ColorSpace string `json:"colorSpace,omitempty"`
+
 	// ColsampleBylevel: Subsample ratio of columns for each level for
 	// boosted tree models.
 	ColsampleBylevel float64 `json:"colsampleBylevel,omitempty"`
@@ -8988,7 +9079,7 @@ type TrainingOptions struct {
 	// feature name is A.b.
 	PreserveInputStructs bool `json:"preserveInputStructs,omitempty"`
 
-	// SampledShapleyNumPaths: Number of paths for the sampled shapley
+	// SampledShapleyNumPaths: Number of paths for the sampled Shapley
 	// explain method.
 	SampledShapleyNumPaths int64 `json:"sampledShapleyNumPaths,omitempty,string"`
 
@@ -9136,6 +9227,10 @@ type TrainingRun struct {
 	// TrainingOptions: Options that were used for this training run,
 	// includes user specified and default options that were used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
+
+	// TrainingStartTime: The start time of this training run, in
+	// milliseconds since epoch.
+	TrainingStartTime int64 `json:"trainingStartTime,omitempty,string"`
 
 	// VertexAiModelId: The model id in Vertex AI Model Registry for this
 	// training run

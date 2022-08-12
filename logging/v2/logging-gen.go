@@ -2375,6 +2375,13 @@ func (s *LogLine) MarshalJSON() ([]byte, error) {
 // records the statistics of the extracted values along with an optional
 // histogram of the values as specified by the bucket options.
 type LogMetric struct {
+	// BucketName: Optional. The resource name of the Log Bucket that owns
+	// the Log Metric. Only Log Buckets in projects are supported. The
+	// bucket has to be in the same project as the metric.For
+	// example:projects/my-project/locations/global/buckets/my-bucketIf
+	// empty, then the Log Metric is considered a non-Bucket Log Metric.
+	BucketName string `json:"bucketName,omitempty"`
+
 	// BucketOptions: Optional. The bucket_options are required when the
 	// logs-based metric is using a DISTRIBUTION value type and it describes
 	// the bucket boundaries used to create a histogram of the extracted
@@ -2407,12 +2414,12 @@ type LogMetric struct {
 	// LabelDescriptor must have an associated extractor expression in this
 	// map. The syntax of the extractor expression is the same as for the
 	// value_extractor field.The extracted value is converted to the type
-	// defined in the label descriptor. If the either the extraction or the
-	// type conversion fails, the label will have a default value. The
-	// default value for a string label is an empty string, for an integer
-	// label its 0, and for a boolean label its false.Note that there are
-	// upper bounds on the maximum number of labels and the number of active
-	// time series that are allowed in a project.
+	// defined in the label descriptor. If either the extraction or the type
+	// conversion fails, the label will have a default value. The default
+	// value for a string label is an empty string, for an integer label its
+	// 0, and for a boolean label its false.Note that there are upper bounds
+	// on the maximum number of labels and the number of active time series
+	// that are allowed in a project.
 	LabelExtractors map[string]string `json:"labelExtractors,omitempty"`
 
 	// MetricDescriptor: Optional. The metric descriptor associated with the
@@ -2478,7 +2485,7 @@ type LogMetric struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "BucketOptions") to
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2486,10 +2493,10 @@ type LogMetric struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BucketOptions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BucketName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

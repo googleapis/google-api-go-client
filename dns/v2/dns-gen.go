@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/dns/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dns/v2"
-//   ...
-//   ctx := context.Background()
-//   dnsService, err := dns.NewService(ctx)
+//	import "google.golang.org/api/dns/v2"
+//	...
+//	ctx := context.Background()
+//	dnsService, err := dns.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   dnsService, err := dns.NewService(ctx, option.WithScopes(dns.NdevClouddnsReadwriteScope))
+//	dnsService, err := dns.NewService(ctx, option.WithScopes(dns.NdevClouddnsReadwriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   dnsService, err := dns.NewService(ctx, option.WithAPIKey("AIza..."))
+//	dnsService, err := dns.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   dnsService, err := dns.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	dnsService, err := dns.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package dns // import "google.golang.org/api/dns/v2"
@@ -2537,10 +2537,10 @@ type ChangesCreateCall struct {
 
 // Create: Atomically updates the ResourceRecordSet collection.
 //
-// - location: .
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: .
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ChangesService) Create(project string, location string, managedZone string, change *Change) *ChangesCreateCall {
 	c := &ChangesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2717,12 +2717,12 @@ type ChangesGetCall struct {
 
 // Get: Fetches the representation of an existing Change.
 //
-// - changeId: The identifier of the requested change, from a previous
-//   ResourceRecordSetsChangeResponse.
-// - location: .
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - changeId: The identifier of the requested change, from a previous
+//     ResourceRecordSetsChangeResponse.
+//   - location: .
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ChangesService) Get(project string, location string, managedZone string, changeId string) *ChangesGetCall {
 	c := &ChangesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2913,10 +2913,10 @@ type ChangesListCall struct {
 
 // List: Enumerates Changes to a ResourceRecordSet collection.
 //
-// - location: .
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: .
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ChangesService) List(project string, location string, managedZone string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2945,7 +2945,8 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 // only supported value is change sequence.
 //
 // Possible values:
-//   "CHANGE_SEQUENCE" (default)
+//
+//	"CHANGE_SEQUENCE" (default)
 func (c *ChangesListCall) SortBy(sortBy string) *ChangesListCall {
 	c.urlParams_.Set("sortBy", sortBy)
 	return c
@@ -3167,12 +3168,12 @@ type DnsKeysGetCall struct {
 
 // Get: Fetches the representation of an existing DnsKey.
 //
-// - dnsKeyId: The identifier of the requested DnsKey.
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - dnsKeyId: The identifier of the requested DnsKey.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) Get(project string, location string, managedZone string, dnsKeyId string) *DnsKeysGetCall {
 	c := &DnsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3378,11 +3379,11 @@ type DnsKeysListCall struct {
 
 // List: Enumerates DnsKeys to a ResourceRecordSet collection.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *DnsKeysService) List(project string, location string, managedZone string) *DnsKeysListCall {
 	c := &DnsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3614,12 +3615,12 @@ type ManagedZoneOperationsGetCall struct {
 
 // Get: Fetches the representation of an existing Operation.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-// - operation: Identifies the operation addressed by this request (ID
-//   of the operation).
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//   - operation: Identifies the operation addressed by this request (ID
+//     of the operation).
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZoneOperationsService) Get(project string, location string, managedZone string, operation string) *ManagedZoneOperationsGetCall {
 	c := &ManagedZoneOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3811,10 +3812,10 @@ type ManagedZoneOperationsListCall struct {
 
 // List: Enumerates Operations for the given ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZoneOperationsService) List(project string, location string, managedZone string) *ManagedZoneOperationsListCall {
 	c := &ManagedZoneOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3843,8 +3844,9 @@ func (c *ManagedZoneOperationsListCall) PageToken(pageToken string) *ManagedZone
 // only supported values are START_TIME and ID.
 //
 // Possible values:
-//   "START_TIME" (default)
-//   "ID"
+//
+//	"START_TIME" (default)
+//	"ID"
 func (c *ManagedZoneOperationsListCall) SortBy(sortBy string) *ManagedZoneOperationsListCall {
 	c.urlParams_.Set("sortBy", sortBy)
 	return c
@@ -4056,9 +4058,9 @@ type ManagedZonesCreateCall struct {
 
 // Create: Creates a new ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Create(project string, location string, managedzone *ManagedZone) *ManagedZonesCreateCall {
 	c := &ManagedZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4225,11 +4227,11 @@ type ManagedZonesDeleteCall struct {
 
 // Delete: Deletes a previously created ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Delete(project string, location string, managedZone string) *ManagedZonesDeleteCall {
 	c := &ManagedZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4369,11 +4371,11 @@ type ManagedZonesGetCall struct {
 
 // Get: Fetches the representation of an existing ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Get(project string, location string, managedZone string) *ManagedZonesGetCall {
 	c := &ManagedZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4556,9 +4558,9 @@ type ManagedZonesListCall struct {
 // List: Enumerates ManagedZones that have been created but not yet
 // deleted.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) List(project string, location string) *ManagedZonesListCall {
 	c := &ManagedZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4778,11 +4780,11 @@ type ManagedZonesPatchCall struct {
 
 // Patch: Applies a partial update to an existing ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Patch(project string, location string, managedZone string, managedzone *ManagedZone) *ManagedZonesPatchCall {
 	c := &ManagedZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4959,11 +4961,11 @@ type ManagedZonesUpdateCall struct {
 
 // Update: Updates an existing ManagedZone.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ManagedZonesService) Update(project string, location string, managedZone string, managedzone *ManagedZone) *ManagedZonesUpdateCall {
 	c := &ManagedZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5139,9 +5141,9 @@ type PoliciesCreateCall struct {
 
 // Create: Creates a new Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Create(project string, location string, policy *Policy) *PoliciesCreateCall {
 	c := &PoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5309,11 +5311,11 @@ type PoliciesDeleteCall struct {
 // Delete: Deletes a previously created Policy. Fails if the policy is
 // still being referenced by a network.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - policy: User given friendly name of the policy addressed by this
-//   request.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - policy: User given friendly name of the policy addressed by this
+//     request.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Delete(project string, location string, policy string) *PoliciesDeleteCall {
 	c := &PoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5453,11 +5455,11 @@ type PoliciesGetCall struct {
 
 // Get: Fetches the representation of an existing Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - policy: User given friendly name of the policy addressed by this
-//   request.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - policy: User given friendly name of the policy addressed by this
+//     request.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Get(project string, location string, policy string) *PoliciesGetCall {
 	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5639,9 +5641,9 @@ type PoliciesListCall struct {
 
 // List: Enumerates all Policies associated with a project.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) List(project string, location string) *PoliciesListCall {
 	c := &PoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5849,11 +5851,11 @@ type PoliciesPatchCall struct {
 
 // Patch: Applies a partial update to an existing Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - policy: User given friendly name of the policy addressed by this
-//   request.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - policy: User given friendly name of the policy addressed by this
+//     request.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Patch(project string, location string, policy string, policy2 *Policy) *PoliciesPatchCall {
 	c := &PoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6030,11 +6032,11 @@ type PoliciesUpdateCall struct {
 
 // Update: Updates an existing Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - policy: User given friendly name of the policy addressed by this
-//   request.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - policy: User given friendly name of the policy addressed by this
+//     request.
+//   - project: Identifies the project addressed by this request.
 func (r *PoliciesService) Update(project string, location string, policy string, policy2 *Policy) *PoliciesUpdateCall {
 	c := &PoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6384,11 +6386,11 @@ type ResourceRecordSetsCreateCall struct {
 
 // Create: Creates a new ResourceRecordSet.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ResourceRecordSetsService) Create(project string, location string, managedZone string, resourcerecordset *ResourceRecordSet) *ResourceRecordSetsCreateCall {
 	c := &ResourceRecordSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6566,13 +6568,13 @@ type ResourceRecordSetsDeleteCall struct {
 
 // Delete: Deletes a previously created ResourceRecordSet.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - name: Fully qualified domain name.
-// - project: Identifies the project addressed by this request.
-// - type: RRSet type.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - name: Fully qualified domain name.
+//   - project: Identifies the project addressed by this request.
+//   - type: RRSet type.
 func (r *ResourceRecordSetsService) Delete(project string, location string, managedZone string, name string, type_ string) *ResourceRecordSetsDeleteCall {
 	c := &ResourceRecordSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6732,13 +6734,13 @@ type ResourceRecordSetsGetCall struct {
 
 // Get: Fetches the representation of an existing ResourceRecordSet.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - name: Fully qualified domain name.
-// - project: Identifies the project addressed by this request.
-// - type: RRSet type.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - name: Fully qualified domain name.
+//   - project: Identifies the project addressed by this request.
+//   - type: RRSet type.
 func (r *ResourceRecordSetsService) Get(project string, location string, managedZone string, name string, type_ string) *ResourceRecordSetsGetCall {
 	c := &ResourceRecordSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6940,11 +6942,11 @@ type ResourceRecordSetsListCall struct {
 // List: Enumerates ResourceRecordSets that you have created but not yet
 // deleted.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - project: Identifies the project addressed by this request.
 func (r *ResourceRecordSetsService) List(project string, location string, managedZone string) *ResourceRecordSetsListCall {
 	c := &ResourceRecordSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7188,13 +7190,13 @@ type ResourceRecordSetsPatchCall struct {
 
 // Patch: Applies a partial update to an existing ResourceRecordSet.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - managedZone: Identifies the managed zone addressed by this request.
-//   Can be the managed zone name or ID.
-// - name: Fully qualified domain name.
-// - project: Identifies the project addressed by this request.
-// - type: RRSet type.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - managedZone: Identifies the managed zone addressed by this request.
+//     Can be the managed zone name or ID.
+//   - name: Fully qualified domain name.
+//   - project: Identifies the project addressed by this request.
+//   - type: RRSet type.
 func (r *ResourceRecordSetsService) Patch(project string, location string, managedZone string, name string, type_ string, resourcerecordset *ResourceRecordSet) *ResourceRecordSetsPatchCall {
 	c := &ResourceRecordSetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7388,10 +7390,10 @@ type ResponsePoliciesCreateCall struct {
 
 // Create: Creates a new Response Policy
 //
-// - location: Specifies the location of the resource, only applicable
-//   in the v APIs. This information will be used for routing and will
-//   be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource, only applicable
+//     in the v APIs. This information will be used for routing and will
+//     be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *ResponsePoliciesService) Create(project string, location string, responsepolicy *ResponsePolicy) *ResponsePoliciesCreateCall {
 	c := &ResponsePoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7559,11 +7561,11 @@ type ResponsePoliciesDeleteCall struct {
 // Delete: Deletes a previously created Response Policy. Fails if the
 // response policy is non-empty or still being referenced by a network.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy addressed
-//   by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy addressed
+//     by this request.
 func (r *ResponsePoliciesService) Delete(project string, location string, responsePolicy string) *ResponsePoliciesDeleteCall {
 	c := &ResponsePoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7703,11 +7705,11 @@ type ResponsePoliciesGetCall struct {
 
 // Get: Fetches the representation of an existing Response Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy addressed
-//   by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy addressed
+//     by this request.
 func (r *ResponsePoliciesService) Get(project string, location string, responsePolicy string) *ResponsePoliciesGetCall {
 	c := &ResponsePoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7889,9 +7891,9 @@ type ResponsePoliciesListCall struct {
 
 // List: Enumerates all Response Policies associated with a project.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
 func (r *ResponsePoliciesService) List(project string, location string) *ResponsePoliciesListCall {
 	c := &ResponsePoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8099,11 +8101,11 @@ type ResponsePoliciesPatchCall struct {
 
 // Patch: Applies a partial update to an existing Response Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Respones Policy addressed
-//   by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Respones Policy addressed
+//     by this request.
 func (r *ResponsePoliciesService) Patch(project string, location string, responsePolicy string, responsepolicy *ResponsePolicy) *ResponsePoliciesPatchCall {
 	c := &ResponsePoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8280,11 +8282,11 @@ type ResponsePoliciesUpdateCall struct {
 
 // Update: Updates an existing Response Policy.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy addressed
-//   by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy addressed
+//     by this request.
 func (r *ResponsePoliciesService) Update(project string, location string, responsePolicy string, responsepolicy *ResponsePolicy) *ResponsePoliciesUpdateCall {
 	c := &ResponsePoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8461,11 +8463,11 @@ type ResponsePolicyRulesCreateCall struct {
 
 // Create: Creates a new Response Policy Rule.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy
-//   containing the Response Policy Rule.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy
+//     containing the Response Policy Rule.
 func (r *ResponsePolicyRulesService) Create(project string, location string, responsePolicy string, responsepolicyrule *ResponsePolicyRule) *ResponsePolicyRulesCreateCall {
 	c := &ResponsePolicyRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8642,13 +8644,13 @@ type ResponsePolicyRulesDeleteCall struct {
 
 // Delete: Deletes a previously created Response Policy Rule.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy
-//   containing the Response Policy Rule.
-// - responsePolicyRule: User assigned name of the Response Policy Rule
-//   addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy
+//     containing the Response Policy Rule.
+//   - responsePolicyRule: User assigned name of the Response Policy Rule
+//     addressed by this request.
 func (r *ResponsePolicyRulesService) Delete(project string, location string, responsePolicy string, responsePolicyRule string) *ResponsePolicyRulesDeleteCall {
 	c := &ResponsePolicyRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8798,13 +8800,13 @@ type ResponsePolicyRulesGetCall struct {
 
 // Get: Fetches the representation of an existing Response Policy Rule.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy
-//   containing the Response Policy Rule.
-// - responsePolicyRule: User assigned name of the Response Policy Rule
-//   addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy
+//     containing the Response Policy Rule.
+//   - responsePolicyRule: User assigned name of the Response Policy Rule
+//     addressed by this request.
 func (r *ResponsePolicyRulesService) Get(project string, location string, responsePolicy string, responsePolicyRule string) *ResponsePolicyRulesGetCall {
 	c := &ResponsePolicyRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8996,10 +8998,10 @@ type ResponsePolicyRulesListCall struct {
 
 // List: Enumerates all Response Policy Rules associated with a project.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy to list.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy to list.
 func (r *ResponsePolicyRulesService) List(project string, location string, responsePolicy string) *ResponsePolicyRulesListCall {
 	c := &ResponsePolicyRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9217,13 +9219,13 @@ type ResponsePolicyRulesPatchCall struct {
 
 // Patch: Applies a partial update to an existing Response Policy Rule.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy
-//   containing the Response Policy Rule.
-// - responsePolicyRule: User assigned name of the Response Policy Rule
-//   addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy
+//     containing the Response Policy Rule.
+//   - responsePolicyRule: User assigned name of the Response Policy Rule
+//     addressed by this request.
 func (r *ResponsePolicyRulesService) Patch(project string, location string, responsePolicy string, responsePolicyRule string, responsepolicyrule *ResponsePolicyRule) *ResponsePolicyRulesPatchCall {
 	c := &ResponsePolicyRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -9410,13 +9412,13 @@ type ResponsePolicyRulesUpdateCall struct {
 
 // Update: Updates an existing Response Policy Rule.
 //
-// - location: Specifies the location of the resource. This information
-//   will be used for routing and will be part of the resource name.
-// - project: Identifies the project addressed by this request.
-// - responsePolicy: User assigned name of the Response Policy
-//   containing the Response Policy Rule.
-// - responsePolicyRule: User assigned name of the Response Policy Rule
-//   addressed by this request.
+//   - location: Specifies the location of the resource. This information
+//     will be used for routing and will be part of the resource name.
+//   - project: Identifies the project addressed by this request.
+//   - responsePolicy: User assigned name of the Response Policy
+//     containing the Response Policy Rule.
+//   - responsePolicyRule: User assigned name of the Response Policy Rule
+//     addressed by this request.
 func (r *ResponsePolicyRulesService) Update(project string, location string, responsePolicy string, responsePolicyRule string, responsepolicyrule *ResponsePolicyRule) *ResponsePolicyRulesUpdateCall {
 	c := &ResponsePolicyRulesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

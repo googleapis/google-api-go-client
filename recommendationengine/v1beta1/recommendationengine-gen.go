@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/recommendations-ai/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/recommendationengine/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   recommendationengineService, err := recommendationengine.NewService(ctx)
+//	import "google.golang.org/api/recommendationengine/v1beta1"
+//	...
+//	ctx := context.Background()
+//	recommendationengineService, err := recommendationengine.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   recommendationengineService, err := recommendationengine.NewService(ctx, option.WithAPIKey("AIza..."))
+//	recommendationengineService, err := recommendationengine.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   recommendationengineService, err := recommendationengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	recommendationengineService, err := recommendationengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package recommendationengine // import "google.golang.org/api/recommendationengine/v1beta1"
@@ -1409,7 +1409,29 @@ func (s *GoogleCloudRecommendationengineV1beta1ListUserEventsResponse) MarshalJS
 }
 
 // GoogleCloudRecommendationengineV1beta1PredictRequest: Request message
-// for Predict method.
+// for Predict method. Full resource name of the format:
+// `{name=projects/*/locations/global/catalogs/default_catalog/eventStore
+// s/default_event_store/placements/*}` The id of the recommendation
+// engine placement. This id is used to identify the set of models that
+// will be used to make the prediction. We currently support three
+// placements with the following IDs by default: // * `shopping_cart`:
+// Predicts items frequently bought together with one or more catalog
+// items in the same shopping session. Commonly displayed after
+// `add-to-cart` event, on product detail pages, or on the shopping cart
+// page. * `home_page`: Predicts the next product that a user will most
+// likely engage with or purchase based on the shopping or viewing
+// history of the specified `userId` or `visitorId`. For example -
+// Recommendations for you. * `product_detail`: Predicts the next
+// product that a user will most likely engage with or purchase. The
+// prediction is based on the shopping or viewing history of the
+// specified `userId` or `visitorId` and its relevance to a specified
+// `CatalogItem`. Typically used on product detail pages. For example -
+// More items like this. * `recently_viewed_default`: Returns up to 75
+// items recently viewed by the specified `userId` or `visitorId`, most
+// recent ones first. Returns nothing if neither of them has viewed any
+// items yet. For example - Recently viewed. The full list of available
+// placements can be seen at
+// https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements
 type GoogleCloudRecommendationengineV1beta1PredictRequest struct {
 	// DryRun: Optional. Use dryRun mode for this prediction query. If set
 	// to true, a fake model will be used that returns arbitrary catalog
@@ -1563,7 +1585,8 @@ func (s *GoogleCloudRecommendationengineV1beta1PredictResponse) MarshalJSON() ([
 }
 
 // GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult:
-//  PredictionResult represents the recommendation prediction results.
+//
+//	PredictionResult represents the recommendation prediction results.
 type GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult struct {
 	// Id: ID of the recommended catalog item
 	Id string `json:"id,omitempty"`
@@ -2968,8 +2991,8 @@ type ProjectsLocationsCatalogsCatalogItemsCreateCall struct {
 
 // Create: Creates a catalog item.
 //
-// - parent: The parent catalog resource name, such as
-//   `projects/*/locations/global/catalogs/default_catalog`.
+//   - parent: The parent catalog resource name, such as
+//     `projects/*/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Create(parent string, googlecloudrecommendationenginev1beta1catalogitem *GoogleCloudRecommendationengineV1beta1CatalogItem) *ProjectsLocationsCatalogsCatalogItemsCreateCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3112,9 +3135,9 @@ type ProjectsLocationsCatalogsCatalogItemsDeleteCall struct {
 
 // Delete: Deletes a catalog item.
 //
-// - name: Full resource name of catalog item, such as
-//   `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
-//   ome_catalog_item_id`.
+//   - name: Full resource name of catalog item, such as
+//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
+//     ome_catalog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Delete(name string) *ProjectsLocationsCatalogsCatalogItemsDeleteCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3247,9 +3270,9 @@ type ProjectsLocationsCatalogsCatalogItemsGetCall struct {
 
 // Get: Gets a specific catalog item.
 //
-// - name: Full resource name of catalog item, such as
-//   `projects/*/locations/global/catalogs/default_catalog/catalogitems/s
-//   ome_catalog_item_id`.
+//   - name: Full resource name of catalog item, such as
+//     `projects/*/locations/global/catalogs/default_catalog/catalogitems/s
+//     ome_catalog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Get(name string) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3401,10 +3424,10 @@ type ProjectsLocationsCatalogsCatalogItemsImportCall struct {
 // that it is possible for a subset of the items to be successfully
 // updated.
 //
-// - parent: `projects/1234/locations/global/catalogs/default_catalog`
-//   If no updateMask is specified, requires catalogItems.create
-//   permission. If updateMask is specified, requires
-//   catalogItems.update permission.
+//   - parent: `projects/1234/locations/global/catalogs/default_catalog`
+//     If no updateMask is specified, requires catalogItems.create
+//     permission. If updateMask is specified, requires
+//     catalogItems.update permission.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Import(parent string, googlecloudrecommendationenginev1beta1importcatalogitemsrequest *GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest) *ProjectsLocationsCatalogsCatalogItemsImportCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3546,8 +3569,8 @@ type ProjectsLocationsCatalogsCatalogItemsListCall struct {
 
 // List: Gets a list of catalog items.
 //
-// - parent: The parent catalog resource name, such as
-//   `projects/*/locations/global/catalogs/default_catalog`.
+//   - parent: The parent catalog resource name, such as
+//     `projects/*/locations/global/catalogs/default_catalog`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) List(parent string) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3756,9 +3779,9 @@ type ProjectsLocationsCatalogsCatalogItemsPatchCall struct {
 // Patch: Updates a catalog item. Partial updating is supported.
 // Non-existing items will be created.
 //
-// - name: Full resource name of catalog item, such as
-//   `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
-//   ome_catalog_item_id`.
+//   - name: Full resource name of catalog item, such as
+//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
+//     ome_catalog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Patch(name string, googlecloudrecommendationenginev1beta1catalogitem *GoogleCloudRecommendationengineV1beta1CatalogItem) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4281,30 +4304,7 @@ type ProjectsLocationsCatalogsEventStoresPlacementsPredictCall struct {
 // PredictionApiKeyRegistry service. Learn more
 // (https://cloud.google.com/recommendations-ai/docs/setting-up#register-key).
 //
-// - name: Full resource name of the format:
-//   `{name=projects/*/locations/global/catalogs/default_catalog/eventSto
-//   res/default_event_store/placements/*}` The id of the recommendation
-//   engine placement. This id is used to identify the set of models
-//   that will be used to make the prediction. We currently support
-//   three placements with the following IDs by default: *
-//   `shopping_cart`: Predicts items frequently bought together with one
-//   or more catalog items in the same shopping session. Commonly
-//   displayed after `add-to-cart` events, on product detail pages, or
-//   on the shopping cart page. * `home_page`: Predicts the next product
-//   that a user will most likely engage with or purchase based on the
-//   shopping or viewing history of the specified `userId` or
-//   `visitorId`. For example - Recommendations for you. *
-//   `product_detail`: Predicts the next product that a user will most
-//   likely engage with or purchase. The prediction is based on the
-//   shopping or viewing history of the specified `userId` or
-//   `visitorId` and its relevance to a specified `CatalogItem`.
-//   Typically used on product detail pages. For example - More items
-//   like this. * `recently_viewed_default`: Returns up to 75 items
-//   recently viewed by the specified `userId` or `visitorId`, most
-//   recent ones first. Returns nothing if neither of them has viewed
-//   any items yet. For example - Recently viewed. The full list of
-//   available placements can be seen at
-//   https://console.cloud.google.com/recommendation/datafeeds/default_catalog/dashboard.
+// - name: .
 func (r *ProjectsLocationsCatalogsEventStoresPlacementsService) Predict(name string, googlecloudrecommendationenginev1beta1predictrequest *GoogleCloudRecommendationengineV1beta1PredictRequest) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsEventStoresPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4414,7 +4414,6 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Full resource name of the format: `{name=projects/*/locations/global/catalogs/default_catalog/eventStores/default_event_store/placements/*}` The id of the recommendation engine placement. This id is used to identify the set of models that will be used to make the prediction. We currently support three placements with the following IDs by default: * `shopping_cart`: Predicts items frequently bought together with one or more catalog items in the same shopping session. Commonly displayed after `add-to-cart` events, on product detail pages, or on the shopping cart page. * `home_page`: Predicts the next product that a user will most likely engage with or purchase based on the shopping or viewing history of the specified `userId` or `visitorId`. For example - Recommendations for you. * `product_detail`: Predicts the next product that a user will most likely engage with or purchase. The prediction is based on the shopping or viewing history of the specified `userId` or `visitorId` and its relevance to a specified `CatalogItem`. Typically used on product detail pages. For example - More items like this. * `recently_viewed_default`: Returns up to 75 items recently viewed by the specified `userId` or `visitorId`, most recent ones first. Returns nothing if neither of them has viewed any items yet. For example - Recently viewed. The full list of available placements can be seen at https://console.cloud.google.com/recommendation/datafeeds/default_catalog/dashboard",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -4469,9 +4468,9 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall
 
 // Create: Register an API key for use with predict method.
 //
-// - parent: The parent resource path.
-//   `projects/*/locations/global/catalogs/default_catalog/eventStores/de
-//   fault_event_store`.
+//   - parent: The parent resource path.
+//     `projects/*/locations/global/catalogs/default_catalog/eventStores/de
+//     fault_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Create(parent string, googlecloudrecommendationenginev1beta1createpredictionapikeyregistrationrequest *GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4615,9 +4614,9 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall
 
 // Delete: Unregister an apiKey from using for predict method.
 //
-// - name: The API key to unregister including full resource path.
-//   `projects/*/locations/global/catalogs/default_catalog/eventStores/de
-//   fault_event_store/predictionApiKeyRegistrations/`.
+//   - name: The API key to unregister including full resource path.
+//     `projects/*/locations/global/catalogs/default_catalog/eventStores/de
+//     fault_event_store/predictionApiKeyRegistrations/`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Delete(name string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4750,9 +4749,9 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall s
 
 // List: List the registered apiKeys for use with predict method.
 //
-// - parent: The parent placement resource name such as
-//   `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//   /default_event_store`.
+//   - parent: The parent placement resource name such as
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
+//     /default_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) List(parent string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4951,9 +4950,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsCollectCall struct {
 // domain. This method is used only by the Recommendations AI JavaScript
 // pixel. Users should not call this method directly.
 //
-// - parent: The parent eventStore name, such as
-//   `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//   /default_event_store`.
+//   - parent: The parent eventStore name, such as
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
+//     /default_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5145,9 +5144,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsImportCall struct {
 // be successfully inserted. Operation.metadata is of type
 // ImportMetadata.
 //
-// - parent:
-//   `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//   /default_event_store`.
+//   - parent:
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
+//     /default_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Import(parent string, googlecloudrecommendationenginev1beta1importusereventsrequest *GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5295,9 +5294,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsListCall struct {
 // of the ingested event is not in the current catalog, it could lead to
 // degraded model quality. This is called an unjoined event.
 //
-// - parent: The parent eventStore resource name, such as
-//   `projects/*/locations/*/catalogs/default_catalog/eventStores/default
-//   _event_store`.
+//   - parent: The parent eventStore resource name, such as
+//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default
+//     _event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) List(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5528,10 +5527,10 @@ type ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall struct {
 // this operation could take hours or days to complete. To test a
 // filter, use the list command first.
 //
-// - parent: The resource name of the event_store under which the events
-//   are created. The format is
-//   `projects/${projectId}/locations/global/catalogs/${catalogId}/eventS
-//   tores/${eventStoreId}`.
+//   - parent: The resource name of the event_store under which the events
+//     are created. The format is
+//     `projects/${projectId}/locations/global/catalogs/${catalogId}/eventS
+//     tores/${eventStoreId}`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Purge(parent string, googlecloudrecommendationenginev1beta1purgeusereventsrequest *GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5680,9 +5679,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall struct {
 // It can also be used to correct events joined with wrong catalog
 // items.
 //
-// - parent: Full resource name of user event, such as
-//   `projects/*/locations/*/catalogs/default_catalog/eventStores/default
-//   _event_store`.
+//   - parent: Full resource name of user event, such as
+//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default
+//     _event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Rejoin(parent string, googlecloudrecommendationenginev1beta1rejoinusereventsrequest *GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5824,9 +5823,9 @@ type ProjectsLocationsCatalogsEventStoresUserEventsWriteCall struct {
 
 // Write: Writes a single user event.
 //
-// - parent: The parent eventStore resource name, such as
-//   "projects/1234/locations/global/catalogs/default_catalog/eventStores
-//   /default_event_store".
+//   - parent: The parent eventStore resource name, such as
+//     "projects/1234/locations/global/catalogs/default_catalog/eventStores
+//     /default_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Write(parent string, googlecloudrecommendationenginev1beta1userevent *GoogleCloudRecommendationengineV1beta1UserEvent) *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5892,7 +5891,9 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt 
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudRecommendationengineV1beta1UserEvent.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.

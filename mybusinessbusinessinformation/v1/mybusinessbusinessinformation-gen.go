@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/my-business/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/mybusinessbusinessinformation/v1"
-//   ...
-//   ctx := context.Background()
-//   mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx)
+//	import "google.golang.org/api/mybusinessbusinessinformation/v1"
+//	...
+//	ctx := context.Background()
+//	mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx, option.WithAPIKey("AIza..."))
+//	mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	mybusinessbusinessinformationService, err := mybusinessbusinessinformation.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package mybusinessbusinessinformation // import "google.golang.org/api/mybusinessbusinessinformation/v1"
@@ -1633,9 +1633,9 @@ func (s *Places) MarshalJSON() ([]byte, error) {
 // to model geographical locations (roads, towns, mountains). In typical
 // usage an address would be created via user input or from importing
 // existing data, depending on the type of process. Advice on address
-// input / editing: - Use an i18n-ready address widget such as
-// https://github.com/google/libaddressinput) - Users should not be
-// presented with UI elements for input or editing of fields outside
+// input / editing: - Use an internationalization-ready address widget
+// such as https://github.com/google/libaddressinput) - Users should not
+// be presented with UI elements for input or editing of fields outside
 // countries where that field is used. For more guidance on how to use
 // this schema, please see:
 // https://support.google.com/business/answer/6397478
@@ -2587,11 +2587,11 @@ type AccountsLocationsListCall struct {
 
 // List: Lists the locations for the specified account.
 //
-// - parent: The name of the account to fetch locations from. If the
-//   parent Account is of AccountType PERSONAL, only Locations that are
-//   directly owned by the Account are returned, otherwise it will
-//   return all accessible locations from the Account, either directly
-//   or indirectly.
+//   - parent: The name of the account to fetch locations from. If the
+//     parent Account is of AccountType PERSONAL, only Locations that are
+//     directly owned by the Account are returned, otherwise it will
+//     return all accessible locations from the Account, either directly
+//     or indirectly.
 func (r *AccountsLocationsService) List(parent string) *AccountsLocationsListCall {
 	c := &AccountsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3101,12 +3101,17 @@ func (c *CategoriesBatchGetCall) RegionCode(regionCode string) *CategoriesBatchG
 // parts to the Category resource should be returned in the response.
 //
 // Possible values:
-//   "CATEGORY_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+//	"CATEGORY_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
 // CATEGORY_METADATA_ONLY.
-//   "BASIC" - The server response will only include Category fields
+//
+//	"BASIC" - The server response will only include Category fields
+//
 // display_name, category_id and language_code. It omits any service
 // type metadata related fields.
-//   "FULL" - Returns all the fields in the response.
+//
+//	"FULL" - Returns all the fields in the response.
 func (c *CategoriesBatchGetCall) View(view string) *CategoriesBatchGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3314,12 +3319,17 @@ func (c *CategoriesListCall) RegionCode(regionCode string) *CategoriesListCall {
 // parts to the Category resource should be returned in the response.
 //
 // Possible values:
-//   "CATEGORY_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+//	"CATEGORY_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
 // CATEGORY_METADATA_ONLY.
-//   "BASIC" - The server response will only include Category fields
+//
+//	"BASIC" - The server response will only include Category fields
+//
 // display_name, category_id and language_code. It omits any service
 // type metadata related fields.
-//   "FULL" - Returns all the fields in the response.
+//
+//	"FULL" - Returns all the fields in the response.
 func (c *CategoriesListCall) View(view string) *CategoriesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3512,8 +3522,8 @@ type ChainsGetCall struct {
 // Get: Gets the specified chain. Returns `NOT_FOUND` if the chain does
 // not exist.
 //
-// - name: The chain's resource name, in the format
-//   `chains/{chain_place_id}`.
+//   - name: The chain's resource name, in the format
+//     `chains/{chain_place_id}`.
 func (r *ChainsService) Get(name string) *ChainsGetCall {
 	c := &ChainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4505,8 +4515,8 @@ type LocationsGetAttributesCall struct {
 
 // GetAttributes: Looks up all the attributes set for a given location.
 //
-// - name: Google identifier for this location in the form of
-//   `locations/{location_id}/attributes`.
+//   - name: Google identifier for this location in the form of
+//     `locations/{location_id}/attributes`.
 func (r *LocationsService) GetAttributes(nameid string) *LocationsGetAttributesCall {
 	c := &LocationsGetAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4806,8 +4816,8 @@ type LocationsPatchCall struct {
 
 // Patch: Updates the specified location.
 //
-// - name: Google identifier for this location in the form:
-//   `locations/{location_id}`.
+//   - name: Google identifier for this location in the form:
+//     `locations/{location_id}`.
 func (r *LocationsService) Patch(nameid string, location *Location) *LocationsPatchCall {
 	c := &LocationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -4973,8 +4983,8 @@ type LocationsUpdateAttributesCall struct {
 
 // UpdateAttributes: Update attributes for a given location.
 //
-// - name: Google identifier for this location in the form of
-//   `locations/{location_id}/attributes`.
+//   - name: Google identifier for this location in the form of
+//     `locations/{location_id}/attributes`.
 func (r *LocationsService) UpdateAttributes(nameid string, attributes *Attributes) *LocationsUpdateAttributesCall {
 	c := &LocationsUpdateAttributesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -5136,8 +5146,8 @@ type LocationsAttributesGetGoogleUpdatedCall struct {
 // GetGoogleUpdated: Gets the Google-updated version of the specified
 // location.
 //
-// - name: Google identifier for this location in the form of
-//   `locations/{location_id}/attributes`.
+//   - name: Google identifier for this location in the form of
+//     `locations/{location_id}/attributes`.
 func (r *LocationsAttributesService) GetGoogleUpdated(nameid string) *LocationsAttributesGetGoogleUpdatedCall {
 	c := &LocationsAttributesGetGoogleUpdatedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

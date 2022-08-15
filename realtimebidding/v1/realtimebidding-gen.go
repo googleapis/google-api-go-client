@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/realtimebidding/v1"
-//   ...
-//   ctx := context.Background()
-//   realtimebiddingService, err := realtimebidding.NewService(ctx)
+//	import "google.golang.org/api/realtimebidding/v1"
+//	...
+//	ctx := context.Background()
+//	realtimebiddingService, err := realtimebidding.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
+//	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	realtimebiddingService, err := realtimebidding.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package realtimebidding // import "google.golang.org/api/realtimebidding/v1"
@@ -967,7 +967,7 @@ type Creative struct {
 	//   "ALCOHOL" - The alcohol restricted category.
 	RestrictedCategories []string `json:"restrictedCategories,omitempty"`
 
-	// Version: Output only. The version of this creative. Version for a new
+	// Version: Output only. The version of the creative. Version for a new
 	// creative is 1 and it increments during subsequent creative updates.
 	Version int64 `json:"version,omitempty"`
 
@@ -3123,8 +3123,8 @@ type BiddersGetCall struct {
 
 // Get: Gets a bidder account by its name.
 //
-// - name: Name of the bidder to get. Format:
-//   `bidders/{bidderAccountId}`.
+//   - name: Name of the bidder to get. Format:
+//     `bidders/{bidderAccountId}`.
 func (r *BiddersService) Get(name string) *BiddersGetCall {
 	c := &BiddersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3456,19 +3456,19 @@ type BiddersCreativesListCall struct {
 // pages. We recommend Google Cloud Pub/Sub
 // (//cloud.google.com/pubsub/docs/overview) to view the latest status.
 //
-// - parent: Name of the parent buyer that owns the creatives. The
-//   pattern for this resource is either `buyers/{buyerAccountId}` or
-//   `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
-//   `buyerAccountId` can be one of the following: 1. The ID of the
-//   buyer that is accessing their own creatives. 2. The ID of the child
-//   seat buyer under a bidder account. So for listing creatives
-//   pertaining to the child seat buyer (`456`) under bidder account
-//   (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
-//   bidder itself. So for listing creatives pertaining to bidder
-//   (`123`), you would use `buyers/123`. If you want to access all
-//   creatives pertaining to both the bidder and all of its child seat
-//   accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
-//   creatives pertaining to bidder (`123`), use `bidders/123`.
+//   - parent: Name of the parent buyer that owns the creatives. The
+//     pattern for this resource is either `buyers/{buyerAccountId}` or
+//     `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
+//     `buyerAccountId` can be one of the following: 1. The ID of the
+//     buyer that is accessing their own creatives. 2. The ID of the child
+//     seat buyer under a bidder account. So for listing creatives
+//     pertaining to the child seat buyer (`456`) under bidder account
+//     (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
+//     bidder itself. So for listing creatives pertaining to bidder
+//     (`123`), you would use `buyers/123`. If you want to access all
+//     creatives pertaining to both the bidder and all of its child seat
+//     accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
+//     creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BiddersCreativesService) List(parent string) *BiddersCreativesListCall {
 	c := &BiddersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3513,11 +3513,17 @@ func (c *BiddersCreativesListCall) PageToken(pageToken string) *BiddersCreatives
 // specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+//	"CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
 // SERVING_DECISION_ONLY.
-//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
+//	"SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
 // in the response.
-//   "FULL" - The entire creative resource (including the declared
+//
+//	"FULL" - The entire creative resource (including the declared
+//
 // fields and the creative content) is included in the response.
 func (c *BiddersCreativesListCall) View(view string) *BiddersCreativesListCall {
 	c.urlParams_.Set("view", view)
@@ -3721,9 +3727,9 @@ type BiddersCreativesWatchCall struct {
 // invocations of this method will return the existing Pub/Sub
 // configuration.
 //
-// - parent: To watch all creatives pertaining to the bidder and all its
-//   child seat accounts, the bidder must follow the pattern
-//   `bidders/{bidderAccountId}`.
+//   - parent: To watch all creatives pertaining to the bidder and all its
+//     child seat accounts, the bidder must follow the pattern
+//     `bidders/{bidderAccountId}`.
 func (r *BiddersCreativesService) Watch(parent string, watchcreativesrequest *WatchCreativesRequest) *BiddersCreativesWatchCall {
 	c := &BiddersCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3865,8 +3871,8 @@ type BiddersEndpointsGetCall struct {
 
 // Get: Gets a bidder endpoint by its name.
 //
-// - name: Name of the bidder endpoint to get. Format:
-//   `bidders/{bidderAccountId}/endpoints/{endpointId}`.
+//   - name: Name of the bidder endpoint to get. Format:
+//     `bidders/{bidderAccountId}/endpoints/{endpointId}`.
 func (r *BiddersEndpointsService) Get(name string) *BiddersEndpointsGetCall {
 	c := &BiddersEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4012,8 +4018,8 @@ type BiddersEndpointsListCall struct {
 
 // List: Lists all the bidder's endpoints.
 //
-// - parent: Name of the bidder whose endpoints will be listed. Format:
-//   `bidders/{bidderAccountId}`.
+//   - parent: Name of the bidder whose endpoints will be listed. Format:
+//     `bidders/{bidderAccountId}`.
 func (r *BiddersEndpointsService) List(parent string) *BiddersEndpointsListCall {
 	c := &BiddersEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4209,11 +4215,11 @@ type BiddersEndpointsPatchCall struct {
 
 // Patch: Updates a bidder's endpoint.
 //
-// - name: Output only. Name of the endpoint resource that must follow
-//   the pattern `bidders/{bidderAccountId}/endpoints/{endpointId}`,
-//   where {bidderAccountId} is the account ID of the bidder who
-//   operates this endpoint, and {endpointId} is a unique ID assigned by
-//   the server.
+//   - name: Output only. Name of the endpoint resource that must follow
+//     the pattern `bidders/{bidderAccountId}/endpoints/{endpointId}`,
+//     where {bidderAccountId} is the account ID of the bidder who
+//     operates this endpoint, and {endpointId} is a unique ID assigned by
+//     the server.
 func (r *BiddersEndpointsService) Patch(name string, endpoint *Endpoint) *BiddersEndpointsPatchCall {
 	c := &BiddersEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4368,8 +4374,8 @@ type BiddersPretargetingConfigsActivateCall struct {
 
 // Activate: Activates a pretargeting configuration.
 //
-// - name: The name of the pretargeting configuration. Format:
-//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - name: The name of the pretargeting configuration. Format:
+//     bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Activate(name string, activatepretargetingconfigrequest *ActivatePretargetingConfigRequest) *BiddersPretargetingConfigsActivateCall {
 	c := &BiddersPretargetingConfigsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4512,8 +4518,8 @@ type BiddersPretargetingConfigsAddTargetedAppsCall struct {
 // AddTargetedApps: Adds targeted apps to the pretargeting
 // configuration.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedApps(pretargetingConfig string, addtargetedappsrequest *AddTargetedAppsRequest) *BiddersPretargetingConfigsAddTargetedAppsCall {
 	c := &BiddersPretargetingConfigsAddTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4656,8 +4662,8 @@ type BiddersPretargetingConfigsAddTargetedPublishersCall struct {
 // AddTargetedPublishers: Adds targeted publishers to the pretargeting
 // config.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedPublishers(pretargetingConfig string, addtargetedpublishersrequest *AddTargetedPublishersRequest) *BiddersPretargetingConfigsAddTargetedPublishersCall {
 	c := &BiddersPretargetingConfigsAddTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4800,8 +4806,8 @@ type BiddersPretargetingConfigsAddTargetedSitesCall struct {
 // AddTargetedSites: Adds targeted sites to the pretargeting
 // configuration.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedSites(pretargetingConfig string, addtargetedsitesrequest *AddTargetedSitesRequest) *BiddersPretargetingConfigsAddTargetedSitesCall {
 	c := &BiddersPretargetingConfigsAddTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4947,8 +4953,8 @@ type BiddersPretargetingConfigsCreateCall struct {
 // may create a maximum of 10 pretargeting configurations. Attempts to
 // exceed this maximum results in a 400 bad request error.
 //
-// - parent: Name of the bidder to create the pretargeting configuration
-//   for. Format: bidders/{bidderAccountId}.
+//   - parent: Name of the bidder to create the pretargeting configuration
+//     for. Format: bidders/{bidderAccountId}.
 func (r *BiddersPretargetingConfigsService) Create(parent string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsCreateCall {
 	c := &BiddersPretargetingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5089,8 +5095,8 @@ type BiddersPretargetingConfigsDeleteCall struct {
 
 // Delete: Deletes a pretargeting configuration.
 //
-// - name: The name of the pretargeting configuration to delete. Format:
-//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - name: The name of the pretargeting configuration to delete. Format:
+//     bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Delete(name string) *BiddersPretargetingConfigsDeleteCall {
 	c := &BiddersPretargetingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5223,8 +5229,8 @@ type BiddersPretargetingConfigsGetCall struct {
 
 // Get: Gets a pretargeting configuration.
 //
-// - name: Name of the pretargeting configuration to get. Format:
-//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - name: Name of the pretargeting configuration to get. Format:
+//     bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Get(name string) *BiddersPretargetingConfigsGetCall {
 	c := &BiddersPretargetingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5370,8 +5376,8 @@ type BiddersPretargetingConfigsListCall struct {
 
 // List: Lists all pretargeting configurations for a single bidder.
 //
-// - parent: Name of the bidder whose pretargeting configurations will
-//   be listed. Format: bidders/{bidderAccountId}.
+//   - parent: Name of the bidder whose pretargeting configurations will
+//     be listed. Format: bidders/{bidderAccountId}.
 func (r *BiddersPretargetingConfigsService) List(parent string) *BiddersPretargetingConfigsListCall {
 	c := &BiddersPretargetingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5567,9 +5573,9 @@ type BiddersPretargetingConfigsPatchCall struct {
 
 // Patch: Updates a pretargeting configuration.
 //
-// - name: Output only. Name of the pretargeting configuration that must
-//   follow the pattern
-//   `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`.
+//   - name: Output only. Name of the pretargeting configuration that must
+//     follow the pattern
+//     `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`.
 func (r *BiddersPretargetingConfigsService) Patch(name string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsPatchCall {
 	c := &BiddersPretargetingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5725,8 +5731,8 @@ type BiddersPretargetingConfigsRemoveTargetedAppsCall struct {
 // RemoveTargetedApps: Removes targeted apps from the pretargeting
 // configuration.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedApps(pretargetingConfig string, removetargetedappsrequest *RemoveTargetedAppsRequest) *BiddersPretargetingConfigsRemoveTargetedAppsCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -5869,8 +5875,8 @@ type BiddersPretargetingConfigsRemoveTargetedPublishersCall struct {
 // RemoveTargetedPublishers: Removes targeted publishers from the
 // pretargeting config.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedPublishers(pretargetingConfig string, removetargetedpublishersrequest *RemoveTargetedPublishersRequest) *BiddersPretargetingConfigsRemoveTargetedPublishersCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -6013,8 +6019,8 @@ type BiddersPretargetingConfigsRemoveTargetedSitesCall struct {
 // RemoveTargetedSites: Removes targeted sites from the pretargeting
 // configuration.
 //
-// - pretargetingConfig: The name of the pretargeting configuration.
-//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - pretargetingConfig: The name of the pretargeting configuration.
+//     Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedSites(pretargetingConfig string, removetargetedsitesrequest *RemoveTargetedSitesRequest) *BiddersPretargetingConfigsRemoveTargetedSitesCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -6156,8 +6162,8 @@ type BiddersPretargetingConfigsSuspendCall struct {
 
 // Suspend: Suspends a pretargeting configuration.
 //
-// - name: The name of the pretargeting configuration. Format:
-//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
+//   - name: The name of the pretargeting configuration. Format:
+//     bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Suspend(name string, suspendpretargetingconfigrequest *SuspendPretargetingConfigRequest) *BiddersPretargetingConfigsSuspendCall {
 	c := &BiddersPretargetingConfigsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6299,9 +6305,9 @@ type BiddersPublisherConnectionsBatchApproveCall struct {
 
 // BatchApprove: Batch approves multiple publisher connections.
 //
-// - parent: The bidder for whom publisher connections will be approved.
-//   Format: `bidders/{bidder}` where `{bidder}` is the account ID of
-//   the bidder.
+//   - parent: The bidder for whom publisher connections will be approved.
+//     Format: `bidders/{bidder}` where `{bidder}` is the account ID of
+//     the bidder.
 func (r *BiddersPublisherConnectionsService) BatchApprove(parent string, batchapprovepublisherconnectionsrequest *BatchApprovePublisherConnectionsRequest) *BiddersPublisherConnectionsBatchApproveCall {
 	c := &BiddersPublisherConnectionsBatchApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6445,9 +6451,9 @@ type BiddersPublisherConnectionsBatchRejectCall struct {
 
 // BatchReject: Batch rejects multiple publisher connections.
 //
-// - parent: The bidder for whom publisher connections will be rejected.
-//   Format: `bidders/{bidder}` where `{bidder}` is the account ID of
-//   the bidder.
+//   - parent: The bidder for whom publisher connections will be rejected.
+//     Format: `bidders/{bidder}` where `{bidder}` is the account ID of
+//     the bidder.
 func (r *BiddersPublisherConnectionsService) BatchReject(parent string, batchrejectpublisherconnectionsrequest *BatchRejectPublisherConnectionsRequest) *BiddersPublisherConnectionsBatchRejectCall {
 	c := &BiddersPublisherConnectionsBatchRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6590,11 +6596,11 @@ type BiddersPublisherConnectionsGetCall struct {
 
 // Get: Gets a publisher connection.
 //
-// - name: Name of the publisher whose connection information is to be
-//   retrieved. In the pattern
-//   `bidders/{bidder}/publisherConnections/{publisher}` where
-//   `{bidder}` is the account ID of the bidder, and `{publisher}` is
-//   the ads.txt/app-ads.txt publisher ID. See publisherConnection.name.
+//   - name: Name of the publisher whose connection information is to be
+//     retrieved. In the pattern
+//     `bidders/{bidder}/publisherConnections/{publisher}` where
+//     `{bidder}` is the account ID of the bidder, and `{publisher}` is
+//     the ads.txt/app-ads.txt publisher ID. See publisherConnection.name.
 func (r *BiddersPublisherConnectionsService) Get(name string) *BiddersPublisherConnectionsGetCall {
 	c := &BiddersPublisherConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6740,9 +6746,9 @@ type BiddersPublisherConnectionsListCall struct {
 
 // List: Lists publisher connections for a given bidder.
 //
-// - parent: Name of the bidder for which publishers have initiated
-//   connections. The pattern for this resource is `bidders/{bidder}`
-//   where `{bidder}` represents the account ID of the bidder.
+//   - parent: Name of the bidder for which publishers have initiated
+//     connections. The pattern for this resource is `bidders/{bidder}`
+//     where `{bidder}` represents the account ID of the bidder.
 func (r *BiddersPublisherConnectionsService) List(parent string) *BiddersPublisherConnectionsListCall {
 	c := &BiddersPublisherConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7120,14 +7126,14 @@ type BuyersGetRemarketingTagCall struct {
 // When a user visits a page containing a remarketing tag, Google adds
 // the user to a user list.
 //
-// - name: To fetch remarketing tag for an account, name must follow the
-//   pattern `buyers/{accountId}` where `{accountId}` represents ID of a
-//   buyer that owns the remarketing tag. For a bidder accessing
-//   remarketing tag on behalf of a child seat buyer, `{accountId}`
-//   should represent the ID of the child seat buyer. To fetch
-//   remarketing tag for a specific user list, name must follow the
-//   pattern `buyers/{accountId}/userLists/{userListId}`. See
-//   UserList.name.
+//   - name: To fetch remarketing tag for an account, name must follow the
+//     pattern `buyers/{accountId}` where `{accountId}` represents ID of a
+//     buyer that owns the remarketing tag. For a bidder accessing
+//     remarketing tag on behalf of a child seat buyer, `{accountId}`
+//     should represent the ID of the child seat buyer. To fetch
+//     remarketing tag for a specific user list, name must follow the
+//     pattern `buyers/{accountId}/userLists/{userListId}`. See
+//     UserList.name.
 func (r *BuyersService) GetRemarketingTag(name string) *BuyersGetRemarketingTagCall {
 	c := &BuyersGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7454,12 +7460,12 @@ type BuyersCreativesCreateCall struct {
 
 // Create: Creates a creative.
 //
-// - parent: The name of the parent buyer that the new creative belongs
-//   to that must follow the pattern `buyers/{buyerAccountId}`, where
-//   `{buyerAccountId}` represents the account ID of the buyer who owns
-//   a creative. For a bidder accessing creatives on behalf of a child
-//   seat buyer, `{buyerAccountId}` should represent the account ID of
-//   the child seat buyer.
+//   - parent: The name of the parent buyer that the new creative belongs
+//     to that must follow the pattern `buyers/{buyerAccountId}`, where
+//     `{buyerAccountId}` represents the account ID of the buyer who owns
+//     a creative. For a bidder accessing creatives on behalf of a child
+//     seat buyer, `{buyerAccountId}` should represent the account ID of
+//     the child seat buyer.
 func (r *BuyersCreativesService) Create(parent string, creative *Creative) *BuyersCreativesCreateCall {
 	c := &BuyersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7615,11 +7621,17 @@ func (r *BuyersCreativesService) Get(name string) *BuyersCreativesGetCall {
 // specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+//	"CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
 // SERVING_DECISION_ONLY.
-//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
+//	"SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
 // in the response.
-//   "FULL" - The entire creative resource (including the declared
+//
+//	"FULL" - The entire creative resource (including the declared
+//
 // fields and the creative content) is included in the response.
 func (c *BuyersCreativesGetCall) View(view string) *BuyersCreativesGetCall {
 	c.urlParams_.Set("view", view)
@@ -7786,19 +7798,19 @@ type BuyersCreativesListCall struct {
 // pages. We recommend Google Cloud Pub/Sub
 // (//cloud.google.com/pubsub/docs/overview) to view the latest status.
 //
-// - parent: Name of the parent buyer that owns the creatives. The
-//   pattern for this resource is either `buyers/{buyerAccountId}` or
-//   `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
-//   `buyerAccountId` can be one of the following: 1. The ID of the
-//   buyer that is accessing their own creatives. 2. The ID of the child
-//   seat buyer under a bidder account. So for listing creatives
-//   pertaining to the child seat buyer (`456`) under bidder account
-//   (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
-//   bidder itself. So for listing creatives pertaining to bidder
-//   (`123`), you would use `buyers/123`. If you want to access all
-//   creatives pertaining to both the bidder and all of its child seat
-//   accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
-//   creatives pertaining to bidder (`123`), use `bidders/123`.
+//   - parent: Name of the parent buyer that owns the creatives. The
+//     pattern for this resource is either `buyers/{buyerAccountId}` or
+//     `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
+//     `buyerAccountId` can be one of the following: 1. The ID of the
+//     buyer that is accessing their own creatives. 2. The ID of the child
+//     seat buyer under a bidder account. So for listing creatives
+//     pertaining to the child seat buyer (`456`) under bidder account
+//     (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
+//     bidder itself. So for listing creatives pertaining to bidder
+//     (`123`), you would use `buyers/123`. If you want to access all
+//     creatives pertaining to both the bidder and all of its child seat
+//     accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
+//     creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BuyersCreativesService) List(parent string) *BuyersCreativesListCall {
 	c := &BuyersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7843,11 +7855,17 @@ func (c *BuyersCreativesListCall) PageToken(pageToken string) *BuyersCreativesLi
 // specify the view as "FULL".
 //
 // Possible values:
-//   "CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
+//	"CREATIVE_VIEW_UNSPECIFIED" - Not specified, equivalent to
+//
 // SERVING_DECISION_ONLY.
-//   "SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
+//	"SERVING_DECISION_ONLY" - Only creativeServingDecision is included
+//
 // in the response.
-//   "FULL" - The entire creative resource (including the declared
+//
+//	"FULL" - The entire creative resource (including the declared
+//
 // fields and the creative content) is included in the response.
 func (c *BuyersCreativesListCall) View(view string) *BuyersCreativesListCall {
 	c.urlParams_.Set("view", view)
@@ -8045,11 +8063,11 @@ type BuyersCreativesPatchCall struct {
 
 // Patch: Updates a creative.
 //
-// - name: Output only. Name of the creative. Follows the pattern
-//   `buyers/{buyer}/creatives/{creative}`, where `{buyer}` represents
-//   the account ID of the buyer who owns the creative, and `{creative}`
-//   is the buyer-specific creative ID that references this creative in
-//   the bid response.
+//   - name: Output only. Name of the creative. Follows the pattern
+//     `buyers/{buyer}/creatives/{creative}`, where `{buyer}` represents
+//     the account ID of the buyer who owns the creative, and `{creative}`
+//     is the buyer-specific creative ID that references this creative in
+//     the bid response.
 func (r *BuyersCreativesService) Patch(name string, creative *Creative) *BuyersCreativesPatchCall {
 	c := &BuyersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8347,12 +8365,12 @@ type BuyersUserListsCreateCall struct {
 
 // Create: Create a new user list.
 //
-// - parent: The name of the parent buyer of the user list to be
-//   retrieved that must follow the pattern `buyers/{buyerAccountId}`,
-//   where `{buyerAccountId}` represents the account ID of the buyer who
-//   owns user lists. For a bidder accessing user lists on behalf of a
-//   child seat buyer , `{buyerAccountId}` should represent the account
-//   ID of the child seat buyer.
+//   - parent: The name of the parent buyer of the user list to be
+//     retrieved that must follow the pattern `buyers/{buyerAccountId}`,
+//     where `{buyerAccountId}` represents the account ID of the buyer who
+//     owns user lists. For a bidder accessing user lists on behalf of a
+//     child seat buyer , `{buyerAccountId}` should represent the account
+//     ID of the child seat buyer.
 func (r *BuyersUserListsService) Create(parent string, userlist *UserList) *BuyersUserListsCreateCall {
 	c := &BuyersUserListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8643,14 +8661,14 @@ type BuyersUserListsGetRemarketingTagCall struct {
 // When a user visits a page containing a remarketing tag, Google adds
 // the user to a user list.
 //
-// - name: To fetch remarketing tag for an account, name must follow the
-//   pattern `buyers/{accountId}` where `{accountId}` represents ID of a
-//   buyer that owns the remarketing tag. For a bidder accessing
-//   remarketing tag on behalf of a child seat buyer, `{accountId}`
-//   should represent the ID of the child seat buyer. To fetch
-//   remarketing tag for a specific user list, name must follow the
-//   pattern `buyers/{accountId}/userLists/{userListId}`. See
-//   UserList.name.
+//   - name: To fetch remarketing tag for an account, name must follow the
+//     pattern `buyers/{accountId}` where `{accountId}` represents ID of a
+//     buyer that owns the remarketing tag. For a bidder accessing
+//     remarketing tag on behalf of a child seat buyer, `{accountId}`
+//     should represent the ID of the child seat buyer. To fetch
+//     remarketing tag for a specific user list, name must follow the
+//     pattern `buyers/{accountId}/userLists/{userListId}`. See
+//     UserList.name.
 func (r *BuyersUserListsService) GetRemarketingTag(name string) *BuyersUserListsGetRemarketingTagCall {
 	c := &BuyersUserListsGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8796,12 +8814,12 @@ type BuyersUserListsListCall struct {
 
 // List: Lists the user lists visible to the current user.
 //
-// - parent: The name of the parent buyer for the user lists to be
-//   returned that must follow the pattern `buyers/{buyerAccountId}`,
-//   where `{buyerAccountId}` represents the account ID of the buyer who
-//   owns user lists. For a bidder accessing user lists on behalf of a
-//   child seat buyer , `{buyerAccountId}` should represent the account
-//   ID of the child seat buyer.
+//   - parent: The name of the parent buyer for the user lists to be
+//     returned that must follow the pattern `buyers/{buyerAccountId}`,
+//     where `{buyerAccountId}` represents the account ID of the buyer who
+//     owns user lists. For a bidder accessing user lists on behalf of a
+//     child seat buyer , `{buyerAccountId}` should represent the account
+//     ID of the child seat buyer.
 func (r *BuyersUserListsService) List(parent string) *BuyersUserListsListCall {
 	c := &BuyersUserListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9137,13 +9155,13 @@ type BuyersUserListsUpdateCall struct {
 // Update: Update the given user list. Only user lists with
 // URLRestrictions can be updated.
 //
-// - name: Output only. Name of the user list that must follow the
-//   pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}`
-//   represents the account ID of the buyer who owns the user list. For
-//   a bidder accessing user lists on behalf of a child seat buyer,
-//   `{buyer}` represents the account ID of the child seat buyer.
-//   `{user_list}` is an int64 identifier assigned by Google to uniquely
-//   identify a user list.
+//   - name: Output only. Name of the user list that must follow the
+//     pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}`
+//     represents the account ID of the buyer who owns the user list. For
+//     a bidder accessing user lists on behalf of a child seat buyer,
+//     `{buyer}` represents the account ID of the child seat buyer.
+//     `{user_list}` is an int64 identifier assigned by Google to uniquely
+//     identify a user list.
 func (r *BuyersUserListsService) Update(nameid string, userlist *UserList) *BuyersUserListsUpdateCall {
 	c := &BuyersUserListsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

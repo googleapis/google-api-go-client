@@ -8,31 +8,31 @@
 //
 // This package is DEPRECATED. Use package cloud.google.com/go/logging instead.
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/logging/v1beta3"
-//   ...
-//   ctx := context.Background()
-//   loggingService, err := logging.NewService(ctx)
+//	import "google.golang.org/api/logging/v1beta3"
+//	...
+//	ctx := context.Background()
+//	loggingService, err := logging.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
+//	loggingService, err := logging.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	loggingService, err := logging.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package logging // import "google.golang.org/api/logging/v1beta3"
@@ -792,8 +792,8 @@ type ProjectsLogServicesListCall struct {
 // List: Lists log services associated with log entries ingested for a
 // project.
 //
-// - projectsId: Part of `projectName`. The project resource whose
-//   services are to be listed.
+//   - projectsId: Part of `projectName`. The project resource whose
+//     services are to be listed.
 func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogServicesListCall {
 	c := &ProjectsLogServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1000,12 +1000,12 @@ type ProjectsLogServicesIndexesListCall struct {
 
 // List: Lists log service indexes associated with a log service.
 //
-// - logServicesId: Part of `serviceName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `serviceName`. A log service resource of the
-//   form `/projects/*/logServices/*`. The service indexes of the log
-//   service are returned. Example:
-//   "/projects/myProj/logServices/appengine.googleapis.com".
+//   - logServicesId: Part of `serviceName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `serviceName`. A log service resource of the
+//     form `/projects/*/logServices/*`. The service indexes of the log
+//     service are returned. Example:
+//     "/projects/myProj/logServices/appengine.googleapis.com".
 func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesId string) *ProjectsLogServicesIndexesListCall {
 	c := &ProjectsLogServicesIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1258,10 +1258,10 @@ type ProjectsLogServicesSinksCreateCall struct {
 
 // Create: Creates the specified log service sink resource.
 //
-// - logServicesId: Part of `serviceName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `serviceName`. The name of the service in which
-//   to create a sink.
+//   - logServicesId: Part of `serviceName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `serviceName`. The name of the service in which
+//     to create a sink.
 func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesId string, logsink *LogSink) *ProjectsLogServicesSinksCreateCall {
 	c := &ProjectsLogServicesSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1411,10 +1411,10 @@ type ProjectsLogServicesSinksDeleteCall struct {
 
 // Delete: Deletes the specified log service sink.
 //
-// - logServicesId: Part of `sinkName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `sinkName`. The name of the sink to delete.
-// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
+//   - logServicesId: Part of `sinkName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `sinkName`. The name of the sink to delete.
+//   - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksDeleteCall {
 	c := &ProjectsLogServicesSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1565,10 +1565,10 @@ type ProjectsLogServicesSinksGetCall struct {
 
 // Get: Gets the specified log service sink resource.
 //
-// - logServicesId: Part of `sinkName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `sinkName`. The name of the sink to return.
-// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
+//   - logServicesId: Part of `sinkName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `sinkName`. The name of the sink to return.
+//   - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Get(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksGetCall {
 	c := &ProjectsLogServicesSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1731,10 +1731,10 @@ type ProjectsLogServicesSinksListCall struct {
 
 // List: Lists log service sinks associated with the specified service.
 //
-// - logServicesId: Part of `serviceName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `serviceName`. The name of the service for
-//   which to list sinks.
+//   - logServicesId: Part of `serviceName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `serviceName`. The name of the service for
+//     which to list sinks.
 func (r *ProjectsLogServicesSinksService) List(projectsId string, logServicesId string) *ProjectsLogServicesSinksListCall {
 	c := &ProjectsLogServicesSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1889,10 +1889,10 @@ type ProjectsLogServicesSinksUpdateCall struct {
 
 // Update: Creates or update the specified log service sink resource.
 //
-// - logServicesId: Part of `sinkName`. See documentation of
-//   `projectsId`.
-// - projectsId: Part of `sinkName`. The name of the sink to update.
-// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
+//   - logServicesId: Part of `sinkName`. See documentation of
+//     `projectsId`.
+//   - projectsId: Part of `sinkName`. The name of the sink to update.
+//   - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesId string, sinksId string, logsink *LogSink) *ProjectsLogServicesSinksUpdateCall {
 	c := &ProjectsLogServicesSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2192,8 +2192,8 @@ type ProjectsLogsListCall struct {
 
 // List: Lists log resources belonging to the specified project.
 //
-// - projectsId: Part of `projectName`. The project name for which to
-//   list the log resources.
+//   - projectsId: Part of `projectName`. The project name for which to
+//     list the log resources.
 func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
 	c := &ProjectsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2428,9 +2428,9 @@ type ProjectsLogsEntriesWriteCall struct {
 // `entries[].metadata.labels` maps, saving you the trouble of creating
 // identical copies for each entry.
 //
-// - logsId: Part of `logName`. See documentation of `projectsId`.
-// - projectsId: Part of `logName`. The name of the log resource into
-//   which to insert the log entries.
+//   - logsId: Part of `logName`. See documentation of `projectsId`.
+//   - projectsId: Part of `logName`. The name of the log resource into
+//     which to insert the log entries.
 func (r *ProjectsLogsEntriesService) Write(projectsId string, logsId string, writelogentriesrequest *WriteLogEntriesRequest) *ProjectsLogsEntriesWriteCall {
 	c := &ProjectsLogsEntriesWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2580,9 +2580,9 @@ type ProjectsLogsSinksCreateCall struct {
 
 // Create: Creates the specified log sink resource.
 //
-// - logsId: Part of `logName`. See documentation of `projectsId`.
-// - projectsId: Part of `logName`. The log in which to create a sink
-//   resource.
+//   - logsId: Part of `logName`. See documentation of `projectsId`.
+//   - projectsId: Part of `logName`. The log in which to create a sink
+//     resource.
 func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logsink *LogSink) *ProjectsLogsSinksCreateCall {
 	c := &ProjectsLogsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2885,10 +2885,10 @@ type ProjectsLogsSinksGetCall struct {
 
 // Get: Gets the specified log sink resource.
 //
-// - logsId: Part of `sinkName`. See documentation of `projectsId`.
-// - projectsId: Part of `sinkName`. The name of the sink resource to
-//   return.
-// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
+//   - logsId: Part of `sinkName`. See documentation of `projectsId`.
+//   - projectsId: Part of `sinkName`. The name of the sink resource to
+//     return.
+//   - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogsSinksService) Get(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksGetCall {
 	c := &ProjectsLogsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId

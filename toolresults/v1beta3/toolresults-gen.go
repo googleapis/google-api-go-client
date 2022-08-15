@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://firebase.google.com/docs/test-lab/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/toolresults/v1beta3"
-//   ...
-//   ctx := context.Background()
-//   toolresultsService, err := toolresults.NewService(ctx)
+//	import "google.golang.org/api/toolresults/v1beta3"
+//	...
+//	ctx := context.Background()
+//	toolresultsService, err := toolresults.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   toolresultsService, err := toolresults.NewService(ctx, option.WithAPIKey("AIza..."))
+//	toolresultsService, err := toolresults.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   toolresultsService, err := toolresults.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	toolresultsService, err := toolresults.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package toolresults // import "google.golang.org/api/toolresults/v1beta3"
@@ -812,6 +812,11 @@ func (s *CrashDialogError) MarshalJSON() ([]byte, error) {
 	type NoMethod CrashDialogError
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DetectedAppSplashScreen: A notification that Robo detected a splash
+// screen provided by app (vs. Android OS splash screen).
+type DetectedAppSplashScreen struct {
 }
 
 // DeviceOutOfMemory: A warning that device ran out of memory
@@ -4006,6 +4011,8 @@ type TestIssue struct {
 	// don't crash apps).
 	//   "deviceOutOfMemory" - Device running out of memory was detected
 	//   "logcatCollectionError" - Problems detected while collecting logcat
+	//   "detectedAppSplashScreen" - Robo detected a splash screen provided
+	// by app (vs. Android OS splash screen).
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should
@@ -6858,9 +6865,9 @@ type ProjectsHistoriesExecutionsStepsAccessibilityClustersCall struct {
 // locale format is incorrect - NOT_FOUND - if the containing Step does
 // not exist
 //
-// - name: A full resource name of the step. For example,
-//   projects/my-project/histories/bh.1234567890abcdef/executions/
-//   1234567890123456789/steps/bs.1234567890abcdef.
+//   - name: A full resource name of the step. For example,
+//     projects/my-project/histories/bh.1234567890abcdef/executions/
+//     1234567890123456789/steps/bs.1234567890abcdef.
 func (r *ProjectsHistoriesExecutionsStepsService) AccessibilityClusters(name string) *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall {
 	c := &ProjectsHistoriesExecutionsStepsAccessibilityClustersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7988,11 +7995,11 @@ type ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall struct {
 // duplicate xml file or a file too large. - NOT_FOUND - if the
 // containing Execution does not exist
 //
-// - executionId: A Execution id.
-// - historyId: A History id.
-// - projectId: A Project id.
-// - stepId: A Step id. Note: This step must include a
-//   TestExecutionStep.
+//   - executionId: A Execution id.
+//   - historyId: A History id.
+//   - projectId: A Project id.
+//   - stepId: A Step id. Note: This step must include a
+//     TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsService) PublishXunitXmlFiles(projectId string, historyId string, executionId string, stepId string, publishxunitxmlfilesrequest *PublishXunitXmlFilesRequest) *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall {
 	c := &ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8727,11 +8734,12 @@ func (r *ProjectsHistoriesExecutionsStepsPerfSampleSeriesService) List(projectId
 // PerfMetricType values such as CPU to filter the result
 //
 // Possible values:
-//   "perfMetricTypeUnspecified"
-//   "memory"
-//   "cpu"
-//   "network"
-//   "graphics"
+//
+//	"perfMetricTypeUnspecified"
+//	"memory"
+//	"cpu"
+//	"network"
+//	"graphics"
 func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) Filter(filter ...string) *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
@@ -9363,12 +9371,12 @@ type ProjectsHistoriesExecutionsStepsTestCasesGetCall struct {
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Test Case does not exist
 //
-// - executionId: A Execution id.
-// - historyId: A History id.
-// - projectId: A Project id.
-// - stepId: A Step id. Note: This step must include a
-//   TestExecutionStep.
-// - testCaseId: A Test Case id.
+//   - executionId: A Execution id.
+//   - historyId: A History id.
+//   - projectId: A Project id.
+//   - stepId: A Step id. Note: This step must include a
+//     TestExecutionStep.
+//   - testCaseId: A Test Case id.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) Get(projectId string, historyId string, executionId string, stepId string, testCaseId string) *ProjectsHistoriesExecutionsStepsTestCasesGetCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9556,11 +9564,11 @@ type ProjectsHistoriesExecutionsStepsTestCasesListCall struct {
 // authorized to write to project - INVALID_ARGUMENT - if the request is
 // malformed - NOT_FOUND - if the containing Step does not exist
 //
-// - executionId: A Execution id.
-// - historyId: A History id.
-// - projectId: A Project id.
-// - stepId: A Step id. Note: This step must include a
-//   TestExecutionStep.
+//   - executionId: A Execution id.
+//   - historyId: A History id.
+//   - projectId: A Project id.
+//   - stepId: A Step id. Note: This step must include a
+//     TestExecutionStep.
 func (r *ProjectsHistoriesExecutionsStepsTestCasesService) List(projectId string, historyId string, executionId string, stepId string) *ProjectsHistoriesExecutionsStepsTestCasesListCall {
 	c := &ProjectsHistoriesExecutionsStepsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

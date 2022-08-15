@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/networking
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/networkservices/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   networkservicesService, err := networkservices.NewService(ctx)
+//	import "google.golang.org/api/networkservices/v1beta1"
+//	...
+//	ctx := context.Background()
+//	networkservicesService, err := networkservices.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   networkservicesService, err := networkservices.NewService(ctx, option.WithAPIKey("AIza..."))
+//	networkservicesService, err := networkservices.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   networkservicesService, err := networkservices.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	networkservicesService, err := networkservices.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package networkservices // import "google.golang.org/api/networkservices/v1beta1"
@@ -662,9 +662,10 @@ type Gateway struct {
 	// `projects/*/locations/*/gateways/`.
 	Name string `json:"name,omitempty"`
 
-	// Ports: Required. One or more ports that the Gateway must receive
-	// traffic on. The proxy binds to the ports specified. Gateway listen on
-	// 0.0.0.0 on the ports specified below.
+	// Ports: Required. One or more port numbers (1-65535), on which the
+	// Gateway will receive traffic. The proxy binds to the specified ports.
+	// Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port. Gateways
+	// of type 'OPEN_MESH' listen on 0.0.0.0 and support multiple ports.
 	Ports []int64 `json:"ports,omitempty"`
 
 	// Scope: Required. Immutable. Scope determines how configuration across
@@ -683,7 +684,8 @@ type Gateway struct {
 	// termination is disabled.
 	ServerTlsPolicy string `json:"serverTlsPolicy,omitempty"`
 
-	// Type: Immutable. The type of the customer managed gateway.
+	// Type: Immutable. The type of the customer managed gateway. This field
+	// is required. If unspecified, an error is returned.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the customer managed gateway is
@@ -1058,7 +1060,7 @@ func (s *GrpcRouteMethodMatch) MarshalJSON() ([]byte, error) {
 // GrpcRouteRetryPolicy: The specifications for retries.
 type GrpcRouteRetryPolicy struct {
 	// NumRetries: Specifies the allowed number of retries. This number must
-	// be > 0. If not specpfied, default to 1.
+	// be > 0. If not specified, default to 1.
 	NumRetries int64 `json:"numRetries,omitempty"`
 
 	// RetryConditions: - connect-failure: Router will retry on failures
@@ -3678,8 +3680,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3886,8 +3888,8 @@ type ProjectsLocationsEndpointPoliciesCreateCall struct {
 
 // Create: Creates a new EndpointPolicy in a given project and location.
 //
-// - parent: The parent resource of the EndpointPolicy. Must be in the
-//   format `projects/*/locations/global`.
+//   - parent: The parent resource of the EndpointPolicy. Must be in the
+//     format `projects/*/locations/global`.
 func (r *ProjectsLocationsEndpointPoliciesService) Create(parent string, endpointpolicy *EndpointPolicy) *ProjectsLocationsEndpointPoliciesCreateCall {
 	c := &ProjectsLocationsEndpointPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4041,8 +4043,8 @@ type ProjectsLocationsEndpointPoliciesDeleteCall struct {
 
 // Delete: Deletes a single EndpointPolicy.
 //
-// - name: A name of the EndpointPolicy to delete. Must be in the format
-//   `projects/*/locations/global/endpointPolicies/*`.
+//   - name: A name of the EndpointPolicy to delete. Must be in the format
+//     `projects/*/locations/global/endpointPolicies/*`.
 func (r *ProjectsLocationsEndpointPoliciesService) Delete(name string) *ProjectsLocationsEndpointPoliciesDeleteCall {
 	c := &ProjectsLocationsEndpointPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4175,8 +4177,8 @@ type ProjectsLocationsEndpointPoliciesGetCall struct {
 
 // Get: Gets details of a single EndpointPolicy.
 //
-// - name: A name of the EndpointPolicy to get. Must be in the format
-//   `projects/*/locations/global/endpointPolicies/*`.
+//   - name: A name of the EndpointPolicy to get. Must be in the format
+//     `projects/*/locations/global/endpointPolicies/*`.
 func (r *ProjectsLocationsEndpointPoliciesService) Get(name string) *ProjectsLocationsEndpointPoliciesGetCall {
 	c := &ProjectsLocationsEndpointPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4324,10 +4326,10 @@ type ProjectsLocationsEndpointPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEndpointPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsEndpointPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4497,9 +4499,9 @@ type ProjectsLocationsEndpointPoliciesListCall struct {
 
 // List: Lists EndpointPolicies in a given project and location.
 //
-// - parent: The project and location from which the EndpointPolicies
-//   should be listed, specified in the format
-//   `projects/*/locations/global`.
+//   - parent: The project and location from which the EndpointPolicies
+//     should be listed, specified in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsEndpointPoliciesService) List(parent string) *ProjectsLocationsEndpointPoliciesListCall {
 	c := &ProjectsLocationsEndpointPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4693,9 +4695,9 @@ type ProjectsLocationsEndpointPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single EndpointPolicy.
 //
-// - name: Name of the EndpointPolicy resource. It matches pattern
-//   `projects/{project}/locations/global/endpointPolicies/{endpoint_poli
-//   cy}`.
+//   - name: Name of the EndpointPolicy resource. It matches pattern
+//     `projects/{project}/locations/global/endpointPolicies/{endpoint_poli
+//     cy}`.
 func (r *ProjectsLocationsEndpointPoliciesService) Patch(name string, endpointpolicy *EndpointPolicy) *ProjectsLocationsEndpointPoliciesPatchCall {
 	c := &ProjectsLocationsEndpointPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4856,10 +4858,10 @@ type ProjectsLocationsEndpointPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEndpointPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEndpointPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsEndpointPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5006,10 +5008,10 @@ type ProjectsLocationsEndpointPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEndpointPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsEndpointPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5151,8 +5153,8 @@ type ProjectsLocationsGatewaysCreateCall struct {
 
 // Create: Creates a new Gateway in a given project and location.
 //
-// - parent: The parent resource of the Gateway. Must be in the format
-//   `projects/*/locations/*`.
+//   - parent: The parent resource of the Gateway. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) Create(parent string, gateway *Gateway) *ProjectsLocationsGatewaysCreateCall {
 	c := &ProjectsLocationsGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5305,8 +5307,8 @@ type ProjectsLocationsGatewaysDeleteCall struct {
 
 // Delete: Deletes a single Gateway.
 //
-// - name: A name of the Gateway to delete. Must be in the format
-//   `projects/*/locations/*/gateways/*`.
+//   - name: A name of the Gateway to delete. Must be in the format
+//     `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Delete(name string) *ProjectsLocationsGatewaysDeleteCall {
 	c := &ProjectsLocationsGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5439,8 +5441,8 @@ type ProjectsLocationsGatewaysGetCall struct {
 
 // Get: Gets details of a single Gateway.
 //
-// - name: A name of the Gateway to get. Must be in the format
-//   `projects/*/locations/*/gateways/*`.
+//   - name: A name of the Gateway to get. Must be in the format
+//     `projects/*/locations/*/gateways/*`.
 func (r *ProjectsLocationsGatewaysService) Get(name string) *ProjectsLocationsGatewaysGetCall {
 	c := &ProjectsLocationsGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5588,10 +5590,10 @@ type ProjectsLocationsGatewaysGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsGatewaysGetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5761,8 +5763,8 @@ type ProjectsLocationsGatewaysListCall struct {
 
 // List: Lists Gateways in a given project and location.
 //
-// - parent: The project and location from which the Gateways should be
-//   listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the Gateways should be
+//     listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsGatewaysService) List(parent string) *ProjectsLocationsGatewaysListCall {
 	c := &ProjectsLocationsGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5956,8 +5958,8 @@ type ProjectsLocationsGatewaysPatchCall struct {
 
 // Patch: Updates the parameters of a single Gateway.
 //
-// - name: Name of the Gateway resource. It matches pattern
-//   `projects/*/locations/*/gateways/`.
+//   - name: Name of the Gateway resource. It matches pattern
+//     `projects/*/locations/*/gateways/`.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, gateway *Gateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6118,10 +6120,10 @@ type ProjectsLocationsGatewaysSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGatewaysSetIamPolicyCall {
 	c := &ProjectsLocationsGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6268,10 +6270,10 @@ type ProjectsLocationsGatewaysTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsGatewaysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGatewaysTestIamPermissionsCall {
 	c := &ProjectsLocationsGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6413,8 +6415,8 @@ type ProjectsLocationsGrpcRoutesCreateCall struct {
 
 // Create: Creates a new GrpcRoute in a given project and location.
 //
-// - parent: The parent resource of the GrpcRoute. Must be in the format
-//   `projects/*/locations/global`.
+//   - parent: The parent resource of the GrpcRoute. Must be in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsGrpcRoutesService) Create(parent string, grpcroute *GrpcRoute) *ProjectsLocationsGrpcRoutesCreateCall {
 	c := &ProjectsLocationsGrpcRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6567,8 +6569,8 @@ type ProjectsLocationsGrpcRoutesDeleteCall struct {
 
 // Delete: Deletes a single GrpcRoute.
 //
-// - name: A name of the GrpcRoute to delete. Must be in the format
-//   `projects/*/locations/global/grpcRoutes/*`.
+//   - name: A name of the GrpcRoute to delete. Must be in the format
+//     `projects/*/locations/global/grpcRoutes/*`.
 func (r *ProjectsLocationsGrpcRoutesService) Delete(name string) *ProjectsLocationsGrpcRoutesDeleteCall {
 	c := &ProjectsLocationsGrpcRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6701,8 +6703,8 @@ type ProjectsLocationsGrpcRoutesGetCall struct {
 
 // Get: Gets details of a single GrpcRoute.
 //
-// - name: A name of the GrpcRoute to get. Must be in the format
-//   `projects/*/locations/global/grpcRoutes/*`.
+//   - name: A name of the GrpcRoute to get. Must be in the format
+//     `projects/*/locations/global/grpcRoutes/*`.
 func (r *ProjectsLocationsGrpcRoutesService) Get(name string) *ProjectsLocationsGrpcRoutesGetCall {
 	c := &ProjectsLocationsGrpcRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6848,8 +6850,8 @@ type ProjectsLocationsGrpcRoutesListCall struct {
 
 // List: Lists GrpcRoutes in a given project and location.
 //
-// - parent: The project and location from which the GrpcRoutes should
-//   be listed, specified in the format `projects/*/locations/global`.
+//   - parent: The project and location from which the GrpcRoutes should
+//     be listed, specified in the format `projects/*/locations/global`.
 func (r *ProjectsLocationsGrpcRoutesService) List(parent string) *ProjectsLocationsGrpcRoutesListCall {
 	c := &ProjectsLocationsGrpcRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7043,8 +7045,8 @@ type ProjectsLocationsGrpcRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single GrpcRoute.
 //
-// - name: Name of the GrpcRoute resource. It matches pattern
-//   `projects/*/locations/global/grpcRoutes/`.
+//   - name: Name of the GrpcRoute resource. It matches pattern
+//     `projects/*/locations/global/grpcRoutes/`.
 func (r *ProjectsLocationsGrpcRoutesService) Patch(name string, grpcroute *GrpcRoute) *ProjectsLocationsGrpcRoutesPatchCall {
 	c := &ProjectsLocationsGrpcRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7203,8 +7205,8 @@ type ProjectsLocationsHttpRoutesCreateCall struct {
 
 // Create: Creates a new HttpRoute in a given project and location.
 //
-// - parent: The parent resource of the HttpRoute. Must be in the format
-//   `projects/*/locations/global`.
+//   - parent: The parent resource of the HttpRoute. Must be in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsHttpRoutesService) Create(parent string, httproute *HttpRoute) *ProjectsLocationsHttpRoutesCreateCall {
 	c := &ProjectsLocationsHttpRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7357,8 +7359,8 @@ type ProjectsLocationsHttpRoutesDeleteCall struct {
 
 // Delete: Deletes a single HttpRoute.
 //
-// - name: A name of the HttpRoute to delete. Must be in the format
-//   `projects/*/locations/global/httpRoutes/*`.
+//   - name: A name of the HttpRoute to delete. Must be in the format
+//     `projects/*/locations/global/httpRoutes/*`.
 func (r *ProjectsLocationsHttpRoutesService) Delete(name string) *ProjectsLocationsHttpRoutesDeleteCall {
 	c := &ProjectsLocationsHttpRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7491,8 +7493,8 @@ type ProjectsLocationsHttpRoutesGetCall struct {
 
 // Get: Gets details of a single HttpRoute.
 //
-// - name: A name of the HttpRoute to get. Must be in the format
-//   `projects/*/locations/global/httpRoutes/*`.
+//   - name: A name of the HttpRoute to get. Must be in the format
+//     `projects/*/locations/global/httpRoutes/*`.
 func (r *ProjectsLocationsHttpRoutesService) Get(name string) *ProjectsLocationsHttpRoutesGetCall {
 	c := &ProjectsLocationsHttpRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7638,8 +7640,8 @@ type ProjectsLocationsHttpRoutesListCall struct {
 
 // List: Lists HttpRoute in a given project and location.
 //
-// - parent: The project and location from which the HttpRoutes should
-//   be listed, specified in the format `projects/*/locations/global`.
+//   - parent: The project and location from which the HttpRoutes should
+//     be listed, specified in the format `projects/*/locations/global`.
 func (r *ProjectsLocationsHttpRoutesService) List(parent string) *ProjectsLocationsHttpRoutesListCall {
 	c := &ProjectsLocationsHttpRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7655,7 +7657,7 @@ func (c *ProjectsLocationsHttpRoutesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListHttpRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListHttpRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsHttpRoutesListCall) PageToken(pageToken string) *ProjectsLocationsHttpRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -7776,7 +7778,7 @@ func (c *ProjectsLocationsHttpRoutesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListHttpRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListHttpRoutesResponse` Indicates that this is a continuation of a prior `ListHttpRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7833,8 +7835,8 @@ type ProjectsLocationsHttpRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single HttpRoute.
 //
-// - name: Name of the HttpRoute resource. It matches pattern
-//   `projects/*/locations/global/httpRoutes/http_route_name>`.
+//   - name: Name of the HttpRoute resource. It matches pattern
+//     `projects/*/locations/global/httpRoutes/http_route_name>`.
 func (r *ProjectsLocationsHttpRoutesService) Patch(name string, httproute *HttpRoute) *ProjectsLocationsHttpRoutesPatchCall {
 	c := &ProjectsLocationsHttpRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7993,8 +7995,8 @@ type ProjectsLocationsMeshesCreateCall struct {
 
 // Create: Creates a new Mesh in a given project and location.
 //
-// - parent: The parent resource of the Mesh. Must be in the format
-//   `projects/*/locations/global`.
+//   - parent: The parent resource of the Mesh. Must be in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsMeshesService) Create(parent string, mesh *Mesh) *ProjectsLocationsMeshesCreateCall {
 	c := &ProjectsLocationsMeshesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8147,8 +8149,8 @@ type ProjectsLocationsMeshesDeleteCall struct {
 
 // Delete: Deletes a single Mesh.
 //
-// - name: A name of the Mesh to delete. Must be in the format
-//   `projects/*/locations/global/meshes/*`.
+//   - name: A name of the Mesh to delete. Must be in the format
+//     `projects/*/locations/global/meshes/*`.
 func (r *ProjectsLocationsMeshesService) Delete(name string) *ProjectsLocationsMeshesDeleteCall {
 	c := &ProjectsLocationsMeshesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8281,8 +8283,8 @@ type ProjectsLocationsMeshesGetCall struct {
 
 // Get: Gets details of a single Mesh.
 //
-// - name: A name of the Mesh to get. Must be in the format
-//   `projects/*/locations/global/meshes/*`.
+//   - name: A name of the Mesh to get. Must be in the format
+//     `projects/*/locations/global/meshes/*`.
 func (r *ProjectsLocationsMeshesService) Get(name string) *ProjectsLocationsMeshesGetCall {
 	c := &ProjectsLocationsMeshesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8430,10 +8432,10 @@ type ProjectsLocationsMeshesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMeshesService) GetIamPolicy(resource string) *ProjectsLocationsMeshesGetIamPolicyCall {
 	c := &ProjectsLocationsMeshesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8603,8 +8605,8 @@ type ProjectsLocationsMeshesListCall struct {
 
 // List: Lists Meshes in a given project and location.
 //
-// - parent: The project and location from which the Meshes should be
-//   listed, specified in the format `projects/*/locations/global`.
+//   - parent: The project and location from which the Meshes should be
+//     listed, specified in the format `projects/*/locations/global`.
 func (r *ProjectsLocationsMeshesService) List(parent string) *ProjectsLocationsMeshesListCall {
 	c := &ProjectsLocationsMeshesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8798,8 +8800,8 @@ type ProjectsLocationsMeshesPatchCall struct {
 
 // Patch: Updates the parameters of a single Mesh.
 //
-// - name: Name of the Mesh resource. It matches pattern
-//   `projects/*/locations/global/meshes/`.
+//   - name: Name of the Mesh resource. It matches pattern
+//     `projects/*/locations/global/meshes/`.
 func (r *ProjectsLocationsMeshesService) Patch(name string, mesh *Mesh) *ProjectsLocationsMeshesPatchCall {
 	c := &ProjectsLocationsMeshesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8960,10 +8962,10 @@ type ProjectsLocationsMeshesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMeshesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMeshesSetIamPolicyCall {
 	c := &ProjectsLocationsMeshesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9110,10 +9112,10 @@ type ProjectsLocationsMeshesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMeshesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMeshesTestIamPermissionsCall {
 	c := &ProjectsLocationsMeshesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9902,8 +9904,8 @@ type ProjectsLocationsServiceBindingsCreateCall struct {
 
 // Create: Creates a new ServiceBinding in a given project and location.
 //
-// - parent: The parent resource of the ServiceBinding. Must be in the
-//   format `projects/*/locations/global`.
+//   - parent: The parent resource of the ServiceBinding. Must be in the
+//     format `projects/*/locations/global`.
 func (r *ProjectsLocationsServiceBindingsService) Create(parent string, servicebinding *ServiceBinding) *ProjectsLocationsServiceBindingsCreateCall {
 	c := &ProjectsLocationsServiceBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10056,8 +10058,8 @@ type ProjectsLocationsServiceBindingsDeleteCall struct {
 
 // Delete: Deletes a single ServiceBinding.
 //
-// - name: A name of the ServiceBinding to delete. Must be in the format
-//   `projects/*/locations/global/serviceBindings/*`.
+//   - name: A name of the ServiceBinding to delete. Must be in the format
+//     `projects/*/locations/global/serviceBindings/*`.
 func (r *ProjectsLocationsServiceBindingsService) Delete(name string) *ProjectsLocationsServiceBindingsDeleteCall {
 	c := &ProjectsLocationsServiceBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10190,8 +10192,8 @@ type ProjectsLocationsServiceBindingsGetCall struct {
 
 // Get: Gets details of a single ServiceBinding.
 //
-// - name: A name of the ServiceBinding to get. Must be in the format
-//   `projects/*/locations/global/serviceBindings/*`.
+//   - name: A name of the ServiceBinding to get. Must be in the format
+//     `projects/*/locations/global/serviceBindings/*`.
 func (r *ProjectsLocationsServiceBindingsService) Get(name string) *ProjectsLocationsServiceBindingsGetCall {
 	c := &ProjectsLocationsServiceBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10339,10 +10341,10 @@ type ProjectsLocationsServiceBindingsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServiceBindingsService) GetIamPolicy(resource string) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
 	c := &ProjectsLocationsServiceBindingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10512,9 +10514,9 @@ type ProjectsLocationsServiceBindingsListCall struct {
 
 // List: Lists ServiceBinding in a given project and location.
 //
-// - parent: The project and location from which the ServiceBindings
-//   should be listed, specified in the format
-//   `projects/*/locations/global`.
+//   - parent: The project and location from which the ServiceBindings
+//     should be listed, specified in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsServiceBindingsService) List(parent string) *ProjectsLocationsServiceBindingsListCall {
 	c := &ProjectsLocationsServiceBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10710,10 +10712,10 @@ type ProjectsLocationsServiceBindingsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServiceBindingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceBindingsSetIamPolicyCall {
 	c := &ProjectsLocationsServiceBindingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10860,10 +10862,10 @@ type ProjectsLocationsServiceBindingsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServiceBindingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceBindingsTestIamPermissionsCall {
 	c := &ProjectsLocationsServiceBindingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11005,8 +11007,8 @@ type ProjectsLocationsTcpRoutesCreateCall struct {
 
 // Create: Creates a new TcpRoute in a given project and location.
 //
-// - parent: The parent resource of the TcpRoute. Must be in the format
-//   `projects/*/locations/global`.
+//   - parent: The parent resource of the TcpRoute. Must be in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsTcpRoutesService) Create(parent string, tcproute *TcpRoute) *ProjectsLocationsTcpRoutesCreateCall {
 	c := &ProjectsLocationsTcpRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11160,8 +11162,8 @@ type ProjectsLocationsTcpRoutesDeleteCall struct {
 
 // Delete: Deletes a single TcpRoute.
 //
-// - name: A name of the TcpRoute to delete. Must be in the format
-//   `projects/*/locations/global/tcpRoutes/*`.
+//   - name: A name of the TcpRoute to delete. Must be in the format
+//     `projects/*/locations/global/tcpRoutes/*`.
 func (r *ProjectsLocationsTcpRoutesService) Delete(name string) *ProjectsLocationsTcpRoutesDeleteCall {
 	c := &ProjectsLocationsTcpRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11294,8 +11296,8 @@ type ProjectsLocationsTcpRoutesGetCall struct {
 
 // Get: Gets details of a single TcpRoute.
 //
-// - name: A name of the TcpRoute to get. Must be in the format
-//   `projects/*/locations/global/tcpRoutes/*`.
+//   - name: A name of the TcpRoute to get. Must be in the format
+//     `projects/*/locations/global/tcpRoutes/*`.
 func (r *ProjectsLocationsTcpRoutesService) Get(name string) *ProjectsLocationsTcpRoutesGetCall {
 	c := &ProjectsLocationsTcpRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11441,8 +11443,8 @@ type ProjectsLocationsTcpRoutesListCall struct {
 
 // List: Lists TcpRoute in a given project and location.
 //
-// - parent: The project and location from which the TcpRoutes should be
-//   listed, specified in the format `projects/*/locations/global`.
+//   - parent: The project and location from which the TcpRoutes should be
+//     listed, specified in the format `projects/*/locations/global`.
 func (r *ProjectsLocationsTcpRoutesService) List(parent string) *ProjectsLocationsTcpRoutesListCall {
 	c := &ProjectsLocationsTcpRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11458,7 +11460,7 @@ func (c *ProjectsLocationsTcpRoutesListCall) PageSize(pageSize int64) *ProjectsL
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListTcpRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListTcpRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsTcpRoutesListCall) PageToken(pageToken string) *ProjectsLocationsTcpRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -11579,7 +11581,7 @@ func (c *ProjectsLocationsTcpRoutesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTcpRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTcpRoutesResponse` Indicates that this is a continuation of a prior `ListTcpRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11636,8 +11638,8 @@ type ProjectsLocationsTcpRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single TcpRoute.
 //
-// - name: Name of the TcpRoute resource. It matches pattern
-//   `projects/*/locations/global/tcpRoutes/tcp_route_name>`.
+//   - name: Name of the TcpRoute resource. It matches pattern
+//     `projects/*/locations/global/tcpRoutes/tcp_route_name>`.
 func (r *ProjectsLocationsTcpRoutesService) Patch(name string, tcproute *TcpRoute) *ProjectsLocationsTcpRoutesPatchCall {
 	c := &ProjectsLocationsTcpRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11796,8 +11798,8 @@ type ProjectsLocationsTlsRoutesCreateCall struct {
 
 // Create: Creates a new TlsRoute in a given project and location.
 //
-// - parent: The parent resource of the TlsRoute. Must be in the format
-//   `projects/*/locations/global`.
+//   - parent: The parent resource of the TlsRoute. Must be in the format
+//     `projects/*/locations/global`.
 func (r *ProjectsLocationsTlsRoutesService) Create(parent string, tlsroute *TlsRoute) *ProjectsLocationsTlsRoutesCreateCall {
 	c := &ProjectsLocationsTlsRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11951,8 +11953,8 @@ type ProjectsLocationsTlsRoutesDeleteCall struct {
 
 // Delete: Deletes a single TlsRoute.
 //
-// - name: A name of the TlsRoute to delete. Must be in the format
-//   `projects/*/locations/global/tlsRoutes/*`.
+//   - name: A name of the TlsRoute to delete. Must be in the format
+//     `projects/*/locations/global/tlsRoutes/*`.
 func (r *ProjectsLocationsTlsRoutesService) Delete(name string) *ProjectsLocationsTlsRoutesDeleteCall {
 	c := &ProjectsLocationsTlsRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12085,8 +12087,8 @@ type ProjectsLocationsTlsRoutesGetCall struct {
 
 // Get: Gets details of a single TlsRoute.
 //
-// - name: A name of the TlsRoute to get. Must be in the format
-//   `projects/*/locations/global/tlsRoutes/*`.
+//   - name: A name of the TlsRoute to get. Must be in the format
+//     `projects/*/locations/global/tlsRoutes/*`.
 func (r *ProjectsLocationsTlsRoutesService) Get(name string) *ProjectsLocationsTlsRoutesGetCall {
 	c := &ProjectsLocationsTlsRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12232,8 +12234,8 @@ type ProjectsLocationsTlsRoutesListCall struct {
 
 // List: Lists TlsRoute in a given project and location.
 //
-// - parent: The project and location from which the TlsRoutes should be
-//   listed, specified in the format `projects/*/locations/global`.
+//   - parent: The project and location from which the TlsRoutes should be
+//     listed, specified in the format `projects/*/locations/global`.
 func (r *ProjectsLocationsTlsRoutesService) List(parent string) *ProjectsLocationsTlsRoutesListCall {
 	c := &ProjectsLocationsTlsRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12249,7 +12251,7 @@ func (c *ProjectsLocationsTlsRoutesListCall) PageSize(pageSize int64) *ProjectsL
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListTlsRoutesResponse` Indicates that this is a
-// continuation of a prior `ListRouters` call, and that the system
+// continuation of a prior `ListTlsRoutes` call, and that the system
 // should return the next page of data.
 func (c *ProjectsLocationsTlsRoutesListCall) PageToken(pageToken string) *ProjectsLocationsTlsRoutesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -12370,7 +12372,7 @@ func (c *ProjectsLocationsTlsRoutesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListTlsRoutesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTlsRoutesResponse` Indicates that this is a continuation of a prior `ListTlsRoutes` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12427,8 +12429,8 @@ type ProjectsLocationsTlsRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single TlsRoute.
 //
-// - name: Name of the TlsRoute resource. It matches pattern
-//   `projects/*/locations/global/tlsRoutes/tls_route_name>`.
+//   - name: Name of the TlsRoute resource. It matches pattern
+//     `projects/*/locations/global/tlsRoutes/tls_route_name>`.
 func (r *ProjectsLocationsTlsRoutesService) Patch(name string, tlsroute *TlsRoute) *ProjectsLocationsTlsRoutesPatchCall {
 	c := &ProjectsLocationsTlsRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

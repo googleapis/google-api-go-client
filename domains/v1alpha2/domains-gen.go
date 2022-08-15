@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/domains/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/domains/v1alpha2"
-//   ...
-//   ctx := context.Background()
-//   domainsService, err := domains.NewService(ctx)
+//	import "google.golang.org/api/domains/v1alpha2"
+//	...
+//	ctx := context.Background()
+//	domainsService, err := domains.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   domainsService, err := domains.NewService(ctx, option.WithAPIKey("AIza..."))
+//	domainsService, err := domains.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   domainsService, err := domains.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	domainsService, err := domains.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package domains // import "google.golang.org/api/domains/v1alpha2"
@@ -692,6 +692,60 @@ func (s *DnsSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Domain: A domain that the calling user manages in Google Domains.
+type Domain struct {
+	// DomainName: The domain name. Unicode domain names are expressed in
+	// Punycode format.
+	DomainName string `json:"domainName,omitempty"`
+
+	// ResourceState: The state of this domain as a `Registration` resource.
+	//
+	// Possible values:
+	//   "RESOURCE_STATE_UNSPECIFIED" - The assessment is undefined.
+	//   "IMPORTABLE" - A `Registration` resource can be created for this
+	// domain by calling `ImportDomain`.
+	//   "UNSUPPORTED" - A `Registration` resource cannot be created for
+	// this domain because it is not supported by Cloud Domains; for
+	// example, the top-level domain is not supported or the registry
+	// charges non-standard pricing for yearly renewals.
+	//   "SUSPENDED" - A `Registration` resource cannot be created for this
+	// domain because it is suspended and needs to be resolved with Google
+	// Domains.
+	//   "EXPIRED" - A `Registration` resource cannot be created for this
+	// domain because it is expired and needs to be renewed with Google
+	// Domains.
+	//   "DELETED" - A `Registration` resource cannot be created for this
+	// domain because it is deleted, but can be restored with Google
+	// Domains.
+	ResourceState string `json:"resourceState,omitempty"`
+
+	// YearlyPrice: Price to renew the domain for one year. Only set when
+	// `resource_state` is `IMPORTABLE`.
+	YearlyPrice *Money `json:"yearlyPrice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Domain) MarshalJSON() ([]byte, error) {
+	type NoMethod Domain
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DsRecord: Defines a Delegation Signer (DS) record, which is needed to
 // enable DNSSEC for a domain. It contains a digest (hash) of a DNSKEY
 // record that must be present in the domain's DNS zone.
@@ -921,6 +975,38 @@ type GoogleDomainsDns struct {
 
 func (s *GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDomainsDns
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportDomainRequest: Request for the `ImportDomain` method.
+type ImportDomainRequest struct {
+	// DomainName: Required. The domain name. Unicode domain names must be
+	// expressed in Punycode format.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Labels: Set of labels associated with the `Registration`.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DomainName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportDomainRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportDomainRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1401,9 +1487,9 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // to model geographical locations (roads, towns, mountains). In typical
 // usage an address would be created via user input or from importing
 // existing data, depending on the type of process. Advice on address
-// input / editing: - Use an i18n-ready address widget such as
-// https://github.com/google/libaddressinput) - Users should not be
-// presented with UI elements for input or editing of fields outside
+// input / editing: - Use an internationalization-ready address widget
+// such as https://github.com/google/libaddressinput) - Users should not
+// be presented with UI elements for input or editing of fields outside
 // countries where that field is used. For more guidance on how to use
 // this schema, please see:
 // https://support.google.com/business/answer/6397478
@@ -1673,7 +1759,12 @@ func (s *RegisterParameters) MarshalJSON() ([]byte, error) {
 // for transfer and retrieve the domain's transfer authorization code.
 // Then call `RetrieveTransferParameters` to confirm that the domain is
 // unlocked and to get values needed to build a call to
-// `TransferDomain`.
+// `TransferDomain`. Finally, you can create a new `Registration` by
+// importing an existing domain managed with Google Domains
+// (https://domains.google/). First, call `RetrieveImportableDomains` to
+// list domains to which the calling user has sufficient access. Then
+// call `ImportDomain` on any domain names you want to use with Cloud
+// Domains.
 type Registration struct {
 	// ContactSettings: Required. Settings for contact information linked to
 	// the `Registration`. You cannot update these with the
@@ -1740,6 +1831,20 @@ type Registration struct {
 	// email they receive.
 	PendingContactSettings *ContactSettings `json:"pendingContactSettings,omitempty"`
 
+	// RegisterFailureReason: Output only. The reason the domain
+	// registration failed. Only set for domains in REGISTRATION_FAILED
+	// state.
+	//
+	// Possible values:
+	//   "REGISTER_FAILURE_REASON_UNSPECIFIED" - Register failure
+	// unspecified.
+	//   "REGISTER_FAILURE_REASON_UNKNOWN" - Registration failed for an
+	// unknown reason.
+	//   "DOMAIN_NOT_AVAILABLE" - The domain is not available for
+	// registration.
+	//   "INVALID_CONTACTS" - The provided contact information was rejected.
+	RegisterFailureReason string `json:"registerFailureReason,omitempty"`
+
 	// State: Output only. The state of the `Registration`
 	//
 	// Possible values:
@@ -1752,6 +1857,8 @@ type Registration struct {
 	//   "TRANSFER_FAILED" - The attempt to transfer the domain from another
 	// registrar to Cloud Domains failed. You can delete resources in this
 	// state and retry the transfer.
+	//   "IMPORT_PENDING" - The domain is being imported from Google Domains
+	// to Cloud Domains.
 	//   "ACTIVE" - The domain is registered and operational. The domain
 	// renews automatically as long as it remains in this state.
 	//   "SUSPENDED" - The domain is suspended and inoperative. For more
@@ -1785,6 +1892,35 @@ type Registration struct {
 	// article](https://support.google.com/domains/answer/3251242).
 	SupportedPrivacy []string `json:"supportedPrivacy,omitempty"`
 
+	// TransferFailureReason: Output only. The reason the domain transfer
+	// failed. Only set for domains in TRANSFER_FAILED state.
+	//
+	// Possible values:
+	//   "TRANSFER_FAILURE_REASON_UNSPECIFIED" - Transfer failure
+	// unspecified.
+	//   "TRANSFER_FAILURE_REASON_UNKNOWN" - Transfer failed for an unknown
+	// reason.
+	//   "EMAIL_CONFIRMATION_FAILURE" - An email confirmation sent to the
+	// user was rejected or expired.
+	//   "DOMAIN_NOT_REGISTERED" - The domain is available for registration.
+	//   "DOMAIN_HAS_TRANSFER_LOCK" - The domain has a transfer lock with
+	// its current registrar which must be removed prior to transfer.
+	//   "INVALID_AUTHORIZATION_CODE" - The authorization code entered is
+	// not valid.
+	//   "TRANSFER_CANCELLED" - The transfer was cancelled by the domain
+	// owner, current registrar, or TLD registry.
+	//   "TRANSFER_REJECTED" - The transfer was rejected by the current
+	// registrar. Contact the current registrar for more information.
+	//   "INVALID_REGISTRANT_EMAIL_ADDRESS" - The registrant email address
+	// cannot be parsed from the domain's current public contact data.
+	//   "DOMAIN_NOT_ELIGIBLE_FOR_TRANSFER" - The domain is not eligible for
+	// transfer due requirements imposed by the current registrar or TLD
+	// registry.
+	//   "TRANSFER_ALREADY_PENDING" - Another transfer is already pending
+	// for this domain. The existing transfer attempt must expire or be
+	// cancelled in order to proceed.
+	TransferFailureReason string `json:"transferFailureReason,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1816,6 +1952,45 @@ func (s *Registration) MarshalJSON() ([]byte, error) {
 // ResetAuthorizationCodeRequest: Request for the
 // `ResetAuthorizationCode` method.
 type ResetAuthorizationCodeRequest struct {
+}
+
+// RetrieveImportableDomainsResponse: Response for the
+// `RetrieveImportableDomains` method.
+type RetrieveImportableDomainsResponse struct {
+	// Domains: A list of domains that the calling user manages in Google
+	// Domains.
+	Domains []*Domain `json:"domains,omitempty"`
+
+	// NextPageToken: When present, there are more results to retrieve. Set
+	// `page_token` to this value on a subsequent call to get the next page
+	// of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetrieveImportableDomainsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RetrieveImportableDomainsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RetrieveRegisterParametersResponse: Response for the
@@ -2132,6 +2307,10 @@ type TransferParameters struct {
 	// CurrentRegistrar: The registrar that currently manages the domain.
 	CurrentRegistrar string `json:"currentRegistrar,omitempty"`
 
+	// CurrentRegistrarUri: The URL of registrar that currently manages the
+	// domain.
+	CurrentRegistrarUri string `json:"currentRegistrarUri,omitempty"`
+
 	// DomainName: The domain name. Unicode domain names are expressed in
 	// Punycode format.
 	DomainName string `json:"domainName,omitempty"`
@@ -2359,8 +2538,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2930,9 +3109,9 @@ type ProjectsLocationsRegistrationsConfigureContactSettingsCall struct {
 // settings. Some changes require confirmation by the domain's
 // registrant contact .
 //
-// - registration: The name of the `Registration` whose contact settings
-//   are being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose contact settings
+//     are being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureContactSettings(registration string, configurecontactsettingsrequest *ConfigureContactSettingsRequest) *ProjectsLocationsRegistrationsConfigureContactSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureContactSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3074,9 +3253,9 @@ type ProjectsLocationsRegistrationsConfigureDnsSettingsCall struct {
 
 // ConfigureDnsSettings: Updates a `Registration`'s DNS settings.
 //
-// - registration: The name of the `Registration` whose DNS settings are
-//   being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose DNS settings are
+//     being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureDnsSettings(registration string, configurednssettingsrequest *ConfigureDnsSettingsRequest) *ProjectsLocationsRegistrationsConfigureDnsSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureDnsSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3219,9 +3398,9 @@ type ProjectsLocationsRegistrationsConfigureManagementSettingsCall struct {
 // ConfigureManagementSettings: Updates a `Registration`'s management
 // settings.
 //
-// - registration: The name of the `Registration` whose management
-//   settings are being updated, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose management
+//     settings are being updated, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ConfigureManagementSettings(registration string, configuremanagementsettingsrequest *ConfigureManagementSettingsRequest) *ProjectsLocationsRegistrationsConfigureManagementSettingsCall {
 	c := &ProjectsLocationsRegistrationsConfigureManagementSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -3374,8 +3553,8 @@ type ProjectsLocationsRegistrationsDeleteCall struct {
 // there. The domain does not renew automatically unless the new owner
 // sets up billing in Google Domains.
 //
-// - name: The name of the `Registration` to delete, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to delete, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Delete(name string) *ProjectsLocationsRegistrationsDeleteCall {
 	c := &ProjectsLocationsRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3514,8 +3693,8 @@ type ProjectsLocationsRegistrationsExportCall struct {
 // domain are subsequently managed there. The domain does not renew
 // automatically unless the new owner sets up billing in Google Domains.
 //
-// - name: The name of the `Registration` to export, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to export, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Export(name string, exportregistrationrequest *ExportRegistrationRequest) *ProjectsLocationsRegistrationsExportCall {
 	c := &ProjectsLocationsRegistrationsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3657,8 +3836,8 @@ type ProjectsLocationsRegistrationsGetCall struct {
 
 // Get: Gets the details of a `Registration` resource.
 //
-// - name: The name of the `Registration` to get, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - name: The name of the `Registration` to get, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) Get(name string) *ProjectsLocationsRegistrationsGetCall {
 	c := &ProjectsLocationsRegistrationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3806,10 +3985,10 @@ type ProjectsLocationsRegistrationsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) GetIamPolicy(resource string) *ProjectsLocationsRegistrationsGetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3966,6 +4145,153 @@ func (c *ProjectsLocationsRegistrationsGetIamPolicyCall) Do(opts ...googleapi.Ca
 
 }
 
+// method id "domains.projects.locations.registrations.import":
+
+type ProjectsLocationsRegistrationsImportCall struct {
+	s                   *Service
+	parent              string
+	importdomainrequest *ImportDomainRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Import: Imports a domain name from Google Domains
+// (https://domains.google/) for use in Cloud Domains. To transfer a
+// domain from another registrar, use the `TransferDomain` method
+// instead. Since individual users can own domains in Google Domains,
+// the calling user must have ownership permission on the domain.
+//
+//   - parent: The parent resource of the Registration. Must be in the
+//     format `projects/*/locations/*`.
+func (r *ProjectsLocationsRegistrationsService) Import(parent string, importdomainrequest *ImportDomainRequest) *ProjectsLocationsRegistrationsImportCall {
+	c := &ProjectsLocationsRegistrationsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.importdomainrequest = importdomainrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistrationsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistrationsImportCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistrationsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importdomainrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+parent}/registrations:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.import" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistrationsImportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports a domain name from [Google Domains](https://domains.google/) for use in Cloud Domains. To transfer a domain from another registrar, use the `TransferDomain` method instead. Since individual users can own domains in Google Domains, the calling user must have ownership permission on the domain.",
+	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/registrations:import",
+	//   "httpMethod": "POST",
+	//   "id": "domains.projects.locations.registrations.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource of the Registration. Must be in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha2/{+parent}/registrations:import",
+	//   "request": {
+	//     "$ref": "ImportDomainRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "domains.projects.locations.registrations.list":
 
 type ProjectsLocationsRegistrationsListCall struct {
@@ -3979,8 +4305,8 @@ type ProjectsLocationsRegistrationsListCall struct {
 
 // List: Lists the `Registration` resources in a project.
 //
-// - parent: The project and location from which to list
-//   `Registration`s, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which to list
+//     `Registration`s, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) List(parent string) *ProjectsLocationsRegistrationsListCall {
 	c := &ProjectsLocationsRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4202,8 +4528,8 @@ type ProjectsLocationsRegistrationsPatchCall struct {
 // `ConfigureDnsSettings` * To update contact information, see
 // `ConfigureContactSettings`
 //
-// - name: Output only. Name of the `Registration` resource, in the
-//   format `projects/*/locations/*/registrations/`.
+//   - name: Output only. Name of the `Registration` resource, in the
+//     format `projects/*/locations/*/registrations/`.
 func (r *ProjectsLocationsRegistrationsService) Patch(name string, registration *Registration) *ProjectsLocationsRegistrationsPatchCall {
 	c := &ProjectsLocationsRegistrationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4369,8 +4695,8 @@ type ProjectsLocationsRegistrationsRegisterCall struct {
 // that the domain was not registered successfully, and you can safely
 // delete the resource and retry registration.
 //
-// - parent: The parent resource of the `Registration`. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the `Registration`. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Register(parent string, registerdomainrequest *RegisterDomainRequest) *ProjectsLocationsRegistrationsRegisterCall {
 	c := &ProjectsLocationsRegistrationsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4514,9 +4840,9 @@ type ProjectsLocationsRegistrationsResetAuthorizationCodeCall struct {
 // `Registration` to a new random string. You can call this method only
 // after 60 days have elapsed since the initial domain registration.
 //
-// - registration: The name of the `Registration` whose authorization
-//   code is being reset, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose authorization
+//     code is being reset, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) ResetAuthorizationCode(registration string, resetauthorizationcoderequest *ResetAuthorizationCodeRequest) *ProjectsLocationsRegistrationsResetAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsResetAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4661,9 +4987,9 @@ type ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall struct {
 // registrar. You can call this method only after 60 days have elapsed
 // since the initial domain registration.
 //
-// - registration: The name of the `Registration` whose authorization
-//   code is being retrieved, in the format
-//   `projects/*/locations/*/registrations/*`.
+//   - registration: The name of the `Registration` whose authorization
+//     code is being retrieved, in the format
+//     `projects/*/locations/*/registrations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveAuthorizationCode(registration string) *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall {
 	c := &ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registration = registration
@@ -4796,6 +5122,206 @@ func (c *ProjectsLocationsRegistrationsRetrieveAuthorizationCodeCall) Do(opts ..
 
 }
 
+// method id "domains.projects.locations.registrations.retrieveImportableDomains":
+
+type ProjectsLocationsRegistrationsRetrieveImportableDomainsCall struct {
+	s            *Service
+	location     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveImportableDomains: Lists domain names from Google Domains
+// (https://domains.google/) that can be imported to Cloud Domains using
+// the `ImportDomain` method. Since individual users can own domains in
+// Google Domains, the list of domains returned depends on the
+// individual user making the call. Domains supported by Google Domains,
+// but not supported by Cloud Domains, are not returned.
+//
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsRegistrationsService) RetrieveImportableDomains(location string) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c := &ProjectsLocationsRegistrationsRetrieveImportableDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) PageSize(pageSize int64) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": When set to the
+// `next_page_token` from a prior response, provides the next page of
+// results.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) PageToken(pageToken string) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) IfNoneMatch(entityTag string) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Context(ctx context.Context) *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+location}/registrations:retrieveImportableDomains")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "domains.projects.locations.registrations.retrieveImportableDomains" call.
+// Exactly one of *RetrieveImportableDomainsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RetrieveImportableDomainsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Do(opts ...googleapi.CallOption) (*RetrieveImportableDomainsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RetrieveImportableDomainsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists domain names from [Google Domains](https://domains.google/) that can be imported to Cloud Domains using the `ImportDomain` method. Since individual users can own domains in Google Domains, the list of domains returned depends on the individual user making the call. Domains supported by Google Domains, but not supported by Cloud Domains, are not returned.",
+	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/registrations:retrieveImportableDomains",
+	//   "httpMethod": "GET",
+	//   "id": "domains.projects.locations.registrations.retrieveImportableDomains",
+	//   "parameterOrder": [
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Required. The location. Must be in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "When set to the `next_page_token` from a prior response, provides the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha2/{+location}/registrations:retrieveImportableDomains",
+	//   "response": {
+	//     "$ref": "RetrieveImportableDomainsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Pages(ctx context.Context, f func(*RetrieveImportableDomainsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "domains.projects.locations.registrations.retrieveRegisterParameters":
 
 type ProjectsLocationsRegistrationsRetrieveRegisterParametersCall struct {
@@ -4811,8 +5337,8 @@ type ProjectsLocationsRegistrationsRetrieveRegisterParametersCall struct {
 // domain name, including price and up-to-date availability. Use the
 // returned values to call `RegisterDomain`.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveRegisterParameters(location string) *ProjectsLocationsRegistrationsRetrieveRegisterParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveRegisterParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -4972,11 +5498,12 @@ type ProjectsLocationsRegistrationsRetrieveTransferParametersCall struct {
 
 // RetrieveTransferParameters: Gets parameters needed to transfer a
 // domain name from another registrar to Cloud Domains. For domains
-// managed by Google Domains, transferring to Cloud Domains is not
-// supported. Use the returned values to call `TransferDomain`.
+// already managed by Google Domains (https://domains.google/), use
+// `ImportDomain` instead. Use the returned values to call
+// `TransferDomain`.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) RetrieveTransferParameters(location string) *ProjectsLocationsRegistrationsRetrieveTransferParametersCall {
 	c := &ProjectsLocationsRegistrationsRetrieveTransferParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5091,7 +5618,7 @@ func (c *ProjectsLocationsRegistrationsRetrieveTransferParametersCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets parameters needed to transfer a domain name from another registrar to Cloud Domains. For domains managed by Google Domains, transferring to Cloud Domains is not supported. Use the returned values to call `TransferDomain`.",
+	//   "description": "Gets parameters needed to transfer a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Use the returned values to call `TransferDomain`.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/registrations:retrieveTransferParameters",
 	//   "httpMethod": "GET",
 	//   "id": "domains.projects.locations.registrations.retrieveTransferParameters",
@@ -5139,8 +5666,8 @@ type ProjectsLocationsRegistrationsSearchDomainsCall struct {
 // approximate; call `RetrieveRegisterParameters` on a domain before
 // registering to confirm availability.
 //
-// - location: The location. Must be in the format
-//   `projects/*/locations/*`.
+//   - location: The location. Must be in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) SearchDomains(location string) *ProjectsLocationsRegistrationsSearchDomainsCall {
 	c := &ProjectsLocationsRegistrationsSearchDomainsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -5300,10 +5827,10 @@ type ProjectsLocationsRegistrationsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRegistrationsSetIamPolicyCall {
 	c := &ProjectsLocationsRegistrationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5450,10 +5977,10 @@ type ProjectsLocationsRegistrationsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRegistrationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRegistrationsTestIamPermissionsCall {
 	c := &ProjectsLocationsRegistrationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5594,25 +6121,26 @@ type ProjectsLocationsRegistrationsTransferCall struct {
 }
 
 // Transfer: Transfers a domain name from another registrar to Cloud
-// Domains. For domains managed by Google Domains, transferring to Cloud
-// Domains is not supported. Before calling this method, go to the
-// domain's current registrar to unlock the domain for transfer and
-// retrieve the domain's transfer authorization code. Then call
-// `RetrieveTransferParameters` to confirm that the domain is unlocked
-// and to get values needed to build a call to this method. A successful
-// call creates a `Registration` resource in state `TRANSFER_PENDING`.
-// It can take several days to complete the transfer process. The
-// registrant can often speed up this process by approving the transfer
-// through the current registrar, either by clicking a link in an email
-// from the registrar or by visiting the registrar's website. A few
-// minutes after transfer approval, the resource transitions to state
-// `ACTIVE`, indicating that the transfer was successful. If the
-// transfer is rejected or the request expires without being approved,
-// the resource can end up in state `TRANSFER_FAILED`. If transfer
-// fails, you can safely delete the resource and retry the transfer.
+// Domains. For domains already managed by Google Domains
+// (https://domains.google/), use `ImportDomain` instead. Before calling
+// this method, go to the domain's current registrar to unlock the
+// domain for transfer and retrieve the domain's transfer authorization
+// code. Then call `RetrieveTransferParameters` to confirm that the
+// domain is unlocked and to get values needed to build a call to this
+// method. A successful call creates a `Registration` resource in state
+// `TRANSFER_PENDING`. It can take several days to complete the transfer
+// process. The registrant can often speed up this process by approving
+// the transfer through the current registrar, either by clicking a link
+// in an email from the registrar or by visiting the registrar's
+// website. A few minutes after transfer approval, the resource
+// transitions to state `ACTIVE`, indicating that the transfer was
+// successful. If the transfer is rejected or the request expires
+// without being approved, the resource can end up in state
+// `TRANSFER_FAILED`. If transfer fails, you can safely delete the
+// resource and retry the transfer.
 //
-// - parent: The parent resource of the `Registration`. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the `Registration`. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsRegistrationsService) Transfer(parent string, transferdomainrequest *TransferDomainRequest) *ProjectsLocationsRegistrationsTransferCall {
 	c := &ProjectsLocationsRegistrationsTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5711,7 +6239,7 @@ func (c *ProjectsLocationsRegistrationsTransferCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Transfers a domain name from another registrar to Cloud Domains. For domains managed by Google Domains, transferring to Cloud Domains is not supported. Before calling this method, go to the domain's current registrar to unlock the domain for transfer and retrieve the domain's transfer authorization code. Then call `RetrieveTransferParameters` to confirm that the domain is unlocked and to get values needed to build a call to this method. A successful call creates a `Registration` resource in state `TRANSFER_PENDING`. It can take several days to complete the transfer process. The registrant can often speed up this process by approving the transfer through the current registrar, either by clicking a link in an email from the registrar or by visiting the registrar's website. A few minutes after transfer approval, the resource transitions to state `ACTIVE`, indicating that the transfer was successful. If the transfer is rejected or the request expires without being approved, the resource can end up in state `TRANSFER_FAILED`. If transfer fails, you can safely delete the resource and retry the transfer.",
+	//   "description": "Transfers a domain name from another registrar to Cloud Domains. For domains already managed by [Google Domains](https://domains.google/), use `ImportDomain` instead. Before calling this method, go to the domain's current registrar to unlock the domain for transfer and retrieve the domain's transfer authorization code. Then call `RetrieveTransferParameters` to confirm that the domain is unlocked and to get values needed to build a call to this method. A successful call creates a `Registration` resource in state `TRANSFER_PENDING`. It can take several days to complete the transfer process. The registrant can often speed up this process by approving the transfer through the current registrar, either by clicking a link in an email from the registrar or by visiting the registrar's website. A few minutes after transfer approval, the resource transitions to state `ACTIVE`, indicating that the transfer was successful. If the transfer is rejected or the request expires without being approved, the resource can end up in state `TRANSFER_FAILED`. If transfer fails, you can safely delete the resource and retry the transfer.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/registrations:transfer",
 	//   "httpMethod": "POST",
 	//   "id": "domains.projects.locations.registrations.transfer",

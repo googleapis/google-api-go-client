@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/run/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/run/v1alpha1"
-//   ...
-//   ctx := context.Background()
-//   runService, err := run.NewService(ctx)
+//	import "google.golang.org/api/run/v1alpha1"
+//	...
+//	ctx := context.Background()
+//	runService, err := run.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
+//	runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package run // import "google.golang.org/api/run/v1alpha1"
@@ -1641,9 +1641,9 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // be performed against a container to determine whether it is alive or
 // ready to receive traffic.
 type Probe struct {
-	// Exec: (Optional) One and only one of the following should be
-	// specified. Exec specifies the action to take. A field inlined from
-	// the Handler message.
+	// Exec: (Optional) Not supported by Cloud Run One and only one of the
+	// following should be specified. Exec specifies the action to take. A
+	// field inlined from the Handler message.
 	Exec *ExecAction `json:"exec,omitempty"`
 
 	// FailureThreshold: (Optional) Minimum consecutive failures for the
@@ -1660,21 +1660,21 @@ type Probe struct {
 	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
 	// InitialDelaySeconds: (Optional) Number of seconds after the container
-	// has started before liveness probes are initiated. Defaults to 0
-	// seconds. Minimum value is 0. Max value for liveness probe is 3600.
-	// Max value for startup probe is 240. More info:
+	// has started before the probe is initiated. Defaults to 0 seconds.
+	// Minimum value is 0. Maximum value for liveness probe is 3600. Maximum
+	// value for startup probe is 240. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
 	// PeriodSeconds: (Optional) How often (in seconds) to perform the
-	// probe. Default to 10 seconds. Minimum value is 1. Max value for
-	// liveness probe is 3600. Max value for startup probe is 240. Must be
-	// greater or equal than timeout_seconds.
+	// probe. Default to 10 seconds. Minimum value is 1. Maximum value for
+	// liveness probe is 3600. Maximum value for startup probe is 240. Must
+	// be greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// SuccessThreshold: (Optional) Minimum consecutive successes for the
-	// probe to be considered successful after having failed. Defaults to 1.
-	// Must be 1 for liveness and startup Probes.
+	// probe to be considered successful after having failed. Must be 1 if
+	// set.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
 	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
@@ -1848,7 +1848,7 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 type SecretVolumeSource struct {
 	// DefaultMode: Integer representation of mode bits to use on created
 	// files by default. Must be a value between 01 and 0777 (octal). If 0
-	// or not set, it will default to 0644. Directories within the path are
+	// or not set, it will default to 0444. Directories within the path are
 	// not affected by this setting. Notes * Internally, a umask of 0222
 	// will be applied to any non-zero value. * This is an integer
 	// representation of the mode bits. So, the octal integer value should
@@ -2068,8 +2068,8 @@ type NamespacesJobsCreateCall struct {
 
 // Create: Create a job.
 //
-// - parent: The namespace in which the job should be created. Replace
-//   {namespace_id} with the project ID or number.
+//   - parent: The namespace in which the job should be created. Replace
+//     {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Create(parent string, job *Job) *NamespacesJobsCreateCall {
 	c := &NamespacesJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2210,8 +2210,8 @@ type NamespacesJobsDeleteCall struct {
 
 // Delete: Delete a job.
 //
-// - name: The name of the job to delete. For Cloud Run (fully managed),
-//   replace {namespace_id} with the project ID or number.
+//   - name: The name of the job to delete. For Cloud Run (fully managed),
+//     replace {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Delete(name string) *NamespacesJobsDeleteCall {
 	c := &NamespacesJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2383,8 +2383,8 @@ type NamespacesJobsGetCall struct {
 
 // Get: Get information about a job.
 //
-// - name: The name of the job to retrieve. For Cloud Run (fully
-//   managed), replace {namespace_id} with the project ID or number.
+//   - name: The name of the job to retrieve. For Cloud Run (fully
+//     managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) Get(name string) *NamespacesJobsGetCall {
 	c := &NamespacesJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2530,8 +2530,8 @@ type NamespacesJobsListCall struct {
 
 // List: List jobs.
 //
-// - parent: The namespace from which the jobs should be listed. Replace
-//   {namespace_id} with the project ID or number.
+//   - parent: The namespace from which the jobs should be listed. Replace
+//     {namespace_id} with the project ID or number.
 func (r *NamespacesJobsService) List(parent string) *NamespacesJobsListCall {
 	c := &NamespacesJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/gkehub/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   gkehubService, err := gkehub.NewService(ctx)
+//	import "google.golang.org/api/gkehub/v1alpha"
+//	...
+//	ctx := context.Background()
+//	gkehubService, err := gkehub.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   gkehubService, err := gkehub.NewService(ctx, option.WithAPIKey("AIza..."))
+//	gkehubService, err := gkehub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   gkehubService, err := gkehub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	gkehubService, err := gkehub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package gkehub // import "google.golang.org/api/gkehub/v1alpha"
@@ -1831,8 +1831,9 @@ type ConfigManagementPolicyController struct {
 	// Monitoring: Monitoring specifies the configuration of monitoring.
 	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
 
-	// MutationEnabled: Enable users to try out mutation for
-	// PolicyController.
+	// MutationEnabled: Enable or disable mutation in policy controller. If
+	// true, mutation CRDs, webhook and controller deployment will be
+	// deployed to the cluster.
 	MutationEnabled bool `json:"mutationEnabled,omitempty"`
 
 	// ReferentialRulesEnabled: Enables the ability to use Constraint
@@ -2432,20 +2433,14 @@ type Fleet struct {
 	// `Production Fleet`
 	DisplayName string `json:"displayName,omitempty"`
 
-	// FleetName: The name for the fleet. The name must meet the following
-	// constraints: + The name of a fleet should be unique within the
-	// organization; + It must consist of lower case alphanumeric characters
-	// or `-`; + The length of the name must be less than or equal to 63; +
-	// Unicode names must be expressed in Punycode format (rfc3492).
-	// Examples: + prod-fleet + xn--wlq33vhyw9jb （Punycode form for
-	// "生产环境")
-	FleetName string `json:"fleetName,omitempty"`
-
 	// Name: Output only. The full, unique resource name of this fleet in
 	// the format of
 	// `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
 	// project can have at most one fleet resource, named "default".
 	Name string `json:"name,omitempty"`
+
+	// State: Output only. State of the namespace resource.
+	State *FleetLifecycleState `json:"state,omitempty"`
 
 	// Uid: Output only. Google-generated UUID for this resource. This is
 	// unique across all Fleet resources. If a Fleet resource is deleted and
@@ -2479,6 +2474,42 @@ type Fleet struct {
 
 func (s *Fleet) MarshalJSON() ([]byte, error) {
 	type NoMethod Fleet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetLifecycleState: FleetLifecycleState describes the state of a
+// Fleet resource.
+type FleetLifecycleState struct {
+	// Code: Output only. The current state of the Fleet resource.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - The code is not set.
+	//   "CREATING" - The fleet is being created.
+	//   "READY" - The fleet active.
+	//   "DELETING" - The fleet is being deleted.
+	//   "UPDATING" - The fleet is being updated.
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FleetLifecycleState) MarshalJSON() ([]byte, error) {
+	type NoMethod FleetLifecycleState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2603,6 +2634,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // member/cluster. Only one authentication method (e.g., OIDC and LDAP)
 // can be set per AuthMethod.
 type IdentityServiceAuthMethod struct {
+	// AzureadConfig: AzureAD specific Configuration.
+	AzureadConfig *IdentityServiceAzureADConfig `json:"azureadConfig,omitempty"`
+
+	// GoogleConfig: GoogleConfig specific configuration
+	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
+
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -2612,7 +2649,7 @@ type IdentityServiceAuthMethod struct {
 	// Proxy: Proxy server address to use for auth method.
 	Proxy string `json:"proxy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "AzureadConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2620,10 +2657,10 @@ type IdentityServiceAuthMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AzureadConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2631,6 +2668,81 @@ type IdentityServiceAuthMethod struct {
 
 func (s *IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceAuthMethod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceAzureADConfig: Configuration for the AzureAD Auth
+// flow.
+type IdentityServiceAzureADConfig struct {
+	// ClientId: ID for the registered client application that makes
+	// authentication requests to the Azure AD identity provider.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Input only. Unencrypted AzureAD client secret will be
+	// passed to the GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// EncryptedClientSecret: Output only. Encrypted AzureAD client secret.
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
+
+	// KubectlRedirectUri: The redirect URL that kubectl uses for
+	// authorization.
+	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
+
+	// Tenant: Kind of Azure AD account to be authenticated. Supported
+	// values are or for accounts belonging to a specific tenant.
+	Tenant string `json:"tenant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceAzureADConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceAzureADConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth
+// flow.
+type IdentityServiceGoogleConfig struct {
+	// Disable: Disable automatic configuration of Google Plugin on
+	// supported platforms.
+	Disable bool `json:"disable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGoogleConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3439,7 +3551,7 @@ type MembershipFeatureState struct {
 	// Identityservice: Identity Service-specific state.
 	Identityservice *IdentityServiceMembershipState `json:"identityservice,omitempty"`
 
-	// Metering: Metering-specific spec.
+	// Metering: Metering-specific state.
 	Metering *MeteringMembershipState `json:"metering,omitempty"`
 
 	// Policycontroller: Policycontroller-specific state.
@@ -3620,6 +3732,8 @@ type MultiCloudCluster struct {
 	// a/awsClusters/my-cluster
 	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
 	// a/azureClusters/my-cluster
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/attachedClusters/my-cluster
 	ResourceLink string `json:"resourceLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
@@ -3993,6 +4107,9 @@ type PolicyControllerHubConfig struct {
 	// LogDeniesEnabled: Logs all denies and dry run failures.
 	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
 
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *PolicyControllerMonitoringConfig `json:"monitoring,omitempty"`
+
 	// MutationEnabled: Enables the ability to mutate resources using Policy
 	// Controller.
 	MutationEnabled bool `json:"mutationEnabled,omitempty"`
@@ -4207,6 +4324,44 @@ type PolicyControllerMembershipState struct {
 
 func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMonitoringConfig: MonitoringConfig specifies the
+// backends Policy Controller should export metrics to. For example, to
+// specify metrics should be exported to Cloud Monitoring and
+// Prometheus, specify backends: ["cloudmonitoring", "prometheus"]
+type PolicyControllerMonitoringConfig struct {
+	// Backends: Specifies the list of backends Policy Controller will
+	// export to. An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for
+	// monitoring
+	Backends []string `json:"backends,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backends") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMonitoringConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4906,9 +5061,9 @@ type OrganizationsLocationsFleetsListCall struct {
 // List: Returns all fleets within an organization or a project that the
 // caller has access to.
 //
-// - parent: The organization or project to list for Fleets under, in
-//   the format `organizations/*/locations/*` or
-//   `projects/*/locations/*`.
+//   - parent: The organization or project to list for Fleets under, in
+//     the format `organizations/*/locations/*` or
+//     `projects/*/locations/*`.
 func (r *OrganizationsLocationsFleetsService) List(parent string) *OrganizationsLocationsFleetsListCall {
 	c := &OrganizationsLocationsFleetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5251,8 +5406,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5459,8 +5614,8 @@ type ProjectsLocationsFeaturesCreateCall struct {
 
 // Create: Adds a new Feature.
 //
-// - parent: The parent (project and location) where the Feature will be
-//   created. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Feature will be
+//     created. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFeaturesService) Create(parent string, feature *Feature) *ProjectsLocationsFeaturesCreateCall {
 	c := &ProjectsLocationsFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5635,8 +5790,8 @@ type ProjectsLocationsFeaturesDeleteCall struct {
 
 // Delete: Removes a Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Delete(name string) *ProjectsLocationsFeaturesDeleteCall {
 	c := &ProjectsLocationsFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5805,8 +5960,8 @@ type ProjectsLocationsFeaturesGetCall struct {
 
 // Get: Gets details of a single Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Get(name string) *ProjectsLocationsFeaturesGetCall {
 	c := &ProjectsLocationsFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5954,10 +6109,10 @@ type ProjectsLocationsFeaturesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) GetIamPolicy(resource string) *ProjectsLocationsFeaturesGetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6127,8 +6282,8 @@ type ProjectsLocationsFeaturesListCall struct {
 
 // List: Lists Features in a given project and location.
 //
-// - parent: The parent (project and location) where the Features will
-//   be listed. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Features will
+//     be listed. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFeaturesService) List(parent string) *ProjectsLocationsFeaturesListCall {
 	c := &ProjectsLocationsFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6352,8 +6507,8 @@ type ProjectsLocationsFeaturesPatchCall struct {
 
 // Patch: Updates an existing Feature.
 //
-// - name: The Feature resource name in the format
-//   `projects/*/locations/*/features/*`.
+//   - name: The Feature resource name in the format
+//     `projects/*/locations/*/features/*`.
 func (r *ProjectsLocationsFeaturesService) Patch(name string, feature *Feature) *ProjectsLocationsFeaturesPatchCall {
 	c := &ProjectsLocationsFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6532,10 +6687,10 @@ type ProjectsLocationsFeaturesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFeaturesSetIamPolicyCall {
 	c := &ProjectsLocationsFeaturesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6682,10 +6837,10 @@ type ProjectsLocationsFeaturesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFeaturesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFeaturesTestIamPermissionsCall {
 	c := &ProjectsLocationsFeaturesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6827,8 +6982,8 @@ type ProjectsLocationsFleetsCreateCall struct {
 
 // Create: Creates a fleet.
 //
-// - parent: The parent (project and location) where the Fleet will be
-//   created. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Fleet will be
+//     created. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsFleetsService) Create(parent string, fleet *Fleet) *ProjectsLocationsFleetsCreateCall {
 	c := &ProjectsLocationsFleetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6890,13 +7045,13 @@ func (c *ProjectsLocationsFleetsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "gkehub.projects.locations.fleets.create" call.
-// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Fleet.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6915,7 +7070,7 @@ func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*F
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Fleet{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6948,7 +7103,7 @@ func (c *ProjectsLocationsFleetsCreateCall) Do(opts ...googleapi.CallOption) (*F
 	//     "$ref": "Fleet"
 	//   },
 	//   "response": {
-	//     "$ref": "Fleet"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6970,8 +7125,8 @@ type ProjectsLocationsFleetsDeleteCall struct {
 // Delete: Removes a Fleet. There must be no memberships remaining in
 // the Fleet.
 //
-// - name: The Fleet resource name in the format
-//   `projects/*/locations/*/fleets/*`.
+//   - name: The Fleet resource name in the format
+//     `projects/*/locations/*/fleets/*`.
 func (r *ProjectsLocationsFleetsService) Delete(name string) *ProjectsLocationsFleetsDeleteCall {
 	c := &ProjectsLocationsFleetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7027,13 +7182,13 @@ func (c *ProjectsLocationsFleetsDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "gkehub.projects.locations.fleets.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7052,7 +7207,7 @@ func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Empty{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7082,7 +7237,7 @@ func (c *ProjectsLocationsFleetsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   },
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
-	//     "$ref": "Empty"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7104,8 +7259,8 @@ type ProjectsLocationsFleetsGetCall struct {
 
 // Get: Returns the details of a fleet.
 //
-// - name: The Fleet resource name in the format
-//   `projects/*/locations/*/fleets/*`.
+//   - name: The Fleet resource name in the format
+//     `projects/*/locations/*/fleets/*`.
 func (r *ProjectsLocationsFleetsService) Get(name string) *ProjectsLocationsFleetsGetCall {
 	c := &ProjectsLocationsFleetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7252,9 +7407,9 @@ type ProjectsLocationsFleetsListCall struct {
 // List: Returns all fleets within an organization or a project that the
 // caller has access to.
 //
-// - parent: The organization or project to list for Fleets under, in
-//   the format `organizations/*/locations/*` or
-//   `projects/*/locations/*`.
+//   - parent: The organization or project to list for Fleets under, in
+//     the format `organizations/*/locations/*` or
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsFleetsService) List(parent string) *ProjectsLocationsFleetsListCall {
 	c := &ProjectsLocationsFleetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7450,10 +7605,10 @@ type ProjectsLocationsFleetsPatchCall struct {
 
 // Patch: Updates a fleet.
 //
-// - name: Output only. The full, unique resource name of this fleet in
-//   the format of
-//   `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
-//   project can have at most one fleet resource, named "default".
+//   - name: Output only. The full, unique resource name of this fleet in
+//     the format of
+//     `projects/{project}/locations/{location}/fleets/{fleet}`. Each GCP
+//     project can have at most one fleet resource, named "default".
 func (r *ProjectsLocationsFleetsService) Patch(name string, fleet *Fleet) *ProjectsLocationsFleetsPatchCall {
 	c := &ProjectsLocationsFleetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7522,13 +7677,13 @@ func (c *ProjectsLocationsFleetsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "gkehub.projects.locations.fleets.patch" call.
-// Exactly one of *Fleet or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Fleet.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fleet, error) {
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7547,7 +7702,7 @@ func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Fleet{
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7586,7 +7741,7 @@ func (c *ProjectsLocationsFleetsPatchCall) Do(opts ...googleapi.CallOption) (*Fl
 	//     "$ref": "Fleet"
 	//   },
 	//   "response": {
-	//     "$ref": "Fleet"
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -7611,8 +7766,8 @@ type ProjectsLocationsMembershipsCreateCall struct {
 // follow the instructions at
 // https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
 //
-// - parent: The parent (project and location) where the Memberships
-//   will be created. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Memberships
+//     will be created. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsMembershipsService) Create(parent string, membership *Membership) *ProjectsLocationsMembershipsCreateCall {
 	c := &ProjectsLocationsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7795,8 +7950,8 @@ type ProjectsLocationsMembershipsDeleteCall struct {
 // the instructions at
 // https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
 //
-// - name: The Membership resource name in the format
-//   `projects/*/locations/*/memberships/*`.
+//   - name: The Membership resource name in the format
+//     `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Delete(name string) *ProjectsLocationsMembershipsDeleteCall {
 	c := &ProjectsLocationsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7954,8 +8109,8 @@ type ProjectsLocationsMembershipsGenerateConnectManifestCall struct {
 // Google-provided libraries.** Most clients should not need to call
 // this method directly.
 //
-// - name: The Membership resource name the Agent will associate with,
-//   in the format `projects/*/locations/*/memberships/*`.
+//   - name: The Membership resource name the Agent will associate with,
+//     in the format `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) GenerateConnectManifest(name string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
 	c := &ProjectsLocationsMembershipsGenerateConnectManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8184,8 +8339,8 @@ type ProjectsLocationsMembershipsGetCall struct {
 
 // Get: Gets the details of a Membership.
 //
-// - name: The Membership resource name in the format
-//   `projects/*/locations/*/memberships/*`.
+//   - name: The Membership resource name in the format
+//     `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Get(name string) *ProjectsLocationsMembershipsGetCall {
 	c := &ProjectsLocationsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8333,10 +8488,10 @@ type ProjectsLocationsMembershipsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) GetIamPolicy(resource string) *ProjectsLocationsMembershipsGetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8506,8 +8661,8 @@ type ProjectsLocationsMembershipsListCall struct {
 
 // List: Lists Memberships in a given project and location.
 //
-// - parent: The parent (project and location) where the Memberships
-//   will be listed. Specified in the format `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Memberships
+//     will be listed. Specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsMembershipsService) List(parent string) *ProjectsLocationsMembershipsListCall {
 	c := &ProjectsLocationsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8733,9 +8888,9 @@ type ProjectsLocationsMembershipsListAdminCall struct {
 // ListAdmin: Lists Memberships of admin clusters in a given project and
 // location. **This method is only used internally**.
 //
-// - parent: The parent (project and location) where the Memberships of
-//   admin cluster will be listed. Specified in the format
-//   `projects/*/locations/*`.
+//   - parent: The parent (project and location) where the Memberships of
+//     admin cluster will be listed. Specified in the format
+//     `projects/*/locations/*`.
 func (r *ProjectsLocationsMembershipsService) ListAdmin(parent string) *ProjectsLocationsMembershipsListAdminCall {
 	c := &ProjectsLocationsMembershipsListAdminCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8955,8 +9110,8 @@ type ProjectsLocationsMembershipsPatchCall struct {
 
 // Patch: Updates an existing Membership.
 //
-// - name: The Membership resource name in the format
-//   `projects/*/locations/*/memberships/*`.
+//   - name: The Membership resource name in the format
+//     `projects/*/locations/*/memberships/*`.
 func (r *ProjectsLocationsMembershipsService) Patch(name string, membership *Membership) *ProjectsLocationsMembershipsPatchCall {
 	c := &ProjectsLocationsMembershipsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9135,10 +9290,10 @@ type ProjectsLocationsMembershipsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMembershipsSetIamPolicyCall {
 	c := &ProjectsLocationsMembershipsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9285,10 +9440,10 @@ type ProjectsLocationsMembershipsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsMembershipsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMembershipsTestIamPermissionsCall {
 	c := &ProjectsLocationsMembershipsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

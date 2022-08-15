@@ -22,8 +22,9 @@ func init() {
 // booksMain is an example that demonstrates calling the Books API.
 //
 // Example usage:
-//   go build -o go-api-demo *.go
-//   go-api-demo -clientid="my-clientid" -secret="my-secret" books
+//
+//	go build -o go-api-demo *.go
+//	go-api-demo -clientid="my-clientid" -secret="my-secret" books
 func booksMain(client *http.Client, argv []string) {
 	if len(argv) != 0 {
 		fmt.Fprintln(os.Stderr, "Usage: books")

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/eventarc
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/eventarc/v1"
-//   ...
-//   ctx := context.Background()
-//   eventarcService, err := eventarc.NewService(ctx)
+//	import "google.golang.org/api/eventarc/v1"
+//	...
+//	ctx := context.Background()
+//	eventarcService, err := eventarc.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   eventarcService, err := eventarc.NewService(ctx, option.WithAPIKey("AIza..."))
+//	eventarcService, err := eventarc.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   eventarcService, err := eventarc.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	eventarcService, err := eventarc.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package eventarc // import "google.golang.org/api/eventarc/v1"
@@ -402,6 +402,11 @@ type Channel struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed
+	// by the user) used to encrypt/decrypt their event data. It must match
+	// the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+
 	// Name: Required. The resource name of the channel. Must be unique
 	// within the location on the project and must be in
 	// `projects/{project}/locations/{location}/channels/{channel_id}`
@@ -430,7 +435,7 @@ type Channel struct {
 	//   "ACTIVE" - The ACTIVE state indicates that a Channel has been
 	// successfully connected with the event provider. An ACTIVE Channel is
 	// ready to receive and route events from the event provider.
-	//   "INACTIVE" - The INACTIVE state means that the Channel cannot
+	//   "INACTIVE" - The INACTIVE state indicates that the Channel cannot
 	// receive events permanently. There are two possible cases this state
 	// can happen: 1. The SaaS provider disconnected from this Channel. 2.
 	// The Channel activation token has expired but the SaaS provider wasn't
@@ -498,8 +503,8 @@ type ChannelConnection struct {
 	// Name: Required. The name of the connection.
 	Name string `json:"name,omitempty"`
 
-	// Uid: Output only. / Output only. Server assigned ID of the resource.
-	// The server guarantees uniqueness and immutability until deleted.
+	// Uid: Output only. Server assigned ID of the resource. The server
+	// guarantees uniqueness and immutability until deleted.
 	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The last-modified time.
@@ -865,6 +870,52 @@ func (s *GKE) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChannelConfig: A GoogleChannelConfig is a resource that stores
+// the custom settings respected by Eventarc first-party triggers in the
+// matching region. Once configured, first-party event data will be
+// protected using the specified custom managed encryption key instead
+// of Google-managed encryption keys.
+type GoogleChannelConfig struct {
+	// CryptoKeyName: Optional. Resource name of a KMS crypto key (managed
+	// by the user) used to encrypt/decrypt their event data. It must match
+	// the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+
+	// Name: Required. The resource name of the config. Must be in the
+	// format of,
+	// `projects/{project}/locations/{location}/googleChannelConfig`.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The last-modified time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CryptoKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CryptoKeyName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChannelConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChannelConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleLongrunningCancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type GoogleLongrunningCancelOperationRequest struct {
@@ -1021,7 +1072,7 @@ type ListChannelConnectionsResponse struct {
 	ChannelConnections []*ChannelConnection `json:"channelConnections,omitempty"`
 
 	// NextPageToken: A page token that can be sent to
-	// ListChannelConnections to request the next page. If this is empty,
+	// `ListChannelConnections` to request the next page. If this is empty,
 	// then there are no more pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1063,7 +1114,7 @@ type ListChannelsResponse struct {
 	// `page_size`.
 	Channels []*Channel `json:"channels,omitempty"`
 
-	// NextPageToken: A page token that can be sent to ListChannels to
+	// NextPageToken: A page token that can be sent to `ListChannels` to
 	// request the next page. If this is empty, then there are no more
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1138,7 +1189,7 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 // ListProvidersResponse: The response message for the `ListProviders`
 // method.
 type ListProvidersResponse struct {
-	// NextPageToken: A page token that can be sent to ListProviders to
+	// NextPageToken: A page token that can be sent to `ListProviders` to
 	// request the next page. If this is empty, then there are no more
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -1180,7 +1231,7 @@ func (s *ListProvidersResponse) MarshalJSON() ([]byte, error) {
 // ListTriggersResponse: The response message for the `ListTriggers`
 // method.
 type ListTriggersResponse struct {
-	// NextPageToken: A page token that can be sent to ListTriggers to
+	// NextPageToken: A page token that can be sent to `ListTriggers` to
 	// request the next page. If this is empty, then there are no more
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -2005,6 +2056,152 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 
 }
 
+// method id "eventarc.projects.locations.getGoogleChannelConfig":
+
+type ProjectsLocationsGetGoogleChannelConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetGoogleChannelConfig: Get a GoogleChannelConfig
+//
+// - name: The name of the config to get.
+func (r *ProjectsLocationsService) GetGoogleChannelConfig(name string) *ProjectsLocationsGetGoogleChannelConfigCall {
+	c := &ProjectsLocationsGetGoogleChannelConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetGoogleChannelConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetGoogleChannelConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) Context(ctx context.Context) *ProjectsLocationsGetGoogleChannelConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.getGoogleChannelConfig" call.
+// Exactly one of *GoogleChannelConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleChannelConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetGoogleChannelConfigCall) Do(opts ...googleapi.CallOption) (*GoogleChannelConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChannelConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a GoogleChannelConfig",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/googleChannelConfig",
+	//   "httpMethod": "GET",
+	//   "id": "eventarc.projects.locations.getGoogleChannelConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the config to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/googleChannelConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleChannelConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "eventarc.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -2019,8 +2216,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2214,6 +2411,164 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "eventarc.projects.locations.updateGoogleChannelConfig":
+
+type ProjectsLocationsUpdateGoogleChannelConfigCall struct {
+	s                   *Service
+	name                string
+	googlechannelconfig *GoogleChannelConfig
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// UpdateGoogleChannelConfig: Update a single GoogleChannelConfig
+//
+//   - name: The resource name of the config. Must be in the format of,
+//     `projects/{project}/locations/{location}/googleChannelConfig`.
+func (r *ProjectsLocationsService) UpdateGoogleChannelConfig(name string, googlechannelconfig *GoogleChannelConfig) *ProjectsLocationsUpdateGoogleChannelConfigCall {
+	c := &ProjectsLocationsUpdateGoogleChannelConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlechannelconfig = googlechannelconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The fields to be
+// updated; only fields explicitly provided are updated. If no field
+// mask is provided, all provided fields in the request are updated. To
+// update all fields, provide a field mask of "*".
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateGoogleChannelConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateGoogleChannelConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateGoogleChannelConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechannelconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.updateGoogleChannelConfig" call.
+// Exactly one of *GoogleChannelConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleChannelConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateGoogleChannelConfigCall) Do(opts ...googleapi.CallOption) (*GoogleChannelConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChannelConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a single GoogleChannelConfig",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/googleChannelConfig",
+	//   "httpMethod": "PATCH",
+	//   "id": "eventarc.projects.locations.updateGoogleChannelConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the config. Must be in the format of, `projects/{project}/locations/{location}/googleChannelConfig`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/googleChannelConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The fields to be updated; only fields explicitly provided are updated. If no field mask is provided, all provided fields in the request are updated. To update all fields, provide a field mask of \"*\".",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleChannelConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleChannelConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "eventarc.projects.locations.channelConnections.create":
 
 type ProjectsLocationsChannelConnectionsCreateCall struct {
@@ -2228,8 +2583,8 @@ type ProjectsLocationsChannelConnectionsCreateCall struct {
 // Create: Create a new ChannelConnection in a particular project and
 // location.
 //
-// - parent: The parent collection in which to add this channel
-//   connection.
+//   - parent: The parent collection in which to add this channel
+//     connection.
 func (r *ProjectsLocationsChannelConnectionsService) Create(parent string, channelconnection *ChannelConnection) *ProjectsLocationsChannelConnectionsCreateCall {
 	c := &ProjectsLocationsChannelConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2664,10 +3019,10 @@ type ProjectsLocationsChannelConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsChannelConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2837,8 +3192,8 @@ type ProjectsLocationsChannelConnectionsListCall struct {
 
 // List: List channel connections.
 //
-// - parent: The parent collection from which to list channel
-//   connections.
+//   - parent: The parent collection from which to list channel
+//     connections.
 func (r *ProjectsLocationsChannelConnectionsService) List(parent string) *ProjectsLocationsChannelConnectionsListCall {
 	c := &ProjectsLocationsChannelConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3036,10 +3391,10 @@ type ProjectsLocationsChannelConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsChannelConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3186,10 +3541,10 @@ type ProjectsLocationsChannelConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsChannelConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3789,10 +4144,10 @@ type ProjectsLocationsChannelsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) GetIamPolicy(resource string) *ProjectsLocationsChannelsGetIamPolicyCall {
 	c := &ProjectsLocationsChannelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4172,10 +4527,10 @@ type ProjectsLocationsChannelsPatchCall struct {
 
 // Patch: Update a single channel.
 //
-// - name: The resource name of the channel. Must be unique within the
-//   location on the project and must be in
-//   `projects/{project}/locations/{location}/channels/{channel_id}`
-//   format.
+//   - name: The resource name of the channel. Must be unique within the
+//     location on the project and must be in
+//     `projects/{project}/locations/{location}/channels/{channel_id}`
+//     format.
 func (r *ProjectsLocationsChannelsService) Patch(name string, channel *Channel) *ProjectsLocationsChannelsPatchCall {
 	c := &ProjectsLocationsChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4346,10 +4701,10 @@ type ProjectsLocationsChannelsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelsSetIamPolicyCall {
 	c := &ProjectsLocationsChannelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4496,10 +4851,10 @@ type ProjectsLocationsChannelsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsChannelsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelsTestIamPermissionsCall {
 	c := &ProjectsLocationsChannelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6141,10 +6496,10 @@ type ProjectsLocationsTriggersGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) GetIamPolicy(resource string) *ProjectsLocationsTriggersGetIamPolicyCall {
 	c := &ProjectsLocationsTriggersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6539,10 +6894,10 @@ type ProjectsLocationsTriggersPatchCall struct {
 
 // Patch: Update a single trigger.
 //
-// - name: The resource name of the trigger. Must be unique within the
-//   location of the project and must be in
-//   `projects/{project}/locations/{location}/triggers/{trigger}`
-//   format.
+//   - name: The resource name of the trigger. Must be unique within the
+//     location of the project and must be in
+//     `projects/{project}/locations/{location}/triggers/{trigger}`
+//     format.
 func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) *ProjectsLocationsTriggersPatchCall {
 	c := &ProjectsLocationsTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6726,10 +7081,10 @@ type ProjectsLocationsTriggersSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsTriggersSetIamPolicyCall {
 	c := &ProjectsLocationsTriggersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6876,10 +7231,10 @@ type ProjectsLocationsTriggersTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsTriggersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsTriggersTestIamPermissionsCall {
 	c := &ProjectsLocationsTriggersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/cloud-build/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudbuild/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudbuildService, err := cloudbuild.NewService(ctx)
+//	import "google.golang.org/api/cloudbuild/v1"
+//	...
+//	ctx := context.Background()
+//	cloudbuildService, err := cloudbuild.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudbuildService, err := cloudbuild.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudbuild // import "google.golang.org/api/cloudbuild/v1"
@@ -4956,8 +4956,8 @@ type ProjectsBuildsApproveCall struct {
 // returned LRO will be analogous to the LRO returned from a CreateBuild
 // call. If rejected, the returned LRO will be immediately done.
 //
-// - name: Name of the target build. For example:
-//   "projects/{$project_id}/builds/{$build_id}".
+//   - name: Name of the target build. For example:
+//     "projects/{$project_id}/builds/{$build_id}".
 func (r *ProjectsBuildsService) Approve(name string, approvebuildrequest *ApproveBuildRequest) *ProjectsBuildsApproveCall {
 	c := &ProjectsBuildsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5971,8 +5971,8 @@ type ProjectsGithubEnterpriseConfigsCreateCall struct {
 // Create: Create an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - parent: Name of the parent project. For example:
-//   projects/{$project_number} or projects/{$project_id}.
+//   - parent: Name of the parent project. For example:
+//     projects/{$project_number} or projects/{$project_id}.
 func (r *ProjectsGithubEnterpriseConfigsService) Create(parent string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsCreateCall {
 	c := &ProjectsGithubEnterpriseConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6141,9 +6141,9 @@ type ProjectsGithubEnterpriseConfigsDeleteCall struct {
 // Delete: Delete an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - name: This field should contain the name of the enterprise config
-//   resource. For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: This field should contain the name of the enterprise config
+//     resource. For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Delete(name string) *ProjectsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6299,9 +6299,9 @@ type ProjectsGithubEnterpriseConfigsGetCall struct {
 
 // Get: Retrieve a GitHubEnterpriseConfig.
 //
-// - name: This field should contain the name of the enterprise config
-//   resource. For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: This field should contain the name of the enterprise config
+//     resource. For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Get(name string) *ProjectsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6470,8 +6470,8 @@ type ProjectsGithubEnterpriseConfigsListCall struct {
 
 // List: List all GitHubEnterpriseConfigs for a given project.
 //
-// - parent: Name of the parent project. For example:
-//   projects/{$project_number} or projects/{$project_id}.
+//   - parent: Name of the parent project. For example:
+//     projects/{$project_number} or projects/{$project_id}.
 func (r *ProjectsGithubEnterpriseConfigsService) List(parent string) *ProjectsGithubEnterpriseConfigsListCall {
 	c := &ProjectsGithubEnterpriseConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6630,9 +6630,9 @@ type ProjectsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - name: Optional. The full resource name for the
-//   GitHubEnterpriseConfig For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: Optional. The full resource name for the
+//     GitHubEnterpriseConfig For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7586,10 +7586,10 @@ type ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedReposi
 // repository from a given BitbucketServerConfig's connected
 // repositories. This API is experimental.
 //
-// - config: The name of the `BitbucketServerConfig` to remove a
-//   connected repository. Format:
-//   `projects/{project}/locations/{location}/bitbucketServerConfigs/{con
-//   fig}`.
+//   - config: The name of the `BitbucketServerConfig` to remove a
+//     connected repository. Format:
+//     `projects/{project}/locations/{location}/bitbucketServerConfigs/{con
+//     fig}`.
 func (r *ProjectsLocationsBitbucketServerConfigsService) RemoveBitbucketServerConnectedRepository(config string, removebitbucketserverconnectedrepositoryrequest *RemoveBitbucketServerConnectedRepositoryRequest) *ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedRepositoryCall {
 	c := &ProjectsLocationsBitbucketServerConfigsRemoveBitbucketServerConnectedRepositoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.config = config
@@ -7732,10 +7732,10 @@ type ProjectsLocationsBitbucketServerConfigsConnectedRepositoriesBatchCreateCall
 // BatchCreate: Batch connecting Bitbucket Server repositories to Cloud
 // Build.
 //
-// - parent: The name of the `BitbucketServerConfig` that added
-//   connected repository. Format:
-//   `projects/{project}/locations/{location}/bitbucketServerConfigs/{con
-//   fig}`.
+//   - parent: The name of the `BitbucketServerConfig` that added
+//     connected repository. Format:
+//     `projects/{project}/locations/{location}/bitbucketServerConfigs/{con
+//     fig}`.
 func (r *ProjectsLocationsBitbucketServerConfigsConnectedRepositoriesService) BatchCreate(parent string, batchcreatebitbucketserverconnectedrepositoriesrequest *BatchCreateBitbucketServerConnectedRepositoriesRequest) *ProjectsLocationsBitbucketServerConfigsConnectedRepositoriesBatchCreateCall {
 	c := &ProjectsLocationsBitbucketServerConfigsConnectedRepositoriesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8078,8 +8078,8 @@ type ProjectsLocationsBuildsApproveCall struct {
 // returned LRO will be analogous to the LRO returned from a CreateBuild
 // call. If rejected, the returned LRO will be immediately done.
 //
-// - name: Name of the target build. For example:
-//   "projects/{$project_id}/builds/{$build_id}".
+//   - name: Name of the target build. For example:
+//     "projects/{$project_id}/builds/{$build_id}".
 func (r *ProjectsLocationsBuildsService) Approve(name string, approvebuildrequest *ApproveBuildRequest) *ProjectsLocationsBuildsApproveCall {
 	c := &ProjectsLocationsBuildsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8221,8 +8221,8 @@ type ProjectsLocationsBuildsCancelCall struct {
 
 // Cancel: Cancels a build in progress.
 //
-// - name: The name of the `Build` to cancel. Format:
-//   `projects/{project}/locations/{location}/builds/{build}`.
+//   - name: The name of the `Build` to cancel. Format:
+//     `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Cancel(name string, cancelbuildrequest *CancelBuildRequest) *ProjectsLocationsBuildsCancelCall {
 	c := &ProjectsLocationsBuildsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8367,8 +8367,8 @@ type ProjectsLocationsBuildsCreateCall struct {
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
 //
-// - parent: The parent resource where this build will be created.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The parent resource where this build will be created.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) Create(parent string, build *Build) *ProjectsLocationsBuildsCreateCall {
 	c := &ProjectsLocationsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8524,8 +8524,8 @@ type ProjectsLocationsBuildsGetCall struct {
 // `Build` that is returned includes its status (such as `SUCCESS`,
 // `FAILURE`, or `WORKING`), and timing information.
 //
-// - name: The name of the `Build` to retrieve. Format:
-//   `projects/{project}/locations/{location}/builds/{build}`.
+//   - name: The name of the `Build` to retrieve. Format:
+//     `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Get(name string) *ProjectsLocationsBuildsGetCall {
 	c := &ProjectsLocationsBuildsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8696,8 +8696,8 @@ type ProjectsLocationsBuildsListCall struct {
 // may still be in-progress, or may have finished successfully or
 // unsuccessfully.
 //
-// - parent: The parent of the collection of `Builds`. Format:
-//   `projects/{project}/locations/{location}`.
+//   - parent: The parent of the collection of `Builds`. Format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) List(parent string) *ProjectsLocationsBuildsListCall {
 	c := &ProjectsLocationsBuildsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8934,8 +8934,8 @@ type ProjectsLocationsBuildsRetryCall struct {
 // or may not be available depending on the bucket's lifecycle
 // management settings.
 //
-// - name: The name of the `Build` to retry. Format:
-//   `projects/{project}/locations/{location}/builds/{build}`.
+//   - name: The name of the `Build` to retry. Format:
+//     `projects/{project}/locations/{location}/builds/{build}`.
 func (r *ProjectsLocationsBuildsService) Retry(name string, retrybuildrequest *RetryBuildRequest) *ProjectsLocationsBuildsRetryCall {
 	c := &ProjectsLocationsBuildsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9078,8 +9078,8 @@ type ProjectsLocationsGithubEnterpriseConfigsCreateCall struct {
 // Create: Create an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - parent: Name of the parent project. For example:
-//   projects/{$project_number} or projects/{$project_id}.
+//   - parent: Name of the parent project. For example:
+//     projects/{$project_number} or projects/{$project_id}.
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Create(parent string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsCreateCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9248,9 +9248,9 @@ type ProjectsLocationsGithubEnterpriseConfigsDeleteCall struct {
 // Delete: Delete an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - name: This field should contain the name of the enterprise config
-//   resource. For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: This field should contain the name of the enterprise config
+//     resource. For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Delete(name string) *ProjectsLocationsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9406,9 +9406,9 @@ type ProjectsLocationsGithubEnterpriseConfigsGetCall struct {
 
 // Get: Retrieve a GitHubEnterpriseConfig.
 //
-// - name: This field should contain the name of the enterprise config
-//   resource. For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: This field should contain the name of the enterprise config
+//     resource. For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Get(name string) *ProjectsLocationsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9577,8 +9577,8 @@ type ProjectsLocationsGithubEnterpriseConfigsListCall struct {
 
 // List: List all GitHubEnterpriseConfigs for a given project.
 //
-// - parent: Name of the parent project. For example:
-//   projects/{$project_number} or projects/{$project_id}.
+//   - parent: Name of the parent project. For example:
+//     projects/{$project_number} or projects/{$project_id}.
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) List(parent string) *ProjectsLocationsGithubEnterpriseConfigsListCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9737,9 +9737,9 @@ type ProjectsLocationsGithubEnterpriseConfigsPatchCall struct {
 // Patch: Update an association between a GCP project and a GitHub
 // Enterprise server.
 //
-// - name: Optional. The full resource name for the
-//   GitHubEnterpriseConfig For example:
-//   "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//   - name: Optional. The full resource name for the
+//     GitHubEnterpriseConfig For example:
+//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10195,8 +10195,8 @@ type ProjectsLocationsTriggersCreateCall struct {
 
 // Create: Creates a new `BuildTrigger`. This API is experimental.
 //
-// - parent: The parent resource where this trigger will be created.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The parent resource where this trigger will be created.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsTriggersService) Create(parent string, buildtrigger *BuildTrigger) *ProjectsLocationsTriggersCreateCall {
 	c := &ProjectsLocationsTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10350,8 +10350,8 @@ type ProjectsLocationsTriggersDeleteCall struct {
 // Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
 //
-// - name: The name of the `Trigger` to delete. Format:
-//   `projects/{project}/locations/{location}/triggers/{trigger}`.
+//   - name: The name of the `Trigger` to delete. Format:
+//     `projects/{project}/locations/{location}/triggers/{trigger}`.
 func (r *ProjectsLocationsTriggersService) Delete(name string) *ProjectsLocationsTriggersDeleteCall {
 	c := &ProjectsLocationsTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10509,8 +10509,8 @@ type ProjectsLocationsTriggersGetCall struct {
 // Get: Returns information about a `BuildTrigger`. This API is
 // experimental.
 //
-// - name: The name of the `Trigger` to retrieve. Format:
-//   `projects/{project}/locations/{location}/triggers/{trigger}`.
+//   - name: The name of the `Trigger` to retrieve. Format:
+//     `projects/{project}/locations/{location}/triggers/{trigger}`.
 func (r *ProjectsLocationsTriggersService) Get(name string) *ProjectsLocationsTriggersGetCall {
 	c := &ProjectsLocationsTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10680,8 +10680,8 @@ type ProjectsLocationsTriggersListCall struct {
 
 // List: Lists existing `BuildTrigger`s. This API is experimental.
 //
-// - parent: The parent of the collection of `Triggers`. Format:
-//   `projects/{project}/locations/{location}`.
+//   - parent: The parent of the collection of `Triggers`. Format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsTriggersService) List(parent string) *ProjectsLocationsTriggersListCall {
 	c := &ProjectsLocationsTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10886,9 +10886,9 @@ type ProjectsLocationsTriggersPatchCall struct {
 // Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
 // This API is experimental.
 //
-// - resourceName: The `Trigger` name with format:
-//   `projects/{project}/locations/{location}/triggers/{trigger}`, where
-//   {trigger} is a unique identifier generated by the service.
+//   - resourceName: The `Trigger` name with format:
+//     `projects/{project}/locations/{location}/triggers/{trigger}`, where
+//     {trigger} is a unique identifier generated by the service.
 func (r *ProjectsLocationsTriggersService) Patch(resourceNameid string, buildtrigger *BuildTrigger) *ProjectsLocationsTriggersPatchCall {
 	c := &ProjectsLocationsTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceNameid = resourceNameid
@@ -11052,10 +11052,14 @@ type ProjectsLocationsTriggersRunCall struct {
 	header_                http.Header
 }
 
-// Run: Runs a `BuildTrigger` at a particular source revision.
+// Run: Runs a `BuildTrigger` at a particular source revision. To run a
+// regional or global trigger, use the POST request that includes the
+// location endpoint in the path. The POST request that does not include
+// the location endpoint in the path can only be used when running
+// global triggers.
 //
-// - name: The name of the `Trigger` to run. Format:
-//   `projects/{project}/locations/{location}/triggers/{trigger}`.
+//   - name: The name of the `Trigger` to run. Format:
+//     `projects/{project}/locations/{location}/triggers/{trigger}`.
 func (r *ProjectsLocationsTriggersService) Run(name string, runbuildtriggerrequest *RunBuildTriggerRequest) *ProjectsLocationsTriggersRunCall {
 	c := &ProjectsLocationsTriggersRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11154,7 +11158,7 @@ func (c *ProjectsLocationsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.triggers.run",
@@ -11198,8 +11202,8 @@ type ProjectsLocationsTriggersWebhookCall struct {
 // Webhook: ReceiveTriggerWebhook [Experimental] is called when the API
 // receives a webhook request targeted at a specific trigger.
 //
-// - name: The name of the `ReceiveTriggerWebhook` to retrieve. Format:
-//   `projects/{project}/locations/{location}/triggers/{trigger}`.
+//   - name: The name of the `ReceiveTriggerWebhook` to retrieve. Format:
+//     `projects/{project}/locations/{location}/triggers/{trigger}`.
 func (r *ProjectsLocationsTriggersService) Webhook(name string, httpbody *HttpBody) *ProjectsLocationsTriggersWebhookCall {
 	c := &ProjectsLocationsTriggersWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11374,8 +11378,8 @@ type ProjectsLocationsWorkerPoolsCreateCall struct {
 
 // Create: Creates a `WorkerPool`.
 //
-// - parent: The parent resource where this worker pool will be created.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The parent resource where this worker pool will be created.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsWorkerPoolsService) Create(parent string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsCreateCall {
 	c := &ProjectsLocationsWorkerPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11543,8 +11547,8 @@ type ProjectsLocationsWorkerPoolsDeleteCall struct {
 
 // Delete: Deletes a `WorkerPool`.
 //
-// - name: The name of the `WorkerPool` to delete. Format:
-//   `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+//   - name: The name of the `WorkerPool` to delete. Format:
+//     `projects/{project}/locations/{location}/workerPools/{workerPool}`.
 func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocationsWorkerPoolsDeleteCall {
 	c := &ProjectsLocationsWorkerPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11715,8 +11719,8 @@ type ProjectsLocationsWorkerPoolsGetCall struct {
 
 // Get: Returns details of a `WorkerPool`.
 //
-// - name: The name of the `WorkerPool` to retrieve. Format:
-//   `projects/{project}/locations/{location}/workerPools/{workerPool}`.
+//   - name: The name of the `WorkerPool` to retrieve. Format:
+//     `projects/{project}/locations/{location}/workerPools/{workerPool}`.
 func (r *ProjectsLocationsWorkerPoolsService) Get(name string) *ProjectsLocationsWorkerPoolsGetCall {
 	c := &ProjectsLocationsWorkerPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11862,8 +11866,8 @@ type ProjectsLocationsWorkerPoolsListCall struct {
 
 // List: Lists `WorkerPool`s.
 //
-// - parent: The parent of the collection of `WorkerPools`. Format:
-//   `projects/{project}/locations/{location}`.
+//   - parent: The parent of the collection of `WorkerPools`. Format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsWorkerPoolsService) List(parent string) *ProjectsLocationsWorkerPoolsListCall {
 	c := &ProjectsLocationsWorkerPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12057,12 +12061,12 @@ type ProjectsLocationsWorkerPoolsPatchCall struct {
 
 // Patch: Updates a `WorkerPool`.
 //
-// - name: Output only. The resource name of the `WorkerPool`, with
-//   format
-//   `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
-//    The value of `{worker_pool}` is provided by `worker_pool_id` in
-//   `CreateWorkerPool` request and the value of `{location}` is
-//   determined by the endpoint accessed.
+//   - name: Output only. The resource name of the `WorkerPool`, with
+//     format
+//     `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
+//     The value of `{worker_pool}` is provided by `worker_pool_id` in
+//     `CreateWorkerPool` request and the value of `{location}` is
+//     determined by the endpoint accessed.
 func (r *ProjectsLocationsWorkerPoolsService) Patch(name string, workerpool *WorkerPool) *ProjectsLocationsWorkerPoolsPatchCall {
 	c := &ProjectsLocationsWorkerPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12230,8 +12234,8 @@ type ProjectsTriggersCreateCall struct {
 
 // Create: Creates a new `BuildTrigger`. This API is experimental.
 //
-// - projectId: ID of the project for which to configure automatic
-//   builds.
+//   - projectId: ID of the project for which to configure automatic
+//     builds.
 func (r *ProjectsTriggersService) Create(projectId string, buildtrigger *BuildTrigger) *ProjectsTriggersCreateCall {
 	c := &ProjectsTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12543,9 +12547,9 @@ type ProjectsTriggersGetCall struct {
 // Get: Returns information about a `BuildTrigger`. This API is
 // experimental.
 //
-// - projectId: ID of the project that owns the trigger.
-// - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to
-//   get.
+//   - projectId: ID of the project that owns the trigger.
+//   - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to
+//     get.
 func (r *ProjectsTriggersService) Get(projectId string, triggerId string) *ProjectsTriggersGetCall {
 	c := &ProjectsTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13068,7 +13072,11 @@ type ProjectsTriggersRunCall struct {
 	header_    http.Header
 }
 
-// Run: Runs a `BuildTrigger` at a particular source revision.
+// Run: Runs a `BuildTrigger` at a particular source revision. To run a
+// regional or global trigger, use the POST request that includes the
+// location endpoint in the path. The POST request that does not include
+// the location endpoint in the path can only be used when running
+// global triggers.
 //
 // - projectId: ID of the project.
 // - triggerId: ID of the trigger.
@@ -13180,7 +13188,7 @@ func (c *ProjectsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.triggers.run",

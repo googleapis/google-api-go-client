@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/trace
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudtrace/v2"
-//   ...
-//   ctx := context.Background()
-//   cloudtraceService, err := cloudtrace.NewService(ctx)
+//	import "google.golang.org/api/cloudtrace/v2"
+//	...
+//	ctx := context.Background()
+//	cloudtraceService, err := cloudtrace.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithScopes(cloudtrace.TraceAppendScope))
+//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithScopes(cloudtrace.TraceAppendScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudtraceService, err := cloudtrace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudtraceService, err := cloudtrace.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudtrace // import "google.golang.org/api/cloudtrace/v2"
@@ -917,8 +917,8 @@ type ProjectsTracesBatchWriteCall struct {
 // BatchWrite: Batch writes new spans to new or existing traces. You
 // cannot update existing spans.
 //
-// - name: The name of the project where the spans belong. The format is
-//   `projects/[PROJECT_ID]`.
+//   - name: The name of the project where the spans belong. The format is
+//     `projects/[PROJECT_ID]`.
 func (r *ProjectsTracesService) BatchWrite(name string, batchwritespansrequest *BatchWriteSpansRequest) *ProjectsTracesBatchWriteCall {
 	c := &ProjectsTracesBatchWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1061,13 +1061,13 @@ type ProjectsTracesSpansCreateSpanCall struct {
 
 // CreateSpan: Creates a new span.
 //
-// - name: The resource name of the span in the following format: *
-//   `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]`
-//   `[TRACE_ID]` is a unique identifier for a trace within a project;
-//   it is a 32-character hexadecimal encoding of a 16-byte array. It
-//   should not be zero. `[SPAN_ID]` is a unique identifier for a span
-//   within a trace; it is a 16-character hexadecimal encoding of an
-//   8-byte array. It should not be zero. .
+//   - name: The resource name of the span in the following format: *
+//     `projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]`
+//     `[TRACE_ID]` is a unique identifier for a trace within a project;
+//     it is a 32-character hexadecimal encoding of a 16-byte array. It
+//     should not be zero. `[SPAN_ID]` is a unique identifier for a span
+//     within a trace; it is a 16-character hexadecimal encoding of an
+//     8-byte array. It should not be zero. .
 func (r *ProjectsTracesSpansService) CreateSpan(nameid string, span *Span) *ProjectsTracesSpansCreateSpanCall {
 	c := &ProjectsTracesSpansCreateSpanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid

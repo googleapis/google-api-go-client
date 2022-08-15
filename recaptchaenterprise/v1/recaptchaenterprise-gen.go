@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/recaptcha-enterprise/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/recaptchaenterprise/v1"
-//   ...
-//   ctx := context.Background()
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx)
+//	import "google.golang.org/api/recaptchaenterprise/v1"
+//	...
+//	ctx := context.Background()
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithAPIKey("AIza..."))
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	recaptchaenterpriseService, err := recaptchaenterprise.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package recaptchaenterprise // import "google.golang.org/api/recaptchaenterprise/v1"
@@ -207,7 +207,7 @@ type ProjectsRelatedaccountgroupsMembershipsService struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account
-// Defender risk assessment.
+// defender risk assessment.
 type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	// Labels: Labels for this request.
 	//
@@ -216,14 +216,14 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	//   "PROFILE_MATCH" - The request matches a known good profile for the
 	// user.
 	//   "SUSPICIOUS_LOGIN_ACTIVITY" - The request is potentially a
-	// suspicious login event and should be further verified either via
+	// suspicious login event and must be further verified either through
 	// multi-factor authentication or another system.
 	//   "SUSPICIOUS_ACCOUNT_CREATION" - The request matched a profile that
-	// previously had suspicious account creation behavior. This could mean
-	// this is a fake account.
+	// previously had suspicious account creation behavior. This can mean
+	// that this is a fake account.
 	//   "RELATED_ACCOUNTS_NUMBER_HIGH" - The account in the request has a
 	// high number of related accounts. It does not necessarily imply that
-	// the account is bad but could require investigating.
+	// the account is bad but can require further investigation.
 	Labels []string `json:"labels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -309,12 +309,11 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// the reasons field instead.
 	Annotation string `json:"annotation,omitempty"`
 
-	// HashedAccountId: Optional. Optional unique stable hashed user
-	// identifier to apply to the assessment. This is an alternative to
-	// setting the hashed_account_id in CreateAssessment, for example when
-	// the account identifier is not yet known in the initial request. It is
-	// recommended that the identifier is hashed using hmac-sha256 with
-	// stable secret.
+	// HashedAccountId: Optional. Unique stable hashed user identifier to
+	// apply to the assessment. This is an alternative to setting the
+	// hashed_account_id in CreateAssessment, for example when the account
+	// identifier is not yet known in the initial request. It is recommended
+	// that the identifier is hashed using hmac-sha256 with stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// Reasons: Optional. Optional reasons for the annotation that will be
@@ -322,8 +321,8 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Default unspecified reason.
-	//   "CHARGEBACK" - Indicates a chargeback issued for the transaction
-	// with no other details. When possible, specify the type by using
+	//   "CHARGEBACK" - Indicates a chargeback issued for a transaction with
+	// no other details. When possible, specify the type by using
 	// CHARGEBACK_FRAUD or CHARGEBACK_DISPUTE instead.
 	//   "CHARGEBACK_FRAUD" - Indicates a chargeback related to an alleged
 	// unauthorized transaction from the cardholder's perspective (for
@@ -332,6 +331,11 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// cardholder having provided their card details but allegedly not being
 	// satisfied with the purchase (for example, misrepresentation,
 	// attempted cancellation).
+	//   "REFUND" - Indicates a refund of the complete payment by the
+	// seller.
+	//   "REFUND_FRAUD" - Indicates that a complete payment transaction was
+	// determined to be fraudulent by the seller, and was cancelled and
+	// refunded as a result.
 	//   "PAYMENT_HEURISTICS" - Indicates the transaction associated with
 	// the assessment is suspected of being fraudulent based on the payment
 	// method, billing details, shipping address or other transaction
@@ -385,7 +389,7 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentResponse struct {
 // GoogleCloudRecaptchaenterpriseV1Assessment: A recaptcha assessment
 // resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
-	// AccountDefenderAssessment: Assessment returned by Account Defender
+	// AccountDefenderAssessment: Assessment returned by account defender
 	// when a hashed_account_id is provided.
 	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
 
@@ -397,8 +401,8 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	Name string `json:"name,omitempty"`
 
 	// PrivatePasswordLeakVerification: The private password leak
-	// verification field contains the parameters used to check for leaks
-	// privately without sharing user credentials.
+	// verification field contains the parameters that are used to to check
+	// for leaks privately without sharing user credentials.
 	PrivatePasswordLeakVerification *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification `json:"privatePasswordLeakVerification,omitempty"`
 
 	// RiskAnalysis: Output only. The risk analysis result for the event
@@ -488,9 +492,9 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// client-side platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 
-	// HashedAccountId: Optional. Optional unique stable hashed user
-	// identifier for the request. The identifier should ideally be hashed
-	// using sha256 with stable secret.
+	// HashedAccountId: Optional. Unique stable hashed user identifier for
+	// the request. The identifier must be hashed using hmac-sha256 with
+	// stable secret.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// SiteKey: Optional. The site key that was used to invoke reCAPTCHA on
@@ -800,7 +804,7 @@ type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
 type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
 	// EncryptedLeakMatchPrefixes: Output only. List of prefixes of the
 	// encrypted potential password leaks that matched the given parameters.
-	// They should be compared with the client-side decryption prefix of
+	// They must be compared with the client-side decryption prefix of
 	// `reencrypted_user_credentials_hash`
 	EncryptedLeakMatchPrefixes []string `json:"encryptedLeakMatchPrefixes,omitempty"`
 
@@ -815,8 +819,8 @@ type GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification struct {
 	LookupHashPrefix string `json:"lookupHashPrefix,omitempty"`
 
 	// ReencryptedUserCredentialsHash: Output only. Corresponds to the
-	// re-encryption of the `encrypted_user_credentials_hash` field. Used to
-	// match potential password leaks within
+	// re-encryption of the `encrypted_user_credentials_hash` field. It is
+	// used to match potential password leaks within
 	// `encrypted_leak_match_prefixes`.
 	ReencryptedUserCredentialsHash string `json:"reencryptedUserCredentialsHash,omitempty"`
 
@@ -881,7 +885,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]b
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	// HashedAccountId: The unique stable hashed user identifier of the
 	// member. The identifier corresponds to a `hashed_account_id` provided
-	// in a previous CreateAssessment or AnnotateAssessment call.
+	// in a previous `CreateAssessment` or `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// Name: Required. The resource name for this membership in the format
@@ -909,6 +913,44 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 
 func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse:
+// Secret key is used only in legacy reCAPTCHA. It must be used in a 3rd
+// party integration with legacy reCAPTCHA.
+type GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse struct {
+	// LegacySecretKey: The secret key (also known as shared secret)
+	// authorizes communication between your application backend and the
+	// reCAPTCHA Enterprise server to create an assessment. The secret key
+	// needs to be kept safe for security purposes.
+	LegacySecretKey string `json:"legacySecretKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "LegacySecretKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LegacySecretKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1045,14 +1087,14 @@ func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, er
 type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest struct {
 	// HashedAccountId: Optional. The unique stable hashed user identifier
 	// we should search connections to. The identifier should correspond to
-	// a `hashed_account_id` provided in a previous CreateAssessment or
-	// AnnotateAssessment call.
+	// a `hashed_account_id` provided in a previous `CreateAssessment` or
+	// `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// PageSize: Optional. The maximum number of groups to return. The
-	// service may return fewer than this value. If unspecified, at most 50
-	// groups will be returned. The maximum value is 1000; values above 1000
-	// will be coerced to 1000.
+	// service might return fewer than this value. If unspecified, at most
+	// 50 groups are returned. The maximum value is 1000; values above 1000
+	// are coerced to 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Optional. A page token, received from a previous
@@ -1381,8 +1423,8 @@ type ProjectsAssessmentsAnnotateCall struct {
 // additional information on whether the event turned out to be
 // authentic or fraudulent.
 //
-// - name: The resource name of the Assessment, in the format
-//   "projects/{project}/assessments/{assessment}".
+//   - name: The resource name of the Assessment, in the format
+//     "projects/{project}/assessments/{assessment}".
 func (r *ProjectsAssessmentsService) Annotate(name string, googlecloudrecaptchaenterprisev1annotateassessmentrequest *GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest) *ProjectsAssessmentsAnnotateCall {
 	c := &ProjectsAssessmentsAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1528,8 +1570,8 @@ type ProjectsAssessmentsCreateCall struct {
 // Create: Creates an Assessment of the likelihood an event is
 // legitimate.
 //
-// - parent: The name of the project in which the assessment will be
-//   created, in the format "projects/{project}".
+//   - parent: The name of the project in which the assessment will be
+//     created, in the format "projects/{project}".
 func (r *ProjectsAssessmentsService) Create(parent string, googlecloudrecaptchaenterprisev1assessment *GoogleCloudRecaptchaenterpriseV1Assessment) *ProjectsAssessmentsCreateCall {
 	c := &ProjectsAssessmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1673,8 +1715,8 @@ type ProjectsKeysCreateCall struct {
 
 // Create: Creates a new reCAPTCHA Enterprise key.
 //
-// - parent: The name of the project in which the key will be created,
-//   in the format "projects/{project}".
+//   - parent: The name of the project in which the key will be created,
+//     in the format "projects/{project}".
 func (r *ProjectsKeysService) Create(parent string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysCreateCall {
 	c := &ProjectsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1816,8 +1858,8 @@ type ProjectsKeysDeleteCall struct {
 
 // Delete: Deletes the specified key.
 //
-// - name: The name of the key to be deleted, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the key to be deleted, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Delete(name string) *ProjectsKeysDeleteCall {
 	c := &ProjectsKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1950,8 +1992,8 @@ type ProjectsKeysGetCall struct {
 
 // Get: Returns the specified key.
 //
-// - name: The name of the requested key, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the requested key, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Get(name string) *ProjectsKeysGetCall {
 	c := &ProjectsKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2099,8 +2141,8 @@ type ProjectsKeysGetMetricsCall struct {
 // GetMetrics: Get some aggregated metrics for a Key. This data can be
 // used to build dashboards.
 //
-// - name: The name of the requested metrics, in the format
-//   "projects/{project}/keys/{key}/metrics".
+//   - name: The name of the requested metrics, in the format
+//     "projects/{project}/keys/{key}/metrics".
 func (r *ProjectsKeysService) GetMetrics(name string) *ProjectsKeysGetMetricsCall {
 	c := &ProjectsKeysGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2247,8 +2289,8 @@ type ProjectsKeysListCall struct {
 
 // List: Returns the list of all keys that belong to a project.
 //
-// - parent: The name of the project that contains the keys that will be
-//   listed, in the format "projects/{project}".
+//   - parent: The name of the project that contains the keys that will be
+//     listed, in the format "projects/{project}".
 func (r *ProjectsKeysService) List(parent string) *ProjectsKeysListCall {
 	c := &ProjectsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2448,8 +2490,8 @@ type ProjectsKeysMigrateCall struct {
 // reCAPTCHA Site Key, and your user must have the reCAPTCHA Enterprise
 // Admin IAM role in the destination project.
 //
-// - name: The name of the key to be migrated, in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The name of the key to be migrated, in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Migrate(name string, googlecloudrecaptchaenterprisev1migratekeyrequest *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) *ProjectsKeysMigrateCall {
 	c := &ProjectsKeysMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2592,8 +2634,8 @@ type ProjectsKeysPatchCall struct {
 
 // Patch: Updates the specified key.
 //
-// - name: The resource name for the Key in the format
-//   "projects/{project}/keys/{key}".
+//   - name: The resource name for the Key in the format
+//     "projects/{project}/keys/{key}".
 func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysPatchCall {
 	c := &ProjectsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2737,6 +2779,158 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 
 }
 
+// method id "recaptchaenterprise.projects.keys.retrieveLegacySecretKey":
+
+type ProjectsKeysRetrieveLegacySecretKeyCall struct {
+	s            *Service
+	key          string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveLegacySecretKey: Returns the secret key related to the
+// specified public key. You must use the legacy secret key only in a
+// 3rd party integration with legacy reCAPTCHA.
+//
+//   - key: The public key name linked to the requested secret key in the
+//     format "projects/{project}/keys/{key}".
+func (r *ProjectsKeysService) RetrieveLegacySecretKey(key string) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c := &ProjectsKeysRetrieveLegacySecretKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.key = key
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Fields(s ...googleapi.Field) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) IfNoneMatch(entityTag string) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Context(ctx context.Context) *ProjectsKeysRetrieveLegacySecretKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+key}:retrieveLegacySecretKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"key": c.key,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.keys.retrieveLegacySecretKey" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsKeysRetrieveLegacySecretKeyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the secret key related to the specified public key. You must use the legacy secret key only in a 3rd party integration with legacy reCAPTCHA.",
+	//   "flatPath": "v1/projects/{projectsId}/keys/{keysId}:retrieveLegacySecretKey",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.keys.retrieveLegacySecretKey",
+	//   "parameterOrder": [
+	//     "key"
+	//   ],
+	//   "parameters": {
+	//     "key": {
+	//       "description": "Required. The public key name linked to the requested secret key in the format \"projects/{project}/keys/{key}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+key}:retrieveLegacySecretKey",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "recaptchaenterprise.projects.relatedaccountgroupmemberships.search":
 
 type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
@@ -2750,8 +2944,9 @@ type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
 
 // Search: Search group memberships related to a given account.
 //
-// - project: The name of the project to search related account group
-//   memberships from, in the format "projects/{project}".
+//   - project: The name of the project to search related account group
+//     memberships from. Specify the project name in the following format:
+//     "projects/{project}".
 func (r *ProjectsRelatedaccountgroupmembershipsService) Search(project string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
 	c := &ProjectsRelatedaccountgroupmembershipsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2862,7 +3057,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "project": {
-	//       "description": "Required. The name of the project to search related account group memberships from, in the format \"projects/{project}\".",
+	//       "description": "Required. The name of the project to search related account group memberships from. Specify the project name in the following format: \"projects/{project}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2919,8 +3114,8 @@ type ProjectsRelatedaccountgroupsListCall struct {
 
 // List: List groups of related accounts.
 //
-// - parent: The name of the project to list related account groups
-//   from, in the format "projects/{project}".
+//   - parent: The name of the project to list related account groups
+//     from, in the format "projects/{project}".
 func (r *ProjectsRelatedaccountgroupsService) List(parent string) *ProjectsRelatedaccountgroupsListCall {
 	c := &ProjectsRelatedaccountgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2928,9 +3123,9 @@ func (r *ProjectsRelatedaccountgroupsService) List(parent string) *ProjectsRelat
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of groups to return. The service may return fewer than this value. If
-// unspecified, at most 50 groups will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// of groups to return. The service might return fewer than this value.
+// If unspecified, at most 50 groups are returned. The maximum value is
+// 1000; values above 1000 are coerced to 1000.
 func (c *ProjectsRelatedaccountgroupsListCall) PageSize(pageSize int64) *ProjectsRelatedaccountgroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3057,7 +3252,7 @@ func (c *ProjectsRelatedaccountgroupsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. If unspecified, at most 50 groups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. The maximum number of groups to return. The service might return fewer than this value. If unspecified, at most 50 groups are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3118,11 +3313,11 @@ type ProjectsRelatedaccountgroupsMembershipsListCall struct {
 	header_      http.Header
 }
 
-// List: Get the memberships in a group of related accounts.
+// List: Get memberships in a group of related accounts.
 //
-// - parent: The resource name for the related account group in the
-//   format
-//   `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.
+//   - parent: The resource name for the related account group in the
+//     format
+//     `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.
 func (r *ProjectsRelatedaccountgroupsMembershipsService) List(parent string) *ProjectsRelatedaccountgroupsMembershipsListCall {
 	c := &ProjectsRelatedaccountgroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3130,9 +3325,9 @@ func (r *ProjectsRelatedaccountgroupsMembershipsService) List(parent string) *Pr
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of accounts to return. The service may return fewer than this value.
-// If unspecified, at most 50 accounts will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// of accounts to return. The service might return fewer than this
+// value. If unspecified, at most 50 accounts are returned. The maximum
+// value is 1000; values above 1000 are coerced to 1000.
 func (c *ProjectsRelatedaccountgroupsMembershipsListCall) PageSize(pageSize int64) *ProjectsRelatedaccountgroupsMembershipsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3250,7 +3445,7 @@ func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the memberships in a group of related accounts.",
+	//   "description": "Get memberships in a group of related accounts.",
 	//   "flatPath": "v1/projects/{projectsId}/relatedaccountgroups/{relatedaccountgroupsId}/memberships",
 	//   "httpMethod": "GET",
 	//   "id": "recaptchaenterprise.projects.relatedaccountgroups.memberships.list",
@@ -3259,7 +3454,7 @@ func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of accounts to return. The service may return fewer than this value. If unspecified, at most 50 accounts will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "Optional. The maximum number of accounts to return. The service might return fewer than this value. If unspecified, at most 50 accounts are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

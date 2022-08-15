@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/appengine/docs/admin-api/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/appengine/v1"
-//   ...
-//   ctx := context.Background()
-//   appengineService, err := appengine.NewService(ctx)
+//	import "google.golang.org/api/appengine/v1"
+//	...
+//	ctx := context.Background()
+//	appengineService, err := appengine.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
+//	appengineService, err := appengine.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	appengineService, err := appengine.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package appengine // import "google.golang.org/api/appengine/v1"
@@ -2195,8 +2195,8 @@ type AppsGetCall struct {
 
 // Get: Gets information about an application.
 //
-// - appsId: Part of `name`. Name of the Application resource to get.
-//   Example: `apps/myapp`.
+//   - appsId: Part of `name`. Name of the Application resource to get.
+//     Example: `apps/myapp`.
 func (r *AppsService) Get(appsId string) *AppsGetCall {
 	c := &AppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2344,8 +2344,8 @@ type AppsRepairCall struct {
 // message about a missing feature, for example "*Error retrieving the
 // App Engine service account*".
 //
-// - appsId: Part of `name`. Name of the application to repair. Example:
-//   `apps/myapp`.
+//   - appsId: Part of `name`. Name of the application to repair. Example:
+//     `apps/myapp`.
 func (r *AppsService) Repair(appsId string, repairapplicationrequest *RepairApplicationRequest) *AppsRepairCall {
 	c := &AppsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -2641,8 +2641,8 @@ type AppsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - appsId: Part of `name`. The resource that owns the locations
-//   collection, if applicable.
+//   - appsId: Part of `name`. The resource that owns the locations
+//     collection, if applicable.
 func (r *AppsLocationsService) List(appsId string) *AppsLocationsListCall {
 	c := &AppsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3207,9 +3207,9 @@ type AppsServicesDeleteCall struct {
 
 // Delete: Deletes the specified service and all enclosed versions.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Delete(appsId string, servicesId string) *AppsServicesDeleteCall {
 	c := &AppsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3350,9 +3350,9 @@ type AppsServicesGetCall struct {
 
 // Get: Gets the current configuration of the specified service.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Get(appsId string, servicesId string) *AppsServicesGetCall {
 	c := &AppsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3505,8 +3505,8 @@ type AppsServicesListCall struct {
 
 // List: Lists all the services in the application.
 //
-// - appsId: Part of `parent`. Name of the parent Application resource.
-//   Example: `apps/myapp`.
+//   - appsId: Part of `parent`. Name of the parent Application resource.
+//     Example: `apps/myapp`.
 func (r *AppsServicesService) List(appsId string) *AppsServicesListCall {
 	c := &AppsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3697,9 +3697,9 @@ type AppsServicesPatchCall struct {
 
 // Patch: Updates the configuration of the specified service.
 //
-// - appsId: Part of `name`. Name of the resource to update. Example:
-//   `apps/myapp/services/default`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource to update. Example:
+//     `apps/myapp/services/default`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesService) Patch(appsId string, servicesId string, service *Service) *AppsServicesPatchCall {
 	c := &AppsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -3885,9 +3885,9 @@ type AppsServicesVersionsCreateCall struct {
 
 // Create: Deploys code and resource files to a new version.
 //
-// - appsId: Part of `parent`. Name of the parent resource to create
-//   this version under. Example: `apps/myapp/services/default`.
-// - servicesId: Part of `parent`. See documentation of `appsId`.
+//   - appsId: Part of `parent`. Name of the parent resource to create
+//     this version under. Example: `apps/myapp/services/default`.
+//   - servicesId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Create(appsId string, servicesId string, version *Version) *AppsServicesVersionsCreateCall {
 	c := &AppsServicesVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4037,10 +4037,10 @@ type AppsServicesVersionsDeleteCall struct {
 
 // Delete: Deletes an existing Version resource.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default/versions/v1`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default/versions/v1`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Delete(appsId string, servicesId string, versionsId string) *AppsServicesVersionsDeleteCall {
 	c := &AppsServicesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4193,10 +4193,10 @@ type AppsServicesVersionsGetCall struct {
 // `BASIC_VIEW` will be returned. Specify the `FULL_VIEW` parameter to
 // get the full resource.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default/versions/v1`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default/versions/v1`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, versionsId string) *AppsServicesVersionsGetCall {
 	c := &AppsServicesVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4209,8 +4209,9 @@ func (r *AppsServicesVersionsService) Get(appsId string, servicesId string, vers
 // returned in the `Get` response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//
+//	"BASIC"
+//	"FULL"
 func (c *AppsServicesVersionsGetCall) View(view string) *AppsServicesVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4379,9 +4380,9 @@ type AppsServicesVersionsListCall struct {
 
 // List: Lists the versions of a service.
 //
-// - appsId: Part of `parent`. Name of the parent Service resource.
-//   Example: `apps/myapp/services/default`.
-// - servicesId: Part of `parent`. See documentation of `appsId`.
+//   - appsId: Part of `parent`. Name of the parent Service resource.
+//     Example: `apps/myapp/services/default`.
+//   - servicesId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) List(appsId string, servicesId string) *AppsServicesVersionsListCall {
 	c := &AppsServicesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4407,8 +4408,9 @@ func (c *AppsServicesVersionsListCall) PageToken(pageToken string) *AppsServices
 // returned in the `List` response.
 //
 // Possible values:
-//   "BASIC"
-//   "FULL"
+//
+//	"BASIC"
+//	"FULL"
 func (c *AppsServicesVersionsListCall) View(view string) *AppsServicesVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4616,10 +4618,10 @@ type AppsServicesVersionsPatchCall struct {
 // For Version resources that use automatic scaling and run in the App
 // Engine standard environment.
 //
-// - appsId: Part of `name`. Name of the resource to update. Example:
-//   `apps/myapp/services/default/versions/1`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource to update. Example:
+//     `apps/myapp/services/default/versions/1`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
 	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4798,11 +4800,11 @@ type AppsServicesVersionsInstancesDebugCall struct {
 // instance should be started. Only applicable for instances in App
 // Engine flexible environment.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default/versions/v1/instances/instance-1`.
-// - instancesId: Part of `name`. See documentation of `appsId`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default/versions/v1/instances/instance-1`.
+//   - instancesId: Part of `name`. See documentation of `appsId`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsInstancesService) Debug(appsId string, servicesId string, versionsId string, instancesId string, debuginstancerequest *DebugInstanceRequest) *AppsServicesVersionsInstancesDebugCall {
 	c := &AppsServicesVersionsInstancesDebugCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4971,11 +4973,11 @@ type AppsServicesVersionsInstancesDeleteCall struct {
 
 // Delete: Stops a running instance.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default/versions/v1/instances/instance-1`.
-// - instancesId: Part of `name`. See documentation of `appsId`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default/versions/v1/instances/instance-1`.
+//   - instancesId: Part of `name`. See documentation of `appsId`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsInstancesService) Delete(appsId string, servicesId string, versionsId string, instancesId string) *AppsServicesVersionsInstancesDeleteCall {
 	c := &AppsServicesVersionsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5136,11 +5138,11 @@ type AppsServicesVersionsInstancesGetCall struct {
 
 // Get: Gets instance information.
 //
-// - appsId: Part of `name`. Name of the resource requested. Example:
-//   `apps/myapp/services/default/versions/v1/instances/instance-1`.
-// - instancesId: Part of `name`. See documentation of `appsId`.
-// - servicesId: Part of `name`. See documentation of `appsId`.
-// - versionsId: Part of `name`. See documentation of `appsId`.
+//   - appsId: Part of `name`. Name of the resource requested. Example:
+//     `apps/myapp/services/default/versions/v1/instances/instance-1`.
+//   - instancesId: Part of `name`. See documentation of `appsId`.
+//   - servicesId: Part of `name`. See documentation of `appsId`.
+//   - versionsId: Part of `name`. See documentation of `appsId`.
 func (r *AppsServicesVersionsInstancesService) Get(appsId string, servicesId string, versionsId string, instancesId string) *AppsServicesVersionsInstancesGetCall {
 	c := &AppsServicesVersionsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -5313,10 +5315,10 @@ type AppsServicesVersionsInstancesListCall struct {
 
 // List: Lists the instances of a version.
 //
-// - appsId: Part of `parent`. Name of the parent Version resource.
-//   Example: `apps/myapp/services/default/versions/v1`.
-// - servicesId: Part of `parent`. See documentation of `appsId`.
-// - versionsId: Part of `parent`. See documentation of `appsId`.
+//   - appsId: Part of `parent`. Name of the parent Version resource.
+//     Example: `apps/myapp/services/default/versions/v1`.
+//   - servicesId: Part of `parent`. See documentation of `appsId`.
+//   - versionsId: Part of `parent`. See documentation of `appsId`.
 func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
 	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId

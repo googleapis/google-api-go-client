@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/assuredworkloads/v1"
-//   ...
-//   ctx := context.Background()
-//   assuredworkloadsService, err := assuredworkloads.NewService(ctx)
+//	import "google.golang.org/api/assuredworkloads/v1"
+//	...
+//	ctx := context.Background()
+//	assuredworkloadsService, err := assuredworkloads.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithAPIKey("AIza..."))
+//	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	assuredworkloadsService, err := assuredworkloads.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package assuredworkloads // import "google.golang.org/api/assuredworkloads/v1"
@@ -205,6 +205,8 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -358,6 +360,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -664,6 +668,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -739,6 +745,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
@@ -1171,6 +1179,8 @@ type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata 
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1246,7 +1256,13 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// ComplianceStatus: Output only. Count of active Violations in the
+	// Workload.
+	ComplianceStatus *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus `json:"complianceStatus,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1380,6 +1396,42 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings struct {
 
 func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus:
+// Represents the Compliance Status of this workload
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus struct {
+	// AcknowledgedViolationCount: Count of active Violations which are
+	// acknowledged in the Workload.
+	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
+
+	// ActiveViolationCount: Count of active Violations which haven't been
+	// acknowledged.
+	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AcknowledgedViolationCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AcknowledgedViolationCount") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2184,8 +2236,8 @@ type OrganizationsLocationsWorkloadsCreateCall struct {
 
 // Create: Creates Assured Workload.
 //
-// - parent: The resource name of the new Workload's parent. Must be of
-//   the form `organizations/{org_id}/locations/{location_id}`.
+//   - parent: The resource name of the new Workload's parent. Must be of
+//     the form `organizations/{org_id}/locations/{location_id}`.
 func (r *OrganizationsLocationsWorkloadsService) Create(parent string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsCreateCall {
 	c := &OrganizationsLocationsWorkloadsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2343,9 +2395,9 @@ type OrganizationsLocationsWorkloadsDeleteCall struct {
 // children are already in a deleted state, otherwise the request will
 // fail with a FAILED_PRECONDITION error.
 //
-// - name: The `name` field is used to identify the workload. Format:
-//   organizations/{org_id}/locations/{location_id}/workloads/{workload_i
-//   d}.
+//   - name: The `name` field is used to identify the workload. Format:
+//     organizations/{org_id}/locations/{location_id}/workloads/{workload_i
+//     d}.
 func (r *OrganizationsLocationsWorkloadsService) Delete(name string) *OrganizationsLocationsWorkloadsDeleteCall {
 	c := &OrganizationsLocationsWorkloadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2490,11 +2542,11 @@ type OrganizationsLocationsWorkloadsGetCall struct {
 
 // Get: Gets Assured Workload associated with a CRM Node
 //
-// - name: The resource name of the Workload to fetch. This is the
-//   workloads's relative path in the API, formatted as
-//   "organizations/{organization_id}/locations/{location_id}/workloads/{
-//   workload_id}". For example,
-//   "organizations/123/locations/us-east1/workloads/assured-workload-1".
+//   - name: The resource name of the Workload to fetch. This is the
+//     workloads's relative path in the API, formatted as
+//     "organizations/{organization_id}/locations/{location_id}/workloads/{
+//     workload_id}". For example,
+//     "organizations/123/locations/us-east1/workloads/assured-workload-1".
 func (r *OrganizationsLocationsWorkloadsService) Get(name string) *OrganizationsLocationsWorkloadsGetCall {
 	c := &OrganizationsLocationsWorkloadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2641,8 +2693,8 @@ type OrganizationsLocationsWorkloadsListCall struct {
 
 // List: Lists Assured Workloads under a CRM Node.
 //
-// - parent: Parent Resource to list workloads from. Must be of the form
-//   `organizations/{org_id}/locations/{location}`.
+//   - parent: Parent Resource to list workloads from. Must be of the form
+//     `organizations/{org_id}/locations/{location}`.
 func (r *OrganizationsLocationsWorkloadsService) List(parent string) *OrganizationsLocationsWorkloadsListCall {
 	c := &OrganizationsLocationsWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2853,9 +2905,9 @@ type OrganizationsLocationsWorkloadsPatchCall struct {
 // field in the Workload. Only one update operation per workload can be
 // in progress.
 //
-// - name: Optional. The resource name of the workload. Format:
-//   organizations/{organization}/locations/{location}/workloads/{workloa
-//   d} Read-only.
+//   - name: Optional. The resource name of the workload. Format:
+//     organizations/{organization}/locations/{location}/workloads/{workloa
+//     d} Read-only.
 func (r *OrganizationsLocationsWorkloadsService) Patch(name string, googlecloudassuredworkloadsv1workload *GoogleCloudAssuredworkloadsV1Workload) *OrganizationsLocationsWorkloadsPatchCall {
 	c := &OrganizationsLocationsWorkloadsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3017,11 +3069,11 @@ type OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall struct {
 // should also have orgpolicy.policy.set permission on the folder
 // resource to use this functionality.
 //
-// - name: The resource name of the Workload. This is the workloads's
-//   relative path in the API, formatted as
-//   "organizations/{organization_id}/locations/{location_id}/workloads/{
-//   workload_id}". For example,
-//   "organizations/123/locations/us-east1/workloads/assured-workload-1".
+//   - name: The resource name of the Workload. This is the workloads's
+//     relative path in the API, formatted as
+//     "organizations/{organization_id}/locations/{location_id}/workloads/{
+//     workload_id}". For example,
+//     "organizations/123/locations/us-east1/workloads/assured-workload-1".
 func (r *OrganizationsLocationsWorkloadsService) RestrictAllowedResources(name string, googlecloudassuredworkloadsv1restrictallowedresourcesrequest *GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest) *OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall {
 	c := &OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

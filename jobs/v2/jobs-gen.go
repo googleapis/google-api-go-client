@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/talent-solution/job-search/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/jobs/v2"
-//   ...
-//   ctx := context.Background()
-//   jobsService, err := jobs.NewService(ctx)
+//	import "google.golang.org/api/jobs/v2"
+//	...
+//	ctx := context.Background()
+//	jobsService, err := jobs.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   jobsService, err := jobs.NewService(ctx, option.WithScopes(jobs.JobsScope))
+//	jobsService, err := jobs.NewService(ctx, option.WithScopes(jobs.JobsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   jobsService, err := jobs.NewService(ctx, option.WithAPIKey("AIza..."))
+//	jobsService, err := jobs.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   jobsService, err := jobs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	jobsService, err := jobs.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package jobs // import "google.golang.org/api/jobs/v2"
@@ -7998,10 +7998,14 @@ func (c *V2CompleteCall) Query(query string) *V2CompleteCall {
 // completion. The defaults is CompletionScope.PUBLIC.
 //
 // Possible values:
-//   "COMPLETION_SCOPE_UNSPECIFIED" - Default value.
-//   "TENANT" - Suggestions are based only on the data provided by the
+//
+//	"COMPLETION_SCOPE_UNSPECIFIED" - Default value.
+//	"TENANT" - Suggestions are based only on the data provided by the
+//
 // client.
-//   "PUBLIC" - Suggestions are based on all jobs data in the system
+//
+//	"PUBLIC" - Suggestions are based on all jobs data in the system
+//
 // that's visible to the client
 func (c *V2CompleteCall) Scope(scope string) *V2CompleteCall {
 	c.urlParams_.Set("scope", scope)
@@ -8012,10 +8016,11 @@ func (c *V2CompleteCall) Scope(scope string) *V2CompleteCall {
 // default is CompletionType.COMBINED.
 //
 // Possible values:
-//   "COMPLETION_TYPE_UNSPECIFIED" - Default value.
-//   "JOB_TITLE" - Only suggest job titles.
-//   "COMPANY_NAME" - Only suggest company names.
-//   "COMBINED" - Suggest both job titles and company names.
+//
+//	"COMPLETION_TYPE_UNSPECIFIED" - Default value.
+//	"JOB_TITLE" - Only suggest job titles.
+//	"COMPANY_NAME" - Only suggest company names.
+//	"COMBINED" - Suggest both job titles and company names.
 func (c *V2CompleteCall) Type(type_ string) *V2CompleteCall {
 	c.urlParams_.Set("type", type_)
 	return c

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/iap
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/iap/v1"
-//   ...
-//   ctx := context.Background()
-//   iapService, err := iap.NewService(ctx)
+//	import "google.golang.org/api/iap/v1"
+//	...
+//	ctx := context.Background()
+//	iapService, err := iap.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   iapService, err := iap.NewService(ctx, option.WithAPIKey("AIza..."))
+//	iapService, err := iap.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   iapService, err := iap.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	iapService, err := iap.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package iap // import "google.golang.org/api/iap/v1"
@@ -231,6 +231,10 @@ type AccessDeniedPageSettings struct {
 	// on access denied events to this application.
 	GenerateTroubleshootingUri bool `json:"generateTroubleshootingUri,omitempty"`
 
+	// RemediationTokenGenerationEnabled: Whether to generate remediation
+	// token on access denied events to this application.
+	RemediationTokenGenerationEnabled bool `json:"remediationTokenGenerationEnabled,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessDeniedPageUri")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -257,6 +261,10 @@ func (s *AccessDeniedPageSettings) MarshalJSON() ([]byte, error) {
 
 // AccessSettings: Access related settings for IAP protected apps.
 type AccessSettings struct {
+	// AllowedDomainsSettings: Settings to configure and enable allowed
+	// domains.
+	AllowedDomainsSettings *AllowedDomainsSettings `json:"allowedDomainsSettings,omitempty"`
+
 	// CorsSettings: Configuration to allow cross-origin requests via IAP.
 	CorsSettings *CorsSettings `json:"corsSettings,omitempty"`
 
@@ -275,7 +283,42 @@ type AccessSettings struct {
 	// IAP.
 	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CorsSettings") to
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedDomainsSettings") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedDomainsSettings")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AllowedDomainsSettings: Configuration for IAP allowed domains. Lets
+// you to restrict access to an app and allow access to only the domains
+// that you list.
+type AllowedDomainsSettings struct {
+	// Domains: List of trusted domains.
+	Domains []string `json:"domains,omitempty"`
+
+	// Enable: Configuration for customers to opt in for the feature.
+	Enable bool `json:"enable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -283,17 +326,17 @@ type AccessSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CorsSettings") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *AccessSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod AccessSettings
+func (s *AllowedDomainsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedDomainsSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -357,16 +400,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -489,11 +536,11 @@ func (s *CorsSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CsmSettings: Configuration for RCTokens generated for service mesh
-// workloads protected by IAP. RCTokens are IAP generated JWTs that can
+// CsmSettings: Configuration for RCToken generated for service mesh
+// workloads protected by IAP. RCToken are IAP generated JWTs that can
 // be verified at the application. The RCToken is primarily used for
 // service mesh deployments, and can be scoped to a single mesh by
-// configuring the audience field accordingly
+// configuring the audience field accordingly.
 type CsmSettings struct {
 	// RctokenAud: Audience claim set in the generated RCToken. This value
 	// is not validated by IAP.
@@ -1131,13 +1178,7 @@ type ReauthSettings struct {
 	//
 	// Possible values:
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
-	//   "LOGIN" - Mimics the behavior as if the user had logged out and
-	// tried to log in again. Users with 2SV (2-step verification) enabled
-	// see their 2SV challenges if they did not opt to have their second
-	// factor responses saved. Apps Core (GSuites) admins can configure
-	// settings to disable 2SV cookies and require 2SV for all Apps Core
-	// users in their domains.
-	//   "PASSWORD" - User must type their password.
+	//   "LOGIN" - Prompts the user to log in again.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
 	Method string `json:"method,omitempty"`
 
@@ -1405,8 +1446,8 @@ type ProjectsBrandsCreateCall struct {
 // brand does not already exist for the project, and that the specified
 // support email is owned by the caller.
 //
-// - parent: GCP Project number/id under which the brand is to be
-//   created. In the following format: projects/{project_number/id}.
+//   - parent: GCP Project number/id under which the brand is to be
+//     created. In the following format: projects/{project_number/id}.
 func (r *ProjectsBrandsService) Create(parent string, brand *Brand) *ProjectsBrandsCreateCall {
 	c := &ProjectsBrandsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1548,8 +1589,8 @@ type ProjectsBrandsGetCall struct {
 
 // Get: Retrieves the OAuth brand of the project.
 //
-// - name: Name of the brand to be fetched. In the following format:
-//   projects/{project_number/id}/brands/{brand}.
+//   - name: Name of the brand to be fetched. In the following format:
+//     projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsService) Get(name string) *ProjectsBrandsGetCall {
 	c := &ProjectsBrandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1695,8 +1736,8 @@ type ProjectsBrandsListCall struct {
 
 // List: Lists the existing brands for the project.
 //
-// - parent: GCP Project number/id. In the following format:
-//   projects/{project_number/id}.
+//   - parent: GCP Project number/id. In the following format:
+//     projects/{project_number/id}.
 func (r *ProjectsBrandsService) List(parent string) *ProjectsBrandsListCall {
 	c := &ProjectsBrandsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1844,9 +1885,9 @@ type ProjectsBrandsIdentityAwareProxyClientsCreateCall struct {
 // client is owned by IAP. Requires that the brand for the project
 // exists and that it is set for internal-only use.
 //
-// - parent: Path to create the client in. In the following format:
-//   projects/{project_number/id}/brands/{brand}. The project must
-//   belong to a G Suite account.
+//   - parent: Path to create the client in. In the following format:
+//     projects/{project_number/id}/brands/{brand}. The project must
+//     belong to a G Suite account.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Create(parent string, identityawareproxyclient *IdentityAwareProxyClient) *ProjectsBrandsIdentityAwareProxyClientsCreateCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1990,10 +2031,10 @@ type ProjectsBrandsIdentityAwareProxyClientsDeleteCall struct {
 // given project, and cleaning up after tests. Requires that the client
 // is owned by IAP.
 //
-// - name: Name of the Identity Aware Proxy client to be deleted. In the
-//   following format:
-//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
-//   s/{client_id}.
+//   - name: Name of the Identity Aware Proxy client to be deleted. In the
+//     following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Delete(name string) *ProjectsBrandsIdentityAwareProxyClientsDeleteCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2127,10 +2168,10 @@ type ProjectsBrandsIdentityAwareProxyClientsGetCall struct {
 // Get: Retrieves an Identity Aware Proxy (IAP) OAuth client. Requires
 // that the client is owned by IAP.
 //
-// - name: Name of the Identity Aware Proxy client to be fetched. In the
-//   following format:
-//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
-//   s/{client_id}.
+//   - name: Name of the Identity Aware Proxy client to be fetched. In the
+//     following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) Get(name string) *ProjectsBrandsIdentityAwareProxyClientsGetCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2276,8 +2317,8 @@ type ProjectsBrandsIdentityAwareProxyClientsListCall struct {
 
 // List: Lists the existing clients for the brand.
 //
-// - parent: Full brand path. In the following format:
-//   projects/{project_number/id}/brands/{brand}.
+//   - parent: Full brand path. In the following format:
+//     projects/{project_number/id}/brands/{brand}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) List(parent string) *ProjectsBrandsIdentityAwareProxyClientsListCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2477,10 +2518,10 @@ type ProjectsBrandsIdentityAwareProxyClientsResetSecretCall struct {
 // secret. Useful if the secret was compromised. Requires that the
 // client is owned by IAP.
 //
-// - name: Name of the Identity Aware Proxy client to that will have its
-//   secret reset. In the following format:
-//   projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
-//   s/{client_id}.
+//   - name: Name of the Identity Aware Proxy client to that will have its
+//     secret reset. In the following format:
+//     projects/{project_number/id}/brands/{brand}/identityAwareProxyClient
+//     s/{client_id}.
 func (r *ProjectsBrandsIdentityAwareProxyClientsService) ResetSecret(name string, resetidentityawareproxyclientsecretrequest *ResetIdentityAwareProxyClientSecretRequest) *ProjectsBrandsIdentityAwareProxyClientsResetSecretCall {
 	c := &ProjectsBrandsIdentityAwareProxyClientsResetSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2622,9 +2663,9 @@ type ProjectsIapTunnelLocationsDestGroupsCreateCall struct {
 
 // Create: Creates a new TunnelDestGroup.
 //
-// - parent: Google Cloud Project ID and location. In the following
-//   format:
-//   `projects/{project_number/id}/iap_tunnel/locations/{location}`.
+//   - parent: Google Cloud Project ID and location. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Create(parent string, tunneldestgroup *TunnelDestGroup) *ProjectsIapTunnelLocationsDestGroupsCreateCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2779,10 +2820,10 @@ type ProjectsIapTunnelLocationsDestGroupsDeleteCall struct {
 
 // Delete: Deletes a TunnelDestGroup.
 //
-// - name: Name of the TunnelDestGroup to delete. In the following
-//   format:
-//   `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
-//   oups/{dest_group}`.
+//   - name: Name of the TunnelDestGroup to delete. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//     oups/{dest_group}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Delete(name string) *ProjectsIapTunnelLocationsDestGroupsDeleteCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2915,10 +2956,10 @@ type ProjectsIapTunnelLocationsDestGroupsGetCall struct {
 
 // Get: Retrieves an existing TunnelDestGroup.
 //
-// - name: Name of the TunnelDestGroup to be fetched. In the following
-//   format:
-//   `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
-//   oups/{dest_group}`.
+//   - name: Name of the TunnelDestGroup to be fetched. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}/destGr
+//     oups/{dest_group}`.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Get(name string) *ProjectsIapTunnelLocationsDestGroupsGetCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3066,10 +3107,10 @@ type ProjectsIapTunnelLocationsDestGroupsListCall struct {
 // locations, use a `-` as the location ID. For example:
 // `/v1/projects/123/iap_tunnel/locations/-/destGroups`
 //
-// - parent: Google Cloud Project ID and location. In the following
-//   format:
-//   `projects/{project_number/id}/iap_tunnel/locations/{location}`. A
-//   `-` can be used for the location to group across all locations.
+//   - parent: Google Cloud Project ID and location. In the following
+//     format:
+//     `projects/{project_number/id}/iap_tunnel/locations/{location}`. A
+//     `-` can be used for the location to group across all locations.
 func (r *ProjectsIapTunnelLocationsDestGroupsService) List(parent string) *ProjectsIapTunnelLocationsDestGroupsListCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3266,9 +3307,9 @@ type ProjectsIapTunnelLocationsDestGroupsPatchCall struct {
 
 // Patch: Updates a TunnelDestGroup.
 //
-// - name: Immutable. Identifier for the TunnelDestGroup. Must be unique
-//   within the project and contain only lower case letters (a-z) and
-//   dashes (-).
+//   - name: Immutable. Identifier for the TunnelDestGroup. Must be unique
+//     within the project and contain only lower case letters (a-z) and
+//     dashes (-).
 func (r *ProjectsIapTunnelLocationsDestGroupsService) Patch(name string, tunneldestgroup *TunnelDestGroup) *ProjectsIapTunnelLocationsDestGroupsPatchCall {
 	c := &ProjectsIapTunnelLocationsDestGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3428,10 +3469,10 @@ type V1GetIamPolicyCall struct {
 // IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *V1GetIamPolicyCall {
 	c := &V1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3574,9 +3615,9 @@ type V1GetIapSettingsCall struct {
 // GetIapSettings: Gets the IAP settings on a particular IAP protected
 // resource.
 //
-// - name: The resource name for which to retrieve the settings.
-//   Authorization: Requires the `getSettings` permission for the
-//   associated resource.
+//   - name: The resource name for which to retrieve the settings.
+//     Authorization: Requires the `getSettings` permission for the
+//     associated resource.
 func (r *V1Service) GetIapSettings(name string) *V1GetIapSettingsCall {
 	c := &V1GetIapSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3725,10 +3766,10 @@ type V1SetIamPolicyCall struct {
 // information about managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *V1SetIamPolicyCall {
 	c := &V1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3873,10 +3914,10 @@ type V1TestIamPermissionsCall struct {
 // managing access via IAP can be found at:
 // https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *V1Service) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *V1TestIamPermissionsCall {
 	c := &V1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

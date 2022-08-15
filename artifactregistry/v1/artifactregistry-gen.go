@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/artifacts/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/artifactregistry/v1"
-//   ...
-//   ctx := context.Background()
-//   artifactregistryService, err := artifactregistry.NewService(ctx)
+//	import "google.golang.org/api/artifactregistry/v1"
+//	...
+//	ctx := context.Background()
+//	artifactregistryService, err := artifactregistry.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithScopes(artifactregistry.CloudPlatformReadOnlyScope))
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithScopes(artifactregistry.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithAPIKey("AIza..."))
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   artifactregistryService, err := artifactregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	artifactregistryService, err := artifactregistry.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package artifactregistry // import "google.golang.org/api/artifactregistry/v1"
@@ -187,7 +187,10 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
 	rs.DockerImages = NewProjectsLocationsRepositoriesDockerImagesService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
+	rs.MavenArtifacts = NewProjectsLocationsRepositoriesMavenArtifactsService(s)
+	rs.NpmPackages = NewProjectsLocationsRepositoriesNpmPackagesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
+	rs.PythonPackages = NewProjectsLocationsRepositoriesPythonPackagesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
 	return rs
 }
@@ -201,7 +204,13 @@ type ProjectsLocationsRepositoriesService struct {
 
 	Files *ProjectsLocationsRepositoriesFilesService
 
+	MavenArtifacts *ProjectsLocationsRepositoriesMavenArtifactsService
+
+	NpmPackages *ProjectsLocationsRepositoriesNpmPackagesService
+
 	Packages *ProjectsLocationsRepositoriesPackagesService
+
+	PythonPackages *ProjectsLocationsRepositoriesPythonPackagesService
 
 	YumArtifacts *ProjectsLocationsRepositoriesYumArtifactsService
 }
@@ -230,6 +239,24 @@ func NewProjectsLocationsRepositoriesFilesService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsRepositoriesFilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesMavenArtifactsService(s *Service) *ProjectsLocationsRepositoriesMavenArtifactsService {
+	rs := &ProjectsLocationsRepositoriesMavenArtifactsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesMavenArtifactsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesNpmPackagesService(s *Service) *ProjectsLocationsRepositoriesNpmPackagesService {
+	rs := &ProjectsLocationsRepositoriesNpmPackagesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesNpmPackagesService struct {
 	s *Service
 }
 
@@ -263,6 +290,15 @@ func NewProjectsLocationsRepositoriesPackagesVersionsService(s *Service) *Projec
 }
 
 type ProjectsLocationsRepositoriesPackagesVersionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesPythonPackagesService(s *Service) *ProjectsLocationsRepositoriesPythonPackagesService {
+	rs := &ProjectsLocationsRepositoriesPythonPackagesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesPythonPackagesService struct {
 	s *Service
 }
 
@@ -378,16 +414,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -465,6 +505,10 @@ type DockerImage struct {
 
 	// Tags: Tags attached to this image.
 	Tags []string `json:"tags,omitempty"`
+
+	// UpdateTime: Output only. The time when the docker image was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// UploadTime: Time the image was uploaded.
 	UploadTime string `json:"uploadTime,omitempty"`
@@ -1030,6 +1074,80 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMavenArtifactsResponse: The response from listing maven
+// artifacts.
+type ListMavenArtifactsResponse struct {
+	// MavenArtifacts: The maven artifacts returned.
+	MavenArtifacts []*MavenArtifact `json:"mavenArtifacts,omitempty"`
+
+	// NextPageToken: The token to retrieve the next page of artifacts, or
+	// empty if there are no more artifacts to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MavenArtifacts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MavenArtifacts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMavenArtifactsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMavenArtifactsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListNpmPackagesResponse: The response from listing npm packages.
+type ListNpmPackagesResponse struct {
+	// NextPageToken: The token to retrieve the next page of artifacts, or
+	// empty if there are no more artifacts to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// NpmPackages: The npm packages returned.
+	NpmPackages []*NpmPackage `json:"npmPackages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListNpmPackagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListNpmPackagesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListPackagesResponse: The response from listing packages.
 type ListPackagesResponse struct {
 	// NextPageToken: The token to retrieve the next page of packages, or
@@ -1062,6 +1180,43 @@ type ListPackagesResponse struct {
 
 func (s *ListPackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPackagesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPythonPackagesResponse: The response from listing python
+// packages.
+type ListPythonPackagesResponse struct {
+	// NextPageToken: The token to retrieve the next page of artifacts, or
+	// empty if there are no more artifacts to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PythonPackages: The python packages returned.
+	PythonPackages []*PythonPackage `json:"pythonPackages,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPythonPackagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPythonPackagesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1224,6 +1379,65 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MavenArtifact: MavenArtifact represents a maven artifact.
+type MavenArtifact struct {
+	// ArtifactId: Artifact ID for the artifact.
+	ArtifactId string `json:"artifactId,omitempty"`
+
+	// CreateTime: Output only. Time the artifact was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// GroupId: Group ID for the artifact. Example: com.google.guava
+	GroupId string `json:"groupId,omitempty"`
+
+	// Name: Required. registry_location, project_id, repository_name and
+	// maven_artifact forms a unique artifact For example,
+	// "projects/test-project/locations/us-west4/repositories/test-repo/maven
+	// Artifacts/ com.google.guava:guava:31.0-jre", where "us-west4" is the
+	// registry_location, "test-project" is the project_id, "test-repo" is
+	// the repository_name and "com.google.guava:guava:31.0-jre" is the
+	// maven artifact.
+	Name string `json:"name,omitempty"`
+
+	// PomUri: Required. URL to access the pom file of the artifact.
+	// Example:
+	// us-west4-maven.pkg.dev/test-project/test-repo/com/google/guava/guava/3
+	// 1.0/guava-31.0.pom
+	PomUri string `json:"pomUri,omitempty"`
+
+	// UpdateTime: Output only. Time the artifact was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Version of this artifact.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArtifactId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MavenArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod MavenArtifact
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MavenRepositoryConfig: MavenRepositoryConfig is maven related
 // repository details. Provides additional configuration details for
 // repositories of the maven format type.
@@ -1265,6 +1479,58 @@ type MavenRepositoryConfig struct {
 
 func (s *MavenRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MavenRepositoryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NpmPackage: NpmPackage represents an npm artifact.
+type NpmPackage struct {
+	// CreateTime: Output only. Time the package was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Required. registry_location, project_id, repository_name and
+	// npm_package forms a unique package For example,
+	// "projects/test-project/locations/us-west4/repositories/test-repo/npmPa
+	// ckages/ npm_test:1.0.0", where "us-west4" is the registry_location,
+	// "test-project" is the project_id, "test-repo" is the repository_name
+	// and npm_test:1.0.0" is the npm package.
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Package for the artifact.
+	PackageName string `json:"packageName,omitempty"`
+
+	// Tags: Tags attached to this package.
+	Tags []string `json:"tags,omitempty"`
+
+	// UpdateTime: Output only. Time the package was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Version of this package.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NpmPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod NpmPackage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1535,6 +1801,61 @@ func (s *ProjectSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PythonPackage: PythonPackage represents a python artifact.
+type PythonPackage struct {
+	// CreateTime: Output only. Time the package was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Required. registry_location, project_id, repository_name and
+	// python_package forms a unique package
+	// name:`projects//locations//repository//pythonPackages/`. For example,
+	// "projects/test-project/locations/us-west4/repositories/test-repo/pytho
+	// nPackages/ python_package:1.0.0", where "us-west4" is the
+	// registry_location, "test-project" is the project_id, "test-repo" is
+	// the repository_name and python_package:1.0.0" is the python package.
+	Name string `json:"name,omitempty"`
+
+	// PackageName: Package for the artifact.
+	PackageName string `json:"packageName,omitempty"`
+
+	// UpdateTime: Output only. Time the package was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Uri: Required. URL to access the package. Example:
+	// us-west4-python.pkg.dev/test-project/test-repo/python_package/file-nam
+	// e-1.0.0.tar.gz
+	Uri string `json:"uri,omitempty"`
+
+	// Version: Version of this package.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PythonPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod PythonPackage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
@@ -1554,6 +1875,7 @@ type Repository struct {
 	//   "APT" - APT package format.
 	//   "YUM" - YUM package format.
 	//   "PYTHON" - Python package format.
+	//   "KFP" - Kubeflow Pipelines package format.
 	Format string `json:"format,omitempty"`
 
 	// KmsKeyName: The Cloud KMS resource name of the customer managed
@@ -2201,9 +2523,9 @@ type ProjectsUpdateProjectSettingsCall struct {
 
 // UpdateProjectSettings: Updates the Settings for the Project.
 //
-// - name: The name of the project's settings. Always of the form:
-//   projects/{project-id}/projectSettings In update request: never set
-//   In response: always set.
+//   - name: The name of the project's settings. Always of the form:
+//     projects/{project-id}/projectSettings In update request: never set
+//     In response: always set.
 func (r *ProjectsService) UpdateProjectSettings(name string, projectsettings *ProjectSettings) *ProjectsUpdateProjectSettingsCall {
 	c := &ProjectsUpdateProjectSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2506,8 +2828,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2866,8 +3188,8 @@ type ProjectsLocationsRepositoriesCreateCall struct {
 // the repository has been created. Its response will be the created
 // Repository.
 //
-// - parent: The name of the parent resource where the repository will
-//   be created.
+//   - parent: The name of the parent resource where the repository will
+//     be created.
 func (r *ProjectsLocationsRepositoriesService) Create(parent string, repository *Repository) *ProjectsLocationsRepositoriesCreateCall {
 	c := &ProjectsLocationsRepositoriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3303,10 +3625,10 @@ type ProjectsLocationsRepositoriesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM policy for a given resource.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) GetIamPolicy(resource string) *ProjectsLocationsRepositoriesGetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3477,8 +3799,8 @@ type ProjectsLocationsRepositoriesListCall struct {
 
 // List: Lists repositories.
 //
-// - parent: The name of the parent resource whose repositories will be
-//   listed.
+//   - parent: The name of the parent resource whose repositories will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLocationsRepositoriesListCall {
 	c := &ProjectsLocationsRepositoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3671,8 +3993,8 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 
 // Patch: Updates a repository.
 //
-// - name: The name of the repository, for example:
-//   "projects/p1/locations/us-central1/repositories/repo1".
+//   - name: The name of the repository, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1".
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3828,10 +4150,10 @@ type ProjectsLocationsRepositoriesSetIamPolicyCall struct {
 
 // SetIamPolicy: Updates the IAM policy for a given resource.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsRepositoriesSetIamPolicyCall {
 	c := &ProjectsLocationsRepositoriesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3974,10 +4296,10 @@ type ProjectsLocationsRepositoriesTestIamPermissionsCall struct {
 // TestIamPermissions: Tests if the caller has a list of permissions on
 // a resource.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsRepositoriesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsRepositoriesTestIamPermissionsCall {
 	c := &ProjectsLocationsRepositoriesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4123,8 +4445,8 @@ type ProjectsLocationsRepositoriesAptArtifactsImportCall struct {
 // are created based on the imported artifacts. Imported artifacts that
 // conflict with existing resources are ignored.
 //
-// - parent: The name of the parent resource where the artifacts will be
-//   imported.
+//   - parent: The name of the parent resource where the artifacts will be
+//     imported.
 func (r *ProjectsLocationsRepositoriesAptArtifactsService) Import(parent string, importaptartifactsrequest *ImportAptArtifactsRequest) *ProjectsLocationsRepositoriesAptArtifactsImportCall {
 	c := &ProjectsLocationsRepositoriesAptArtifactsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4270,8 +4592,8 @@ type ProjectsLocationsRepositoriesAptArtifactsUploadCall struct {
 // resources are created based on the imported artifact. Imported
 // artifacts that conflict with existing resources are ignored.
 //
-// - parent: The name of the parent resource where the artifacts will be
-//   uploaded.
+//   - parent: The name of the parent resource where the artifacts will be
+//     uploaded.
 func (r *ProjectsLocationsRepositoriesAptArtifactsService) Upload(parent string, uploadaptartifactrequest *UploadAptArtifactRequest) *ProjectsLocationsRepositoriesAptArtifactsUploadCall {
 	c := &ProjectsLocationsRepositoriesAptArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4639,11 +4961,18 @@ type ProjectsLocationsRepositoriesDockerImagesListCall struct {
 
 // List: Lists docker images.
 //
-// - parent: The name of the parent resource whose docker images will be
-//   listed.
+//   - parent: The name of the parent resource whose docker images will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesDockerImagesService) List(parent string) *ProjectsLocationsRepositoriesDockerImagesListCall {
 	c := &ProjectsLocationsRepositoriesDockerImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesDockerImagesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesDockerImagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -4768,6 +5097,11 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) Do(opts ...googleapi
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "The field to order the results by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of artifacts to return.",
 	//       "format": "int32",
@@ -4981,8 +5315,8 @@ type ProjectsLocationsRepositoriesFilesListCall struct {
 
 // List: Lists files.
 //
-// - parent: The name of the repository whose files will be listed. For
-//   example: "projects/p1/locations/us-central1/repositories/repo1.
+//   - parent: The name of the repository whose files will be listed. For
+//     example: "projects/p1/locations/us-central1/repositories/repo1.
 func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *ProjectsLocationsRepositoriesFilesListCall {
 	c := &ProjectsLocationsRepositoriesFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5176,6 +5510,688 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Do(opts ...googleapi.CallOp
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsRepositoriesFilesListCall) Pages(ctx context.Context, f func(*ListFilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "artifactregistry.projects.locations.repositories.mavenArtifacts.get":
+
+type ProjectsLocationsRepositoriesMavenArtifactsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a maven artifact.
+//
+// - name: The name of the maven artifact.
+func (r *ProjectsLocationsRepositoriesMavenArtifactsService) Get(name string) *ProjectsLocationsRepositoriesMavenArtifactsGetCall {
+	c := &ProjectsLocationsRepositoriesMavenArtifactsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesMavenArtifactsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesMavenArtifactsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesMavenArtifactsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.mavenArtifacts.get" call.
+// Exactly one of *MavenArtifact or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *MavenArtifact.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsGetCall) Do(opts ...googleapi.CallOption) (*MavenArtifact, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &MavenArtifact{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a maven artifact.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/mavenArtifacts/{mavenArtifactsId}",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.mavenArtifacts.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the maven artifact.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/mavenArtifacts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "MavenArtifact"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.repositories.mavenArtifacts.list":
+
+type ProjectsLocationsRepositoriesMavenArtifactsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists maven artifacts.
+//
+//   - parent: The name of the parent resource whose maven artifacts will
+//     be listed.
+func (r *ProjectsLocationsRepositoriesMavenArtifactsService) List(parent string) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c := &ProjectsLocationsRepositoriesMavenArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of artifacts to return.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesMavenArtifactsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/mavenArtifacts")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.mavenArtifacts.list" call.
+// Exactly one of *ListMavenArtifactsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMavenArtifactsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) Do(opts ...googleapi.CallOption) (*ListMavenArtifactsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListMavenArtifactsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists maven artifacts.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/mavenArtifacts",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.mavenArtifacts.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of artifacts to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource whose maven artifacts will be listed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/mavenArtifacts",
+	//   "response": {
+	//     "$ref": "ListMavenArtifactsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesMavenArtifactsListCall) Pages(ctx context.Context, f func(*ListMavenArtifactsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "artifactregistry.projects.locations.repositories.npmPackages.get":
+
+type ProjectsLocationsRepositoriesNpmPackagesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a npm package.
+//
+// - name: The name of the npm package.
+func (r *ProjectsLocationsRepositoriesNpmPackagesService) Get(name string) *ProjectsLocationsRepositoriesNpmPackagesGetCall {
+	c := &ProjectsLocationsRepositoriesNpmPackagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesNpmPackagesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesNpmPackagesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesNpmPackagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.npmPackages.get" call.
+// Exactly one of *NpmPackage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *NpmPackage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesNpmPackagesGetCall) Do(opts ...googleapi.CallOption) (*NpmPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NpmPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a npm package.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/npmPackages/{npmPackagesId}",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.npmPackages.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the npm package.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/npmPackages/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NpmPackage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.repositories.npmPackages.list":
+
+type ProjectsLocationsRepositoriesNpmPackagesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists npm packages.
+//
+//   - parent: The name of the parent resource whose npm packages will be
+//     listed.
+func (r *ProjectsLocationsRepositoriesNpmPackagesService) List(parent string) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c := &ProjectsLocationsRepositoriesNpmPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of artifacts to return.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesNpmPackagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/npmPackages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.npmPackages.list" call.
+// Exactly one of *ListNpmPackagesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListNpmPackagesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) Do(opts ...googleapi.CallOption) (*ListNpmPackagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListNpmPackagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists npm packages.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/npmPackages",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.npmPackages.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of artifacts to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource whose npm packages will be listed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/npmPackages",
+	//   "response": {
+	//     "$ref": "ListNpmPackagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesNpmPackagesListCall) Pages(ctx context.Context, f func(*ListNpmPackagesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -5486,8 +6502,8 @@ type ProjectsLocationsRepositoriesPackagesListCall struct {
 
 // List: Lists packages.
 //
-// - parent: The name of the parent resource whose packages will be
-//   listed.
+//   - parent: The name of the parent resource whose packages will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *ProjectsLocationsRepositoriesPackagesListCall {
 	c := &ProjectsLocationsRepositoriesPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5680,8 +6696,8 @@ type ProjectsLocationsRepositoriesPackagesTagsCreateCall struct {
 
 // Create: Creates a tag.
 //
-// - parent: The name of the parent resource where the tag will be
-//   created.
+//   - parent: The name of the parent resource where the tag will be
+//     created.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Create(parent string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsCreateCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6324,11 +7340,11 @@ type ProjectsLocationsRepositoriesPackagesTagsPatchCall struct {
 
 // Patch: Updates a tag.
 //
-// - name: The name of the tag, for example:
-//   "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
-//   tags/tag1". If the package part contains slashes, the slashes are
-//   escaped. The tag part can only have characters in
-//   [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
+//   - name: The name of the tag, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
+//     tags/tag1". If the package part contains slashes, the slashes are
+//     escaped. The tag part can only have characters in
+//     [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
 func (r *ProjectsLocationsRepositoriesPackagesTagsService) Patch(name string, tag *Tag) *ProjectsLocationsRepositoriesPackagesTagsPatchCall {
 	c := &ProjectsLocationsRepositoriesPackagesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6641,11 +7657,16 @@ func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Get(name string) 
 // returned in the response.
 //
 // Possible values:
-//   "VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Includes basic information about the version, but not any
+//
+//	"BASIC" - Includes basic information about the version, but not any
+//
 // related tags.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) View(view string) *ProjectsLocationsRepositoriesPackagesVersionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6806,8 +7827,8 @@ type ProjectsLocationsRepositoriesPackagesVersionsListCall struct {
 
 // List: Lists versions.
 //
-// - parent: The name of the parent resource whose versions will be
-//   listed.
+//   - parent: The name of the parent resource whose versions will be
+//     listed.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6839,11 +7860,16 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) PageToken(pageTo
 // returned in the response.
 //
 // Possible values:
-//   "VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
+//	"VERSION_VIEW_UNSPECIFIED" - The default / unset value. The API
+//
 // will default to the BASIC view.
-//   "BASIC" - Includes basic information about the version, but not any
+//
+//	"BASIC" - Includes basic information about the version, but not any
+//
 // related tags.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) View(view string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7028,6 +8054,347 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Pages(ctx contex
 	}
 }
 
+// method id "artifactregistry.projects.locations.repositories.pythonPackages.get":
+
+type ProjectsLocationsRepositoriesPythonPackagesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a python package.
+//
+// - name: The name of the python package.
+func (r *ProjectsLocationsRepositoriesPythonPackagesService) Get(name string) *ProjectsLocationsRepositoriesPythonPackagesGetCall {
+	c := &ProjectsLocationsRepositoriesPythonPackagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPythonPackagesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesPythonPackagesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPythonPackagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.pythonPackages.get" call.
+// Exactly one of *PythonPackage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PythonPackage.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPythonPackagesGetCall) Do(opts ...googleapi.CallOption) (*PythonPackage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PythonPackage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a python package.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/pythonPackages/{pythonPackagesId}",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.pythonPackages.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the python package.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/pythonPackages/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PythonPackage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.locations.repositories.pythonPackages.list":
+
+type ProjectsLocationsRepositoriesPythonPackagesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists python packages.
+//
+//   - parent: The name of the parent resource whose python packages will
+//     be listed.
+func (r *ProjectsLocationsRepositoriesPythonPackagesService) List(parent string) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c := &ProjectsLocationsRepositoriesPythonPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of artifacts to return.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPythonPackagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pythonPackages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.pythonPackages.list" call.
+// Exactly one of *ListPythonPackagesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPythonPackagesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Do(opts ...googleapi.CallOption) (*ListPythonPackagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPythonPackagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists python packages.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/pythonPackages",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.locations.repositories.pythonPackages.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of artifacts to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the parent resource whose python packages will be listed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/pythonPackages",
+	//   "response": {
+	//     "$ref": "ListPythonPackagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Pages(ctx context.Context, f func(*ListPythonPackagesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "artifactregistry.projects.locations.repositories.yumArtifacts.import":
 
 type ProjectsLocationsRepositoriesYumArtifactsImportCall struct {
@@ -7044,8 +8411,8 @@ type ProjectsLocationsRepositoriesYumArtifactsImportCall struct {
 // resources are created based on the imported artifacts. Imported
 // artifacts that conflict with existing resources are ignored.
 //
-// - parent: The name of the parent resource where the artifacts will be
-//   imported.
+//   - parent: The name of the parent resource where the artifacts will be
+//     imported.
 func (r *ProjectsLocationsRepositoriesYumArtifactsService) Import(parent string, importyumartifactsrequest *ImportYumArtifactsRequest) *ProjectsLocationsRepositoriesYumArtifactsImportCall {
 	c := &ProjectsLocationsRepositoriesYumArtifactsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7191,8 +8558,8 @@ type ProjectsLocationsRepositoriesYumArtifactsUploadCall struct {
 // resources are created based on the imported artifact. Imported
 // artifacts that conflict with existing resources are ignored.
 //
-// - parent: The name of the parent resource where the artifacts will be
-//   uploaded.
+//   - parent: The name of the parent resource where the artifacts will be
+//     uploaded.
 func (r *ProjectsLocationsRepositoriesYumArtifactsService) Upload(parent string, uploadyumartifactrequest *UploadYumArtifactRequest) *ProjectsLocationsRepositoriesYumArtifactsUploadCall {
 	c := &ProjectsLocationsRepositoriesYumArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

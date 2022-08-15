@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/document-ai/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/documentai/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   documentaiService, err := documentai.NewService(ctx)
+//	import "google.golang.org/api/documentai/v1beta2"
+//	...
+//	ctx := context.Background()
+//	documentaiService, err := documentai.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
+//	documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package documentai // import "google.golang.org/api/documentai/v1beta2"
@@ -870,6 +870,10 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	// document.
 	IndividualImportStatuses []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus `json:"individualImportStatuses,omitempty"`
 
+	// TotalDocumentCount: Total number of the documents that are qualified
+	// for importing.
+	TotalDocumentCount int64 `json:"totalDocumentCount,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1406,7 +1410,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
@@ -1936,6 +1940,52 @@ func (s *GoogleCloudDocumentaiV1alpha1CommonOperationMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta1Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta1Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse: Response
 // to an batch document processing request. This is returned in the LRO
 // Operation after the operation is complete.
@@ -2290,6 +2340,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta1DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -2500,6 +2553,38 @@ type GoogleCloudDocumentaiV1beta1DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta1Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3887,6 +3972,52 @@ func (s *GoogleCloudDocumentaiV1beta2AutoMlParams) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta2Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest: Request to
 // batch process documents as an asynchronous operation. The output is
 // written to Cloud Storage as JSON in the [Document] format.
@@ -4333,6 +4464,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta2DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -4543,6 +4677,38 @@ type GoogleCloudDocumentaiV1beta2DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta2Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6272,7 +6438,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6907,12 +7073,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -7036,38 +7202,40 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 // is set and utc_offset is unset: a civil time on a calendar day in a
 // particular time zone. * When neither time_zone nor utc_offset is set:
 // a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type GoogleTypeDateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -7152,11 +7320,12 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 // not intended to model geographical locations (roads, towns,
 // mountains). In typical usage an address would be created via user
 // input or from importing existing data, depending on the type of
-// process. Advice on address input / editing: - Use an i18n-ready
-// address widget such as https://github.com/google/libaddressinput) -
-// Users should not be presented with UI elements for input or editing
-// of fields outside countries where that field is used. For more
-// guidance on how to use this schema, please see:
+// process. Advice on address input / editing: - Use an
+// internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be
+// presented with UI elements for input or editing of fields outside
+// countries where that field is used. For more guidance on how to use
+// this schema, please see:
 // https://support.google.com/business/answer/6397478
 type GoogleTypePostalAddress struct {
 	// AddressLines: Unstructured address lines describing the lower levels
@@ -7314,9 +7483,9 @@ type ProjectsDocumentsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically.
 func (r *ProjectsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsDocumentsBatchProcessCall {
 	c := &ProjectsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7458,10 +7627,10 @@ type ProjectsDocumentsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically. This field is
-//   only populated when used in ProcessDocument method.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically. This field is
+//     only populated when used in ProcessDocument method.
 func (r *ProjectsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsDocumentsProcessCall {
 	c := &ProjectsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7605,9 +7774,9 @@ type ProjectsLocationsDocumentsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically.
 func (r *ProjectsLocationsDocumentsService) BatchProcess(parent string, googleclouddocumentaiv1beta2batchprocessdocumentsrequest *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsRequest) *ProjectsLocationsDocumentsBatchProcessCall {
 	c := &ProjectsLocationsDocumentsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7749,10 +7918,10 @@ type ProjectsLocationsDocumentsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - parent: Target project and location to make a call. Format:
-//   `projects/{project-id}/locations/{location-id}`. If no location is
-//   specified, a region will be chosen automatically. This field is
-//   only populated when used in ProcessDocument method.
+//   - parent: Target project and location to make a call. Format:
+//     `projects/{project-id}/locations/{location-id}`. If no location is
+//     specified, a region will be chosen automatically. This field is
+//     only populated when used in ProcessDocument method.
 func (r *ProjectsLocationsDocumentsService) Process(parent string, googleclouddocumentaiv1beta2processdocumentrequest *GoogleCloudDocumentaiV1beta2ProcessDocumentRequest) *ProjectsLocationsDocumentsProcessCall {
 	c := &ProjectsLocationsDocumentsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

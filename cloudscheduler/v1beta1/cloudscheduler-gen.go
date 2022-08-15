@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/scheduler/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudscheduler/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   cloudschedulerService, err := cloudscheduler.NewService(ctx)
+//	import "google.golang.org/api/cloudscheduler/v1beta1"
+//	...
+//	ctx := context.Background()
+//	cloudschedulerService, err := cloudscheduler.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudschedulerService, err := cloudscheduler.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudscheduler // import "google.golang.org/api/cloudscheduler/v1beta1"
@@ -450,10 +450,16 @@ type Job struct {
 	// handler does not respond by this deadline then the request is
 	// cancelled and the attempt is marked as a `DEADLINE_EXCEEDED` failure.
 	// The failed attempt can be viewed in execution logs. Cloud Scheduler
-	// will retry the job according to the RetryConfig. The allowed duration
-	// for this deadline is: * For HTTP targets, between 15 seconds and 30
-	// minutes. * For App Engine HTTP targets, between 15 seconds and 24
-	// hours 15 seconds. * For Pub/Sub targets, this field is ignored.
+	// will retry the job according to the RetryConfig. The default and the
+	// allowed values depend on the type of target: * For HTTP targets, the
+	// default is 3 minutes. The deadline must be in the interval [15
+	// seconds, 30 minutes]. * For App Engine HTTP targets, 0 indicates that
+	// the request has the default deadline. The default deadline depends on
+	// the scaling type of the service: 10 minutes for standard apps with
+	// automatic scaling, 24 hours for standard apps with manual and basic
+	// scaling, and 60 minutes for flex apps. If the request deadline is
+	// set, it must be in the interval [15 seconds, 24 hours 15 seconds]. *
+	// For Pub/Sub targets, this field is ignored.
 	AttemptDeadline string `json:"attemptDeadline,omitempty"`
 
 	// Description: Optionally caller-specified in CreateJob or UpdateJob. A
@@ -1207,8 +1213,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1415,8 +1421,8 @@ type ProjectsLocationsJobsCreateCall struct {
 
 // Create: Creates a job.
 //
-// - parent: The location name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID`.
+//   - parent: The location name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsJobsService) Create(parent string, job *Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1557,8 +1563,8 @@ type ProjectsLocationsJobsDeleteCall struct {
 
 // Delete: Deletes a job.
 //
-// - name: The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
+//   - name: The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1706,8 +1712,8 @@ type ProjectsLocationsJobsGetCall struct {
 
 // Get: Gets a job.
 //
-// - name: The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
+//   - name: The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1853,8 +1859,8 @@ type ProjectsLocationsJobsListCall struct {
 
 // List: Lists jobs.
 //
-// - parent: The location name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID`.
+//   - parent: The location name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2088,19 +2094,19 @@ type ProjectsLocationsJobsPatchCall struct {
 // executed. If this happens, retry the UpdateJob request until a
 // successful response is received.
 //
-// - name: Optionally caller-specified in CreateJob, after which it
-//   becomes output only. The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`. *
-//   `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
-//   hyphens (-), colons (:), or periods (.). For more information, see
-//   Identifying projects
-//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
-//   * `LOCATION_ID` is the canonical ID for the job's location. The
-//   list of available locations can be obtained by calling
-//   ListLocations. For more information, see
-//   https://cloud.google.com/about/locations/. * `JOB_ID` can contain
-//   only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or
-//   underscores (_). The maximum length is 500 characters.
+//   - name: Optionally caller-specified in CreateJob, after which it
+//     becomes output only. The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`. *
+//     `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
+//     hyphens (-), colons (:), or periods (.). For more information, see
+//     Identifying projects
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+//   - `LOCATION_ID` is the canonical ID for the job's location. The
+//     list of available locations can be obtained by calling
+//     ListLocations. For more information, see
+//     https://cloud.google.com/about/locations/. * `JOB_ID` can contain
+//     only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or
+//     underscores (_). The maximum length is 500 characters.
 func (r *ProjectsLocationsJobsService) Patch(name string, job *Job) *ProjectsLocationsJobsPatchCall {
 	c := &ProjectsLocationsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2258,8 +2264,8 @@ type ProjectsLocationsJobsPauseCall struct {
 // the job is stored in state; if paused it will be set to
 // Job.State.PAUSED. A job must be in Job.State.ENABLED to be paused.
 //
-// - name: The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
+//   - name: The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
 func (r *ProjectsLocationsJobsService) Pause(name string, pausejobrequest *PauseJobRequest) *ProjectsLocationsJobsPauseCall {
 	c := &ProjectsLocationsJobsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2404,8 +2410,8 @@ type ProjectsLocationsJobsResumeCall struct {
 // calling this method it will be set to Job.State.ENABLED. A job must
 // be in Job.State.PAUSED to be resumed.
 //
-// - name: The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
+//   - name: The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
 func (r *ProjectsLocationsJobsService) Resume(name string, resumejobrequest *ResumeJobRequest) *ProjectsLocationsJobsResumeCall {
 	c := &ProjectsLocationsJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2548,8 +2554,8 @@ type ProjectsLocationsJobsRunCall struct {
 // Run: Forces a job to run now. When this method is called, Cloud
 // Scheduler will dispatch the job, even if the job is already running.
 //
-// - name: The job name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
+//   - name: The job name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.
 func (r *ProjectsLocationsJobsService) Run(name string, runjobrequest *RunJobRequest) *ProjectsLocationsJobsRunCall {
 	c := &ProjectsLocationsJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/dialogflow/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dialogflow/v3alpha1"
-//   ...
-//   ctx := context.Background()
-//   dialogflowService, err := dialogflow.NewService(ctx)
+//	import "google.golang.org/api/dialogflow/v3alpha1"
+//	...
+//	ctx := context.Background()
+//	dialogflowService, err := dialogflow.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   dialogflowService, err := dialogflow.NewService(ctx, option.WithScopes(dialogflow.DialogflowScope))
+//	dialogflowService, err := dialogflow.NewService(ctx, option.WithScopes(dialogflow.DialogflowScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   dialogflowService, err := dialogflow.NewService(ctx, option.WithAPIKey("AIza..."))
+//	dialogflowService, err := dialogflow.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   dialogflowService, err := dialogflow.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	dialogflowService, err := dialogflow.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package dialogflow // import "google.golang.org/api/dialogflow/v3alpha1"
@@ -425,20 +425,30 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // approach is
 // as follows:
 //
-// * If at least one OutputAudioText response is present, then all
-//   OutputAudioText responses are linearly concatenated, and the result
+//   - If at least one OutputAudioText response is present, then all
+//     OutputAudioText responses are linearly concatenated, and the result
+//
 // is used
-//   for output audio synthesis.
+//
+//	for output audio synthesis.
+//
 // * If the OutputAudioText responses are a mixture of text and SSML,
 // then the
-//   concatenated result is treated as SSML; otherwise, the result is
+//
+//	concatenated result is treated as SSML; otherwise, the result is
+//
 // treated as
-//   either text or SSML as appropriate. The agent designer should
+//
+//	either text or SSML as appropriate. The agent designer should
+//
 // ideally use
-//   either text or SSML consistently throughout the bot design.
+//
+//	either text or SSML consistently throughout the bot design.
+//
 // * Otherwise, all Text responses are linearly concatenated, and the
 // result is
-//   used for output audio synthesis.
+//
+//	used for output audio synthesis.
 //
 // This approach allows for more sophisticated user experience
 // scenarios, where
@@ -497,11 +507,13 @@ func (s *GoogleCloudDialogflowCxV3beta1ResponseMessage) MarshalJSON() ([]byte, e
 // ConversationSuccess.
 //
 // You may set this, for example:
-// * In the entry_fulfillment of a Page if
-//   entering the page indicates that the conversation succeeded.
-// * In a webhook response when you determine that you handled the
+//   - In the entry_fulfillment of a Page if
+//     entering the page indicates that the conversation succeeded.
+//   - In a webhook response when you determine that you handled the
+//
 // customer
-//   issue.
+//
+//	issue.
 type GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess struct {
 	// Metadata: Custom metadata. Dialogflow doesn't impose any structure on
 	// this.
@@ -541,12 +553,14 @@ func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess) Marsh
 // is up to you and your handoff procedures.
 //
 // You may set this, for example:
-// * In the entry_fulfillment of a Page if
-//   entering the page indicates something went extremely wrong in the
-//   conversation.
-// * In a webhook response when you determine that the customer issue
+//   - In the entry_fulfillment of a Page if
+//     entering the page indicates something went extremely wrong in the
+//     conversation.
+//   - In a webhook response when you determine that the customer issue
+//
 // can only
-//   be handled by a human.
+//
+//	be handled by a human.
 type GoogleCloudDialogflowCxV3beta1ResponseMessageHumanAgentHandoff struct {
 	// Metadata: Custom metadata for your handoff procedure. Dialogflow
 	// doesn't impose
@@ -4468,7 +4482,8 @@ func (s *GoogleCloudDialogflowV2beta1IntentMessageBasicCardButton) MarshalJSON()
 }
 
 // GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction:
-//  Opens the given URI.
+//
+//	Opens the given URI.
 type GoogleCloudDialogflowV2beta1IntentMessageBasicCardButtonOpenUriAction struct {
 	// Uri: Required. The HTTP or HTTPS scheme URI.
 	Uri string `json:"uri,omitempty"`
@@ -5133,14 +5148,14 @@ func (s *GoogleCloudDialogflowV2beta1IntentMessageRbmCardContent) MarshalJSON() 
 // Business Messaging (RBM) Media displayed in Cards
 // The following media-types are currently supported:
 //
-// Image Types
+// # Image Types
 //
 // * image/jpeg
 // * image/jpg'
 // * image/gif
 // * image/png
 //
-// Video Types
+// # Video Types
 //
 // * video/h263
 // * video/m4v
@@ -7114,10 +7129,12 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type GoogleProtobufEmpty struct {
@@ -7189,7 +7206,9 @@ type ProjectsLocationsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
+//
+//	The server
+//
 // makes a best effort to cancel the operation, but success is
 // not
 // guaranteed.  If the server doesn't support this method, it
@@ -7706,7 +7725,9 @@ type ProjectsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
+//
+//	The server
+//
 // makes a best effort to cancel the operation, but success is
 // not
 // guaranteed.  If the server doesn't support this method, it

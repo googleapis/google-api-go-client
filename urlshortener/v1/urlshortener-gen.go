@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/url-shortener/v1/getting_started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/urlshortener/v1"
-//   ...
-//   ctx := context.Background()
-//   urlshortenerService, err := urlshortener.NewService(ctx)
+//	import "google.golang.org/api/urlshortener/v1"
+//	...
+//	ctx := context.Background()
+//	urlshortenerService, err := urlshortener.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   urlshortenerService, err := urlshortener.NewService(ctx, option.WithAPIKey("AIza..."))
+//	urlshortenerService, err := urlshortener.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   urlshortenerService, err := urlshortener.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	urlshortenerService, err := urlshortener.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package urlshortener // import "google.golang.org/api/urlshortener/v1"
@@ -376,9 +376,11 @@ func (r *UrlService) Get(shortUrl string) *UrlGetCall {
 // information to return.
 //
 // Possible values:
-//   "ANALYTICS_CLICKS" - Returns only click counts.
-//   "ANALYTICS_TOP_STRINGS" - Returns only top string counts.
-//   "FULL" - Returns the creation timestamp and all available
+//
+//	"ANALYTICS_CLICKS" - Returns only click counts.
+//	"ANALYTICS_TOP_STRINGS" - Returns only top string counts.
+//	"FULL" - Returns the creation timestamp and all available
+//
 // analytics.
 func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
 	c.urlParams_.Set("projection", projection)
@@ -663,8 +665,9 @@ func (r *UrlService) List() *UrlListCall {
 // information to return.
 //
 // Possible values:
-//   "ANALYTICS_CLICKS" - Returns short URL click counts.
-//   "FULL" - Returns short URL click counts.
+//
+//	"ANALYTICS_CLICKS" - Returns short URL click counts.
+//	"FULL" - Returns short URL click counts.
 func (c *UrlListCall) Projection(projection string) *UrlListCall {
 	c.urlParams_.Set("projection", projection)
 	return c

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/android-publisher
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/androidpublisher/v3"
-//   ...
-//   ctx := context.Background()
-//   androidpublisherService, err := androidpublisher.NewService(ctx)
+//	import "google.golang.org/api/androidpublisher/v3"
+//	...
+//	ctx := context.Background()
+//	androidpublisherService, err := androidpublisher.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   androidpublisherService, err := androidpublisher.NewService(ctx, option.WithAPIKey("AIza..."))
+//	androidpublisherService, err := androidpublisher.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   androidpublisherService, err := androidpublisher.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	androidpublisherService, err := androidpublisher.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package androidpublisher // import "google.golang.org/api/androidpublisher/v3"
@@ -813,10 +813,11 @@ type AutoRenewingBasePlanType struct {
 	// default value will be used based on the recurring period duration.
 	GracePeriodDuration string `json:"gracePeriodDuration,omitempty"`
 
-	// LegacyCompatible: Whether the renewing base plan is compatible with
-	// legacy version of the Play Billing Library (prior to version 3) or
-	// not. Only one renewing base plan can be marked as legacy compatible
-	// for a given subscription.
+	// LegacyCompatible: Whether the renewing base plan is backward
+	// compatible. The backward compatible base plan is returned by the
+	// Google Play Billing Library deprecated method querySkuDetailsAsync().
+	// Only one renewing base plan can be marked as legacy compatible for a
+	// given subscription.
 	LegacyCompatible bool `json:"legacyCompatible,omitempty"`
 
 	// ProrationMode: The proration mode for the base plan determines what
@@ -8178,11 +8179,11 @@ type EditsDeobfuscationfilesUploadCall struct {
 // Upload: Uploads a new deobfuscation file and attaches to the
 // specified APK.
 //
-// - apkVersionCode: The version code of the APK whose Deobfuscation
-//   File is being uploaded.
-// - deobfuscationFileType: The type of the deobfuscation file.
-// - editId: Unique identifier for this edit.
-// - packageName: Unique identifier for the Android app.
+//   - apkVersionCode: The version code of the APK whose Deobfuscation
+//     File is being uploaded.
+//   - deobfuscationFileType: The type of the deobfuscation file.
+//   - editId: Unique identifier for this edit.
+//   - packageName: Unique identifier for the Android app.
 func (r *EditsDeobfuscationfilesService) Upload(packageNameid string, editId string, apkVersionCode int64, deobfuscationFileType string) *EditsDeobfuscationfilesUploadCall {
 	c := &EditsDeobfuscationfilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -8899,12 +8900,12 @@ type EditsExpansionfilesGetCall struct {
 
 // Get: Fetches the expansion file configuration for the specified APK.
 //
-// - apkVersionCode: The version code of the APK whose expansion file
-//   configuration is being read or modified.
-// - editId: Identifier of the edit.
-// - expansionFileType: The file type of the file configuration which is
-//   being read or modified.
-// - packageName: Package name of the app.
+//   - apkVersionCode: The version code of the APK whose expansion file
+//     configuration is being read or modified.
+//   - editId: Identifier of the edit.
+//   - expansionFileType: The file type of the file configuration which is
+//     being read or modified.
+//   - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Get(packageName string, editId string, apkVersionCode int64, expansionFileType string) *EditsExpansionfilesGetCall {
 	c := &EditsExpansionfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9092,12 +9093,12 @@ type EditsExpansionfilesPatchCall struct {
 // another APK's expansion file. To add a new expansion file use the
 // Upload method.
 //
-// - apkVersionCode: The version code of the APK whose expansion file
-//   configuration is being read or modified.
-// - editId: Identifier of the edit.
-// - expansionFileType: The file type of the expansion file
-//   configuration which is being updated.
-// - packageName: Package name of the app.
+//   - apkVersionCode: The version code of the APK whose expansion file
+//     configuration is being read or modified.
+//   - editId: Identifier of the edit.
+//   - expansionFileType: The file type of the expansion file
+//     configuration which is being updated.
+//   - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Patch(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesPatchCall {
 	c := &EditsExpansionfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9281,12 +9282,12 @@ type EditsExpansionfilesUpdateCall struct {
 // another APK's expansion file. To add a new expansion file use the
 // Upload method.
 //
-// - apkVersionCode: The version code of the APK whose expansion file
-//   configuration is being read or modified.
-// - editId: Identifier of the edit.
-// - expansionFileType: The file type of the file configuration which is
-//   being read or modified.
-// - packageName: Package name of the app.
+//   - apkVersionCode: The version code of the APK whose expansion file
+//     configuration is being read or modified.
+//   - editId: Identifier of the edit.
+//   - expansionFileType: The file type of the file configuration which is
+//     being read or modified.
+//   - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Update(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesUpdateCall {
 	c := &EditsExpansionfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9469,12 +9470,12 @@ type EditsExpansionfilesUploadCall struct {
 // Upload: Uploads a new expansion file and attaches to the specified
 // APK.
 //
-// - apkVersionCode: The version code of the APK whose expansion file
-//   configuration is being read or modified.
-// - editId: Identifier of the edit.
-// - expansionFileType: The file type of the expansion file
-//   configuration which is being updated.
-// - packageName: Package name of the app.
+//   - apkVersionCode: The version code of the APK whose expansion file
+//     configuration is being read or modified.
+//   - editId: Identifier of the edit.
+//   - expansionFileType: The file type of the expansion file
+//     configuration which is being updated.
+//   - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Upload(packageName string, editId string, apkVersionCode int64, expansionFileType string) *EditsExpansionfilesUploadCall {
 	c := &EditsExpansionfilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9731,13 +9732,13 @@ type EditsImagesDeleteCall struct {
 
 // Delete: Deletes the image (specified by id) from the edit.
 //
-// - editId: Identifier of the edit.
-// - imageId: Unique identifier an image within the set of images
-//   attached to this edit.
-// - imageType: Type of the Image.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German).
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - imageId: Unique identifier an image within the set of images
+//     attached to this edit.
+//   - imageType: Type of the Image.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German).
+//   - packageName: Package name of the app.
 func (r *EditsImagesService) Delete(packageName string, editId string, language string, imageType string, imageId string) *EditsImagesDeleteCall {
 	c := &EditsImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9902,13 +9903,13 @@ type EditsImagesDeleteallCall struct {
 // Deleteall: Deletes all images for the specified language and image
 // type. Returns an empty response if no images are found.
 //
-// - editId: Identifier of the edit.
-// - imageType: Type of the Image. Providing an image type that refers
-//   to no images is a no-op.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German). Providing a language that is
-//   not supported by the App is a no-op.
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - imageType: Type of the Image. Providing an image type that refers
+//     to no images is a no-op.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German). Providing a language that is
+//     not supported by the App is a no-op.
+//   - packageName: Package name of the app.
 func (r *EditsImagesService) Deleteall(packageName string, editId string, language string, imageType string) *EditsImagesDeleteallCall {
 	c := &EditsImagesDeleteallCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10092,13 +10093,13 @@ type EditsImagesListCall struct {
 
 // List: Lists all images. The response may be empty.
 //
-// - editId: Identifier of the edit.
-// - imageType: Type of the Image. Providing an image type that refers
-//   to no images will return an empty response.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German). There must be a store
-//   listing for the specified language.
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - imageType: Type of the Image. Providing an image type that refers
+//     to no images will return an empty response.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German). There must be a store
+//     listing for the specified language.
+//   - packageName: Package name of the app.
 func (r *EditsImagesService) List(packageName string, editId string, language string, imageType string) *EditsImagesListCall {
 	c := &EditsImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10296,12 +10297,12 @@ type EditsImagesUploadCall struct {
 // Upload: Uploads an image of the specified language and image type,
 // and adds to the edit.
 //
-// - editId: Identifier of the edit.
-// - imageType: Type of the Image.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German). Providing a language that is
-//   not supported by the App is a no-op.
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - imageType: Type of the Image.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German). Providing a language that is
+//     not supported by the App is a no-op.
+//   - packageName: Package name of the app.
 func (r *EditsImagesService) Upload(packageName string, editId string, language string, imageType string) *EditsImagesUploadCall {
 	c := &EditsImagesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10567,10 +10568,10 @@ type EditsListingsDeleteCall struct {
 
 // Delete: Deletes a localized store listing.
 //
-// - editId: Identifier of the edit.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German).
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German).
+//   - packageName: Package name of the app.
 func (r *EditsListingsService) Delete(packageName string, editId string, language string) *EditsListingsDeleteCall {
 	c := &EditsListingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10808,10 +10809,10 @@ type EditsListingsGetCall struct {
 
 // Get: Gets a localized store listing.
 //
-// - editId: Identifier of the edit.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German).
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German).
+//   - packageName: Package name of the app.
 func (r *EditsListingsService) Get(packageName string, editId string, language string) *EditsListingsGetCall {
 	c := &EditsListingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11132,10 +11133,10 @@ type EditsListingsPatchCall struct {
 
 // Patch: Patches a localized store listing.
 //
-// - editId: Identifier of the edit.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German).
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German).
+//   - packageName: Package name of the app.
 func (r *EditsListingsService) Patch(packageName string, editId string, language string, listing *Listing) *EditsListingsPatchCall {
 	c := &EditsListingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11296,10 +11297,10 @@ type EditsListingsUpdateCall struct {
 
 // Update: Creates or updates a localized store listing.
 //
-// - editId: Identifier of the edit.
-// - language: Language localization code (a BCP-47 language tag; for
-//   example, "de-AT" for Austrian German).
-// - packageName: Package name of the app.
+//   - editId: Identifier of the edit.
+//   - language: Language localization code (a BCP-47 language tag; for
+//     example, "de-AT" for Austrian German).
+//   - packageName: Package name of the app.
 func (r *EditsListingsService) Update(packageName string, editId string, language string, listing *Listing) *EditsListingsUpdateCall {
 	c := &EditsListingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12605,11 +12606,11 @@ type GeneratedapksDownloadCall struct {
 
 // Download: Downloads a single signed APK generated from an app bundle.
 //
-// - downloadId: Download ID, which uniquely identifies the APK to
-//   download. Can be obtained from the response of `generatedapks.list`
-//   method.
-// - packageName: Package name of the app.
-// - versionCode: Version code of the app bundle.
+//   - downloadId: Download ID, which uniquely identifies the APK to
+//     download. Can be obtained from the response of `generatedapks.list`
+//     method.
+//   - packageName: Package name of the app.
+//   - versionCode: Version code of the app bundle.
 func (r *GeneratedapksService) Download(packageName string, versionCode int64, downloadId string) *GeneratedapksDownloadCall {
 	c := &GeneratedapksDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12921,8 +12922,8 @@ type GrantsCreateCall struct {
 
 // Create: Grant access for a user to the given package.
 //
-// - parent: The user which needs permission. Format:
-//   developers/{developer}/users/{user}.
+//   - parent: The user which needs permission. Format:
+//     developers/{developer}/users/{user}.
 func (r *GrantsService) Create(parent string, grant *Grant) *GrantsCreateCall {
 	c := &GrantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13064,8 +13065,8 @@ type GrantsDeleteCall struct {
 // Delete: Removes all access for the user to the given package or
 // developer account.
 //
-// - name: The name of the grant to delete. Format:
-//   developers/{developer}/users/{email}/grants/{package_name}.
+//   - name: The name of the grant to delete. Format:
+//     developers/{developer}/users/{email}/grants/{package_name}.
 func (r *GrantsService) Delete(name string) *GrantsDeleteCall {
 	c := &GrantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13170,10 +13171,10 @@ type GrantsPatchCall struct {
 
 // Patch: Updates access for the user to the given package.
 //
-// - name: Resource name for this grant, following the pattern
-//   "developers/{developer}/users/{email}/grants/{package_name}". If
-//   this grant is for a draft app, the app ID will be used in this
-//   resource name instead of the package name.
+//   - name: Resource name for this grant, following the pattern
+//     "developers/{developer}/users/{email}/grants/{package_name}". If
+//     this grant is for a draft app, the app ID will be used in this
+//     resource name instead of the package name.
 func (r *GrantsService) Patch(name string, grant *Grant) *GrantsPatchCall {
 	c := &GrantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14884,9 +14885,9 @@ type MonetizationSubscriptionsArchiveCall struct {
 // new or existing subscribers currently. This action is irreversible,
 // and the subscription ID will remain reserved.
 //
-// - packageName: The parent app (package name) of the app of the
-//   subscription to delete.
-// - productId: The unique product ID of the subscription to delete.
+//   - packageName: The parent app (package name) of the app of the
+//     subscription to delete.
+//   - productId: The unique product ID of the subscription to delete.
 func (r *MonetizationSubscriptionsService) Archive(packageName string, productId string, archivesubscriptionrequest *ArchiveSubscriptionRequest) *MonetizationSubscriptionsArchiveCall {
 	c := &MonetizationSubscriptionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15037,9 +15038,9 @@ type MonetizationSubscriptionsCreateCall struct {
 // Create: Creates a new subscription. Newly added base plans will
 // remain in draft state until activated.
 //
-// - packageName: The parent app (package name) for which the
-//   subscription should be created. Must be equal to the package_name
-//   field on the Subscription resource.
+//   - packageName: The parent app (package name) for which the
+//     subscription should be created. Must be equal to the package_name
+//     field on the Subscription resource.
 func (r *MonetizationSubscriptionsService) Create(packageName string, subscription *Subscription) *MonetizationSubscriptionsCreateCall {
 	c := &MonetizationSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15209,9 +15210,9 @@ type MonetizationSubscriptionsDeleteCall struct {
 // Delete: Deletes a subscription. A subscription can only be deleted if
 // it has never had a base plan published.
 //
-// - packageName: The parent app (package name) of the app of the
-//   subscription to delete.
-// - productId: The unique product ID of the subscription to delete.
+//   - packageName: The parent app (package name) of the app of the
+//     subscription to delete.
+//   - productId: The unique product ID of the subscription to delete.
 func (r *MonetizationSubscriptionsService) Delete(packageName string, productId string) *MonetizationSubscriptionsDeleteCall {
 	c := &MonetizationSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15325,9 +15326,9 @@ type MonetizationSubscriptionsGetCall struct {
 
 // Get: Reads a single subscription.
 //
-// - packageName: The parent app (package name) of the subscription to
-//   get.
-// - productId: The unique product ID of the subscription to get.
+//   - packageName: The parent app (package name) of the subscription to
+//     get.
+//   - productId: The unique product ID of the subscription to get.
 func (r *MonetizationSubscriptionsService) Get(packageName string, productId string) *MonetizationSubscriptionsGetCall {
 	c := &MonetizationSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15481,8 +15482,8 @@ type MonetizationSubscriptionsListCall struct {
 
 // List: Lists all subscriptions under a given app.
 //
-// - packageName: The parent app (package name) for which the
-//   subscriptions should be read.
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be read.
 func (r *MonetizationSubscriptionsService) List(packageName string) *MonetizationSubscriptionsListCall {
 	c := &MonetizationSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15692,12 +15693,12 @@ type MonetizationSubscriptionsPatchCall struct {
 
 // Patch: Updates an existing subscription.
 //
-// - packageName: Immutable. Package name of the parent app.
-// - productId: Immutable. Unique product ID of the product. Unique
-//   within the parent app. Product IDs must be composed of lower-case
-//   letters (a-z), numbers (0-9), underscores (_) and dots (.). It must
-//   start with a lower-case letter or number, and be between 1 and 40
-//   (inclusive) characters in length.
+//   - packageName: Immutable. Package name of the parent app.
+//   - productId: Immutable. Unique product ID of the product. Unique
+//     within the parent app. Product IDs must be composed of lower-case
+//     letters (a-z), numbers (0-9), underscores (_) and dots (.). It must
+//     start with a lower-case letter or number, and be between 1 and 40
+//     (inclusive) characters in length.
 func (r *MonetizationSubscriptionsService) Patch(packageName string, productId string, subscription *Subscription) *MonetizationSubscriptionsPatchCall {
 	c := &MonetizationSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -15877,11 +15878,11 @@ type MonetizationSubscriptionsBasePlansActivateCall struct {
 // Activate: Activates a base plan. Once activated, base plans will be
 // available to new subscribers.
 //
-// - basePlanId: The unique base plan ID of the base plan to activate.
-// - packageName: The parent app (package name) of the base plan to
-//   activate.
-// - productId: The parent subscription (ID) of the base plan to
-//   activate.
+//   - basePlanId: The unique base plan ID of the base plan to activate.
+//   - packageName: The parent app (package name) of the base plan to
+//     activate.
+//   - productId: The parent subscription (ID) of the base plan to
+//     activate.
 func (r *MonetizationSubscriptionsBasePlansService) Activate(packageName string, productId string, basePlanId string, activatebaseplanrequest *ActivateBasePlanRequest) *MonetizationSubscriptionsBasePlansActivateCall {
 	c := &MonetizationSubscriptionsBasePlansActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16044,11 +16045,11 @@ type MonetizationSubscriptionsBasePlansDeactivateCall struct {
 // will become unavailable to new subscribers, but existing subscribers
 // will maintain their subscription
 //
-// - basePlanId: The unique base plan ID of the base plan to deactivate.
-// - packageName: The parent app (package name) of the base plan to
-//   deactivate.
-// - productId: The parent subscription (ID) of the base plan to
-//   deactivate.
+//   - basePlanId: The unique base plan ID of the base plan to deactivate.
+//   - packageName: The parent app (package name) of the base plan to
+//     deactivate.
+//   - productId: The parent subscription (ID) of the base plan to
+//     deactivate.
 func (r *MonetizationSubscriptionsBasePlansService) Deactivate(packageName string, productId string, basePlanId string, deactivatebaseplanrequest *DeactivateBasePlanRequest) *MonetizationSubscriptionsBasePlansDeactivateCall {
 	c := &MonetizationSubscriptionsBasePlansDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16209,10 +16210,10 @@ type MonetizationSubscriptionsBasePlansDeleteCall struct {
 // Delete: Deletes a base plan. Can only be done for draft base plans.
 // This action is irreversible.
 //
-// - basePlanId: The unique offer ID of the base plan to delete.
-// - packageName: The parent app (package name) of the base plan to
-//   delete.
-// - productId: The parent subscription (ID) of the base plan to delete.
+//   - basePlanId: The unique offer ID of the base plan to delete.
+//   - packageName: The parent app (package name) of the base plan to
+//     delete.
+//   - productId: The parent subscription (ID) of the base plan to delete.
 func (r *MonetizationSubscriptionsBasePlansService) Delete(packageName string, productId string, basePlanId string) *MonetizationSubscriptionsBasePlansDeleteCall {
 	c := &MonetizationSubscriptionsBasePlansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16341,12 +16342,12 @@ type MonetizationSubscriptionsBasePlansMigratePricesCall struct {
 // supplied timestamp. Subscribers who do not agree to the new price
 // will have their subscription ended at the next renewal.
 //
-// - basePlanId: The unique base plan ID of the base plan to update
-//   prices on.
-// - packageName: Package name of the parent app. Must be equal to the
-//   package_name field on the Subscription resource.
-// - productId: The ID of the subscription to update. Must be equal to
-//   the product_id field on the Subscription resource.
+//   - basePlanId: The unique base plan ID of the base plan to update
+//     prices on.
+//   - packageName: Package name of the parent app. Must be equal to the
+//     package_name field on the Subscription resource.
+//   - productId: The ID of the subscription to update. Must be equal to
+//     the product_id field on the Subscription resource.
 func (r *MonetizationSubscriptionsBasePlansService) MigratePrices(packageName string, productId string, basePlanId string, migratebaseplanpricesrequest *MigrateBasePlanPricesRequest) *MonetizationSubscriptionsBasePlansMigratePricesCall {
 	c := &MonetizationSubscriptionsBasePlansMigratePricesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16509,11 +16510,11 @@ type MonetizationSubscriptionsBasePlansOffersActivateCall struct {
 // Activate: Activates a subscription offer. Once activated,
 // subscription offers will be available to new subscribers.
 //
-// - basePlanId: The parent base plan (ID) of the offer to activate.
-// - offerId: The unique offer ID of the offer to activate.
-// - packageName: The parent app (package name) of the offer to
-//   activate.
-// - productId: The parent subscription (ID) of the offer to activate.
+//   - basePlanId: The parent base plan (ID) of the offer to activate.
+//   - offerId: The unique offer ID of the offer to activate.
+//   - packageName: The parent app (package name) of the offer to
+//     activate.
+//   - productId: The parent subscription (ID) of the offer to activate.
 func (r *MonetizationSubscriptionsBasePlansOffersService) Activate(packageName string, productId string, basePlanId string, offerId string, activatesubscriptionofferrequest *ActivateSubscriptionOfferRequest) *MonetizationSubscriptionsBasePlansOffersActivateCall {
 	c := &MonetizationSubscriptionsBasePlansOffersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16685,15 +16686,15 @@ type MonetizationSubscriptionsBasePlansOffersCreateCall struct {
 // plans can have subscription offers. The offer state will be DRAFT
 // until it is activated.
 //
-// - basePlanId: The parent base plan (ID) for which the offer should be
-//   created. Must be equal to the base_plan_id field on the
-//   SubscriptionOffer resource.
-// - packageName: The parent app (package name) for which the offer
-//   should be created. Must be equal to the package_name field on the
-//   Subscription resource.
-// - productId: The parent subscription (ID) for which the offer should
-//   be created. Must be equal to the product_id field on the
-//   SubscriptionOffer resource.
+//   - basePlanId: The parent base plan (ID) for which the offer should be
+//     created. Must be equal to the base_plan_id field on the
+//     SubscriptionOffer resource.
+//   - packageName: The parent app (package name) for which the offer
+//     should be created. Must be equal to the package_name field on the
+//     Subscription resource.
+//   - productId: The parent subscription (ID) for which the offer should
+//     be created. Must be equal to the product_id field on the
+//     SubscriptionOffer resource.
 func (r *MonetizationSubscriptionsBasePlansOffersService) Create(packageName string, productId string, basePlanId string, subscriptionoffer *SubscriptionOffer) *MonetizationSubscriptionsBasePlansOffersCreateCall {
 	c := &MonetizationSubscriptionsBasePlansOffersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -16885,11 +16886,11 @@ type MonetizationSubscriptionsBasePlansOffersDeactivateCall struct {
 // existing subscribers will maintain their subscription, but the offer
 // will become unavailable to new subscribers.
 //
-// - basePlanId: The parent base plan (ID) of the offer to deactivate.
-// - offerId: The unique offer ID of the offer to deactivate.
-// - packageName: The parent app (package name) of the offer to
-//   deactivate.
-// - productId: The parent subscription (ID) of the offer to deactivate.
+//   - basePlanId: The parent base plan (ID) of the offer to deactivate.
+//   - offerId: The unique offer ID of the offer to deactivate.
+//   - packageName: The parent app (package name) of the offer to
+//     deactivate.
+//   - productId: The parent subscription (ID) of the offer to deactivate.
 func (r *MonetizationSubscriptionsBasePlansOffersService) Deactivate(packageName string, productId string, basePlanId string, offerId string, deactivatesubscriptionofferrequest *DeactivateSubscriptionOfferRequest) *MonetizationSubscriptionsBasePlansOffersDeactivateCall {
 	c := &MonetizationSubscriptionsBasePlansOffersDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -17374,13 +17375,13 @@ type MonetizationSubscriptionsBasePlansOffersListCall struct {
 
 // List: Lists all offers under a given subscription.
 //
-// - basePlanId: The parent base plan (ID) for which the offers should
-//   be read. May be specified as '-' to read all offers under a
-//   subscription.
-// - packageName: The parent app (package name) for which the
-//   subscriptions should be read.
-// - productId: The parent subscription (ID) for which the offers should
-//   be read.
+//   - basePlanId: The parent base plan (ID) for which the offers should
+//     be read. May be specified as '-' to read all offers under a
+//     subscription.
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be read.
+//   - productId: The parent subscription (ID) for which the offers should
+//     be read.
 func (r *MonetizationSubscriptionsBasePlansOffersService) List(packageName string, productId string, basePlanId string) *MonetizationSubscriptionsBasePlansOffersListCall {
 	c := &MonetizationSubscriptionsBasePlansOffersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -17597,14 +17598,14 @@ type MonetizationSubscriptionsBasePlansOffersPatchCall struct {
 
 // Patch: Updates an existing subscription offer.
 //
-// - basePlanId: Immutable. The ID of the base plan to which this offer
-//   is an extension.
-// - offerId: Immutable. Unique ID of this subscription offer. Must be
-//   unique within the base plan.
-// - packageName: Immutable. The package name of the app the parent
-//   subscription belongs to.
-// - productId: Immutable. The ID of the parent subscription this offer
-//   belongs to.
+//   - basePlanId: Immutable. The ID of the base plan to which this offer
+//     is an extension.
+//   - offerId: Immutable. Unique ID of this subscription offer. Must be
+//     unique within the base plan.
+//   - packageName: Immutable. The package name of the app the parent
+//     subscription belongs to.
+//   - productId: Immutable. The ID of the parent subscription this offer
+//     belongs to.
 func (r *MonetizationSubscriptionsBasePlansOffersService) Patch(packageName string, productId string, basePlanId string, offerId string, subscriptionoffer *SubscriptionOffer) *MonetizationSubscriptionsBasePlansOffersPatchCall {
 	c := &MonetizationSubscriptionsBasePlansOffersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -17800,11 +17801,11 @@ type OrdersRefundCall struct {
 // Refund: Refunds a user's subscription or in-app purchase order.
 // Orders older than 1 year cannot be refunded.
 //
-// - orderId: The order ID provided to the user when the subscription or
-//   in-app order was purchased.
-// - packageName: The package name of the application for which this
-//   subscription or in-app item was purchased (for example,
-//   'com.some.thing').
+//   - orderId: The order ID provided to the user when the subscription or
+//     in-app order was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription or in-app item was purchased (for example,
+//     'com.some.thing').
 func (r *OrdersService) Refund(packageName string, orderId string) *OrdersRefundCall {
 	c := &OrdersRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -17934,12 +17935,12 @@ type PurchasesProductsAcknowledgeCall struct {
 
 // Acknowledge: Acknowledges a purchase of an inapp item.
 //
-// - packageName: The package name of the application the inapp product
-//   was sold in (for example, 'com.some.thing').
-// - productId: The inapp product SKU (for example,
-//   'com.some.thing.inapp1').
-// - token: The token provided to the user's device when the inapp
-//   product was purchased.
+//   - packageName: The package name of the application the inapp product
+//     was sold in (for example, 'com.some.thing').
+//   - productId: The inapp product SKU (for example,
+//     'com.some.thing.inapp1').
+//   - token: The token provided to the user's device when the inapp
+//     product was purchased.
 func (r *PurchasesProductsService) Acknowledge(packageName string, productId string, token string, productpurchasesacknowledgerequest *ProductPurchasesAcknowledgeRequest) *PurchasesProductsAcknowledgeCall {
 	c := &PurchasesProductsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18072,12 +18073,12 @@ type PurchasesProductsGetCall struct {
 
 // Get: Checks the purchase and consumption status of an inapp item.
 //
-// - packageName: The package name of the application the inapp product
-//   was sold in (for example, 'com.some.thing').
-// - productId: The inapp product SKU (for example,
-//   'com.some.thing.inapp1').
-// - token: The token provided to the user's device when the inapp
-//   product was purchased.
+//   - packageName: The package name of the application the inapp product
+//     was sold in (for example, 'com.some.thing').
+//   - productId: The inapp product SKU (for example,
+//     'com.some.thing.inapp1').
+//   - token: The token provided to the user's device when the inapp
+//     product was purchased.
 func (r *PurchasesProductsService) Get(packageName string, productId string, token string) *PurchasesProductsGetCall {
 	c := &PurchasesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18242,12 +18243,12 @@ type PurchasesSubscriptionsAcknowledgeCall struct {
 
 // Acknowledge: Acknowledges a subscription purchase.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Acknowledge(packageName string, subscriptionId string, token string, subscriptionpurchasesacknowledgerequest *SubscriptionPurchasesAcknowledgeRequest) *PurchasesSubscriptionsAcknowledgeCall {
 	c := &PurchasesSubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18380,12 +18381,12 @@ type PurchasesSubscriptionsCancelCall struct {
 // Cancel: Cancels a user's subscription purchase. The subscription
 // remains valid until its expiration time.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Cancel(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsCancelCall {
 	c := &PurchasesSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18510,12 +18511,12 @@ type PurchasesSubscriptionsDeferCall struct {
 // Defer: Defers a user's subscription purchase until a specified future
 // expiration time.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Defer(packageName string, subscriptionId string, token string, subscriptionpurchasesdeferrequest *SubscriptionPurchasesDeferRequest) *PurchasesSubscriptionsDeferCall {
 	c := &PurchasesSubscriptionsDeferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18678,12 +18679,12 @@ type PurchasesSubscriptionsGetCall struct {
 // Get: Checks whether a user's subscription purchase is valid and
 // returns its expiry time.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Get(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsGetCall {
 	c := &PurchasesSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18849,12 +18850,12 @@ type PurchasesSubscriptionsRefundCall struct {
 // remains valid until its expiration time and it will continue to
 // recur.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: "The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: "The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Refund(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRefundCall {
 	c := &PurchasesSubscriptionsRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -18979,12 +18980,12 @@ type PurchasesSubscriptionsRevokeCall struct {
 // purchase. Access to the subscription will be terminated immediately
 // and it will stop recurring.
 //
-// - packageName: The package name of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - subscriptionId: The purchased subscription ID (for example,
-//   'monthly001').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package name of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - subscriptionId: The purchased subscription ID (for example,
+//     'monthly001').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsService) Revoke(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRevokeCall {
 	c := &PurchasesSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -19107,10 +19108,10 @@ type PurchasesSubscriptionsv2GetCall struct {
 
 // Get: Get metadata about a subscription
 //
-// - packageName: The package of the application for which this
-//   subscription was purchased (for example, 'com.some.thing').
-// - token: The token provided to the user's device when the
-//   subscription was purchased.
+//   - packageName: The package of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
 func (r *PurchasesSubscriptionsv2Service) Get(packageName string, token string) *PurchasesSubscriptionsv2GetCall {
 	c := &PurchasesSubscriptionsv2GetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -19265,8 +19266,8 @@ type PurchasesVoidedpurchasesListCall struct {
 // List: Lists the purchases that were canceled, refunded or
 // charged-back.
 //
-// - packageName: The package name of the application for which voided
-//   purchases need to be returned (for example, 'com.some.thing').
+//   - packageName: The package name of the application for which voided
+//     purchases need to be returned (for example, 'com.some.thing').
 func (r *PurchasesVoidedpurchasesService) List(packageName string) *PurchasesVoidedpurchasesListCall {
 	c := &PurchasesVoidedpurchasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -20664,8 +20665,8 @@ type UsersCreateCall struct {
 
 // Create: Grant access for a user to the given developer account.
 //
-// - parent: The developer account to add the user to. Format:
-//   developers/{developer}.
+//   - parent: The developer account to add the user to. Format:
+//     developers/{developer}.
 func (r *UsersService) Create(parent string, user *User) *UsersCreateCall {
 	c := &UsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20807,8 +20808,8 @@ type UsersDeleteCall struct {
 // Delete: Removes all access for the user to the given developer
 // account.
 //
-// - name: The name of the user to delete. Format:
-//   developers/{developer}/users/{email}.
+//   - name: The name of the user to delete. Format:
+//     developers/{developer}/users/{email}.
 func (r *UsersService) Delete(name string) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20913,8 +20914,8 @@ type UsersListCall struct {
 
 // List: Lists all users with access to a developer account.
 //
-// - parent: The developer account to fetch users from. Format:
-//   developers/{developer}.
+//   - parent: The developer account to fetch users from. Format:
+//     developers/{developer}.
 func (r *UsersService) List(parent string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21107,8 +21108,8 @@ type UsersPatchCall struct {
 
 // Patch: Updates access for the user to the developer account.
 //
-// - name: Resource name for this user, following the pattern
-//   "developers/{developer}/users/{email}".
+//   - name: Resource name for this user, following the pattern
+//     "developers/{developer}/users/{email}".
 func (r *UsersService) Patch(name string, user *User) *UsersPatchCall {
 	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

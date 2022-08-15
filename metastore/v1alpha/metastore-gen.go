@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/dataproc-metastore/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/metastore/v1alpha"
-//   ...
-//   ctx := context.Background()
-//   metastoreService, err := metastore.NewService(ctx)
+//	import "google.golang.org/api/metastore/v1alpha"
+//	...
+//	ctx := context.Background()
+//	metastoreService, err := metastore.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   metastoreService, err := metastore.NewService(ctx, option.WithAPIKey("AIza..."))
+//	metastoreService, err := metastore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   metastoreService, err := metastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	metastoreService, err := metastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package metastore // import "google.golang.org/api/metastore/v1alpha"
@@ -504,13 +504,17 @@ type Binding struct {
 	// identifier that represents anyone who is authenticated with a Google
 	// account or a service account. user:{emailid}: An email address that
 	// represents a specific Google account. For example, alice@example.com
-	// . serviceAccount:{emailid}: An email address that represents a
+	// . serviceAccount:{emailid}: An email address that represents a Google
 	// service account. For example,
-	// my-other-app@appspot.gserviceaccount.com. group:{emailid}: An email
-	// address that represents a Google group. For example,
-	// admins@example.com. deleted:user:{emailid}?uid={uniqueid}: An email
-	// address (plus unique identifier) representing a user that has been
-	// recently deleted. For example,
+	// my-other-app@appspot.gserviceaccount.com.
+	// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]:
+	// An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa].
+	// group:{emailid}: An email address that represents a Google group. For
+	// example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}:
+	// An email address (plus unique identifier) representing a user that
+	// has been recently deleted. For example,
 	// alice@example.com?uid=123456789012345678901. If the user is
 	// recovered, this value reverts to user:{emailid} and the recovered
 	// user retains the role in the binding.
@@ -868,10 +872,11 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 type Federation struct {
 	// BackendMetastores: A map from BackendMetastore rank to
 	// BackendMetastores from which the federation service serves metadata
-	// at query time. The map key is an integer that represents the order in
-	// which BackendMetastores should be evaluated to resolve database names
-	// at query time. A BackendMetastore with a lower number will be
-	// evaluated before a BackendMetastore with a higher number.
+	// at query time. The map key represents the order in which
+	// BackendMetastores should be evaluated to resolve database names at
+	// query time and should be greater than or equal to zero. A
+	// BackendMetastore with a lower number will be evaluated before a
+	// BackendMetastore with a higher number.
 	BackendMetastores map[string]BackendMetastore `json:"backendMetastores,omitempty"`
 
 	// CreateTime: Output only. The time when the metastore federation was
@@ -2563,8 +2568,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2771,9 +2776,9 @@ type ProjectsLocationsFederationsCreateCall struct {
 
 // Create: Creates a metastore federation in a project and location.
 //
-// - parent: The relative resource name of the location in which to
-//   create a federation service, in the following
-//   form:projects/{project_number}/locations/{location_id}.
+//   - parent: The relative resource name of the location in which to
+//     create a federation service, in the following
+//     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsFederationsService) Create(parent string, federation *Federation) *ProjectsLocationsFederationsCreateCall {
 	c := &ProjectsLocationsFederationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2950,10 +2955,10 @@ type ProjectsLocationsFederationsDeleteCall struct {
 
 // Delete: Deletes a single federation.
 //
-// - name: The relative resource name of the metastore federation to
-//   delete, in the following
-//   form:projects/{project_number}/locations/{location_id}/federations/{
-//   federation_id}.
+//   - name: The relative resource name of the metastore federation to
+//     delete, in the following
+//     form:projects/{project_number}/locations/{location_id}/federations/{
+//     federation_id}.
 func (r *ProjectsLocationsFederationsService) Delete(name string) *ProjectsLocationsFederationsDeleteCall {
 	c := &ProjectsLocationsFederationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3106,10 +3111,10 @@ type ProjectsLocationsFederationsGetCall struct {
 
 // Get: Gets the details of a single federation.
 //
-// - name: The relative resource name of the metastore federation to
-//   retrieve, in the following
-//   form:projects/{project_number}/locations/{location_id}/federations/{
-//   federation_id}.
+//   - name: The relative resource name of the metastore federation to
+//     retrieve, in the following
+//     form:projects/{project_number}/locations/{location_id}/federations/{
+//     federation_id}.
 func (r *ProjectsLocationsFederationsService) Get(name string) *ProjectsLocationsFederationsGetCall {
 	c := &ProjectsLocationsFederationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3257,10 +3262,10 @@ type ProjectsLocationsFederationsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFederationsService) GetIamPolicy(resource string) *ProjectsLocationsFederationsGetIamPolicyCall {
 	c := &ProjectsLocationsFederationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3430,9 +3435,9 @@ type ProjectsLocationsFederationsListCall struct {
 
 // List: Lists federations in a project and location.
 //
-// - parent: The relative resource name of the location of metastore
-//   federations to list, in the following form:
-//   projects/{project_number}/locations/{location_id}.
+//   - parent: The relative resource name of the location of metastore
+//     federations to list, in the following form:
+//     projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsFederationsService) List(parent string) *ProjectsLocationsFederationsListCall {
 	c := &ProjectsLocationsFederationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3657,10 +3662,10 @@ type ProjectsLocationsFederationsPatchCall struct {
 
 // Patch: Updates the fields of a federation.
 //
-// - name: Immutable. The relative resource name of the federation, of
-//   the form:
-//   projects/{project_number}/locations/{location_id}/federations/{feder
-//   ation_id}`.
+//   - name: Immutable. The relative resource name of the federation, of
+//     the form:
+//     projects/{project_number}/locations/{location_id}/federations/{feder
+//     ation_id}`.
 func (r *ProjectsLocationsFederationsService) Patch(name string, federation *Federation) *ProjectsLocationsFederationsPatchCall {
 	c := &ProjectsLocationsFederationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3840,10 +3845,10 @@ type ProjectsLocationsFederationsSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFederationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFederationsSetIamPolicyCall {
 	c := &ProjectsLocationsFederationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3990,10 +3995,10 @@ type ProjectsLocationsFederationsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsFederationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFederationsTestIamPermissionsCall {
 	c := &ProjectsLocationsFederationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4631,9 +4636,9 @@ type ProjectsLocationsServicesCreateCall struct {
 
 // Create: Creates a metastore service in a project and location.
 //
-// - parent: The relative resource name of the location in which to
-//   create a metastore service, in the following
-//   form:projects/{project_number}/locations/{location_id}.
+//   - parent: The relative resource name of the location in which to
+//     create a metastore service, in the following
+//     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4809,10 +4814,10 @@ type ProjectsLocationsServicesDeleteCall struct {
 
 // Delete: Deletes a single service.
 //
-// - name: The relative resource name of the metastore service to
-//   delete, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}.
+//   - name: The relative resource name of the metastore service to
+//     delete, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4965,10 +4970,10 @@ type ProjectsLocationsServicesExportMetadataCall struct {
 
 // ExportMetadata: Exports metadata from a service.
 //
-// - service: The relative resource name of the metastore service to run
-//   export, in the following
-//   form:projects/{project_id}/locations/{location_id}/services/{service
-//   _id}.
+//   - service: The relative resource name of the metastore service to run
+//     export, in the following
+//     form:projects/{project_id}/locations/{location_id}/services/{service
+//     _id}.
 func (r *ProjectsLocationsServicesService) ExportMetadata(service string, exportmetadatarequest *ExportMetadataRequest) *ProjectsLocationsServicesExportMetadataCall {
 	c := &ProjectsLocationsServicesExportMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -5110,10 +5115,10 @@ type ProjectsLocationsServicesGetCall struct {
 
 // Get: Gets the details of a single service.
 //
-// - name: The relative resource name of the metastore service to
-//   retrieve, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}.
+//   - name: The relative resource name of the metastore service to
+//     retrieve, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5261,10 +5266,10 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5434,9 +5439,9 @@ type ProjectsLocationsServicesListCall struct {
 
 // List: Lists services in a project and location.
 //
-// - parent: The relative resource name of the location of metastore
-//   services to list, in the following
-//   form:projects/{project_number}/locations/{location_id}.
+//   - parent: The relative resource name of the location of metastore
+//     services to list, in the following
+//     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5660,10 +5665,10 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates the parameters of a single service.
 //
-// - name: Immutable. The relative resource name of the metastore
-//   service, of the
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}.
+//   - name: Immutable. The relative resource name of the metastore
+//     service, of the
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5841,12 +5846,12 @@ type ProjectsLocationsServicesRemoveIamPolicyCall struct {
 
 // RemoveIamPolicy: Removes the attached IAM policies for a resource
 //
-// - resource: The relative resource name of the dataplane resource to
-//   remove IAM policy, in the following
-//   form:projects/{project_id}/locations/{location_id}/services/{service
-//   _id}/databases/{database_id} or
-//   projects/{project_id}/locations/{location_id}/services/{service_id}/
-//   databases/{database_id}/tables/{table_id}.
+//   - resource: The relative resource name of the dataplane resource to
+//     remove IAM policy, in the following
+//     form:projects/{project_id}/locations/{location_id}/services/{service
+//     _id}/databases/{database_id} or
+//     projects/{project_id}/locations/{location_id}/services/{service_id}/
+//     databases/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsServicesService) RemoveIamPolicy(resource string, removeiampolicyrequest *RemoveIamPolicyRequest) *ProjectsLocationsServicesRemoveIamPolicyCall {
 	c := &ProjectsLocationsServicesRemoveIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5988,10 +5993,10 @@ type ProjectsLocationsServicesRestoreCall struct {
 
 // Restore: Restores a service from a backup.
 //
-// - service: The relative resource name of the metastore service to run
-//   restore, in the following
-//   form:projects/{project_id}/locations/{location_id}/services/{service
-//   _id}.
+//   - service: The relative resource name of the metastore service to run
+//     restore, in the following
+//     form:projects/{project_id}/locations/{location_id}/services/{service
+//     _id}.
 func (r *ProjectsLocationsServicesService) Restore(service string, restoreservicerequest *RestoreServiceRequest) *ProjectsLocationsServicesRestoreCall {
 	c := &ProjectsLocationsServicesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -6135,10 +6140,10 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6285,10 +6290,10 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6430,10 +6435,10 @@ type ProjectsLocationsServicesBackupsCreateCall struct {
 
 // Create: Creates a new backup in a given project and location.
 //
-// - parent: The relative resource name of the service in which to
-//   create a backup of the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}.
+//   - parent: The relative resource name of the service in which to
+//     create a backup of the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}.
 func (r *ProjectsLocationsServicesBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsServicesBackupsCreateCall {
 	c := &ProjectsLocationsServicesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6609,10 +6614,10 @@ type ProjectsLocationsServicesBackupsDeleteCall struct {
 
 // Delete: Deletes a single backup.
 //
-// - name: The relative resource name of the backup to delete, in the
-//   following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/backups/{backup_id}.
+//   - name: The relative resource name of the backup to delete, in the
+//     following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Delete(name string) *ProjectsLocationsServicesBackupsDeleteCall {
 	c := &ProjectsLocationsServicesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6765,10 +6770,10 @@ type ProjectsLocationsServicesBackupsGetCall struct {
 
 // Get: Gets details of a single backup.
 //
-// - name: The relative resource name of the backup to retrieve, in the
-//   following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/backups/{backup_id}.
+//   - name: The relative resource name of the backup to retrieve, in the
+//     following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Get(name string) *ProjectsLocationsServicesBackupsGetCall {
 	c := &ProjectsLocationsServicesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6916,10 +6921,10 @@ type ProjectsLocationsServicesBackupsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesBackupsService) GetIamPolicy(resource string) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
 	c := &ProjectsLocationsServicesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7089,10 +7094,10 @@ type ProjectsLocationsServicesBackupsListCall struct {
 
 // List: Lists backups in a service.
 //
-// - parent: The relative resource name of the service whose backups to
-//   list, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/backups.
+//   - parent: The relative resource name of the service whose backups to
+//     list, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/backups.
 func (r *ProjectsLocationsServicesBackupsService) List(parent string) *ProjectsLocationsServicesBackupsListCall {
 	c := &ProjectsLocationsServicesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7318,10 +7323,10 @@ type ProjectsLocationsServicesBackupsSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesBackupsSetIamPolicyCall {
 	c := &ProjectsLocationsServicesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7468,10 +7473,10 @@ type ProjectsLocationsServicesBackupsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesBackupsTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7615,10 +7620,10 @@ type ProjectsLocationsServicesDatabasesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) GetIamPolicy(resource string) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7790,10 +7795,10 @@ type ProjectsLocationsServicesDatabasesSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesDatabasesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7940,10 +7945,10 @@ type ProjectsLocationsServicesDatabasesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesDatabasesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8087,10 +8092,10 @@ type ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) GetIamPolicy(resource string) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8262,10 +8267,10 @@ type ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall struct {
 // resource. Replaces any existing policy.Can return NOT_FOUND,
 // INVALID_ARGUMENT, and PERMISSION_DENIED errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8412,10 +8417,10 @@ type ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8557,10 +8562,10 @@ type ProjectsLocationsServicesMetadataImportsCreateCall struct {
 
 // Create: Creates a new MetadataImport in a given project and location.
 //
-// - parent: The relative resource name of the service in which to
-//   create a metastore import, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}.
+//   - parent: The relative resource name of the service in which to
+//     create a metastore import, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Create(parent string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c := &ProjectsLocationsServicesMetadataImportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8737,10 +8742,10 @@ type ProjectsLocationsServicesMetadataImportsGetCall struct {
 
 // Get: Gets details of a single import.
 //
-// - name: The relative resource name of the metadata import to
-//   retrieve, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/metadataImports/{import_id}.
+//   - name: The relative resource name of the metadata import to
+//     retrieve, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/metadataImports/{import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Get(name string) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c := &ProjectsLocationsServicesMetadataImportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8886,10 +8891,10 @@ type ProjectsLocationsServicesMetadataImportsListCall struct {
 
 // List: Lists imports in a service.
 //
-// - parent: The relative resource name of the service whose metadata
-//   imports to list, in the following
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/metadataImports.
+//   - parent: The relative resource name of the service whose metadata
+//     imports to list, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/metadataImports.
 func (r *ProjectsLocationsServicesMetadataImportsService) List(parent string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c := &ProjectsLocationsServicesMetadataImportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9114,10 +9119,10 @@ type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 // Patch: Updates a single import. Only the description field of
 // MetadataImport is supported to be updated.
 //
-// - name: Immutable. The relative resource name of the metadata import,
-//   of the
-//   form:projects/{project_number}/locations/{location_id}/services/{ser
-//   vice_id}/metadataImports/{metadata_import_id}.
+//   - name: Immutable. The relative resource name of the metadata import,
+//     of the
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/metadataImports/{metadata_import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c := &ProjectsLocationsServicesMetadataImportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

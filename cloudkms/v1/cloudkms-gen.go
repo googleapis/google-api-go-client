@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/kms/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudkms/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudkmsService, err := cloudkms.NewService(ctx)
+//	import "google.golang.org/api/cloudkms/v1"
+//	...
+//	ctx := context.Background()
+//	cloudkmsService, err := cloudkms.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudkmsService, err := cloudkms.NewService(ctx, option.WithScopes(cloudkms.CloudkmsScope))
+//	cloudkmsService, err := cloudkms.NewService(ctx, option.WithScopes(cloudkms.CloudkmsScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudkmsService, err := cloudkms.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudkmsService, err := cloudkms.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudkmsService, err := cloudkms.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudkmsService, err := cloudkms.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudkms // import "google.golang.org/api/cloudkms/v1"
@@ -1807,19 +1807,29 @@ type ImportCryptoKeyVersionRequest struct {
 	// this key material.
 	ImportJob string `json:"importJob,omitempty"`
 
-	// RsaAesWrappedKey: Wrapped key material produced with
-	// RSA_OAEP_3072_SHA1_AES_256 or RSA_OAEP_4096_SHA1_AES_256. This field
-	// contains the concatenation of two wrapped keys: 1. An ephemeral
-	// AES-256 wrapping key wrapped with the public_key using RSAES-OAEP
-	// with SHA-1/SHA-256, MGF1 with SHA-1/SHA-256, and an empty label. 2.
-	// The key to be imported, wrapped with the ephemeral AES-256 key using
-	// AES-KWP (RFC 5649). If importing symmetric key material, it is
-	// expected that the unwrapped key contains plain bytes. If importing
-	// asymmetric key material, it is expected that the unwrapped key is in
-	// PKCS#8-encoded DER format (the PrivateKeyInfo structure from RFC
-	// 5208). This format is the same as the format produced by PKCS#11
-	// mechanism CKM_RSA_AES_KEY_WRAP.
+	// RsaAesWrappedKey: Optional. This field has the same meaning as
+	// wrapped_key. Prefer to use that field in new work. Either that field
+	// or this field (but not both) must be specified.
 	RsaAesWrappedKey string `json:"rsaAesWrappedKey,omitempty"`
+
+	// WrappedKey: Optional. The wrapped key material to import. Before
+	// wrapping, key material must be formatted. If importing symmetric key
+	// material, the expected key material format is plain bytes. If
+	// importing asymmetric key material, the expected key material format
+	// is PKCS#8-encoded DER (the PrivateKeyInfo structure from RFC 5208).
+	// When wrapping with import methods (RSA_OAEP_3072_SHA1_AES_256 or
+	// RSA_OAEP_4096_SHA1_AES_256 or RSA_OAEP_3072_SHA256_AES_256 or
+	// RSA_OAEP_4096_SHA256_AES_256), this field must contain the
+	// concatenation of: 1. An ephemeral AES-256 wrapping key wrapped with
+	// the public_key using RSAES-OAEP with SHA-1/SHA-256, MGF1 with
+	// SHA-1/SHA-256, and an empty label. 2. The formatted key to be
+	// imported, wrapped with the ephemeral AES-256 key using AES-KWP (RFC
+	// 5649). This format is the same as the format produced by PKCS#11
+	// mechanism CKM_RSA_AES_KEY_WRAP. When wrapping with import methods
+	// (RSA_OAEP_3072_SHA256 or RSA_OAEP_4096_SHA256), this field must
+	// contain the formatted key to be imported, wrapped with the public_key
+	// using RSAES-OAEP with SHA-256, MGF1 with SHA-256, and an empty label.
+	WrappedKey string `json:"wrappedKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with
@@ -1907,6 +1917,28 @@ type ImportJob struct {
 	// RSA key. For more details, see [RSA AES key wrap
 	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
 	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_3072_SHA256_AES_256" - This ImportMethod represents the
+	// CKM_RSA_AES_KEY_WRAP key wrapping scheme defined in the PKCS #11
+	// standard. In summary, this involves wrapping the raw key with an
+	// ephemeral AES key, and wrapping the ephemeral AES key with a 3072 bit
+	// RSA key. For more details, see [RSA AES key wrap
+	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
+	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_4096_SHA256_AES_256" - This ImportMethod represents the
+	// CKM_RSA_AES_KEY_WRAP key wrapping scheme defined in the PKCS #11
+	// standard. In summary, this involves wrapping the raw key with an
+	// ephemeral AES key, and wrapping the ephemeral AES key with a 4096 bit
+	// RSA key. For more details, see [RSA AES key wrap
+	// mechanism](http://docs.oasis-open.org/pkcs11/pkcs11-curr/v2.40/cos01/p
+	// kcs11-curr-v2.40-cos01.html#_Toc408226908).
+	//   "RSA_OAEP_3072_SHA256" - This ImportMethod represents RSAES-OAEP
+	// with a 3072 bit RSA key. The key material to be imported is wrapped
+	// directly with the RSA key. Due to technical limitations of RSA
+	// wrapping, this method cannot be used to wrap RSA keys for import.
+	//   "RSA_OAEP_4096_SHA256" - This ImportMethod represents RSAES-OAEP
+	// with a 4096 bit RSA key. The key material to be imported is wrapped
+	// directly with the RSA key. Due to technical limitations of RSA
+	// wrapping, this method cannot be used to wrap RSA keys for import.
 	ImportMethod string `json:"importMethod,omitempty"`
 
 	// Name: Output only. The resource name for this ImportJob in the format
@@ -2141,7 +2173,7 @@ func (s *ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListEkmConnectionsResponse: Response message for
-// KeyManagementService.ListEkmConnections.
+// EkmService.ListEkmConnections.
 type ListEkmConnectionsResponse struct {
 	// EkmConnections: The list of EkmConnections.
 	EkmConnections []*EkmConnection `json:"ekmConnections,omitempty"`
@@ -3113,8 +3145,8 @@ type ProjectsLocationsGenerateRandomBytesCall struct {
 // GenerateRandomBytes: Generate random bytes using the Cloud KMS
 // randomness source in the provided location.
 //
-// - location: The project-specific location in which to generate random
-//   bytes. For example, "projects/my-project/locations/us-central1".
+//   - location: The project-specific location in which to generate random
+//     bytes. For example, "projects/my-project/locations/us-central1".
 func (r *ProjectsLocationsService) GenerateRandomBytes(location string, generaterandombytesrequest *GenerateRandomBytesRequest) *ProjectsLocationsGenerateRandomBytesCall {
 	c := &ProjectsLocationsGenerateRandomBytesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.location = location
@@ -3405,8 +3437,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3614,8 +3646,8 @@ type ProjectsLocationsEkmConnectionsCreateCall struct {
 
 // Create: Creates a new EkmConnection in a given Project and Location.
 //
-// - parent: The resource name of the location associated with the
-//   EkmConnection, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     EkmConnection, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsEkmConnectionsService) Create(parent string, ekmconnection *EkmConnection) *ProjectsLocationsEkmConnectionsCreateCall {
 	c := &ProjectsLocationsEkmConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3920,10 +3952,10 @@ type ProjectsLocationsEkmConnectionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsEkmConnectionsGetIamPolicyCall {
 	c := &ProjectsLocationsEkmConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4094,8 +4126,8 @@ type ProjectsLocationsEkmConnectionsListCall struct {
 
 // List: Lists EkmConnections.
 //
-// - parent: The resource name of the location associated with the
-//   EkmConnections to list, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     EkmConnections to list, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsEkmConnectionsService) List(parent string) *ProjectsLocationsEkmConnectionsListCall {
 	c := &ProjectsLocationsEkmConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4321,8 +4353,8 @@ type ProjectsLocationsEkmConnectionsPatchCall struct {
 
 // Patch: Updates an EkmConnection's metadata.
 //
-// - name: Output only. The resource name for the EkmConnection in the
-//   format `projects/*/locations/*/ekmConnections/*`.
+//   - name: Output only. The resource name for the EkmConnection in the
+//     format `projects/*/locations/*/ekmConnections/*`.
 func (r *ProjectsLocationsEkmConnectionsService) Patch(name string, ekmconnection *EkmConnection) *ProjectsLocationsEkmConnectionsPatchCall {
 	c := &ProjectsLocationsEkmConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4480,10 +4512,10 @@ type ProjectsLocationsEkmConnectionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEkmConnectionsSetIamPolicyCall {
 	c := &ProjectsLocationsEkmConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4631,10 +4663,10 @@ type ProjectsLocationsEkmConnectionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsEkmConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEkmConnectionsTestIamPermissionsCall {
 	c := &ProjectsLocationsEkmConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4777,8 +4809,8 @@ type ProjectsLocationsKeyRingsCreateCall struct {
 
 // Create: Create a new KeyRing in a given Project and Location.
 //
-// - parent: The resource name of the location associated with the
-//   KeyRings, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) Create(parent string, keyring *KeyRing) *ProjectsLocationsKeyRingsCreateCall {
 	c := &ProjectsLocationsKeyRingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5083,10 +5115,10 @@ type ProjectsLocationsKeyRingsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5257,8 +5289,8 @@ type ProjectsLocationsKeyRingsListCall struct {
 
 // List: Lists KeyRings.
 //
-// - parent: The resource name of the location associated with the
-//   KeyRings, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     KeyRings, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsKeyRingsService) List(parent string) *ProjectsLocationsKeyRingsListCall {
 	c := &ProjectsLocationsKeyRingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5486,10 +5518,10 @@ type ProjectsLocationsKeyRingsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5637,10 +5669,10 @@ type ProjectsLocationsKeyRingsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5956,8 +5988,8 @@ type ProjectsLocationsKeyRingsCryptoKeysDecryptCall struct {
 // Decrypt: Decrypts data that was protected by Encrypt. The
 // CryptoKey.purpose must be ENCRYPT_DECRYPT.
 //
-// - name: The resource name of the CryptoKey to use for decryption. The
-//   server will choose the appropriate version.
+//   - name: The resource name of the CryptoKey to use for decryption. The
+//     server will choose the appropriate version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Decrypt(name string, decryptrequest *DecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6101,9 +6133,9 @@ type ProjectsLocationsKeyRingsCryptoKeysEncryptCall struct {
 // Encrypt: Encrypts data, so that it can only be recovered by a call to
 // Decrypt. The CryptoKey.purpose must be ENCRYPT_DECRYPT.
 //
-// - name: The resource name of the CryptoKey or CryptoKeyVersion to use
-//   for encryption. If a CryptoKey is specified, the server will use
-//   its primary version.
+//   - name: The resource name of the CryptoKey or CryptoKeyVersion to use
+//     for encryption. If a CryptoKey is specified, the server will use
+//     its primary version.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Encrypt(name string, encryptrequest *EncryptRequest) *ProjectsLocationsKeyRingsCryptoKeysEncryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysEncryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6396,10 +6428,10 @@ type ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6570,8 +6602,8 @@ type ProjectsLocationsKeyRingsCryptoKeysListCall struct {
 
 // List: Lists CryptoKeys.
 //
-// - parent: The resource name of the KeyRing to list, in the format
-//   `projects/*/locations/*/keyRings/*`.
+//   - parent: The resource name of the KeyRing to list, in the format
+//     `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6619,9 +6651,13 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) PageToken(pageToken string
 // the primary version to include in the response.
 //
 // Possible values:
-//   "CRYPTO_KEY_VERSION_VIEW_UNSPECIFIED" - Default view for each
+//
+//	"CRYPTO_KEY_VERSION_VIEW_UNSPECIFIED" - Default view for each
+//
 // CryptoKeyVersion. Does not include the attestation field.
-//   "FULL" - Provides all fields in each CryptoKeyVersion, including
+//
+//	"FULL" - Provides all fields in each CryptoKeyVersion, including
+//
 // the attestation.
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) VersionView(versionView string) *ProjectsLocationsKeyRingsCryptoKeysListCall {
 	c.urlParams_.Set("versionView", versionView)
@@ -6823,8 +6859,8 @@ type ProjectsLocationsKeyRingsCryptoKeysPatchCall struct {
 
 // Patch: Update a CryptoKey.
 //
-// - name: Output only. The resource name for this CryptoKey in the
-//   format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+//   - name: Output only. The resource name for this CryptoKey in the
+//     format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Patch(name string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6982,10 +7018,10 @@ type ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7133,10 +7169,10 @@ type ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7426,8 +7462,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall s
 // retrieved from GetPublicKey corresponding to a CryptoKeyVersion with
 // CryptoKey.purpose ASYMMETRIC_DECRYPT.
 //
-// - name: The resource name of the CryptoKeyVersion to use for
-//   decryption.
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     decryption.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) AsymmetricDecrypt(name string, asymmetricdecryptrequest *AsymmetricDecryptRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7717,8 +7753,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall struct {
 // assign the next sequential id. If unset, state will be set to
 // ENABLED.
 //
-// - parent: The name of the CryptoKey associated with the
-//   CryptoKeyVersions.
+//   - parent: The name of the CryptoKey associated with the
+//     CryptoKeyVersions.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Create(parent string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8310,9 +8346,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall struct {
 // created, and will be assigned the next sequential id within the
 // CryptoKey.
 //
-// - parent: The name of the CryptoKey to be imported into. The create
-//   permission is only required on this key when creating a new
-//   CryptoKeyVersion.
+//   - parent: The name of the CryptoKey to be imported into. The create
+//     permission is only required on this key when creating a new
+//     CryptoKeyVersion.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Import(parent string, importcryptokeyversionrequest *ImportCryptoKeyVersionRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8455,8 +8491,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall struct {
 
 // List: Lists CryptoKeyVersions.
 //
-// - parent: The resource name of the CryptoKey to list, in the format
-//   `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+//   - parent: The resource name of the CryptoKey to list, in the format
+//     `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) List(parent string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8504,9 +8540,13 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) PageToken
 // response.
 //
 // Possible values:
-//   "CRYPTO_KEY_VERSION_VIEW_UNSPECIFIED" - Default view for each
+//
+//	"CRYPTO_KEY_VERSION_VIEW_UNSPECIFIED" - Default view for each
+//
 // CryptoKeyVersion. Does not include the attestation field.
-//   "FULL" - Provides all fields in each CryptoKeyVersion, including
+//
+//	"FULL" - Provides all fields in each CryptoKeyVersion, including
+//
 // the attestation.
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) View(view string) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall {
 	c.urlParams_.Set("view", view)
@@ -8855,8 +8895,8 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall struct {
 // CryptoKey.purpose MAC, and returns a response that indicates whether
 // or not the verification was successful.
 //
-// - name: The resource name of the CryptoKeyVersion to use for
-//   verification.
+//   - name: The resource name of the CryptoKeyVersion to use for
+//     verification.
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) MacVerify(name string, macverifyrequest *MacVerifyRequest) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9002,10 +9042,10 @@ type ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall struct {
 // DestroyCryptoKeyVersion and RestoreCryptoKeyVersion to move between
 // other states.
 //
-// - name: Output only. The resource name for this CryptoKeyVersion in
-//   the format
-//   `projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`
-//   .
+//   - name: Output only. The resource name for this CryptoKeyVersion in
+//     the format
+//     `projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`
+//     .
 func (r *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsService) Patch(name string, cryptokeyversion *CryptoKeyVersion) *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9612,10 +9652,10 @@ type ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) GetIamPolicy(resource string) *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9786,8 +9826,8 @@ type ProjectsLocationsKeyRingsImportJobsListCall struct {
 
 // List: Lists ImportJobs.
 //
-// - parent: The resource name of the KeyRing to list, in the format
-//   `projects/*/locations/*/keyRings/*`.
+//   - parent: The resource name of the KeyRing to list, in the format
+//     `projects/*/locations/*/keyRings/*`.
 func (r *ProjectsLocationsKeyRingsImportJobsService) List(parent string) *ProjectsLocationsKeyRingsImportJobsListCall {
 	c := &ProjectsLocationsKeyRingsImportJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10015,10 +10055,10 @@ type ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall {
 	c := &ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10166,10 +10206,10 @@ type ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsKeyRingsImportJobsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall {
 	c := &ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

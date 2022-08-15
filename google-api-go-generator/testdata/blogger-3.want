@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/blogger/docs/3.0/getting_started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/blogger/v3"
-//   ...
-//   ctx := context.Background()
-//   bloggerService, err := blogger.NewService(ctx)
+//	import "google.golang.org/api/blogger/v3"
+//	...
+//	ctx := context.Background()
+//	bloggerService, err := blogger.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   bloggerService, err := blogger.NewService(ctx, option.WithScopes(blogger.BloggerReadonlyScope))
+//	bloggerService, err := blogger.NewService(ctx, option.WithScopes(blogger.BloggerReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   bloggerService, err := blogger.NewService(ctx, option.WithAPIKey("AIza..."))
+//	bloggerService, err := blogger.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   bloggerService, err := blogger.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	bloggerService, err := blogger.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package blogger // import "google.golang.org/api/blogger/v3"
@@ -1597,9 +1597,9 @@ type BlogUserInfosGetCall struct {
 
 // Get: Gets one blog and user info pair by blogId and userId.
 //
-// - blogId: The ID of the blog to get.
-// - userId: ID of the user whose blogs are to be fetched. Either the
-//   word 'self' (sans quote marks) or the user's profile identifier.
+//   - blogId: The ID of the blog to get.
+//   - userId: ID of the user whose blogs are to be fetched. Either the
+//     word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
 	c := &BlogUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2065,8 +2065,8 @@ type BlogsListByUserCall struct {
 
 // ListByUser: Retrieves a list of blogs, possibly filtered.
 //
-// - userId: ID of the user whose blogs are to be fetched. Either the
-//   word 'self' (sans quote marks) or the user's profile identifier.
+//   - userId: ID of the user whose blogs are to be fetched. Either the
+//     word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 	c := &BlogsListByUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2084,9 +2084,10 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2740,10 +2741,11 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "emptied" - Comments that have had their content removed
-//   "live" - Comments that are publicly visible
-//   "pending" - Comments that are awaiting administrator approval
-//   "spam" - Comments marked as spam by the administrator
+//
+//	"emptied" - Comments that have had their content removed
+//	"live" - Comments that are publicly visible
+//	"pending" - Comments that are awaiting administrator approval
+//	"spam" - Comments marked as spam by the administrator
 func (c *CommentsListCall) Statuses(statuses ...string) *CommentsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -2752,9 +2754,10 @@ func (c *CommentsListCall) Statuses(statuses ...string) *CommentsListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *CommentsListCall) View(view string) *CommentsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3530,9 +3533,10 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 // Range sets the optional parameter "range":
 //
 // Possible values:
-//   "30DAYS" - Page view counts from the last thirty days.
-//   "7DAYS" - Page view counts from the last seven days.
-//   "all" - Total page view counts from all time.
+//
+//	"30DAYS" - Page view counts from the last thirty days.
+//	"7DAYS" - Page view counts from the last seven days.
+//	"all" - Total page view counts from all time.
 func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 	c.urlParams_.SetMulti("range", append([]string{}, range_...))
 	return c
@@ -3816,9 +3820,10 @@ func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PagesGetCall) View(view string) *PagesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4142,9 +4147,10 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft (unpublished) Pages
-//   "imported" - Pages that have had their content removed
-//   "live" - Pages that are publicly visible
+//
+//	"draft" - Draft (unpublished) Pages
+//	"imported" - Pages that have had their content removed
+//	"live" - Pages that are publicly visible
 func (c *PagesListCall) Statuses(statuses ...string) *PagesListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -4153,9 +4159,10 @@ func (c *PagesListCall) Statuses(statuses ...string) *PagesListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PagesListCall) View(view string) *PagesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4637,11 +4644,11 @@ type PostUserInfosGetCall struct {
 
 // Get: Gets one post and user info pair by postId and userId.
 //
-// - blogId: The ID of the blog.
-// - postId: The ID of the post to get.
-// - userId: ID of the user for the per-user information to be fetched.
-//   Either the word 'self' (sans quote marks) or the user's profile
-//   identifier.
+//   - blogId: The ID of the blog.
+//   - postId: The ID of the post to get.
+//   - userId: ID of the user for the per-user information to be fetched.
+//     Either the word 'self' (sans quote marks) or the user's profile
+//     identifier.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
 	c := &PostUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4819,10 +4826,10 @@ type PostUserInfosListCall struct {
 // List: Retrieves a list of post and user info pairs, possibly
 // filtered.
 //
-// - blogId: ID of the blog to fetch posts from.
-// - userId: ID of the user for the per-user information to be fetched.
-//   Either the word 'self' (sans quote marks) or the user's profile
-//   identifier.
+//   - blogId: ID of the blog to fetch posts from.
+//   - userId: ID of the user for the per-user information to be fetched.
+//     Either the word 'self' (sans quote marks) or the user's profile
+//     identifier.
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
 	c := &PostUserInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4861,8 +4868,9 @@ func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListC
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4885,9 +4893,10 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft posts
-//   "live" - Published posts
-//   "scheduled" - Posts that are scheduled to publish in future.
+//
+//	"draft" - Draft posts
+//	"live" - Published posts
+//	"scheduled" - Posts that are scheduled to publish in future.
 func (c *PostUserInfosListCall) Statuses(statuses ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -4896,9 +4905,10 @@ func (c *PostUserInfosListCall) Statuses(statuses ...string) *PostUserInfosListC
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Reader level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Reader level detail
 func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5280,9 +5290,10 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PostsGetCall) View(view string) *PostsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5473,9 +5484,10 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Admin level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Admin level detail
 func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5845,8 +5857,9 @@ func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostsListCall) OrderBy(orderBy string) *PostsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5869,9 +5882,10 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 // Statuses sets the optional parameter "statuses":
 //
 // Possible values:
-//   "draft" - Draft posts
-//   "live" - Published posts
-//   "scheduled" - Posts that are scheduled to publish in future.
+//
+//	"draft" - Draft posts
+//	"live" - Published posts
+//	"scheduled" - Posts that are scheduled to publish in future.
 func (c *PostsListCall) Statuses(statuses ...string) *PostsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -5880,9 +5894,10 @@ func (c *PostsListCall) Statuses(statuses ...string) *PostsListCall {
 // View sets the optional parameter "view":
 //
 // Possible values:
-//   "ADMIN" - Admin level detail
-//   "AUTHOR" - Author level detail
-//   "READER" - Reader level detail
+//
+//	"ADMIN" - Admin level detail
+//	"AUTHOR" - Author level detail
+//	"READER" - Reader level detail
 func (c *PostsListCall) View(view string) *PostsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6596,8 +6611,9 @@ func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
 // OrderBy sets the optional parameter "orderBy": Sort search results
 //
 // Possible values:
-//   "published" - Order by the date the post was published
-//   "updated" - Order by the date the post was last updated
+//
+//	"published" - Order by the date the post was published
+//	"updated" - Order by the date the post was last updated
 func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

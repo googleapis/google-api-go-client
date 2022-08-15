@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/my-business/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/mybusinessaccountmanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx)
+//	import "google.golang.org/api/mybusinessaccountmanagement/v1"
+//	...
+//	ctx := context.Background()
+//	mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	mybusinessaccountmanagementService, err := mybusinessaccountmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package mybusinessaccountmanagement // import "google.golang.org/api/mybusinessaccountmanagement/v1"
@@ -306,6 +306,13 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 
 // Admin: An administrator of an Account or a location.
 type Admin struct {
+	// Account: Immutable. The name of the Account resource that this Admin
+	// refers to. Used when calling locations.admins.create to invite a
+	// LocationGroup as an admin. If both this field and `admin` are set on
+	// `CREATE` requests, this field takes precedence and the email address
+	// in `admin` will be ignored. Format: `accounts/{account}`.
+	Account string `json:"account,omitempty"`
+
 	// Admin: Optional. The name of the admin. When making the initial
 	// invitation, this is the invitee's email address. On `GET` calls, the
 	// user's email address is returned if the invitation is still pending.
@@ -343,7 +350,7 @@ type Admin struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Admin") to
+	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -351,8 +358,8 @@ type Admin struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Admin") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Account") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -622,9 +629,9 @@ func (s *OrganizationInfo) MarshalJSON() ([]byte, error) {
 // to model geographical locations (roads, towns, mountains). In typical
 // usage an address would be created via user input or from importing
 // existing data, depending on the type of process. Advice on address
-// input / editing: - Use an i18n-ready address widget such as
-// https://github.com/google/libaddressinput) - Users should not be
-// presented with UI elements for input or editing of fields outside
+// input / editing: - Use an internationalization-ready address widget
+// such as https://github.com/google/libaddressinput) - Users should not
+// be presented with UI elements for input or editing of fields outside
 // countries where that field is used. For more guidance on how to use
 // this schema, please see:
 // https://support.google.com/business/answer/6397478
@@ -1101,8 +1108,7 @@ func (c *AccountsListCall) Filter(filter string) *AccountsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": How many accounts to
-// fetch per page. The minimum supported page_size is 2. The default and
-// maximum is 20.
+// fetch per page. The default and maximum is 20.
 func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1235,7 +1241,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. How many accounts to fetch per page. The minimum supported page_size is 2. The default and maximum is 20.",
+	//       "description": "Optional. How many accounts to fetch per page. The default and maximum is 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1294,8 +1300,8 @@ type AccountsPatchCall struct {
 // Patch: Updates the specified business account. Personal accounts
 // cannot be updated using this method.
 //
-// - name: Immutable. The resource name, in the format
-//   `accounts/{account_id}`.
+//   - name: Immutable. The resource name, in the format
+//     `accounts/{account_id}`.
 func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1463,8 +1469,8 @@ type AccountsAdminsCreateCall struct {
 // be granted access to the account. See AcceptInvitation to
 // programmatically accept an invitation.
 //
-// - parent: The resource name of the account this admin is created for.
-//   `accounts/{account_id}`.
+//   - parent: The resource name of the account this admin is created for.
+//     `accounts/{account_id}`.
 func (r *AccountsAdminsService) Create(parent string, admin *Admin) *AccountsAdminsCreateCall {
 	c := &AccountsAdminsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1602,8 +1608,8 @@ type AccountsAdminsDeleteCall struct {
 
 // Delete: Removes the specified admin from the specified account.
 //
-// - name: The resource name of the admin to remove from the account.
-//   `accounts/{account_id}/admins/{admin_id}`.
+//   - name: The resource name of the admin to remove from the account.
+//     `accounts/{account_id}/admins/{admin_id}`.
 func (r *AccountsAdminsService) Delete(name string) *AccountsAdminsDeleteCall {
 	c := &AccountsAdminsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1733,8 +1739,8 @@ type AccountsAdminsListCall struct {
 
 // List: Lists the admins for the specified account.
 //
-// - parent: The name of the account from which to retrieve a list of
-//   admins. `accounts/{account_id}/admins`.
+//   - parent: The name of the account from which to retrieve a list of
+//     admins. `accounts/{account_id}/admins`.
 func (r *AccountsAdminsService) List(parent string) *AccountsAdminsListCall {
 	c := &AccountsAdminsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1877,11 +1883,11 @@ type AccountsAdminsPatchCall struct {
 
 // Patch: Updates the Admin for the specified Account Admin.
 //
-// - name: Immutable. The resource name. For account admins, this is in
-//   the form: `accounts/{account_id}/admins/{admin_id}` For location
-//   admins, this is in the form:
-//   `locations/{location_id}/admins/{admin_id}` This field will be
-//   ignored if set during admin creation.
+//   - name: Immutable. The resource name. For account admins, this is in
+//     the form: `accounts/{account_id}/admins/{admin_id}` For location
+//     admins, this is in the form:
+//     `locations/{location_id}/admins/{admin_id}` This field will be
+//     ignored if set during admin creation.
 func (r *AccountsAdminsService) Patch(name string, admin *Admin) *AccountsAdminsPatchCall {
 	c := &AccountsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2034,8 +2040,8 @@ type AccountsInvitationsAcceptCall struct {
 
 // Accept: Accepts the specified invitation.
 //
-// - name: The name of the invitation that is being accepted.
-//   `accounts/{account_id}/invitations/{invitation_id}`.
+//   - name: The name of the invitation that is being accepted.
+//     `accounts/{account_id}/invitations/{invitation_id}`.
 func (r *AccountsInvitationsService) Accept(name string, acceptinvitationrequest *AcceptInvitationRequest) *AccountsInvitationsAcceptCall {
 	c := &AccountsInvitationsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2174,8 +2180,8 @@ type AccountsInvitationsDeclineCall struct {
 
 // Decline: Declines the specified invitation.
 //
-// - name: The name of the account invitation that is being declined.
-//   `accounts/{account_id}/invitations/{invitation_id}`.
+//   - name: The name of the account invitation that is being declined.
+//     `accounts/{account_id}/invitations/{invitation_id}`.
 func (r *AccountsInvitationsService) Decline(name string, declineinvitationrequest *DeclineInvitationRequest) *AccountsInvitationsDeclineCall {
 	c := &AccountsInvitationsDeclineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2314,8 +2320,8 @@ type AccountsInvitationsListCall struct {
 
 // List: Lists pending invitations for the specified account.
 //
-// - parent: The name of the account from which the list of invitations
-//   is being retrieved. `accounts/{account_id}/invitations`.
+//   - parent: The name of the account from which the list of invitations
+//     is being retrieved. `accounts/{account_id}/invitations`.
 func (r *AccountsInvitationsService) List(parent string) *AccountsInvitationsListCall {
 	c := &AccountsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2473,8 +2479,8 @@ type LocationsTransferCall struct {
 // owner of the account the location is currently associated with and
 // must also be at least a manager of the destination account.
 //
-// - name: The name of the location to transfer.
-//   `locations/{location_id}`.
+//   - name: The name of the location to transfer.
+//     `locations/{location_id}`.
 func (r *LocationsService) Transfer(name string, transferlocationrequest *TransferLocationRequest) *LocationsTransferCall {
 	c := &LocationsTransferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2616,8 +2622,8 @@ type LocationsAdminsCreateCall struct {
 // to be granted access to the location. See AcceptInvitation to
 // programmatically accept an invitation.
 //
-// - parent: The resource name of the location this admin is created
-//   for. `locations/{location_id}/admins`.
+//   - parent: The resource name of the location this admin is created
+//     for. `locations/{location_id}/admins`.
 func (r *LocationsAdminsService) Create(parent string, admin *Admin) *LocationsAdminsCreateCall {
 	c := &LocationsAdminsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2886,8 +2892,8 @@ type LocationsAdminsListCall struct {
 
 // List: Lists all of the admins for the specified location.
 //
-// - parent: The name of the location to list admins of.
-//   `locations/{location_id}/admins`.
+//   - parent: The name of the location to list admins of.
+//     `locations/{location_id}/admins`.
 func (r *LocationsAdminsService) List(parent string) *LocationsAdminsListCall {
 	c := &LocationsAdminsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3031,11 +3037,11 @@ type LocationsAdminsPatchCall struct {
 // Patch: Updates the Admin for the specified location. Only the
 // AdminRole of the Admin can be updated.
 //
-// - name: Immutable. The resource name. For account admins, this is in
-//   the form: `accounts/{account_id}/admins/{admin_id}` For location
-//   admins, this is in the form:
-//   `locations/{location_id}/admins/{admin_id}` This field will be
-//   ignored if set during admin creation.
+//   - name: Immutable. The resource name. For account admins, this is in
+//     the form: `accounts/{account_id}/admins/{admin_id}` For location
+//     admins, this is in the form:
+//     `locations/{location_id}/admins/{admin_id}` This field will be
+//     ignored if set during admin creation.
 func (r *LocationsAdminsService) Patch(name string, admin *Admin) *LocationsAdminsPatchCall {
 	c := &LocationsAdminsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

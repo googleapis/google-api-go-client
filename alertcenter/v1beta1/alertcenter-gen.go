@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/admin-sdk/alertcenter/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/alertcenter/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   alertcenterService, err := alertcenter.NewService(ctx)
+//	import "google.golang.org/api/alertcenter/v1beta1"
+//	...
+//	ctx := context.Background()
+//	alertcenterService, err := alertcenter.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   alertcenterService, err := alertcenter.NewService(ctx, option.WithAPIKey("AIza..."))
+//	alertcenterService, err := alertcenter.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   alertcenterService, err := alertcenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	alertcenterService, err := alertcenter.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package alertcenter // import "google.golang.org/api/alertcenter/v1beta1"
@@ -583,6 +583,42 @@ type AlertMetadata struct {
 
 func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AlertMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApnsCertificateExpirationInfo: The explanation message associated
+// with ApnsCertificationExpiring and ApnsCertificationExpired alerts.
+type ApnsCertificateExpirationInfo struct {
+	// AppleId: The Apple ID used for the certificate, may be blank if
+	// admins did not enter it.
+	AppleId string `json:"appleId,omitempty"`
+
+	// ExpirationTime: The expiration date of the APNS Certificate.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+
+	// Uid: The UID for the certificate.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppleId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApnsCertificateExpirationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ApnsCertificateExpirationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3734,8 +3770,8 @@ type AlertsFeedbackListCall struct {
 // List: Lists all the feedback for an alert. Attempting to list
 // feedbacks for a non-existent alert returns `NOT_FOUND` error.
 //
-// - alertId: The alert identifier. The "-" wildcard could be used to
-//   represent all alerts.
+//   - alertId: The alert identifier. The "-" wildcard could be used to
+//     represent all alerts.
 func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 	c := &AlertsFeedbackListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId

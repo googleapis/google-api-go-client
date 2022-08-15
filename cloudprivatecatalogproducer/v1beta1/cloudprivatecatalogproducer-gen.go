@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/private-catalog/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudprivatecatalogproducer/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx)
+//	import "google.golang.org/api/cloudprivatecatalogproducer/v1beta1"
+//	...
+//	ctx := context.Background()
+//	cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudprivatecatalogproducerService, err := cloudprivatecatalogproducer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudprivatecatalogproducer // import "google.golang.org/api/cloudprivatecatalogproducer/v1beta1"
@@ -219,8 +219,8 @@ type OperationsService struct {
 // For example, suppose the cloud resource hierarchy is as follows:
 //
 // * organizations/example.com
-//   * folders/team
-//     * projects/test
+//   - folders/team
+//   - projects/test
 //
 // After creating an association with `organizations/example.com`, the
 // catalog
@@ -899,41 +899,41 @@ func (s *GoogleCloudPrivatecatalogproducerV1beta1Version) MarshalJSON() ([]byte,
 //
 // Example Policy with multiple AuditConfigs:
 //
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:jose@example.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "sampleservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:aliya@example.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_configs": [
+//	    {
+//	      "service": "allServices"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	          "exempted_members": [
+//	            "user:jose@example.com"
+//	          ]
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	        },
+//	        {
+//	          "log_type": "ADMIN_READ",
+//	        }
+//	      ]
+//	    },
+//	    {
+//	      "service": "sampleservice.googleapis.com"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	          "exempted_members": [
+//	            "user:aliya@example.com"
+//	          ]
+//	        }
+//	      ]
+//	    }
+//	  ]
+//	}
 //
 // For sampleservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
@@ -980,19 +980,19 @@ func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 // type of permissions.
 // Example:
 //
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:jose@example.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_log_configs": [
+//	    {
+//	      "log_type": "DATA_READ",
+//	      "exempted_members": [
+//	        "user:jose@example.com"
+//	      ]
+//	    },
+//	    {
+//	      "log_type": "DATA_WRITE",
+//	    }
+//	  ]
+//	}
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
@@ -1145,7 +1145,6 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 // which specifies access
 // controls for Google Cloud resources.
 //
-//
 // A `Policy` is a collection of `bindings`. A `binding` binds one or
 // more
 // `members` to a single `role`. Members can be user accounts, service
@@ -1166,52 +1165,56 @@ func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 //
 // **JSON example:**
 //
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/resourcemanager.organizationAdmin",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
+//	{
+//	  "bindings": [
+//	    {
+//	      "role": "roles/resourcemanager.organizationAdmin",
+//	      "members": [
+//	        "user:mike@example.com",
+//	        "group:admins@example.com",
+//	        "domain:google.com",
 //
 // "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/resourcemanager.organizationViewer",
-//           "members": ["user:eve@example.com"],
-//           "condition": {
-//             "title": "expirable access",
-//             "description": "Does not grant access after Sep 2020",
-//             "expression": "request.time <
+//
+//	  ]
+//	},
+//	{
+//	  "role": "roles/resourcemanager.organizationViewer",
+//	  "members": ["user:eve@example.com"],
+//	  "condition": {
+//	    "title": "expirable access",
+//	    "description": "Does not grant access after Sep 2020",
+//	    "expression": "request.time <
+//
 // timestamp('2020-10-01T00:00:00.000Z')",
-//           }
-//         }
-//       ],
-//       "etag": "BwWWja0YfJA=",
-//       "version": 3
-//     }
+//
+//	      }
+//	    }
+//	  ],
+//	  "etag": "BwWWja0YfJA=",
+//	  "version": 3
+//	}
 //
 // **YAML example:**
 //
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-project-id@appspot.gserviceaccount.com
-//       role: roles/resourcemanager.organizationAdmin
-//     - members:
-//       - user:eve@example.com
-//       role: roles/resourcemanager.organizationViewer
-//       condition:
-//         title: expirable access
-//         description: Does not grant access after Sep 2020
-//         expression: request.time <
+//	bindings:
+//	- members:
+//	  - user:mike@example.com
+//	  - group:admins@example.com
+//	  - domain:google.com
+//	  - serviceAccount:my-project-id@appspot.gserviceaccount.com
+//	  role: roles/resourcemanager.organizationAdmin
+//	- members:
+//	  - user:eve@example.com
+//	  role: roles/resourcemanager.organizationViewer
+//	  condition:
+//	    title: expirable access
+//	    description: Does not grant access after Sep 2020
+//	    expression: request.time <
+//
 // timestamp('2020-10-01T00:00:00.000Z')
-//     - etag: BwWWja0YfJA=
-//     - version: 3
+//   - etag: BwWWja0YfJA=
+//   - version: 3
 //
 // For a description of IAM and its features, see the
 // [IAM documentation](https://cloud.google.com/iam/docs/).
@@ -1545,10 +1548,12 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type GoogleProtobufEmpty struct {
@@ -1617,30 +1622,35 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 //
 // Example (Comparison):
 //
-//     title: "Summary size limit"
-//     description: "Determines if a summary is less than 100 chars"
-//     expression: "document.summary.size() < 100"
+//	title: "Summary size limit"
+//	description: "Determines if a summary is less than 100 chars"
+//	expression: "document.summary.size() < 100"
 //
 // Example (Equality):
 //
-//     title: "Requestor is owner"
-//     description: "Determines if requestor is the document owner"
-//     expression: "document.owner ==
+//	title: "Requestor is owner"
+//	description: "Determines if requestor is the document owner"
+//	expression: "document.owner ==
+//
 // request.auth.claims.email"
 //
 // Example (Logic):
 //
-//     title: "Public documents"
-//     description: "Determine whether the document should be publicly
+//	title: "Public documents"
+//	description: "Determine whether the document should be publicly
+//
 // visible"
-//     expression: "document.type != 'private' && document.type !=
+//
+//	expression: "document.type != 'private' && document.type !=
+//
 // 'internal'"
 //
 // Example (Data Manipulation):
 //
-//     title: "Notification string"
-//     description: "Create a notification string with a timestamp."
-//     expression: "'New message received at ' +
+//	title: "Notification string"
+//	description: "Create a notification string with a timestamp."
+//	expression: "'New message received at ' +
+//
 // string(document.create_time)"
 //
 // The exact variables and functions that may be referenced within an
@@ -1905,7 +1915,9 @@ func (c *CatalogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Catalog.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -2056,7 +2068,9 @@ func (c *CatalogsGetCall) doRequest(alt string) (*http.Response, error) {
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Catalog.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -2565,7 +2579,9 @@ func (c *CatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Catalog.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -2995,7 +3011,9 @@ func (c *CatalogsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Catalog.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -3889,7 +3907,9 @@ func (c *CatalogsProductsCreateCall) doRequest(alt string) (*http.Response, erro
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Product.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -4168,7 +4188,9 @@ func (c *CatalogsProductsGetCall) doRequest(alt string) (*http.Response, error) 
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Product.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -4524,7 +4546,9 @@ func (c *CatalogsProductsPatchCall) doRequest(alt string) (*http.Response, error
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Product.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -5094,7 +5118,9 @@ func (c *CatalogsProductsVersionsGetCall) doRequest(alt string) (*http.Response,
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Version.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -5437,7 +5463,9 @@ func (c *CatalogsProductsVersionsPatchCall) doRequest(alt string) (*http.Respons
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudPrivatecatalogproducerV1beta1Version.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -5520,7 +5548,9 @@ type OperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
+//
+//	The server
+//
 // makes a best effort to cancel the operation, but success is
 // not
 // guaranteed.  If the server doesn't support this method, it

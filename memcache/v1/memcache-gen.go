@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/memorystore/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/memcache/v1"
-//   ...
-//   ctx := context.Background()
-//   memcacheService, err := memcache.NewService(ctx)
+//	import "google.golang.org/api/memcache/v1"
+//	...
+//	ctx := context.Background()
+//	memcacheService, err := memcache.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   memcacheService, err := memcache.NewService(ctx, option.WithAPIKey("AIza..."))
+//	memcacheService, err := memcache.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   memcacheService, err := memcache.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	memcacheService, err := memcache.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package memcache // import "google.golang.org/api/memcache/v1"
@@ -511,9 +511,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// value are arbitrary strings provided by the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MaintenancePolicyNames: Deprecated. The MaintenancePolicies that have
-	// been attached to the instance. The key must be of the type name of
-	// the oneof policy name defined in MaintenancePolicy, and the
+	// MaintenancePolicyNames: Optional. Deprecated. The MaintenancePolicies
+	// that have been attached to the instance. The key must be of the type
+	// name of the oneof policy name defined in MaintenancePolicy, and the
 	// referenced policy must define the same policy type. For complete
 	// details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
@@ -684,9 +684,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// oneof policy name defined in MaintenancePolicy, and the embedded
 	// policy must define the same policy type. For complete details of
 	// MaintenancePolicy, please refer to go/cloud-saas-mw-ug. If only the
-	// name is needed (like in the deprecated
-	// Instance.maintenance_policy_names field) then only populate
-	// MaintenancePolicy.name.
+	// name is needed, then only populate MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to
@@ -1881,6 +1879,20 @@ type UpdatePolicy struct {
 	//   "UPDATE_CHANNEL_UNSPECIFIED" - Unspecified channel.
 	//   "EARLIER" - Early channel within a customer project.
 	//   "LATER" - Later channel within a customer project.
+	//   "WEEK1" - ! ! The follow channels can ONLY be used if you adopt the
+	// new MW system! ! ! NOTE: all WEEK channels are assumed to be under a
+	// weekly window. ! There is currently no dedicated channel definitions
+	// for Daily windows. ! If you use Daily window, the system will assume
+	// a 1d (24Hours) advanced ! notification period b/w EARLY and LATER. !
+	// We may consider support more flexible daily channel specifications in
+	// ! the future. WEEK1 == EARLIER with minimum 7d advanced notification.
+	// {7d, 14d} The system will treat them equally and will use WEEK1
+	// whenever it can. New customers are encouraged to use this channel
+	// annotation.
+	//   "WEEK2" - WEEK2 == LATER with minimum 14d advanced notification
+	// {14d, 21d}.
+	//   "WEEK5" - WEEK5 == 40d support. minimum 35d advanced notification
+	// {35d, 42d}.
 	Channel string `json:"channel,omitempty"`
 
 	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
@@ -2153,8 +2165,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2363,8 +2375,8 @@ type ProjectsLocationsInstancesApplyParametersCall struct {
 // nodes in order to update them to the current set of parameters for
 // the Memcached Instance.
 //
-// - name: Resource name of the Memcached instance for which parameter
-//   group updates should be applied.
+//   - name: Resource name of the Memcached instance for which parameter
+//     group updates should be applied.
 func (r *ProjectsLocationsInstancesService) ApplyParameters(name string, applyparametersrequest *ApplyParametersRequest) *ProjectsLocationsInstancesApplyParametersCall {
 	c := &ProjectsLocationsInstancesApplyParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2506,9 +2518,9 @@ type ProjectsLocationsInstancesCreateCall struct {
 
 // Create: Creates a new Instance in a given location.
 //
-// - parent: The resource name of the instance location using the form:
-//   `projects/{project_id}/locations/{location_id}` where `location_id`
-//   refers to a GCP region.
+//   - parent: The resource name of the instance location using the form:
+//     `projects/{project_id}/locations/{location_id}` where `location_id`
+//     refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2666,9 +2678,9 @@ type ProjectsLocationsInstancesDeleteCall struct {
 
 // Delete: Deletes a single Instance.
 //
-// - name: Memcached instance resource name in the format:
-//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//   d}` where `location_id` refers to a GCP region.
+//   - name: Memcached instance resource name in the format:
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2801,9 +2813,9 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets details of a single Instance.
 //
-// - name: Memcached instance resource name in the format:
-//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//   d}` where `location_id` refers to a GCP region.
+//   - name: Memcached instance resource name in the format:
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2949,9 +2961,9 @@ type ProjectsLocationsInstancesListCall struct {
 
 // List: Lists Instances in a given location.
 //
-// - parent: The resource name of the instance location using the form:
-//   `projects/{project_id}/locations/{location_id}` where `location_id`
-//   refers to a GCP region.
+//   - parent: The resource name of the instance location using the form:
+//     `projects/{project_id}/locations/{location_id}` where `location_id`
+//     refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3173,14 +3185,14 @@ type ProjectsLocationsInstancesPatchCall struct {
 
 // Patch: Updates an existing Instance in a given project and location.
 //
-// - name: Unique name of the resource in this scope including project
-//   and location using the form:
-//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//   d}` Note: Memcached instances are managed and addressed at the
-//   regional level so `location_id` here refers to a Google Cloud
-//   region; however, users may choose which zones Memcached nodes
-//   should be provisioned in within an instance. Refer to zones field
-//   for more details.
+//   - name: Unique name of the resource in this scope including project
+//     and location using the form:
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}` Note: Memcached instances are managed and addressed at the
+//     regional level so `location_id` here refers to a Google Cloud
+//     region; however, users may choose which zones Memcached nodes
+//     should be provisioned in within an instance. Refer to zones field
+//     for more details.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3335,9 +3347,9 @@ type ProjectsLocationsInstancesRescheduleMaintenanceCall struct {
 
 // RescheduleMaintenance: Reschedules upcoming maintenance event.
 //
-// - instance: Memcache instance resource name using the form:
-//   `projects/{project_id}/locations/{location_id}/instances/{instance_i
-//   d}` where `location_id` refers to a GCP region.
+//   - instance: Memcache instance resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}` where `location_id` refers to a GCP region.
 func (r *ProjectsLocationsInstancesService) RescheduleMaintenance(instance string, reschedulemaintenancerequest *RescheduleMaintenanceRequest) *ProjectsLocationsInstancesRescheduleMaintenanceCall {
 	c := &ProjectsLocationsInstancesRescheduleMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instance = instance
@@ -3482,8 +3494,8 @@ type ProjectsLocationsInstancesUpdateParametersCall struct {
 // followed by `ApplyParameters` to apply the parameters to nodes of the
 // Memcached instance.
 //
-// - name: Resource name of the Memcached instance for which the
-//   parameters should be updated.
+//   - name: Resource name of the Memcached instance for which the
+//     parameters should be updated.
 func (r *ProjectsLocationsInstancesService) UpdateParameters(name string, updateparametersrequest *UpdateParametersRequest) *ProjectsLocationsInstancesUpdateParametersCall {
 	c := &ProjectsLocationsInstancesUpdateParametersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/android/management
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/androidmanagement/v1"
-//   ...
-//   ctx := context.Background()
-//   androidmanagementService, err := androidmanagement.NewService(ctx)
+//	import "google.golang.org/api/androidmanagement/v1"
+//	...
+//	ctx := context.Background()
+//	androidmanagementService, err := androidmanagement.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
+//	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	androidmanagementService, err := androidmanagement.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package androidmanagement // import "google.golang.org/api/androidmanagement/v1"
@@ -444,9 +444,9 @@ type AppProcessInfo struct {
 	ApkSha256Hash string `json:"apkSha256Hash,omitempty"`
 
 	// PackageNames: Package names of all packages that are associated with
-	// the particular user id. In most cases, this will be a single package
-	// name, the package that has been assigned that user id. If multiple
-	// application share a uid then all packages sharing uid will be
+	// the particular user ID. In most cases, this will be a single package
+	// name, the package that has been assigned that user ID. If multiple
+	// application share a UID then all packages sharing UID will be
 	// included.
 	PackageNames []string `json:"packageNames,omitempty"`
 
@@ -909,6 +909,30 @@ type ApplicationPolicy struct {
 	// permission grant state.
 	//   "PACKAGE_ACCESS" - Grants access to package access state.
 	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
+	//   "NETWORK_ACTIVITY_LOGS" - Grants access to network activity logs.
+	// Allows the delegated application to call setNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setNetworkLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isNetworkLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isNetworkLoggingEnabled%28android.content.ComponentName%29)
+	// and retrieveNetworkLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveNetworkLogs%28android.content.ComponentName,%20long%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices on Android 10 and above.
+	// Supported for a work profile on Android 12 and above. When delegation
+	// is supported and set, NETWORK_ACTIVITY_LOGS is ignored.
+	//   "SECURITY_LOGS" - Grants access to security logs. Allows the
+	// delegated application to call setSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setSecurityLoggingEnabled%28android.content.ComponentName,%20boolean%29),
+	// isSecurityLoggingEnabled
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#isSecurityLoggingEnabled%28android.content.ComponentName%29),
+	// retrieveSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrieveSecurityLogs%28android.content.ComponentName%29)
+	// and retrievePreRebootSecurityLogs
+	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#retrievePreRebootSecurityLogs%28android.content.ComponentName%29)
+	// methods. This scope can be delegated to at most one application.
+	// Supported for fully managed devices and company-owned devices with a
+	// work profile on Android 12 and above. When delegation is supported
+	// and set, SECURITY_LOGS is ignored.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
 
 	// Disabled: Whether the app is disabled. When disabled, the app data is
@@ -2332,8 +2356,13 @@ type EnrollmentToken struct {
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 
 	// Duration: The length of time the enrollment token is valid, ranging
-	// from 1 minute to 90 days. If not specified, the default duration is 1
-	// hour.
+	// from 1 minute to Durations.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE),
+	// approximately 10,000 years. If not specified, the default duration is
+	// 1 hour. Please note that if requested duration causes the resulting
+	// expiration_timestamp to exceed Timestamps.MAX_VALUE
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Timestamps.html#MAX_VALUE),
+	// then expiration_timestamp is coerced to Timestamps.MAX_VALUE.
 	Duration string `json:"duration,omitempty"`
 
 	// ExpirationTimestamp: The expiration time of the token. This is a
@@ -3873,6 +3902,10 @@ type NonComplianceDetail struct {
 	//   "ONC_WIFI_INVALID_VALUE" - There is an incorrect value in ONC Wi-Fi
 	// configuration. fieldPath specifies which field value is incorrect.
 	// oncWifiContext is set. nonComplianceReason is set to INVALID_VALUE.
+	//   "ONC_WIFI_API_LEVEL" - The ONC Wi-Fi setting is not supported in
+	// the API level of the Android version running on the device. fieldPath
+	// specifies which field value is not supported. oncWifiContext is set.
+	// nonComplianceReason is set to API_LEVEL.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -5680,7 +5713,8 @@ func (s *SoftwareInfo) MarshalJSON() ([]byte, error) {
 // SpecificNonComplianceReason.
 type SpecificNonComplianceContext struct {
 	// OncWifiContext: Additional context for non-compliance related to
-	// Wi-Fi configuration. See ONC_WIFI_INVALID_VALUE.
+	// Wi-Fi configuration. See ONC_WIFI_INVALID_VALUE and
+	// ONC_WIFI_API_LEVEL
 	OncWifiContext *OncWifiContext `json:"oncWifiContext,omitempty"`
 
 	// PasswordPoliciesContext: Additional context for non-compliance
@@ -6023,13 +6057,15 @@ type UsageLog struct {
 	// logged security events. Supported for fully managed devices on
 	// Android 7 and above. Supported for company-owned devices with a work
 	// profile on Android 12 and above, on which only security events from
-	// the work profile are logged.
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
 	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
-	// which only network events from the work profile are logged.
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
 	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
 
 	// UploadOnCellularAllowed: Specifies which of the enabled log types can
@@ -6044,13 +6080,15 @@ type UsageLog struct {
 	// logged security events. Supported for fully managed devices on
 	// Android 7 and above. Supported for company-owned devices with a work
 	// profile on Android 12 and above, on which only security events from
-	// the work profile are logged.
+	// the work profile are logged. Can be overridden by the application
+	// delegated scope SECURITY_LOGS
 	//   "NETWORK_ACTIVITY_LOGS" - Enable logging of on-device network
 	// events, like DNS lookups and TCP connections. See UsageLogEvent for a
 	// complete description of the logged network events. Supported for
 	// fully managed devices on Android 8 and above. Supported for
 	// company-owned devices with a work profile on Android 12 and above, on
-	// which only network events from the work profile are logged.
+	// which only network events from the work profile are logged. Can be
+	// overridden by the application delegated scope NETWORK_ACTIVITY_LOGS
 	UploadOnCellularAllowed []string `json:"uploadOnCellularAllowed,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnabledLogTypes") to
@@ -6107,7 +6145,7 @@ type UsageLogEvent struct {
 	CertValidationFailureEvent *CertValidationFailureEvent `json:"certValidationFailureEvent,omitempty"`
 
 	// ConnectEvent: A TCP connect event was initiated through the standard
-	// network stack. Part of NETWORK_LOGS.
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	ConnectEvent *ConnectEvent `json:"connectEvent,omitempty"`
 
 	// CryptoSelfTestCompletedEvent: Validates whether Android’s built-in
@@ -6117,7 +6155,7 @@ type UsageLogEvent struct {
 	CryptoSelfTestCompletedEvent *CryptoSelfTestCompletedEvent `json:"cryptoSelfTestCompletedEvent,omitempty"`
 
 	// DnsEvent: A DNS lookup event was initiated through the standard
-	// network stack. Part of NETWORK_LOGS.
+	// network stack. Part of NETWORK_ACTIVITY_LOGS.
 	DnsEvent *DnsEvent `json:"dnsEvent,omitempty"`
 
 	// EventId: Unique id of the event.
@@ -6243,8 +6281,8 @@ type UsageLogEvent struct {
 	RemoteLockEvent *RemoteLockEvent `json:"remoteLockEvent,omitempty"`
 
 	// WipeFailureEvent: The work profile or company-owned device failed to
-	// wipe when when requested. This could be user initiated or admin
-	// initiated e.g. delete was received. Part of SECURITY_LOGS.
+	// wipe when requested. This could be user initiated or admin initiated
+	// e.g. delete was received. Part of SECURITY_LOGS.
 	WipeFailureEvent *WipeFailureEvent `json:"wipeFailureEvent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6557,8 +6595,8 @@ func (s *WipeAction) MarshalJSON() ([]byte, error) {
 }
 
 // WipeFailureEvent: The work profile or company-owned device failed to
-// wipe when when requested. This could be user initiated or admin
-// initiated e.g. delete was received. Intentionally empty.
+// wipe when requested. This could be user initiated or admin initiated
+// e.g. delete was received. Intentionally empty.
 type WipeFailureEvent struct {
 }
 
@@ -6763,8 +6801,8 @@ type EnterprisesDeleteCall struct {
 // Delete: Deletes an enterprise. Only available for EMM-managed
 // enterprises.
 //
-// - name: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesService) Delete(name string) *EnterprisesDeleteCall {
 	c := &EnterprisesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6897,8 +6935,8 @@ type EnterprisesGetCall struct {
 
 // Get: Gets an enterprise.
 //
-// - name: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesService) Get(name string) *EnterprisesGetCall {
 	c := &EnterprisesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7072,9 +7110,12 @@ func (c *EnterprisesListCall) ProjectId(projectId string) *EnterprisesListCall {
 // fields to return. This method only supports BASIC.
 //
 // Possible values:
-//   "ENTERPRISE_VIEW_UNSPECIFIED" - The API will default to the BASIC
+//
+//	"ENTERPRISE_VIEW_UNSPECIFIED" - The API will default to the BASIC
+//
 // view for the List method.
-//   "BASIC" - Includes name and enterprise_display_name fields.
+//
+//	"BASIC" - Includes name and enterprise_display_name fields.
 func (c *EnterprisesListCall) View(view string) *EnterprisesListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7257,8 +7298,8 @@ type EnterprisesPatchCall struct {
 
 // Patch: Updates an enterprise.
 //
-// - name: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - name: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesService) Patch(name string, enterprise *Enterprise) *EnterprisesPatchCall {
 	c := &EnterprisesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7414,8 +7455,8 @@ type EnterprisesApplicationsGetCall struct {
 
 // Get: Gets info about an application.
 //
-// - name: The name of the application in the form
-//   enterprises/{enterpriseId}/applications/{package_name}.
+//   - name: The name of the application in the form
+//     enterprises/{enterpriseId}/applications/{package_name}.
 func (r *EnterprisesApplicationsService) Get(name string) *EnterprisesApplicationsGetCall {
 	c := &EnterprisesApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7574,8 +7615,8 @@ type EnterprisesDevicesDeleteCall struct {
 
 // Delete: Deletes a device. This operation wipes the device.
 //
-// - name: The name of the device in the form
-//   enterprises/{enterpriseId}/devices/{deviceId}.
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDeleteCall {
 	c := &EnterprisesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7586,10 +7627,14 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 // flags that control the device wiping behavior.
 //
 // Possible values:
-//   "WIPE_DATA_FLAG_UNSPECIFIED" - This value is ignored.
-//   "PRESERVE_RESET_PROTECTION_DATA" - Preserve the factory reset
+//
+//	"WIPE_DATA_FLAG_UNSPECIFIED" - This value is ignored.
+//	"PRESERVE_RESET_PROTECTION_DATA" - Preserve the factory reset
+//
 // protection data on the device.
-//   "WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external
+//
+//	"WIPE_EXTERNAL_STORAGE" - Additionally wipe the device's external
+//
 // storage (such as SD cards).
 func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
 	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
@@ -7752,8 +7797,8 @@ type EnterprisesDevicesGetCall struct {
 
 // Get: Gets a device.
 //
-// - name: The name of the device in the form
-//   enterprises/{enterpriseId}/devices/{deviceId}.
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7901,8 +7946,8 @@ type EnterprisesDevicesIssueCommandCall struct {
 // returned contains a Command in its metadata field. Use the get
 // operation method to get the status of the command.
 //
-// - name: The name of the device in the form
-//   enterprises/{enterpriseId}/devices/{deviceId}.
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) IssueCommand(name string, command *Command) *EnterprisesDevicesIssueCommandCall {
 	c := &EnterprisesDevicesIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8044,8 +8089,8 @@ type EnterprisesDevicesListCall struct {
 
 // List: Lists devices for a given enterprise.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8237,8 +8282,8 @@ type EnterprisesDevicesPatchCall struct {
 
 // Patch: Updates a device.
 //
-// - name: The name of the device in the form
-//   enterprises/{enterpriseId}/devices/{deviceId}.
+//   - name: The name of the device in the form
+//     enterprises/{enterpriseId}/devices/{deviceId}.
 func (r *EnterprisesDevicesService) Patch(name string, device *Device) *EnterprisesDevicesPatchCall {
 	c := &EnterprisesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9037,8 +9082,8 @@ type EnterprisesEnrollmentTokensCreateCall struct {
 // recommended for EMMs to securely store the token if it's intended to
 // be reused.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) Create(parent string, enrollmenttoken *EnrollmentToken) *EnterprisesEnrollmentTokensCreateCall {
 	c := &EnterprisesEnrollmentTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9180,8 +9225,8 @@ type EnterprisesEnrollmentTokensDeleteCall struct {
 // Delete: Deletes an enrollment token. This operation invalidates the
 // token, preventing its future use.
 //
-// - name: The name of the enrollment token in the form
-//   enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
+//   - name: The name of the enrollment token in the form
+//     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Delete(name string) *EnterprisesEnrollmentTokensDeleteCall {
 	c := &EnterprisesEnrollmentTokensDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9319,8 +9364,8 @@ type EnterprisesEnrollmentTokensGetCall struct {
 // recommended to delete active enrollment tokens as soon as they're not
 // intended to be used anymore.
 //
-// - name: The name of the enrollment token in the form
-//   enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
+//   - name: The name of the enrollment token in the form
+//     enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 func (r *EnterprisesEnrollmentTokensService) Get(name string) *EnterprisesEnrollmentTokensGetCall {
 	c := &EnterprisesEnrollmentTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9471,8 +9516,8 @@ type EnterprisesEnrollmentTokensListCall struct {
 // lifecycle. For security reasons, it's recommended to delete active
 // enrollment tokens as soon as they're not intended to be used anymore.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesEnrollmentTokensService) List(parent string) *EnterprisesEnrollmentTokensListCall {
 	c := &EnterprisesEnrollmentTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9666,8 +9711,8 @@ type EnterprisesPoliciesDeleteCall struct {
 // Delete: Deletes a policy. This operation is only permitted if no
 // devices are currently referencing the policy.
 //
-// - name: The name of the policy in the form
-//   enterprises/{enterpriseId}/policies/{policyId}.
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Delete(name string) *EnterprisesPoliciesDeleteCall {
 	c := &EnterprisesPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9800,8 +9845,8 @@ type EnterprisesPoliciesGetCall struct {
 
 // Get: Gets a policy.
 //
-// - name: The name of the policy in the form
-//   enterprises/{enterpriseId}/policies/{policyId}.
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Get(name string) *EnterprisesPoliciesGetCall {
 	c := &EnterprisesPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9947,8 +9992,8 @@ type EnterprisesPoliciesListCall struct {
 
 // List: Lists policies for a given enterprise.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesPoliciesService) List(parent string) *EnterprisesPoliciesListCall {
 	c := &EnterprisesPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10140,8 +10185,8 @@ type EnterprisesPoliciesPatchCall struct {
 
 // Patch: Updates or creates a policy.
 //
-// - name: The name of the policy in the form
-//   enterprises/{enterpriseId}/policies/{policyId}.
+//   - name: The name of the policy in the form
+//     enterprises/{enterpriseId}/policies/{policyId}.
 func (r *EnterprisesPoliciesService) Patch(name string, policy *Policy) *EnterprisesPoliciesPatchCall {
 	c := &EnterprisesPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10297,8 +10342,8 @@ type EnterprisesWebAppsCreateCall struct {
 
 // Create: Creates a web app.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) Create(parent string, webapp *WebApp) *EnterprisesWebAppsCreateCall {
 	c := &EnterprisesWebAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10439,8 +10484,8 @@ type EnterprisesWebAppsDeleteCall struct {
 
 // Delete: Deletes a web app.
 //
-// - name: The name of the web app in the form
-//   enterprises/{enterpriseId}/webApps/{packageName}.
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Delete(name string) *EnterprisesWebAppsDeleteCall {
 	c := &EnterprisesWebAppsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10573,8 +10618,8 @@ type EnterprisesWebAppsGetCall struct {
 
 // Get: Gets a web app.
 //
-// - name: The name of the web app in the form
-//   enterprises/{enterpriseId}/webApp/{packageName}.
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApp/{packageName}.
 func (r *EnterprisesWebAppsService) Get(name string) *EnterprisesWebAppsGetCall {
 	c := &EnterprisesWebAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10720,8 +10765,8 @@ type EnterprisesWebAppsListCall struct {
 
 // List: Lists web apps for a given enterprise.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebAppsService) List(parent string) *EnterprisesWebAppsListCall {
 	c := &EnterprisesWebAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10914,8 +10959,8 @@ type EnterprisesWebAppsPatchCall struct {
 
 // Patch: Updates a web app.
 //
-// - name: The name of the web app in the form
-//   enterprises/{enterpriseId}/webApps/{packageName}.
+//   - name: The name of the web app in the form
+//     enterprises/{enterpriseId}/webApps/{packageName}.
 func (r *EnterprisesWebAppsService) Patch(name string, webapp *WebApp) *EnterprisesWebAppsPatchCall {
 	c := &EnterprisesWebAppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11072,8 +11117,8 @@ type EnterprisesWebTokensCreateCall struct {
 // Create: Creates a web token to access an embeddable managed Google
 // Play web UI for a given enterprise.
 //
-// - parent: The name of the enterprise in the form
-//   enterprises/{enterpriseId}.
+//   - parent: The name of the enterprise in the form
+//     enterprises/{enterpriseId}.
 func (r *EnterprisesWebTokensService) Create(parent string, webtoken *WebToken) *EnterprisesWebTokensCreateCall {
 	c := &EnterprisesWebTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

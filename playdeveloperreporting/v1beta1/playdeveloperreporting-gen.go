@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/play/developer/reporting
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/playdeveloperreporting/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx)
+//	import "google.golang.org/api/playdeveloperreporting/v1beta1"
+//	...
+//	ctx := context.Background()
+//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithAPIKey("AIza..."))
+//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	playdeveloperreportingService, err := playdeveloperreporting.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package playdeveloperreporting // import "google.golang.org/api/playdeveloperreporting/v1beta1"
@@ -279,11 +279,28 @@ func (s *GooglePlayDeveloperReportingV1beta1Anomaly) MarshalJSON() ([]byte, erro
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app. **Related metric sets:** * vitals.errors contains
-// unnormalized version (absolute counts) of crashes. * vitals.errors
-// contains normalized metrics about crashes, another stability metric.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app. **Related
+// metric sets:** * vitals.errors contains unnormalized version
+// (absolute counts) of crashes. * vitals.errors contains normalized
+// metrics about crashes, another stability metric.
 type GooglePlayDeveloperReportingV1beta1AnrRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -348,11 +365,28 @@ func (s *GooglePlayDeveloperReportingV1beta1AnrRateMetricSet) MarshalJSON() ([]b
 // known as form factor) of the user's device. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app. **Related metric sets:** * vitals.errors contains
-// unnormalized version (absolute counts) of crashes. * vitals.errors
-// contains normalized metrics about ANRs, another stability metric.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app. **Related
+// metric sets:** * vitals.errors contains unnormalized version
+// (absolute counts) of crashes. * vitals.errors contains normalized
+// metrics about ANRs, another stability metric.
 type GooglePlayDeveloperReportingV1beta1CrashRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -463,9 +497,25 @@ func (s *GooglePlayDeveloperReportingV1beta1DimensionValue) MarshalJSON() ([]byt
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -704,7 +754,24 @@ type GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest struct {
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -818,7 +885,24 @@ type GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest struct {
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -932,7 +1016,24 @@ type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1049,7 +1150,24 @@ type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSe
 	// `deviceType` (string): the type (also known as form factor) of the
 	// user's device. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter
-	// ISO-3166 code (e.g. US for the United States).
+	// ISO-3166 code (e.g. US for the United States). * `deviceRamBucket`
+	// (int64): RAM of the device, in MB, in buckets (3GB, 4GB, etc.). *
+	// `deviceSocMake` (string): Make of the device's primary
+	// system-on-chip, e.g., Samsung. Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+	// * `deviceSocModel` (string): Model of the device's primary
+	// system-on-chip, e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+	// (string): Screen density of the device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// Filter: Filters to apply to data. The filtering expression follows
@@ -1190,9 +1308,25 @@ func (s *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetr
 // form factor) of the user's device. * `countryCode` (string): the
 // country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). **Required permissions**: to access this resource, the
-// calling user needs the _View app information (read-only)_ permission
-// for the app.
+// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
+// * `deviceSocModel` (string): Model of the device's primary
+// system-on-chip, e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
+// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
+// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
+// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
+// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
+// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
+// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
+// version of the device, e.g., "196610". * `deviceScreenSize` (string):
+// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
+// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
+// permissions**: to access this resource, the calling user needs the
+// _View app information (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
@@ -1303,38 +1437,40 @@ func (s *GooglePlayDeveloperReportingV1beta1TimelineSpec) MarshalJSON() ([]byte,
 // is set and utc_offset is unset: a civil time on a calendar day in a
 // particular time zone. * When neither time_zone nor utc_offset is set:
 // a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type GoogleTypeDateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -1488,8 +1624,8 @@ type AnomaliesListCall struct {
 
 // List: Lists anomalies in any of the datasets.
 //
-// - parent: Parent app for which anomalies were detected. Format:
-//   apps/{app}.
+//   - parent: Parent app for which anomalies were detected. Format:
+//     apps/{app}.
 func (r *AnomaliesService) List(parent string) *AnomaliesListCall {
 	c := &AnomaliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2324,8 +2460,8 @@ type VitalsExcessivewakeuprateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-// - name: The resource name. Format:
-//   apps/{app}/excessiveWakeupRateMetricSet.
+//   - name: The resource name. Format:
+//     apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Get(name string) *VitalsExcessivewakeuprateGetCall {
 	c := &VitalsExcessivewakeuprateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2471,8 +2607,8 @@ type VitalsExcessivewakeuprateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-// - name: The resource name. Format:
-//   apps/{app}/excessiveWakeupRateMetricSet.
+//   - name: The resource name. Format:
+//     apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Query(name string, googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest) *VitalsExcessivewakeuprateQueryCall {
 	c := &VitalsExcessivewakeuprateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2637,8 +2773,8 @@ type VitalsStuckbackgroundwakelockrateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-// - name: The resource name. Format:
-//   apps/{app}/stuckBackgroundWakelockRateMetricSet.
+//   - name: The resource name. Format:
+//     apps/{app}/stuckBackgroundWakelockRateMetricSet.
 func (r *VitalsStuckbackgroundwakelockrateService) Get(name string) *VitalsStuckbackgroundwakelockrateGetCall {
 	c := &VitalsStuckbackgroundwakelockrateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2784,8 +2920,8 @@ type VitalsStuckbackgroundwakelockrateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-// - name: The resource name. Format:
-//   apps/{app}/stuckBackgroundWakelockRateMetricSet.
+//   - name: The resource name. Format:
+//     apps/{app}/stuckBackgroundWakelockRateMetricSet.
 func (r *VitalsStuckbackgroundwakelockrateService) Query(name string, googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetRequest) *VitalsStuckbackgroundwakelockrateQueryCall {
 	c := &VitalsStuckbackgroundwakelockrateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

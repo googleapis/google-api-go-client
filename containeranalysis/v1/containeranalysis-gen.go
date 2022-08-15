@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/container-analysis/api/reference/rest/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/containeranalysis/v1"
-//   ...
-//   ctx := context.Background()
-//   containeranalysisService, err := containeranalysis.NewService(ctx)
+//	import "google.golang.org/api/containeranalysis/v1"
+//	...
+//	ctx := context.Background()
+//	containeranalysisService, err := containeranalysis.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   containeranalysisService, err := containeranalysis.NewService(ctx, option.WithAPIKey("AIza..."))
+//	containeranalysisService, err := containeranalysis.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   containeranalysisService, err := containeranalysis.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	containeranalysisService, err := containeranalysis.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package containeranalysis // import "google.golang.org/api/containeranalysis/v1"
@@ -216,6 +216,34 @@ type AliasContext struct {
 
 func (s *AliasContext) MarshalJSON() ([]byte, error) {
 	type NoMethod AliasContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalysisCompleted: Indicates which analysis completed successfully.
+// Multiple types of analysis can be performed on a single resource.
+type AnalysisCompleted struct {
+	AnalysisType []string `json:"analysisType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalysisCompleted) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalysisCompleted
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -493,16 +521,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -2998,6 +3030,12 @@ func (s *DiscoveryNote) MarshalJSON() ([]byte, error) {
 // DiscoveryOccurrence: Provides information about the analysis status
 // of a discovered resource.
 type DiscoveryOccurrence struct {
+	AnalysisCompleted *AnalysisCompleted `json:"analysisCompleted,omitempty"`
+
+	// AnalysisError: Indicates any errors encountered during analysis of a
+	// resource. There could be 0 or more of these errors.
+	AnalysisError []*Status `json:"analysisError,omitempty"`
+
 	// AnalysisStatus: The status of discovery for the resource.
 	//
 	// Possible values:
@@ -3005,9 +3043,10 @@ type DiscoveryOccurrence struct {
 	//   "PENDING" - Resource is known but no action has been taken yet.
 	//   "SCANNING" - Resource is being analyzed.
 	//   "FINISHED_SUCCESS" - Analysis has finished successfully.
+	//   "COMPLETE" - Analysis has completed
 	//   "FINISHED_FAILED" - Analysis has finished unsuccessfully, the
 	// analysis itself is in a bad state.
-	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported
+	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported.
 	AnalysisStatus string `json:"analysisStatus,omitempty"`
 
 	// AnalysisStatusError: When an error is encountered this will contain a
@@ -3033,15 +3072,15 @@ type DiscoveryOccurrence struct {
 	// LastScanTime: The last time this resource was scanned.
 	LastScanTime string `json:"lastScanTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AnalysisStatus") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AnalysisCompleted")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AnalysisStatus") to
+	// NullFields is a list of field names (e.g. "AnalysisCompleted") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -6194,8 +6233,8 @@ type ProjectsNotesBatchCreateCall struct {
 
 // BatchCreate: Creates new notes in batch.
 //
-// - parent: The name of the project in the form of
-//   `projects/[PROJECT_ID]`, under which the notes are to be created.
+//   - parent: The name of the project in the form of
+//     `projects/[PROJECT_ID]`, under which the notes are to be created.
 func (r *ProjectsNotesService) BatchCreate(parent string, batchcreatenotesrequest *BatchCreateNotesRequest) *ProjectsNotesBatchCreateCall {
 	c := &ProjectsNotesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6337,8 +6376,8 @@ type ProjectsNotesCreateCall struct {
 
 // Create: Creates a new note.
 //
-// - parent: The name of the project in the form of
-//   `projects/[PROJECT_ID]`, under which the note is to be created.
+//   - parent: The name of the project in the form of
+//     `projects/[PROJECT_ID]`, under which the note is to be created.
 func (r *ProjectsNotesService) Create(parent string, note *Note) *ProjectsNotesCreateCall {
 	c := &ProjectsNotesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6491,8 +6530,8 @@ type ProjectsNotesDeleteCall struct {
 
 // Delete: Deletes the specified note.
 //
-// - name: The name of the note in the form of
-//   `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
+//   - name: The name of the note in the form of
+//     `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
 func (r *ProjectsNotesService) Delete(name string) *ProjectsNotesDeleteCall {
 	c := &ProjectsNotesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6625,8 +6664,8 @@ type ProjectsNotesGetCall struct {
 
 // Get: Gets the specified note.
 //
-// - name: The name of the note in the form of
-//   `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
+//   - name: The name of the note in the form of
+//     `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
 func (r *ProjectsNotesService) Get(name string) *ProjectsNotesGetCall {
 	c := &ProjectsNotesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6777,10 +6816,10 @@ type ProjectsNotesGetIamPolicyCall struct {
 // the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsNotesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsNotesGetIamPolicyCall {
 	c := &ProjectsNotesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6922,8 +6961,8 @@ type ProjectsNotesListCall struct {
 
 // List: Lists notes for the specified project.
 //
-// - parent: The name of the project to list notes for in the form of
-//   `projects/[PROJECT_ID]`.
+//   - parent: The name of the project to list notes for in the form of
+//     `projects/[PROJECT_ID]`.
 func (r *ProjectsNotesService) List(parent string) *ProjectsNotesListCall {
 	c := &ProjectsNotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7127,8 +7166,8 @@ type ProjectsNotesPatchCall struct {
 
 // Patch: Updates the specified note.
 //
-// - name: The name of the note in the form of
-//   `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
+//   - name: The name of the note in the form of
+//     `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
 func (r *ProjectsNotesService) Patch(name string, note *Note) *ProjectsNotesPatchCall {
 	c := &ProjectsNotesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7288,10 +7327,10 @@ type ProjectsNotesSetIamPolicyCall struct {
 // the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsNotesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsNotesSetIamPolicyCall {
 	c := &ProjectsNotesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7437,10 +7476,10 @@ type ProjectsNotesTestIamPermissionsCall struct {
 // format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsNotesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsNotesTestIamPermissionsCall {
 	c := &ProjectsNotesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7584,8 +7623,8 @@ type ProjectsNotesOccurrencesListCall struct {
 // projects can use this method to get all occurrences across consumer
 // projects referencing the specified note.
 //
-// - name: The name of the note to list occurrences for in the form of
-//   `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
+//   - name: The name of the note to list occurrences for in the form of
+//     `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
 func (r *ProjectsNotesOccurrencesService) List(name string) *ProjectsNotesOccurrencesListCall {
 	c := &ProjectsNotesOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7788,9 +7827,9 @@ type ProjectsOccurrencesBatchCreateCall struct {
 
 // BatchCreate: Creates new occurrences in batch.
 //
-// - parent: The name of the project in the form of
-//   `projects/[PROJECT_ID]`, under which the occurrences are to be
-//   created.
+//   - parent: The name of the project in the form of
+//     `projects/[PROJECT_ID]`, under which the occurrences are to be
+//     created.
 func (r *ProjectsOccurrencesService) BatchCreate(parent string, batchcreateoccurrencesrequest *BatchCreateOccurrencesRequest) *ProjectsOccurrencesBatchCreateCall {
 	c := &ProjectsOccurrencesBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7932,9 +7971,9 @@ type ProjectsOccurrencesCreateCall struct {
 
 // Create: Creates a new occurrence.
 //
-// - parent: The name of the project in the form of
-//   `projects/[PROJECT_ID]`, under which the occurrence is to be
-//   created.
+//   - parent: The name of the project in the form of
+//     `projects/[PROJECT_ID]`, under which the occurrence is to be
+//     created.
 func (r *ProjectsOccurrencesService) Create(parent string, occurrence *Occurrence) *ProjectsOccurrencesCreateCall {
 	c := &ProjectsOccurrencesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8077,8 +8116,8 @@ type ProjectsOccurrencesDeleteCall struct {
 // method to delete an occurrence when the occurrence is no longer
 // applicable for the given resource.
 //
-// - name: The name of the occurrence in the form of
-//   `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
+//   - name: The name of the occurrence in the form of
+//     `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
 func (r *ProjectsOccurrencesService) Delete(name string) *ProjectsOccurrencesDeleteCall {
 	c := &ProjectsOccurrencesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8211,8 +8250,8 @@ type ProjectsOccurrencesGetCall struct {
 
 // Get: Gets the specified occurrence.
 //
-// - name: The name of the occurrence in the form of
-//   `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
+//   - name: The name of the occurrence in the form of
+//     `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
 func (r *ProjectsOccurrencesService) Get(name string) *ProjectsOccurrencesGetCall {
 	c := &ProjectsOccurrencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8363,10 +8402,10 @@ type ProjectsOccurrencesGetIamPolicyCall struct {
 // the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsOccurrencesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsOccurrencesGetIamPolicyCall {
 	c := &ProjectsOccurrencesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8510,8 +8549,8 @@ type ProjectsOccurrencesGetNotesCall struct {
 // Consumer projects can use this method to get a note that belongs to a
 // provider project.
 //
-// - name: The name of the occurrence in the form of
-//   `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
+//   - name: The name of the occurrence in the form of
+//     `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
 func (r *ProjectsOccurrencesService) GetNotes(name string) *ProjectsOccurrencesGetNotesCall {
 	c := &ProjectsOccurrencesGetNotesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8658,8 +8697,8 @@ type ProjectsOccurrencesGetVulnerabilitySummaryCall struct {
 // GetVulnerabilitySummary: Gets a summary of the number and severity of
 // occurrences.
 //
-// - parent: The name of the project to get a vulnerability summary for
-//   in the form of `projects/[PROJECT_ID]`.
+//   - parent: The name of the project to get a vulnerability summary for
+//     in the form of `projects/[PROJECT_ID]`.
 func (r *ProjectsOccurrencesService) GetVulnerabilitySummary(parent string) *ProjectsOccurrencesGetVulnerabilitySummaryCall {
 	c := &ProjectsOccurrencesGetVulnerabilitySummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8816,8 +8855,8 @@ type ProjectsOccurrencesListCall struct {
 
 // List: Lists occurrences for the specified project.
 //
-// - parent: The name of the project to list occurrences for in the form
-//   of `projects/[PROJECT_ID]`.
+//   - parent: The name of the project to list occurrences for in the form
+//     of `projects/[PROJECT_ID]`.
 func (r *ProjectsOccurrencesService) List(parent string) *ProjectsOccurrencesListCall {
 	c := &ProjectsOccurrencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9021,8 +9060,8 @@ type ProjectsOccurrencesPatchCall struct {
 
 // Patch: Updates the specified occurrence.
 //
-// - name: The name of the occurrence in the form of
-//   `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
+//   - name: The name of the occurrence in the form of
+//     `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
 func (r *ProjectsOccurrencesService) Patch(name string, occurrence *Occurrence) *ProjectsOccurrencesPatchCall {
 	c := &ProjectsOccurrencesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9182,10 +9221,10 @@ type ProjectsOccurrencesSetIamPolicyCall struct {
 // the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsOccurrencesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsOccurrencesSetIamPolicyCall {
 	c := &ProjectsOccurrencesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9331,10 +9370,10 @@ type ProjectsOccurrencesTestIamPermissionsCall struct {
 // format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for notes and
 // `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsOccurrencesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsOccurrencesTestIamPermissionsCall {
 	c := &ProjectsOccurrencesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

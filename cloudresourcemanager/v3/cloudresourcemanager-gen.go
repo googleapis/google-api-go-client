@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/resource-manager
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudresourcemanager/v3"
-//   ...
-//   ctx := context.Background()
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx)
+//	import "google.golang.org/api/cloudresourcemanager/v3"
+//	...
+//	ctx := context.Background()
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithScopes(cloudresourcemanager.CloudPlatformReadOnlyScope))
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithScopes(cloudresourcemanager.CloudPlatformReadOnlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudresourcemanagerService, err := cloudresourcemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudresourcemanager // import "google.golang.org/api/cloudresourcemanager/v3"
@@ -380,16 +380,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -434,7 +438,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation:
-//  Metadata describing a long running folder operation
+//
+//	Metadata describing a long running folder operation
 type CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation struct {
 	// DestinationParent: The resource name of the folder or organization we
 	// are either creating the folder under or moving the folder to.
@@ -655,13 +660,15 @@ type EffectiveTag struct {
 	// value is directly attached to the resource, inherited will be false.
 	Inherited bool `json:"inherited,omitempty"`
 
-	// NamespacedTagKey: The namespaced_name of the TagKey, in the format of
-	// `{organization_id}/{tag_key_short_name}`
+	// NamespacedTagKey: The namespaced_name of the TagKey. Now only
+	// supported in the format of `{organization_id}/{tag_key_short_name}`.
+	// Other formats will be supported when we add non-org parented tags.
 	NamespacedTagKey string `json:"namespacedTagKey,omitempty"`
 
-	// NamespacedTagValue: Namespaced name of the TagValue. Must be in the
-	// format
+	// NamespacedTagValue: Namespaced name of the TagValue. Now only
+	// supported in the format
 	// `{organization_id}/{tag_key_short_name}/{tag_value_short_name}`.
+	// Other formats will be supported when we add non-org parented tags.
 	NamespacedTagValue string `json:"namespacedTagValue,omitempty"`
 
 	// TagKey: The name of the TagKey, in the format `tagKeys/{id}`, such as
@@ -2205,7 +2212,7 @@ type TagKey struct {
 	// corresponding purpose_data should be set for the network the tag is
 	// intended for. The key should be 'network' and the value should be in
 	// the format of the network url id string:
-	// http://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
+	// https://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
 	Purpose string `json:"purpose,omitempty"`
 
 	// PurposeData: Optional. Purpose data corresponds to the policy system
@@ -2270,8 +2277,10 @@ type TagValue struct {
 	// `tagValues/456`.
 	Name string `json:"name,omitempty"`
 
-	// NamespacedName: Output only. Namespaced name of the TagValue. Must be
-	// in the format `{organization_id}/{tag_key_short_name}/{short_name}`.
+	// NamespacedName: Output only. Namespaced name of the TagValue. Now
+	// only supported in the format
+	// `{organization_id}/{tag_key_short_name}/{short_name}`. Other formats
+	// will be supported when we add non-org parented tags.
 	NamespacedName string `json:"namespacedName,omitempty"`
 
 	// Parent: Immutable. The resource name of the new TagValue's parent
@@ -2782,8 +2791,8 @@ type FoldersDeleteCall struct {
 // operation will result in a no-op success. The caller must have
 // `resourcemanager.folders.delete` permission on the identified folder.
 //
-// - name: The resource name of the folder to be deleted. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: The resource name of the folder to be deleted. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Delete(name string) *FoldersDeleteCall {
 	c := &FoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2919,8 +2928,8 @@ type FoldersGetCall struct {
 // (for example, `folders/1234`). The caller must have
 // `resourcemanager.folders.get` permission on the identified folder.
 //
-// - name: The resource name of the folder to retrieve. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: The resource name of the folder to retrieve. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Get(name string) *FoldersGetCall {
 	c := &FoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3072,10 +3081,10 @@ type FoldersGetIamPolicyCall struct {
 // `resourcemanager.folders.getIamPolicy` permission on the identified
 // folder.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *FoldersGetIamPolicyCall {
 	c := &FoldersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3446,8 +3455,8 @@ type FoldersMoveCall struct {
 // `resourcemanager.folders.move` permission on the folder's current and
 // proposed new parent.
 //
-// - name: The resource name of the Folder to move. Must be of the form
-//   folders/{folder_id}.
+//   - name: The resource name of the Folder to move. Must be of the form
+//     folders/{folder_id}.
 func (r *FoldersService) Move(name string, movefolderrequest *MoveFolderRequest) *FoldersMoveCall {
 	c := &FoldersMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3600,8 +3609,8 @@ type FoldersPatchCall struct {
 // `PreconditionFailure` explaining this violation will be returned in
 // the Status.details field.
 //
-// - name: Output only. The resource name of the folder. Its format is
-//   `folders/{folder_id}`, for example: "folders/1234".
+//   - name: Output only. The resource name of the folder. Its format is
+//     `folders/{folder_id}`, for example: "folders/1234".
 func (r *FoldersService) Patch(name string, folder *Folder) *FoldersPatchCall {
 	c := &FoldersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3975,10 +3984,10 @@ type FoldersSetIamPolicyCall struct {
 // `resourcemanager.folders.setIamPolicy` permission on the identified
 // folder.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *FoldersSetIamPolicyCall {
 	c := &FoldersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4123,10 +4132,10 @@ type FoldersTestIamPermissionsCall struct {
 // resource name, for example: "folders/1234". There are no permissions
 // required for making this API call.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *FoldersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *FoldersTestIamPermissionsCall {
 	c := &FoldersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4276,8 +4285,8 @@ type FoldersUndeleteCall struct {
 // `resourcemanager.folders.undelete` permission on the identified
 // folder.
 //
-// - name: The resource name of the folder to undelete. Must be of the
-//   form `folders/{folder_id}`.
+//   - name: The resource name of the folder to undelete. Must be of the
+//     form `folders/{folder_id}`.
 func (r *FoldersService) Undelete(name string, undeletefolderrequest *UndeleteFolderRequest) *FoldersUndeleteCall {
 	c := &FoldersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5183,10 +5192,10 @@ type OrganizationsGetCall struct {
 // Get: Fetches an organization resource identified by the specified
 // resource name.
 //
-// - name: The resource name of the Organization to fetch. This is the
-//   organization's relative path in the API, formatted as
-//   "organizations/[organizationId]". For example,
-//   "organizations/1234".
+//   - name: The resource name of the Organization to fetch. This is the
+//     organization's relative path in the API, formatted as
+//     "organizations/[organizationId]". For example,
+//     "organizations/1234".
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5338,10 +5347,10 @@ type OrganizationsGetIamPolicyCall struct {
 // IAM permission `resourcemanager.organizations.getIamPolicy` on the
 // specified organization.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5696,10 +5705,10 @@ type OrganizationsSetIamPolicyCall struct {
 // `resourcemanager.organizations.setIamPolicy` on the specified
 // organization.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5844,10 +5853,10 @@ type OrganizationsTestIamPermissionsCall struct {
 // organization's resource name, for example: "organizations/123". There
 // are no permissions required for making this API call.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
 	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6131,8 +6140,8 @@ type ProjectsDeleteCall struct {
 // not cause an error, but also won't do anything. The caller must have
 // `resourcemanager.projects.delete` permissions for this project.
 //
-// - name: The name of the Project (for example,
-//   `projects/415104041262`).
+//   - name: The name of the Project (for example,
+//     `projects/415104041262`).
 func (r *ProjectsService) Delete(name string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6267,8 +6276,8 @@ type ProjectsGetCall struct {
 // example, `projects/415104041262`). The caller must have
 // `resourcemanager.projects.get` permission for this project.
 //
-// - name: The name of the project (for example,
-//   `projects/415104041262`).
+//   - name: The name of the project (for example,
+//     `projects/415104041262`).
 func (r *ProjectsService) Get(name string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6418,10 +6427,10 @@ type ProjectsGetIamPolicyCall struct {
 // projects/123. Permission is denied if the policy or the resource do
 // not exist.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6930,9 +6939,9 @@ type ProjectsPatchCall struct {
 // for labels field. The caller must have
 // `resourcemanager.projects.update` permission for this project.
 //
-// - name: Output only. The unique resource name of the project. It is
-//   an int64 generated number prefixed by "projects/". Example:
-//   `projects/415104041262`.
+//   - name: Output only. The unique resource name of the project. It is
+//     an int64 generated number prefixed by "projects/". Example:
+//     `projects/415104041262`.
 func (r *ProjectsService) Patch(name string, project *Project) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7136,7 +7145,7 @@ func (c *ProjectsSearchCall) PageToken(pageToken string) *ProjectsSearchCall {
 // labels.color:* | The project has the label `color`. | |
 // labels.color:red | The project's label `color` has the value `red`. |
 // | labels.color:red labels.size:big | The project's label `color` has
-// the value `red` and its label `size` has the value `big`.| ``` If no
+// the value `red` or its label `size` has the value `big`. | ``` If no
 // query is specified, the call will return projects for which the user
 // has the `resourcemanager.projects.get` permission.
 func (c *ProjectsSearchCall) Query(query string) *ProjectsSearchCall {
@@ -7258,7 +7267,7 @@ func (c *ProjectsSearchCall) Do(opts ...googleapi.CallOption) (*SearchProjectsRe
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, then it will return results that match any of the fields. Some eligible fields are: ``` | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| ``` Search expressions are case insensitive. Some examples queries: ``` | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` and its label `size` has the value `big`.| ``` If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
+	//       "description": "Optional. A query string for searching for projects that the caller has `resourcemanager.projects.get` permission to. If multiple fields are included in the query, then it will return results that match any of the fields. Some eligible fields are: ``` | Field | Description | |-------------------------|----------------------------------------------| | displayName, name | Filters by displayName. | | parent | Project's parent (for example: folders/123, organizations/*). Prefer parent field over parent.type and parent.id.| | parent.type | Parent's type: `folder` or `organization`. | | parent.id | Parent's id number (for example: 123) | | id, projectId | Filters by projectId. | | state, lifecycleState | Filters by state. | | labels | Filters by label name or value. | | labels.\\ (where *key* is the name of a label) | Filters by label name.| ``` Search expressions are case insensitive. Some examples queries: ``` | Query | Description | |------------------|-----------------------------------------------------| | name:how* | The project's name starts with \"how\". | | name:Howl | The project's name is `Howl` or `howl`. | | name:HOWL | Equivalent to above. | | NAME:howl | Equivalent to above. | | labels.color:* | The project has the label `color`. | | labels.color:red | The project's label `color` has the value `red`. | | labels.color:red labels.size:big | The project's label `color` has the value `red` or its label `size` has the value `big`. | ``` If no query is specified, the call will return projects for which the user has the `resourcemanager.projects.get` permission.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7339,10 +7348,10 @@ type ProjectsSetIamPolicyCall struct {
 // organization inaccessible. + Calling this method requires enabling
 // the App Engine Admin API.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7486,10 +7495,10 @@ type ProjectsTestIamPermissionsCall struct {
 // specified project, in the format `projects/{ProjectIdOrNumber}` e.g.
 // projects/123..
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7636,8 +7645,8 @@ type ProjectsUndeleteCall struct {
 // deletion starts, the project cannot be restored. The caller must have
 // `resourcemanager.projects.undelete` permission for this project.
 //
-// - name: The name of the project (for example,
-//   `projects/415104041262`). Required.
+//   - name: The name of the project (for example,
+//     `projects/415104041262`). Required.
 func (r *ProjectsService) Undelete(name string, undeleteprojectrequest *UndeleteProjectRequest) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7918,10 +7927,10 @@ type TagBindingsDeleteCall struct {
 
 // Delete: Deletes a TagBinding.
 //
-// - name: The name of the TagBinding. This is a String of the form:
-//   `tagBindings/{id}` (e.g.
-//   `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F
-//   123/tagValues/456`).
+//   - name: The name of the TagBinding. This is a String of the form:
+//     `tagBindings/{id}` (e.g.
+//     `tagBindings/%2F%2Fcloudresourcemanager.googleapis.com%2Fprojects%2F
+//     123/tagValues/456`).
 func (r *TagBindingsService) Delete(name string) *TagBindingsDeleteCall {
 	c := &TagBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8252,7 +8261,7 @@ type TagKeysCreateCall struct {
 
 // Create: Creates a new TagKey. If another request with the same
 // parameters is sent while the original request is in process, the
-// second request will receive an error. A maximum of 300 TagKeys can
+// second request will receive an error. A maximum of 1000 TagKeys can
 // exist under a parent at any given time.
 func (r *TagKeysService) Create(tagkey *TagKey) *TagKeysCreateCall {
 	c := &TagKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8356,7 +8365,7 @@ func (c *TagKeysCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 300 TagKeys can exist under a parent at any given time.",
+	//   "description": "Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 1000 TagKeys can exist under a parent at any given time.",
 	//   "flatPath": "v3/tagKeys",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.tagKeys.create",
@@ -8395,9 +8404,9 @@ type TagKeysDeleteCall struct {
 // Delete: Deletes a TagKey. The TagKey cannot be deleted if it has any
 // child TagValues.
 //
-// - name: The resource name of a TagKey to be deleted in the format
-//   `tagKeys/123`. The TagKey cannot be a parent of any existing
-//   TagValues or it will not be deleted successfully.
+//   - name: The resource name of a TagKey to be deleted in the format
+//     `tagKeys/123`. The TagKey cannot be a parent of any existing
+//     TagValues or it will not be deleted successfully.
 func (r *TagKeysService) Delete(name string) *TagKeysDeleteCall {
 	c := &TagKeysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8558,8 +8567,8 @@ type TagKeysGetCall struct {
 // if the key does not exist or the user does not have permission to
 // view it.
 //
-// - name: A resource name in the format `tagKeys/{id}`, such as
-//   `tagKeys/123`.
+//   - name: A resource name in the format `tagKeys/{id}`, such as
+//     `tagKeys/123`.
 func (r *TagKeysService) Get(name string) *TagKeysGetCall {
 	c := &TagKeysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8711,10 +8720,10 @@ type TagKeysGetIamPolicyCall struct {
 // `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission
 // on the specified TagKey.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagKeysService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagKeysGetIamPolicyCall {
 	c := &TagKeysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9050,9 +9059,9 @@ type TagKeysPatchCall struct {
 
 // Patch: Updates the attributes of the TagKey resource.
 //
-// - name: Immutable. The resource name for a TagKey. Must be in the
-//   format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated
-//   numeric id for the TagKey.
+//   - name: Immutable. The resource name for a TagKey. Must be in the
+//     format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated
+//     numeric id for the TagKey.
 func (r *TagKeysService) Patch(name string, tagkey *TagKey) *TagKeysPatchCall {
 	c := &TagKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9226,10 +9235,10 @@ type TagKeysSetIamPolicyCall struct {
 // `resourcemanager.tagKeys.setIamPolicy` permission on the identified
 // tagValue.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagKeysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagKeysSetIamPolicyCall {
 	c := &TagKeysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9374,10 +9383,10 @@ type TagKeysTestIamPermissionsCall struct {
 // resource name. For example, "tagKeys/1234". There are no permissions
 // required for making this API call.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagKeysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagKeysTestIamPermissionsCall {
 	c := &TagKeysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9519,7 +9528,7 @@ type TagValuesCreateCall struct {
 // Create: Creates a TagValue as a child of the specified TagKey. If a
 // another request with the same parameters is sent while the original
 // request is in process the second request will receive an error. A
-// maximum of 300 TagValues can exist under a TagKey at any given time.
+// maximum of 1000 TagValues can exist under a TagKey at any given time.
 func (r *TagValuesService) Create(tagvalue *TagValue) *TagValuesCreateCall {
 	c := &TagValuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tagvalue = tagvalue
@@ -9622,7 +9631,7 @@ func (c *TagValuesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 300 TagValues can exist under a TagKey at any given time.",
+	//   "description": "Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 1000 TagValues can exist under a TagKey at any given time.",
 	//   "flatPath": "v3/tagValues",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.tagValues.create",
@@ -9661,8 +9670,8 @@ type TagValuesDeleteCall struct {
 // Delete: Deletes a TagValue. The TagValue cannot have any bindings
 // when it is deleted.
 //
-// - name: Resource name for TagValue to be deleted in the format
-//   tagValues/456.
+//   - name: Resource name for TagValue to be deleted in the format
+//     tagValues/456.
 func (r *TagValuesService) Delete(name string) *TagValuesDeleteCall {
 	c := &TagValuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9819,12 +9828,12 @@ type TagValuesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves TagValue. If the TagValue or namespaced name does not
-// exist, or if the user does not have permission to view it, this
-// method will return `PERMISSION_DENIED`.
+// Get: Retrieves a TagValue. This method will return
+// `PERMISSION_DENIED` if the value does not exist or the user does not
+// have permission to view it.
 //
-// - name: Resource name for TagValue to be fetched in the format
-//   `tagValues/456`.
+//   - name: Resource name for TagValue to be fetched in the format
+//     `tagValues/456`.
 func (r *TagValuesService) Get(name string) *TagValuesGetCall {
 	c := &TagValuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9930,7 +9939,7 @@ func (c *TagValuesGetCall) Do(opts ...googleapi.CallOption) (*TagValue, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves TagValue. If the TagValue or namespaced name does not exist, or if the user does not have permission to view it, this method will return `PERMISSION_DENIED`.",
+	//   "description": "Retrieves a TagValue. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.",
 	//   "flatPath": "v3/tagValues/{tagValuesId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.tagValues.get",
@@ -9977,10 +9986,10 @@ type TagValuesGetIamPolicyCall struct {
 // permission on the identified TagValue to get the access control
 // policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagValuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TagValuesGetIamPolicyCall {
 	c := &TagValuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10316,8 +10325,8 @@ type TagValuesPatchCall struct {
 
 // Patch: Updates the attributes of the TagValue resource.
 //
-// - name: Immutable. Resource name for TagValue in the format
-//   `tagValues/456`.
+//   - name: Immutable. Resource name for TagValue in the format
+//     `tagValues/456`.
 func (r *TagValuesService) Patch(name string, tagvalue *TagValue) *TagValuesPatchCall {
 	c := &TagValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10489,10 +10498,10 @@ type TagValuesSetIamPolicyCall struct {
 // `resourcemanager.tagValues.setIamPolicy` permission on the identified
 // tagValue.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagValuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TagValuesSetIamPolicyCall {
 	c := &TagValuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10637,10 +10646,10 @@ type TagValuesTestIamPermissionsCall struct {
 // resource name. For example: `tagValues/1234`. There are no
 // permissions required for making this API call.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TagValuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TagValuesTestIamPermissionsCall {
 	c := &TagValuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10783,8 +10792,8 @@ type TagValuesTagHoldsCreateCall struct {
 // Create: Creates a TagHold. Returns ALREADY_EXISTS if a TagHold with
 // the same resource and origin exists under the same TagValue.
 //
-// - parent: The resource name of the TagHold's parent TagValue. Must be
-//   of the form: `tagValues/{tag-value-id}`.
+//   - parent: The resource name of the TagHold's parent TagValue. Must be
+//     of the form: `tagValues/{tag-value-id}`.
 func (r *TagValuesTagHoldsService) Create(parent string, taghold *TagHold) *TagValuesTagHoldsCreateCall {
 	c := &TagValuesTagHoldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10938,8 +10947,8 @@ type TagValuesTagHoldsDeleteCall struct {
 
 // Delete: Deletes a TagHold.
 //
-// - name: The resource name of the TagHold to delete. Must be of the
-//   form: `tagValues/{tag-value-id}/tagHolds/{tag-hold-id}`.
+//   - name: The resource name of the TagHold to delete. Must be of the
+//     form: `tagValues/{tag-value-id}/tagHolds/{tag-hold-id}`.
 func (r *TagValuesTagHoldsService) Delete(name string) *TagValuesTagHoldsDeleteCall {
 	c := &TagValuesTagHoldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11085,8 +11094,8 @@ type TagValuesTagHoldsListCall struct {
 
 // List: Lists TagHolds under a TagValue.
 //
-// - parent: The resource name of the parent TagValue. Must be of the
-//   form: `tagValues/{tag-value-id}`.
+//   - parent: The resource name of the parent TagValue. Must be of the
+//     form: `tagValues/{tag-value-id}`.
 func (r *TagValuesTagHoldsService) List(parent string) *TagValuesTagHoldsListCall {
 	c := &TagValuesTagHoldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

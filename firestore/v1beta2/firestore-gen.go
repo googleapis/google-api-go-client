@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/firestore
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/firestore/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   firestoreService, err := firestore.NewService(ctx)
+//	import "google.golang.org/api/firestore/v1beta2"
+//	...
+//	ctx := context.Background()
+//	firestoreService, err := firestore.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   firestoreService, err := firestore.NewService(ctx, option.WithScopes(firestore.DatastoreScope))
+//	firestoreService, err := firestore.NewService(ctx, option.WithScopes(firestore.DatastoreScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   firestoreService, err := firestore.NewService(ctx, option.WithAPIKey("AIza..."))
+//	firestoreService, err := firestore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   firestoreService, err := firestore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	firestoreService, err := firestore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package firestore // import "google.golang.org/api/firestore/v1beta2"
@@ -1103,8 +1103,8 @@ type ProjectsDatabasesExportDocumentsCall struct {
 // operation is done. If an export operation is cancelled before
 // completion it may leave partial data behind in Google Cloud Storage.
 //
-// - name: Database to export. Should be of the form:
-//   `projects/{project_id}/databases/{database_id}`.
+//   - name: Database to export. Should be of the form:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1beta2exportdocumentsrequest *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
 	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1252,8 +1252,8 @@ type ProjectsDatabasesImportDocumentsCall struct {
 // ImportDocuments operation is cancelled, it is possible that a subset
 // of the data has already been imported to Cloud Firestore.
 //
-// - name: Database to import into. Should be of the form:
-//   `projects/{project_id}/databases/{database_id}`.
+//   - name: Database to import into. Should be of the form:
+//     `projects/{project_id}/databases/{database_id}`.
 func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1beta2importdocumentsrequest *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
 	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1396,9 +1396,9 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 
 // Get: Gets the metadata and configuration for a Field.
 //
-// - name: A name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}/fields/{field_id}`.
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/fields/{field_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1549,9 +1549,9 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 // FirestoreAdmin.ListFields with the filter set to
 // `indexConfig.usesAncestorConfig:false`.
 //
-// - parent: A parent name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}`.
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1773,27 +1773,27 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 // `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
 // ult__/fields/*`.
 //
-// - name: A field name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}/fields/{field_path}` A field path may be a simple field
-//   name, e.g. `address` or a path to fields within map_value , e.g.
-//   `address.city`, or a special field path. The only valid special
-//   field is `*`, which represents any field. Field paths may be quoted
-//   using ` (backtick). The only character that needs to be escaped
-//   within a quoted field path is the backtick character itself,
-//   escaped using a backslash. Special characters in field paths that
-//   must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
-//   as any ascii symbolic characters. Examples: (Note: Comments here
-//   are written in markdown syntax, so there is an additional layer of
-//   backticks to represent a code block) `\`address.city\`` represents
-//   a field named `address.city`, not the map key `city` in the field
-//   `address`. `\`*\`` represents a field named `*`, not any field. A
-//   special `Field` contains the default indexing settings for all
-//   fields. This field's resource name is:
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/__de
-//   fault__/fields/*` Indexes defined on this `Field` will be applied
-//   to all fields which do not have their own `Field` index
-//   configuration.
+//   - name: A field name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/fields/{field_path}` A field path may be a simple field
+//     name, e.g. `address` or a path to fields within map_value , e.g.
+//     `address.city`, or a special field path. The only valid special
+//     field is `*`, which represents any field. Field paths may be quoted
+//     using ` (backtick). The only character that needs to be escaped
+//     within a quoted field path is the backtick character itself,
+//     escaped using a backslash. Special characters in field paths that
+//     must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
+//     as any ascii symbolic characters. Examples: (Note: Comments here
+//     are written in markdown syntax, so there is an additional layer of
+//     backticks to represent a code block) `\`address.city\“ represents
+//     a field named `address.city`, not the map key `city` in the field
+//     `address`. `\`*\“ represents a field named `*`, not any field. A
+//     special `Field` contains the default indexing settings for all
+//     fields. This field's resource name is:
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/__de
+//     fault__/fields/*` Indexes defined on this `Field` will be applied
+//     to all fields which do not have their own `Field` index
+//     configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1beta2field *GoogleFirestoreAdminV1beta2Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1953,9 +1953,9 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 // the creation. The metadata for the operation will be the type
 // IndexOperationMetadata.
 //
-// - parent: A parent name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}`.
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2097,9 +2097,9 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 
 // Delete: Deletes a composite index.
 //
-// - name: A name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}/indexes/{index_id}`.
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2233,9 +2233,9 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 
 // Get: Gets a composite index.
 //
-// - name: A name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}/indexes/{index_id}`.
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2382,9 +2382,9 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 
 // List: Lists composite indexes.
 //
-// - parent: A parent name of the form
-//   `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//   lection_id}`.
+//   - parent: A parent name of the form
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
+//     lection_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

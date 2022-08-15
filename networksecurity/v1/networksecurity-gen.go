@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/networking
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/networksecurity/v1"
-//   ...
-//   ctx := context.Background()
-//   networksecurityService, err := networksecurity.NewService(ctx)
+//	import "google.golang.org/api/networksecurity/v1"
+//	...
+//	ctx := context.Background()
+//	networksecurityService, err := networksecurity.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   networksecurityService, err := networksecurity.NewService(ctx, option.WithAPIKey("AIza..."))
+//	networksecurityService, err := networksecurity.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   networksecurityService, err := networksecurity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	networksecurityService, err := networksecurity.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package networksecurity // import "google.golang.org/api/networksecurity/v1"
@@ -384,8 +384,8 @@ type Destination struct {
 	// Hosts: Required. List of host names to match. Matched against the
 	// ":authority" header in http requests. At least one host should match.
 	// Each host can be an exact match, or a prefix match (example
-	// "mydomain.*") or a suffix match (example // *.myorg.com") or a
-	// presence(any) match "*".
+	// "mydomain.*") or a suffix match (example "*.myorg.com") or a presence
+	// (any) match "*".
 	Hosts []string `json:"hosts,omitempty"`
 
 	// HttpHeaderMatch: Optional. Match against key:value pair in http
@@ -540,7 +540,7 @@ func (s *GoogleCloudNetworksecurityV1CertificateProvider) MarshalJSON() ([]byte,
 // Endpoint.
 type GoogleCloudNetworksecurityV1GrpcEndpoint struct {
 	// TargetUri: Required. The target URI of the gRPC endpoint. Only UDS
-	// path is supported, and should start with “unix:”.
+	// path is supported, and should start with "unix:".
 	TargetUri string `json:"targetUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetUri") to
@@ -951,7 +951,7 @@ func (s *GoogleIamV1TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HttpHeaderMatch: Specification of HTTP header match atrributes.
+// HttpHeaderMatch: Specification of HTTP header match attributes.
 type HttpHeaderMatch struct {
 	// HeaderName: Required. The name of the HTTP header to match. For
 	// matching against the HTTP request's authority, use a headerMatch with
@@ -1501,8 +1501,8 @@ type Source struct {
 	// Principals: Optional. List of peer identities to match for
 	// authorization. At least one principal should match. Each peer can be
 	// an exact match, or a prefix match (example, "namespace/*") or a
-	// suffix match (example, // */service-account") or a presence match
-	// "*". Authorization based on the principal name without certificate
+	// suffix match (example, "*/service-account") or a presence match "*".
+	// Authorization based on the principal name without certificate
 	// validation (configured by ServerTlsPolicy resource) is considered
 	// insecure.
 	Principals []string `json:"principals,omitempty"`
@@ -1772,8 +1772,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1981,8 +1981,8 @@ type ProjectsLocationsAuthorizationPoliciesCreateCall struct {
 // Create: Creates a new AuthorizationPolicy in a given project and
 // location.
 //
-// - parent: The parent resource of the AuthorizationPolicy. Must be in
-//   the format `projects/{project}/locations/{location}`.
+//   - parent: The parent resource of the AuthorizationPolicy. Must be in
+//     the format `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsAuthorizationPoliciesService) Create(parent string, authorizationpolicy *AuthorizationPolicy) *ProjectsLocationsAuthorizationPoliciesCreateCall {
 	c := &ProjectsLocationsAuthorizationPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2138,9 +2138,9 @@ type ProjectsLocationsAuthorizationPoliciesDeleteCall struct {
 
 // Delete: Deletes a single AuthorizationPolicy.
 //
-// - name: A name of the AuthorizationPolicy to delete. Must be in the
-//   format
-//   `projects/{project}/locations/{location}/authorizationPolicies/*`.
+//   - name: A name of the AuthorizationPolicy to delete. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/authorizationPolicies/*`.
 func (r *ProjectsLocationsAuthorizationPoliciesService) Delete(name string) *ProjectsLocationsAuthorizationPoliciesDeleteCall {
 	c := &ProjectsLocationsAuthorizationPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2273,9 +2273,9 @@ type ProjectsLocationsAuthorizationPoliciesGetCall struct {
 
 // Get: Gets details of a single AuthorizationPolicy.
 //
-// - name: A name of the AuthorizationPolicy to get. Must be in the
-//   format
-//   `projects/{project}/locations/{location}/authorizationPolicies/*`.
+//   - name: A name of the AuthorizationPolicy to get. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/authorizationPolicies/*`.
 func (r *ProjectsLocationsAuthorizationPoliciesService) Get(name string) *ProjectsLocationsAuthorizationPoliciesGetCall {
 	c := &ProjectsLocationsAuthorizationPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2423,10 +2423,10 @@ type ProjectsLocationsAuthorizationPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAuthorizationPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsAuthorizationPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsAuthorizationPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2596,9 +2596,9 @@ type ProjectsLocationsAuthorizationPoliciesListCall struct {
 
 // List: Lists AuthorizationPolicies in a given project and location.
 //
-// - parent: The project and location from which the
-//   AuthorizationPolicies should be listed, specified in the format
-//   `projects/{project}/locations/{location}`.
+//   - parent: The project and location from which the
+//     AuthorizationPolicies should be listed, specified in the format
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsAuthorizationPoliciesService) List(parent string) *ProjectsLocationsAuthorizationPoliciesListCall {
 	c := &ProjectsLocationsAuthorizationPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2793,8 +2793,8 @@ type ProjectsLocationsAuthorizationPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single AuthorizationPolicy.
 //
-// - name: Name of the AuthorizationPolicy resource. It matches pattern
-//   `projects/{project}/locations/{location}/authorizationPolicies/`.
+//   - name: Name of the AuthorizationPolicy resource. It matches pattern
+//     `projects/{project}/locations/{location}/authorizationPolicies/`.
 func (r *ProjectsLocationsAuthorizationPoliciesService) Patch(name string, authorizationpolicy *AuthorizationPolicy) *ProjectsLocationsAuthorizationPoliciesPatchCall {
 	c := &ProjectsLocationsAuthorizationPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2955,10 +2955,10 @@ type ProjectsLocationsAuthorizationPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAuthorizationPoliciesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsAuthorizationPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsAuthorizationPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3105,10 +3105,10 @@ type ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsAuthorizationPoliciesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3252,8 +3252,8 @@ type ProjectsLocationsClientTlsPoliciesCreateCall struct {
 // Create: Creates a new ClientTlsPolicy in a given project and
 // location.
 //
-// - parent: The parent resource of the ClientTlsPolicy. Must be in the
-//   format `projects/*/locations/{location}`.
+//   - parent: The parent resource of the ClientTlsPolicy. Must be in the
+//     format `projects/*/locations/{location}`.
 func (r *ProjectsLocationsClientTlsPoliciesService) Create(parent string, clienttlspolicy *ClientTlsPolicy) *ProjectsLocationsClientTlsPoliciesCreateCall {
 	c := &ProjectsLocationsClientTlsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3409,8 +3409,8 @@ type ProjectsLocationsClientTlsPoliciesDeleteCall struct {
 
 // Delete: Deletes a single ClientTlsPolicy.
 //
-// - name: A name of the ClientTlsPolicy to delete. Must be in the
-//   format `projects/*/locations/{location}/clientTlsPolicies/*`.
+//   - name: A name of the ClientTlsPolicy to delete. Must be in the
+//     format `projects/*/locations/{location}/clientTlsPolicies/*`.
 func (r *ProjectsLocationsClientTlsPoliciesService) Delete(name string) *ProjectsLocationsClientTlsPoliciesDeleteCall {
 	c := &ProjectsLocationsClientTlsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3543,8 +3543,8 @@ type ProjectsLocationsClientTlsPoliciesGetCall struct {
 
 // Get: Gets details of a single ClientTlsPolicy.
 //
-// - name: A name of the ClientTlsPolicy to get. Must be in the format
-//   `projects/*/locations/{location}/clientTlsPolicies/*`.
+//   - name: A name of the ClientTlsPolicy to get. Must be in the format
+//     `projects/*/locations/{location}/clientTlsPolicies/*`.
 func (r *ProjectsLocationsClientTlsPoliciesService) Get(name string) *ProjectsLocationsClientTlsPoliciesGetCall {
 	c := &ProjectsLocationsClientTlsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3692,10 +3692,10 @@ type ProjectsLocationsClientTlsPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientTlsPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsClientTlsPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsClientTlsPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3865,9 +3865,9 @@ type ProjectsLocationsClientTlsPoliciesListCall struct {
 
 // List: Lists ClientTlsPolicies in a given project and location.
 //
-// - parent: The project and location from which the ClientTlsPolicies
-//   should be listed, specified in the format
-//   `projects/*/locations/{location}`.
+//   - parent: The project and location from which the ClientTlsPolicies
+//     should be listed, specified in the format
+//     `projects/*/locations/{location}`.
 func (r *ProjectsLocationsClientTlsPoliciesService) List(parent string) *ProjectsLocationsClientTlsPoliciesListCall {
 	c := &ProjectsLocationsClientTlsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4061,9 +4061,9 @@ type ProjectsLocationsClientTlsPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single ClientTlsPolicy.
 //
-// - name: Name of the ClientTlsPolicy resource. It matches the pattern
-//   `projects/*/locations/{location}/clientTlsPolicies/{client_tls_polic
-//   y}`.
+//   - name: Name of the ClientTlsPolicy resource. It matches the pattern
+//     `projects/*/locations/{location}/clientTlsPolicies/{client_tls_polic
+//     y}`.
 func (r *ProjectsLocationsClientTlsPoliciesService) Patch(name string, clienttlspolicy *ClientTlsPolicy) *ProjectsLocationsClientTlsPoliciesPatchCall {
 	c := &ProjectsLocationsClientTlsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4224,10 +4224,10 @@ type ProjectsLocationsClientTlsPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientTlsPoliciesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsClientTlsPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsClientTlsPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4374,10 +4374,10 @@ type ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsClientTlsPoliciesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsClientTlsPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5168,8 +5168,8 @@ type ProjectsLocationsServerTlsPoliciesCreateCall struct {
 // Create: Creates a new ServerTlsPolicy in a given project and
 // location.
 //
-// - parent: The parent resource of the ServerTlsPolicy. Must be in the
-//   format `projects/*/locations/{location}`.
+//   - parent: The parent resource of the ServerTlsPolicy. Must be in the
+//     format `projects/*/locations/{location}`.
 func (r *ProjectsLocationsServerTlsPoliciesService) Create(parent string, servertlspolicy *ServerTlsPolicy) *ProjectsLocationsServerTlsPoliciesCreateCall {
 	c := &ProjectsLocationsServerTlsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5325,8 +5325,8 @@ type ProjectsLocationsServerTlsPoliciesDeleteCall struct {
 
 // Delete: Deletes a single ServerTlsPolicy.
 //
-// - name: A name of the ServerTlsPolicy to delete. Must be in the
-//   format `projects/*/locations/{location}/serverTlsPolicies/*`.
+//   - name: A name of the ServerTlsPolicy to delete. Must be in the
+//     format `projects/*/locations/{location}/serverTlsPolicies/*`.
 func (r *ProjectsLocationsServerTlsPoliciesService) Delete(name string) *ProjectsLocationsServerTlsPoliciesDeleteCall {
 	c := &ProjectsLocationsServerTlsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5459,8 +5459,8 @@ type ProjectsLocationsServerTlsPoliciesGetCall struct {
 
 // Get: Gets details of a single ServerTlsPolicy.
 //
-// - name: A name of the ServerTlsPolicy to get. Must be in the format
-//   `projects/*/locations/{location}/serverTlsPolicies/*`.
+//   - name: A name of the ServerTlsPolicy to get. Must be in the format
+//     `projects/*/locations/{location}/serverTlsPolicies/*`.
 func (r *ProjectsLocationsServerTlsPoliciesService) Get(name string) *ProjectsLocationsServerTlsPoliciesGetCall {
 	c := &ProjectsLocationsServerTlsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5608,10 +5608,10 @@ type ProjectsLocationsServerTlsPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServerTlsPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsServerTlsPoliciesGetIamPolicyCall {
 	c := &ProjectsLocationsServerTlsPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5781,9 +5781,9 @@ type ProjectsLocationsServerTlsPoliciesListCall struct {
 
 // List: Lists ServerTlsPolicies in a given project and location.
 //
-// - parent: The project and location from which the ServerTlsPolicies
-//   should be listed, specified in the format
-//   `projects/*/locations/{location}`.
+//   - parent: The project and location from which the ServerTlsPolicies
+//     should be listed, specified in the format
+//     `projects/*/locations/{location}`.
 func (r *ProjectsLocationsServerTlsPoliciesService) List(parent string) *ProjectsLocationsServerTlsPoliciesListCall {
 	c := &ProjectsLocationsServerTlsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5977,9 +5977,9 @@ type ProjectsLocationsServerTlsPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single ServerTlsPolicy.
 //
-// - name: Name of the ServerTlsPolicy resource. It matches the pattern
-//   `projects/*/locations/{location}/serverTlsPolicies/{server_tls_polic
-//   y}`.
+//   - name: Name of the ServerTlsPolicy resource. It matches the pattern
+//     `projects/*/locations/{location}/serverTlsPolicies/{server_tls_polic
+//     y}`.
 func (r *ProjectsLocationsServerTlsPoliciesService) Patch(name string, servertlspolicy *ServerTlsPolicy) *ProjectsLocationsServerTlsPoliciesPatchCall {
 	c := &ProjectsLocationsServerTlsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6140,10 +6140,10 @@ type ProjectsLocationsServerTlsPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServerTlsPoliciesService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsServerTlsPoliciesSetIamPolicyCall {
 	c := &ProjectsLocationsServerTlsPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6290,10 +6290,10 @@ type ProjectsLocationsServerTlsPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsServerTlsPoliciesService) TestIamPermissions(resource string, googleiamv1testiampermissionsrequest *GoogleIamV1TestIamPermissionsRequest) *ProjectsLocationsServerTlsPoliciesTestIamPermissionsCall {
 	c := &ProjectsLocationsServerTlsPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

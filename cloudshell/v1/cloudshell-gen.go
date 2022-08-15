@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/shell/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudshell/v1"
-//   ...
-//   ctx := context.Background()
-//   cloudshellService, err := cloudshell.NewService(ctx)
+//	import "google.golang.org/api/cloudshell/v1"
+//	...
+//	ctx := context.Background()
+//	cloudshellService, err := cloudshell.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudshellService, err := cloudshell.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudshellService, err := cloudshell.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudshellService, err := cloudshell.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudshellService, err := cloudshell.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudshell // import "google.golang.org/api/cloudshell/v1"
@@ -1350,8 +1350,8 @@ type UsersEnvironmentsAddPublicKeyCall struct {
 // environment via SSH. If a key with the same content already exists,
 // this will error with ALREADY_EXISTS.
 //
-// - environment: Environment this key should be added to, e.g.
-//   `users/me/environments/default`.
+//   - environment: Environment this key should be added to, e.g.
+//     `users/me/environments/default`.
 func (r *UsersEnvironmentsService) AddPublicKey(environment string, addpublickeyrequest *AddPublicKeyRequest) *UsersEnvironmentsAddPublicKeyCall {
 	c := &UsersEnvironmentsAddPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -1496,9 +1496,9 @@ type UsersEnvironmentsAuthorizeCall struct {
 // run various Google Cloud command line tools without requiring the
 // user to manually authenticate.
 //
-// - name: Name of the resource that should receive the credentials, for
-//   example `users/me/environments/default` or
-//   `users/someone@example.com/environments/default`.
+//   - name: Name of the resource that should receive the credentials, for
+//     example `users/me/environments/default` or
+//     `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Authorize(name string, authorizeenvironmentrequest *AuthorizeEnvironmentRequest) *UsersEnvironmentsAuthorizeCall {
 	c := &UsersEnvironmentsAuthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1641,9 +1641,9 @@ type UsersEnvironmentsGetCall struct {
 // Get: Gets an environment. Returns NOT_FOUND if the environment does
 // not exist.
 //
-// - name: Name of the requested resource, for example
-//   `users/me/environments/default` or
-//   `users/someone@example.com/environments/default`.
+//   - name: Name of the requested resource, for example
+//     `users/me/environments/default` or
+//     `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Get(name string) *UsersEnvironmentsGetCall {
 	c := &UsersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1792,8 +1792,8 @@ type UsersEnvironmentsRemovePublicKeyCall struct {
 // the corresponding private key. If a key with the same content is not
 // present, this will error with NOT_FOUND.
 //
-// - environment: Environment this key should be removed from, e.g.
-//   `users/me/environments/default`.
+//   - environment: Environment this key should be removed from, e.g.
+//     `users/me/environments/default`.
 func (r *UsersEnvironmentsService) RemovePublicKey(environment string, removepublickeyrequest *RemovePublicKeyRequest) *UsersEnvironmentsRemovePublicKeyCall {
 	c := &UsersEnvironmentsRemovePublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.environment = environment
@@ -1941,9 +1941,9 @@ type UsersEnvironmentsStartCall struct {
 // connections, the operation will contain a StartEnvironmentResponse in
 // its response field.
 //
-// - name: Name of the resource that should be started, for example
-//   `users/me/environments/default` or
-//   `users/someone@example.com/environments/default`.
+//   - name: Name of the resource that should be started, for example
+//     `users/me/environments/default` or
+//     `users/someone@example.com/environments/default`.
 func (r *UsersEnvironmentsService) Start(name string, startenvironmentrequest *StartEnvironmentRequest) *UsersEnvironmentsStartCall {
 	c := &UsersEnvironmentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

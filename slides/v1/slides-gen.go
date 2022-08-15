@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/slides/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/slides/v1"
-//   ...
-//   ctx := context.Background()
-//   slidesService, err := slides.NewService(ctx)
+//	import "google.golang.org/api/slides/v1"
+//	...
+//	ctx := context.Background()
+//	slidesService, err := slides.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   slidesService, err := slides.NewService(ctx, option.WithScopes(slides.SpreadsheetsReadonlyScope))
+//	slidesService, err := slides.NewService(ctx, option.WithScopes(slides.SpreadsheetsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   slidesService, err := slides.NewService(ctx, option.WithAPIKey("AIza..."))
+//	slidesService, err := slides.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   slidesService, err := slides.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	slidesService, err := slides.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package slides // import "google.golang.org/api/slides/v1"
@@ -1272,10 +1272,10 @@ func (s *CreateSheetsChartResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateSlideRequest: Creates a new slide.
+// CreateSlideRequest: Creates a slide.
 type CreateSlideRequest struct {
 	// InsertionIndex: The optional zero-based index indicating where to
-	// insert the slides. If you don't specify an index, the new slide is
+	// insert the slides. If you don't specify an index, the slide is
 	// created at the end.
 	InsertionIndex int64 `json:"insertionIndex,omitempty"`
 
@@ -1283,15 +1283,15 @@ type CreateSlideRequest struct {
 	// unique among all pages and page elements in the presentation. The ID
 	// must start with an alphanumeric character or an underscore (matches
 	// regex `[a-zA-Z0-9_]`); remaining characters may include those as well
-	// as a hyphen or colon (matches regex `[a-zA-Z0-9_-:]`). The length of
-	// the ID must not be less than 5 or greater than 50. If you don't
-	// specify an ID, a unique one is generated.
+	// as a hyphen or colon (matches regex `[a-zA-Z0-9_-:]`). The ID length
+	// must be between 5 and 50 characters, inclusive. If you don't specify
+	// an ID, a unique one is generated.
 	ObjectId string `json:"objectId,omitempty"`
 
 	// PlaceholderIdMappings: An optional list of object ID mappings from
-	// the placeholder(s) on the layout to the placeholder(s) that will be
-	// created on the new slide from that specified layout. Can only be used
-	// when `slide_layout_reference` is specified.
+	// the placeholder(s) on the layout to the placeholders that are created
+	// on the slide from the specified layout. Can only be used when
+	// `slide_layout_reference` is specified.
 	PlaceholderIdMappings []*LayoutPlaceholderIdMapping `json:"placeholderIdMappings,omitempty"`
 
 	// SlideLayoutReference: Layout reference of the slide to be inserted,
@@ -1300,8 +1300,8 @@ type CreateSlideRequest struct {
 	// if the insertion_index is zero. - The first master in the
 	// presentation, if there are no slides. If the LayoutReference is not
 	// found in the current master, a 400 bad request error is returned. If
-	// you don't specify a layout reference, then the new slide will use the
-	// predefined layout `BLANK`.
+	// you don't specify a layout reference, the slide uses the predefined
+	// `BLANK` layout.
 	SlideLayoutReference *LayoutReference `json:"slideLayoutReference,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InsertionIndex") to
@@ -7784,9 +7784,9 @@ type PresentationsPagesGetThumbnailCall struct {
 // image. This request counts as an expensive read request
 // (/slides/limits) for quota purposes.
 //
-// - pageObjectId: The object ID of the page whose thumbnail to
-//   retrieve.
-// - presentationId: The ID of the presentation to retrieve.
+//   - pageObjectId: The object ID of the page whose thumbnail to
+//     retrieve.
+//   - presentationId: The ID of the presentation to retrieve.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7800,7 +7800,8 @@ func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObje
 // defaults to PNG.
 //
 // Possible values:
-//   "PNG" - The default mime type.
+//
+//	"PNG" - The default mime type.
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbnailPropertiesMimeType string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.mimeType", thumbnailPropertiesMimeType)
 	return c
@@ -7812,12 +7813,15 @@ func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbna
 // size of the image.
 //
 // Possible values:
-//   "THUMBNAIL_SIZE_UNSPECIFIED" - The default thumbnail image size.
+//
+//	"THUMBNAIL_SIZE_UNSPECIFIED" - The default thumbnail image size.
+//
 // The unspecified thumbnail size implies that the server chooses the
 // size of the image in a way that might vary in the future.
-//   "LARGE" - The thumbnail image width of 1600px.
-//   "MEDIUM" - The thumbnail image width of 800px.
-//   "SMALL" - The thumbnail image width of 200px.
+//
+//	"LARGE" - The thumbnail image width of 1600px.
+//	"MEDIUM" - The thumbnail image width of 800px.
+//	"SMALL" - The thumbnail image width of 200px.
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesThumbnailSize(thumbnailPropertiesThumbnailSize string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.thumbnailSize", thumbnailPropertiesThumbnailSize)
 	return c

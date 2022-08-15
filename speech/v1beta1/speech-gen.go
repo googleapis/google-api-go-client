@@ -10,31 +10,31 @@
 //
 // For product documentation, see: https://cloud.google.com/speech-to-text/docs/quickstart-protocol
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/speech/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   speechService, err := speech.NewService(ctx)
+//	import "google.golang.org/api/speech/v1beta1"
+//	...
+//	ctx := context.Background()
+//	speechService, err := speech.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   speechService, err := speech.NewService(ctx, option.WithAPIKey("AIza..."))
+//	speechService, err := speech.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   speechService, err := speech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	speechService, err := speech.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package speech // import "google.golang.org/api/speech/v1beta1"
@@ -631,29 +631,41 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 //
 // - Partial errors. If a service needs to return partial errors to the
 // client,
-//     it may embed the `Status` in the normal response to indicate the
+//
+//	it may embed the `Status` in the normal response to indicate the
+//
 // partial
-//     errors.
+//
+//	errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting.
+//
+//	have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
-//     `Status` message should be used directly inside batch response,
+//
+//	`Status` message should be used directly inside batch response,
+//
 // one for
-//     each error sub-response.
+//
+//	each error sub-response.
 //
 // - Asynchronous operations. If an API call embeds asynchronous
 // operation
-//     results in its response, the status of those operations should
+//
+//	results in its response, the status of those operations should
+//
 // be
-//     represented directly using the `Status` message.
+//
+//	represented directly using the `Status` message.
 //
 // - Logging. If some API errors are stored in logs, the message
 // `Status` could
-//     be used directly after any stripping needed for security/privacy
+//
+//	be used directly after any stripping needed for security/privacy
+//
 // reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of

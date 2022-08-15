@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/traffic-director
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/trafficdirector/v2"
-//   ...
-//   ctx := context.Background()
-//   trafficdirectorService, err := trafficdirector.NewService(ctx)
+//	import "google.golang.org/api/trafficdirector/v2"
+//	...
+//	ctx := context.Background()
+//	trafficdirectorService, err := trafficdirector.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   trafficdirectorService, err := trafficdirector.NewService(ctx, option.WithAPIKey("AIza..."))
+//	trafficdirectorService, err := trafficdirector.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   trafficdirectorService, err := trafficdirector.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	trafficdirectorService, err := trafficdirector.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package trafficdirector // import "google.golang.org/api/trafficdirector/v2"
@@ -702,12 +702,12 @@ func (s *Extension) MarshalJSON() ([]byte, error) {
 // adhere to the documented `syntax `_. The engine is designed to
 // complete execution in linear time as well as limit the amount of
 // memory used. Envoy supports program size checking via runtime. The
-// runtime keys `re2.max_program_size.error_level` and
-// `re2.max_program_size.warn_level` can be set to integers as the
+// runtime keys “re2.max_program_size.error_level“ and
+// “re2.max_program_size.warn_level“ can be set to integers as the
 // maximum program size or complexity that a compiled regex can have
 // before an exception is thrown or a warning is logged, respectively.
-// `re2.max_program_size.error_level` defaults to 100, and
-// `re2.max_program_size.warn_level` has no default if unset (will not
+// “re2.max_program_size.error_level“ defaults to 100, and
+// “re2.max_program_size.warn_level“ has no default if unset (will not
 // check/log a warning). Envoy emits two stats for tracking the program
 // size of regexes: the histogram `re2.program_size`, which records the
 // program size, and the counter `re2.exceeded_warn_level`, which is

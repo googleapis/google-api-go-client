@@ -6,33 +6,33 @@
 
 // Package vmmigration provides access to the VM Migration API.
 //
-// For product documentation, see: https://cloud.google.com/migrate/compute-engine
+// For product documentation, see: https://cloud.google.com/migrate/virtual-machines
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/vmmigration/v1"
-//   ...
-//   ctx := context.Background()
-//   vmmigrationService, err := vmmigration.NewService(ctx)
+//	import "google.golang.org/api/vmmigration/v1"
+//	...
+//	ctx := context.Background()
+//	vmmigrationService, err := vmmigration.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   vmmigrationService, err := vmmigration.NewService(ctx, option.WithAPIKey("AIza..."))
+//	vmmigrationService, err := vmmigration.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   vmmigrationService, err := vmmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	vmmigrationService, err := vmmigration.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package vmmigration // import "google.golang.org/api/vmmigration/v1"
@@ -219,7 +219,6 @@ func NewProjectsLocationsSourcesMigratingVmsService(s *Service) *ProjectsLocatio
 	rs := &ProjectsLocationsSourcesMigratingVmsService{s: s}
 	rs.CloneJobs = NewProjectsLocationsSourcesMigratingVmsCloneJobsService(s)
 	rs.CutoverJobs = NewProjectsLocationsSourcesMigratingVmsCutoverJobsService(s)
-	rs.ReplicationCycles = NewProjectsLocationsSourcesMigratingVmsReplicationCyclesService(s)
 	return rs
 }
 
@@ -229,8 +228,6 @@ type ProjectsLocationsSourcesMigratingVmsService struct {
 	CloneJobs *ProjectsLocationsSourcesMigratingVmsCloneJobsService
 
 	CutoverJobs *ProjectsLocationsSourcesMigratingVmsCutoverJobsService
-
-	ReplicationCycles *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService
 }
 
 func NewProjectsLocationsSourcesMigratingVmsCloneJobsService(s *Service) *ProjectsLocationsSourcesMigratingVmsCloneJobsService {
@@ -248,15 +245,6 @@ func NewProjectsLocationsSourcesMigratingVmsCutoverJobsService(s *Service) *Proj
 }
 
 type ProjectsLocationsSourcesMigratingVmsCutoverJobsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsSourcesMigratingVmsReplicationCyclesService(s *Service) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService {
-	rs := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsSourcesMigratingVmsReplicationCyclesService struct {
 	s *Service
 }
 
@@ -416,39 +404,6 @@ type AvailableUpdates struct {
 
 func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	type NoMethod AvailableUpdates
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AwsSourceVmDetails: Represent the source AWS VM details.
-type AwsSourceVmDetails struct {
-	// Firmware: The firmware type of the source VM.
-	//
-	// Possible values:
-	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
-	//   "EFI" - The firmware is EFI.
-	//   "BIOS" - The firmware is BIOS.
-	Firmware string `json:"firmware,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Firmware") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Firmware") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod AwsSourceVmDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1419,48 +1374,6 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListReplicationCyclesResponse: Response message for
-// 'ListReplicationCycles' request.
-type ListReplicationCyclesResponse struct {
-	// NextPageToken: Output only. A token, which can be sent as
-	// `page_token` to retrieve the next page. If this field is omitted,
-	// there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ReplicationCycles: Output only. The list of replication cycles
-	// response.
-	ReplicationCycles []*ReplicationCycle `json:"replicationCycles,omitempty"`
-
-	// Unreachable: Output only. Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListReplicationCyclesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListReplicationCyclesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListSourcesResponse: Response message for 'ListSources' request.
 type ListSourcesResponse struct {
 	// NextPageToken: Output only. A token, which can be sent as
@@ -1670,10 +1583,6 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MigratingVm: MigratingVm describes the VM that will be migrated from
 // a Source environment and its replication state.
 type MigratingVm struct {
-	// AwsSourceVmDetails: Output only. Details of the VM from an AWS
-	// source.
-	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
-
 	// ComputeEngineTargetDefaults: Details of the target VM in Compute
 	// Engine.
 	ComputeEngineTargetDefaults *ComputeEngineTargetDefaults `json:"computeEngineTargetDefaults,omitempty"`
@@ -1775,21 +1684,22 @@ type MigratingVm struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AwsSourceVmDetails")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ComputeEngineTargetDefaults") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AwsSourceVmDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ComputeEngineTargetDefaults") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2056,10 +1966,6 @@ type ReplicationCycle struct {
 
 	// StartTime: The time the replication cycle has started.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "ProgressPercent") to
 	// unconditionally include in API requests. By default, fields with
@@ -2910,8 +2816,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6020,9 +5926,9 @@ type ProjectsLocationsSourcesDatacenterConnectorsCreateCall struct {
 
 // Create: Creates a new DatacenterConnector in a given Source.
 //
-// - parent: The DatacenterConnector's parent. Required. The Source in
-//   where the new DatacenterConnector will be created. For example:
-//   `projects/my-project/locations/us-central1/sources/my-source`.
+//   - parent: The DatacenterConnector's parent. Required. The Source in
+//     where the new DatacenterConnector will be created. For example:
+//     `projects/my-project/locations/us-central1/sources/my-source`.
 func (r *ProjectsLocationsSourcesDatacenterConnectorsService) Create(parent string, datacenterconnector *DatacenterConnector) *ProjectsLocationsSourcesDatacenterConnectorsCreateCall {
 	c := &ProjectsLocationsSourcesDatacenterConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7325,12 +7231,17 @@ func (r *ProjectsLocationsSourcesMigratingVmsService) Get(name string) *Projects
 // migrating VM.
 //
 // Possible values:
-//   "MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
+//
+//	"MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
+//
 // fallback to the default value.
-//   "MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
+//
+//	"MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
+//
 // basic details do not include the recent clone jobs and recent cutover
 // jobs lists.
-//   "MIGRATING_VM_VIEW_FULL" - Include everything.
+//
+//	"MIGRATING_VM_VIEW_FULL" - Include everything.
 func (c *ProjectsLocationsSourcesMigratingVmsGetCall) View(view string) *ProjectsLocationsSourcesMigratingVmsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -7533,12 +7444,17 @@ func (c *ProjectsLocationsSourcesMigratingVmsListCall) PageToken(pageToken strin
 // migrating VM.
 //
 // Possible values:
-//   "MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
+//
+//	"MIGRATING_VM_VIEW_UNSPECIFIED" - View is unspecified. The API will
+//
 // fallback to the default value.
-//   "MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
+//
+//	"MIGRATING_VM_VIEW_BASIC" - Get the migrating VM basic details. The
+//
 // basic details do not include the recent clone jobs and recent cutover
 // jobs lists.
-//   "MIGRATING_VM_VIEW_FULL" - Include everything.
+//
+//	"MIGRATING_VM_VIEW_FULL" - Include everything.
 func (c *ProjectsLocationsSourcesMigratingVmsListCall) View(view string) *ProjectsLocationsSourcesMigratingVmsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -9712,374 +9628,6 @@ func (c *ProjectsLocationsSourcesMigratingVmsCutoverJobsListCall) Pages(ctx cont
 	}
 }
 
-// method id "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get":
-
-type ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single ReplicationCycle.
-//
-// - name: The name of the ReplicationCycle.
-func (r *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService) Get(name string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
-	c := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Context(ctx context.Context) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get" call.
-// Exactly one of *ReplicationCycle or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ReplicationCycle.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesGetCall) Do(opts ...googleapi.CallOption) (*ReplicationCycle, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ReplicationCycle{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets details of a single ReplicationCycle.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/replicationCycles/{replicationCyclesId}",
-	//   "httpMethod": "GET",
-	//   "id": "vmmigration.projects.locations.sources.migratingVms.replicationCycles.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the ReplicationCycle.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/migratingVms/[^/]+/replicationCycles/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "ReplicationCycle"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list":
-
-type ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists ReplicationCycles in a given MigratingVM.
-//
-// - parent: The parent, which owns this collection of
-//   ReplicationCycles.
-func (r *ProjectsLocationsSourcesMigratingVmsReplicationCyclesService) List(parent string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c := &ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": The filter request.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Filter(filter string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": the order by fields
-// for the result.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) OrderBy(orderBy string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of replication cycles to return. The service may return fewer than
-// this value. If unspecified, at most 100 migrating VMs will be
-// returned. The maximum value is 100; values above 100 will be coerced
-// to 100.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) PageSize(pageSize int64) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Required. A page
-// token, received from a previous `ListReplicationCycles` call. Provide
-// this to retrieve the subsequent page. When paginating, all other
-// parameters provided to `ListReplicationCycles` must match the call
-// that provided the page token.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) PageToken(pageToken string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Context(ctx context.Context) *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/replicationCycles")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list" call.
-// Exactly one of *ListReplicationCyclesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListReplicationCyclesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Do(opts ...googleapi.CallOption) (*ListReplicationCyclesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListReplicationCyclesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists ReplicationCycles in a given MigratingVM.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sources/{sourcesId}/migratingVms/{migratingVmsId}/replicationCycles",
-	//   "httpMethod": "GET",
-	//   "id": "vmmigration.projects.locations.sources.migratingVms.replicationCycles.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. the order by fields for the result.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of replication cycles to return. The service may return fewer than this value. If unspecified, at most 100 migrating VMs will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Required. A page token, received from a previous `ListReplicationCycles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReplicationCycles` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of ReplicationCycles.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/sources/[^/]+/migratingVms/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/replicationCycles",
-	//   "response": {
-	//     "$ref": "ListReplicationCyclesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsSourcesMigratingVmsReplicationCyclesListCall) Pages(ctx context.Context, f func(*ListReplicationCyclesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 // method id "vmmigration.projects.locations.sources.utilizationReports.create":
 
 type ProjectsLocationsSourcesUtilizationReportsCreateCall struct {
@@ -10438,12 +9986,17 @@ func (r *ProjectsLocationsSourcesUtilizationReportsService) Get(name string) *Pr
 // report. Defaults to FULL
 //
 // Possible values:
-//   "UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
+//
+//	"UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
+//
 // The API will default to FULL on single report request and BASIC for
 // multiple reports request.
-//   "BASIC" - Get the report metadata, without the list of VMs and
+//
+//	"BASIC" - Get the report metadata, without the list of VMs and
+//
 // their utilization info.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsSourcesUtilizationReportsGetCall) View(view string) *ProjectsLocationsSourcesUtilizationReportsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -10646,12 +10199,17 @@ func (c *ProjectsLocationsSourcesUtilizationReportsListCall) PageToken(pageToken
 // report. Defaults to BASIC.
 //
 // Possible values:
-//   "UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
+//
+//	"UTILIZATION_REPORT_VIEW_UNSPECIFIED" - The default / unset value.
+//
 // The API will default to FULL on single report request and BASIC for
 // multiple reports request.
-//   "BASIC" - Get the report metadata, without the list of VMs and
+//
+//	"BASIC" - Get the report metadata, without the list of VMs and
+//
 // their utilization info.
-//   "FULL" - Include everything.
+//
+//	"FULL" - Include everything.
 func (c *ProjectsLocationsSourcesUtilizationReportsListCall) View(view string) *ProjectsLocationsSourcesUtilizationReportsListCall {
 	c.urlParams_.Set("view", view)
 	return c

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/shopping-content/v2/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/content/v2.1"
-//   ...
-//   ctx := context.Background()
-//   contentService, err := content.NewService(ctx)
+//	import "google.golang.org/api/content/v2.1"
+//	...
+//	ctx := context.Background()
+//	contentService, err := content.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
+//	contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package content // import "google.golang.org/api/content/v2.1"
@@ -119,7 +119,6 @@ func New(client *http.Client) (*APIService, error) {
 	s := &APIService{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Accountstatuses = NewAccountstatusesService(s)
-	s.Accountstatusesbyexternalsellerid = NewAccountstatusesbyexternalselleridService(s)
 	s.Accounttax = NewAccounttaxService(s)
 	s.Buyongoogleprograms = NewBuyongoogleprogramsService(s)
 	s.Collections = NewCollectionsService(s)
@@ -163,8 +162,6 @@ type APIService struct {
 	Accounts *AccountsService
 
 	Accountstatuses *AccountstatusesService
-
-	Accountstatusesbyexternalsellerid *AccountstatusesbyexternalselleridService
 
 	Accounttax *AccounttaxService
 
@@ -289,15 +286,6 @@ func NewAccountstatusesService(s *APIService) *AccountstatusesService {
 }
 
 type AccountstatusesService struct {
-	s *APIService
-}
-
-func NewAccountstatusesbyexternalselleridService(s *APIService) *AccountstatusesbyexternalselleridService {
-	rs := &AccountstatusesbyexternalselleridService{s: s}
-	return rs
-}
-
-type AccountstatusesbyexternalselleridService struct {
 	s *APIService
 }
 
@@ -2051,7 +2039,8 @@ type AccountsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -2413,7 +2402,8 @@ type AccountstatusesCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountStatus") to
@@ -2592,7 +2582,8 @@ type AccounttaxCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3173,7 +3164,8 @@ type CollectionStatus struct {
 
 	// CreationDate: Date on which the collection has been created in ISO
 	// 8601 (http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and
-	// offset, e.g. "2020-01-02T09:00:00+01:00" or "2020-01-02T09:00:00Z"
+	// offset, for example "2020-01-02T09:00:00+01:00" or
+	// "2020-01-02T09:00:00Z"
 	CreationDate string `json:"creationDate,omitempty"`
 
 	// DestinationStatuses: The intended destinations for the collection.
@@ -3184,7 +3176,7 @@ type CollectionStatus struct {
 
 	// LastUpdateDate: Date on which the collection has been last updated in
 	// ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format: Date, time,
-	// and offset, e.g. "2020-01-02T09:00:00+01:00" or
+	// and offset, for example "2020-01-02T09:00:00+01:00" or
 	// "2020-01-02T09:00:00Z"
 	LastUpdateDate string `json:"lastUpdateDate,omitempty"`
 
@@ -3222,7 +3214,8 @@ type CollectionStatusDestinationStatus struct {
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
 
-	// Status: The status for the specified destination.
+	// Status: The status for the specified destination in the collections
+	// target country.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
@@ -3924,7 +3917,8 @@ type DatafeedsCustomBatchResponseEntry struct {
 	// was successful.
 	Datafeed *Datafeed `json:"datafeed,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -4141,7 +4135,8 @@ type DatafeedstatusesCustomBatchResponseEntry struct {
 	// if the request was successful.
 	DatafeedStatus *DatafeedStatus `json:"datafeedStatus,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -4259,38 +4254,40 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // utc_offset is unset: a civil time on a calendar day in a particular
 // time zone. * When neither time_zone nor utc_offset is set: a civil
 // time on a calendar day in local time. The date is relative to the
-// Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type DateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -6437,7 +6434,8 @@ type LocalinventoryCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6699,7 +6697,8 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 // requested explicitly in the request's search query.
 type Metrics struct {
 	// Aos: Average order size - the average number of items in an order.
-	// **This metric cannot be segmented by product dimensions.**
+	// **This metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	Aos float64 `json:"aos,omitempty"`
 
 	// AovMicros: Average order value - the average value (total price of
@@ -6708,7 +6707,8 @@ type Metrics struct {
 	// 'segments.currency_code' is automatically added to the SELECT clause
 	// in the search query (unless it is explicitly selected by the user)
 	// and the currency_code segment is populated in the response. **This
-	// metric cannot be segmented by product dimensions.**
+	// metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	AovMicros float64 `json:"aovMicros,omitempty"`
 
 	// Clicks: Number of clicks.
@@ -6744,20 +6744,23 @@ type Metrics struct {
 
 	// DaysToShip: Average number of days between an order being placed and
 	// the order being fully shipped, reported on the last shipment date.
-	// **This metric cannot be segmented by product dimensions.**
+	// **This metric cannot be segmented by product dimensions and
+	// customer_country_code.**
 	DaysToShip float64 `json:"daysToShip,omitempty"`
 
 	// Impressions: Number of times merchant's products are shown.
 	Impressions int64 `json:"impressions,omitempty,string"`
 
 	// ItemDaysToShip: Average number of days between an item being ordered
-	// and the item being
+	// and the item being **This metric cannot be segmented by
+	// customer_country_code.**
 	ItemDaysToShip float64 `json:"itemDaysToShip,omitempty"`
 
 	// ItemFillRate: Percentage of shipped items in relation to all
 	// finalized items (shipped or rejected by the merchant; unshipped items
 	// are not taken into account), reported on the order date. Item fill
-	// rate is lowered by merchant rejections.
+	// rate is lowered by merchant rejections. **This metric cannot be
+	// segmented by customer_country_code.**
 	ItemFillRate float64 `json:"itemFillRate,omitempty"`
 
 	// OrderedItemSalesMicros: Total price of ordered items. Excludes
@@ -6767,20 +6770,23 @@ type Metrics struct {
 	// selected, 'segments.currency_code' is automatically added to the
 	// SELECT clause in the search query (unless it is explicitly selected
 	// by the user) and the currency_code segment is populated in the
-	// response.
+	// response. **This metric cannot be segmented by
+	// customer_country_code.**
 	OrderedItemSalesMicros int64 `json:"orderedItemSalesMicros,omitempty,string"`
 
 	// OrderedItems: Number of ordered items. Excludes customer
 	// cancellations that happened within 30 minutes of placing the order.
+	// **This metric cannot be segmented by customer_country_code.**
 	OrderedItems int64 `json:"orderedItems,omitempty,string"`
 
 	// Orders: Number of placed orders. Excludes customer cancellations that
 	// happened within 30 minutes of placing the order. **This metric cannot
-	// be segmented by product dimensions.**
+	// be segmented by product dimensions and customer_country_code.**
 	Orders int64 `json:"orders,omitempty,string"`
 
 	// RejectedItems: Number of ordered items canceled by the merchant,
-	// reported on the order date.
+	// reported on the order date. **This metric cannot be segmented by
+	// customer_country_code.**
 	RejectedItems int64 `json:"rejectedItems,omitempty,string"`
 
 	// ReturnRate: Total price of returned items divided by the total price
@@ -6788,11 +6794,13 @@ type Metrics struct {
 	// selected, 'segments.currency_code' is automatically added to the
 	// SELECT clause in the search query (unless it is explicitly selected
 	// by the user) and the currency_code segment is populated in the
-	// response.
+	// response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ReturnRate float64 `json:"returnRate,omitempty"`
 
 	// ReturnedItems: Number of ordered items sent back for return, reported
-	// on the date when the merchant accepted the return.
+	// on the date when the merchant accepted the return. **This metric
+	// cannot be segmented by customer_country_code.**
 	ReturnedItems int64 `json:"returnedItems,omitempty,string"`
 
 	// ReturnsMicros: Total price of ordered items sent back for return,
@@ -6801,7 +6809,8 @@ type Metrics struct {
 	// segment. If this metric is selected, 'segments.currency_code' is
 	// automatically added to the SELECT clause in the search query (unless
 	// it is explicitly selected by the user) and the currency_code segment
-	// is populated in the response.
+	// is populated in the response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ReturnsMicros int64 `json:"returnsMicros,omitempty,string"`
 
 	// ShippedItemSalesMicros: Total price of shipped items, reported on the
@@ -6810,28 +6819,32 @@ type Metrics struct {
 	// metric is selected, 'segments.currency_code' is automatically added
 	// to the SELECT clause in the search query (unless it is explicitly
 	// selected by the user) and the currency_code segment is populated in
-	// the response.
+	// the response. **This metric cannot be segmented by
+	// customer_country_code.**
 	ShippedItemSalesMicros int64 `json:"shippedItemSalesMicros,omitempty,string"`
 
 	// ShippedItems: Number of shipped items, reported on the shipment date.
+	// **This metric cannot be segmented by customer_country_code.**
 	ShippedItems int64 `json:"shippedItems,omitempty,string"`
 
 	// ShippedOrders: Number of fully shipped orders, reported on the last
 	// shipment date. **This metric cannot be segmented by product
-	// dimensions.**
+	// dimensions and customer_country_code.**
 	ShippedOrders int64 `json:"shippedOrders,omitempty,string"`
 
 	// UnshippedItems: Number of ordered items not shipped up until the end
 	// of the queried day. If a multi-day period is specified in the search
 	// query, the returned value is the average number of unshipped items
-	// over the days in the queried period.
+	// over the days in the queried period. **This metric cannot be
+	// segmented by customer_country_code.**
 	UnshippedItems float64 `json:"unshippedItems,omitempty"`
 
 	// UnshippedOrders: Number of orders not shipped or partially shipped up
 	// until the end of the queried day. If a multi-day period is specified
 	// in the search query, the returned value is the average number of
 	// unshipped orders over the days in the queried period. **This metric
-	// cannot be segmented by product dimensions.**
+	// cannot be segmented by product dimensions and
+	// customer_country_code.**
 	UnshippedOrders float64 `json:"unshippedOrders,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aos") to
@@ -12057,6 +12070,10 @@ type Product struct {
 	// sellers to your multi-seller account.
 	ExternalSellerId string `json:"externalSellerId,omitempty"`
 
+	// FeedLabel: Feed label for the item. Either `targetCountry` or
+	// `feedLabel` is required.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
 	// Gender: Target gender of the item.
 	Gender string `json:"gender,omitempty"`
 
@@ -13097,6 +13114,258 @@ func (s *ProductUnitPricingMeasure) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ProductView: Product fields. Values are only set for fields requested
+// explicitly in the request's search query.
+type ProductView struct {
+	// AggregatedDestinationStatus: Aggregated destination status.
+	//
+	// Possible values:
+	//   "AGGREGATED_STATUS_UNSPECIFIED" - Undefined aggregated status.
+	//   "NOT_ELIGIBLE_OR_DISAPPROVED" - Offer isn't eligible, or is
+	// disapproved for all destinations.
+	//   "PENDING" - Offer's status is pending in all destinations.
+	//   "ELIGIBLE_LIMITED" - Offer is eligible for some (but not all)
+	// destinations.
+	//   "ELIGIBLE" - Offer is eligible for all destinations.
+	AggregatedDestinationStatus string `json:"aggregatedDestinationStatus,omitempty"`
+
+	// Availability: Availability of the product.
+	Availability string `json:"availability,omitempty"`
+
+	// Brand: Brand of the product.
+	Brand string `json:"brand,omitempty"`
+
+	// Channel: Channel of the product (online versus local).
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - Indicates that the channel is unspecified.
+	//   "LOCAL" - Indicates that the channel is local.
+	//   "ONLINE" - Indicates that the channel is online.
+	Channel string `json:"channel,omitempty"`
+
+	// Condition: Condition of the product.
+	Condition string `json:"condition,omitempty"`
+
+	// CreationTime: The time the merchant created the product in timestamp
+	// seconds.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// CurrencyCode: Product price currency code (for example, ISO 4217).
+	// Absent if product price is not available.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// ExpirationDate: Expiration date for the product. Specified on
+	// insertion.
+	ExpirationDate *Date `json:"expirationDate,omitempty"`
+
+	// Gtin: GTIN of the product.
+	Gtin []string `json:"gtin,omitempty"`
+
+	// Id: The REST ID of the product, in the form of
+	// channel:contentLanguage:targetCountry:offerId. Content API methods
+	// that operate on products take this as their productId parameter.
+	// Should always be included in the SELECT clause.
+	Id string `json:"id,omitempty"`
+
+	// ItemGroupId: Item group ID provided by the merchant for grouping
+	// variants together.
+	ItemGroupId string `json:"itemGroupId,omitempty"`
+
+	// ItemIssues: List of item issues for the product.
+	ItemIssues []*ProductViewItemIssue `json:"itemIssues,omitempty"`
+
+	// LanguageCode: Language code of the product in BCP 47 format.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// OfferId: Merchant-provided id of the product.
+	OfferId string `json:"offerId,omitempty"`
+
+	// PriceMicros: Product price specified as micros in the product
+	// currency. Absent in case the information about the price of the
+	// product is not available.
+	PriceMicros int64 `json:"priceMicros,omitempty,string"`
+
+	// ShippingLabel: The normalized shipping label specified in the feed
+	ShippingLabel string `json:"shippingLabel,omitempty"`
+
+	// Title: Title of the product.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AggregatedDestinationStatus") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AggregatedDestinationStatus") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductView) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssue: Item issue associated with the product.
+type ProductViewItemIssue struct {
+	// IssueType: Item issue type.
+	IssueType *ProductViewItemIssueItemIssueType `json:"issueType,omitempty"`
+
+	// Resolution: Item issue resolution.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown resolution type.
+	//   "MERCHANT_ACTION" - The merchant has to fix the issue.
+	//   "PENDING_PROCESSING" - The issue will be resolved automatically
+	// (for example, image crawl), or Google review. No merchant action is
+	// required now. Resolution might lead to another issue (for example, if
+	// crawl fails).
+	Resolution string `json:"resolution,omitempty"`
+
+	// Severity: Item issue severity.
+	Severity *ProductViewItemIssueItemIssueSeverity `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueIssueSeverityPerDestination: Issue severity for
+// all affected regions in a destination.
+type ProductViewItemIssueIssueSeverityPerDestination struct {
+	// DemotedCountries: List of demoted countries in the destination.
+	DemotedCountries []string `json:"demotedCountries,omitempty"`
+
+	// Destination: Issue destination.
+	Destination string `json:"destination,omitempty"`
+
+	// DisapprovedCountries: List of disapproved countries in the
+	// destination.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DemotedCountries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DemotedCountries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueIssueSeverityPerDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueIssueSeverityPerDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueItemIssueSeverity: Severity of an issue per
+// destination in a region, and aggregated severity.
+type ProductViewItemIssueItemIssueSeverity struct {
+	// AggregatedSeverity: Severity of an issue aggregated for destination.
+	//
+	// Possible values:
+	//   "AGGREGATED_ISSUE_SEVERITY_UNSPECIFIED" - Undefined Issue severity.
+	//   "DISAPPROVED" - Issue disapproves the product in at least one of
+	// the selected destinations.
+	//   "DEMOTED" - Issue demotes the product in all selected destinations
+	// it affects.
+	//   "PENDING" - Issue resolution is `PENDING_PROCESSING`.
+	AggregatedSeverity string `json:"aggregatedSeverity,omitempty"`
+
+	// SeverityPerDestination: Item issue severity for every destination.
+	SeverityPerDestination []*ProductViewItemIssueIssueSeverityPerDestination `json:"severityPerDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregatedSeverity")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregatedSeverity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueItemIssueSeverity) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueItemIssueSeverity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductViewItemIssueItemIssueType: Type of the item issue.
+type ProductViewItemIssueItemIssueType struct {
+	// CanonicalAttribute: Canonical attribute name for attribute-specific
+	// issues.
+	CanonicalAttribute string `json:"canonicalAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanonicalAttribute")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalAttribute") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductViewItemIssueItemIssueType) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductViewItemIssueItemIssueType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ProductWeight struct {
 	// Unit: Required. The weight unit. Acceptable values are: - "g" -
 	// "kg" - "oz" - "lb"
@@ -13273,7 +13542,8 @@ type ProductsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -13460,7 +13730,8 @@ type ProductstatusesCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors, if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -13532,10 +13803,8 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Promotion: The Promotions feature is available for `AU`, `CA`, `DE`,
-// `FR`, `GB`, `IN` and `US` target countries, and `en` content
-// language. Represents a promotion. See the following articles for more
-// details. * Promotions feed specification
+// Promotion: Represents a promotion. See the following articles for
+// more details. * Promotions feed specification
 // (https://support.google.com/merchants/answer/2906014) * Local
 // promotions feed specification
 // (https://support.google.com/merchants/answer/10146130) * Promotions
@@ -13549,7 +13818,10 @@ type Promotion struct {
 	BrandExclusion []string `json:"brandExclusion,omitempty"`
 
 	// ContentLanguage: Required. The content language used as part of the
-	// unique identifier. Currently only `en` value is supported.
+	// unique identifier. `en` content language is available for all target
+	// countries. `fr` content language is available for `CA` and `FR`
+	// target countries, and `de` content language is available for `DE`
+	// target country.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
 	// CouponValueType: Required. Coupon value type for the promotion.
@@ -14221,7 +14493,8 @@ type RegionalinventoryCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry this entry responds to.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if and only if the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -14259,6 +14532,12 @@ type ReportRow struct {
 	// Metrics: Metrics requested by the merchant in the query. Metric
 	// values are only set for metrics requested explicitly in the query.
 	Metrics *Metrics `json:"metrics,omitempty"`
+
+	// ProductView: Product fields requested by the merchant in the query.
+	// Field values are only set if the merchant queries `ProductView`.
+	// `product_view` field is available only to allowlisted users who can
+	// query the `ProductView` table.
+	ProductView *ProductView `json:"productView,omitempty"`
 
 	// Segments: Segmentation dimensions requested by the merchant in the
 	// query. Dimension values are only set for dimensions requested
@@ -16192,11 +16471,12 @@ func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Segments: Dimensions according to which metrics are segmented in the
-// response. Values of product dimensions, e.g., offer id, reflect the
-// state of a product at the time of the corresponding event, e.g.,
-// impression or order. Segment fields cannot be selected in queries
-// without also selecting at least one metric field. Values are only set
-// for dimensions requested explicitly in the request's search query.
+// response. Values of product dimensions, such as `offer_id`, reflect
+// the state of a product at the time of the corresponding event, for
+// example, impression or order. Segment fields cannot be selected in
+// queries without also selecting at least one metric field. Values are
+// only set for dimensions requested explicitly in the request's search
+// query.
 type Segments struct {
 	// Brand: Brand of the product.
 	Brand string `json:"brand,omitempty"`
@@ -16226,9 +16506,9 @@ type Segments struct {
 	// in Google's product taxonomy.
 	CategoryL5 string `json:"categoryL5,omitempty"`
 
-	// CurrencyCode: Currency in which price metrics are represented, e.g.,
-	// if you select `ordered_item_sales_micros`, the returned value will be
-	// represented by this currency.
+	// CurrencyCode: Currency in which price metrics are represented, for
+	// example, if you select `ordered_item_sales_micros`, the returned
+	// value will be represented by this currency.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// CustomLabel0: Custom label 0 for custom grouping of products.
@@ -16245,6 +16525,12 @@ type Segments struct {
 
 	// CustomLabel4: Custom label 4 for custom grouping of products.
 	CustomLabel4 string `json:"customLabel4,omitempty"`
+
+	// CustomerCountryCode: Code of the country where the customer is
+	// located at the time of the event. Represented in the ISO 3166 format.
+	// If the customer country cannot be determined, a special 'ZZ' code is
+	// returned.
+	CustomerCountryCode string `json:"customerCountryCode,omitempty"`
 
 	// Date: Date in the merchant timezone to which metrics apply.
 	Date *Date `json:"date,omitempty"`
@@ -16277,7 +16563,8 @@ type Segments struct {
 	// in merchant's own product taxonomy.
 	ProductTypeL5 string `json:"productTypeL5,omitempty"`
 
-	// Program: Program to which metrics apply, e.g., Free Product Listing.
+	// Program: Program to which metrics apply, for example, Free Product
+	// Listing.
 	//
 	// Possible values:
 	//   "PROGRAM_UNSPECIFIED" - Not specified.
@@ -17037,7 +17324,8 @@ type ShippingsettingsCustomBatchResponseEntry struct {
 	// BatchId: The ID of the request entry to which this entry responds.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Errors: A list of errors defined if, and only if, the request failed.
+	// Errors: A list of errors for failed custombatch entries. *Note:*
+	// Schema errors fail the whole request.
 	Errors *Errors `json:"errors,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -18497,11 +18785,11 @@ type AccountsClaimwebsiteCall struct {
 
 // Claimwebsite: Claims the website of a Merchant Center sub-account.
 //
-// - accountId: The ID of the account whose website is claimed.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account whose website is claimed.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Claimwebsite(merchantId uint64, accountId uint64) *AccountsClaimwebsiteCall {
 	c := &AccountsClaimwebsiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -18785,10 +19073,10 @@ type AccountsDeleteCall struct {
 
 // Delete: Deletes a Merchant Center sub-account.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account, and accountId must be the ID of a sub-account
-//   of this account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account, and accountId must be the ID of a sub-account
+//     of this account.
 func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -18917,11 +19205,11 @@ type AccountsGetCall struct {
 
 // Get: Retrieves a Merchant Center account.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -18934,9 +19222,12 @@ func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetC
 // default value is "merchant".
 //
 // Possible values:
-//   "MERCHANT" - Default. View is populated with Merchant Center
+//
+//	"MERCHANT" - Default. View is populated with Merchant Center
+//
 // fields.
-//   "CSS" - View is populated with Comparison Shopping Services fields.
+//
+//	"CSS" - View is populated with Comparison Shopping Services fields.
 func (c *AccountsGetCall) View(view string) *AccountsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -19103,8 +19394,8 @@ type AccountsInsertCall struct {
 
 // Insert: Creates a Merchant Center sub-account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsInsertCall {
 	c := &AccountsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19248,11 +19539,11 @@ type AccountsLinkCall struct {
 // Link: Performs an action on a link between two Merchant Center
 // accounts, namely accountId and linkedAccountId.
 //
-// - accountId: The ID of the account that should be linked.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account that should be linked.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Link(merchantId uint64, accountId uint64, accountslinkrequest *AccountsLinkRequest) *AccountsLinkCall {
 	c := &AccountsLinkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19404,8 +19695,8 @@ type AccountsListCall struct {
 
 // List: Lists the sub-accounts in your Merchant Center account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19445,9 +19736,12 @@ func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 // default value is "merchant".
 //
 // Possible values:
-//   "MERCHANT" - Default. View is populated with Merchant Center
+//
+//	"MERCHANT" - Default. View is populated with Merchant Center
+//
 // fields.
-//   "CSS" - View is populated with Comparison Shopping Services fields.
+//
+//	"CSS" - View is populated with Comparison Shopping Services fields.
 func (c *AccountsListCall) View(view string) *AccountsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -19650,11 +19944,11 @@ type AccountsListlinksCall struct {
 // Listlinks: Returns the list of accounts linked to your Merchant
 // Center account.
 //
-// - accountId: The ID of the account for which to list links.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to list links.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Listlinks(merchantId uint64, accountId uint64) *AccountsListlinksCall {
 	c := &AccountsListlinksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19860,11 +20154,11 @@ type AccountsRequestphoneverificationCall struct {
 // Requestphoneverification: Request verification code to start phone
 // verification.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and accountId must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and accountId must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Requestphoneverification(merchantId int64, accountId int64, requestphoneverificationrequest *RequestPhoneVerificationRequest) *AccountsRequestphoneverificationCall {
 	c := &AccountsRequestphoneverificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20018,11 +20312,11 @@ type AccountsUpdateCall struct {
 // Update: Updates a Merchant Center account. Any fields that are not
 // provided are deleted from the resource.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20333,11 +20627,11 @@ type AccountsVerifyphonenumberCall struct {
 // `accounts.businessinformation.phoneNumber`. Only verified phone
 // number will replace an existing verified phone number.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and accountId must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and accountId must be the ID of a sub-account of this
+//     account.
 func (r *AccountsService) Verifyphonenumber(merchantId int64, accountId int64, verifyphonenumberrequest *VerifyPhoneNumberRequest) *AccountsVerifyphonenumberCall {
 	c := &AccountsVerifyphonenumberCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -20491,8 +20785,8 @@ type AccountsCredentialsCreateCall struct {
 // credentials already exist for this Merchant Center account and
 // purpose, this method updates them.
 //
-// - accountId: The merchant id of the account these credentials belong
-//   to.
+//   - accountId: The merchant id of the account these credentials belong
+//     to.
 func (r *AccountsCredentialsService) Create(accountId int64, accountcredentials *AccountCredentials) *AccountsCredentialsCreateCall {
 	c := &AccountsCredentialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -21244,8 +21538,8 @@ type AccountsReturncarrierCreateCall struct {
 
 // Create: Links return carrier to a merchant account.
 //
-// - accountId: The Merchant Center Account Id under which the Return
-//   Carrier is to be linked.
+//   - accountId: The Merchant Center Account Id under which the Return
+//     Carrier is to be linked.
 func (r *AccountsReturncarrierService) Create(accountId int64, accountreturncarrier *AccountReturnCarrier) *AccountsReturncarrierCreateCall {
 	c := &AccountsReturncarrierCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -21387,10 +21681,10 @@ type AccountsReturncarrierDeleteCall struct {
 
 // Delete: Delete a return carrier in the merchant account.
 //
-// - accountId: The Merchant Center Account Id under which the Return
-//   Carrier is to be linked.
-// - carrierAccountId: The Google-provided unique carrier ID, used to
-//   update the resource.
+//   - accountId: The Merchant Center Account Id under which the Return
+//     Carrier is to be linked.
+//   - carrierAccountId: The Google-provided unique carrier ID, used to
+//     update the resource.
 func (r *AccountsReturncarrierService) Delete(accountId int64, carrierAccountId int64) *AccountsReturncarrierDeleteCall {
 	c := &AccountsReturncarrierDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -21505,8 +21799,8 @@ type AccountsReturncarrierListCall struct {
 
 // List: Lists available return carriers in the merchant account.
 //
-// - accountId: The Merchant Center Account Id under which the Return
-//   Carrier is to be linked.
+//   - accountId: The Merchant Center Account Id under which the Return
+//     Carrier is to be linked.
 func (r *AccountsReturncarrierService) List(accountId int64) *AccountsReturncarrierListCall {
 	c := &AccountsReturncarrierListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -21653,10 +21947,10 @@ type AccountsReturncarrierPatchCall struct {
 
 // Patch: Updates a return carrier in the merchant account.
 //
-// - accountId: The Merchant Center Account Id under which the Return
-//   Carrier is to be linked.
-// - carrierAccountId: The Google-provided unique carrier ID, used to
-//   update the resource.
+//   - accountId: The Merchant Center Account Id under which the Return
+//     Carrier is to be linked.
+//   - carrierAccountId: The Google-provided unique carrier ID, used to
+//     update the resource.
 func (r *AccountsReturncarrierService) Patch(accountId int64, carrierAccountId int64, accountreturncarrier *AccountReturnCarrier) *AccountsReturncarrierPatchCall {
 	c := &AccountsReturncarrierPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -21937,11 +22231,11 @@ type AccountstatusesGetCall struct {
 // Get: Retrieves the status of a Merchant Center account. No
 // itemLevelIssues are returned for multi-client accounts.
 //
-// - accountId: The ID of the account.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
 	c := &AccountstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22112,8 +22406,8 @@ type AccountstatusesListCall struct {
 // List: Lists the statuses of the sub-accounts in your Merchant Center
 // account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCall {
 	c := &AccountstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22319,179 +22613,6 @@ func (c *AccountstatusesListCall) Pages(ctx context.Context, f func(*Accountstat
 	}
 }
 
-// method id "content.accountstatusesbyexternalsellerid.get":
-
-type AccountstatusesbyexternalselleridGetCall struct {
-	s                *APIService
-	merchantId       int64
-	externalSellerId string
-	urlParams_       gensupport.URLParams
-	ifNoneMatch_     string
-	ctx_             context.Context
-	header_          http.Header
-}
-
-// Get: Gets status of the account with the specified external_seller_id
-// belonging to the MCA with the specified merchant_id.
-//
-// - externalSellerId: The External Seller ID of the seller account to
-//   be retrieved.
-// - merchantId: The ID of the MCA containing the seller.
-func (r *AccountstatusesbyexternalselleridService) Get(merchantId int64, externalSellerId string) *AccountstatusesbyexternalselleridGetCall {
-	c := &AccountstatusesbyexternalselleridGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.merchantId = merchantId
-	c.externalSellerId = externalSellerId
-	return c
-}
-
-// Destinations sets the optional parameter "destinations": If set, only
-// issues for the specified destinations are returned, otherwise only
-// issues for the Shopping destination.
-func (c *AccountstatusesbyexternalselleridGetCall) Destinations(destinations ...string) *AccountstatusesbyexternalselleridGetCall {
-	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountstatusesbyexternalselleridGetCall) Fields(s ...googleapi.Field) *AccountstatusesbyexternalselleridGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AccountstatusesbyexternalselleridGetCall) IfNoneMatch(entityTag string) *AccountstatusesbyexternalselleridGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountstatusesbyexternalselleridGetCall) Context(ctx context.Context) *AccountstatusesbyexternalselleridGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountstatusesbyexternalselleridGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountstatusesbyexternalselleridGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"merchantId":       strconv.FormatInt(c.merchantId, 10),
-		"externalSellerId": c.externalSellerId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "content.accountstatusesbyexternalsellerid.get" call.
-// Exactly one of *AccountStatus or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *AccountStatus.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountstatusesbyexternalselleridGetCall) Do(opts ...googleapi.CallOption) (*AccountStatus, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &AccountStatus{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets status of the account with the specified external_seller_id belonging to the MCA with the specified merchant_id.",
-	//   "flatPath": "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}",
-	//   "httpMethod": "GET",
-	//   "id": "content.accountstatusesbyexternalsellerid.get",
-	//   "parameterOrder": [
-	//     "merchantId",
-	//     "externalSellerId"
-	//   ],
-	//   "parameters": {
-	//     "destinations": {
-	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "externalSellerId": {
-	//       "description": "Required. The External Seller ID of the seller account to be retrieved.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "merchantId": {
-	//       "description": "Required. The ID of the MCA containing the seller.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{merchantId}/accountstatusesbyexternalsellerid/{externalSellerId}",
-	//   "response": {
-	//     "$ref": "AccountStatus"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/content"
-	//   ]
-	// }
-
-}
-
 // method id "content.accounttax.custombatch":
 
 type AccounttaxCustombatchCall struct {
@@ -22632,12 +22753,12 @@ type AccounttaxGetCall struct {
 
 // Get: Retrieves the tax settings of the account.
 //
-// - accountId: The ID of the account for which to get/update account
-//   tax settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get/update account
+//     tax settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccounttaxService) Get(merchantId uint64, accountId uint64) *AccounttaxGetCall {
 	c := &AccounttaxGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22794,8 +22915,8 @@ type AccounttaxListCall struct {
 // List: Lists the tax settings of the sub-accounts in your Merchant
 // Center account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
 	c := &AccounttaxListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -22989,12 +23110,12 @@ type AccounttaxUpdateCall struct {
 // Update: Updates the tax settings of the account. Any fields that are
 // not provided are deleted from the resource.
 //
-// - accountId: The ID of the account for which to get/update account
-//   tax settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get/update account
+//     tax settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxUpdateCall {
 	c := &AccounttaxUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23150,10 +23271,10 @@ type BuyongoogleprogramsActivateCall struct {
 // example, when paused. This method is only available to selected
 // merchants.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Activate(merchantId int64, regionCode string, activatebuyongoogleprogramrequest *ActivateBuyOnGoogleProgramRequest) *BuyongoogleprogramsActivateCall {
 	c := &BuyongoogleprogramsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23278,10 +23399,10 @@ type BuyongoogleprogramsGetCall struct {
 // Get: Retrieves a status of the BoG program for your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The Program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The Program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Get(merchantId int64, regionCode string) *BuyongoogleprogramsGetCall {
 	c := &BuyongoogleprogramsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23443,10 +23564,10 @@ type BuyongoogleprogramsOnboardCall struct {
 // multiple times will only accept Terms of Service if the latest
 // version is not currently signed.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Onboard(merchantId int64, regionCode string, onboardbuyongoogleprogramrequest *OnboardBuyOnGoogleProgramRequest) *BuyongoogleprogramsOnboardCall {
 	c := &BuyongoogleprogramsOnboardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23571,10 +23692,10 @@ type BuyongoogleprogramsPatchCall struct {
 // Patch: Updates the status of the BoG program for your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Patch(merchantId int64, regionCode string, buyongoogleprogramstatus *BuyOnGoogleProgramStatus) *BuyongoogleprogramsPatchCall {
 	c := &BuyongoogleprogramsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23742,10 +23863,10 @@ type BuyongoogleprogramsPauseCall struct {
 // Pause: Pauses the BoG program in your Merchant Center account. This
 // method is only available to selected merchants.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Pause(merchantId int64, regionCode string, pausebuyongoogleprogramrequest *PauseBuyOnGoogleProgramRequest) *BuyongoogleprogramsPauseCall {
 	c := &BuyongoogleprogramsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -23872,10 +23993,10 @@ type BuyongoogleprogramsRequestreviewCall struct {
 // the REVIEW_PENDING state. This method is only available to selected
 // merchants.
 //
-// - merchantId: The ID of the account.
-// - regionCode: The program region code ISO 3166-1 alpha-2
-//   (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
-//   US is available.
+//   - merchantId: The ID of the account.
+//   - regionCode: The program region code ISO 3166-1 alpha-2
+//     (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only
+//     US is available.
 func (r *BuyongoogleprogramsService) Requestreview(merchantId int64, regionCode string, requestreviewbuyongoogleprogramrequest *RequestReviewBuyOnGoogleProgramRequest) *BuyongoogleprogramsRequestreviewCall {
 	c := &BuyongoogleprogramsRequestreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24001,8 +24122,8 @@ type CollectionsCreateCall struct {
 // updates that entry. In each update, the collection is completely
 // replaced by the fields in the body of the update request.
 //
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionsService) Create(merchantId int64, collection *Collection) *CollectionsCreateCall {
 	c := &CollectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24144,10 +24265,10 @@ type CollectionsDeleteCall struct {
 
 // Delete: Deletes a collection from your Merchant Center account.
 //
-// - collectionId: The collectionId of the collection. CollectionId is
-//   the same as the REST ID of the collection.
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - collectionId: The collectionId of the collection. CollectionId is
+//     the same as the REST ID of the collection.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionsService) Delete(merchantId int64, collectionId string) *CollectionsDeleteCall {
 	c := &CollectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24262,9 +24383,9 @@ type CollectionsGetCall struct {
 
 // Get: Retrieves a collection from your Merchant Center account.
 //
-// - collectionId: The REST ID of the collection.
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - collectionId: The REST ID of the collection.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionsService) Get(merchantId int64, collectionId string) *CollectionsGetCall {
 	c := &CollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24422,8 +24543,8 @@ type CollectionsListCall struct {
 // on next_page_token to determine if there are more items to be
 // requested.
 //
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionsService) List(merchantId int64) *CollectionsListCall {
 	c := &CollectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24619,10 +24740,10 @@ type CollectionstatusesGetCall struct {
 // Get: Gets the status of a collection from your Merchant Center
 // account.
 //
-// - collectionId: The collectionId of the collection. CollectionId is
-//   the same as the REST ID of the collection.
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - collectionId: The collectionId of the collection. CollectionId is
+//     the same as the REST ID of the collection.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionstatusesService) Get(merchantId int64, collectionId string) *CollectionstatusesGetCall {
 	c := &CollectionstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24778,8 +24899,8 @@ type CollectionstatusesListCall struct {
 // List: Lists the statuses of the collections in your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account that contains the collection.
-//   This account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the collection.
+//     This account cannot be a multi-client account.
 func (r *CollectionstatusesService) List(merchantId int64) *CollectionstatusesListCall {
 	c := &CollectionstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -24974,11 +25095,11 @@ type CssesGetCall struct {
 
 // Get: Retrieves a single CSS domain by ID.
 //
-// - cssDomainId: The ID of the CSS domain to return.
-// - cssGroupId: The ID of the managing account. If this parameter is
-//   not the same as cssDomainId (#cssDomainId), then this ID must be a
-//   CSS group ID and `cssDomainId` must be the ID of a CSS domain
-//   affiliated with this group.
+//   - cssDomainId: The ID of the CSS domain to return.
+//   - cssGroupId: The ID of the managing account. If this parameter is
+//     not the same as cssDomainId (#cssDomainId), then this ID must be a
+//     CSS group ID and `cssDomainId` must be the ID of a CSS domain
+//     affiliated with this group.
 func (r *CssesService) Get(cssGroupId int64, cssDomainId int64) *CssesGetCall {
 	c := &CssesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.cssGroupId = cssGroupId
@@ -25612,9 +25733,9 @@ type DatafeedsDeleteCall struct {
 // Delete: Deletes a datafeed configuration from your Merchant Center
 // account.
 //
-// - datafeedId: The ID of the datafeed.
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - datafeedId: The ID of the datafeed.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *DatafeedsDeleteCall {
 	c := &DatafeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25733,9 +25854,9 @@ type DatafeedsFetchnowCall struct {
 // (https://developers.google.com/shopping-content/reference/rest/v2.1/products)
 // to update your product data.
 //
-// - datafeedId: The ID of the datafeed to be fetched.
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - datafeedId: The ID of the datafeed to be fetched.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) Fetchnow(merchantId uint64, datafeedId uint64) *DatafeedsFetchnowCall {
 	c := &DatafeedsFetchnowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -25880,9 +26001,9 @@ type DatafeedsGetCall struct {
 // Get: Retrieves a datafeed configuration from your Merchant Center
 // account.
 //
-// - datafeedId: The ID of the datafeed.
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - datafeedId: The ID of the datafeed.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsGetCall {
 	c := &DatafeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26039,8 +26160,8 @@ type DatafeedsInsertCall struct {
 // Insert: Registers a datafeed configuration with your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *DatafeedsInsertCall {
 	c := &DatafeedsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26183,8 +26304,8 @@ type DatafeedsListCall struct {
 // List: Lists the configurations for datafeeds in your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account that manages the datafeeds. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the datafeeds. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 	c := &DatafeedsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26379,9 +26500,9 @@ type DatafeedsUpdateCall struct {
 // account. Any fields that are not provided are deleted from the
 // resource.
 //
-// - datafeedId: The ID of the datafeed.
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - datafeedId: The ID of the datafeed.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsUpdateCall {
 	c := &DatafeedsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26662,9 +26783,9 @@ type DatafeedstatusesGetCall struct {
 // Get: Retrieves the status of a datafeed from your Merchant Center
 // account.
 //
-// - datafeedId: The ID of the datafeed.
-// - merchantId: The ID of the account that manages the datafeed. This
-//   account cannot be a multi-client account.
+//   - datafeedId: The ID of the datafeed.
+//   - merchantId: The ID of the account that manages the datafeed. This
+//     account cannot be a multi-client account.
 func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *DatafeedstatusesGetCall {
 	c := &DatafeedstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -26851,8 +26972,8 @@ type DatafeedstatusesListCall struct {
 // List: Lists the statuses of the datafeeds in your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account that manages the datafeeds. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the datafeeds. This
+//     account cannot be a multi-client account.
 func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListCall {
 	c := &DatafeedstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27433,12 +27554,12 @@ type LiasettingsGetCall struct {
 
 // Get: Retrieves the LIA settings of the account.
 //
-// - accountId: The ID of the account for which to get or update LIA
-//   settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get or update LIA
+//     settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Get(merchantId uint64, accountId uint64) *LiasettingsGetCall {
 	c := &LiasettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27596,12 +27717,12 @@ type LiasettingsGetaccessiblegmbaccountsCall struct {
 // Getaccessiblegmbaccounts: Retrieves the list of accessible Business
 // Profiles.
 //
-// - accountId: The ID of the account for which to retrieve accessible
-//   Business Profiles.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to retrieve accessible
+//     Business Profiles.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Getaccessiblegmbaccounts(merchantId uint64, accountId uint64) *LiasettingsGetaccessiblegmbaccountsCall {
 	c := &LiasettingsGetaccessiblegmbaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -27760,8 +27881,8 @@ type LiasettingsListCall struct {
 // List: Lists the LIA settings of the sub-accounts in your Merchant
 // Center account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *LiasettingsService) List(merchantId uint64) *LiasettingsListCall {
 	c := &LiasettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28084,13 +28205,13 @@ type LiasettingsRequestgmbaccessCall struct {
 
 // Requestgmbaccess: Requests access to a specified Business Profile.
 //
-// - accountId: The ID of the account for which Business Profile access
-//   is requested.
-// - gmbEmail: The email of the Business Profile.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which Business Profile access
+//     is requested.
+//   - gmbEmail: The email of the Business Profile.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Requestgmbaccess(merchantId uint64, accountId uint64, gmbEmail string) *LiasettingsRequestgmbaccessCall {
 	c := &LiasettingsRequestgmbaccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28244,13 +28365,13 @@ type LiasettingsRequestinventoryverificationCall struct {
 // Requestinventoryverification: Requests inventory validation for the
 // specified country.
 //
-// - accountId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - country: The country for which inventory validation is requested.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - country: The country for which inventory validation is requested.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Requestinventoryverification(merchantId uint64, accountId uint64, country string) *LiasettingsRequestinventoryverificationCall {
 	c := &LiasettingsRequestinventoryverificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28314,7 +28435,9 @@ func (c *LiasettingsRequestinventoryverificationCall) doRequest(alt string) (*ht
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *LiasettingsRequestInventoryVerificationResponse.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -28405,17 +28528,17 @@ type LiasettingsSetinventoryverificationcontactCall struct {
 // Setinventoryverificationcontact: Sets the inventory verification
 // contract for the specified country.
 //
-// - accountId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - contactEmail: The email of the inventory verification contact.
-// - contactName: The name of the inventory verification contact.
-// - country: The country for which inventory verification is requested.
-// - language: The language for which inventory verification is
-//   requested.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - contactEmail: The email of the inventory verification contact.
+//   - contactName: The name of the inventory verification contact.
+//   - country: The country for which inventory verification is requested.
+//   - language: The language for which inventory verification is
+//     requested.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Setinventoryverificationcontact(merchantId uint64, accountId uint64, country string, language string, contactName string, contactEmail string) *LiasettingsSetinventoryverificationcontactCall {
 	c := &LiasettingsSetinventoryverificationcontactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28593,13 +28716,13 @@ type LiasettingsSetposdataproviderCall struct {
 // Setposdataprovider: Sets the POS data provider for the specified
 // country.
 //
-// - accountId: The ID of the account for which to retrieve accessible
-//   Business Profiles.
-// - country: The country for which the POS data provider is selected.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to retrieve accessible
+//     Business Profiles.
+//   - country: The country for which the POS data provider is selected.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Setposdataprovider(merchantId uint64, accountId uint64, country string) *LiasettingsSetposdataproviderCall {
 	c := &LiasettingsSetposdataproviderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -28779,12 +28902,12 @@ type LiasettingsUpdateCall struct {
 // Update: Updates the LIA settings of the account. Any fields that are
 // not provided are deleted from the resource.
 //
-// - accountId: The ID of the account for which to get or update LIA
-//   settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get or update LIA
+//     settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *LiasettingsService) Update(merchantId uint64, accountId uint64, liasettings *LiaSettings) *LiasettingsUpdateCall {
 	c := &LiasettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29065,10 +29188,10 @@ type LocalinventoryInsertCall struct {
 // Insert: Updates the local inventory of a product in your Merchant
 // Center account.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product for which to update local
-//   inventory.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product for which to update local
+//     inventory.
 func (r *LocalinventoryService) Insert(merchantId uint64, productId string, localinventory *LocalInventory) *LocalinventoryInsertCall {
 	c := &LocalinventoryInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29221,9 +29344,9 @@ type OrderinvoicesCreatechargeinvoiceCall struct {
 // Createchargeinvoice: Creates a charge invoice for a shipment group,
 // and triggers a charge capture for orderinvoice enabled orders.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrderinvoicesService) Createchargeinvoice(merchantId uint64, orderId string, orderinvoicescreatechargeinvoicerequest *OrderinvoicesCreateChargeInvoiceRequest) *OrderinvoicesCreatechargeinvoiceCall {
 	c := &OrderinvoicesCreatechargeinvoiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29381,9 +29504,9 @@ type OrderinvoicesCreaterefundinvoiceCall struct {
 // been charged using `createChargeInvoice`. All amounts (except for the
 // summary) are incremental with respect to the previous invoice.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrderinvoicesService) Createrefundinvoice(merchantId uint64, orderId string, orderinvoicescreaterefundinvoicerequest *OrderinvoicesCreateRefundInvoiceRequest) *OrderinvoicesCreaterefundinvoiceCall {
 	c := &OrderinvoicesCreaterefundinvoiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29537,8 +29660,8 @@ type OrderreportsListdisbursementsCall struct {
 // Listdisbursements: Retrieves a report for disbursements from your
 // Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
 func (r *OrderreportsService) Listdisbursements(merchantId uint64) *OrderreportsListdisbursementsCall {
 	c := &OrderreportsListdisbursementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29759,10 +29882,10 @@ type OrderreportsListtransactionsCall struct {
 // Listtransactions: Retrieves a list of transactions for a disbursement
 // from your Merchant Center account.
 //
-// - disbursementId: The Google-provided ID of the disbursement (found
-//   in Wallet).
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
+//   - disbursementId: The Google-provided ID of the disbursement (found
+//     in Wallet).
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
 func (r *OrderreportsService) Listtransactions(merchantId uint64, disbursementId string) *OrderreportsListtransactionsCall {
 	c := &OrderreportsListtransactionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -29991,9 +30114,9 @@ type OrderreturnsAcknowledgeCall struct {
 
 // Acknowledge: Acks an order return in your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - returnId: The ID of the return.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - returnId: The ID of the return.
 func (r *OrderreturnsService) Acknowledge(merchantId uint64, returnId string, orderreturnsacknowledgerequest *OrderreturnsAcknowledgeRequest) *OrderreturnsAcknowledgeCall {
 	c := &OrderreturnsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30144,8 +30267,8 @@ type OrderreturnsCreateorderreturnCall struct {
 
 // Createorderreturn: Create return in your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
 func (r *OrderreturnsService) Createorderreturn(merchantId uint64, orderreturnscreateorderreturnrequest *OrderreturnsCreateOrderReturnRequest) *OrderreturnsCreateorderreturnCall {
 	c := &OrderreturnsCreateorderreturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30289,9 +30412,9 @@ type OrderreturnsGetCall struct {
 
 // Get: Retrieves an order return from your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - returnId: Merchant order return ID generated by Google.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - returnId: Merchant order return ID generated by Google.
 func (r *OrderreturnsService) Get(merchantId uint64, returnId string) *OrderreturnsGetCall {
 	c := &OrderreturnsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30446,8 +30569,8 @@ type OrderreturnsListCall struct {
 
 // List: Lists order returns in your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
 func (r *OrderreturnsService) List(merchantId uint64) *OrderreturnsListCall {
 	c := &OrderreturnsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -30508,8 +30631,9 @@ func (c *OrderreturnsListCall) MaxResults(maxResults int64) *OrderreturnsListCal
 // the specified order.
 //
 // Possible values:
-//   "RETURN_CREATION_TIME_DESC" - Return results in descending order.
-//   "RETURN_CREATION_TIME_ASC" - Return results in ascending order.
+//
+//	"RETURN_CREATION_TIME_DESC" - Return results in descending order.
+//	"RETURN_CREATION_TIME_ASC" - Return results in ascending order.
 func (c *OrderreturnsListCall) OrderBy(orderBy string) *OrderreturnsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -30528,11 +30652,12 @@ func (c *OrderreturnsListCall) PageToken(pageToken string) *OrderreturnsListCall
 // obtained regardless of their shipment states.
 //
 // Possible values:
-//   "NEW" - Return shipments with `new` state only.
-//   "SHIPPED" - Return shipments with `shipped` state only.
-//   "COMPLETED" - Return shipments with `completed` state only.
-//   "UNDELIVERABLE" - Return shipments with `undeliverable` state only.
-//   "PENDING" - Return shipments with `pending` state only.
+//
+//	"NEW" - Return shipments with `new` state only.
+//	"SHIPPED" - Return shipments with `shipped` state only.
+//	"COMPLETED" - Return shipments with `completed` state only.
+//	"UNDELIVERABLE" - Return shipments with `undeliverable` state only.
+//	"PENDING" - Return shipments with `pending` state only.
 func (c *OrderreturnsListCall) ShipmentStates(shipmentStates ...string) *OrderreturnsListCall {
 	c.urlParams_.SetMulti("shipmentStates", append([]string{}, shipmentStates...))
 	return c
@@ -30544,9 +30669,10 @@ func (c *OrderreturnsListCall) ShipmentStates(shipmentStates ...string) *Orderre
 // obtained regardless of their shipment statuses.
 //
 // Possible values:
-//   "NEW" - Return shipments with `new` status only.
-//   "IN_PROGRESS" - Return shipments with `inProgress` status only.
-//   "PROCESSED" - Return shipments with `processed` status only.
+//
+//	"NEW" - Return shipments with `new` status only.
+//	"IN_PROGRESS" - Return shipments with `inProgress` status only.
+//	"PROCESSED" - Return shipments with `processed` status only.
 func (c *OrderreturnsListCall) ShipmentStatus(shipmentStatus ...string) *OrderreturnsListCall {
 	c.urlParams_.SetMulti("shipmentStatus", append([]string{}, shipmentStatus...))
 	return c
@@ -30571,9 +30697,11 @@ func (c *OrderreturnsListCall) ShipmentTrackingNumbers(shipmentTrackingNumbers .
 // obtained regardless of their shipment types.
 //
 // Possible values:
-//   "BY_MAIL" - Return shipments with type `byMail` only.
-//   "RETURNLESS" - Return shipments with type `returnless` only.
-//   "CONTACT_CUSTOMER_SUPPORT" - Return shipments with type
+//
+//	"BY_MAIL" - Return shipments with type `byMail` only.
+//	"RETURNLESS" - Return shipments with type `returnless` only.
+//	"CONTACT_CUSTOMER_SUPPORT" - Return shipments with type
+//
 // `contactCustomerSupport` only.
 func (c *OrderreturnsListCall) ShipmentTypes(shipmentTypes ...string) *OrderreturnsListCall {
 	c.urlParams_.SetMulti("shipmentTypes", append([]string{}, shipmentTypes...))
@@ -30844,9 +30972,9 @@ type OrderreturnsProcessCall struct {
 
 // Process: Processes return in your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - returnId: The ID of the return.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - returnId: The ID of the return.
 func (r *OrderreturnsService) Process(merchantId uint64, returnId string, orderreturnsprocessrequest *OrderreturnsProcessRequest) *OrderreturnsProcessCall {
 	c := &OrderreturnsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31155,9 +31283,9 @@ type OrdersAcknowledgeCall struct {
 
 // Acknowledge: Marks an order as acknowledged.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersacknowledgerequest *OrdersAcknowledgeRequest) *OrdersAcknowledgeCall {
 	c := &OrdersAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31309,9 +31437,9 @@ type OrdersAdvancetestorderCall struct {
 // Advancetestorder: Sandbox only. Moves a test order from state
 // "inProgress" to state "pendingShipment".
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the test order to modify.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the test order to modify.
 func (r *OrdersService) Advancetestorder(merchantId uint64, orderId string) *OrdersAdvancetestorderCall {
 	c := &OrdersAdvancetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31454,9 +31582,9 @@ type OrdersCancelCall struct {
 
 // Cancel: Cancels all line items in an order, making a full refund.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order to cancel.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order to cancel.
 func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelrequest *OrdersCancelRequest) *OrdersCancelCall {
 	c := &OrdersCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31608,9 +31736,9 @@ type OrdersCancellineitemCall struct {
 
 // Cancellineitem: Cancels a line item, making a full refund.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orderscancellineitemrequest *OrdersCancelLineItemRequest) *OrdersCancellineitemCall {
 	c := &OrdersCancellineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31763,9 +31891,9 @@ type OrdersCanceltestorderbycustomerCall struct {
 // Canceltestorderbycustomer: Sandbox only. Cancels a test order for
 // customer-initiated cancellation.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the test order to cancel.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the test order to cancel.
 func (r *OrdersService) Canceltestorderbycustomer(merchantId uint64, orderId string, orderscanceltestorderbycustomerrequest *OrdersCancelTestOrderByCustomerRequest) *OrdersCanceltestorderbycustomerCall {
 	c := &OrdersCanceltestorderbycustomerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -31931,9 +32059,9 @@ type OrdersCaptureOrderCall struct {
 // cancelling the order with reason `failedToCaptureFunds` if the items
 // cannot be held.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the Order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the Order.
 func (r *OrdersService) CaptureOrder(merchantId int64, orderId string, captureorderrequest *CaptureOrderRequest) *OrdersCaptureOrderCall {
 	c := &OrdersCaptureOrderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32084,8 +32212,8 @@ type OrdersCreatetestorderCall struct {
 
 // Createtestorder: Sandbox only. Creates a test order.
 //
-// - merchantId: The ID of the account that should manage the order.
-//   This cannot be a multi-client account.
+//   - merchantId: The ID of the account that should manage the order.
+//     This cannot be a multi-client account.
 func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorderrequest *OrdersCreateTestOrderRequest) *OrdersCreatetestorderCall {
 	c := &OrdersCreatetestorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32228,9 +32356,9 @@ type OrdersCreatetestreturnCall struct {
 
 // Createtestreturn: Sandbox only. Creates a test return.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Createtestreturn(merchantId uint64, orderId string, orderscreatetestreturnrequest *OrdersCreateTestReturnRequest) *OrdersCreatetestreturnCall {
 	c := &OrdersCreatetestreturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32382,9 +32510,9 @@ type OrdersGetCall struct {
 
 // Get: Retrieves an order from your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Get(merchantId uint64, orderId string) *OrdersGetCall {
 	c := &OrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32540,9 +32668,9 @@ type OrdersGetbymerchantorderidCall struct {
 
 // Getbymerchantorderid: Retrieves an order using merchant order ID.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - merchantOrderId: The merchant order ID to be looked for.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - merchantOrderId: The merchant order ID to be looked for.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
 	c := &OrdersGetbymerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32700,9 +32828,9 @@ type OrdersGettestordertemplateCall struct {
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
 // can be used to quickly create a new order in sandbox.
 //
-// - merchantId: The ID of the account that should manage the order.
-//   This cannot be a multi-client account.
-// - templateName: The name of the template to retrieve.
+//   - merchantId: The ID of the account that should manage the order.
+//     This cannot be a multi-client account.
+//   - templateName: The name of the template to retrieve.
 func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName string) *OrdersGettestordertemplateCall {
 	c := &OrdersGettestordertemplateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -32896,9 +33024,9 @@ type OrdersInstorerefundlineitemCall struct {
 // receive a double refund by first refunding through Google then
 // through an in-store return.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Instorerefundlineitem(merchantId uint64, orderId string, ordersinstorerefundlineitemrequest *OrdersInStoreRefundLineItemRequest) *OrdersInstorerefundlineitemCall {
 	c := &OrdersInstorerefundlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33050,8 +33178,8 @@ type OrdersListCall struct {
 
 // List: Lists the orders in your Merchant Center account.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
 func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 	c := &OrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33115,22 +33243,31 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 // `partiallyReturned`, `returned`, and `canceled`.
 //
 // Possible values:
-//   "ACTIVE" - Return orders with status `active`. The `active` status
+//
+//	"ACTIVE" - Return orders with status `active`. The `active` status
+//
 // includes `pendingShipment` and `partiallyShipped` orders.
-//   "COMPLETED" - Return orders with status `completed`. The
+//
+//	"COMPLETED" - Return orders with status `completed`. The
+//
 // `completed` status includes `shipped`, `partiallyDelivered`,
 // `delivered`, `partiallyReturned`, `returned`, and `canceled` orders.
-//   "CANCELED" - Return orders with status `canceled`.
-//   "IN_PROGRESS" - Return orders with status `inProgress`.
-//   "PENDING_SHIPMENT" - Return orders with status `pendingShipment`.
-//   "PARTIALLY_SHIPPED" - Return orders with status `partiallyShipped`.
-//   "SHIPPED" - Return orders with status `shipped`.
-//   "PARTIALLY_DELIVERED" - Return orders with status
+//
+//	"CANCELED" - Return orders with status `canceled`.
+//	"IN_PROGRESS" - Return orders with status `inProgress`.
+//	"PENDING_SHIPMENT" - Return orders with status `pendingShipment`.
+//	"PARTIALLY_SHIPPED" - Return orders with status `partiallyShipped`.
+//	"SHIPPED" - Return orders with status `shipped`.
+//	"PARTIALLY_DELIVERED" - Return orders with status
+//
 // `partiallyDelivered`.
-//   "DELIVERED" - Return orders with status `delivered`.
-//   "PARTIALLY_RETURNED" - Return orders with status
+//
+//	"DELIVERED" - Return orders with status `delivered`.
+//	"PARTIALLY_RETURNED" - Return orders with status
+//
 // `partiallyReturned`.
-//   "RETURNED" - Return orders with status `returned`.
+//
+//	"RETURNED" - Return orders with status `returned`.
 func (c *OrdersListCall) Statuses(statuses ...string) *OrdersListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
@@ -33360,9 +33497,9 @@ type OrdersRefunditemCall struct {
 
 // Refunditem: Issues a partial or total refund for items and shipment.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order to refund.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order to refund.
 func (r *OrdersService) Refunditem(merchantId uint64, orderId string, ordersrefunditemrequest *OrdersRefundItemRequest) *OrdersRefunditemCall {
 	c := &OrdersRefunditemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33514,9 +33651,9 @@ type OrdersRefundorderCall struct {
 
 // Refundorder: Issues a partial or total refund for an order.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order to refund.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order to refund.
 func (r *OrdersService) Refundorder(merchantId uint64, orderId string, ordersrefundorderrequest *OrdersRefundOrderRequest) *OrdersRefundorderCall {
 	c := &OrdersRefundorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33668,9 +33805,9 @@ type OrdersRejectreturnlineitemCall struct {
 
 // Rejectreturnlineitem: Rejects return on an line item.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Rejectreturnlineitem(merchantId uint64, orderId string, ordersrejectreturnlineitemrequest *OrdersRejectReturnLineItemRequest) *OrdersRejectreturnlineitemCall {
 	c := &OrdersRejectreturnlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33829,9 +33966,9 @@ type OrdersReturnrefundlineitemCall struct {
 // issue the refund. If the return cannot be found, then we recommend
 // using this API to issue a refund.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Returnrefundlineitem(merchantId uint64, orderId string, ordersreturnrefundlineitemrequest *OrdersReturnRefundLineItemRequest) *OrdersReturnrefundlineitemCall {
 	c := &OrdersReturnrefundlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -33989,9 +34126,9 @@ type OrdersSetlineitemmetadataCall struct {
 // methods. Submitted key-value pairs can be retrieved as part of the
 // orders resource.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Setlineitemmetadata(merchantId uint64, orderId string, orderssetlineitemmetadatarequest *OrdersSetLineItemMetadataRequest) *OrdersSetlineitemmetadataCall {
 	c := &OrdersSetlineitemmetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34144,9 +34281,9 @@ type OrdersShiplineitemsCall struct {
 
 // Shiplineitems: Marks line item(s) as shipped.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, ordersshiplineitemsrequest *OrdersShipLineItemsRequest) *OrdersShiplineitemsCall {
 	c := &OrdersShiplineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34299,9 +34436,9 @@ type OrdersUpdatelineitemshippingdetailsCall struct {
 // Updatelineitemshippingdetails: Updates ship by and delivery by dates
 // for a line item.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Updatelineitemshippingdetails(merchantId uint64, orderId string, ordersupdatelineitemshippingdetailsrequest *OrdersUpdateLineItemShippingDetailsRequest) *OrdersUpdatelineitemshippingdetailsCall {
 	c := &OrdersUpdatelineitemshippingdetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34456,9 +34593,9 @@ type OrdersUpdatemerchantorderidCall struct {
 // Updatemerchantorderid: Updates the merchant order ID for a given
 // order.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string, ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest) *OrdersUpdatemerchantorderidCall {
 	c := &OrdersUpdatemerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34612,9 +34749,9 @@ type OrdersUpdateshipmentCall struct {
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
 // ID.
 //
-// - merchantId: The ID of the account that manages the order. This
-//   cannot be a multi-client account.
-// - orderId: The ID of the order.
+//   - merchantId: The ID of the account that manages the order. This
+//     cannot be a multi-client account.
+//   - orderId: The ID of the order.
 func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, ordersupdateshipmentrequest *OrdersUpdateShipmentRequest) *OrdersUpdateshipmentCall {
 	c := &OrdersUpdateshipmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -34765,8 +34902,8 @@ type OrdertrackingsignalsCreateCall struct {
 
 // Create: Creates new order tracking signal.
 //
-// - merchantId: The ID of the merchant for which the order signal is
-//   created.
+//   - merchantId: The ID of the merchant for which the order signal is
+//     created.
 func (r *OrdertrackingsignalsService) Create(merchantId int64, ordertrackingsignal *OrderTrackingSignal) *OrdertrackingsignalsCreateCall {
 	c := &OrdertrackingsignalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -35949,8 +36086,8 @@ type ProductdeliverytimeCreateCall struct {
 
 // Create: Creates or updates the delivery time of a product.
 //
-// - merchantId: The Google merchant ID of the account that contains the
-//   product. This account cannot be a multi-client account.
+//   - merchantId: The Google merchant ID of the account that contains the
+//     product. This account cannot be a multi-client account.
 func (r *ProductdeliverytimeService) Create(merchantId int64, productdeliverytime *ProductDeliveryTime) *ProductdeliverytimeCreateCall {
 	c := &ProductdeliverytimeCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36092,10 +36229,10 @@ type ProductdeliverytimeDeleteCall struct {
 
 // Delete: Deletes the delivery time of a product.
 //
-// - merchantId: The Google merchant ID of the account that contains the
-//   product. This account cannot be a multi-client account.
-// - productId: The Content API ID of the product, in the form
-//   `channel:contentLanguage:targetCountry:offerId`.
+//   - merchantId: The Google merchant ID of the account that contains the
+//     product. This account cannot be a multi-client account.
+//   - productId: The Content API ID of the product, in the form
+//     `channel:contentLanguage:targetCountry:offerId`.
 func (r *ProductdeliverytimeService) Delete(merchantId int64, productId string) *ProductdeliverytimeDeleteCall {
 	c := &ProductdeliverytimeDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36210,10 +36347,10 @@ type ProductdeliverytimeGetCall struct {
 
 // Get: Gets `productDeliveryTime` by `productId`.
 //
-// - merchantId: The Google merchant ID of the account that contains the
-//   product. This account cannot be a multi-client account.
-// - productId: The Content API ID of the product, in the form
-//   `channel:contentLanguage:targetCountry:offerId`.
+//   - merchantId: The Google merchant ID of the account that contains the
+//     product. This account cannot be a multi-client account.
+//   - productId: The Content API ID of the product, in the form
+//     `channel:contentLanguage:targetCountry:offerId`.
 func (r *ProductdeliverytimeService) Get(merchantId int64, productId string) *ProductdeliverytimeGetCall {
 	c := &ProductdeliverytimeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36494,9 +36631,9 @@ type ProductsDeleteCall struct {
 
 // Delete: Deletes a product from your Merchant Center account.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product.
 func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsDeleteCall {
 	c := &ProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36626,9 +36763,9 @@ type ProductsGetCall struct {
 
 // Get: Retrieves a product from your Merchant Center account.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product.
 func (r *ProductsService) Get(merchantId uint64, productId string) *ProductsGetCall {
 	c := &ProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36785,8 +36922,8 @@ type ProductsInsertCall struct {
 // with the same channel, contentLanguage, offerId, and targetCountry
 // already exists, this method updates that entry.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
 func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsInsertCall {
 	c := &ProductsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -36945,8 +37082,8 @@ type ProductsListCall struct {
 // on nextPageToken to determine if there are more items to be
 // requested.
 //
-// - merchantId: The ID of the account that contains the products. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the products. This
+//     account cannot be a multi-client account.
 func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 	c := &ProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37140,9 +37277,9 @@ type ProductsUpdateCall struct {
 // Update: Updates an existing product in your Merchant Center account.
 // Only updates attributes provided in the request.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product for which to update.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product for which to update.
 func (r *ProductsService) Update(merchantId uint64, productId string, product *Product) *ProductsUpdateCall {
 	c := &ProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37439,9 +37576,9 @@ type ProductstatusesGetCall struct {
 
 // Get: Gets the status of a product from your Merchant Center account.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product.
 func (r *ProductstatusesService) Get(merchantId uint64, productId string) *ProductstatusesGetCall {
 	c := &ProductstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37611,8 +37748,8 @@ type ProductstatusesListCall struct {
 // List: Lists the statuses of the products in your Merchant Center
 // account.
 //
-// - merchantId: The ID of the account that contains the products. This
-//   account cannot be a multi-client account.
+//   - merchantId: The ID of the account that contains the products. This
+//     account cannot be a multi-client account.
 func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCall {
 	c := &ProductstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -37820,9 +37957,9 @@ type ProductstatusesRepricingreportsListCall struct {
 
 // List: Lists the metrics report for a given Repricing product.
 //
-// - merchantId: Id of the merchant who owns the Repricing rule.
-// - productId: Id of the Repricing product. Also known as the REST_ID
-//   (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.id).
+//   - merchantId: Id of the merchant who owns the Repricing rule.
+//   - productId: Id of the Repricing product. Also known as the REST_ID
+//     (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.id).
 func (r *ProductstatusesRepricingreportsService) List(merchantId int64, productId string) *ProductstatusesRepricingreportsListCall {
 	c := &ProductstatusesRepricingreportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38372,8 +38509,8 @@ type PubsubnotificationsettingsGetCall struct {
 // Get: Retrieves a Merchant Center account's pubsub notification
 // settings.
 //
-// - merchantId: The ID of the account for which to get pubsub
-//   notification settings.
+//   - merchantId: The ID of the account for which to get pubsub
+//     notification settings.
 func (r *PubsubnotificationsettingsService) Get(merchantId uint64) *PubsubnotificationsettingsGetCall {
 	c := &PubsubnotificationsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38793,10 +38930,10 @@ type RegionalinventoryInsertCall struct {
 // Center account. If a regional inventory with the same region ID
 // already exists, this method updates that entry.
 //
-// - merchantId: The ID of the account that contains the product. This
-//   account cannot be a multi-client account.
-// - productId: The REST ID of the product for which to update the
-//   regional inventory.
+//   - merchantId: The ID of the account that contains the product. This
+//     account cannot be a multi-client account.
+//   - productId: The REST ID of the product for which to update the
+//     regional inventory.
 func (r *RegionalinventoryService) Insert(merchantId uint64, productId string, regionalinventory *RegionalInventory) *RegionalinventoryInsertCall {
 	c := &RegionalinventoryInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -38947,8 +39084,8 @@ type RegionsCreateCall struct {
 
 // Create: Creates a region definition in your Merchant Center account.
 //
-// - merchantId: The id of the merchant for which to create region
-//   definition.
+//   - merchantId: The id of the merchant for which to create region
+//     definition.
 func (r *RegionsService) Create(merchantId int64, region *Region) *RegionsCreateCall {
 	c := &RegionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39103,9 +39240,9 @@ type RegionsDeleteCall struct {
 // Delete: Deletes a region definition from your Merchant Center
 // account.
 //
-// - merchantId: The id of the merchant for which to delete region
-//   definition.
-// - regionId: The id of the region to delete.
+//   - merchantId: The id of the merchant for which to delete region
+//     definition.
+//   - regionId: The id of the region to delete.
 func (r *RegionsService) Delete(merchantId int64, regionId string) *RegionsDeleteCall {
 	c := &RegionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39220,9 +39357,9 @@ type RegionsGetCall struct {
 
 // Get: Retrieves a region defined in your Merchant Center account.
 //
-// - merchantId: The id of the merchant for which to retrieve region
-//   definition.
-// - regionId: The id of the region to retrieve.
+//   - merchantId: The id of the merchant for which to retrieve region
+//     definition.
+//   - regionId: The id of the region to retrieve.
 func (r *RegionsService) Get(merchantId int64, regionId string) *RegionsGetCall {
 	c := &RegionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39377,8 +39514,8 @@ type RegionsListCall struct {
 
 // List: Lists the regions in your Merchant Center account.
 //
-// - merchantId: The id of the merchant for which to list region
-//   definitions.
+//   - merchantId: The id of the merchant for which to list region
+//     definitions.
 func (r *RegionsService) List(merchantId int64) *RegionsListCall {
 	c := &RegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39575,9 +39712,9 @@ type RegionsPatchCall struct {
 
 // Patch: Updates a region definition in your Merchant Center account.
 //
-// - merchantId: The id of the merchant for which to update region
-//   definition.
-// - regionId: The id of the region to update.
+//   - merchantId: The id of the merchant for which to update region
+//     definition.
+//   - regionId: The id of the region to update.
 func (r *RegionsService) Patch(merchantId int64, regionId string, region *Region) *RegionsPatchCall {
 	c := &RegionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -39743,8 +39880,8 @@ type ReportsSearchCall struct {
 // Search: Retrieves merchant performance mertrics matching the search
 // query and optionally segmented by selected dimensions.
 //
-// - merchantId: Id of the merchant making the call. Must be a
-//   standalone account or an MCA subaccount.
+//   - merchantId: Id of the merchant making the call. Must be a
+//     standalone account or an MCA subaccount.
 func (r *ReportsService) Search(merchantId int64, searchrequest *SearchRequest) *ReportsSearchCall {
 	c := &ReportsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -41078,9 +41215,9 @@ type ReturnaddressDeleteCall struct {
 // Delete: Deletes a return address for the given Merchant Center
 // account.
 //
-// - merchantId: The Merchant Center account from which to delete the
-//   given return address.
-// - returnAddressId: Return address ID generated by Google.
+//   - merchantId: The Merchant Center account from which to delete the
+//     given return address.
+//   - returnAddressId: Return address ID generated by Google.
 func (r *ReturnaddressService) Delete(merchantId uint64, returnAddressId string) *ReturnaddressDeleteCall {
 	c := &ReturnaddressDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -41195,9 +41332,9 @@ type ReturnaddressGetCall struct {
 
 // Get: Gets a return address of the Merchant Center account.
 //
-// - merchantId: The Merchant Center account to get a return address
-//   for.
-// - returnAddressId: Return address ID generated by Google.
+//   - merchantId: The Merchant Center account to get a return address
+//     for.
+//   - returnAddressId: Return address ID generated by Google.
 func (r *ReturnaddressService) Get(merchantId uint64, returnAddressId string) *ReturnaddressGetCall {
 	c := &ReturnaddressGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -41352,8 +41489,8 @@ type ReturnaddressInsertCall struct {
 
 // Insert: Inserts a return address for the Merchant Center account.
 //
-// - merchantId: The Merchant Center account to insert a return address
-//   for.
+//   - merchantId: The Merchant Center account to insert a return address
+//     for.
 func (r *ReturnaddressService) Insert(merchantId uint64, returnaddress *ReturnAddress) *ReturnaddressInsertCall {
 	c := &ReturnaddressInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -41495,8 +41632,8 @@ type ReturnaddressListCall struct {
 
 // List: Lists the return addresses of the Merchant Center account.
 //
-// - merchantId: The Merchant Center account to list return addresses
-//   for.
+//   - merchantId: The Merchant Center account to list return addresses
+//     for.
 func (r *ReturnaddressService) List(merchantId uint64) *ReturnaddressListCall {
 	c := &ReturnaddressListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -41828,9 +41965,9 @@ type ReturnpolicyDeleteCall struct {
 // Delete: Deletes a return policy for the given Merchant Center
 // account.
 //
-// - merchantId: The Merchant Center account from which to delete the
-//   given return policy.
-// - returnPolicyId: Return policy ID generated by Google.
+//   - merchantId: The Merchant Center account from which to delete the
+//     given return policy.
+//   - returnPolicyId: Return policy ID generated by Google.
 func (r *ReturnpolicyService) Delete(merchantId uint64, returnPolicyId string) *ReturnpolicyDeleteCall {
 	c := &ReturnpolicyDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42101,8 +42238,8 @@ type ReturnpolicyInsertCall struct {
 
 // Insert: Inserts a return policy for the Merchant Center account.
 //
-// - merchantId: The Merchant Center account to insert a return policy
-//   for.
+//   - merchantId: The Merchant Center account to insert a return policy
+//     for.
 func (r *ReturnpolicyService) Insert(merchantId uint64, returnpolicy *ReturnPolicy) *ReturnpolicyInsertCall {
 	c := &ReturnpolicyInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42244,8 +42381,8 @@ type ReturnpolicyListCall struct {
 
 // List: Lists the return policies of the Merchant Center account.
 //
-// - merchantId: The Merchant Center account to list return policies
-//   for.
+//   - merchantId: The Merchant Center account to list return policies
+//     for.
 func (r *ReturnpolicyService) List(merchantId uint64) *ReturnpolicyListCall {
 	c := &ReturnpolicyListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42391,8 +42528,8 @@ type ReturnpolicyonlineCreateCall struct {
 
 // Create: Creates a new return policy.
 //
-// - merchantId: The id of the merchant for which to retrieve the return
-//   policy online object.
+//   - merchantId: The id of the merchant for which to retrieve the return
+//     policy online object.
 func (r *ReturnpolicyonlineService) Create(merchantId int64, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlineCreateCall {
 	c := &ReturnpolicyonlineCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42534,9 +42671,9 @@ type ReturnpolicyonlineDeleteCall struct {
 
 // Delete: Deletes an existing return policy.
 //
-// - merchantId: The id of the merchant for which to retrieve the return
-//   policy online object.
-// - returnPolicyId: The id of the return policy to delete.
+//   - merchantId: The id of the merchant for which to retrieve the return
+//     policy online object.
+//   - returnPolicyId: The id of the return policy to delete.
 func (r *ReturnpolicyonlineService) Delete(merchantId int64, returnPolicyId string) *ReturnpolicyonlineDeleteCall {
 	c := &ReturnpolicyonlineDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42651,9 +42788,9 @@ type ReturnpolicyonlineGetCall struct {
 
 // Get: Gets an existing return policy.
 //
-// - merchantId: The id of the merchant for which to retrieve the return
-//   policy online object.
-// - returnPolicyId: The id of the return policy to retrieve.
+//   - merchantId: The id of the merchant for which to retrieve the return
+//     policy online object.
+//   - returnPolicyId: The id of the return policy to retrieve.
 func (r *ReturnpolicyonlineService) Get(merchantId int64, returnPolicyId string) *ReturnpolicyonlineGetCall {
 	c := &ReturnpolicyonlineGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42808,8 +42945,8 @@ type ReturnpolicyonlineListCall struct {
 
 // List: Lists all existing return policies.
 //
-// - merchantId: The id of the merchant for which to retrieve the return
-//   policy online object.
+//   - merchantId: The id of the merchant for which to retrieve the return
+//     policy online object.
 func (r *ReturnpolicyonlineService) List(merchantId int64) *ReturnpolicyonlineListCall {
 	c := &ReturnpolicyonlineListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -42956,9 +43093,9 @@ type ReturnpolicyonlinePatchCall struct {
 
 // Patch: Updates an existing return policy.
 //
-// - merchantId: The id of the merchant for which to retrieve the return
-//   policy online object.
-// - returnPolicyId: The id of the return policy to update.
+//   - merchantId: The id of the merchant for which to retrieve the return
+//     policy online object.
+//   - returnPolicyId: The id of the return policy to update.
 func (r *ReturnpolicyonlineService) Patch(merchantId int64, returnPolicyId string, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlinePatchCall {
 	c := &ReturnpolicyonlinePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -43835,12 +43972,12 @@ type ShippingsettingsGetCall struct {
 
 // Get: Retrieves the shipping settings of the account.
 //
-// - accountId: The ID of the account for which to get/update shipping
-//   settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get/update shipping
+//     settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *ShippingsettingsService) Get(merchantId uint64, accountId uint64) *ShippingsettingsGetCall {
 	c := &ShippingsettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -43997,8 +44134,8 @@ type ShippingsettingsGetsupportedcarriersCall struct {
 // Getsupportedcarriers: Retrieves supported carriers and carrier
 // services for an account.
 //
-// - merchantId: The ID of the account for which to retrieve the
-//   supported carriers.
+//   - merchantId: The ID of the account for which to retrieve the
+//     supported carriers.
 func (r *ShippingsettingsService) Getsupportedcarriers(merchantId uint64) *ShippingsettingsGetsupportedcarriersCall {
 	c := &ShippingsettingsGetsupportedcarriersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -44146,8 +44283,8 @@ type ShippingsettingsGetsupportedholidaysCall struct {
 
 // Getsupportedholidays: Retrieves supported holidays for an account.
 //
-// - merchantId: The ID of the account for which to retrieve the
-//   supported holidays.
+//   - merchantId: The ID of the account for which to retrieve the
+//     supported holidays.
 func (r *ShippingsettingsService) Getsupportedholidays(merchantId uint64) *ShippingsettingsGetsupportedholidaysCall {
 	c := &ShippingsettingsGetsupportedholidaysCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -44296,8 +44433,8 @@ type ShippingsettingsGetsupportedpickupservicesCall struct {
 // Getsupportedpickupservices: Retrieves supported pickup services for
 // an account.
 //
-// - merchantId: The ID of the account for which to retrieve the
-//   supported pickup services.
+//   - merchantId: The ID of the account for which to retrieve the
+//     supported pickup services.
 func (r *ShippingsettingsService) Getsupportedpickupservices(merchantId uint64) *ShippingsettingsGetsupportedpickupservicesCall {
 	c := &ShippingsettingsGetsupportedpickupservicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -44446,8 +44583,8 @@ type ShippingsettingsListCall struct {
 // List: Lists the shipping settings of the sub-accounts in your
 // Merchant Center account.
 //
-// - merchantId: The ID of the managing account. This must be a
-//   multi-client account.
+//   - merchantId: The ID of the managing account. This must be a
+//     multi-client account.
 func (r *ShippingsettingsService) List(merchantId uint64) *ShippingsettingsListCall {
 	c := &ShippingsettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -44642,12 +44779,12 @@ type ShippingsettingsUpdateCall struct {
 // Update: Updates the shipping settings of the account. Any fields that
 // are not provided are deleted from the resource.
 //
-// - accountId: The ID of the account for which to get/update shipping
-//   settings.
-// - merchantId: The ID of the managing account. If this parameter is
-//   not the same as accountId, then this account must be a multi-client
-//   account and `accountId` must be the ID of a sub-account of this
-//   account.
+//   - accountId: The ID of the account for which to get/update shipping
+//     settings.
+//   - merchantId: The ID of the managing account. If this parameter is
+//     not the same as accountId, then this account must be a multi-client
+//     account and `accountId` must be the ID of a sub-account of this
+//     account.
 func (r *ShippingsettingsService) Update(merchantId uint64, accountId uint64, shippingsettings *ShippingSettings) *ShippingsettingsUpdateCall {
 	c := &ShippingsettingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId

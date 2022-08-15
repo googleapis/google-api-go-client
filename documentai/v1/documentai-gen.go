@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/document-ai/docs/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/documentai/v1"
-//   ...
-//   ctx := context.Background()
-//   documentaiService, err := documentai.NewService(ctx)
+//	import "google.golang.org/api/documentai/v1"
+//	...
+//	ctx := context.Background()
+//	documentaiService, err := documentai.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
+//	documentaiService, err := documentai.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	documentaiService, err := documentai.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package documentai // import "google.golang.org/api/documentai/v1"
@@ -170,6 +170,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.ProcessorTypes = NewProjectsLocationsProcessorTypesService(s)
 	rs.Processors = NewProjectsLocationsProcessorsService(s)
 	return rs
 }
@@ -178,6 +179,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Operations *ProjectsLocationsOperationsService
+
+	ProcessorTypes *ProjectsLocationsProcessorTypesService
 
 	Processors *ProjectsLocationsProcessorsService
 }
@@ -188,6 +191,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsProcessorTypesService(s *Service) *ProjectsLocationsProcessorTypesService {
+	rs := &ProjectsLocationsProcessorTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProcessorTypesService struct {
 	s *Service
 }
 
@@ -942,6 +954,10 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	// document.
 	IndividualImportStatuses []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus `json:"individualImportStatuses,omitempty"`
 
+	// TotalDocumentCount: Total number of the documents that are qualified
+	// for importing.
+	TotalDocumentCount int64 `json:"totalDocumentCount,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1405,6 +1421,52 @@ func (s *GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1Barcode: Encodes the detailed information of a
+// barcode.
+type GoogleCloudDocumentaiV1Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1BatchDocumentsInputConfig: The common config
 // to specify a set of documents used as input.
 type GoogleCloudDocumentaiV1BatchDocumentsInputConfig struct {
@@ -1512,7 +1574,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
@@ -2155,6 +2217,9 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -2365,6 +2430,38 @@ type GoogleCloudDocumentaiV1DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3359,6 +3456,16 @@ type GoogleCloudDocumentaiV1DocumentSchemaMetadata struct {
 	// entire document (classification).
 	DocumentSplitter bool `json:"documentSplitter,omitempty"`
 
+	// PrefixedNamingOnProperties: If set, all the nested entities must be
+	// prefixed with the parents.
+	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
+
+	// SkipNamingValidation: If set, we will skip the naming format
+	// validation in the schema. So the string values in
+	// `DocumentSchema.EntityType.name` and
+	// `DocumentSchema.EntityType.Property.name` will not be checked.
+	SkipNamingValidation bool `json:"skipNamingValidation,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "DocumentAllowMultipleLabels") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -3843,6 +3950,42 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 
 func (s *GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1HumanReviewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ListProcessorTypesResponse: Response message
+// for list processor types.
+type GoogleCloudDocumentaiV1ListProcessorTypesResponse struct {
+	// NextPageToken: Points to the next page, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ProcessorTypes: The processor types.
+	ProcessorTypes []*GoogleCloudDocumentaiV1ProcessorType `json:"processorTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ListProcessorTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ListProcessorTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4729,6 +4872,52 @@ func (s *GoogleCloudDocumentaiV1alpha1CommonOperationMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta1Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta1Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse: Response
 // to an batch document processing request. This is returned in the LRO
 // Operation after the operation is complete.
@@ -5083,6 +5272,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta1DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -5293,6 +5485,38 @@ type GoogleCloudDocumentaiV1beta1DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta1Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6650,6 +6874,52 @@ func (s *GoogleCloudDocumentaiV1beta1Vertex) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information
+// of a barcode.
+type GoogleCloudDocumentaiV1beta2Barcode struct {
+	// Format: Format of a barcode. The supported formats are: CODE_128:
+	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
+	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
+	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
+	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
+	// Aztec code type. DATABAR: GS1 DataBar code type.
+	Format string `json:"format,omitempty"`
+
+	// RawValue: Raw value encoded in the barcode. For example,
+	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	RawValue string `json:"rawValue,omitempty"`
+
+	// ValueFormat: Value format describes the format of the value that a
+	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
+	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
+	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
+	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
+	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	ValueFormat string `json:"valueFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2Barcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2Barcode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse: Response
 // to an batch document processing request. This is returned in the LRO
 // Operation after the operation is complete.
@@ -7062,6 +7332,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// line-spacing and orientation.
 	Blocks []*GoogleCloudDocumentaiV1beta2DocumentPageBlock `json:"blocks,omitempty"`
 
+	// DetectedBarcodes: A list of detected barcodes.
+	DetectedBarcodes []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode `json:"detectedBarcodes,omitempty"`
+
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
 	DetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"detectedLanguages,omitempty"`
@@ -7272,6 +7545,38 @@ type GoogleCloudDocumentaiV1beta2DocumentPageBlock struct {
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode: A detected
+// barcode.
+type GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode struct {
+	// Barcode: Detailed barcode information of the DetectedBarcode.
+	Barcode *GoogleCloudDocumentaiV1beta2Barcode `json:"barcode,omitempty"`
+
+	// Layout: Layout for DetectedBarcode.
+	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Barcode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Barcode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8714,7 +9019,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
-	// Status: The status of the processing of the document.
+	// Status: The status processing the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -9477,12 +9782,12 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -9606,38 +9911,40 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 // is set and utc_offset is unset: a civil time on a calendar day in a
 // particular time zone. * When neither time_zone nor utc_offset is set:
 // a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-// considered not to have a specific year. month and day must have
-// valid, non-zero values. This type may also be used to represent a
-// physical time if all the date and time fields are set and either case
-// of the `time_offset` oneof is set. Consider using `Timestamp` message
-// for physical time instead. If your use case also would like to store
-// the user's timezone, that can be done in another field. This type is
-// more flexible than some applications may want. Make sure to document
-// and validate your application's limitations.
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
 type GoogleTypeDateTime struct {
-	// Day: Required. Day of month. Must be from 1 to 31 and valid for the
-	// year and month.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
 
-	// Hours: Required. Hours of day in 24 hour format. Should be from 0 to
-	// 23. An API may choose to allow the value "24:00:00" for scenarios
-	// like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
 
-	// Minutes: Required. Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
 	Minutes int64 `json:"minutes,omitempty"`
 
-	// Month: Required. Month of year. Must be from 1 to 12.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
 	Month int64 `json:"month,omitempty"`
 
-	// Nanos: Required. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Seconds: Required. Seconds of minutes of the time. Must normally be
-	// from 0 to 59. An API may allow the value 60 if it allows
-	// leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 
 	// TimeZone: Time zone.
@@ -9722,11 +10029,12 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 // not intended to model geographical locations (roads, towns,
 // mountains). In typical usage an address would be created via user
 // input or from importing existing data, depending on the type of
-// process. Advice on address input / editing: - Use an i18n-ready
-// address widget such as https://github.com/google/libaddressinput) -
-// Users should not be presented with UI elements for input or editing
-// of fields outside countries where that field is used. For more
-// guidance on how to use this schema, please see:
+// process. Advice on address input / editing: - Use an
+// internationalization-ready address widget such as
+// https://github.com/google/libaddressinput) - Users should not be
+// presented with UI elements for input or editing of fields outside
+// countries where that field is used. For more guidance on how to use
+// this schema, please see:
 // https://support.google.com/business/answer/6397478
 type GoogleTypePostalAddress struct {
 	// AddressLines: Unstructured address lines describing the lower levels
@@ -10019,9 +10327,9 @@ type ProjectsLocationsFetchProcessorTypesCall struct {
 // FetchProcessorTypes: Fetches processor types. Note that we do not use
 // ListProcessorTypes here because it is not paginated.
 //
-// - parent: The project of processor type to list. The available
-//   processor types may depend on the allow-listing on projects.
-//   Format: `projects/{project}/locations/{location}`.
+//   - parent: The project of processor type to list. The available
+//     processor types may depend on the allow-listing on projects.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) FetchProcessorTypes(parent string) *ProjectsLocationsFetchProcessorTypesCall {
 	c := &ProjectsLocationsFetchProcessorTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10316,8 +10624,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11016,6 +11324,204 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "documentai.projects.locations.processorTypes.list":
+
+type ProjectsLocationsProcessorTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the processor types that exist.
+//
+//   - parent: The location of processor type to list. The available
+//     processor types may depend on the allow-listing on projects.
+//     Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsProcessorTypesService) List(parent string) *ProjectsLocationsProcessorTypesListCall {
+	c := &ProjectsLocationsProcessorTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of processor types to return. If unspecified, at most 100 processor
+// types will be returned. The maximum value is 500; values above 500
+// will be coerced to 500.
+func (c *ProjectsLocationsProcessorTypesListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Used to retrieve
+// the next page of results, empty if at the end of the list.
+func (c *ProjectsLocationsProcessorTypesListCall) PageToken(pageToken string) *ProjectsLocationsProcessorTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorTypesListCall) Context(ctx context.Context) *ProjectsLocationsProcessorTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/processorTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processorTypes.list" call.
+// Exactly one of *GoogleCloudDocumentaiV1ListProcessorTypesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1ListProcessorTypesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorTypesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ListProcessorTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1ListProcessorTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the processor types that exist.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processorTypes",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processorTypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of processor types to return. If unspecified, at most 100 processor types will be returned. The maximum value is 500; values above 500 will be coerced to 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Used to retrieve the next page of results, empty if at the end of the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The location of processor type to list. The available processor types may depend on the allow-listing on projects. Format: `projects/{project}/locations/{location}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/processorTypes",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1ListProcessorTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorTypesListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1ListProcessorTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.batchProcess":
 
 type ProjectsLocationsProcessorsBatchProcessCall struct {
@@ -11030,11 +11536,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - name: The resource name of Processor or ProcessorVersion. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of Processor or ProcessorVersion. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11178,8 +11684,8 @@ type ProjectsLocationsProcessorsCreateCall struct {
 // chose. The processor will be at "ENABLED" state by default after its
 // creation.
 //
-// - parent: The parent (project and location) under which to create the
-//   processor. Format: `projects/{project}/locations/{location}`.
+//   - parent: The parent (project and location) under which to create the
+//     processor. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) Create(parent string, googleclouddocumentaiv1processor *GoogleCloudDocumentaiV1Processor) *ProjectsLocationsProcessorsCreateCall {
 	c := &ProjectsLocationsProcessorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11885,9 +12391,9 @@ type ProjectsLocationsProcessorsListCall struct {
 
 // List: Lists all processors which belong to this project.
 //
-// - parent: The parent (project and location) which owns this
-//   collection of Processors. Format:
-//   `projects/{project}/locations/{location}`.
+//   - parent: The parent (project and location) which owns this
+//     collection of Processors. Format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) List(parent string) *ProjectsLocationsProcessorsListCall {
 	c := &ProjectsLocationsProcessorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12084,13 +12590,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - name: The resource name of the Processor or ProcessorVersion to use
-//   for processing. If a Processor is specified, the server will use
-//   its default version. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of the Processor or ProcessorVersion to use
+//     for processing. If a Processor is specified, the server will use
+//     its default version. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12235,8 +12741,8 @@ type ProjectsLocationsProcessorsSetDefaultProcessorVersionCall struct {
 // Processor that will be used in ProcessDocument and
 // BatchProcessDocuments.
 //
-// - processor: The resource name of the Processor to change default
-//   version.
+//   - processor: The resource name of the Processor to change default
+//     version.
 func (r *ProjectsLocationsProcessorsService) SetDefaultProcessorVersion(processor string, googleclouddocumentaiv1setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
 	c := &ProjectsLocationsProcessorsSetDefaultProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.processor = processor
@@ -12379,8 +12885,8 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
 //
-// - humanReviewConfig: The resource name of the HumanReviewConfig that
-//   the document will be reviewed with.
+//   - humanReviewConfig: The resource name of the HumanReviewConfig that
+//     the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1reviewdocumentrequest *GoogleCloudDocumentaiV1ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -12523,11 +13029,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
-// - name: The resource name of Processor or ProcessorVersion. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of Processor or ProcessorVersion. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1batchprocessrequest *GoogleCloudDocumentaiV1BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13091,9 +13597,9 @@ type ProjectsLocationsProcessorsProcessorVersionsListCall struct {
 
 // List: Lists all versions of a processor.
 //
-// - parent: The parent (project, location and processor) to list all
-//   versions. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`.
+//   - parent: The parent (project, location and processor) to list all
+//     versions. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13290,13 +13796,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 
 // Process: Processes a single document.
 //
-// - name: The resource name of the Processor or ProcessorVersion to use
-//   for processing. If a Processor is specified, the server will use
-//   its default version. Format:
-//   `projects/{project}/locations/{location}/processors/{processor}`,
-//   or
-//   `projects/{project}/locations/{location}/processors/{processor}/proc
-//   essorVersions/{processorVersion}`.
+//   - name: The resource name of the Processor or ProcessorVersion to use
+//     for processing. If a Processor is specified, the server will use
+//     its default version. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`,
+//     or
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1processrequest *GoogleCloudDocumentaiV1ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13876,8 +14382,8 @@ type Uiv1beta3ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *Uiv1beta3ProjectsLocationsService) List(name string) *Uiv1beta3ProjectsLocationsListCall {
 	c := &Uiv1beta3ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

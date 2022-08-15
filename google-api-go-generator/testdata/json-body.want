@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/ml/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/ml/v1"
-//   ...
-//   ctx := context.Background()
-//   mlService, err := ml.NewService(ctx)
+//	import "google.golang.org/api/ml/v1"
+//	...
+//	ctx := context.Background()
+//	mlService, err := ml.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   mlService, err := ml.NewService(ctx, option.WithAPIKey("AIza..."))
+//	mlService, err := ml.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   mlService, err := ml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	mlService, err := ml.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package ml // import "google.golang.org/api/ml/v1"
@@ -211,7 +211,6 @@ type ProjectsOperationsService struct {
 // or
 // an HTML page.
 //
-//
 // This message can be used both in streaming and non-streaming API
 // methods in
 // the request as well as the response.
@@ -224,29 +223,33 @@ type ProjectsOperationsService struct {
 //
 // Example:
 //
-//     message GetResourceRequest {
-//       // A unique request id.
-//       string request_id = 1;
+//	message GetResourceRequest {
+//	  // A unique request id.
+//	  string request_id = 1;
 //
-//       // The raw HTTP body is bound to this field.
-//       google.api.HttpBody http_body = 2;
-//     }
+//	  // The raw HTTP body is bound to this field.
+//	  google.api.HttpBody http_body = 2;
+//	}
 //
-//     service ResourceService {
-//       rpc GetResource(GetResourceRequest) returns
+//	service ResourceService {
+//	  rpc GetResource(GetResourceRequest) returns
+//
 // (google.api.HttpBody);
-//       rpc UpdateResource(google.api.HttpBody) returns
+//
+//	rpc UpdateResource(google.api.HttpBody) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // Example with streaming methods:
 //
-//     service CaldavService {
-//       rpc GetCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//       rpc UpdateCalendar(stream google.api.HttpBody)
-//         returns (stream google.api.HttpBody);
-//     }
+//	service CaldavService {
+//	  rpc GetCalendar(stream google.api.HttpBody)
+//	    returns (stream google.api.HttpBody);
+//	  rpc UpdateCalendar(stream google.api.HttpBody)
+//	    returns (stream google.api.HttpBody);
+//	}
 //
 // Use of this type only changes how the request and response bodies
 // are
@@ -2106,41 +2109,41 @@ func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
 //
 // Example Policy with multiple AuditConfigs:
 //
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:foo@gmail.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "fooservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:bar@gmail.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_configs": [
+//	    {
+//	      "service": "allServices"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	          "exempted_members": [
+//	            "user:foo@gmail.com"
+//	          ]
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	        },
+//	        {
+//	          "log_type": "ADMIN_READ",
+//	        }
+//	      ]
+//	    },
+//	    {
+//	      "service": "fooservice.googleapis.com"
+//	      "audit_log_configs": [
+//	        {
+//	          "log_type": "DATA_READ",
+//	        },
+//	        {
+//	          "log_type": "DATA_WRITE",
+//	          "exempted_members": [
+//	            "user:bar@gmail.com"
+//	          ]
+//	        }
+//	      ]
+//	    }
+//	  ]
+//	}
 //
 // For fooservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ
@@ -2187,19 +2190,19 @@ func (s *GoogleIamV1__AuditConfig) MarshalJSON() ([]byte, error) {
 // type of permissions.
 // Example:
 //
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:foo@gmail.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
+//	{
+//	  "audit_log_configs": [
+//	    {
+//	      "log_type": "DATA_READ",
+//	      "exempted_members": [
+//	        "user:foo@gmail.com"
+//	      ]
+//	    },
+//	    {
+//	      "log_type": "DATA_WRITE",
+//	    }
+//	  ]
+//	}
 //
 // This enables 'DATA_READ' and 'DATA_WRITE' logging, while
 // exempting
@@ -2321,7 +2324,6 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // policy. It is used to
 // specify access control policies for Cloud Platform resources.
 //
-//
 // A `Policy` consists of a list of `bindings`. A `binding` binds a list
 // of
 // `members` to a `role`, where the members can be user accounts, Google
@@ -2332,38 +2334,38 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //
 // **JSON Example**
 //
-//     {
-//       "bindings": [
-//         {
-//           "role": "roles/owner",
-//           "members": [
-//             "user:mike@example.com",
-//             "group:admins@example.com",
-//             "domain:google.com",
+//	{
+//	  "bindings": [
+//	    {
+//	      "role": "roles/owner",
+//	      "members": [
+//	        "user:mike@example.com",
+//	        "group:admins@example.com",
+//	        "domain:google.com",
 //
 // "serviceAccount:my-other-app@appspot.gserviceaccount.com"
-//           ]
-//         },
-//         {
-//           "role": "roles/viewer",
-//           "members": ["user:sean@example.com"]
-//         }
-//       ]
-//     }
+//
+//	      ]
+//	    },
+//	    {
+//	      "role": "roles/viewer",
+//	      "members": ["user:sean@example.com"]
+//	    }
+//	  ]
+//	}
 //
 // **YAML Example**
 //
-//     bindings:
-//     - members:
-//       - user:mike@example.com
-//       - group:admins@example.com
-//       - domain:google.com
-//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
-//       role: roles/owner
-//     - members:
-//       - user:sean@example.com
-//       role: roles/viewer
-//
+//	bindings:
+//	- members:
+//	  - user:mike@example.com
+//	  - group:admins@example.com
+//	  - domain:google.com
+//	  - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//	  role: roles/owner
+//	- members:
+//	  - user:sean@example.com
+//	  role: roles/viewer
 //
 // For a description of IAM and its features, see the
 // IAM developer's guide (https://cloud.google.com/iam/docs).
@@ -2657,10 +2659,12 @@ func (s *GoogleLongrunning__Operation) MarshalJSON() ([]byte, error) {
 // request
 // or the response type of an API method. For instance:
 //
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
+//	service Foo {
+//	  rpc Bar(google.protobuf.Empty) returns
+//
 // (google.protobuf.Empty);
-//     }
+//
+//	}
 //
 // The JSON representation for `Empty` is empty JSON object `{}`.
 type GoogleProtobuf__Empty struct {
@@ -2723,29 +2727,41 @@ type GoogleProtobuf__Empty struct {
 //
 // - Partial errors. If a service needs to return partial errors to the
 // client,
-//     it may embed the `Status` in the normal response to indicate the
+//
+//	it may embed the `Status` in the normal response to indicate the
+//
 // partial
-//     errors.
+//
+//	errors.
 //
 // - Workflow errors. A typical workflow has multiple steps. Each step
 // may
-//     have a `Status` message for error reporting.
+//
+//	have a `Status` message for error reporting.
 //
 // - Batch operations. If a client uses batch request and batch
 // response, the
-//     `Status` message should be used directly inside batch response,
+//
+//	`Status` message should be used directly inside batch response,
+//
 // one for
-//     each error sub-response.
+//
+//	each error sub-response.
 //
 // - Asynchronous operations. If an API call embeds asynchronous
 // operation
-//     results in its response, the status of those operations should
+//
+//	results in its response, the status of those operations should
+//
 // be
-//     represented directly using the `Status` message.
+//
+//	represented directly using the `Status` message.
 //
 // - Logging. If some API errors are stored in logs, the message
 // `Status` could
-//     be used directly after any stripping needed for security/privacy
+//
+//	be used directly after any stripping needed for security/privacy
+//
 // reasons.
 type GoogleRpc__Status struct {
 	// Code: The status code, which should be an enum value of
@@ -2789,9 +2805,9 @@ func (s *GoogleRpc__Status) MarshalJSON() ([]byte, error) {
 
 // GoogleType__Expr: Represents an expression text. Example:
 //
-//     title: "User account presence"
-//     description: "Determines whether the request has a user account"
-//     expression: "size(request.user) > 0"
+//	title: "User account presence"
+//	description: "Determines whether the request has a user account"
+//	expression: "size(request.user) > 0"
 type GoogleType__Expr struct {
 	// Description: An optional description of the expression. This is a
 	// longer text which
@@ -3014,8 +3030,8 @@ type ProjectsPredictCall struct {
 //
 // - name: The resource name of a model or a version.
 //
-//   Authorization: requires the `predict` permission on the specified
-//   resource.
+//	Authorization: requires the `predict` permission on the specified
+//	resource.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3595,10 +3611,10 @@ type ProjectsJobsGetIamPolicyCall struct {
 // policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamPolicyCall {
 	c := &ProjectsJobsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3995,13 +4011,15 @@ func (r *ProjectsJobsService) Patch(name string, googlecloudmlv1__job *GoogleClo
 // parameter
 // would be specified as `labels`, `etag`, and the
 // `PATCH` request body would specify the new value, as follows:
-//     {
-//       "labels": {
-//          "owner": "Google",
-//          "color": "Blue"
-//       }
-//       "etag": "33a64df551425fcc55e4d42a148795d9f25f89d4"
-//     }
+//
+//	{
+//	  "labels": {
+//	     "owner": "Google",
+//	     "color": "Blue"
+//	  }
+//	  "etag": "33a64df551425fcc55e4d42a148795d9f25f89d4"
+//	}
+//
 // If `etag` matches the one on the server, the labels of the job will
 // be
 // replaced with the given ones, and the server end `etag` will
@@ -4156,10 +4174,10 @@ type ProjectsJobsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsJobsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsJobsSetIamPolicyCall {
 	c := &ProjectsJobsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4311,10 +4329,10 @@ type ProjectsJobsTestIamPermissionsCall struct {
 // operation
 // may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsJobsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsJobsTestIamPermissionsCall {
 	c := &ProjectsJobsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4606,10 +4624,10 @@ type ProjectsLocationsListCall struct {
 // List: List all locations that provides at least one type of CMLE
 // capability.
 //
-// - parent: The name of the project for which available locations are
-//   to be
-//   listed (since some locations might be restricted to specific
-//   projects).
+//   - parent: The name of the project for which available locations are
+//     to be
+//     listed (since some locations might be restricted to specific
+//     projects).
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5251,10 +5269,10 @@ type ProjectsModelsGetIamPolicyCall struct {
 // policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGetIamPolicyCall {
 	c := &ProjectsModelsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5644,12 +5662,13 @@ func (r *ProjectsModelsService) Patch(name string, googlecloudmlv1__model *Googl
 // specified as `description`, `default_version.name`, and the
 // `PATCH`
 // request body would specify the new value, as follows:
-//     {
-//       "description": "foo",
-//       "defaultVersion": {
-//         "name":"version_1"
-//       }
-//     }
+//
+//	{
+//	  "description": "foo",
+//	  "defaultVersion": {
+//	    "name":"version_1"
+//	  }
+//	}
 //
 // Currently the supported update masks are `description`
 // and
@@ -5801,10 +5820,10 @@ type ProjectsModelsSetIamPolicyCall struct {
 // resource. Replaces any
 // existing policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsModelsService) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *ProjectsModelsSetIamPolicyCall {
 	c := &ProjectsModelsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5956,10 +5975,10 @@ type ProjectsModelsTestIamPermissionsCall struct {
 // operation
 // may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested.
-//   See the operation documentation for the appropriate value for this
-//   field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested.
+//     See the operation documentation for the appropriate value for this
+//     field.
 func (r *ProjectsModelsService) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *ProjectsModelsTestIamPermissionsCall {
 	c := &ProjectsModelsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6265,11 +6284,11 @@ type ProjectsModelsVersionsDeleteCall struct {
 // version
 // of the model unless it is the only remaining version.
 //
-// - name: The name of the version. You can get the names of all
-//   the
-//   versions of a model by calling
-//   projects.models.versions.list
-//   (/ml-engine/reference/rest/v1/projects.models.versions/list).
+//   - name: The name of the version. You can get the names of all
+//     the
+//     versions of a model by calling
+//     projects.models.versions.list
+//     (/ml-engine/reference/rest/v1/projects.models.versions/list).
 func (r *ProjectsModelsVersionsService) Delete(name string) *ProjectsModelsVersionsDeleteCall {
 	c := &ProjectsModelsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6801,9 +6820,10 @@ func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__vers
 // `update_mask` parameter would be specified as `description`, and
 // the
 // `PATCH` request body would specify the new value, as follows:
-//     {
-//       "description": "foo"
-//     }
+//
+//	{
+//	  "description": "foo"
+//	}
 //
 // Currently the only supported update mask fields are `description`
 // and
@@ -6964,12 +6984,12 @@ type ProjectsModelsVersionsSetDefaultCall struct {
 // version
 // setting manually using this method.
 //
-// - name: The name of the version to make the default for the model.
-//   You
-//   can get the names of all the versions of a model by
-//   calling
-//   projects.models.versions.list
-//   (/ml-engine/reference/rest/v1/projects.models.versions/list).
+//   - name: The name of the version to make the default for the model.
+//     You
+//     can get the names of all the versions of a model by
+//     calling
+//     projects.models.versions.list
+//     (/ml-engine/reference/rest/v1/projects.models.versions/list).
 func (r *ProjectsModelsVersionsService) SetDefault(name string, googlecloudmlv1__setdefaultversionrequest *GoogleCloudMlV1__SetDefaultVersionRequest) *ProjectsModelsVersionsSetDefaultCall {
 	c := &ProjectsModelsVersionsSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7109,7 +7129,9 @@ type ProjectsOperationsCancelCall struct {
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
-//  The server
+//
+//	The server
+//
 // makes a best effort to cancel the operation, but success is
 // not
 // guaranteed.  If the server doesn't support this method, it

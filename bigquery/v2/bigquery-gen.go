@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/bigquery/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/bigquery/v2"
-//   ...
-//   ctx := context.Background()
-//   bigqueryService, err := bigquery.NewService(ctx)
+//	import "google.golang.org/api/bigquery/v2"
+//	...
+//	ctx := context.Background()
+//	bigqueryService, err := bigquery.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithScopes(bigquery.DevstorageReadWriteScope))
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithScopes(bigquery.DevstorageReadWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithAPIKey("AIza..."))
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   bigqueryService, err := bigquery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	bigqueryService, err := bigquery.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package bigquery // import "google.golang.org/api/bigquery/v2"
@@ -1339,16 +1339,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1949,6 +1953,12 @@ type CsvOptions struct {
 	// NullMarker: [Optional] An custom string that will represent a NULL
 	// value in CSV import data.
 	NullMarker string `json:"null_marker,omitempty"`
+
+	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
+	// ASCII control characters (the first 32 characters in the ASCII-table,
+	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
+	// ignored for other formats.
+	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
 
 	// Quote: [Optional] The value that is used to quote data sections in a
 	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
@@ -3208,6 +3218,11 @@ type ExternalDataConfiguration struct {
 	// to Parquet.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
 
+	// ReferenceFileSchemaUri: [Optional] Provide a referencing file with
+	// the expected table schema. Enabled for the format: AVRO, PARQUET,
+	// ORC.
+	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
+
 	// Schema: [Optional] The schema for the data. Schema is required for
 	// CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable,
 	// Cloud Datastore backups, and Avro formats.
@@ -4428,6 +4443,10 @@ type JobConfigurationLoad struct {
 	// for this table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
+
+	// ReferenceFileSchemaUri: User provided referencing file with the
+	// expected reader schema, Available for the format: AVRO, PARQUET, ORC.
+	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
 
 	// Schema: [Optional] The schema for the destination table. The schema
 	// can be omitted if the destination table already exists, or if you're
@@ -5728,6 +5747,8 @@ type Model struct {
 	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
 	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
 	//   "PCA" - Prinpical Component Analysis model.
+	//   "DNN_LINEAR_COMBINED_CLASSIFIER" - Wide-and-deep classifier model.
+	//   "DNN_LINEAR_COMBINED_REGRESSOR" - Wide-and-deep regressor model.
 	//   "AUTOENCODER" - Autoencoder model.
 	//   "ARIMA_PLUS" - New name for the ARIMA model.
 	ModelType string `json:"modelType,omitempty"`
@@ -6606,8 +6627,15 @@ type QueryTimelineSample struct {
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
 
-	// PendingUnits: Total parallel units of work remaining for the active
-	// stages.
+	// EstimatedRunnableUnits: Units of work that can be scheduled
+	// immediately. Providing additional slots for these units of work will
+	// speed up the query, provided no other query in the reservation needs
+	// additional slots.
+	EstimatedRunnableUnits int64 `json:"estimatedRunnableUnits,omitempty,string"`
+
+	// PendingUnits: Total units of work remaining for the query. This
+	// number can be revised (increased or decreased) while the query is
+	// running.
 	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
 
 	// TotalSlotMs: Cumulative slot-ms consumed by the query.
@@ -6842,17 +6870,18 @@ func (s *RegressionMetrics) UnmarshalJSON(data []byte) error {
 type RemoteFunctionOptions struct {
 	// Connection: Fully qualified name of the user-provided connection
 	// object which holds the authentication information to send requests to
-	// the remote service.
-	// projects/{project_id}/locations/{location_id}/connections/{connection_
-	// id}
+	// the remote service. Format:
+	// ``"projects/{projectId}/locations/{locationId}/connections/{connectio
+	// nId}"``
 	Connection string `json:"connection,omitempty"`
 
-	// Endpoint: Endpoint of the user-provided remote service (e.g. a
-	// function url in Google Cloud Functions).
+	// Endpoint: Endpoint of the user-provided remote service, e.g.
+	// ```https://us-east1-my_gcf_project.cloudfunctions.net/remote_add```
 	Endpoint string `json:"endpoint,omitempty"`
 
 	// MaxBatchingRows: Max number of rows in each batch sent to the remote
-	// service. If absent or if 0, it means no limit.
+	// service. If absent or if 0, BigQuery dynamically decides the number
+	// of rows in a batch.
 	MaxBatchingRows int64 `json:"maxBatchingRows,omitempty,string"`
 
 	// UserDefinedContext: User-defined context as a set of key/value pairs,
@@ -6980,6 +7009,9 @@ type Routine struct {
 	//   "PROCEDURE" - Stored procedure.
 	//   "TABLE_VALUED_FUNCTION" - Non-builtin permanent TVF.
 	RoutineType string `json:"routineType,omitempty"`
+
+	// SparkOptions: Optional. Spark specific options.
+	SparkOptions *SparkOptions `json:"sparkOptions,omitempty"`
 
 	// StrictMode: Optional. Can be set for procedures only. If true
 	// (default), the definition body will be validated in the creation and
@@ -7413,6 +7445,75 @@ func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SparkOptions: Options for a user-defined Spark routine.
+type SparkOptions struct {
+	// ArchiveUris: Archive files to be extracted into the working directory
+	// of each executor. For more information about Apache Spark, see Apache
+	// Spark (https://spark.apache.org/docs/latest/index.html).
+	ArchiveUris []string `json:"archiveUris,omitempty"`
+
+	// Connection: Fully qualified name of the user-provided Spark
+	// connection object. Format:
+	// ``"projects/{project_id}/locations/{location_id}/connections/{connect
+	// ion_id}"``
+	Connection string `json:"connection,omitempty"`
+
+	// ContainerImage: Custom container image for the runtime environment.
+	ContainerImage string `json:"containerImage,omitempty"`
+
+	// FileUris: Files to be placed in the working directory of each
+	// executor. For more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	FileUris []string `json:"fileUris,omitempty"`
+
+	// JarUris: JARs to include on the driver and executor CLASSPATH. For
+	// more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	JarUris []string `json:"jarUris,omitempty"`
+
+	// MainFileUri: The main file URI of the Spark application. Exactly one
+	// of the definition_body field and the main_file_uri field must be set.
+	MainFileUri string `json:"mainFileUri,omitempty"`
+
+	// Properties: Configuration properties as a set of key/value pairs,
+	// which will be passed on to the Spark application. For more
+	// information, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// PyFileUris: Python files to be placed on the PYTHONPATH for PySpark
+	// application. Supported file types: `.py`, `.egg`, and `.zip`. For
+	// more information about Apache Spark, see Apache Spark
+	// (https://spark.apache.org/docs/latest/index.html).
+	PyFileUris []string `json:"pyFileUris,omitempty"`
+
+	// RuntimeVersion: Runtime version. If not specified, the default
+	// runtime version is used.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveUris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SparkOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StandardSqlDataType: The data type of a variable such as a function
 // argument. Examples include: * INT64: `{"typeKind": "INT64"}` * ARRAY:
 // { "typeKind": "ARRAY", "arrayElementType": {"typeKind": "STRING"} } *
@@ -7708,6 +7809,11 @@ type Table struct {
 
 	// MaterializedView: [Optional] Materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
+
+	// MaxStaleness: [Optional] Max staleness of data that could be returned
+	// when table or materialized view is queried (formatted as Google SQL
+	// Interval type).
+	MaxStaleness string `json:"maxStaleness,omitempty"`
 
 	// Model: [Output-only, Beta] Present iff this table represents a ML
 	// model. Describes the training information for the model, and it is
@@ -8598,6 +8704,19 @@ type TrainingOptions struct {
 	// series.
 	CleanSpikesAndDips bool `json:"cleanSpikesAndDips,omitempty"`
 
+	// ColorSpace: Enums for color space, used for processing images in
+	// Object Table. See more details at
+	// https://www.tensorflow.org/io/tutorials/colorspace.
+	//
+	// Possible values:
+	//   "COLOR_SPACE_UNSPECIFIED" - Unspecified color space
+	//   "RGB" - RGB
+	//   "HSV" - HSV
+	//   "YIQ" - YIQ
+	//   "YUV" - YUV
+	//   "GRAYSCALE" - GRAYSCALE
+	ColorSpace string `json:"colorSpace,omitempty"`
+
 	// ColsampleBylevel: Subsample ratio of columns for each level for
 	// boosted tree models.
 	ColsampleBylevel float64 `json:"colsampleBylevel,omitempty"`
@@ -8897,6 +9016,11 @@ type TrainingOptions struct {
 	// MaxParallelTrials: Maximum number of trials to run in parallel.
 	MaxParallelTrials int64 `json:"maxParallelTrials,omitempty,string"`
 
+	// MaxTimeSeriesLength: Get truncated length by last n points in time
+	// series. Use separately from time_series_length_fraction and
+	// min_time_series_length.
+	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
+
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
 
@@ -8907,6 +9031,10 @@ type TrainingOptions struct {
 
 	// MinSplitLoss: Minimum split loss for boosted tree models.
 	MinSplitLoss float64 `json:"minSplitLoss,omitempty"`
+
+	// MinTimeSeriesLength: Set fast trend ARIMA_PLUS model minimum training
+	// length. Use in pair with time_series_length_fraction.
+	MinTimeSeriesLength int64 `json:"minTimeSeriesLength,omitempty,string"`
 
 	// MinTreeChildWeight: Minimum sum of instance weight needed in a child
 	// for boosted tree models.
@@ -8951,7 +9079,7 @@ type TrainingOptions struct {
 	// feature name is A.b.
 	PreserveInputStructs bool `json:"preserveInputStructs,omitempty"`
 
-	// SampledShapleyNumPaths: Number of paths for the sampled shapley
+	// SampledShapleyNumPaths: Number of paths for the sampled Shapley
 	// explain method.
 	SampledShapleyNumPaths int64 `json:"sampledShapleyNumPaths,omitempty,string"`
 
@@ -8971,6 +9099,10 @@ type TrainingOptions struct {
 	// ARIMA model training.
 	TimeSeriesIdColumns []string `json:"timeSeriesIdColumns,omitempty"`
 
+	// TimeSeriesLengthFraction: Get truncated length by fraction in time
+	// series.
+	TimeSeriesLengthFraction float64 `json:"timeSeriesLengthFraction,omitempty"`
+
 	// TimeSeriesTimestampColumn: Column to be designated as time series
 	// timestamp for ARIMA model.
 	TimeSeriesTimestampColumn string `json:"timeSeriesTimestampColumn,omitempty"`
@@ -8985,6 +9117,10 @@ type TrainingOptions struct {
 	// gradient histogram.
 	//   "HIST" - Fast histogram optimized approximate greedy algorithm.
 	TreeMethod string `json:"treeMethod,omitempty"`
+
+	// TrendSmoothingWindowSize: The smoothing window size for the trend
+	// component of the time series.
+	TrendSmoothingWindowSize int64 `json:"trendSmoothingWindowSize,omitempty,string"`
 
 	// UserColumn: User column specified for matrix factorization models.
 	UserColumn string `json:"userColumn,omitempty"`
@@ -9023,19 +9159,20 @@ func (s *TrainingOptions) MarshalJSON() ([]byte, error) {
 func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	type NoMethod TrainingOptions
 	var s1 struct {
-		ColsampleBylevel      gensupport.JSONFloat64 `json:"colsampleBylevel"`
-		ColsampleBynode       gensupport.JSONFloat64 `json:"colsampleBynode"`
-		ColsampleBytree       gensupport.JSONFloat64 `json:"colsampleBytree"`
-		DataSplitEvalFraction gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
-		Dropout               gensupport.JSONFloat64 `json:"dropout"`
-		InitialLearnRate      gensupport.JSONFloat64 `json:"initialLearnRate"`
-		L1Regularization      gensupport.JSONFloat64 `json:"l1Regularization"`
-		L2Regularization      gensupport.JSONFloat64 `json:"l2Regularization"`
-		LearnRate             gensupport.JSONFloat64 `json:"learnRate"`
-		MinRelativeProgress   gensupport.JSONFloat64 `json:"minRelativeProgress"`
-		MinSplitLoss          gensupport.JSONFloat64 `json:"minSplitLoss"`
-		Subsample             gensupport.JSONFloat64 `json:"subsample"`
-		WalsAlpha             gensupport.JSONFloat64 `json:"walsAlpha"`
+		ColsampleBylevel         gensupport.JSONFloat64 `json:"colsampleBylevel"`
+		ColsampleBynode          gensupport.JSONFloat64 `json:"colsampleBynode"`
+		ColsampleBytree          gensupport.JSONFloat64 `json:"colsampleBytree"`
+		DataSplitEvalFraction    gensupport.JSONFloat64 `json:"dataSplitEvalFraction"`
+		Dropout                  gensupport.JSONFloat64 `json:"dropout"`
+		InitialLearnRate         gensupport.JSONFloat64 `json:"initialLearnRate"`
+		L1Regularization         gensupport.JSONFloat64 `json:"l1Regularization"`
+		L2Regularization         gensupport.JSONFloat64 `json:"l2Regularization"`
+		LearnRate                gensupport.JSONFloat64 `json:"learnRate"`
+		MinRelativeProgress      gensupport.JSONFloat64 `json:"minRelativeProgress"`
+		MinSplitLoss             gensupport.JSONFloat64 `json:"minSplitLoss"`
+		Subsample                gensupport.JSONFloat64 `json:"subsample"`
+		TimeSeriesLengthFraction gensupport.JSONFloat64 `json:"timeSeriesLengthFraction"`
+		WalsAlpha                gensupport.JSONFloat64 `json:"walsAlpha"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -9054,6 +9191,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
 	s.Subsample = float64(s1.Subsample)
+	s.TimeSeriesLengthFraction = float64(s1.TimeSeriesLengthFraction)
 	s.WalsAlpha = float64(s1.WalsAlpha)
 	return nil
 }
@@ -9089,6 +9227,10 @@ type TrainingRun struct {
 	// TrainingOptions: Options that were used for this training run,
 	// includes user specified and default options that were used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
+
+	// TrainingStartTime: The start time of this training run, in
+	// milliseconds since epoch.
+	TrainingStartTime int64 `json:"trainingStartTime,omitempty,string"`
 
 	// VertexAiModelId: The model id in Vertex AI Model Registry for this
 	// training run
@@ -10363,12 +10505,12 @@ type JobsDeleteCall struct {
 // Delete: Requests the deletion of the metadata of a job. This call
 // returns when the job's metadata is deleted.
 //
-// - jobId: Job ID of the job for which metadata is to be deleted. If
-//   this is a parent job which has child jobs, the metadata from all
-//   child jobs will be deleted as well. Direct deletion of the metadata
-//   of child jobs is not allowed.
-// - projectId: Project ID of the job for which metadata is to be
-//   deleted.
+//   - jobId: Job ID of the job for which metadata is to be deleted. If
+//     this is a parent job which has child jobs, the metadata from all
+//     child jobs will be deleted as well. Direct deletion of the metadata
+//     of child jobs is not allowed.
+//   - projectId: Project ID of the job for which metadata is to be
+//     deleted.
 func (r *JobsService) Delete(projectId string, jobId string) *JobsDeleteCall {
 	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10916,8 +11058,8 @@ type JobsInsertCall struct {
 // Insert: Starts a new asynchronous job. Requires the Can View project
 // role.
 //
-// - projectId: Project ID of the project that will be billed for the
-//   job.
+//   - projectId: Project ID of the project that will be billed for the
+//     job.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11204,8 +11346,9 @@ func (c *JobsListCall) ParentJobId(parentJobId string) *JobsListCall {
 // information returned to a set of selected fields
 //
 // Possible values:
-//   "full" - Includes all job data
-//   "minimal" - Does not include the job configuration
+//
+//	"full" - Includes all job data
+//	"minimal" - Does not include the job configuration
 func (c *JobsListCall) Projection(projection string) *JobsListCall {
 	c.urlParams_.Set("projection", projection)
 	return c
@@ -11215,9 +11358,10 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 // state
 //
 // Possible values:
-//   "done" - Finished jobs
-//   "pending" - Pending jobs
-//   "running" - Running jobs
+//
+//	"done" - Finished jobs
+//	"pending" - Pending jobs
+//	"running" - Running jobs
 func (c *JobsListCall) StateFilter(stateFilter ...string) *JobsListCall {
 	c.urlParams_.SetMulti("stateFilter", append([]string{}, stateFilter...))
 	return c
@@ -13469,10 +13613,10 @@ type RowAccessPoliciesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RowAccessPoliciesGetIamPolicyCall {
 	c := &RowAccessPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13837,10 +13981,10 @@ type RowAccessPoliciesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RowAccessPoliciesSetIamPolicyCall {
 	c := &RowAccessPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -13988,10 +14132,10 @@ type RowAccessPoliciesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *RowAccessPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *RowAccessPoliciesTestIamPermissionsCall {
 	c := &RowAccessPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -14696,17 +14840,25 @@ func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 // returned.
 //
 // Possible values:
-//   "BASIC" - Includes basic table information including schema and
+//
+//	"BASIC" - Includes basic table information including schema and
+//
 // partitioning specification. This view does not include storage
 // statistics such as numRows or numBytes. This view is significantly
 // more efficient and should be used to support high query rates.
-//   "FULL" - Includes all table information, including storage
+//
+//	"FULL" - Includes all table information, including storage
+//
 // statistics. It returns same information as STORAGE_STATS view, but
 // may contain additional information in the future.
-//   "STORAGE_STATS" - Includes all information in the BASIC view as
+//
+//	"STORAGE_STATS" - Includes all information in the BASIC view as
+//
 // well as storage statistics (numBytes, numLongTermBytes, numRows and
 // lastModifiedTime).
-//   "TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//
+//	"TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//
 // the STORAGE_STATS view.
 func (c *TablesGetCall) View(view string) *TablesGetCall {
 	c.urlParams_.Set("view", view)
@@ -14892,10 +15044,10 @@ type TablesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *TablesGetIamPolicyCall {
 	c := &TablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15575,10 +15727,10 @@ type TablesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *TablesSetIamPolicyCall {
 	c := &TablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -15726,10 +15878,10 @@ type TablesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *TablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *TablesTestIamPermissionsCall {
 	c := &TablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/abusive-experience-report/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/abusiveexperiencereport/v1"
-//   ...
-//   ctx := context.Background()
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx)
+//	import "google.golang.org/api/abusiveexperiencereport/v1"
+//	...
+//	ctx := context.Background()
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithAPIKey("AIza..."))
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	abusiveexperiencereportService, err := abusiveexperiencereport.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package abusiveexperiencereport // import "google.golang.org/api/abusiveexperiencereport/v1"
@@ -261,8 +261,8 @@ type SitesGetCall struct {
 
 // Get: Gets a site's Abusive Experience Report summary.
 //
-// - name: The name of the site whose summary to get, e.g.
-//   `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`.
+//   - name: The name of the site whose summary to get, e.g.
+//     `sites/http%3A%2F%2Fwww.google.com%2F`. Format: `sites/{site}`.
 func (r *SitesService) Get(name string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

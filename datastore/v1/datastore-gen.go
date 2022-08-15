@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/datastore/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datastore/v1"
-//   ...
-//   ctx := context.Background()
-//   datastoreService, err := datastore.NewService(ctx)
+//	import "google.golang.org/api/datastore/v1"
+//	...
+//	ctx := context.Background()
+//	datastoreService, err := datastore.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   datastoreService, err := datastore.NewService(ctx, option.WithScopes(datastore.DatastoreScope))
+//	datastoreService, err := datastore.NewService(ctx, option.WithScopes(datastore.DatastoreScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   datastoreService, err := datastore.NewService(ctx, option.WithAPIKey("AIza..."))
+//	datastoreService, err := datastore.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   datastoreService, err := datastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	datastoreService, err := datastore.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datastore // import "google.golang.org/api/datastore/v1"
@@ -182,8 +182,9 @@ type ProjectsOperationsService struct {
 
 // AllocateIdsRequest: The request for Datastore.AllocateIds.
 type AllocateIdsRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Keys: Required. A list of keys with incomplete key paths for which to
@@ -278,8 +279,9 @@ func (s *ArrayValue) MarshalJSON() ([]byte, error) {
 
 // BeginTransactionRequest: The request for Datastore.BeginTransaction.
 type BeginTransactionRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// TransactionOptions: Options for a new transaction.
@@ -343,8 +345,9 @@ func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Datastore.Commit.
 type CommitRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Mode: The type of commit to perform. Defaults to `TRANSACTIONAL`.
@@ -733,9 +736,9 @@ func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON(
 // following examples). Example usage: Entire project: kinds=[],
 // namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
 // 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
-// namespace: kinds=['Foo', 'Bar'], namespace_ids=[''] Kinds Foo and Bar
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[”] Kinds Foo and Bar
 // in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
-// namespace_ids=['', 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=[”, 'Baz'] The entire Baz namespace: kinds=[],
 // namespace_ids=['Baz']
 type GoogleDatastoreAdminV1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
@@ -1446,9 +1449,9 @@ func (s *GoogleDatastoreAdminV1beta1CommonMetadata) MarshalJSON() ([]byte, error
 // following examples). Example usage: Entire project: kinds=[],
 // namespace_ids=[] Kinds Foo and Bar in all namespaces: kinds=['Foo',
 // 'Bar'], namespace_ids=[] Kinds Foo and Bar only in the default
-// namespace: kinds=['Foo', 'Bar'], namespace_ids=[''] Kinds Foo and Bar
+// namespace: kinds=['Foo', 'Bar'], namespace_ids=[”] Kinds Foo and Bar
 // in both the default and Baz namespaces: kinds=['Foo', 'Bar'],
-// namespace_ids=['', 'Baz'] The entire Baz namespace: kinds=[],
+// namespace_ids=[”, 'Baz'] The entire Baz namespace: kinds=[],
 // namespace_ids=['Baz']
 type GoogleDatastoreAdminV1beta1EntityFilter struct {
 	// Kinds: If empty, then this represents all kinds.
@@ -1951,8 +1954,9 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 
 // LookupRequest: The request for Datastore.Lookup.
 type LookupRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Keys: Required. Keys of entities to look up.
@@ -2564,7 +2568,6 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 // ReadOptions: The options shared by read requests.
 type ReadOptions struct {
 	// ReadConsistency: The non-transactional read consistency to use.
-	// Cannot be set to `STRONG` for global queries.
 	//
 	// Possible values:
 	//   "READ_CONSISTENCY_UNSPECIFIED" - Unspecified. This value must not
@@ -2639,8 +2642,9 @@ func (s *ReadWrite) MarshalJSON() ([]byte, error) {
 
 // ReserveIdsRequest: The request for Datastore.ReserveIds.
 type ReserveIdsRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Keys: Required. A list of keys with complete key paths whose numeric
@@ -2679,8 +2683,9 @@ type ReserveIdsResponse struct {
 
 // RollbackRequest: The request for Datastore.Rollback.
 type RollbackRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// Transaction: Required. The transaction identifier, returned by a call
@@ -2720,8 +2725,9 @@ type RollbackResponse struct {
 
 // RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
-	// DatabaseId: If not empty, the ID of the database against which to
-	// make the request.
+	// DatabaseId: The ID of the database against which to make the request.
+	// '(default)' is not allowed; please use empty string '' to refer the
+	// default database.
 	DatabaseId string `json:"databaseId,omitempty"`
 
 	// GqlQuery: The GQL query to run. This query must be a non-aggregation

@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/pubsub/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/pubsub/v1"
-//   ...
-//   ctx := context.Background()
-//   pubsubService, err := pubsub.NewService(ctx)
+//	import "google.golang.org/api/pubsub/v1"
+//	...
+//	ctx := context.Background()
+//	pubsubService, err := pubsub.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   pubsubService, err := pubsub.NewService(ctx, option.WithScopes(pubsub.PubsubScope))
+//	pubsubService, err := pubsub.NewService(ctx, option.WithScopes(pubsub.PubsubScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   pubsubService, err := pubsub.NewService(ctx, option.WithAPIKey("AIza..."))
+//	pubsubService, err := pubsub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   pubsubService, err := pubsub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	pubsubService, err := pubsub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package pubsub // import "google.golang.org/api/pubsub/v1"
@@ -1663,7 +1663,9 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subscription: A subscription resource.
+// Subscription: A subscription resource. If none of `push_config` or
+// `bigquery_config` is set, then the subscriber will pull and ack
+// messages using API methods. At most one of these fields may be set.
 type Subscription struct {
 	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
 	// basis) Pub/Sub waits for the subscriber to acknowledge receipt before
@@ -1684,9 +1686,7 @@ type Subscription struct {
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// BigqueryConfig: If delivery to BigQuery is used with this
-	// subscription, this field is used to configure it. Either `pushConfig`
-	// or `bigQueryConfig` can be set, but not both. If both are empty, then
-	// the subscriber will pull and ack messages using API methods.
+	// subscription, this field is used to configure it.
 	BigqueryConfig *BigQueryConfig `json:"bigqueryConfig,omitempty"`
 
 	// DeadLetterPolicy: A policy that specifies the conditions for dead
@@ -1759,9 +1759,7 @@ type Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it. Either `pushConfig` or
-	// `bigQueryConfig` can be set, but not both. If both are empty, then
-	// the subscriber will pull and ack messages using API methods.
+	// field is used to configure it.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// RetainAckedMessages: Indicates whether to retain acknowledged
@@ -2174,8 +2172,8 @@ type ProjectsSchemasCreateCall struct {
 
 // Create: Creates a schema.
 //
-// - parent: The name of the project in which to create the schema.
-//   Format is `projects/{project-id}`.
+//   - parent: The name of the project in which to create the schema.
+//     Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) Create(parent string, schema *Schema) *ProjectsSchemasCreateCall {
 	c := &ProjectsSchemasCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2332,8 +2330,8 @@ type ProjectsSchemasDeleteCall struct {
 
 // Delete: Deletes a schema.
 //
-// - name: Name of the schema to delete. Format is
-//   `projects/{project}/schemas/{schema}`.
+//   - name: Name of the schema to delete. Format is
+//     `projects/{project}/schemas/{schema}`.
 func (r *ProjectsSchemasService) Delete(name string) *ProjectsSchemasDeleteCall {
 	c := &ProjectsSchemasDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2467,8 +2465,8 @@ type ProjectsSchemasGetCall struct {
 
 // Get: Gets a schema.
 //
-// - name: The name of the schema to get. Format is
-//   `projects/{project}/schemas/{schema}`.
+//   - name: The name of the schema to get. Format is
+//     `projects/{project}/schemas/{schema}`.
 func (r *ProjectsSchemasService) Get(name string) *ProjectsSchemasGetCall {
 	c := &ProjectsSchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2480,11 +2478,16 @@ func (r *ProjectsSchemasService) Get(name string) *ProjectsSchemasGetCall {
 // out. Set to `BASIC` to omit the `definition`.
 //
 // Possible values:
-//   "SCHEMA_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+//	"SCHEMA_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
 // default to the BASIC view.
-//   "BASIC" - Include the name and type of the schema, but not the
+//
+//	"BASIC" - Include the name and type of the schema, but not the
+//
 // definition.
-//   "FULL" - Include all Schema object fields.
+//
+//	"FULL" - Include all Schema object fields.
 func (c *ProjectsSchemasGetCall) View(view string) *ProjectsSchemasGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -2647,10 +2650,10 @@ type ProjectsSchemasGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSchemasService) GetIamPolicy(resource string) *ProjectsSchemasGetIamPolicyCall {
 	c := &ProjectsSchemasGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2821,8 +2824,8 @@ type ProjectsSchemasListCall struct {
 
 // List: Lists schemas in a project.
 //
-// - parent: The name of the project in which to list schemas. Format is
-//   `projects/{project-id}`.
+//   - parent: The name of the project in which to list schemas. Format is
+//     `projects/{project-id}`.
 func (r *ProjectsSchemasService) List(parent string) *ProjectsSchemasListCall {
 	c := &ProjectsSchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2850,11 +2853,16 @@ func (c *ProjectsSchemasListCall) PageToken(pageToken string) *ProjectsSchemasLi
 // `type`, but not `definition`. Set to `FULL` to retrieve all fields.
 //
 // Possible values:
-//   "SCHEMA_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+//	"SCHEMA_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
 // default to the BASIC view.
-//   "BASIC" - Include the name and type of the schema, but not the
+//
+//	"BASIC" - Include the name and type of the schema, but not the
+//
 // definition.
-//   "FULL" - Include all Schema object fields.
+//
+//	"FULL" - Include all Schema object fields.
 func (c *ProjectsSchemasListCall) View(view string) *ProjectsSchemasListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -3049,10 +3057,10 @@ type ProjectsSchemasSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSchemasService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSchemasSetIamPolicyCall {
 	c := &ProjectsSchemasSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3200,10 +3208,10 @@ type ProjectsSchemasTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSchemasService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSchemasTestIamPermissionsCall {
 	c := &ProjectsSchemasTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3346,8 +3354,8 @@ type ProjectsSchemasValidateCall struct {
 
 // Validate: Validates a schema.
 //
-// - parent: The name of the project in which to validate schemas.
-//   Format is `projects/{project-id}`.
+//   - parent: The name of the project in which to validate schemas.
+//     Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) Validate(parent string, validateschemarequest *ValidateSchemaRequest) *ProjectsSchemasValidateCall {
 	c := &ProjectsSchemasValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3490,8 +3498,8 @@ type ProjectsSchemasValidateMessageCall struct {
 
 // ValidateMessage: Validates a message against a schema.
 //
-// - parent: The name of the project in which to validate schemas.
-//   Format is `projects/{project-id}`.
+//   - parent: The name of the project in which to validate schemas.
+//     Format is `projects/{project-id}`.
 func (r *ProjectsSchemasService) ValidateMessage(parent string, validatemessagerequest *ValidateMessageRequest) *ProjectsSchemasValidateMessageCall {
 	c := &ProjectsSchemasValidateMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3650,11 +3658,11 @@ type ProjectsSnapshotsCreateCall struct {
 // generated name is populated in the returned Snapshot object. Note
 // that for REST API requests, you must specify a name in the request.
 //
-// - name: User-provided name for this snapshot. If the name is not
-//   provided in the request, the server will assign a random name for
-//   this snapshot on the same project as the subscription. Note that
-//   for REST API requests, you must specify a name. See the resource
-//   name rules. Format is `projects/{project}/snapshots/{snap}`.
+//   - name: User-provided name for this snapshot. If the name is not
+//     provided in the request, the server will assign a random name for
+//     this snapshot on the same project as the subscription. Note that
+//     for REST API requests, you must specify a name. See the resource
+//     name rules. Format is `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
 	c := &ProjectsSnapshotsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3805,8 +3813,8 @@ type ProjectsSnapshotsDeleteCall struct {
 // snapshot or its subscription, unless the same subscription is
 // specified.
 //
-// - snapshot: The name of the snapshot to delete. Format is
-//   `projects/{project}/snapshots/{snap}`.
+//   - snapshot: The name of the snapshot to delete. Format is
+//     `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Delete(snapshot string) *ProjectsSnapshotsDeleteCall {
 	c := &ProjectsSnapshotsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -3944,8 +3952,8 @@ type ProjectsSnapshotsGetCall struct {
 // bulk. That is, you can set the acknowledgment state of messages in an
 // existing subscription to the state captured by a snapshot.
 //
-// - snapshot: The name of the snapshot to get. Format is
-//   `projects/{project}/snapshots/{snap}`.
+//   - snapshot: The name of the snapshot to get. Format is
+//     `projects/{project}/snapshots/{snap}`.
 func (r *ProjectsSnapshotsService) Get(snapshot string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -4094,10 +4102,10 @@ type ProjectsSnapshotsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapshotsGetIamPolicyCall {
 	c := &ProjectsSnapshotsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4272,8 +4280,8 @@ type ProjectsSnapshotsListCall struct {
 // you can set the acknowledgment state of messages in an existing
 // subscription to the state captured by a snapshot.
 //
-// - project: The name of the project in which to list snapshots. Format
-//   is `projects/{project-id}`.
+//   - project: The name of the project in which to list snapshots. Format
+//     is `projects/{project-id}`.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4617,10 +4625,10 @@ type ProjectsSnapshotsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSnapshotsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSnapshotsSetIamPolicyCall {
 	c := &ProjectsSnapshotsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4768,10 +4776,10 @@ type ProjectsSnapshotsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSnapshotsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSnapshotsTestIamPermissionsCall {
 	c := &ProjectsSnapshotsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4919,8 +4927,8 @@ type ProjectsSubscriptionsAcknowledgeCall struct {
 // redelivered later. Acknowledging a message more than once will not
 // result in an error.
 //
-// - subscription: The subscription whose message is being acknowledged.
-//   Format is `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The subscription whose message is being acknowledged.
+//     Format is `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Acknowledge(subscription string, acknowledgerequest *AcknowledgeRequest) *ProjectsSubscriptionsAcknowledgeCall {
 	c := &ProjectsSubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5073,13 +5081,13 @@ type ProjectsSubscriptionsCreateCall struct {
 // generated name is populated in the returned Subscription object. Note
 // that for REST API requests, you must specify a name in the request.
 //
-// - name: The name of the subscription. It must have the format
-//   "projects/{project}/subscriptions/{subscription}".
-//   `{subscription}` must start with a letter, and contain only letters
-//   (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
-//   periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
-//   must be between 3 and 255 characters in length, and it must not
-//   start with "goog".
+//   - name: The name of the subscription. It must have the format
+//     "projects/{project}/subscriptions/{subscription}".
+//     `{subscription}` must start with a letter, and contain only letters
+//     (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
+//     periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
+//     must be between 3 and 255 characters in length, and it must not
+//     start with "goog".
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5226,8 +5234,8 @@ type ProjectsSubscriptionsDeleteCall struct {
 // association with the old subscription or its topic unless the same
 // topic is specified.
 //
-// - subscription: The subscription to delete. Format is
-//   `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The subscription to delete. Format is
+//     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Delete(subscription string) *ProjectsSubscriptionsDeleteCall {
 	c := &ProjectsSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5364,8 +5372,8 @@ type ProjectsSubscriptionsDetachCall struct {
 // subscription is a push subscription, pushes to the endpoint will
 // stop.
 //
-// - subscription: The subscription to detach. Format is
-//   `projects/{project}/subscriptions/{subscription}`.
+//   - subscription: The subscription to detach. Format is
+//     `projects/{project}/subscriptions/{subscription}`.
 func (r *ProjectsSubscriptionsService) Detach(subscription string) *ProjectsSubscriptionsDetachCall {
 	c := &ProjectsSubscriptionsDetachCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5499,8 +5507,8 @@ type ProjectsSubscriptionsGetCall struct {
 
 // Get: Gets the configuration details of a subscription.
 //
-// - subscription: The name of the subscription to get. Format is
-//   `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The name of the subscription to get. Format is
+//     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Get(subscription string) *ProjectsSubscriptionsGetCall {
 	c := &ProjectsSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -5649,10 +5657,10 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5823,8 +5831,8 @@ type ProjectsSubscriptionsListCall struct {
 
 // List: Lists matching subscriptions.
 //
-// - project: The name of the project in which to list subscriptions.
-//   Format is `projects/{project-id}`.
+//   - project: The name of the project in which to list subscriptions.
+//     Format is `projects/{project-id}`.
 func (r *ProjectsSubscriptionsService) List(project string) *ProjectsSubscriptionsListCall {
 	c := &ProjectsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6024,8 +6032,8 @@ type ProjectsSubscriptionsModifyAckDeadlineCall struct {
 // modify the subscription-level `ackDeadlineSeconds` used for
 // subsequent messages.
 //
-// - subscription: The name of the subscription. Format is
-//   `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The name of the subscription. Format is
+//     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) ModifyAckDeadline(subscription string, modifyackdeadlinerequest *ModifyAckDeadlineRequest) *ProjectsSubscriptionsModifyAckDeadlineCall {
 	c := &ProjectsSubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -6173,8 +6181,8 @@ type ProjectsSubscriptionsModifyPushConfigCall struct {
 // Messages will accumulate for delivery continuously through the call
 // regardless of changes to the `PushConfig`.
 //
-// - subscription: The name of the subscription. Format is
-//   `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The name of the subscription. Format is
+//     `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) ModifyPushConfig(subscription string, modifypushconfigrequest *ModifyPushConfigRequest) *ProjectsSubscriptionsModifyPushConfigCall {
 	c := &ProjectsSubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -6318,13 +6326,13 @@ type ProjectsSubscriptionsPatchCall struct {
 // Patch: Updates an existing subscription. Note that certain properties
 // of a subscription, such as its topic, are not modifiable.
 //
-// - name: The name of the subscription. It must have the format
-//   "projects/{project}/subscriptions/{subscription}".
-//   `{subscription}` must start with a letter, and contain only letters
-//   (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
-//   periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
-//   must be between 3 and 255 characters in length, and it must not
-//   start with "goog".
+//   - name: The name of the subscription. It must have the format
+//     "projects/{project}/subscriptions/{subscription}".
+//     `{subscription}` must start with a letter, and contain only letters
+//     (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
+//     periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
+//     must be between 3 and 255 characters in length, and it must not
+//     start with "goog".
 func (r *ProjectsSubscriptionsService) Patch(name string, updatesubscriptionrequest *UpdateSubscriptionRequest) *ProjectsSubscriptionsPatchCall {
 	c := &ProjectsSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6465,12 +6473,10 @@ type ProjectsSubscriptionsPullCall struct {
 	header_      http.Header
 }
 
-// Pull: Pulls messages from the server. The server may return
-// `UNAVAILABLE` if there are too many concurrent pull requests pending
-// for the given subscription.
+// Pull: Pulls messages from the server.
 //
-// - subscription: The subscription from which messages should be
-//   pulled. Format is `projects/{project}/subscriptions/{sub}`.
+//   - subscription: The subscription from which messages should be
+//     pulled. Format is `projects/{project}/subscriptions/{sub}`.
 func (r *ProjectsSubscriptionsService) Pull(subscription string, pullrequest *PullRequest) *ProjectsSubscriptionsPullCall {
 	c := &ProjectsSubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -6569,7 +6575,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many concurrent pull requests pending for the given subscription.",
+	//   "description": "Pulls messages from the server.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:pull",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.pull",
@@ -6764,10 +6770,10 @@ type ProjectsSubscriptionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSubscriptionsSetIamPolicyCall {
 	c := &ProjectsSubscriptionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6915,10 +6921,10 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7063,12 +7069,12 @@ type ProjectsTopicsCreateCall struct {
 // [resource name rules]
 // (https://cloud.google.com/pubsub/docs/admin#resource_names).
 //
-// - name: The name of the topic. It must have the format
-//   "projects/{project}/topics/{topic}". `{topic}` must start with a
-//   letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
-//   dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
-//   (`+`) or percent signs (`%`). It must be between 3 and 255
-//   characters in length, and it must not start with "goog".
+//   - name: The name of the topic. It must have the format
+//     "projects/{project}/topics/{topic}". `{topic}` must start with a
+//     letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+//     dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+//     (`+`) or percent signs (`%`). It must be between 3 and 255
+//     characters in length, and it must not start with "goog".
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7215,8 +7221,8 @@ type ProjectsTopicsDeleteCall struct {
 // subscriptions to this topic are not deleted, but their `topic` field
 // is set to `_deleted-topic_`.
 //
-// - topic: Name of the topic to delete. Format is
-//   `projects/{project}/topics/{topic}`.
+//   - topic: Name of the topic to delete. Format is
+//     `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Delete(topic string) *ProjectsTopicsDeleteCall {
 	c := &ProjectsTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7350,8 +7356,8 @@ type ProjectsTopicsGetCall struct {
 
 // Get: Gets the configuration of a topic.
 //
-// - topic: The name of the topic to get. Format is
-//   `projects/{project}/topics/{topic}`.
+//   - topic: The name of the topic to get. Format is
+//     `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Get(topic string) *ProjectsTopicsGetCall {
 	c := &ProjectsTopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -7500,10 +7506,10 @@ type ProjectsTopicsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7674,8 +7680,8 @@ type ProjectsTopicsListCall struct {
 
 // List: Lists matching topics.
 //
-// - project: The name of the project in which to list topics. Format is
-//   `projects/{project-id}`.
+//   - project: The name of the project in which to list topics. Format is
+//     `projects/{project-id}`.
 func (r *ProjectsTopicsService) List(project string) *ProjectsTopicsListCall {
 	c := &ProjectsTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7871,12 +7877,12 @@ type ProjectsTopicsPatchCall struct {
 // Patch: Updates an existing topic. Note that certain properties of a
 // topic are not modifiable.
 //
-// - name: The name of the topic. It must have the format
-//   "projects/{project}/topics/{topic}". `{topic}` must start with a
-//   letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
-//   dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
-//   (`+`) or percent signs (`%`). It must be between 3 and 255
-//   characters in length, and it must not start with "goog".
+//   - name: The name of the topic. It must have the format
+//     "projects/{project}/topics/{topic}". `{topic}` must start with a
+//     letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+//     dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+//     (`+`) or percent signs (`%`). It must be between 3 and 255
+//     characters in length, and it must not start with "goog".
 func (r *ProjectsTopicsService) Patch(name string, updatetopicrequest *UpdateTopicRequest) *ProjectsTopicsPatchCall {
 	c := &ProjectsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8020,8 +8026,8 @@ type ProjectsTopicsPublishCall struct {
 // Publish: Adds one or more messages to the topic. Returns `NOT_FOUND`
 // if the topic does not exist.
 //
-// - topic: The messages in the request will be published on this topic.
-//   Format is `projects/{project}/topics/{topic}`.
+//   - topic: The messages in the request will be published on this topic.
+//     Format is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -8166,10 +8172,10 @@ type ProjectsTopicsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsTopicsSetIamPolicyCall {
 	c := &ProjectsTopicsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8317,10 +8323,10 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8467,8 +8473,8 @@ type ProjectsTopicsSnapshotsListCall struct {
 // bulk. That is, you can set the acknowledgment state of messages in an
 // existing subscription to the state captured by a snapshot.
 //
-// - topic: The name of the topic that snapshots are attached to. Format
-//   is `projects/{project}/topics/{topic}`.
+//   - topic: The name of the topic that snapshots are attached to. Format
+//     is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -8663,8 +8669,8 @@ type ProjectsTopicsSubscriptionsListCall struct {
 
 // List: Lists the names of the attached subscriptions on this topic.
 //
-// - topic: The name of the topic that subscriptions are attached to.
-//   Format is `projects/{project}/topics/{topic}`.
+//   - topic: The name of the topic that subscriptions are attached to.
+//     Format is `projects/{project}/topics/{topic}`.
 func (r *ProjectsTopicsSubscriptionsService) List(topic string) *ProjectsTopicsSubscriptionsListCall {
 	c := &ProjectsTopicsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic

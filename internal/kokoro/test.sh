@@ -50,9 +50,27 @@ cd google-api-go-generator
 go generate
 cd ..
 
+set +e # Run all tests, don't stop after the first failure.
+exit_code=0
+
 # Run tests and tee output to log file, to be pushed to GCS as artifact.
 if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
     go test -race -v ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+    # Takes the kokoro output log (raw stdout) and creates a machine-parseable
+    # xUnit XML file.
+    cat $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt |
+        go-junit-report -set-exit-code >sponge_log.xml
+    exit_code=$($?)
 else
     go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+    exit_code=$($?)
 fi
+
+if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]]; then
+    chmod +x $KOKORO_GFILE_DIR/linux_amd64/flakybot
+    $KOKORO_GFILE_DIR/linux_amd64/flakybot -logs_dir=$GOCLOUD_HOME \
+        -repo=googleapis/google-api-go-client \
+        -commit_hash=$KOKORO_GITHUB_COMMIT_URL_google_api_go_client
+fi
+
+exit $exit_code

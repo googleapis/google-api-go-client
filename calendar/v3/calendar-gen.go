@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://developers.google.com/google-apps/calendar/firstapp
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/calendar/v3"
-//   ...
-//   ctx := context.Background()
-//   calendarService, err := calendar.NewService(ctx)
+//	import "google.golang.org/api/calendar/v3"
+//	...
+//	ctx := context.Background()
+//	calendarService, err := calendar.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   calendarService, err := calendar.NewService(ctx, option.WithScopes(calendar.CalendarSettingsReadonlyScope))
+//	calendarService, err := calendar.NewService(ctx, option.WithScopes(calendar.CalendarSettingsReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   calendarService, err := calendar.NewService(ctx, option.WithAPIKey("AIza..."))
+//	calendarService, err := calendar.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   calendarService, err := calendar.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	calendarService, err := calendar.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package calendar // import "google.golang.org/api/calendar/v3"
@@ -1397,10 +1397,13 @@ type Event struct {
 	// ICalUID: Event unique identifier as defined in RFC5545. It is used to
 	// uniquely identify events accross calendaring systems and must be
 	// supplied when importing events via the import method.
-	// Note that the icalUID and the id are not identical and only one of
+	// Note that the iCalUID and the id are not identical and only one of
 	// them should be supplied at event creation time. One difference in
 	// their semantics is that in recurring events, all occurrences of one
-	// event have different ids while they all share the same icalUIDs.
+	// event have different ids while they all share the same iCalUIDs. To
+	// retrieve an event using its iCalUID, call the events.list method
+	// using the iCalUID parameter. To retrieve an event using its id, call
+	// the events.get method.
 	ICalUID string `json:"iCalUID,omitempty"`
 
 	// Id: Opaque identifier of the event. When creating new single or
@@ -2409,11 +2412,11 @@ type AclDeleteCall struct {
 
 // Delete: Deletes an access control rule.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - ruleId: ACL rule identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - ruleId: ACL rule identifier.
 func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
 	c := &AclDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2526,11 +2529,11 @@ type AclGetCall struct {
 
 // Get: Returns an access control rule.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - ruleId: ACL rule identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - ruleId: ACL rule identifier.
 func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 	c := &AclGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2684,10 +2687,10 @@ type AclInsertCall struct {
 
 // Insert: Creates an access control rule.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall {
 	c := &AclInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2840,10 +2843,10 @@ type AclListCall struct {
 
 // List: Returns the rules in the access control list for the calendar.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *AclService) List(calendarId string) *AclListCall {
 	c := &AclListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2884,7 +2887,8 @@ func (c *AclListCall) ShowDeleted(showDeleted bool) *AclListCall {
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *AclListCall) SyncToken(syncToken string) *AclListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -3073,11 +3077,11 @@ type AclPatchCall struct {
 // Patch: Updates an access control rule. This method supports patch
 // semantics.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - ruleId: ACL rule identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - ruleId: ACL rule identifier.
 func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *AclPatchCall {
 	c := &AclPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3241,11 +3245,11 @@ type AclUpdateCall struct {
 
 // Update: Updates an access control rule.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - ruleId: ACL rule identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - ruleId: ACL rule identifier.
 func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) *AclUpdateCall {
 	c := &AclUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3408,10 +3412,10 @@ type AclWatchCall struct {
 
 // Watch: Watch for changes to ACL resources.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *AclService) Watch(calendarId string, channel *Channel) *AclWatchCall {
 	c := &AclWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3453,7 +3457,8 @@ func (c *AclWatchCall) ShowDeleted(showDeleted bool) *AclWatchCall {
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *AclWatchCall) SyncToken(syncToken string) *AclWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -3614,10 +3619,10 @@ type CalendarListDeleteCall struct {
 
 // Delete: Removes a calendar from the user's calendar list.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall {
 	c := &CalendarListDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3720,10 +3725,10 @@ type CalendarListGetCall struct {
 
 // Get: Returns a calendar from the user's calendar list.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 	c := &CalendarListGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4023,11 +4028,14 @@ func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCal
 // default is no restriction.
 //
 // Possible values:
-//   "freeBusyReader" - The user can read free/busy information.
-//   "owner" - The user can read and modify events and access control
+//
+//	"freeBusyReader" - The user can read free/busy information.
+//	"owner" - The user can read and modify events and access control
+//
 // lists.
-//   "reader" - The user can read events that are not private.
-//   "writer" - The user can read and modify events.
+//
+//	"reader" - The user can read events that are not private.
+//	"writer" - The user can read and modify events.
 func (c *CalendarListListCall) MinAccessRole(minAccessRole string) *CalendarListListCall {
 	c.urlParams_.Set("minAccessRole", minAccessRole)
 	return c
@@ -4069,7 +4077,8 @@ func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *CalendarListListCall) SyncToken(syncToken string) *CalendarListListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -4268,10 +4277,10 @@ type CalendarListPatchCall struct {
 // Patch: Updates an existing calendar on the user's calendar list. This
 // method supports patch semantics.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarListService) Patch(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListPatchCall {
 	c := &CalendarListPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4426,10 +4435,10 @@ type CalendarListUpdateCall struct {
 
 // Update: Updates an existing calendar on the user's calendar list.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarListService) Update(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListUpdateCall {
 	c := &CalendarListUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4601,11 +4610,14 @@ func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchC
 // default is no restriction.
 //
 // Possible values:
-//   "freeBusyReader" - The user can read free/busy information.
-//   "owner" - The user can read and modify events and access control
+//
+//	"freeBusyReader" - The user can read free/busy information.
+//	"owner" - The user can read and modify events and access control
+//
 // lists.
-//   "reader" - The user can read events that are not private.
-//   "writer" - The user can read and modify events.
+//
+//	"reader" - The user can read events that are not private.
+//	"writer" - The user can read and modify events.
 func (c *CalendarListWatchCall) MinAccessRole(minAccessRole string) *CalendarListWatchCall {
 	c.urlParams_.Set("minAccessRole", minAccessRole)
 	return c
@@ -4647,7 +4659,8 @@ func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCa
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *CalendarListWatchCall) SyncToken(syncToken string) *CalendarListWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -4820,10 +4833,10 @@ type CalendarsClearCall struct {
 // Clear: Clears a primary calendar. This operation deletes all events
 // associated with the primary calendar of an account.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 	c := &CalendarsClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4926,10 +4939,10 @@ type CalendarsDeleteCall struct {
 // Delete: Deletes a secondary calendar. Use calendars.clear for
 // clearing all events on primary calendars.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
 	c := &CalendarsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5032,10 +5045,10 @@ type CalendarsGetCall struct {
 
 // Get: Returns metadata for a calendar.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 	c := &CalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5303,10 +5316,10 @@ type CalendarsPatchCall struct {
 // Patch: Updates metadata for a calendar. This method supports patch
 // semantics.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *CalendarsPatchCall {
 	c := &CalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5446,10 +5459,10 @@ type CalendarsUpdateCall struct {
 
 // Update: Updates metadata for a calendar.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *CalendarsUpdateCall {
 	c := &CalendarsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5815,11 +5828,11 @@ type EventsDeleteCall struct {
 
 // Delete: Deletes an event.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - eventId: Event identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - eventId: Event identifier.
 func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteCall {
 	c := &EventsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5842,10 +5855,14 @@ func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDele
 // should receive notifications about the deletion of the event.
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
+//
+//	"none" - No notifications are sent. For calendar migration tasks,
+//
 // consider using the Events.import method instead.
 func (c *EventsDeleteCall) SendUpdates(sendUpdates string) *EventsDeleteCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
@@ -5976,13 +5993,15 @@ type EventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns an event.
+// Get: Returns an event based on its Google Calendar ID. To retrieve an
+// event using its iCalendar ID, call the events.list method using the
+// iCalUID parameter.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - eventId: Event identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - eventId: Event identifier.
 func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 	c := &EventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6116,7 +6135,7 @@ func (c *EventsGetCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns an event.",
+	//   "description": "Returns an event based on its Google Calendar ID. To retrieve an event using its iCalendar ID, call the events.list method using the iCalUID parameter.",
 	//   "httpMethod": "GET",
 	//   "id": "calendar.events.get",
 	//   "parameterOrder": [
@@ -6182,10 +6201,10 @@ type EventsImportCall struct {
 // Import: Imports an event. This operation is used to add a private
 // copy of an existing event to a calendar.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
 	c := &EventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6359,10 +6378,10 @@ type EventsInsertCall struct {
 
 // Insert: Creates an event.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCall {
 	c := &EventsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6407,10 +6426,14 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 // some emails might still be sent. The default is false.
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. Warning: Using the value none
+//
+//	"none" - No notifications are sent. Warning: Using the value none
+//
 // can have significant adverse effects, including events not syncing to
 // external calendars or events being lost altogether for some users.
 // For calendar migration tasks, consider using the events.import method
@@ -6602,11 +6625,11 @@ type EventsInstancesCall struct {
 
 // Instances: Returns instances of the specified recurring event.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - eventId: Recurring event identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - eventId: Recurring event identifier.
 func (r *EventsService) Instances(calendarId string, eventId string) *EventsInstancesCall {
 	c := &EventsInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6910,10 +6933,10 @@ type EventsListCall struct {
 
 // List: Returns events on the specified calendar.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *EventsService) List(calendarId string) *EventsListCall {
 	c := &EventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6930,8 +6953,9 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
-// the iCalendar format to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies an event ID
+// in the iCalendar format to be provided in the response.  Use this if
+// you want to search for an event by its iCalendar ID.
 func (c *EventsListCall) ICalUID(iCalUID string) *EventsListCall {
 	c.urlParams_.Set("iCalUID", iCalUID)
 	return c
@@ -6963,10 +6987,13 @@ func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
 // order.
 //
 // Possible values:
-//   "startTime" - Order by the start date/time (ascending). This is
+//
+//	"startTime" - Order by the start date/time (ascending). This is
+//
 // only available when querying single events (i.e. the parameter
 // singleEvents is True)
-//   "updated" - Order by last modification time (ascending).
+//
+//	"updated" - Order by last modification time (ascending).
 func (c *EventsListCall) OrderBy(orderBy string) *EventsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7057,7 +7084,8 @@ func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
 // 410 GONE response code and the client should clear its storage and
 // perform a full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *EventsListCall) SyncToken(syncToken string) *EventsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -7220,7 +7248,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+	//       "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7368,11 +7396,11 @@ type EventsMoveCall struct {
 // Move: Moves an event to another calendar, i.e. changes an event's
 // organizer.
 //
-// - calendarId: Calendar identifier of the source calendar where the
-//   event currently is on.
-// - destination: Calendar identifier of the target calendar where the
-//   event is to be moved to.
-// - eventId: Event identifier.
+//   - calendarId: Calendar identifier of the source calendar where the
+//     event currently is on.
+//   - destination: Calendar identifier of the target calendar where the
+//     event is to be moved to.
+//   - eventId: Event identifier.
 func (r *EventsService) Move(calendarId string, eventId string, destinationid string) *EventsMoveCall {
 	c := &EventsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7397,10 +7425,14 @@ func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCa
 // organizer.
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
+//
+//	"none" - No notifications are sent. For calendar migration tasks,
+//
 // consider using the Events.import method instead.
 func (c *EventsMoveCall) SendUpdates(sendUpdates string) *EventsMoveCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
@@ -7568,11 +7600,11 @@ type EventsPatchCall struct {
 
 // Patch: Updates an event. This method supports patch semantics.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - eventId: Event identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - eventId: Event identifier.
 func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *EventsPatchCall {
 	c := &EventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7628,10 +7660,14 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 // title changes, etc.).
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
+//
+//	"none" - No notifications are sent. For calendar migration tasks,
+//
 // consider using the Events.import method instead.
 func (c *EventsPatchCall) SendUpdates(sendUpdates string) *EventsPatchCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
@@ -7831,11 +7867,11 @@ type EventsQuickAddCall struct {
 
 // QuickAdd: Creates an event based on a simple text string.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - text: The text describing the event to be created.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - text: The text describing the event to be created.
 func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAddCall {
 	c := &EventsQuickAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7858,10 +7894,14 @@ func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQu
 // should receive notifications about the creation of the new event.
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
+//
+//	"none" - No notifications are sent. For calendar migration tasks,
+//
 // consider using the Events.import method instead.
 func (c *EventsQuickAddCall) SendUpdates(sendUpdates string) *EventsQuickAddCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
@@ -8021,11 +8061,11 @@ type EventsUpdateCall struct {
 
 // Update: Updates an event.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
-// - eventId: Event identifier.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
+//   - eventId: Event identifier.
 func (r *EventsService) Update(calendarId string, eventId string, event *Event) *EventsUpdateCall {
 	c := &EventsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -8081,10 +8121,14 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 // title changes, etc.).
 //
 // Possible values:
-//   "all" - Notifications are sent to all guests.
-//   "externalOnly" - Notifications are sent to non-Google Calendar
+//
+//	"all" - Notifications are sent to all guests.
+//	"externalOnly" - Notifications are sent to non-Google Calendar
+//
 // guests only.
-//   "none" - No notifications are sent. For calendar migration tasks,
+//
+//	"none" - No notifications are sent. For calendar migration tasks,
+//
 // consider using the Events.import method instead.
 func (c *EventsUpdateCall) SendUpdates(sendUpdates string) *EventsUpdateCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
@@ -8285,10 +8329,10 @@ type EventsWatchCall struct {
 
 // Watch: Watch for changes to Events resources.
 //
-// - calendarId: Calendar identifier. To retrieve calendar IDs call the
-//   calendarList.list method. If you want to access the primary
-//   calendar of the currently logged in user, use the "primary"
-//   keyword.
+//   - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//     calendarList.list method. If you want to access the primary
+//     calendar of the currently logged in user, use the "primary"
+//     keyword.
 func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchCall {
 	c := &EventsWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -8306,8 +8350,9 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 	return c
 }
 
-// ICalUID sets the optional parameter "iCalUID": Specifies event ID in
-// the iCalendar format to be included in the response.
+// ICalUID sets the optional parameter "iCalUID": Specifies an event ID
+// in the iCalendar format to be provided in the response.  Use this if
+// you want to search for an event by its iCalendar ID.
 func (c *EventsWatchCall) ICalUID(iCalUID string) *EventsWatchCall {
 	c.urlParams_.Set("iCalUID", iCalUID)
 	return c
@@ -8339,10 +8384,13 @@ func (c *EventsWatchCall) MaxResults(maxResults int64) *EventsWatchCall {
 // order.
 //
 // Possible values:
-//   "startTime" - Order by the start date/time (ascending). This is
+//
+//	"startTime" - Order by the start date/time (ascending). This is
+//
 // only available when querying single events (i.e. the parameter
 // singleEvents is True)
-//   "updated" - Order by last modification time (ascending).
+//
+//	"updated" - Order by last modification time (ascending).
 func (c *EventsWatchCall) OrderBy(orderBy string) *EventsWatchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -8433,7 +8481,8 @@ func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
 // 410 GONE response code and the client should clear its storage and
 // perform a full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *EventsWatchCall) SyncToken(syncToken string) *EventsWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -8588,7 +8637,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "iCalUID": {
-	//       "description": "Specifies event ID in the iCalendar format to be included in the response. Optional.",
+	//       "description": "Specifies an event ID in the iCalendar format to be provided in the response. Optional. Use this if you want to search for an event by its iCalendar ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9013,7 +9062,8 @@ func (c *SettingsListCall) PageToken(pageToken string) *SettingsListCall {
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *SettingsListCall) SyncToken(syncToken string) *SettingsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -9212,7 +9262,8 @@ func (c *SettingsWatchCall) PageToken(pageToken string) *SettingsWatchCall {
 // response code and the client should clear its storage and perform a
 // full synchronization without any syncToken.
 // Learn more about incremental synchronization.
-//  The default is to return all entries.
+//
+//	The default is to return all entries.
 func (c *SettingsWatchCall) SyncToken(syncToken string) *SettingsWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c

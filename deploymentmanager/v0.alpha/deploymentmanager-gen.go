@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/deployment-manager
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/deploymentmanager/v0.alpha"
-//   ...
-//   ctx := context.Background()
-//   deploymentmanagerService, err := deploymentmanager.NewService(ctx)
+//	import "google.golang.org/api/deploymentmanager/v0.alpha"
+//	...
+//	ctx := context.Background()
+//	deploymentmanagerService, err := deploymentmanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithScopes(deploymentmanager.NdevCloudmanReadonlyScope))
+//	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithScopes(deploymentmanager.NdevCloudmanReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	deploymentmanagerService, err := deploymentmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package deploymentmanager // import "google.golang.org/api/deploymentmanager/v0.alpha"
@@ -1718,6 +1718,9 @@ type OperationWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.
@@ -2171,6 +2174,9 @@ type ResourceWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.
@@ -2485,6 +2491,9 @@ type ResourceUpdateWarnings struct {
 	//   "NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE" - The route's
 	// nextHopInstance URL refers to an instance that does not have an ipv6
 	// interface on the same network as the route.
+	//   "INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB" - A WEIGHTED_MAGLEV
+	// backend service is associated with a health check that is not of type
+	// HTTP/HTTPS/HTTP2.
 	Code string `json:"code,omitempty"`
 
 	// Data: [Output Only] Metadata about this warning in key: value format.
@@ -4426,8 +4435,9 @@ func (r *DeploymentsService) Delete(project string, deployment string) *Deployme
 // policy to use for deleting resources.
 //
 // Possible values:
-//   "DELETE" (default)
-//   "ABANDON"
+//
+//	"DELETE" (default)
+//	"ABANDON"
 func (c *DeploymentsDeleteCall) DeletePolicy(deletePolicy string) *DeploymentsDeleteCall {
 	c.urlParams_.Set("deletePolicy", deletePolicy)
 	return c
@@ -4929,9 +4939,10 @@ func (r *DeploymentsService) Insert(project string, deployment *Deployment) *Dep
 // policy to use for creating new resources.
 //
 // Possible values:
-//   "CREATE_OR_ACQUIRE" (default)
-//   "ACQUIRE"
-//   "CREATE"
+//
+//	"CREATE_OR_ACQUIRE" (default)
+//	"ACQUIRE"
+//	"CREATE"
 func (c *DeploymentsInsertCall) CreatePolicy(createPolicy string) *DeploymentsInsertCall {
 	c.urlParams_.Set("createPolicy", createPolicy)
 	return c
@@ -5389,9 +5400,10 @@ func (r *DeploymentsService) Patch(project string, deployment string, deployment
 // policy to use for creating new resources.
 //
 // Possible values:
-//   "CREATE_OR_ACQUIRE" (default)
-//   "ACQUIRE"
-//   "CREATE"
+//
+//	"CREATE_OR_ACQUIRE" (default)
+//	"ACQUIRE"
+//	"CREATE"
 func (c *DeploymentsPatchCall) CreatePolicy(createPolicy string) *DeploymentsPatchCall {
 	c.urlParams_.Set("createPolicy", createPolicy)
 	return c
@@ -5401,8 +5413,9 @@ func (c *DeploymentsPatchCall) CreatePolicy(createPolicy string) *DeploymentsPat
 // policy to use for deleting resources.
 //
 // Possible values:
-//   "DELETE" (default)
-//   "ABANDON"
+//
+//	"DELETE" (default)
+//	"ABANDON"
 func (c *DeploymentsPatchCall) DeletePolicy(deletePolicy string) *DeploymentsPatchCall {
 	c.urlParams_.Set("deletePolicy", deletePolicy)
 	return c
@@ -6089,9 +6102,10 @@ func (r *DeploymentsService) Update(project string, deployment string, deploymen
 // policy to use for creating new resources.
 //
 // Possible values:
-//   "CREATE_OR_ACQUIRE" (default)
-//   "ACQUIRE"
-//   "CREATE"
+//
+//	"CREATE_OR_ACQUIRE" (default)
+//	"ACQUIRE"
+//	"CREATE"
 func (c *DeploymentsUpdateCall) CreatePolicy(createPolicy string) *DeploymentsUpdateCall {
 	c.urlParams_.Set("createPolicy", createPolicy)
 	return c
@@ -6101,8 +6115,9 @@ func (c *DeploymentsUpdateCall) CreatePolicy(createPolicy string) *DeploymentsUp
 // policy to use for deleting resources.
 //
 // Possible values:
-//   "DELETE" (default)
-//   "ABANDON"
+//
+//	"DELETE" (default)
+//	"ABANDON"
 func (c *DeploymentsUpdateCall) DeletePolicy(deletePolicy string) *DeploymentsUpdateCall {
 	c.urlParams_.Set("deletePolicy", deletePolicy)
 	return c

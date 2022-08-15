@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/storage-transfer/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/storagetransfer/v1"
-//   ...
-//   ctx := context.Background()
-//   storagetransferService, err := storagetransfer.NewService(ctx)
+//	import "google.golang.org/api/storagetransfer/v1"
+//	...
+//	ctx := context.Background()
+//	storagetransferService, err := storagetransfer.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
+//	storagetransferService, err := storagetransfer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	storagetransferService, err := storagetransfer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package storagetransfer // import "google.golang.org/api/storagetransfer/v1"
@@ -281,6 +281,50 @@ type AwsAccessKey struct {
 
 func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 	type NoMethod AwsAccessKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsS3CompatibleData: An AwsS3CompatibleData resource.
+type AwsS3CompatibleData struct {
+	// BucketName: Required. Specifies the name of the bucket.
+	BucketName string `json:"bucketName,omitempty"`
+
+	// Endpoint: Required. Specifies the endpoint of the storage service.
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// Path: Specifies the root path to transfer objects. Must be an empty
+	// string or full path name that ends with a '/'. This field is treated
+	// as an object prefix. As such, it should generally not begin with a
+	// '/'.
+	Path string `json:"path,omitempty"`
+
+	// Region: Specifies the region to sign requests with. This can be left
+	// blank if requests should be signed with an empty region.
+	Region string `json:"region,omitempty"`
+
+	// S3Metadata: A S3 compatible metadata.
+	S3Metadata *S3CompatibleMetadata `json:"s3Metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsS3CompatibleData) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsS3CompatibleData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1420,6 +1464,77 @@ func (s *RunTransferJobRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// S3CompatibleMetadata: S3CompatibleMetadata contains the metadata
+// fields that apply to the basic types of S3-compatible data providers.
+type S3CompatibleMetadata struct {
+	// AuthMethod: Specifies the authentication and authorization method
+	// used by the storage service. When not specified, Transfer Service
+	// will attempt to determine right auth method to use.
+	//
+	// Possible values:
+	//   "AUTH_METHOD_UNSPECIFIED" - AuthMethod is not specified.
+	//   "AUTH_METHOD_AWS_SIGNATURE_V4" - Auth requests with AWS SigV4.
+	//   "AUTH_METHOD_AWS_SIGNATURE_V2" - Auth requests with AWS SigV2.
+	AuthMethod string `json:"authMethod,omitempty"`
+
+	// ListApi: The Listing API to use for discovering objects. When not
+	// specified, Transfer Service will attempt to determine the right API
+	// to use.
+	//
+	// Possible values:
+	//   "LIST_API_UNSPECIFIED" - ListApi is not specified.
+	//   "LIST_OBJECTS_V2" - Perform listing using ListObjectsV2 API.
+	//   "LIST_OBJECTS" - Legacy ListObjects API.
+	ListApi string `json:"listApi,omitempty"`
+
+	// Protocol: Specifies the network protocol of the agent. When not
+	// specified, the default value of NetworkProtocol
+	// NETWORK_PROTOCOL_HTTPS is used.
+	//
+	// Possible values:
+	//   "NETWORK_PROTOCOL_UNSPECIFIED" - NetworkProtocol is not specified.
+	//   "NETWORK_PROTOCOL_HTTPS" - Perform requests using HTTPS.
+	//   "NETWORK_PROTOCOL_HTTP" - Not recommended: This sends data in
+	// clear-text. This is only appropriate within a closed network or for
+	// publicly available data. Perform requests using HTTP.
+	Protocol string `json:"protocol,omitempty"`
+
+	// RequestModel: Specifies the API request model used to call the
+	// storage service. When not specified, the default value of
+	// RequestModel REQUEST_MODEL_VIRTUAL_HOSTED_STYLE is used.
+	//
+	// Possible values:
+	//   "REQUEST_MODEL_UNSPECIFIED" - RequestModel is not specified.
+	//   "REQUEST_MODEL_VIRTUAL_HOSTED_STYLE" - Perform requests using
+	// Virtual Hosted Style. Example:
+	// https://bucket-name.s3.region.amazonaws.com/key-name
+	//   "REQUEST_MODEL_PATH_STYLE" - Perform requests using Path Style.
+	// Example: https://s3.region.amazonaws.com/bucket-name/key-name
+	RequestModel string `json:"requestModel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthMethod") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *S3CompatibleMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod S3CompatibleMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Schedule: Transfers can be scheduled to recur or to run just once.
 type Schedule struct {
 	// EndTimeOfDay: The time in UTC that no further transfer operations are
@@ -1916,7 +2031,7 @@ type TransferOptions struct {
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
 	// MetadataOptions: Represents the selected metadata options for a
-	// transfer job. This feature is in Preview.
+	// transfer job.
 	MetadataOptions *MetadataOptions `json:"metadataOptions,omitempty"`
 
 	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
@@ -1969,6 +2084,9 @@ func (s *TransferOptions) MarshalJSON() ([]byte, error) {
 
 // TransferSpec: Configuration for running a transfer.
 type TransferSpec struct {
+	// AwsS3CompatibleDataSource: An AWS S3 compatible data source.
+	AwsS3CompatibleDataSource *AwsS3CompatibleData `json:"awsS3CompatibleDataSource,omitempty"`
+
 	// AwsS3DataSource: An AWS S3 data source.
 	AwsS3DataSource *AwsS3Data `json:"awsS3DataSource,omitempty"`
 
@@ -2020,21 +2138,22 @@ type TransferSpec struct {
 	// error.
 	TransferOptions *TransferOptions `json:"transferOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AwsS3DataSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AwsS3CompatibleDataSource") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AwsS3DataSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AwsS3CompatibleDataSource") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2110,8 +2229,8 @@ type GoogleServiceAccountsGetCall struct {
 // Storage Transfer Service and can only be used by Storage Transfer
 // Service.
 //
-// - projectId: The ID of the Google Cloud project that the Google
-//   service account is associated with.
+//   - projectId: The ID of the Google Cloud project that the Google
+//     service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2256,8 +2375,8 @@ type ProjectsAgentPoolsCreateCall struct {
 
 // Create: Creates an agent pool resource.
 //
-// - projectId: The ID of the Google Cloud project that owns the agent
-//   pool.
+//   - projectId: The ID of the Google Cloud project that owns the agent
+//     pool.
 func (r *ProjectsAgentPoolsService) Create(projectId string, agentpool *AgentPool) *ProjectsAgentPoolsCreateCall {
 	c := &ProjectsAgentPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2904,8 +3023,8 @@ type ProjectsAgentPoolsPatchCall struct {
 
 // Patch: Updates an existing agent pool resource.
 //
-// - name: Specifies a unique string that identifies the agent pool.
-//   Format: `projects/{project_id}/agentPools/{agent_pool_id}`.
+//   - name: Specifies a unique string that identifies the agent pool.
+//     Format: `projects/{project_id}/agentPools/{agent_pool_id}`.
 func (r *ProjectsAgentPoolsService) Patch(name string, agentpool *AgentPool) *ProjectsAgentPoolsPatchCall {
 	c := &ProjectsAgentPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3341,14 +3460,14 @@ type TransferJobsListCall struct {
 
 // List: Lists transfer jobs.
 //
-// - filter: A list of query parameters specified as JSON text in the
-//   form of: `{"projectId":"my_project_id",
-//   "jobNames":["jobid1","jobid2",...],
-//   "jobStatuses":["status1","status2",...]}` Since `jobNames` and
-//   `jobStatuses` support multiple values, their values must be
-//   specified with array notation. `projectId` is required. `jobNames`
-//   and `jobStatuses` are optional. The valid values for `jobStatuses`
-//   are case-insensitive: ENABLED, DISABLED, and DELETED.
+//   - filter: A list of query parameters specified as JSON text in the
+//     form of: `{"projectId":"my_project_id",
+//     "jobNames":["jobid1","jobid2",...],
+//     "jobStatuses":["status1","status2",...]}` Since `jobNames` and
+//     `jobStatuses` support multiple values, their values must be
+//     specified with array notation. `projectId` is required. `jobNames`
+//     and `jobStatuses` are optional. The valid values for `jobStatuses`
+//     are case-insensitive: ENABLED, DISABLED, and DELETED.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)
@@ -4135,19 +4254,19 @@ type TransferOperationsListCall struct {
 // List: Lists transfer operations. Operations are ordered by their
 // creation time in reverse chronological order.
 //
-// - filter: A list of query parameters specified as JSON text in the
-//   form of: `{"projectId":"my_project_id",
-//   "jobNames":["jobid1","jobid2",...],
-//   "operationNames":["opid1","opid2",...],
-//   "transferStatuses":["status1","status2",...]}` Since `jobNames`,
-//   `operationNames`, and `transferStatuses` support multiple values,
-//   they must be specified with array notation. `projectId` is
-//   required. `jobNames`, `operationNames`, and `transferStatuses` are
-//   optional. The valid values for `transferStatuses` are
-//   case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
-//   ABORTED.
-// - name: The name of the type being listed; must be
-//   `transferOperations`.
+//   - filter: A list of query parameters specified as JSON text in the
+//     form of: `{"projectId":"my_project_id",
+//     "jobNames":["jobid1","jobid2",...],
+//     "operationNames":["opid1","opid2",...],
+//     "transferStatuses":["status1","status2",...]}` Since `jobNames`,
+//     `operationNames`, and `transferStatuses` support multiple values,
+//     they must be specified with array notation. `projectId` is
+//     required. `jobNames`, `operationNames`, and `transferStatuses` are
+//     optional. The valid values for `transferStatuses` are
+//     case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
+//     ABORTED.
+//   - name: The name of the type being listed; must be
+//     `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

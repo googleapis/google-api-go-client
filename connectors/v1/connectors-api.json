@@ -1055,7 +1055,7 @@
       }
     }
   },
-  "revision": "20220603",
+  "revision": "20220724",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1186,6 +1186,32 @@
       },
       "type": "object"
     },
+    "AuthorizationCodeLink": {
+      "description": "This configuration captures the details required to render an authorization link for the OAuth Authorization Code Flow.",
+      "id": "AuthorizationCodeLink",
+      "properties": {
+        "clientId": {
+          "description": "The client ID assigned to the GCP Connectors OAuth app for the connector data source.",
+          "type": "string"
+        },
+        "enablePkce": {
+          "description": "Whether to enable PKCE for the auth code flow.",
+          "type": "boolean"
+        },
+        "scopes": {
+          "description": "The scopes for which the user will authorize GCP Connectors on the connector data source.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "uri": {
+          "description": "The base URI the user must click to trigger the authorization code login flow.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Binding": {
       "description": "Associates `members`, or principals, with a `role`.",
       "id": "Binding",
@@ -1246,6 +1272,10 @@
       "description": "ConfigVariableTemplate provides metadata about a `ConfigVariable` that is used in a Connection.",
       "id": "ConfigVariableTemplate",
       "properties": {
+        "authorizationCodeLink": {
+          "$ref": "AuthorizationCodeLink",
+          "description": "Authorization code link options. To be populated if `ValueType` is `AUTHORIZATION_CODE`"
+        },
         "description": {
           "description": "Description.",
           "type": "string"
@@ -1273,6 +1303,20 @@
           "$ref": "RoleGrant",
           "description": "Role grant configuration for the config variable."
         },
+        "state": {
+          "description": "State of the config variable.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "DEPRECATED"
+          ],
+          "enumDescriptions": [
+            "Status is unspecified.",
+            "Config variable is active",
+            "Config variable is deprecated."
+          ],
+          "type": "string"
+        },
         "validationRegex": {
           "description": "Regular expression in RE2 syntax used for validating the `value` of a `ConfigVariable`.",
           "type": "string"
@@ -1285,7 +1329,8 @@
             "INT",
             "BOOL",
             "SECRET",
-            "ENUM"
+            "ENUM",
+            "AUTHORIZATION_CODE"
           ],
           "enumDescriptions": [
             "Value type is not specified.",
@@ -1293,7 +1338,8 @@
             "Value type is integer.",
             "Value type is boolean.",
             "Value type is secret.",
-            "Value type is enum."
+            "Value type is enum.",
+            "Value type is authorization code."
           ],
           "type": "string"
         }
@@ -2648,7 +2694,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. Resource name of the form: `projects/*/locations/*/runtimeConfig`",
+          "description": "Output only. Name of the runtimeConfig resource. Format: projects/{project}/locations/{location}/runtimeConfig",
           "readOnly": true,
           "type": "string"
         },
@@ -2764,6 +2810,7 @@
       "type": "object"
     },
     "SshPublicKey": {
+      "description": "Parameters to support Ssh public key Authentication.",
       "id": "SshPublicKey",
       "properties": {
         "certType": {
@@ -2777,6 +2824,10 @@
         "sshClientCert": {
           "$ref": "Secret",
           "description": "SSH Client Cert. It should contain both public and private key."
+        },
+        "sshClientCertPass": {
+          "$ref": "Secret",
+          "description": "Password (passphrase) for ssh client certificate if it has one."
         },
         "username": {
           "description": "The user account used to authenticate.",

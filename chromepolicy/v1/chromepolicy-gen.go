@@ -8,35 +8,35 @@
 //
 // For product documentation, see: http://developers.google.com/chrome/policy
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/chromepolicy/v1"
-//   ...
-//   ctx := context.Background()
-//   chromepolicyService, err := chromepolicy.NewService(ctx)
+//	import "google.golang.org/api/chromepolicy/v1"
+//	...
+//	ctx := context.Background()
+//	chromepolicyService, err := chromepolicy.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithScopes(chromepolicy.ChromeManagementPolicyReadonlyScope))
+//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithScopes(chromepolicy.ChromeManagementPolicyReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithAPIKey("AIza..."))
+//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   chromepolicyService, err := chromepolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	chromepolicyService, err := chromepolicy.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package chromepolicy // import "google.golang.org/api/chromepolicy/v1"
@@ -166,6 +166,7 @@ type CustomersService struct {
 
 func NewCustomersPoliciesService(s *Service) *CustomersPoliciesService {
 	rs := &CustomersPoliciesService{s: s}
+	rs.Groups = NewCustomersPoliciesGroupsService(s)
 	rs.Orgunits = NewCustomersPoliciesOrgunitsService(s)
 	return rs
 }
@@ -173,7 +174,18 @@ func NewCustomersPoliciesService(s *Service) *CustomersPoliciesService {
 type CustomersPoliciesService struct {
 	s *Service
 
+	Groups *CustomersPoliciesGroupsService
+
 	Orgunits *CustomersPoliciesOrgunitsService
+}
+
+func NewCustomersPoliciesGroupsService(s *Service) *CustomersPoliciesGroupsService {
+	rs := &CustomersPoliciesGroupsService{s: s}
+	return rs
+}
+
+type CustomersPoliciesGroupsService struct {
+	s *Service
 }
 
 func NewCustomersPoliciesOrgunitsService(s *Service) *CustomersPoliciesOrgunitsService {
@@ -288,6 +300,42 @@ func (s *GoogleChromePolicyV1AdditionalTargetKeyName) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest: Request message
+// for specifying that multiple policy values will be deleted.
+type GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest struct {
+	// Requests: List of policies that will be deleted as defined by the
+	// `requests`. All requests in the list must follow these restrictions:
+	// 1. All schemas in the list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to a group
+	// resource. 3. All `policyTargetKey` values must have the same `app_id`
+	// key name in the `additionalTargetKeys`. 4. No two modification
+	// requests can reference the same `policySchema` + ` policyTargetKey`
+	// pair.
+	Requests []*GoogleChromePolicyV1DeleteGroupPolicyRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest: Request
 // message for specifying that multiple policy values inherit their
 // value from their parents.
@@ -323,6 +371,43 @@ type GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest struct {
 
 func (s *GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyV1BatchModifyGroupPoliciesRequest: Request message
+// for modifying multiple policy values for a specific group-based
+// target.
+type GoogleChromePolicyV1BatchModifyGroupPoliciesRequest struct {
+	// Requests: List of policies to modify as defined by the `requests`.
+	// All requests in the list must follow these restrictions: 1. All
+	// schemas in the list must have the same root namespace. 2. All
+	// `policyTargetKey.targetResource` values must point to a group
+	// resource. 3. All `policyTargetKey` values must have the same `app_id`
+	// key name in the `additionalTargetKeys`. 4. No two modification
+	// requests can reference the same `policySchema` + ` policyTargetKey`
+	// pair.
+	Requests []*GoogleChromePolicyV1ModifyGroupPolicyRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1BatchModifyGroupPoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1BatchModifyGroupPoliciesRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -365,6 +450,40 @@ func (s *GoogleChromePolicyV1BatchModifyOrgUnitPoliciesRequest) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyV1DeleteGroupPolicyRequest: Request parameters for
+// deleting the policy value of a specific group target.
+type GoogleChromePolicyV1DeleteGroupPolicyRequest struct {
+	// PolicySchema: The fully qualified name of the policy schema that is
+	// being inherited.
+	PolicySchema string `json:"policySchema,omitempty"`
+
+	// PolicyTargetKey: Required. The key of the target for which we want to
+	// modify a policy. The target resource must point to a Group.
+	PolicyTargetKey *GoogleChromePolicyV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicySchema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicySchema") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1DeleteGroupPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1DeleteGroupPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyV1InheritOrgUnitPolicyRequest: Request parameters
 // for inheriting policy value of a specific org unit target from the
 // policy value of its parent org unit.
@@ -396,6 +515,83 @@ type GoogleChromePolicyV1InheritOrgUnitPolicyRequest struct {
 
 func (s *GoogleChromePolicyV1InheritOrgUnitPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyV1InheritOrgUnitPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyV1ListGroupPriorityOrderingRequest: Request message
+// for listing the group priority ordering of an app.
+type GoogleChromePolicyV1ListGroupPriorityOrderingRequest struct {
+	// PolicyNamespace: Required. The namespace of the policy type for the
+	// request.
+	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicyTargetKey: Required. The key of the target for which we want to
+	// retrieve the group priority ordering. The target resource must point
+	// to an app.
+	PolicyTargetKey *GoogleChromePolicyV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyNamespace") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyNamespace") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1ListGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1ListGroupPriorityOrderingRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyV1ListGroupPriorityOrderingResponse: Response
+// message for listing the group priority ordering of an app.
+type GoogleChromePolicyV1ListGroupPriorityOrderingResponse struct {
+	// GroupIds: Output only. The group IDs, in priority ordering.
+	GroupIds []string `json:"groupIds,omitempty"`
+
+	// PolicyNamespace: Output only. The namespace of the policy type of the
+	// group IDs.
+	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicyTargetKey: Output only. The target resource for which the group
+	// priority ordering has been retrieved.
+	PolicyTargetKey *GoogleChromePolicyV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "GroupIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GroupIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1ListGroupPriorityOrderingResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1ListGroupPriorityOrderingResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -433,6 +629,46 @@ type GoogleChromePolicyV1ListPolicySchemasResponse struct {
 
 func (s *GoogleChromePolicyV1ListPolicySchemasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyV1ListPolicySchemasResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyV1ModifyGroupPolicyRequest: Request parameters for
+// modifying a policy value for a specific group target.
+type GoogleChromePolicyV1ModifyGroupPolicyRequest struct {
+	// PolicyTargetKey: Required. The key of the target for which we want to
+	// modify a policy. The target resource must point to a Group.
+	PolicyTargetKey *GoogleChromePolicyV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// PolicyValue: The new value for the policy.
+	PolicyValue *GoogleChromePolicyV1PolicyValue `json:"policyValue,omitempty"`
+
+	// UpdateMask: Required. Policy fields to update. Only fields in this
+	// mask will be updated; other fields in `policy_value` will be ignored
+	// (even if they have values). If a field is in this list it must have a
+	// value in 'policy_value'.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PolicyTargetKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PolicyTargetKey") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1ModifyGroupPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1ModifyGroupPolicyRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -514,8 +750,9 @@ type GoogleChromePolicyV1PolicySchema struct {
 
 	// SchemaName: Output only. The fully qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies or
-	// BatchModifyOrgUnitPolicies
+	// PolicyValue when calling BatchInheritOrgUnitPolicies
+	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
+	// BatchDeleteGroupPolicies.
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
@@ -771,7 +1008,7 @@ type GoogleChromePolicyV1PolicyTargetKey struct {
 
 	// TargetResource: The target resource on which this policy is applied.
 	// The following resources are supported: * Organizational Unit
-	// ("orgunits/{orgunit_id}")
+	// ("orgunits/{orgunit_id}") * Group ("groups/{group_id}")
 	TargetResource string `json:"targetResource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -968,6 +1205,44 @@ type GoogleChromePolicyV1ResolvedPolicy struct {
 
 func (s *GoogleChromePolicyV1ResolvedPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyV1ResolvedPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest: Request
+// message for updating the group priority ordering of an app.
+type GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest struct {
+	// GroupIds: Required. The group IDs, in desired priority ordering.
+	GroupIds []string `json:"groupIds,omitempty"`
+
+	// PolicyNamespace: Required. The namespace of the policy type for the
+	// request.
+	PolicyNamespace string `json:"policyNamespace,omitempty"`
+
+	// PolicyTargetKey: Required. The key of the target for which we want to
+	// update the group priority ordering. The target resource must point to
+	// an app.
+	PolicyTargetKey *GoogleChromePolicyV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GroupIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GroupIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1311,7 +1586,8 @@ type Proto2FileDescriptorProto struct {
 	Package string `json:"package,omitempty"`
 
 	// Syntax: The syntax of the proto file. The supported values are
-	// "proto2" and "proto3".
+	// "proto2", "proto3", and "editions". If `edition` is present, this
+	// value must be "editions".
 	Syntax string `json:"syntax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnumType") to
@@ -1378,8 +1654,8 @@ type CustomersPoliciesResolveCall struct {
 // Resolve: Gets the resolved policy values for a list of policies that
 // match a search query.
 //
-// - customer: ID of the G Suite account or literal "my_customer" for
-//   the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesService) Resolve(customer string, googlechromepolicyv1resolverequest *GoogleChromePolicyV1ResolveRequest) *CustomersPoliciesResolveCall {
 	c := &CustomersPoliciesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1531,6 +1807,597 @@ func (c *CustomersPoliciesResolveCall) Pages(ctx context.Context, f func(*Google
 	}
 }
 
+// method id "chromepolicy.customers.policies.groups.batchDelete":
+
+type CustomersPoliciesGroupsBatchDeleteCall struct {
+	s                                                   *Service
+	customer                                            string
+	googlechromepolicyv1batchdeletegrouppoliciesrequest *GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// BatchDelete: Delete multiple policy values that are applied to a
+// specific group. All targets must have the same target format. That is
+// to say that they must point to the same target resource and must have
+// the same keys specified in `additionalTargetKeyNames`, though the
+// values for those keys may be different. On failure the request will
+// return the error details as part of the google.rpc.Status.
+//
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
+func (r *CustomersPoliciesGroupsService) BatchDelete(customer string, googlechromepolicyv1batchdeletegrouppoliciesrequest *GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest) *CustomersPoliciesGroupsBatchDeleteCall {
+	c := &CustomersPoliciesGroupsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromepolicyv1batchdeletegrouppoliciesrequest = googlechromepolicyv1batchdeletegrouppoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersPoliciesGroupsBatchDeleteCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersPoliciesGroupsBatchDeleteCall) Context(ctx context.Context) *CustomersPoliciesGroupsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersPoliciesGroupsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersPoliciesGroupsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyv1batchdeletegrouppoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromepolicy.customers.policies.groups.batchDelete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersPoliciesGroupsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete multiple policy values that are applied to a specific group. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "flatPath": "v1/customers/{customersId}/policies/groups:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "chromepolicy.customers.policies.groups.batchDelete",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/policies/groups:batchDelete",
+	//   "request": {
+	//     "$ref": "GoogleChromePolicyV1BatchDeleteGroupPoliciesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.policy"
+	//   ]
+	// }
+
+}
+
+// method id "chromepolicy.customers.policies.groups.batchModify":
+
+type CustomersPoliciesGroupsBatchModifyCall struct {
+	s                                                   *Service
+	customer                                            string
+	googlechromepolicyv1batchmodifygrouppoliciesrequest *GoogleChromePolicyV1BatchModifyGroupPoliciesRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// BatchModify: Modify multiple policy values that are applied to a
+// specific group. All targets must have the same target format. That is
+// to say that they must point to the same target resource and must have
+// the same keys specified in `additionalTargetKeyNames`, though the
+// values for those keys may be different. On failure the request will
+// return the error details as part of the google.rpc.Status.
+//
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
+func (r *CustomersPoliciesGroupsService) BatchModify(customer string, googlechromepolicyv1batchmodifygrouppoliciesrequest *GoogleChromePolicyV1BatchModifyGroupPoliciesRequest) *CustomersPoliciesGroupsBatchModifyCall {
+	c := &CustomersPoliciesGroupsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromepolicyv1batchmodifygrouppoliciesrequest = googlechromepolicyv1batchmodifygrouppoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersPoliciesGroupsBatchModifyCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsBatchModifyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersPoliciesGroupsBatchModifyCall) Context(ctx context.Context) *CustomersPoliciesGroupsBatchModifyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersPoliciesGroupsBatchModifyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersPoliciesGroupsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyv1batchmodifygrouppoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:batchModify")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromepolicy.customers.policies.groups.batchModify" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersPoliciesGroupsBatchModifyCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modify multiple policy values that are applied to a specific group. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "flatPath": "v1/customers/{customersId}/policies/groups:batchModify",
+	//   "httpMethod": "POST",
+	//   "id": "chromepolicy.customers.policies.groups.batchModify",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/policies/groups:batchModify",
+	//   "request": {
+	//     "$ref": "GoogleChromePolicyV1BatchModifyGroupPoliciesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.policy"
+	//   ]
+	// }
+
+}
+
+// method id "chromepolicy.customers.policies.groups.listGroupPriorityOrdering":
+
+type CustomersPoliciesGroupsListGroupPriorityOrderingCall struct {
+	s                                                    *Service
+	customer                                             string
+	googlechromepolicyv1listgrouppriorityorderingrequest *GoogleChromePolicyV1ListGroupPriorityOrderingRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// ListGroupPriorityOrdering: Retrieve a group priority ordering for an
+// app. The target app must be supplied in `additionalTargetKeyNames` in
+// the PolicyTargetKey. On failure the request will return the error
+// details as part of the google.rpc.Status.
+//
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
+func (r *CustomersPoliciesGroupsService) ListGroupPriorityOrdering(customer string, googlechromepolicyv1listgrouppriorityorderingrequest *GoogleChromePolicyV1ListGroupPriorityOrderingRequest) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
+	c := &CustomersPoliciesGroupsListGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromepolicyv1listgrouppriorityorderingrequest = googlechromepolicyv1listgrouppriorityorderingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Context(ctx context.Context) *CustomersPoliciesGroupsListGroupPriorityOrderingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyv1listgrouppriorityorderingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:listGroupPriorityOrdering")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromepolicy.customers.policies.groups.listGroupPriorityOrdering" call.
+// Exactly one of *GoogleChromePolicyV1ListGroupPriorityOrderingResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleChromePolicyV1ListGroupPriorityOrderingResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersPoliciesGroupsListGroupPriorityOrderingCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV1ListGroupPriorityOrderingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromePolicyV1ListGroupPriorityOrderingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a group priority ordering for an app. The target app must be supplied in `additionalTargetKeyNames` in the PolicyTargetKey. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "flatPath": "v1/customers/{customersId}/policies/groups:listGroupPriorityOrdering",
+	//   "httpMethod": "POST",
+	//   "id": "chromepolicy.customers.policies.groups.listGroupPriorityOrdering",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/policies/groups:listGroupPriorityOrdering",
+	//   "request": {
+	//     "$ref": "GoogleChromePolicyV1ListGroupPriorityOrderingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleChromePolicyV1ListGroupPriorityOrderingResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.policy",
+	//     "https://www.googleapis.com/auth/chrome.management.policy.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering":
+
+type CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall struct {
+	s                                                      *Service
+	customer                                               string
+	googlechromepolicyv1updategrouppriorityorderingrequest *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// UpdateGroupPriorityOrdering: Update a group priority ordering for an
+// app. The target app must be supplied in `additionalTargetKeyNames` in
+// the PolicyTargetKey. On failure the request will return the error
+// details as part of the google.rpc.Status.
+//
+//   - customer: ID of the Google Workspace account or literal
+//     "my_customer" for the customer associated to the request.
+func (r *CustomersPoliciesGroupsService) UpdateGroupPriorityOrdering(customer string, googlechromepolicyv1updategrouppriorityorderingrequest *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
+	c := &CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	c.googlechromepolicyv1updategrouppriorityorderingrequest = googlechromepolicyv1updategrouppriorityorderingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Fields(s ...googleapi.Field) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Context(ctx context.Context) *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyv1updategrouppriorityorderingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/policies/groups:updateGroupPriorityOrdering")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersPoliciesGroupsUpdateGroupPriorityOrderingCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a group priority ordering for an app. The target app must be supplied in `additionalTargetKeyNames` in the PolicyTargetKey. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "flatPath": "v1/customers/{customersId}/policies/groups:updateGroupPriorityOrdering",
+	//   "httpMethod": "POST",
+	//   "id": "chromepolicy.customers.policies.groups.updateGroupPriorityOrdering",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. ID of the Google Workspace account or literal \"my_customer\" for the customer associated to the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/policies/groups:updateGroupPriorityOrdering",
+	//   "request": {
+	//     "$ref": "GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.policy"
+	//   ]
+	// }
+
+}
+
 // method id "chromepolicy.customers.policies.orgunits.batchInherit":
 
 type CustomersPoliciesOrgunitsBatchInheritCall struct {
@@ -1550,8 +2417,8 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 // the values for those keys may be different. On failure the request
 // will return the error details as part of the google.rpc.Status.
 //
-// - customer: ID of the G Suite account or literal "my_customer" for
-//   the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchInherit(customer string, googlechromepolicyv1batchinheritorgunitpoliciesrequest *GoogleChromePolicyV1BatchInheritOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchInheritCall {
 	c := &CustomersPoliciesOrgunitsBatchInheritCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1698,8 +2565,8 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 // the values for those keys may be different. On failure the request
 // will return the error details as part of the google.rpc.Status.
 //
-// - customer: ID of the G Suite account or literal "my_customer" for
-//   the customer associated to the request.
+//   - customer: ID of the G Suite account or literal "my_customer" for
+//     the customer associated to the request.
 func (r *CustomersPoliciesOrgunitsService) BatchModify(customer string, googlechromepolicyv1batchmodifyorgunitpoliciesrequest *GoogleChromePolicyV1BatchModifyOrgUnitPoliciesRequest) *CustomersPoliciesOrgunitsBatchModifyCall {
 	c := &CustomersPoliciesOrgunitsBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer

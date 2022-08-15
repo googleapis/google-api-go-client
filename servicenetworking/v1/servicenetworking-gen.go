@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/servicenetworking/v1"
-//   ...
-//   ctx := context.Background()
-//   servicenetworkingService, err := servicenetworking.NewService(ctx)
+//	import "google.golang.org/api/servicenetworking/v1"
+//	...
+//	ctx := context.Background()
+//	servicenetworkingService, err := servicenetworking.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithScopes(servicenetworking.ServiceManagementScope))
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithScopes(servicenetworking.ServiceManagementScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithAPIKey("AIza..."))
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	servicenetworkingService, err := servicenetworking.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package servicenetworking // import "google.golang.org/api/servicenetworking/v1"
@@ -1124,6 +1124,42 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CloudSQLConfig: Cloud SQL configuration.
+type CloudSQLConfig struct {
+	// Service: Peering service used for peering with the Cloud SQL project.
+	Service string `json:"service,omitempty"`
+
+	// UmbrellaNetwork: The name of the umbrella network in the Cloud SQL
+	// umbrella project.
+	UmbrellaNetwork string `json:"umbrellaNetwork,omitempty"`
+
+	// UmbrellaProject: The project number of the Cloud SQL umbrella
+	// project.
+	UmbrellaProject int64 `json:"umbrellaProject,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSQLConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Connection: Represents a private connection resource. A private
 // connection is implemented as a VPC Network Peering connection between
 // a service producer's VPC network and a service consumer's VPC
@@ -1182,6 +1218,9 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 // ConsumerConfig: Configuration information for a private service
 // access connection.
 type ConsumerConfig struct {
+	// CloudsqlConfigs: Represents one or multiple Cloud SQL configurations.
+	CloudsqlConfigs []*CloudSQLConfig `json:"cloudsqlConfigs,omitempty"`
+
 	// ConsumerExportCustomRoutes: Export custom routes flag value for
 	// peering from consumer to producer.
 	ConsumerExportCustomRoutes bool `json:"consumerExportCustomRoutes,omitempty"`
@@ -1237,22 +1276,21 @@ type ConsumerConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ConsumerExportCustomRoutes") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudsqlConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ConsumerExportCustomRoutes") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudsqlConfigs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5664,14 +5702,14 @@ type ServicesAddSubnetworkCall struct {
 // producer's tenant project to be a shared VPC service project as
 // needed.
 //
-// - parent: A tenant project in the service producer organization, in
-//   the following format:
-//   services/{service}/{collection-id}/{resource-id}. {collection-id}
-//   is the cloud resource collection type that represents the tenant
-//   project. Only `projects` are supported. {resource-id} is the tenant
-//   project numeric id, such as `123456`. {service} the name of the
-//   peering service, such as `service-peering.example.com`. This
-//   service must already be enabled in the service consumer's project.
+//   - parent: A tenant project in the service producer organization, in
+//     the following format:
+//     services/{service}/{collection-id}/{resource-id}. {collection-id}
+//     is the cloud resource collection type that represents the tenant
+//     project. Only `projects` are supported. {resource-id} is the tenant
+//     project numeric id, such as `123456`. {service} the name of the
+//     peering service, such as `service-peering.example.com`. This
+//     service must already be enabled in the service consumer's project.
 func (r *ServicesService) AddSubnetwork(parent string, addsubnetworkrequest *AddSubnetworkRequest) *ServicesAddSubnetworkCall {
 	c := &ServicesAddSubnetworkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5815,10 +5853,10 @@ type ServicesDisableVpcServiceControlsCall struct {
 // DisableVpcServiceControls: Disables VPC service controls for a
 // connection.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) DisableVpcServiceControls(parent string, disablevpcservicecontrolsrequest *DisableVpcServiceControlsRequest) *ServicesDisableVpcServiceControlsCall {
 	c := &ServicesDisableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5962,10 +6000,10 @@ type ServicesEnableVpcServiceControlsCall struct {
 // EnableVpcServiceControls: Enables VPC service controls for a
 // connection.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesService) EnableVpcServiceControls(parent string, enablevpcservicecontrolsrequest *EnableVpcServiceControlsRequest) *ServicesEnableVpcServiceControlsCall {
 	c := &ServicesEnableVpcServiceControlsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6113,9 +6151,9 @@ type ServicesSearchRangeCall struct {
 // non-conflicting sub-range of requested size (expressed in number of
 // leading bits of ipv4 network mask, as in CIDR range notation).
 //
-// - parent: This is in a form services/{service}. {service} the name of
-//   the private access management service, for example
-//   'service-peering.example.com'.
+//   - parent: This is in a form services/{service}. {service} the name of
+//     the private access management service, for example
+//     'service-peering.example.com'.
 func (r *ServicesService) SearchRange(parent string, searchrangerequest *SearchRangeRequest) *ServicesSearchRangeCall {
 	c := &ServicesSearchRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6262,9 +6300,9 @@ type ServicesValidateCall struct {
 // and not have to wait for AddSubnetwork operation completion to
 // determine if user request is invalid.
 //
-// - parent: This is in a form services/{service} where {service} is the
-//   name of the private access management service. For example
-//   'service-peering.example.com'.
+//   - parent: This is in a form services/{service} where {service} is the
+//     name of the private access management service. For example
+//     'service-peering.example.com'.
 func (r *ServicesService) Validate(parent string, validateconsumerconfigrequest *ValidateConsumerConfigRequest) *ServicesValidateCall {
 	c := &ServicesValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6414,10 +6452,10 @@ type ServicesConnectionsCreateCall struct {
 // services in the service producer's organization, so it only needs to
 // be invoked once.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesConnectionsService) Create(parent string, connection *Connection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6560,13 +6598,13 @@ type ServicesConnectionsDeleteConnectionCall struct {
 
 // DeleteConnection: Deletes a private service access connection.
 //
-// - name: The private service connection that connects to a service
-//   producer organization. The name includes both the private service
-//   name and the VPC network peering name in the format of
-//   `services/{peering_service_name}/connections/{vpc_peering_name}`.
-//   For Google services that support this functionality, this is
-//   `services/servicenetworking.googleapis.com/connections/servicenetwor
-//   king-googleapis-com`.
+//   - name: The private service connection that connects to a service
+//     producer organization. The name includes both the private service
+//     name and the VPC network peering name in the format of
+//     `services/{peering_service_name}/connections/{vpc_peering_name}`.
+//     For Google services that support this functionality, this is
+//     `services/servicenetworking.googleapis.com/connections/servicenetwor
+//     king-googleapis-com`.
 func (r *ServicesConnectionsService) DeleteConnection(name string, deleteconnectionrequest *DeleteConnectionRequest) *ServicesConnectionsDeleteConnectionCall {
 	c := &ServicesConnectionsDeleteConnectionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6710,12 +6748,12 @@ type ServicesConnectionsListCall struct {
 // List: List the private connections that are configured in a service
 // consumer's VPC network.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`. If you specify
-//   `services/-` as the parameter value, all configured peering
-//   services are listed.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`. If you specify
+//     `services/-` as the parameter value, all configured peering
+//     services are listed.
 func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsListCall {
 	c := &ServicesConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6880,13 +6918,13 @@ type ServicesConnectionsPatchCall struct {
 // Patch: Updates the allocated ranges that are assigned to a
 // connection.
 //
-// - name: The private service connection that connects to a service
-//   producer organization. The name includes both the private service
-//   name and the VPC network peering name in the format of
-//   `services/{peering_service_name}/connections/{vpc_peering_name}`.
-//   For Google services that support this functionality, this is
-//   `services/servicenetworking.googleapis.com/connections/servicenetwor
-//   king-googleapis-com`.
+//   - name: The private service connection that connects to a service
+//     producer organization. The name includes both the private service
+//     name and the VPC network peering name in the format of
+//     `services/{peering_service_name}/connections/{vpc_peering_name}`.
+//     For Google services that support this functionality, this is
+//     `services/servicenetworking.googleapis.com/connections/servicenetwor
+//     king-googleapis-com`.
 func (r *ServicesConnectionsService) Patch(name string, connection *Connection) *ServicesConnectionsPatchCall {
 	c := &ServicesConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7056,10 +7094,10 @@ type ServicesDnsRecordSetsAddCall struct {
 // Add: Service producers can use this method to add DNS record sets to
 // private DNS zones in the shared producer host project.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Add(parent string, adddnsrecordsetrequest *AddDnsRecordSetRequest) *ServicesDnsRecordSetsAddCall {
 	c := &ServicesDnsRecordSetsAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7203,10 +7241,10 @@ type ServicesDnsRecordSetsRemoveCall struct {
 // Remove: Service producers can use this method to remove DNS record
 // sets from private DNS zones in the shared producer host project.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Remove(parent string, removednsrecordsetrequest *RemoveDnsRecordSetRequest) *ServicesDnsRecordSetsRemoveCall {
 	c := &ServicesDnsRecordSetsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7350,10 +7388,10 @@ type ServicesDnsRecordSetsUpdateCall struct {
 // Update: Service producers can use this method to update DNS record
 // sets from private DNS zones in the shared producer host project.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsRecordSetsService) Update(parent string, updatednsrecordsetrequest *UpdateDnsRecordSetRequest) *ServicesDnsRecordSetsUpdateCall {
 	c := &ServicesDnsRecordSetsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7498,10 +7536,10 @@ type ServicesDnsZonesAddCall struct {
 // in the shared producer host project and matching peering zones in the
 // consumer project.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsZonesService) Add(parent string, adddnszonerequest *AddDnsZoneRequest) *ServicesDnsZonesAddCall {
 	c := &ServicesDnsZonesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7646,10 +7684,10 @@ type ServicesDnsZonesRemoveCall struct {
 // zones in the shared producer host project and matching peering zones
 // in the consumer project.
 //
-// - parent: The service that is managing peering connectivity for a
-//   service producer's organization. For Google services that support
-//   this functionality, this value is
-//   `services/servicenetworking.googleapis.com`.
+//   - parent: The service that is managing peering connectivity for a
+//     service producer's organization. For Google services that support
+//     this functionality, this value is
+//     `services/servicenetworking.googleapis.com`.
 func (r *ServicesDnsZonesService) Remove(parent string, removednszonerequest *RemoveDnsZoneRequest) *ServicesDnsZonesRemoveCall {
 	c := &ServicesDnsZonesRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7794,14 +7832,14 @@ type ServicesProjectsGlobalNetworksGetCall struct {
 // their connection including the import/export of custom routes and
 // subnetwork routes with public IP.
 //
-// - name: Name of the consumer config to retrieve in the format:
-//   `services/{service}/projects/{project}/global/networks/{network}`.
-//   {service} is the peering service that is managing connectivity for
-//   the service producer's organization. For Google services that
-//   support this functionality, this value is
-//   `servicenetworking.googleapis.com`. {project} is a project number
-//   e.g. `12345` that contains the service consumer's VPC network.
-//   {network} is the name of the service consumer's VPC network.
+//   - name: Name of the consumer config to retrieve in the format:
+//     `services/{service}/projects/{project}/global/networks/{network}`.
+//     {service} is the peering service that is managing connectivity for
+//     the service producer's organization. For Google services that
+//     support this functionality, this value is
+//     `servicenetworking.googleapis.com`. {project} is a project number
+//     e.g. `12345` that contains the service consumer's VPC network.
+//     {network} is the name of the service consumer's VPC network.
 func (r *ServicesProjectsGlobalNetworksService) Get(name string) *ServicesProjectsGlobalNetworksGetCall {
 	c := &ServicesProjectsGlobalNetworksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7966,16 +8004,16 @@ type ServicesProjectsGlobalNetworksUpdateConsumerConfigCall struct {
 // configuration of their connection including the import/export of
 // custom routes and subnetwork routes with public IP.
 //
-// - parent: Parent resource identifying the connection for which the
-//   consumer config is being updated in the format:
-//   `services/{service}/projects/{project}/global/networks/{network}`
-//   {service} is the peering service that is managing connectivity for
-//   the service producer's organization. For Google services that
-//   support this functionality, this value is
-//   `servicenetworking.googleapis.com`. {project} is the number of the
-//   project that contains the service consumer's VPC network e.g.
-//   `12345`. {network} is the name of the service consumer's VPC
-//   network.
+//   - parent: Parent resource identifying the connection for which the
+//     consumer config is being updated in the format:
+//     `services/{service}/projects/{project}/global/networks/{network}`
+//     {service} is the peering service that is managing connectivity for
+//     the service producer's organization. For Google services that
+//     support this functionality, this value is
+//     `servicenetworking.googleapis.com`. {project} is the number of the
+//     project that contains the service consumer's VPC network e.g.
+//     `12345`. {network} is the name of the service consumer's VPC
+//     network.
 func (r *ServicesProjectsGlobalNetworksService) UpdateConsumerConfig(parent string, updateconsumerconfigrequest *UpdateConsumerConfigRequest) *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall {
 	c := &ServicesProjectsGlobalNetworksUpdateConsumerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8120,16 +8158,16 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall struct {
 // in given namespace originating in the service producer VPC network to
 // the consumer VPC network to be resolved.
 //
-// - parent: Parent resource identifying the connection for which the
-//   peered DNS domain will be created in the format:
-//   `services/{service}/projects/{project}/global/networks/{network}`
-//   {service} is the peering service that is managing connectivity for
-//   the service producer's organization. For Google services that
-//   support this functionality, this value is
-//   `servicenetworking.googleapis.com`. {project} is the number of the
-//   project that contains the service consumer's VPC network e.g.
-//   `12345`. {network} is the name of the service consumer's VPC
-//   network.
+//   - parent: Parent resource identifying the connection for which the
+//     peered DNS domain will be created in the format:
+//     `services/{service}/projects/{project}/global/networks/{network}`
+//     {service} is the peering service that is managing connectivity for
+//     the service producer's organization. For Google services that
+//     support this functionality, this value is
+//     `servicenetworking.googleapis.com`. {project} is the number of the
+//     project that contains the service consumer's VPC network e.g.
+//     `12345`. {network} is the name of the service consumer's VPC
+//     network.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) Create(parent string, peereddnsdomain *PeeredDnsDomain) *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8271,15 +8309,15 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall struct {
 
 // Delete: Deletes a peered DNS domain.
 //
-// - name: The name of the peered DNS domain to delete in the format:
-//   `services/{service}/projects/{project}/global/networks/{network}/pee
-//   redDnsDomains/{name}`. {service} is the peering service that is
-//   managing connectivity for the service producer's organization. For
-//   Google services that support this functionality, this value is
-//   `servicenetworking.googleapis.com`. {project} is the number of the
-//   project that contains the service consumer's VPC network e.g.
-//   `12345`. {network} is the name of the service consumer's VPC
-//   network. {name} is the name of the peered DNS domain.
+//   - name: The name of the peered DNS domain to delete in the format:
+//     `services/{service}/projects/{project}/global/networks/{network}/pee
+//     redDnsDomains/{name}`. {service} is the peering service that is
+//     managing connectivity for the service producer's organization. For
+//     Google services that support this functionality, this value is
+//     `servicenetworking.googleapis.com`. {project} is the number of the
+//     project that contains the service consumer's VPC network e.g.
+//     `12345`. {network} is the name of the service consumer's VPC
+//     network. {name} is the name of the peered DNS domain.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) Delete(name string) *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8413,15 +8451,15 @@ type ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall struct {
 
 // List: Lists peered DNS domains for a connection.
 //
-// - parent: Parent resource identifying the connection which owns this
-//   collection of peered DNS domains in the format:
-//   `services/{service}/projects/{project}/global/networks/{network}`.
-//   {service} is the peering service that is managing connectivity for
-//   the service producer's organization. For Google services that
-//   support this functionality, this value is
-//   `servicenetworking.googleapis.com`. {project} is a project number
-//   e.g. `12345` that contains the service consumer's VPC network.
-//   {network} is the name of the service consumer's VPC network.
+//   - parent: Parent resource identifying the connection which owns this
+//     collection of peered DNS domains in the format:
+//     `services/{service}/projects/{project}/global/networks/{network}`.
+//     {service} is the peering service that is managing connectivity for
+//     the service producer's organization. For Google services that
+//     support this functionality, this value is
+//     `servicenetworking.googleapis.com`. {project} is a project number
+//     e.g. `12345` that contains the service consumer's VPC network.
+//     {network} is the name of the service consumer's VPC network.
 func (r *ServicesProjectsGlobalNetworksPeeredDnsDomainsService) List(parent string) *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall {
 	c := &ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8571,9 +8609,9 @@ type ServicesRolesAddCall struct {
 // role must be selected from within an allowlisted set of roles. Each
 // role is applied at only the granularity specified in the allowlist.
 //
-// - parent: This is in a form services/{service} where {service} is the
-//   name of the private access management service. For example
-//   'service-peering.example.com'.
+//   - parent: This is in a form services/{service} where {service} is the
+//     name of the private access management service. For example
+//     'service-peering.example.com'.
 func (r *ServicesRolesService) Add(parent string, addrolesrequest *AddRolesRequest) *ServicesRolesAddCall {
 	c := &ServicesRolesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

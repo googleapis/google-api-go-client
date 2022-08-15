@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/dataflow/docs/guides/data-pipelines
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/datapipelines/v1"
-//   ...
-//   ctx := context.Background()
-//   datapipelinesService, err := datapipelines.NewService(ctx)
+//	import "google.golang.org/api/datapipelines/v1"
+//	...
+//	ctx := context.Background()
+//	datapipelinesService, err := datapipelines.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   datapipelinesService, err := datapipelines.NewService(ctx, option.WithAPIKey("AIza..."))
+//	datapipelinesService, err := datapipelines.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   datapipelinesService, err := datapipelines.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	datapipelinesService, err := datapipelines.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package datapipelines // import "google.golang.org/api/datapipelines/v1"
@@ -1141,8 +1141,8 @@ type ProjectsLocationsListPipelinesCall struct {
 // ListPipelines: Lists pipelines. Returns a "FORBIDDEN" error if the
 // caller doesn't have permission to access it.
 //
-// - parent: The location name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID`.
+//   - parent: The location name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsService) ListPipelines(parent string) *ProjectsLocationsListPipelinesCall {
 	c := &ProjectsLocationsListPipelinesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1248,7 +1248,9 @@ func (c *ProjectsLocationsListPipelinesCall) doRequest(alt string) (*http.Respon
 // error will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
 // *GoogleCloudDatapipelinesV1ListPipelinesResponse.ServerResponse.Header
-//  or (if a response was returned at all) in
+//
+//	or (if a response was returned at all) in
+//
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
@@ -1364,8 +1366,8 @@ type ProjectsLocationsPipelinesCreateCall struct {
 // internal scheduler is not configured, you can use RunPipeline to run
 // jobs.
 //
-// - parent: The location name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID`.
+//   - parent: The location name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID`.
 func (r *ProjectsLocationsPipelinesService) Create(parent string, googleclouddatapipelinesv1pipeline *GoogleCloudDatapipelinesV1Pipeline) *ProjectsLocationsPipelinesCreateCall {
 	c := &ProjectsLocationsPipelinesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1508,8 +1510,8 @@ type ProjectsLocationsPipelinesDeleteCall struct {
 // Delete: Deletes a pipeline. If a scheduler job is attached to the
 // pipeline, it will be deleted.
 //
-// - name: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - name: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
 func (r *ProjectsLocationsPipelinesService) Delete(name string) *ProjectsLocationsPipelinesDeleteCall {
 	c := &ProjectsLocationsPipelinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1644,8 +1646,8 @@ type ProjectsLocationsPipelinesGetCall struct {
 // such pipeline exists. Returns a "FORBIDDEN" error if the caller
 // doesn't have permission to access it.
 //
-// - name: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - name: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
 func (r *ProjectsLocationsPipelinesService) Get(name string) *ProjectsLocationsPipelinesGetCall {
 	c := &ProjectsLocationsPipelinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1795,21 +1797,21 @@ type ProjectsLocationsPipelinesPatchCall struct {
 // UpdatePipeline does not return successfully, you can retry the
 // UpdatePipeline request until you receive a successful response.
 //
-// - name: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
-//   * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
-//   hyphens (-), colons (:), and periods (.). For more information, see
-//   Identifying projects
-//   (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects).
-//   * `LOCATION_ID` is the canonical ID for the pipeline's location.
-//   The list of available locations can be obtained by calling
-//   `google.cloud.location.Locations.ListLocations`. Note that the Data
-//   Pipelines service is not available in all regions. It depends on
-//   Cloud Scheduler, an App Engine application, so it's only available
-//   in App Engine regions
-//   (https://cloud.google.com/about/locations#region). * `PIPELINE_ID`
-//   is the ID of the pipeline. Must be unique for the selected project
-//   and location.
+//   - name: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
+//     hyphens (-), colons (:), and periods (.). For more information, see
+//     Identifying projects
+//     (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects).
+//   - `LOCATION_ID` is the canonical ID for the pipeline's location.
+//     The list of available locations can be obtained by calling
+//     `google.cloud.location.Locations.ListLocations`. Note that the Data
+//     Pipelines service is not available in all regions. It depends on
+//     Cloud Scheduler, an App Engine application, so it's only available
+//     in App Engine regions
+//     (https://cloud.google.com/about/locations#region). * `PIPELINE_ID`
+//     is the ID of the pipeline. Must be unique for the selected project
+//     and location.
 func (r *ProjectsLocationsPipelinesService) Patch(name string, googleclouddatapipelinesv1pipeline *GoogleCloudDatapipelinesV1Pipeline) *ProjectsLocationsPipelinesPatchCall {
 	c := &ProjectsLocationsPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1970,8 +1972,8 @@ type ProjectsLocationsPipelinesRunCall struct {
 // "FORBIDDEN" error if the user doesn't have permission to access the
 // pipeline or run jobs for the pipeline.
 //
-// - name: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - name: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
 func (r *ProjectsLocationsPipelinesService) Run(name string, googleclouddatapipelinesv1runpipelinerequest *GoogleCloudDatapipelinesV1RunPipelineRequest) *ProjectsLocationsPipelinesRunCall {
 	c := &ProjectsLocationsPipelinesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2117,8 +2119,8 @@ type ProjectsLocationsPipelinesStopCall struct {
 // corresponding scheduler entry, it's deleted, and the pipeline state
 // is changed to "ARCHIVED". However, pipeline metadata is retained.
 //
-// - name: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - name: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
 func (r *ProjectsLocationsPipelinesService) Stop(name string, googleclouddatapipelinesv1stoppipelinerequest *GoogleCloudDatapipelinesV1StopPipelineRequest) *ProjectsLocationsPipelinesStopCall {
 	c := &ProjectsLocationsPipelinesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2262,8 +2264,8 @@ type ProjectsLocationsPipelinesJobsListCall struct {
 // List: Lists jobs for a given pipeline. Throws a "FORBIDDEN" error if
 // the caller doesn't have permission to access it.
 //
-// - parent: The pipeline name. For example:
-//   `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
+//   - parent: The pipeline name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/pipelines/PIPELINE_ID`.
 func (r *ProjectsLocationsPipelinesJobsService) List(parent string) *ProjectsLocationsPipelinesJobsListCall {
 	c := &ProjectsLocationsPipelinesJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

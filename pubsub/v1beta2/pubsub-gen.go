@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/pubsub/docs
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/pubsub/v1beta2"
-//   ...
-//   ctx := context.Background()
-//   pubsubService, err := pubsub.NewService(ctx)
+//	import "google.golang.org/api/pubsub/v1beta2"
+//	...
+//	ctx := context.Background()
+//	pubsubService, err := pubsub.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   pubsubService, err := pubsub.NewService(ctx, option.WithScopes(pubsub.PubsubScope))
+//	pubsubService, err := pubsub.NewService(ctx, option.WithScopes(pubsub.PubsubScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   pubsubService, err := pubsub.NewService(ctx, option.WithAPIKey("AIza..."))
+//	pubsubService, err := pubsub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   pubsubService, err := pubsub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	pubsubService, err := pubsub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package pubsub // import "google.golang.org/api/pubsub/v1beta2"
@@ -1331,13 +1331,13 @@ type ProjectsSubscriptionsCreateCall struct {
 // subscription on the same project as the topic. Note that for REST API
 // requests, you must specify a name.
 //
-// - name: The name of the subscription. It must have the format
-//   "projects/{project}/subscriptions/{subscription}".
-//   `{subscription}` must start with a letter, and contain only letters
-//   (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
-//   periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
-//   must be between 3 and 255 characters in length, and it must not
-//   start with "goog".
+//   - name: The name of the subscription. It must have the format
+//     "projects/{project}/subscriptions/{subscription}".
+//     `{subscription}` must start with a letter, and contain only letters
+//     (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`), underscores (`_`),
+//     periods (`.`), tildes (`~`), plus (`+`) or percent signs (`%`). It
+//     must be between 3 and 255 characters in length, and it must not
+//     start with "goog".
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
 	c := &ProjectsSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1767,10 +1767,10 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1941,8 +1941,8 @@ type ProjectsSubscriptionsListCall struct {
 
 // List: Lists matching subscriptions.
 //
-// - project: The name of the cloud project that subscriptions belong
-//   to.
+//   - project: The name of the cloud project that subscriptions belong
+//     to.
 func (r *ProjectsSubscriptionsService) List(project string) *ProjectsSubscriptionsListCall {
 	c := &ProjectsSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2436,8 +2436,8 @@ type ProjectsSubscriptionsPullCall struct {
 // `UNAVAILABLE` if there are too many concurrent pull requests pending
 // for the given subscription.
 //
-// - subscription: The subscription from which messages should be
-//   pulled.
+//   - subscription: The subscription from which messages should be
+//     pulled.
 func (r *ProjectsSubscriptionsService) Pull(subscription string, pullrequest *PullRequest) *ProjectsSubscriptionsPullCall {
 	c := &ProjectsSubscriptionsPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -2582,10 +2582,10 @@ type ProjectsSubscriptionsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSubscriptionsSetIamPolicyCall {
 	c := &ProjectsSubscriptionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2733,10 +2733,10 @@ type ProjectsSubscriptionsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsSubscriptionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsSubscriptionsTestIamPermissionsCall {
 	c := &ProjectsSubscriptionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2879,12 +2879,12 @@ type ProjectsTopicsCreateCall struct {
 
 // Create: Creates the given topic with the given name.
 //
-// - name: The name of the topic. It must have the format
-//   "projects/{project}/topics/{topic}". `{topic}` must start with a
-//   letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
-//   dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
-//   (`+`) or percent signs (`%`). It must be between 3 and 255
-//   characters in length, and it must not start with "goog".
+//   - name: The name of the topic. It must have the format
+//     "projects/{project}/topics/{topic}". `{topic}` must start with a
+//     letter, and contain only letters (`[A-Za-z]`), numbers (`[0-9]`),
+//     dashes (`-`), underscores (`_`), periods (`.`), tildes (`~`), plus
+//     (`+`) or percent signs (`%`). It must be between 3 and 255
+//     characters in length, and it must not start with "goog".
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3314,10 +3314,10 @@ type ProjectsTopicsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3831,10 +3831,10 @@ type ProjectsTopicsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsTopicsSetIamPolicyCall {
 	c := &ProjectsTopicsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3982,10 +3982,10 @@ type ProjectsTopicsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsTopicsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTopicsTestIamPermissionsCall {
 	c := &ProjectsTopicsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

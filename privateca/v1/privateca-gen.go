@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/privateca/v1"
-//   ...
-//   ctx := context.Background()
-//   privatecaService, err := privateca.NewService(ctx)
+//	import "google.golang.org/api/privateca/v1"
+//	...
+//	ctx := context.Background()
+//	privatecaService, err := privateca.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   privatecaService, err := privateca.NewService(ctx, option.WithAPIKey("AIza..."))
+//	privatecaService, err := privateca.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   privatecaService, err := privateca.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	privatecaService, err := privateca.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package privateca // import "google.golang.org/api/privateca/v1"
@@ -467,16 +467,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -2626,7 +2630,10 @@ type ReconciliationOperationMetadata struct {
 	// Possible values:
 	//   "UNKNOWN_REPAIR_ACTION"
 	//   "DELETE" - The resource has to be deleted. When using this bit, the
-	// CLH should fail the operation.
+	// CLH should fail the operation. DEPRECATED. Instead use
+	// DELETE_RESOURCE OperationSignal in SideChannel. For more information
+	// - go/ccfe-delete-on-upsert,
+	// go/ccfe-reconciliation-protocol-ug#apply_delete
 	//   "RETRY" - This resource could not be repaired but the repair should
 	// be tried again at a later time. This can happen if there is a
 	// dependency that needs to be resolved first- e.g. if a parent resource
@@ -3553,8 +3560,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3761,8 +3768,8 @@ type ProjectsLocationsCaPoolsCreateCall struct {
 
 // Create: Create a CaPool.
 //
-// - parent: The resource name of the location associated with the
-//   CaPool, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     CaPool, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCaPoolsService) Create(parent string, capool *CaPool) *ProjectsLocationsCaPoolsCreateCall {
 	c := &ProjectsLocationsCaPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3938,8 +3945,8 @@ type ProjectsLocationsCaPoolsDeleteCall struct {
 
 // Delete: Delete a CaPool.
 //
-// - name: The resource name for this CaPool in the format
-//   `projects/*/locations/*/caPools/*`.
+//   - name: The resource name for this CaPool in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsService) Delete(name string) *ProjectsLocationsCaPoolsDeleteCall {
 	c := &ProjectsLocationsCaPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4096,8 +4103,8 @@ type ProjectsLocationsCaPoolsFetchCaCertsCall struct {
 // CaPool. This will include CA certificate chains for all ACTIVE
 // CertificateAuthority resources in the CaPool.
 //
-// - caPool: The resource name for the CaPool in the format
-//   `projects/*/locations/*/caPools/*`.
+//   - caPool: The resource name for the CaPool in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsService) FetchCaCerts(caPool string, fetchcacertsrequest *FetchCaCertsRequest) *ProjectsLocationsCaPoolsFetchCaCertsCall {
 	c := &ProjectsLocationsCaPoolsFetchCaCertsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.caPool = caPool
@@ -4387,10 +4394,10 @@ type ProjectsLocationsCaPoolsGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsService) GetIamPolicy(resource string) *ProjectsLocationsCaPoolsGetIamPolicyCall {
 	c := &ProjectsLocationsCaPoolsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4560,8 +4567,8 @@ type ProjectsLocationsCaPoolsListCall struct {
 
 // List: Lists CaPools.
 //
-// - parent: The resource name of the location associated with the
-//   CaPools, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     CaPools, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCaPoolsService) List(parent string) *ProjectsLocationsCaPoolsListCall {
 	c := &ProjectsLocationsCaPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4780,8 +4787,8 @@ type ProjectsLocationsCaPoolsPatchCall struct {
 
 // Patch: Update a CaPool.
 //
-// - name: Output only. The resource name for this CaPool in the format
-//   `projects/*/locations/*/caPools/*`.
+//   - name: Output only. The resource name for this CaPool in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsService) Patch(name string, capool *CaPool) *ProjectsLocationsCaPoolsPatchCall {
 	c := &ProjectsLocationsCaPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4960,10 +4967,10 @@ type ProjectsLocationsCaPoolsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCaPoolsSetIamPolicyCall {
 	c := &ProjectsLocationsCaPoolsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5110,10 +5117,10 @@ type ProjectsLocationsCaPoolsTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCaPoolsTestIamPermissionsCall {
 	c := &ProjectsLocationsCaPoolsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5259,8 +5266,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesActivateCall struct {
 // FetchCertificateAuthorityCsr, this method can complete the activation
 // process.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Activate(name string, activatecertificateauthorityrequest *ActivateCertificateAuthorityRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesActivateCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5403,9 +5410,9 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCreateCall struct {
 // Create: Create a new CertificateAuthority in a given Project and
 // Location.
 //
-// - parent: The resource name of the CaPool associated with the
-//   CertificateAuthorities, in the format
-//   `projects/*/locations/*/caPools/*`.
+//   - parent: The resource name of the CaPool associated with the
+//     CertificateAuthorities, in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Create(parent string, certificateauthority *CertificateAuthority) *ProjectsLocationsCaPoolsCertificateAuthoritiesCreateCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5581,8 +5588,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall struct {
 
 // Delete: Delete a CertificateAuthority.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Delete(name string) *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5766,8 +5773,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesDisableCall struct {
 
 // Disable: Disable a CertificateAuthority.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Disable(name string, disablecertificateauthorityrequest *DisableCertificateAuthorityRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesDisableCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5909,8 +5916,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesEnableCall struct {
 
 // Enable: Enable a CertificateAuthority.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Enable(name string, enablecertificateauthorityrequest *EnableCertificateAuthorityRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesEnableCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6057,8 +6064,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesFetchCall struct {
 // CertificateAuthority resource, or could be an on-prem certificate
 // authority. See also ActivateCertificateAuthority.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Fetch(name string) *ProjectsLocationsCaPoolsCertificateAuthoritiesFetchCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6351,9 +6358,9 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesListCall struct {
 
 // List: Lists CertificateAuthorities.
 //
-// - parent: The resource name of the CaPool associated with the
-//   CertificateAuthorities, in the format
-//   `projects/*/locations/*/caPools/*`.
+//   - parent: The resource name of the CaPool associated with the
+//     CertificateAuthorities, in the format
+//     `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) List(parent string) *ProjectsLocationsCaPoolsCertificateAuthoritiesListCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6574,9 +6581,9 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall struct {
 
 // Patch: Update a CertificateAuthority.
 //
-// - name: Output only. The resource name for this CertificateAuthority
-//   in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: Output only. The resource name for this CertificateAuthority
+//     in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Patch(name string, certificateauthority *CertificateAuthority) *ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6753,8 +6760,8 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesUndeleteCall struct {
 
 // Undelete: Undelete a CertificateAuthority that has been deleted.
 //
-// - name: The resource name for this CertificateAuthority in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: The resource name for this CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Undelete(name string, undeletecertificateauthorityrequest *UndeleteCertificateAuthorityRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesUndeleteCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7044,10 +7051,10 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsGet
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) GetIamPolicy(resource string) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7217,9 +7224,9 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsLis
 
 // List: Lists CertificateRevocationLists.
 //
-// - parent: The resource name of the location associated with the
-//   CertificateRevocationLists, in the format
-//   `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - parent: The resource name of the location associated with the
+//     CertificateRevocationLists, in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) List(parent string) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsListCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7441,10 +7448,10 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsPat
 
 // Patch: Update a CertificateRevocationList.
 //
-// - name: Output only. The resource name for this
-//   CertificateRevocationList in the format
-//   `projects/*/locations/*/caPools/*certificateAuthorities/*/
-//   certificateRevocationLists/*`.
+//   - name: Output only. The resource name for this
+//     CertificateRevocationList in the format
+//     `projects/*/locations/*/caPools/*certificateAuthorities/*/
+//     certificateRevocationLists/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) Patch(name string, certificaterevocationlist *CertificateRevocationList) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7623,10 +7630,10 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsSet
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7773,10 +7780,10 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsTes
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationListsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7919,8 +7926,8 @@ type ProjectsLocationsCaPoolsCertificatesCreateCall struct {
 // Create: Create a new Certificate in a given Project, Location from a
 // particular CaPool.
 //
-// - parent: The resource name of the CaPool associated with the
-//   Certificate, in the format `projects/*/locations/*/caPools/*`.
+//   - parent: The resource name of the CaPool associated with the
+//     Certificate, in the format `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) Create(parent string, certificate *Certificate) *ProjectsLocationsCaPoolsCertificatesCreateCall {
 	c := &ProjectsLocationsCaPoolsCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8282,8 +8289,8 @@ type ProjectsLocationsCaPoolsCertificatesListCall struct {
 
 // List: Lists Certificates.
 //
-// - parent: The resource name of the location associated with the
-//   Certificates, in the format `projects/*/locations/*/caPools/*`.
+//   - parent: The resource name of the location associated with the
+//     Certificates, in the format `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) List(parent string) *ProjectsLocationsCaPoolsCertificatesListCall {
 	c := &ProjectsLocationsCaPoolsCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8507,8 +8514,8 @@ type ProjectsLocationsCaPoolsCertificatesPatchCall struct {
 // Patch: Update a Certificate. Currently, the only field you can update
 // is the labels field.
 //
-// - name: Output only. The resource name for this Certificate in the
-//   format `projects/*/locations/*/caPools/*/certificates/*`.
+//   - name: Output only. The resource name for this Certificate in the
+//     format `projects/*/locations/*/caPools/*/certificates/*`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCaPoolsCertificatesPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8685,8 +8692,8 @@ type ProjectsLocationsCaPoolsCertificatesRevokeCall struct {
 
 // Revoke: Revoke a Certificate.
 //
-// - name: The resource name for this Certificate in the format
-//   `projects/*/locations/*/caPools/*/certificates/*`.
+//   - name: The resource name for this Certificate in the format
+//     `projects/*/locations/*/caPools/*/certificates/*`.
 func (r *ProjectsLocationsCaPoolsCertificatesService) Revoke(name string, revokecertificaterequest *RevokeCertificateRequest) *ProjectsLocationsCaPoolsCertificatesRevokeCall {
 	c := &ProjectsLocationsCaPoolsCertificatesRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8829,8 +8836,8 @@ type ProjectsLocationsCertificateTemplatesCreateCall struct {
 // Create: Create a new CertificateTemplate in a given Project and
 // Location.
 //
-// - parent: The resource name of the location associated with the
-//   CertificateTemplate, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     CertificateTemplate, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateTemplatesService) Create(parent string, certificatetemplate *CertificateTemplate) *ProjectsLocationsCertificateTemplatesCreateCall {
 	c := &ProjectsLocationsCertificateTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9006,8 +9013,8 @@ type ProjectsLocationsCertificateTemplatesDeleteCall struct {
 
 // Delete: DeleteCertificateTemplate deletes a CertificateTemplate.
 //
-// - name: The resource name for this CertificateTemplate in the format
-//   `projects/*/locations/*/certificateTemplates/*`.
+//   - name: The resource name for this CertificateTemplate in the format
+//     `projects/*/locations/*/certificateTemplates/*`.
 func (r *ProjectsLocationsCertificateTemplatesService) Delete(name string) *ProjectsLocationsCertificateTemplatesDeleteCall {
 	c := &ProjectsLocationsCertificateTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9310,10 +9317,10 @@ type ProjectsLocationsCertificateTemplatesGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCertificateTemplatesService) GetIamPolicy(resource string) *ProjectsLocationsCertificateTemplatesGetIamPolicyCall {
 	c := &ProjectsLocationsCertificateTemplatesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9483,8 +9490,8 @@ type ProjectsLocationsCertificateTemplatesListCall struct {
 
 // List: Lists CertificateTemplates.
 //
-// - parent: The resource name of the location associated with the
-//   CertificateTemplates, in the format `projects/*/locations/*`.
+//   - parent: The resource name of the location associated with the
+//     CertificateTemplates, in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateTemplatesService) List(parent string) *ProjectsLocationsCertificateTemplatesListCall {
 	c := &ProjectsLocationsCertificateTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9704,8 +9711,8 @@ type ProjectsLocationsCertificateTemplatesPatchCall struct {
 
 // Patch: Update a CertificateTemplate.
 //
-// - name: Output only. The resource name for this CertificateTemplate
-//   in the format `projects/*/locations/*/certificateTemplates/*`.
+//   - name: Output only. The resource name for this CertificateTemplate
+//     in the format `projects/*/locations/*/certificateTemplates/*`.
 func (r *ProjectsLocationsCertificateTemplatesService) Patch(name string, certificatetemplate *CertificateTemplate) *ProjectsLocationsCertificateTemplatesPatchCall {
 	c := &ProjectsLocationsCertificateTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9884,10 +9891,10 @@ type ProjectsLocationsCertificateTemplatesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Can return `NOT_FOUND`,
 // `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCertificateTemplatesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCertificateTemplatesSetIamPolicyCall {
 	c := &ProjectsLocationsCertificateTemplatesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10034,10 +10041,10 @@ type ProjectsLocationsCertificateTemplatesTestIamPermissionsCall struct {
 // and command-line tools, not for authorization checking. This
 // operation may "fail open" without warning.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsLocationsCertificateTemplatesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsCertificateTemplatesTestIamPermissionsCall {
 	c := &ProjectsLocationsCertificateTemplatesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

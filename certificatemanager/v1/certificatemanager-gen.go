@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/certificate-manager
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/certificatemanager/v1"
-//   ...
-//   ctx := context.Background()
-//   certificatemanagerService, err := certificatemanager.NewService(ctx)
+//	import "google.golang.org/api/certificatemanager/v1"
+//	...
+//	ctx := context.Background()
+//	certificatemanagerService, err := certificatemanager.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   certificatemanagerService, err := certificatemanager.NewService(ctx, option.WithAPIKey("AIza..."))
+//	certificatemanagerService, err := certificatemanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   certificatemanagerService, err := certificatemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	certificatemanagerService, err := certificatemanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package certificatemanager // import "google.golang.org/api/certificatemanager/v1"
@@ -221,9 +221,10 @@ type ProjectsLocationsOperationsService struct {
 // AuthorizationAttemptInfo: State of the latest attempt to authorize a
 // domain for certificate issuance.
 type AuthorizationAttemptInfo struct {
-	// Details: Human readable explanation for reaching the state. Provided
-	// to help address the configuration issues. Not guaranteed to be
-	// stable. For programmatic access use Reason enum.
+	// Details: Output only. Human readable explanation for reaching the
+	// state. Provided to help address the configuration issues. Not
+	// guaranteed to be stable. For programmatic access use FailureReason
+	// enum.
 	Details string `json:"details,omitempty"`
 
 	// Domain: Domain name of the authorization attempt.
@@ -242,7 +243,8 @@ type AuthorizationAttemptInfo struct {
 	// domain, e.g. for certificates per top-level private domain.
 	FailureReason string `json:"failureReason,omitempty"`
 
-	// State: State of the domain for managed certificate issuance.
+	// State: Output only. State of the domain for managed certificate
+	// issuance.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
@@ -600,17 +602,17 @@ type Empty struct {
 
 // GclbTarget: Describes a Target Proxy which uses this Certificate Map.
 type GclbTarget struct {
-	// IpConfigs: IP configurations for this Target Proxy where the
-	// Certificate Map is serving.
+	// IpConfigs: Output only. IP configurations for this Target Proxy where
+	// the Certificate Map is serving.
 	IpConfigs []*IpConfig `json:"ipConfigs,omitempty"`
 
-	// TargetHttpsProxy: This field returns the resource name in the
-	// following format:
+	// TargetHttpsProxy: Output only. This field returns the resource name
+	// in the following format:
 	// `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
 	TargetHttpsProxy string `json:"targetHttpsProxy,omitempty"`
 
-	// TargetSslProxy: This field returns the resource name in the following
-	// format:
+	// TargetSslProxy: Output only. This field returns the resource name in
+	// the following format:
 	// `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
 	TargetSslProxy string `json:"targetSslProxy,omitempty"`
 
@@ -640,10 +642,10 @@ func (s *GclbTarget) MarshalJSON() ([]byte, error) {
 // IpConfig: Defines IP configuration where this Certificate Map is
 // serving.
 type IpConfig struct {
-	// IpAddress: An external IP address.
+	// IpAddress: Output only. An external IP address.
 	IpAddress string `json:"ipAddress,omitempty"`
 
-	// Ports: Ports.
+	// Ports: Output only. Ports.
 	Ports []int64 `json:"ports,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
@@ -984,8 +986,8 @@ type ManagedCertificate struct {
 	// challenge resolution.
 	Domains []string `json:"domains,omitempty"`
 
-	// ProvisioningIssue: Information about issues with provisioning a
-	// Managed Certificate.
+	// ProvisioningIssue: Output only. Information about issues with
+	// provisioning a Managed Certificate.
 	ProvisioningIssue *ProvisioningIssue `json:"provisioningIssue,omitempty"`
 
 	// State: Output only. State of the managed certificate resource.
@@ -1143,12 +1145,12 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // ProvisioningIssue: Information about issues with provisioning a
 // Managed Certificate.
 type ProvisioningIssue struct {
-	// Details: Human readable explanation about the issue. Provided to help
-	// address the configuration issues. Not guaranteed to be stable. For
-	// programmatic access use Reason enum.
+	// Details: Output only. Human readable explanation about the issue.
+	// Provided to help address the configuration issues. Not guaranteed to
+	// be stable. For programmatic access use Reason enum.
 	Details string `json:"details,omitempty"`
 
-	// Reason: Reason for provisioning failures.
+	// Reason: Output only. Reason for provisioning failures.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED"
@@ -1179,52 +1181,6 @@ type ProvisioningIssue struct {
 
 func (s *ProvisioningIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisioningIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ResourcesCount: ResourcesCount represents the resource that stores
-// aggregated project's info in the given location, e.g.: total number
-// of certificates assigned to the project.
-type ResourcesCount struct {
-	// Certificates: The count of certificates.
-	Certificates uint64 `json:"certificates,omitempty,string"`
-
-	// ComputeTime: Required. Input only. The time of the computation. The
-	// field is input only, used in Create and Update calls. For Update
-	// call, new values of selected resources are set if their compute_time
-	// is younger than the persisted ones, e.g.: If you support 3 types of
-	// resources: A, B and C, and you have: 'A' resource count computed at
-	// timestamp = 3 'B' resource count computed at timestamp = 10 'C'
-	// resource count computed at timestamp = 5 And you're going to update
-	// all of them with compute_time = 8, only 'A' and 'C' will be updated,
-	// as 'B' already has fresher data. For Get call a ResourcesCount
-	// instance contains the freshest values for every type.
-	ComputeTime string `json:"computeTime,omitempty"`
-
-	// Name: The singleton resource of the resources count. Must be in the
-	// format `projects/*/locations/*/resourcesCounts/single`.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Certificates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Certificates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResourcesCount) MarshalJSON() ([]byte, error) {
-	type NoMethod ResourcesCount
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1470,8 +1426,8 @@ type ProjectsLocationsListCall struct {
 // List: Lists information about the supported locations for this
 // service.
 //
-// - name: The resource that owns the locations collection, if
-//   applicable.
+//   - name: The resource that owns the locations collection, if
+//     applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1678,8 +1634,8 @@ type ProjectsLocationsCertificateMapsCreateCall struct {
 
 // Create: Creates a new CertificateMap in a given project and location.
 //
-// - parent: The parent resource of the certificate map. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the certificate map. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateMapsService) Create(parent string, certificatemap *CertificateMap) *ProjectsLocationsCertificateMapsCreateCall {
 	c := &ProjectsLocationsCertificateMapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1834,8 +1790,8 @@ type ProjectsLocationsCertificateMapsDeleteCall struct {
 // deleted if it contains Certificate Map Entries. Remove all the
 // entries from the map before calling this method.
 //
-// - name: A name of the certificate map to delete. Must be in the
-//   format `projects/*/locations/*/certificateMaps/*`.
+//   - name: A name of the certificate map to delete. Must be in the
+//     format `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Delete(name string) *ProjectsLocationsCertificateMapsDeleteCall {
 	c := &ProjectsLocationsCertificateMapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1968,8 +1924,8 @@ type ProjectsLocationsCertificateMapsGetCall struct {
 
 // Get: Gets details of a single CertificateMap.
 //
-// - name: A name of the certificate map to describe. Must be in the
-//   format `projects/*/locations/*/certificateMaps/*`.
+//   - name: A name of the certificate map to describe. Must be in the
+//     format `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Get(name string) *ProjectsLocationsCertificateMapsGetCall {
 	c := &ProjectsLocationsCertificateMapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2115,8 +2071,8 @@ type ProjectsLocationsCertificateMapsListCall struct {
 
 // List: Lists CertificateMaps in a given project and location.
 //
-// - parent: The project and location from which the certificate maps
-//   should be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the certificate maps
+//     should be listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificateMapsService) List(parent string) *ProjectsLocationsCertificateMapsListCall {
 	c := &ProjectsLocationsCertificateMapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2336,9 +2292,9 @@ type ProjectsLocationsCertificateMapsPatchCall struct {
 
 // Patch: Updates a CertificateMap.
 //
-// - name: A user-defined name of the Certificate Map. Certificate Map
-//   names must be unique globally and match pattern
-//   `projects/*/locations/*/certificateMaps/*`.
+//   - name: A user-defined name of the Certificate Map. Certificate Map
+//     names must be unique globally and match pattern
+//     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsService) Patch(name string, certificatemap *CertificateMap) *ProjectsLocationsCertificateMapsPatchCall {
 	c := &ProjectsLocationsCertificateMapsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2496,8 +2452,8 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall struct {
 // Create: Creates a new CertificateMapEntry in a given project and
 // location.
 //
-// - parent: The parent resource of the certificate map entry. Must be
-//   in the format `projects/*/locations/*/certificateMaps/*`.
+//   - parent: The parent resource of the certificate map entry. Must be
+//     in the format `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Create(parent string, certificatemapentry *CertificateMapEntry) *ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2651,9 +2607,9 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall struct {
 
 // Delete: Deletes a single CertificateMapEntry.
 //
-// - name: A name of the certificate map entry to delete. Must be in the
-//   format
-//   `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
+//   - name: A name of the certificate map entry to delete. Must be in the
+//     format
+//     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Delete(name string) *ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2786,9 +2742,9 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall struct {
 
 // Get: Gets details of a single CertificateMapEntry.
 //
-// - name: A name of the certificate map entry to describe. Must be in
-//   the format
-//   `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
+//   - name: A name of the certificate map entry to describe. Must be in
+//     the format
+//     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Get(name string) *ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2934,9 +2890,9 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesListCall struct {
 
 // List: Lists CertificateMapEntries in a given project and location.
 //
-// - parent: The project, location and certificate map from which the
-//   certificate map entries should be listed, specified in the format
-//   `projects/*/locations/*/certificateMaps/*`.
+//   - parent: The project, location and certificate map from which the
+//     certificate map entries should be listed, specified in the format
+//     `projects/*/locations/*/certificateMaps/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) List(parent string) *ProjectsLocationsCertificateMapsCertificateMapEntriesListCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3160,9 +3116,9 @@ type ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall struct {
 
 // Patch: Updates a CertificateMapEntry.
 //
-// - name: A user-defined name of the Certificate Map Entry. Certificate
-//   Map Entry names must be unique globally and match pattern
-//   `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
+//   - name: A user-defined name of the Certificate Map Entry. Certificate
+//     Map Entry names must be unique globally and match pattern
+//     `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
 func (r *ProjectsLocationsCertificateMapsCertificateMapEntriesService) Patch(name string, certificatemapentry *CertificateMapEntry) *ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall {
 	c := &ProjectsLocationsCertificateMapsCertificateMapEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3319,8 +3275,8 @@ type ProjectsLocationsCertificatesCreateCall struct {
 
 // Create: Creates a new Certificate in a given project and location.
 //
-// - parent: The parent resource of the certificate. Must be in the
-//   format `projects/*/locations/*`.
+//   - parent: The parent resource of the certificate. Must be in the
+//     format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificatesService) Create(parent string, certificate *Certificate) *ProjectsLocationsCertificatesCreateCall {
 	c := &ProjectsLocationsCertificatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3473,8 +3429,8 @@ type ProjectsLocationsCertificatesDeleteCall struct {
 
 // Delete: Deletes a single Certificate.
 //
-// - name: A name of the certificate to delete. Must be in the format
-//   `projects/*/locations/*/certificates/*`.
+//   - name: A name of the certificate to delete. Must be in the format
+//     `projects/*/locations/*/certificates/*`.
 func (r *ProjectsLocationsCertificatesService) Delete(name string) *ProjectsLocationsCertificatesDeleteCall {
 	c := &ProjectsLocationsCertificatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3607,8 +3563,8 @@ type ProjectsLocationsCertificatesGetCall struct {
 
 // Get: Gets details of a single Certificate.
 //
-// - name: A name of the certificate to describe. Must be in the format
-//   `projects/*/locations/*/certificates/*`.
+//   - name: A name of the certificate to describe. Must be in the format
+//     `projects/*/locations/*/certificates/*`.
 func (r *ProjectsLocationsCertificatesService) Get(name string) *ProjectsLocationsCertificatesGetCall {
 	c := &ProjectsLocationsCertificatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3754,8 +3710,8 @@ type ProjectsLocationsCertificatesListCall struct {
 
 // List: Lists Certificates in a given project and location.
 //
-// - parent: The project and location from which the certificate should
-//   be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the certificate should
+//     be listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsCertificatesService) List(parent string) *ProjectsLocationsCertificatesListCall {
 	c := &ProjectsLocationsCertificatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3975,9 +3931,9 @@ type ProjectsLocationsCertificatesPatchCall struct {
 
 // Patch: Updates a Certificate.
 //
-// - name: A user-defined name of the certificate. Certificate names
-//   must be unique globally and match pattern
-//   `projects/*/locations/*/certificates/*`.
+//   - name: A user-defined name of the certificate. Certificate names
+//     must be unique globally and match pattern
+//     `projects/*/locations/*/certificates/*`.
 func (r *ProjectsLocationsCertificatesService) Patch(name string, certificate *Certificate) *ProjectsLocationsCertificatesPatchCall {
 	c := &ProjectsLocationsCertificatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4135,8 +4091,8 @@ type ProjectsLocationsDnsAuthorizationsCreateCall struct {
 // Create: Creates a new DnsAuthorization in a given project and
 // location.
 //
-// - parent: The parent resource of the dns authorization. Must be in
-//   the format `projects/*/locations/*`.
+//   - parent: The parent resource of the dns authorization. Must be in
+//     the format `projects/*/locations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Create(parent string, dnsauthorization *DnsAuthorization) *ProjectsLocationsDnsAuthorizationsCreateCall {
 	c := &ProjectsLocationsDnsAuthorizationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4289,8 +4245,8 @@ type ProjectsLocationsDnsAuthorizationsDeleteCall struct {
 
 // Delete: Deletes a single DnsAuthorization.
 //
-// - name: A name of the dns authorization to delete. Must be in the
-//   format `projects/*/locations/*/dnsAuthorizations/*`.
+//   - name: A name of the dns authorization to delete. Must be in the
+//     format `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Delete(name string) *ProjectsLocationsDnsAuthorizationsDeleteCall {
 	c := &ProjectsLocationsDnsAuthorizationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4423,8 +4379,8 @@ type ProjectsLocationsDnsAuthorizationsGetCall struct {
 
 // Get: Gets details of a single DnsAuthorization.
 //
-// - name: A name of the dns authorization to describe. Must be in the
-//   format `projects/*/locations/*/dnsAuthorizations/*`.
+//   - name: A name of the dns authorization to describe. Must be in the
+//     format `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Get(name string) *ProjectsLocationsDnsAuthorizationsGetCall {
 	c := &ProjectsLocationsDnsAuthorizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4570,8 +4526,8 @@ type ProjectsLocationsDnsAuthorizationsListCall struct {
 
 // List: Lists DnsAuthorizations in a given project and location.
 //
-// - parent: The project and location from which the dns authorizations
-//   should be listed, specified in the format `projects/*/locations/*`.
+//   - parent: The project and location from which the dns authorizations
+//     should be listed, specified in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) List(parent string) *ProjectsLocationsDnsAuthorizationsListCall {
 	c := &ProjectsLocationsDnsAuthorizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4791,9 +4747,9 @@ type ProjectsLocationsDnsAuthorizationsPatchCall struct {
 
 // Patch: Updates a DnsAuthorization.
 //
-// - name: A user-defined name of the dns authorization.
-//   DnsAuthorization names must be unique globally and match pattern
-//   `projects/*/locations/*/dnsAuthorizations/*`.
+//   - name: A user-defined name of the dns authorization.
+//     DnsAuthorization names must be unique globally and match pattern
+//     `projects/*/locations/*/dnsAuthorizations/*`.
 func (r *ProjectsLocationsDnsAuthorizationsService) Patch(name string, dnsauthorization *DnsAuthorization) *ProjectsLocationsDnsAuthorizationsPatchCall {
 	c := &ProjectsLocationsDnsAuthorizationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

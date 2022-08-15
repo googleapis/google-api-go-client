@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://cloud.google.com/asset-inventory/docs/quickstart
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/cloudasset/v1beta1"
-//   ...
-//   ctx := context.Background()
-//   cloudassetService, err := cloudasset.NewService(ctx)
+//	import "google.golang.org/api/cloudasset/v1beta1"
+//	...
+//	ctx := context.Background()
+//	cloudassetService, err := cloudasset.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   cloudassetService, err := cloudasset.NewService(ctx, option.WithAPIKey("AIza..."))
+//	cloudassetService, err := cloudasset.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   cloudassetService, err := cloudasset.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	cloudassetService, err := cloudasset.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package cloudasset // import "google.golang.org/api/cloudasset/v1beta1"
@@ -466,16 +466,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -2611,10 +2615,10 @@ type FoldersExportAssetsCall struct {
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
 //
-// - parent: The relative name of the root asset. This can only be an
-//   organization number (such as "organizations/123"), a project ID
-//   (such as "projects/my-project-id"), a project number (such as
-//   "projects/12345"), or a folder number (such as "folders/123").
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *FoldersService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *FoldersExportAssetsCall {
 	c := &FoldersExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2910,10 +2914,10 @@ type OrganizationsBatchGetAssetsHistoryCall struct {
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
 //
-// - parent: The relative name of the root asset. It can only be an
-//   organization number (such as "organizations/123"), a project ID
-//   (such as "projects/my-project-id")", or a project number (such as
-//   "projects/12345").
+//   - parent: The relative name of the root asset. It can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id")", or a project number (such as
+//     "projects/12345").
 func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *OrganizationsBatchGetAssetsHistoryCall {
 	c := &OrganizationsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2936,9 +2940,10 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string
 // type.
 //
 // Possible values:
-//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
-//   "RESOURCE" - Resource metadata.
-//   "IAM_POLICY" - The actual IAM policy set on a resource.
+//
+//	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+//	"RESOURCE" - Resource metadata.
+//	"IAM_POLICY" - The actual IAM policy set on a resource.
 func (c *OrganizationsBatchGetAssetsHistoryCall) ContentType(contentType string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
@@ -3138,10 +3143,10 @@ type OrganizationsExportAssetsCall struct {
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
 //
-// - parent: The relative name of the root asset. This can only be an
-//   organization number (such as "organizations/123"), a project ID
-//   (such as "projects/my-project-id"), a project number (such as
-//   "projects/12345"), or a folder number (such as "folders/123").
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *OrganizationsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *OrganizationsExportAssetsCall {
 	c := &OrganizationsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3437,10 +3442,10 @@ type ProjectsBatchGetAssetsHistoryCall struct {
 // specified asset does not exist, this API returns an INVALID_ARGUMENT
 // error.
 //
-// - parent: The relative name of the root asset. It can only be an
-//   organization number (such as "organizations/123"), a project ID
-//   (such as "projects/my-project-id")", or a project number (such as
-//   "projects/12345").
+//   - parent: The relative name of the root asset. It can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id")", or a project number (such as
+//     "projects/12345").
 func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGetAssetsHistoryCall {
 	c := &ProjectsBatchGetAssetsHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3463,9 +3468,10 @@ func (c *ProjectsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *Pr
 // type.
 //
 // Possible values:
-//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
-//   "RESOURCE" - Resource metadata.
-//   "IAM_POLICY" - The actual IAM policy set on a resource.
+//
+//	"CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+//	"RESOURCE" - Resource metadata.
+//	"IAM_POLICY" - The actual IAM policy set on a resource.
 func (c *ProjectsBatchGetAssetsHistoryCall) ContentType(contentType string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
@@ -3665,10 +3671,10 @@ type ProjectsExportAssetsCall struct {
 // For regular-size resource parent, the export operation usually
 // finishes within 5 minutes.
 //
-// - parent: The relative name of the root asset. This can only be an
-//   organization number (such as "organizations/123"), a project ID
-//   (such as "projects/my-project-id"), a project number (such as
-//   "projects/12345"), or a folder number (such as "folders/123").
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123").
 func (r *ProjectsService) ExportAssets(parent string, exportassetsrequest *ExportAssetsRequest) *ProjectsExportAssetsCall {
 	c := &ProjectsExportAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

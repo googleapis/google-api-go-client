@@ -8,35 +8,35 @@
 //
 // For product documentation, see: https://cloud.google.com/source-repositories/docs/apis
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/sourcerepo/v1"
-//   ...
-//   ctx := context.Background()
-//   sourcerepoService, err := sourcerepo.NewService(ctx)
+//	import "google.golang.org/api/sourcerepo/v1"
+//	...
+//	ctx := context.Background()
+//	sourcerepoService, err := sourcerepo.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   sourcerepoService, err := sourcerepo.NewService(ctx, option.WithScopes(sourcerepo.SourceReadWriteScope))
+//	sourcerepoService, err := sourcerepo.NewService(ctx, option.WithScopes(sourcerepo.SourceReadWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   sourcerepoService, err := sourcerepo.NewService(ctx, option.WithAPIKey("AIza..."))
+//	sourcerepoService, err := sourcerepo.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   sourcerepoService, err := sourcerepo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	sourcerepoService, err := sourcerepo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package sourcerepo // import "google.golang.org/api/sourcerepo/v1"
@@ -291,16 +291,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1074,8 +1078,8 @@ type ProjectsGetConfigCall struct {
 // GetConfig: Returns the Cloud Source Repositories configuration of the
 // project.
 //
-// - name: The name of the requested project. Values are of the form
-//   `projects/`.
+//   - name: The name of the requested project. Values are of the form
+//     `projects/`.
 func (r *ProjectsService) GetConfig(name string) *ProjectsGetConfigCall {
 	c := &ProjectsGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1222,8 +1226,8 @@ type ProjectsUpdateConfigCall struct {
 // UpdateConfig: Updates the Cloud Source Repositories configuration of
 // the project.
 //
-// - name: The name of the requested project. Values are of the form
-//   `projects/`.
+//   - name: The name of the requested project. Values are of the form
+//     `projects/`.
 func (r *ProjectsService) UpdateConfig(name string, updateprojectconfigrequest *UpdateProjectConfigRequest) *ProjectsUpdateConfigCall {
 	c := &ProjectsUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1367,8 +1371,8 @@ type ProjectsReposCreateCall struct {
 // the named repository already exists, `CreateRepo` returns
 // `ALREADY_EXISTS`.
 //
-// - parent: The project in which to create the repo. Values are of the
-//   form `projects/`.
+//   - parent: The project in which to create the repo. Values are of the
+//     form `projects/`.
 func (r *ProjectsReposService) Create(parent string, repo *Repo) *ProjectsReposCreateCall {
 	c := &ProjectsReposCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1510,8 +1514,8 @@ type ProjectsReposDeleteCall struct {
 
 // Delete: Deletes a repo.
 //
-// - name: The name of the repo to delete. Values are of the form
-//   `projects//repos/`.
+//   - name: The name of the repo to delete. Values are of the form
+//     `projects//repos/`.
 func (r *ProjectsReposService) Delete(name string) *ProjectsReposDeleteCall {
 	c := &ProjectsReposDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1645,8 +1649,8 @@ type ProjectsReposGetCall struct {
 
 // Get: Returns information about a repo.
 //
-// - name: The name of the requested repository. Values are of the form
-//   `projects//repos/`.
+//   - name: The name of the requested repository. Values are of the form
+//     `projects//repos/`.
 func (r *ProjectsReposService) Get(name string) *ProjectsReposGetCall {
 	c := &ProjectsReposGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1797,10 +1801,10 @@ type ProjectsReposGetIamPolicyCall struct {
 // an empty policy if the resource exists and does not have a policy
 // set.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsReposService) GetIamPolicy(resource string) *ProjectsReposGetIamPolicyCall {
 	c := &ProjectsReposGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1975,8 +1979,8 @@ type ProjectsReposListCall struct {
 // repos are not set by ListRepos. To get the size of a repo, use
 // GetRepo.
 //
-// - name: The project ID whose repos should be listed. Values are of
-//   the form `projects/`.
+//   - name: The project ID whose repos should be listed. Values are of
+//     the form `projects/`.
 func (r *ProjectsReposService) List(name string) *ProjectsReposListCall {
 	c := &ProjectsReposListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2174,8 +2178,8 @@ type ProjectsReposPatchCall struct {
 
 // Patch: Updates information about a repo.
 //
-// - name: The name of the requested repository. Values are of the form
-//   `projects//repos/`.
+//   - name: The name of the requested repository. Values are of the form
+//     `projects//repos/`.
 func (r *ProjectsReposService) Patch(name string, updatereporequest *UpdateRepoRequest) *ProjectsReposPatchCall {
 	c := &ProjectsReposPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2318,10 +2322,10 @@ type ProjectsReposSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.
 //
-// - resource: REQUIRED: The resource for which the policy is being
-//   specified. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsReposService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsReposSetIamPolicyCall {
 	c := &ProjectsReposSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2465,8 +2469,8 @@ type ProjectsReposSyncCall struct {
 // Sync: Synchronize a connected repo. The response contains
 // SyncRepoMetadata in the metadata field.
 //
-// - name: The name of the repo to synchronize. Values are of the form
-//   `projects//repos/`.
+//   - name: The name of the repo to synchronize. Values are of the form
+//     `projects//repos/`.
 func (r *ProjectsReposService) Sync(name string, syncreporequest *SyncRepoRequest) *ProjectsReposSyncCall {
 	c := &ProjectsReposSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2610,10 +2614,10 @@ type ProjectsReposTestIamPermissionsCall struct {
 // specified resource. If the resource does not exist, this will return
 // an empty set of permissions, not a NOT_FOUND error.
 //
-// - resource: REQUIRED: The resource for which the policy detail is
-//   being requested. See Resource names
-//   (https://cloud.google.com/apis/design/resource_names) for the
-//   appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
 func (r *ProjectsReposService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsReposTestIamPermissionsCall {
 	c := &ProjectsReposTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

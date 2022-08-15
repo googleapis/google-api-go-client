@@ -8,31 +8,31 @@
 //
 // For product documentation, see: https://developers.google.com/hangouts/chat
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/chat/v1"
-//   ...
-//   ctx := context.Background()
-//   chatService, err := chat.NewService(ctx)
+//	import "google.golang.org/api/chat/v1"
+//	...
+//	ctx := context.Background()
+//	chatService, err := chat.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
+//	chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   chatService, err := chat.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	chatService, err := chat.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package chat // import "google.golang.org/api/chat/v1"
@@ -737,6 +737,39 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CardWithId: Widgets for Chat apps to specify.
+type CardWithId struct {
+	// Card: Card proto that allows Chat apps to specify UI elements and
+	// editable widgets.
+	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
+
+	// CardId: Required for `cardsV2` messages. Chat app-specified
+	// identifier for this widget. Scoped within a message.
+	CardId string `json:"cardId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Card") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Card") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CardWithId) MarshalJSON() ([]byte, error) {
+	type NoMethod CardWithId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ChatAppLogEntry: JSON payload of error messages. If the Cloud Logging
 // API is enabled, these error messages are logged to Google Cloud
 // Logging (https://cloud.google.com/logging/docs).
@@ -821,12 +854,12 @@ func (s *ChatAppLogEntry) MarshalJSON() ([]byte, error) {
 // if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// alphaFrac, ')'].join(”); }; var rgbToCssColor = function(red, green,
 // blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
 // blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
 // hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
-// resultBuilder.push(hexString); return resultBuilder.join(''); }; //
+// resultBuilder.push(hexString); return resultBuilder.join(”); }; //
 // ...
 type Color struct {
 	// Alpha: The fraction of this color that should be applied to the
@@ -1319,7 +1352,8 @@ type GoogleAppsCardV1Action struct {
 	// the card use LoadIndicator.SPINNER
 	// (workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
 	// for all actions, as this locks the UI to ensure no changes are made
-	// by the user while the action is being processed.
+	// by the user while the action is being processed. Not supported by
+	// Google Chat apps.
 	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
@@ -1527,16 +1561,17 @@ type GoogleAppsCardV1Card struct {
 	// "url": "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
-	// DisplayStyle: The display style for `peekCardHeader`.
+	// DisplayStyle: The `peekCardHeader` display style for. Not supported
+	// by Google Chat apps.
 	//
 	// Possible values:
-	//   "DISPLAY_STYLE_UNSPECIFIED" - Default value. Do not use.
+	//   "DISPLAY_STYLE_UNSPECIFIED" - Do not use.
 	//   "PEEK" - The header of the card appears at the bottom of the
 	// sidebar, partially covering the current top card of the stack.
 	// Clicking the header pops the card into the card stack. If the card
 	// has no header, a generated header is used instead.
-	//   "REPLACE" - The card is shown by replacing the view of the top card
-	// in the card stack.
+	//   "REPLACE" - Default value. The card is shown by replacing the view
+	// of the top card in the card stack.
 	DisplayStyle string `json:"displayStyle,omitempty"`
 
 	// FixedFooter: The fixed footer shown at the bottom of this card.
@@ -1551,7 +1586,8 @@ type GoogleAppsCardV1Card struct {
 
 	// PeekCardHeader: When displaying contextual content, the peek card
 	// header acts as a placeholder so that the user can navigate forward
-	// between the homepage cards and the contextual cards.
+	// between the homepage cards and the contextual cards. Not supported by
+	// Google Chat apps.
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
 
 	// Sections: Sections are separated by a line divider.
@@ -2147,13 +2183,14 @@ type GoogleAppsCardV1OpenLink struct {
 	// observes it until the window closes. Not supported by Chat apps.
 	//
 	// Possible values:
-	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes.
+	//   "NOTHING" - Default value. The card does not reload; nothing
+	// happens.
 	//   "RELOAD" - Reloads the card after the child window closes. If used
 	// in conjunction with
-	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
-	// openas), the child window acts as a modal dialog and the main card is
-	// blocked until the child window closes.
+	// [OpenAs.OVERLAY](https://developers.google.com/workspace/add-ons/refer
+	// ence/rpc/google.apps.card.v1#openas), the child window acts as a
+	// modal dialog and the parent card is blocked until the child window
+	// closes.
 	OnClose string `json:"onClose,omitempty"`
 
 	// OpenAs: How to open a link. Not supported by Chat apps.
@@ -2489,7 +2526,7 @@ func (s *GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1TextParagraph: A paragraph of text that supports
 // formatting. See Text formatting
-// (workspace/add-ons/concepts/widgets#text_formatting") for details.
+// (workspace/add-ons/concepts/widgets#text_formatting) for details.
 type GoogleAppsCardV1TextParagraph struct {
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
@@ -3031,6 +3068,21 @@ type Membership struct {
 	// spaces/{space}/members/{member}
 	Name string `json:"name,omitempty"`
 
+	// Role: Output only. User's role within a Chat space, which determines
+	// their permitted actions in the space.
+	//
+	// Possible values:
+	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. The user isn't a
+	// member of the space, but might be invited.
+	//   "ROLE_MEMBER" - A member of the space. The user has basic
+	// permissions, like sending messages to the space. In 1:1 and unnamed
+	// group conversations, everyone has this role.
+	//   "ROLE_MANAGER" - A space manager. The user has all basic
+	// permissions plus administrative permissions that allow them to manage
+	// the space, like adding or removing members. Only supports
+	// SpaceType.SPACE.
+	Role string `json:"role,omitempty"`
+
 	// State: Output only. State of the membership.
 	//
 	// Possible values:
@@ -3092,6 +3144,17 @@ type Message struct {
 	// message.
 	Cards []*Card `json:"cards,omitempty"`
 
+	// CardsV2: Richly formatted and interactive cards that display UI
+	// elements and editable widgets, such as: - Formatted text - Buttons -
+	// Clickable images - Checkboxes - Radio buttons - Input widgets. Cards
+	// are usually displayed below the text-body of a Chat message, but can
+	// situationally appear other places, such as dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
+	// a unique identifier among cards in the same message and for
+	// identifying user input values. Currently supported widgets include: -
+	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList`
+	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
+
 	// CreateTime: Output only. The time at which the message was created in
 	// Google Chat server.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3102,8 +3165,8 @@ type Message struct {
 	FallbackText string `json:"fallbackText,omitempty"`
 
 	// LastUpdateTime: Output only. The time at which the message was last
-	// updated. If the message was never updated, this field matches
-	// `create_time`.
+	// edited by a user. If the message has never been edited, this field is
+	// empty.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// MatchedUrl: Output only. A URL in `spaces.messages.text` that matches
@@ -3341,11 +3404,15 @@ type Space struct {
 	// Chat app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
+	// SpaceDetails: Details about the space including description and
+	// rules.
+	SpaceDetails *SpaceDetails `json:"spaceDetails,omitempty"`
+
 	// Threaded: Output only. Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. Deprecated: Use `single_user_bot_dm` or
-	// `space_type` (developer preview) instead. The type of a space.
+	// Type: Output only. Deprecated: Use `singleUserBotDm` or `spaceType`
+	// (developer preview) instead. The type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -3378,6 +3445,39 @@ type Space struct {
 
 func (s *Space) MarshalJSON() ([]byte, error) {
 	type NoMethod Space
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceDetails: Details about the space including description and
+// rules.
+type SpaceDetails struct {
+	// Description: Optional. A description of the space. It could describe
+	// the space's discussion topic, functional purpose, or participants.
+	Description string `json:"description,omitempty"`
+
+	// Guidelines: Optional. The space's rules, expectations, and etiquette.
+	Guidelines string `json:"guidelines,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3748,8 +3848,8 @@ type DmsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3918,8 +4018,8 @@ type DmsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4088,8 +4188,8 @@ type DmsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4258,8 +4358,8 @@ type MediaDownloadCall struct {
 // Download: Downloads media. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
 //
-// - resourceName: Name of the media that is being downloaded. See
-//   ReadRequest.resource_name.
+//   - resourceName: Name of the media that is being downloaded. See
+//     ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -4420,8 +4520,8 @@ type RoomsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4590,8 +4690,8 @@ type RoomsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4760,8 +4860,8 @@ type RoomsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4930,8 +5030,8 @@ type SpacesGetCall struct {
 // Get: Returns a space. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the space, in the form "spaces/*". Format:
-//   spaces/{space}.
+//   - name: Resource name of the space, in the form "spaces/*". Format:
+//     spaces/{space}.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5197,13 +5297,13 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
+	//       "description": "Optional. Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.",
+	//       "description": "Optional. A token identifying a page of results the server should return.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5251,8 +5351,8 @@ type SpacesWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5421,8 +5521,8 @@ type SpacesMembersGetCall struct {
 // Get: Returns a membership. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the membership to retrieve. Format:
-//   spaces/{space}/members/{member}.
+//   - name: Resource name of the membership to retrieve. Format:
+//     spaces/{space}/members/{member}.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5567,8 +5667,8 @@ type SpacesMembersListCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - parent: The resource name of the space for which to fetch a
-//   membership list. Format: spaces/{space}.
+//   - parent: The resource name of the space for which to fetch a
+//     membership list. Format: spaces/{space}.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5759,8 +5859,8 @@ type SpacesMessagesCreateCall struct {
 // Create: Creates a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAAAAAAAA.
+//   - parent: Space resource name, in the form "spaces/*". Example:
+//     spaces/AAAAAAAAAAA.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5928,9 +6028,9 @@ type SpacesMessagesDeleteCall struct {
 // Delete: Deletes a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the message to be deleted, in the form
-//   "spaces/*/messages/*" Example:
-//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
+//   - name: Resource name of the message to be deleted, in the form
+//     "spaces/*/messages/*" Example:
+//     spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6061,9 +6161,9 @@ type SpacesMessagesGetCall struct {
 // Get: Returns a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the message to be retrieved, in the form
-//   "spaces/*/messages/*". Example:
-//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
+//   - name: Resource name of the message to be retrieved, in the form
+//     "spaces/*/messages/*". Example:
+//     spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6207,8 +6307,8 @@ type SpacesMessagesUpdateCall struct {
 // Update: Updates a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name in the form `spaces/*/messages/*`. Example:
-//   `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
+//   - name: Resource name in the form `spaces/*/messages/*`. Example:
+//     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6217,8 +6317,9 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// field paths to be updated, comma separated if there are multiple.
-// Currently supported field paths: * text * cards * attachment
+// field paths to update. Separate multiple values with commas.
+// Currently supported field paths: - text - cards (Requires service
+// account authentication (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6331,7 +6432,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to be updated, comma separated if there are multiple. Currently supported field paths: * text * cards * attachment",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6364,8 +6465,8 @@ type SpacesMessagesAttachmentsGetCall struct {
 // authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-// - name: Resource name of the attachment, in the form
-//   "spaces/*/messages/*/attachments/*".
+//   - name: Resource name of the attachment, in the form
+//     "spaces/*/messages/*/attachments/*".
 func (r *SpacesMessagesAttachmentsService) Get(name string) *SpacesMessagesAttachmentsGetCall {
 	c := &SpacesMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -10,35 +10,35 @@
 //
 // For product documentation, see: https://cloud.google.com/spanner/
 //
-// Creating a client
+// # Creating a client
 //
 // Usage example:
 //
-//   import "google.golang.org/api/spanner/v1"
-//   ...
-//   ctx := context.Background()
-//   spannerService, err := spanner.NewService(ctx)
+//	import "google.golang.org/api/spanner/v1"
+//	...
+//	ctx := context.Background()
+//	spannerService, err := spanner.NewService(ctx)
 //
 // In this example, Google Application Default Credentials are used for authentication.
 //
 // For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
-// Other authentication options
+// # Other authentication options
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   spannerService, err := spanner.NewService(ctx, option.WithScopes(spanner.SpannerDataScope))
+//	spannerService, err := spanner.NewService(ctx, option.WithScopes(spanner.SpannerDataScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
-//   spannerService, err := spanner.NewService(ctx, option.WithAPIKey("AIza..."))
+//	spannerService, err := spanner.NewService(ctx, option.WithAPIKey("AIza..."))
 //
 // To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
 //
-//   config := &oauth2.Config{...}
-//   // ...
-//   token, err := config.Exchange(ctx, ...)
-//   spannerService, err := spanner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//	config := &oauth2.Config{...}
+//	// ...
+//	token, err := config.Exchange(ctx, ...)
+//	spannerService, err := spanner.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
 // See https://godoc.org/google.golang.org/api/option/ for details on options.
 package spanner // import "google.golang.org/api/spanner/v1"
@@ -1909,6 +1909,57 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FreeInstanceMetadata: Free instance specific metadata that is kept
+// even after an instance has been upgraded for tracking purposes.
+type FreeInstanceMetadata struct {
+	// ExpireBehavior: Specifies the expiration behavior of a free instance.
+	// The default of ExpireBehavior is `REMOVE_AFTER_GRACE_PERIOD`. This
+	// can be modified during or after creation, and before expiration.
+	//
+	// Possible values:
+	//   "EXPIRE_BEHAVIOR_UNSPECIFIED" - Not specified.
+	//   "FREE_TO_PROVISIONED" - When the free instance expires, upgrade the
+	// instance to a provisioned instance.
+	//   "REMOVE_AFTER_GRACE_PERIOD" - When the free instance expires,
+	// disable the instance, and delete it after the grace period passes if
+	// it has not been upgraded.
+	ExpireBehavior string `json:"expireBehavior,omitempty"`
+
+	// ExpireTime: Output only. Timestamp after which the instance will
+	// either be upgraded or scheduled for deletion after a grace period.
+	// ExpireBehavior is used to choose between upgrading or scheduling the
+	// free instance for deletion. This timestamp is set during the creation
+	// of a free instance.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// UpgradeTime: Output only. If present, the timestamp at which the free
+	// instance was upgraded to a provisioned instance.
+	UpgradeTime string `json:"upgradeTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExpireBehavior") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExpireBehavior") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod FreeInstanceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
 type GetDatabaseDdlResponse struct {
 	// Statements: A list of formatted DDL statements defining the schema of
@@ -2093,6 +2144,21 @@ type Instance struct {
 	// EndpointUris: Deprecated. This field is not populated.
 	EndpointUris []string `json:"endpointUris,omitempty"`
 
+	// FreeInstanceMetadata: Free instance metadata. Only populated for free
+	// instances.
+	FreeInstanceMetadata *FreeInstanceMetadata `json:"freeInstanceMetadata,omitempty"`
+
+	// InstanceType: The `InstanceType` of the current instance.
+	//
+	// Possible values:
+	//   "INSTANCE_TYPE_UNSPECIFIED" - Not specified.
+	//   "PROVISIONED" - Provisioned instances have dedicated resources,
+	// standard usage limits and support.
+	//   "FREE_INSTANCE" - Free instances provide no guarantee for dedicated
+	// resources, [node_count, processing_units] should be 0. They come with
+	// stricter usage limits and limited support.
+	InstanceType string `json:"instanceType,omitempty"`
+
 	// Labels: Cloud Labels are a flexible and lightweight mechanism for
 	// organizing cloud resources into groups that reflect a customer's
 	// organizational needs and deployment strategies. Cloud Labels can be
@@ -2186,6 +2252,22 @@ type InstanceConfig struct {
 	// DisplayName: The name of this instance configuration as it appears in
 	// UIs.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// FreeInstanceAvailability: Output only. Describes whether free
+	// instances are available to be created in this instance config.
+	//
+	// Possible values:
+	//   "FREE_INSTANCE_AVAILABILITY_UNSPECIFIED" - Not specified.
+	//   "AVAILABLE" - Indicates that free instances are available to be
+	// created in this instance config.
+	//   "UNSUPPORTED" - Indicates that free instances are not supported in
+	// this instance config.
+	//   "DISABLED" - Indicates that free instances are currently not
+	// available to be created in this instance config.
+	//   "QUOTA_EXCEEDED" - Indicates that additional free instances cannot
+	// be created in this instance config because the project has reached
+	// its limit of free instances.
+	FreeInstanceAvailability string `json:"freeInstanceAvailability,omitempty"`
 
 	// LeaderOptions: Allowed values of the "default_leader" schema option
 	// for databases in instances that use this instance configuration.
@@ -3271,11 +3353,15 @@ type PartialResultSet struct {
 	// set whose rows contain a single string field. The following
 	// `PartialResultSet`s might be yielded: { "metadata": { ... } "values":
 	// ["Hello", "W"] "chunked_value": true "resume_token": "Af65..." } {
-	// "values": ["orl"] "chunked_value": true "resume_token": "Bqp2..." } {
-	// "values": ["d"] "resume_token": "Zx1B..." } This sequence of
-	// `PartialResultSet`s encodes two rows, one containing the field value
-	// "Hello", and a second containing the field value "World" = "W" +
-	// "orl" + "d".
+	// "values": ["orl"] "chunked_value": true } { "values": ["d"]
+	// "resume_token": "Zx1B..." } This sequence of `PartialResultSet`s
+	// encodes two rows, one containing the field value "Hello", and a
+	// second containing the field value "World" = "W" + "orl" + "d". Not
+	// all `PartialResultSet`s contain a `resume_token`. Execution can only
+	// be resumed from a previously yielded `resume_token`. For the above
+	// sequence of `PartialResultSet`s, resuming the query with
+	// "resume_token": "Af65..." will yield results from the
+	// `PartialResultSet` with value `["orl"]`.
 	Values []interface{} `json:"values,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5599,8 +5685,8 @@ type ProjectsInstanceConfigsGetCall struct {
 
 // Get: Gets information about a particular instance configuration.
 //
-// - name: The name of the requested instance configuration. Values are
-//   of the form `projects//instanceConfigs/`.
+//   - name: The name of the requested instance configuration. Values are
+//     of the form `projects//instanceConfigs/`.
 func (r *ProjectsInstanceConfigsService) Get(name string) *ProjectsInstanceConfigsGetCall {
 	c := &ProjectsInstanceConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5748,9 +5834,9 @@ type ProjectsInstanceConfigsListCall struct {
 // List: Lists the supported instance configurations for a given
 // project.
 //
-// - parent: The name of the project for which a list of supported
-//   instance configurations is requested. Values are of the form
-//   `projects/`.
+//   - parent: The name of the project for which a list of supported
+//     instance configurations is requested. Values are of the form
+//     `projects/`.
 func (r *ProjectsInstanceConfigsService) List(parent string) *ProjectsInstanceConfigsListCall {
 	c := &ProjectsInstanceConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6604,8 +6690,8 @@ type ProjectsInstancesCreateCall struct {
 // type is CreateInstanceMetadata. The response field type is Instance,
 // if successful.
 //
-// - parent: The name of the project in which to create the instance.
-//   Values are of the form `projects/`.
+//   - parent: The name of the project in which to create the instance.
+//     Values are of the form `projects/`.
 func (r *ProjectsInstancesService) Create(parent string, createinstancerequest *CreateInstanceRequest) *ProjectsInstancesCreateCall {
 	c := &ProjectsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6751,8 +6837,8 @@ type ProjectsInstancesDeleteCall struct {
 // immediately and irrevocably disappear from the API. All data in the
 // databases is permanently deleted.
 //
-// - name: The name of the instance to be deleted. Values are of the
-//   form `projects//instances/`.
+//   - name: The name of the instance to be deleted. Values are of the
+//     form `projects//instances/`.
 func (r *ProjectsInstancesService) Delete(name string) *ProjectsInstancesDeleteCall {
 	c := &ProjectsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6886,8 +6972,8 @@ type ProjectsInstancesGetCall struct {
 
 // Get: Gets information about a particular instance.
 //
-// - name: The name of the requested instance. Values are of the form
-//   `projects//instances/`.
+//   - name: The name of the requested instance. Values are of the form
+//     `projects//instances/`.
 func (r *ProjectsInstancesService) Get(name string) *ProjectsInstancesGetCall {
 	c := &ProjectsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7051,10 +7137,10 @@ type ProjectsInstancesGetIamPolicyCall struct {
 // have a policy set. Authorization requires
 // `spanner.instances.getIamPolicy` on resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being retrieved. The format is `projects//instances/` for
-//   instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being retrieved. The format is `projects//instances/` for
+//     instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesGetIamPolicyCall {
 	c := &ProjectsInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7197,8 +7283,8 @@ type ProjectsInstancesListCall struct {
 
 // List: Lists all instances in the given project.
 //
-// - parent: The name of the project for which a list of instances is
-//   requested. Values are of the form `projects/`.
+//   - parent: The name of the project for which a list of instances is
+//     requested. Values are of the form `projects/`.
 func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCall {
 	c := &ProjectsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7452,10 +7538,10 @@ type ProjectsInstancesPatchCall struct {
 // successful. Authorization requires `spanner.instances.update`
 // permission on the resource name.
 //
-// - name: A unique identifier for the instance, which cannot be changed
-//   after the instance is created. Values are of the form
-//   `projects//instances/a-z*[a-z0-9]`. The final segment of the name
-//   must be between 2 and 64 characters in length.
+//   - name: A unique identifier for the instance, which cannot be changed
+//     after the instance is created. Values are of the form
+//     `projects//instances/a-z*[a-z0-9]`. The final segment of the name
+//     must be between 2 and 64 characters in length.
 func (r *ProjectsInstancesService) Patch(nameid string, updateinstancerequest *UpdateInstanceRequest) *ProjectsInstancesPatchCall {
 	c := &ProjectsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7600,10 +7686,10 @@ type ProjectsInstancesSetIamPolicyCall struct {
 // Replaces any existing policy. Authorization requires
 // `spanner.instances.setIamPolicy` on resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being set. The format is `projects//instances/` for instance
-//   resources and `projects//instances//databases/` for databases
-//   resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being set. The format is `projects//instances/` for instance
+//     resources and `projects//instances//databases/` for databases
+//     resources.
 func (r *ProjectsInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesSetIamPolicyCall {
 	c := &ProjectsInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7750,10 +7836,10 @@ type ProjectsInstancesTestIamPermissionsCall struct {
 // the user has `spanner.instances.list` permission on the containing
 // Google Cloud Project. Otherwise returns an empty set of permissions.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which
-//   permissions are being tested. The format is `projects//instances/`
-//   for instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which
+//     permissions are being tested. The format is `projects//instances/`
+//     for instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTestIamPermissionsCall {
 	c := &ProjectsInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7904,8 +7990,8 @@ type ProjectsInstancesBackupOperationsListCall struct {
 // `operation.metadata.value.progress.start_time` in descending order
 // starting from the most recently started operation.
 //
-// - parent: The instance of the backup operations. Values are of the
-//   form `projects//instances/`.
+//   - parent: The instance of the backup operations. Values are of the
+//     form `projects//instances/`.
 func (r *ProjectsInstancesBackupOperationsService) List(parent string) *ProjectsInstancesBackupOperationsListCall {
 	c := &ProjectsInstancesBackupOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8167,8 +8253,8 @@ type ProjectsInstancesBackupsCopyCall struct {
 // returned operation will stop the copying and delete the backup.
 // Concurrent CopyBackup requests can run on the same source backup.
 //
-// - parent: The name of the destination instance that will contain the
-//   backup copy. Values are of the form: `projects//instances/`.
+//   - parent: The name of the destination instance that will contain the
+//     backup copy. Values are of the form: `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesBackupsCopyCall {
 	c := &ProjectsInstancesBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8319,11 +8405,11 @@ type ProjectsInstancesBackupsCreateCall struct {
 // per database. Backup creation of different databases can run
 // concurrently.
 //
-// - parent: The name of the instance in which the backup will be
-//   created. This must be the same instance that contains the database
-//   the backup will be created from. The backup will be stored in the
-//   location(s) specified in the instance configuration of this
-//   instance. Values are of the form `projects//instances/`.
+//   - parent: The name of the instance in which the backup will be
+//     created. This must be the same instance that contains the database
+//     the backup will be created from. The backup will be stored in the
+//     location(s) specified in the instance configuration of this
+//     instance. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Create(parent string, backup *Backup) *ProjectsInstancesBackupsCreateCall {
 	c := &ProjectsInstancesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8344,14 +8430,18 @@ func (c *ProjectsInstancesBackupsCreateCall) BackupId(backupId string) *Projects
 // the backup.
 //
 // Possible values:
-//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
-//   "USE_DATABASE_ENCRYPTION" - Use the same encryption configuration
+//
+//	"ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+//	"USE_DATABASE_ENCRYPTION" - Use the same encryption configuration
+//
 // as the database. This is the default option when encryption_config is
 // empty. For example, if the database is using
 // `Customer_Managed_Encryption`, the backup will be using the same
 // Cloud KMS key as the database.
-//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
-//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+//
+//	"GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+//	"CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+//
 // specified, `kms_key_name` must contain a valid Cloud KMS key.
 func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigEncryptionType(encryptionConfigEncryptionType string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.Set("encryptionConfig.encryptionType", encryptionConfigEncryptionType)
@@ -8529,8 +8619,8 @@ type ProjectsInstancesBackupsDeleteCall struct {
 
 // Delete: Deletes a pending or completed Backup.
 //
-// - name: Name of the backup to delete. Values are of the form
-//   `projects//instances//backups/`.
+//   - name: Name of the backup to delete. Values are of the form
+//     `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Delete(name string) *ProjectsInstancesBackupsDeleteCall {
 	c := &ProjectsInstancesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8664,8 +8754,8 @@ type ProjectsInstancesBackupsGetCall struct {
 
 // Get: Gets metadata on a pending or completed Backup.
 //
-// - name: Name of the backup. Values are of the form
-//   `projects//instances//backups/`.
+//   - name: Name of the backup. Values are of the form
+//     `projects//instances//backups/`.
 func (r *ProjectsInstancesBackupsService) Get(name string) *ProjectsInstancesBackupsGetCall {
 	c := &ProjectsInstancesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8817,10 +8907,10 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being retrieved. The format is `projects//instances/` for
-//   instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being retrieved. The format is `projects//instances/` for
+//     instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesBackupsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesBackupsGetIamPolicyCall {
 	c := &ProjectsInstancesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8965,8 +9055,8 @@ type ProjectsInstancesBackupsListCall struct {
 // ordered by `create_time` in descending order, starting from the most
 // recent `create_time`.
 //
-// - parent: The instance to list backups from. Values are of the form
-//   `projects//instances/`.
+//   - parent: The instance to list backups from. Values are of the form
+//     `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstancesBackupsListCall {
 	c := &ProjectsInstancesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9195,14 +9285,14 @@ type ProjectsInstancesBackupsPatchCall struct {
 
 // Patch: Updates a pending or completed Backup.
 //
-// - name: Output only for the CreateBackup operation. Required for the
-//   UpdateBackup operation. A globally unique identifier for the backup
-//   which cannot be changed. Values are of the form
-//   `projects//instances//backups/a-z*[a-z0-9]` The final segment of
-//   the name must be between 2 and 60 characters in length. The backup
-//   is stored in the location(s) specified in the instance
-//   configuration of the instance containing the backup, identified by
-//   the prefix of the backup name of the form `projects//instances/`.
+//   - name: Output only for the CreateBackup operation. Required for the
+//     UpdateBackup operation. A globally unique identifier for the backup
+//     which cannot be changed. Values are of the form
+//     `projects//instances//backups/a-z*[a-z0-9]` The final segment of
+//     the name must be between 2 and 60 characters in length. The backup
+//     is stored in the location(s) specified in the instance
+//     configuration of the instance containing the backup, identified by
+//     the prefix of the backup name of the form `projects//instances/`.
 func (r *ProjectsInstancesBackupsService) Patch(nameid string, backup *Backup) *ProjectsInstancesBackupsPatchCall {
 	c := &ProjectsInstancesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -9366,10 +9456,10 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being set. The format is `projects//instances/` for instance
-//   resources and `projects//instances//databases/` for databases
-//   resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being set. The format is `projects//instances/` for instance
+//     resources and `projects//instances//databases/` for databases
+//     resources.
 func (r *ProjectsInstancesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesBackupsSetIamPolicyCall {
 	c := &ProjectsInstancesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9519,10 +9609,10 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which
-//   permissions are being tested. The format is `projects//instances/`
-//   for instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which
+//     permissions are being tested. The format is `projects//instances/`
+//     for instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesBackupsTestIamPermissionsCall {
 	c := &ProjectsInstancesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10311,8 +10401,8 @@ type ProjectsInstancesDatabaseOperationsListCall struct {
 // that have completed/failed/canceled within the last 7 days, and
 // pending operations.
 //
-// - parent: The instance of the database operations. Values are of the
-//   form `projects//instances/`.
+//   - parent: The instance of the database operations. Values are of the
+//     form `projects//instances/`.
 func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *ProjectsInstancesDatabaseOperationsListCall {
 	c := &ProjectsInstancesDatabaseOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10553,8 +10643,8 @@ type ProjectsInstancesDatabasesCreateCall struct {
 // database. The metadata field type is CreateDatabaseMetadata. The
 // response field type is Database, if successful.
 //
-// - parent: The name of the instance that will serve the new database.
-//   Values are of the form `projects//instances/`.
+//   - parent: The name of the instance that will serve the new database.
+//     Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Create(parent string, createdatabaserequest *CreateDatabaseRequest) *ProjectsInstancesDatabasesCreateCall {
 	c := &ProjectsInstancesDatabasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10833,8 +10923,8 @@ type ProjectsInstancesDatabasesGetCall struct {
 
 // Get: Gets the state of a Cloud Spanner database.
 //
-// - name: The name of the requested database. Values are of the form
-//   `projects//instances//databases/`.
+//   - name: The name of the requested database. Values are of the form
+//     `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) Get(name string) *ProjectsInstancesDatabasesGetCall {
 	c := &ProjectsInstancesDatabasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10983,8 +11073,8 @@ type ProjectsInstancesDatabasesGetDdlCall struct {
 // formatted DDL statements. This method does not show pending schema
 // updates, those may be queried using the Operations API.
 //
-// - database: The database whose schema we wish to get. Values are of
-//   the form `projects//instances//databases/`.
+//   - database: The database whose schema we wish to get. Values are of
+//     the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesService) GetDdl(database string) *ProjectsInstancesDatabasesGetDdlCall {
 	c := &ProjectsInstancesDatabasesGetDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.database = database
@@ -11136,10 +11226,10 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 // authorization requires `spanner.backups.getIamPolicy` permission on
 // resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being retrieved. The format is `projects//instances/` for
-//   instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being retrieved. The format is `projects//instances/` for
+//     instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesDatabasesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesGetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -11283,9 +11373,9 @@ type ProjectsInstancesDatabasesGetScansCall struct {
 // GetScans: Request a specific scan with Database-specific data for
 // Cloud Key Visualizer.
 //
-// - name: The unique name of the scan containing the requested
-//   information, specific to the Database service implementing this
-//   interface.
+//   - name: The unique name of the scan containing the requested
+//     information, specific to the Database service implementing this
+//     interface.
 func (r *ProjectsInstancesDatabasesService) GetScans(name string) *ProjectsInstancesDatabasesGetScansCall {
 	c := &ProjectsInstancesDatabasesGetScansCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11315,12 +11405,16 @@ func (c *ProjectsInstancesDatabasesGetScansCall) StartTime(startTime string) *Pr
 // the FULL view is assumed.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
-//   "SUMMARY" - Server responses only include `name`, `details`,
+//
+//	"VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
+//	"SUMMARY" - Server responses only include `name`, `details`,
+//
 // `start_time` and `end_time`. The default value. Note, the ListScans
 // method may only use this view type, others view types are not
 // supported.
-//   "FULL" - Full representation of the scan is returned in the server
+//
+//	"FULL" - Full representation of the scan is returned in the server
+//
 // response, including `data`.
 func (c *ProjectsInstancesDatabasesGetScansCall) View(view string) *ProjectsInstancesDatabasesGetScansCall {
 	c.urlParams_.Set("view", view)
@@ -11494,8 +11588,8 @@ type ProjectsInstancesDatabasesListCall struct {
 
 // List: Lists Cloud Spanner databases.
 //
-// - parent: The instance whose databases should be listed. Values are
-//   of the form `projects//instances/`.
+//   - parent: The instance whose databases should be listed. Values are
+//     of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) List(parent string) *ProjectsInstancesDatabasesListCall {
 	c := &ProjectsInstancesDatabasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11702,10 +11796,10 @@ type ProjectsInstancesDatabasesRestoreCall struct {
 // for the optimize operation associated with the first restore to
 // complete.
 //
-// - parent: The name of the instance in which to create the restored
-//   database. This instance must be in the same project and have the
-//   same instance configuration as the instance containing the source
-//   backup. Values are of the form `projects//instances/`.
+//   - parent: The name of the instance in which to create the restored
+//     database. This instance must be in the same project and have the
+//     same instance configuration as the instance containing the source
+//     backup. Values are of the form `projects//instances/`.
 func (r *ProjectsInstancesDatabasesService) Restore(parent string, restoredatabaserequest *RestoreDatabaseRequest) *ProjectsInstancesDatabasesRestoreCall {
 	c := &ProjectsInstancesDatabasesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11852,10 +11946,10 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 // authorization requires `spanner.backups.setIamPolicy` permission on
 // resource.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which the policy
-//   is being set. The format is `projects//instances/` for instance
-//   resources and `projects//instances//databases/` for databases
-//   resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy
+//     is being set. The format is `projects//instances/` for instance
+//     resources and `projects//instances//databases/` for databases
+//     resources.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12005,10 +12099,10 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // result in a NOT_FOUND error if the user has `spanner.backups.list`
 // permission on the containing instance.
 //
-// - resource: REQUIRED: The Cloud Spanner resource for which
-//   permissions are being tested. The format is `projects//instances/`
-//   for instance resources and `projects//instances//databases/` for
-//   database resources.
+//   - resource: REQUIRED: The Cloud Spanner resource for which
+//     permissions are being tested. The format is `projects//instances/`
+//     for instance resources and `projects//instances//databases/` for
+//     database resources.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -12299,8 +12393,8 @@ type ProjectsInstancesDatabasesDatabaseRolesListCall struct {
 
 // List: Lists Cloud Spanner database roles.
 //
-// - parent: The database whose roles should be listed. Values are of
-//   the form `projects//instances//databases//databaseRoles`.
+//   - parent: The database whose roles should be listed. Values are of
+//     the form `projects//instances//databases/`.
 func (r *ProjectsInstancesDatabasesDatabaseRolesService) List(parent string) *ProjectsInstancesDatabasesDatabaseRolesListCall {
 	c := &ProjectsInstancesDatabasesDatabaseRolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12442,7 +12536,7 @@ func (c *ProjectsInstancesDatabasesDatabaseRolesListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The database whose roles should be listed. Values are of the form `projects//instances//databases//databaseRoles`.",
+	//       "description": "Required. The database whose roles should be listed. Values are of the form `projects//instances//databases/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+$",
 	//       "required": true,
@@ -12480,6 +12574,159 @@ func (c *ProjectsInstancesDatabasesDatabaseRolesListCall) Pages(ctx context.Cont
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "spanner.projects.instances.databases.databaseRoles.testIamPermissions":
+
+type ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that the caller has on the
+// specified database or backup resource. Attempting this RPC on a
+// non-existent Cloud Spanner database will result in a NOT_FOUND error
+// if the user has `spanner.databases.list` permission on the containing
+// Cloud Spanner instance. Otherwise returns an empty set of
+// permissions. Calling this method on a backup that does not exist will
+// result in a NOT_FOUND error if the user has `spanner.backups.list`
+// permission on the containing instance.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which
+//     permissions are being tested. The format is `projects//instances/`
+//     for instance resources and `projects//instances//databases/` for
+//     database resources.
+func (r *ProjectsInstancesDatabasesDatabaseRolesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall {
+	c := &ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.databaseRoles.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that the caller has on the specified database or backup resource. Attempting this RPC on a non-existent Cloud Spanner database will result in a NOT_FOUND error if the user has `spanner.databases.list` permission on the containing Cloud Spanner instance. Otherwise returns an empty set of permissions. Calling this method on a backup that does not exist will result in a NOT_FOUND error if the user has `spanner.backups.list` permission on the containing instance.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/databaseRoles/{databaseRolesId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.databases.databaseRoles.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The Cloud Spanner resource for which permissions are being tested. The format is `projects//instances/` for instance resources and `projects//instances//databases/` for database resources.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/databaseRoles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instances.databases.operations.cancel":
@@ -13437,8 +13684,8 @@ type ProjectsInstancesDatabasesSessionsCommitCall struct {
 // that you perform another read from the database to see the state of
 // things as they are now.
 //
-// - session: The session in which the transaction to be committed is
-//   running.
+//   - session: The session in which the transaction to be committed is
+//     running.
 func (r *ProjectsInstancesDatabasesSessionsService) Commit(session string, commitrequest *CommitRequest) *ProjectsInstancesDatabasesSessionsCommitCall {
 	c := &ProjectsInstancesDatabasesSessionsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -13879,8 +14126,8 @@ type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
 // after the first failed statement; the remaining statements are not
 // executed.
 //
-// - session: The session in which the DML statements should be
-//   performed.
+//   - session: The session in which the DML statements should be
+//     performed.
 func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
 	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -15144,8 +15391,8 @@ type ProjectsInstancesDatabasesSessionsRollbackCall struct {
 // transaction, the transaction was already aborted, or the transaction
 // is not found. `Rollback` never returns `ABORTED`.
 //
-// - session: The session in which the transaction to roll back is
-//   running.
+//   - session: The session in which the transaction to roll back is
+//     running.
 func (r *ProjectsInstancesDatabasesSessionsService) Rollback(session string, rollbackrequest *RollbackRequest) *ProjectsInstancesDatabasesSessionsRollbackCall {
 	c := &ProjectsInstancesDatabasesSessionsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.session = session
@@ -16075,8 +16322,8 @@ type ScansListCall struct {
 
 // List: Return available scans given a Database-specific resource name.
 //
-// - parent: The unique name of the parent resource, specific to the
-//   Database service implementing this interface.
+//   - parent: The unique name of the parent resource, specific to the
+//     Database service implementing this interface.
 func (r *ScansService) List(parent string) *ScansListCall {
 	c := &ScansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16111,12 +16358,16 @@ func (c *ScansListCall) PageToken(pageToken string) *ScansListCall {
 // (the default) is currently supported for ListScans.
 //
 // Possible values:
-//   "VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
-//   "SUMMARY" - Server responses only include `name`, `details`,
+//
+//	"VIEW_UNSPECIFIED" - Not specified, equivalent to SUMMARY.
+//	"SUMMARY" - Server responses only include `name`, `details`,
+//
 // `start_time` and `end_time`. The default value. Note, the ListScans
 // method may only use this view type, others view types are not
 // supported.
-//   "FULL" - Full representation of the scan is returned in the server
+//
+//	"FULL" - Full representation of the scan is returned in the server
+//
 // response, including `data`.
 func (c *ScansListCall) View(view string) *ScansListCall {
 	c.urlParams_.Set("view", view)

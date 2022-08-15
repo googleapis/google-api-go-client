@@ -218,7 +218,7 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
-// Backup: A Cloud Filestore backup.
+// Backup: A Filestore backup.
 type Backup struct {
 	// CapacityGb: Output only. Capacity of the source file share when the
 	// backup was created.
@@ -248,17 +248,17 @@ type Backup struct {
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
-	// SourceFileShare: Name of the file share in the source Cloud Filestore
+	// SourceFileShare: Name of the file share in the source Filestore
 	// instance that the backup is created from.
 	SourceFileShare string `json:"sourceFileShare,omitempty"`
 
-	// SourceInstance: The resource name of the source Cloud Filestore
-	// instance, in the format
+	// SourceInstance: The resource name of the source Filestore instance,
+	// in the format
 	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
 	// `, used to create this backup.
 	SourceInstance string `json:"sourceInstance,omitempty"`
 
-	// SourceInstanceTier: Output only. The service tier of the source Cloud
+	// SourceInstanceTier: Output only. The service tier of the source
 	// Filestore instance that this backup is created from.
 	//
 	// Possible values:
@@ -464,8 +464,8 @@ type Empty struct {
 
 // FileShareConfig: File share configuration for the instance.
 type FileShareConfig struct {
-	// CapacityGb: File share capacity in gigabytes (GB). Cloud Filestore
-	// defines 1 GB as 1024^3 bytes.
+	// CapacityGb: File share capacity in gigabytes (GB). Filestore defines
+	// 1 GB as 1024^3 bytes.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
 
 	// Name: The name of the file share (must be 32 characters or less for
@@ -960,7 +960,7 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A Cloud Filestore instance.
+// Instance: A Filestore instance.
 type Instance struct {
 	// CapacityGb: The storage capacity of the instance in gigabytes (GB =
 	// 1024^3 bytes). This capacity can be increased up to `max_capacity_gb`
@@ -1529,8 +1529,8 @@ type NetworkConfig struct {
 	// that identifies the range of IP addresses reserved for this instance.
 	// For example, 10.0.0.0/29, 192.168.0.0/24, or 192.168.0.0/26,
 	// respectively. The range you specify can't overlap with either
-	// existing subnets or assigned IP address ranges for other Cloud
-	// Filestore instances in the selected VPC network.
+	// existing subnets or assigned IP address ranges for other Filestore
+	// instances in the selected VPC network.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectMode") to
@@ -1742,8 +1742,8 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // RestoreInstanceRequest: RestoreInstanceRequest restores an existing
 // instance's file share from a snapshot or backup.
 type RestoreInstanceRequest struct {
-	// FileShare: Required. Name of the file share in the Cloud Filestore
-	// instance that the snapshot is being restored to.
+	// FileShare: Required. Name of the file share in the Filestore instance
+	// that the snapshot is being restored to.
 	FileShare string `json:"fileShare,omitempty"`
 
 	// SourceBackup: The resource name of the backup, in the format
@@ -1857,10 +1857,10 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Share: A Cloud Filestore share.
+// Share: A Filestore share.
 type Share struct {
-	// CapacityGb: File share capacity in gigabytes (GB). Cloud Filestore
-	// defines 1 GB as 1024^3 bytes. Must be greater than 0.
+	// CapacityGb: File share capacity in gigabytes (GB). Filestore defines
+	// 1 GB as 1024^3 bytes. Must be greater than 0.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
 
 	// CreateTime: Output only. The time when the share was created.
@@ -1923,7 +1923,7 @@ func (s *Share) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Snapshot: A Cloud Filestore snapshot.
+// Snapshot: A Filestore snapshot.
 type Snapshot struct {
 	// CreateTime: Output only. The time when the snapshot was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2076,6 +2076,20 @@ type UpdatePolicy struct {
 	//   "UPDATE_CHANNEL_UNSPECIFIED" - Unspecified channel.
 	//   "EARLIER" - Early channel within a customer project.
 	//   "LATER" - Later channel within a customer project.
+	//   "WEEK1" - ! ! The follow channels can ONLY be used if you adopt the
+	// new MW system! ! ! NOTE: all WEEK channels are assumed to be under a
+	// weekly window. ! There is currently no dedicated channel definitions
+	// for Daily windows. ! If you use Daily window, the system will assume
+	// a 1d (24Hours) advanced ! notification period b/w EARLY and LATER. !
+	// We may consider support more flexible daily channel specifications in
+	// ! the future. WEEK1 == EARLIER with minimum 7d advanced notification.
+	// {7d, 14d} The system will treat them equally and will use WEEK1
+	// whenever it can. New customers are encouraged to use this channel
+	// annotation.
+	//   "WEEK2" - WEEK2 == LATER with minimum 14d advanced notification
+	// {14d, 21d}.
+	//   "WEEK5" - WEEK5 == 40d support. minimum 35d advanced notification
+	// {35d, 42d}.
 	Channel string `json:"channel,omitempty"`
 
 	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
@@ -2522,8 +2536,8 @@ type ProjectsLocationsBackupsCreateCall struct {
 // Create: Creates a backup.
 //
 //   - parent: The backup's project and location, in the format
-//     `projects/{project_id}/locations/{location}`. In Cloud Filestore,
-//     backup locations map to GCP regions, for example **us-west1**.
+//     `projects/{project_id}/locations/{location}`. In Filestore, backup
+//     locations map to GCP regions, for example **us-west1**.
 func (r *ProjectsLocationsBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupsCreateCall {
 	c := &ProjectsLocationsBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2646,7 +2660,7 @@ func (c *ProjectsLocationsBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The backup's project and location, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**.",
+	//       "description": "Required. The backup's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to GCP regions, for example **us-west1**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2963,10 +2977,10 @@ type ProjectsLocationsBackupsListCall struct {
 //
 //   - parent: The project and location for which to retrieve backup
 //     information, in the format
-//     `projects/{project_id}/locations/{location}`. In Cloud Filestore,
-//     backup locations map to GCP regions, for example **us-west1**. To
-//     retrieve backup information for all locations, use "-" for the
-//     `{location}` value.
+//     `projects/{project_id}/locations/{location}`. In Filestore, backup
+//     locations map to GCP regions, for example **us-west1**. To retrieve
+//     backup information for all locations, use "-" for the `{location}`
+//     value.
 func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
 	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3130,7 +3144,7 @@ func (c *ProjectsLocationsBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
+	//       "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3343,7 +3357,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 // capacity of the tier).
 //
 //   - parent: The instance's project and location, in the format
-//     `projects/{project_id}/locations/{location}`. In Cloud Filestore,
+//     `projects/{project_id}/locations/{location}`. In Filestore,
 //     locations map to GCP zones, for example **us-west1-b**.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3467,7 +3481,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**.",
+	//       "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, locations map to GCP zones, for example **us-west1-b**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

@@ -23,6 +23,10 @@ func computeTokenSource(audience string, ds *internal.DialSettings) (oauth2.Toke
 	}
 	ts := computeIDTokenSource{
 		audience: audience,
+		format:   "full",
+	}
+	if ds.CustomFormat != "" {
+		ts.format = ds.CustomFormat
 	}
 	tok, err := ts.Token()
 	if err != nil {
@@ -33,12 +37,13 @@ func computeTokenSource(audience string, ds *internal.DialSettings) (oauth2.Toke
 
 type computeIDTokenSource struct {
 	audience string
+	format   string
 }
 
 func (c computeIDTokenSource) Token() (*oauth2.Token, error) {
 	v := url.Values{}
 	v.Set("audience", c.audience)
-	v.Set("format", "full")
+	v.Set("format", c.format)
 	urlSuffix := "instance/service-accounts/default/identity?" + v.Encode()
 	res, err := metadata.Get(urlSuffix)
 	if err != nil {

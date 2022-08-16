@@ -47,6 +47,7 @@ type DialSettings struct {
 	ImpersonationConfig           *impersonate.Config
 	EnableDirectPath              bool
 	AllowNonDefaultServiceAccount bool
+	CustomFormat                  string
 
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters

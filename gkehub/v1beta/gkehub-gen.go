@@ -576,16 +576,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -2991,9 +2995,9 @@ type PolicyControllerHubConfig struct {
 	// Controller.
 	//   "INSTALL_SPEC_ENABLED" - Request to install and enable Policy
 	// Controller.
-	//   "INSTALL_SPEC_DISABLED" - Request to disable Policy Controller. If
-	// Policy Controller is not installed, it will be installed but
-	// disabled.
+	//   "INSTALL_SPEC_SUSPENDED" - Request to suspend Policy Controller
+	// i.e. its webhooks. If Policy Controller is not installed, it will be
+	// installed but suspended.
 	InstallSpec string `json:"installSpec,omitempty"`
 
 	// LogDeniesEnabled: Logs all denies and dry run failures.
@@ -3036,70 +3040,6 @@ type PolicyControllerHubConfig struct {
 
 func (s *PolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerHubConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PolicyControllerHubState: State of the Policy Controller.
-type PolicyControllerHubState struct {
-	// DeploymentStates: Map from deployment name to deployment state.
-	// Example deployments are gatekeeper-controller-manager,
-	// gatekeeper-audit deployment, and gatekeeper-mutation.
-	DeploymentStates map[string]string `json:"deploymentStates,omitempty"`
-
-	// Version: The version of Gatekeeper Policy Controller deployed.
-	Version *PolicyControllerHubVersion `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DeploymentStates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeploymentStates") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyControllerHubState) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerHubState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PolicyControllerHubVersion: The build version of Gatekeeper that
-// Policy Controller is using.
-type PolicyControllerHubVersion struct {
-	// Version: The gatekeeper image tag that is composed of ACM version,
-	// git tag, build number.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Version") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Version") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
-	type NoMethod PolicyControllerHubVersion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3149,16 +3089,13 @@ type PolicyControllerMembershipState struct {
 	// a Policy Controller installation.
 	ClusterName string `json:"clusterName,omitempty"`
 
-	// MembershipSpec: Membership configuration in the cluster. This
-	// represents the actual state in the cluster, while the MembershipSpec
-	// in the FeatureSpec represents the intended state
-	MembershipSpec *PolicyControllerMembershipSpec `json:"membershipSpec,omitempty"`
+	// ComponentStates: Currently these include (also serving as map keys):
+	// 1. "admission" 2. "audit" 3. "mutation" 4. "constraint template
+	// library"
+	ComponentStates map[string]PolicyControllerOnClusterState `json:"componentStates,omitempty"`
 
-	// PolicyControllerHubState: Policy Controller state observed by the
-	// Policy Controller Hub
-	PolicyControllerHubState *PolicyControllerHubState `json:"policyControllerHubState,omitempty"`
-
-	// State: The lifecycle state Policy Controller is in.
+	// State: The overall Policy Controller lifecycle state observed by the
+	// Hub Feature controller.
 	//
 	// Possible values:
 	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
@@ -3254,6 +3191,74 @@ type PolicyControllerMonitoringConfig struct {
 
 func (s *PolicyControllerMonitoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyControllerMonitoringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerOnClusterState: OnClusterState represents the state
+// of a sub-component of Policy Controller.
+type PolicyControllerOnClusterState struct {
+	// Details: Surface potential errors or information logs.
+	Details string `json:"details,omitempty"`
+
+	// State: The lifecycle state of this component.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and
+	// no k8s resources of any type that are associated with the PC should
+	// exist there. The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is
+	// not fully installed on the cluster. In this state the hub can be
+	// expected to be taking actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an
+	// operational mode. In this state PCH will be reconciling state with
+	// the PC, and the PC will be performing it’s operational tasks per
+	// that software. Entering a READY state requires that the hub has
+	// confirmed the PC is installed and its pods are operational with the
+	// version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of
+	// changing the configuration (including changing the version of PC
+	// either up and down, or modifying the manifests of PC) of the
+	// resources running on the cluster. The PCH has a Membership, is aware
+	// of the version the cluster should be running in, but has not
+	// confirmed for itself that the PC is running with that version.
+	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	// the PCH wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
+	// to act to make it operational. Entering a CLUSTER_ERROR state happens
+	// automatically when the PCH determines that a PC installed on the
+	// cluster is non-operative or that the cluster does not meet
+	// requirements set for the PCH to administer the cluster but has
+	// nevertheless been given an instruction to do so (such as
+	// ‘install’).
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and
+	// only the PCH is unable to act. The hub should not issue instructions
+	// to change the PC state, or otherwise interfere with the on-cluster
+	// resources. Entering a HUB_ERROR state happens automatically when the
+	// PCH determines the hub is in an unhealthy state and it wishes to
+	// ‘take hands off’ to avoid corrupting the PC or other data.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerOnClusterState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerOnClusterState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

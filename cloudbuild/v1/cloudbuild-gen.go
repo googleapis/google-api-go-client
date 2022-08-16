@@ -7887,8 +7887,7 @@ func (r *ProjectsLocationsBitbucketServerConfigsReposService) List(parent string
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of configs to return. The service may return fewer than this value.
-// If unspecified, at most 50 configs will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsBitbucketServerConfigsReposListCall) PageSize(pageSize int64) *ProjectsLocationsBitbucketServerConfigsReposListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8013,7 +8012,7 @@ func (c *ProjectsLocationsBitbucketServerConfigsReposListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 50 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "description": "The maximum number of configs to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 will be coerced to 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

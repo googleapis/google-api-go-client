@@ -158,6 +158,89 @@ type PlaceActionTypeMetadataService struct {
 	s *Service
 }
 
+// AvailableDay: Day level availability.
+type AvailableDay struct {
+	// FulfillmentDate: An available date for a fulfillment method. Assumed
+	// to be in merchant's timezone.
+	FulfillmentDate *Date `json:"fulfillmentDate,omitempty"`
+
+	// LastOrderingTime: Unix timestamp. The last time till when, a user
+	// could place an order to be received by `fulfillment_date`. In other
+	// words, after last_ordering_time, fulfillment_date will no longer be
+	// shown as available.
+	LastOrderingTime string `json:"lastOrderingTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FulfillmentDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FulfillmentDate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvailableDay) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailableDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -167,6 +250,114 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FeeDetails: Fee details for the fulfillment method associated with
+// the action.
+type FeeDetails struct {
+	// BaseFee: The base fee associated with the fulfillment method.
+	BaseFee *MinimumFee `json:"baseFee,omitempty"`
+
+	// FixedFee: The fixed fee associated with the fulfillment method.
+	FixedFee *FixedFee `json:"fixedFee,omitempty"`
+
+	// NoFee: No fee for the fulfillment method.
+	NoFee *NoFee `json:"noFee,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseFee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseFee") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod FeeDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FixedFee: The fixed fee required for the fulfillment method.
+type FixedFee struct {
+	// Amount: The amount of the fixed fee for the fulfillment method.
+	Amount *Money `json:"amount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Amount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FixedFee) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedFee
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FulfillmentOption: The fulfillment option for an order online action.
+type FulfillmentOption struct {
+	// AvailableDay: A list of days on which there is availability for this
+	// fulfillment method (preferably at least 2).
+	AvailableDay []*AvailableDay `json:"availableDay,omitempty"`
+
+	// FeeDetails: Fee details for the fulfillment method.
+	FeeDetails *FeeDetails `json:"feeDetails,omitempty"`
+
+	// FulfillmentType: Fulfillment type
+	//
+	// Possible values:
+	//   "FULFILLMENT_TYPE_UNSPECIFIED" - The fulfillment type is
+	// unspecified.
+	//   "FULFILLMENT_TYPE_DELIVERY" - The fulfillment type is delivery.
+	//   "FULFILLMENT_TYPE_PICKUP" - The fulfillment type is pickup.
+	FulfillmentType string `json:"fulfillmentType,omitempty"`
+
+	// MinimumOrder: Minimum order for the fulfillment method associated
+	// with the action.
+	MinimumOrder *Money `json:"minimumOrder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailableDay") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailableDay") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FulfillmentOption) MarshalJSON() ([]byte, error) {
+	type NoMethod FulfillmentOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListPlaceActionLinksResponse: Response message for
@@ -248,6 +439,110 @@ func (s *ListPlaceActionTypeMetadataResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MinimumFee: The minimum fee required for the fulfillment method.
+type MinimumFee struct {
+	// BaseFeeAmount: The base fee amount for the fulfillment method.
+	BaseFeeAmount *Money `json:"baseFeeAmount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseFeeAmount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseFeeAmount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MinimumFee) MarshalJSON() ([]byte, error) {
+	type NoMethod MinimumFee
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Money: Represents an amount of money with its currency type.
+type Money struct {
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
+	Units int64 `json:"units,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Money) MarshalJSON() ([]byte, error) {
+	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NoFee: No fee required for the fulfillment method associated with the
+// action.
+type NoFee struct {
+}
+
+// OrderOnlineMetadata: Client version of the metadata for an order
+// online action.
+type OrderOnlineMetadata struct {
+	// FulfillmentOption: Available fulfillment options for an order online
+	// action.
+	FulfillmentOption []*FulfillmentOption `json:"fulfillmentOption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FulfillmentOption")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FulfillmentOption") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrderOnlineMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderOnlineMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PlaceActionLink: Represents a place action link and its attributes.
 type PlaceActionLink struct {
 	// CreateTime: Output only. The time when the place action link was
@@ -275,6 +570,10 @@ type PlaceActionLink struct {
 	// response.
 	Name string `json:"name,omitempty"`
 
+	// OrderOnlineMetadata: Optional. Metadata for the order online link.
+	// Supports action with PlaceActionType of SHOP_ONLINE.
+	OrderOnlineMetadata *OrderOnlineMetadata `json:"orderOnlineMetadata,omitempty"`
+
 	// PlaceActionType: Required. The type of place action that can be
 	// performed using this link.
 	//
@@ -289,6 +588,8 @@ type PlaceActionLink struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ProviderType: Output only. Specifies the provider type.
@@ -357,6 +658,8 @@ type PlaceActionTypeMetadata struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to

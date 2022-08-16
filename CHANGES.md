@@ -1,5 +1,13 @@
 # Changes
 
+## [0.93.0](https://github.com/googleapis/google-api-go-client/compare/v0.92.0...v0.93.0) (2022-08-16)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1664](https://github.com/googleapis/google-api-go-client/issues/1664) [#1662](https://github.com/googleapis/google-api-go-client/issues/1662) [#1661](https://github.com/googleapis/google-api-go-client/issues/1661) [#1652](https://github.com/googleapis/google-api-go-client/issues/1652)
+* **google-api-go-generator:** Change field PaymentState to pointer ([#1663](https://github.com/googleapis/google-api-go-client/issues/1663)) ([d6ee425](https://github.com/googleapis/google-api-go-client/commit/d6ee425a65668ee28ff97c6fb70f3497865d6572)), refs [#727](https://github.com/googleapis/google-api-go-client/issues/727)
+
 ## [0.92.0](https://github.com/googleapis/google-api-go-client/compare/v0.91.0...v0.92.0) (2022-08-10)
 
 

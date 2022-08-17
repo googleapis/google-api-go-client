@@ -3278,6 +3278,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "identitytoolkit:v1",
+      "name": "identitytoolkit",
+      "version": "v1",
+      "title": "Identity Toolkit API",
+      "description": "The Google Identity Toolkit API lets you use open standards to verify a user's identity.",
+      "discoveryRestUrl": "https://identitytoolkit.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/identity-platform",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "identitytoolkit:v2",
+      "name": "identitytoolkit",
+      "version": "v2",
+      "title": "Identity Toolkit API",
+      "description": "The Google Identity Toolkit API lets you use open standards to verify a user's identity.",
+      "discoveryRestUrl": "https://identitytoolkit.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/identity-platform",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "identitytoolkit:v3",
       "name": "identitytoolkit",
       "version": "v3",
@@ -3288,7 +3318,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://firebase.google.com/docs/auth/",
+      "documentationLink": "https://cloud.google.com/identity-platform",
       "preferred": true
     },
     {

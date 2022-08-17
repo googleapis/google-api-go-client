@@ -488,9 +488,7 @@ type ProjectsStoredInfoTypesService struct {
 // job. See https://cloud.google.com/dlp/docs/concepts-actions to learn
 // more.
 type GooglePrivacyDlpV2Action struct {
-	// Deidentify: Create a de-identified copy of the input data. Applicable
-	// for non-image data only. The de-identified copy is in the same
-	// location as the original data.
+	// Deidentify: Create a de-identified copy of the input data.
 	Deidentify *GooglePrivacyDlpV2Deidentify `json:"deidentify,omitempty"`
 
 	// JobNotificationEmails: Enable email notification for project owners
@@ -540,6 +538,14 @@ func (s *GooglePrivacyDlpV2Action) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2ActivateJobTriggerRequest: Request message for
 // ActivateJobTrigger.
 type GooglePrivacyDlpV2ActivateJobTriggerRequest struct {
+}
+
+// GooglePrivacyDlpV2AllInfoTypes: Apply transformation to all findings.
+type GooglePrivacyDlpV2AllInfoTypes struct {
+}
+
+// GooglePrivacyDlpV2AllText: Apply to all text.
+type GooglePrivacyDlpV2AllText struct {
 }
 
 // GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails: Result of a risk
@@ -2691,8 +2697,8 @@ func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2Deidentify: Create a de-identified copy of the
-// requested table or files. . A TransformationDetail will be created
-// for each transformation. If any rows in BigQuery are skipped during
+// requested table or files. A TransformationDetail will be created for
+// each transformation. If any rows in BigQuery are skipped during
 // de-identification (transformation errors or row size exceeds BigQuery
 // insert API limits) they are placed in the failure output table. If
 // the original row exceeds the BigQuery insert API limit it will be
@@ -2703,11 +2709,12 @@ func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 // created in the same project and dataset as the original table.
 // Compatible with: Inspect
 type GooglePrivacyDlpV2Deidentify struct {
-	// CloudStorageOutput: Required. User settable GCS bucket and folders to
-	// store de-identified files. This field must be set for cloud storage
-	// deidentification. The output GCS bucket must be different from the
-	// input bucket. De-identified files will overwrite files in the output
-	// path. Form of: gs://bucket/folder/ or gs://bucket
+	// CloudStorageOutput: Required. User settable Cloud Storage bucket and
+	// folders to store de-identified files. This field must be set for
+	// cloud storage deidentification. The output Cloud Storage bucket must
+	// be different from the input bucket. De-identified files will
+	// overwrite files in the output path. Form of: gs://bucket/folder/ or
+	// gs://bucket
 	CloudStorageOutput string `json:"cloudStorageOutput,omitempty"`
 
 	// FileTypesToTransform: List of user-specified file type groups to
@@ -2788,6 +2795,9 @@ func (s *GooglePrivacyDlpV2Deidentify) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2DeidentifyConfig: The configuration that controls
 // how the data will change.
 type GooglePrivacyDlpV2DeidentifyConfig struct {
+	// ImageTransformations: Treat the dataset as an image and redact.
+	ImageTransformations *GooglePrivacyDlpV2ImageTransformations `json:"imageTransformations,omitempty"`
+
 	// InfoTypeTransformations: Treat the dataset as free-form text and
 	// apply the same free text transformation everywhere.
 	InfoTypeTransformations *GooglePrivacyDlpV2InfoTypeTransformations `json:"infoTypeTransformations,omitempty"`
@@ -2803,18 +2813,18 @@ type GooglePrivacyDlpV2DeidentifyConfig struct {
 	TransformationErrorHandling *GooglePrivacyDlpV2TransformationErrorHandling `json:"transformationErrorHandling,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "InfoTypeTransformations") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "ImageTransformations") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InfoTypeTransformations")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "ImageTransformations") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -4300,6 +4310,77 @@ func (s *GooglePrivacyDlpV2ImageRedactionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ImageTransformation: Configuration for determining
+// how redaction of images should occur.
+type GooglePrivacyDlpV2ImageTransformation struct {
+	// AllInfoTypes: Apply transformation to all findings not specified in
+	// other ImageTransformation's selected_info_types. Only one instance is
+	// allowed within the ImageTransformations message.
+	AllInfoTypes *GooglePrivacyDlpV2AllInfoTypes `json:"allInfoTypes,omitempty"`
+
+	// AllText: Apply transformation to all text that doesn't match an
+	// infoType. Only one instance is allowed within the
+	// ImageTransformations message.
+	AllText *GooglePrivacyDlpV2AllText `json:"allText,omitempty"`
+
+	// RedactionColor: The color to use when redacting content from an
+	// image. If not specified, the default is black.
+	RedactionColor *GooglePrivacyDlpV2Color `json:"redactionColor,omitempty"`
+
+	// SelectedInfoTypes: Apply transformation to the selected info_types.
+	SelectedInfoTypes *GooglePrivacyDlpV2SelectedInfoTypes `json:"selectedInfoTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllInfoTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllInfoTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ImageTransformation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ImageTransformation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ImageTransformations: A type of transformation that
+// is applied over images.
+type GooglePrivacyDlpV2ImageTransformations struct {
+	Transforms []*GooglePrivacyDlpV2ImageTransformation `json:"transforms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Transforms") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Transforms") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ImageTransformations) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ImageTransformations
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2InfoType: Type of information detected by the API.
 type GooglePrivacyDlpV2InfoType struct {
 	// Name: Name of the information type. Either a name of your choosing
@@ -5064,8 +5145,10 @@ func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2JobNotificationEmails: Enable email notification to
-// project owners and editors on jobs's completion/failure.
+// GooglePrivacyDlpV2JobNotificationEmails: Sends an email when the job
+// completes. The email goes to IAM project owners and technical
+// Essential Contacts
+// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts).
 type GooglePrivacyDlpV2JobNotificationEmails struct {
 }
 
@@ -7118,6 +7201,42 @@ func (s *GooglePrivacyDlpV2RecordSuppression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GooglePrivacyDlpV2RecordTransformation struct {
+	// ContainerTimestamp: Findings container modification timestamp, if
+	// applicable.
+	ContainerTimestamp string `json:"containerTimestamp,omitempty"`
+
+	// ContainerVersion: Container version, if available ("generation" for
+	// Cloud Storage).
+	ContainerVersion string `json:"containerVersion,omitempty"`
+
+	// FieldId: For record transformations, provide a field.
+	FieldId *GooglePrivacyDlpV2FieldId `json:"fieldId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2RecordTransformation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2RecordTransformation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2RecordTransformations: A type of transformation
 // that is applied over structured data such as a table.
 type GooglePrivacyDlpV2RecordTransformations struct {
@@ -7676,6 +7795,37 @@ type GooglePrivacyDlpV2Schedule struct {
 
 func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Schedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2SelectedInfoTypes: Apply transformation to the
+// selected info_types.
+type GooglePrivacyDlpV2SelectedInfoTypes struct {
+	// InfoTypes: Required. InfoTypes to apply the transformation to.
+	// Required. Provided InfoType must be unique within the
+	// ImageTransformations message.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2SelectedInfoTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SelectedInfoTypes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8568,6 +8718,131 @@ func (s *GooglePrivacyDlpV2TransformationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2TransformationDescription: A flattened description
+// of a `PrimitiveTransformation` or `RecordSuppression`.
+type GooglePrivacyDlpV2TransformationDescription struct {
+	// Condition: A human-readable string representation of the
+	// `RecordCondition` corresponding to this transformation. Set if a
+	// `RecordCondition` was used to determine whether or not to apply this
+	// transformation. Examples: * (age_field > 85) * (age_field <= 18) *
+	// (zip_field exists) * (zip_field == 01234) && (city_field !=
+	// "Springville") * (zip_field == 01234) && (age_field <= 18) &&
+	// (city_field exists)
+	Condition string `json:"condition,omitempty"`
+
+	// Description: A description of the transformation. This is empty for a
+	// RECORD_SUPPRESSION, or is the output of calling toString() on the
+	// `PrimitiveTransformation` protocol buffer message for any other type
+	// of transformation.
+	Description string `json:"description,omitempty"`
+
+	// InfoType: Set if the transformation was limited to a specific
+	// `InfoType`.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+
+	// Type: The transformation type.
+	//
+	// Possible values:
+	//   "TRANSFORMATION_TYPE_UNSPECIFIED" - Unused
+	//   "RECORD_SUPPRESSION" - Record suppression
+	//   "REPLACE_VALUE" - Replace value
+	//   "REPLACE_DICTIONARY" - Replace value using a dictionary.
+	//   "REDACT" - Redact
+	//   "CHARACTER_MASK" - Character mask
+	//   "CRYPTO_REPLACE_FFX_FPE" - FFX-FPE
+	//   "FIXED_SIZE_BUCKETING" - Fixed size bucketing
+	//   "BUCKETING" - Bucketing
+	//   "REPLACE_WITH_INFO_TYPE" - Replace with info type
+	//   "TIME_PART" - Time part
+	//   "CRYPTO_HASH" - Crypto hash
+	//   "DATE_SHIFT" - Date shift
+	//   "CRYPTO_DETERMINISTIC_CONFIG" - Deterministic crypto
+	//   "REDACT_IMAGE" - Redact image
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TransformationDetails: Details about a single
+// transformation. This object contains a description of the
+// transformation, information about whether the transformation was
+// successfully applied, and the precise location where the
+// transformation occurred. These details are stored in a user-specified
+// BigQuery table.
+type GooglePrivacyDlpV2TransformationDetails struct {
+	// ContainerName: The top level name of the container where the
+	// transformation is located (this will be the source file name or table
+	// name).
+	ContainerName string `json:"containerName,omitempty"`
+
+	// ResourceName: The name of the job that completed the transformation.
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// StatusDetails: Status of the transformation, if transformation was
+	// not successful, this will specify what caused it to fail, otherwise
+	// it will show that the transformation was successful.
+	StatusDetails *GooglePrivacyDlpV2TransformationResultStatus `json:"statusDetails,omitempty"`
+
+	// Transformation: Description of transformation. This would only
+	// contain more than one element if there were multiple matching
+	// transformations and which one to apply was ambiguous. Not set for
+	// states that contain no transformation, currently only state that
+	// contains no transformation is
+	// TransformationResultStateType.METADATA_UNRETRIEVABLE.
+	Transformation []*GooglePrivacyDlpV2TransformationDescription `json:"transformation,omitempty"`
+
+	// TransformationLocation: The precise location of the transformed
+	// content in the original container.
+	TransformationLocation *GooglePrivacyDlpV2TransformationLocation `json:"transformationLocation,omitempty"`
+
+	// TransformedBytes: The number of bytes that were transformed. If
+	// transformation was unsuccessful or did not take place because there
+	// was no content to transform, this will be zero.
+	TransformedBytes int64 `json:"transformedBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2TransformationDetailsStorageConfig: Config for
 // storing transformation details.
 type GooglePrivacyDlpV2TransformationDetailsStorageConfig struct {
@@ -8641,6 +8916,53 @@ func (s *GooglePrivacyDlpV2TransformationErrorHandling) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2TransformationLocation: Specifies the location of a
+// transformation.
+type GooglePrivacyDlpV2TransformationLocation struct {
+	// ContainerType: Information about the functionality of the container
+	// where this finding occurred, if available.
+	//
+	// Possible values:
+	//   "TRANSFORM_UNKNOWN_CONTAINER"
+	//   "TRANSFORM_BODY"
+	//   "TRANSFORM_METADATA"
+	//   "TRANSFORM_TABLE"
+	ContainerType string `json:"containerType,omitempty"`
+
+	// FindingId: For infotype transformations, link to the corresponding
+	// findings ID so that location information does not need to be
+	// duplicated. Each findings ID correlates to an entry in the findings
+	// output table, this table only gets created when users specify to save
+	// findings (add the save findings action to the request).
+	FindingId string `json:"findingId,omitempty"`
+
+	// RecordTransformation: For record transformations, provide a field and
+	// container information.
+	RecordTransformation *GooglePrivacyDlpV2RecordTransformation `json:"recordTransformation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContainerType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContainerType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2TransformationOverview: Overview of the
 // modifications that occurred.
 type GooglePrivacyDlpV2TransformationOverview struct {
@@ -8672,6 +8994,51 @@ type GooglePrivacyDlpV2TransformationOverview struct {
 
 func (s *GooglePrivacyDlpV2TransformationOverview) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationOverview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GooglePrivacyDlpV2TransformationResultStatus struct {
+	// Details: Detailed error codes and messages
+	Details *GoogleRpcStatus `json:"details,omitempty"`
+
+	// ResultStatusType: Transformation result status type, this will be
+	// either SUCCESS, or it will be the reason for why the transformation
+	// was not completely successful.
+	//
+	// Possible values:
+	//   "STATE_TYPE_UNSPECIFIED"
+	//   "INVALID_TRANSFORM" - This will be set when a finding could not be
+	// transformed (i.e. outside user set bucket range).
+	//   "BIGQUERY_MAX_ROW_SIZE_EXCEEDED" - This will be set when a BigQuery
+	// transformation was successful but could not be stored back in
+	// BigQuery because the transformed row exceeds BigQuery's max row size.
+	//   "METADATA_UNRETRIEVABLE" - This will be set when there is a finding
+	// in the custom metadata of a file, but at the write time of the
+	// transformed file, this key / value pair is unretrievable.
+	//   "SUCCESS" - This will be set when the transformation and storing of
+	// it is successful.
+	ResultStatusType string `json:"resultStatusType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2TransformationResultStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TransformationResultStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14630,13 +14997,10 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 //     (https://cloud.google.com/dlp/docs/specifying-location): + Projects
 //     scope, location specified:
 //     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
-//     scope, no location specified (defaults to global):
-//     `organizations/`ORG_ID The following example `parent` string
-//     specifies a parent project with the identifier `example-project`,
-//     and specifies the `europe-west3` location for processing data:
+//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     following example `parent` string specifies a parent project with
+//     the identifier `example-project`, and specifies the `europe-west3`
+//     location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsLocationsStoredInfoTypesService) List(parentid string) *OrganizationsLocationsStoredInfoTypesListCall {
 	c := &OrganizationsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14812,7 +15176,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -15467,13 +15831,10 @@ type OrganizationsStoredInfoTypesListCall struct {
 //     (https://cloud.google.com/dlp/docs/specifying-location): + Projects
 //     scope, location specified:
 //     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
-//     scope, no location specified (defaults to global):
-//     `organizations/`ORG_ID The following example `parent` string
-//     specifies a parent project with the identifier `example-project`,
-//     and specifies the `europe-west3` location for processing data:
+//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     following example `parent` string specifies a parent project with
+//     the identifier `example-project`, and specifies the `europe-west3`
+//     location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *OrganizationsStoredInfoTypesService) List(parentid string) *OrganizationsStoredInfoTypesListCall {
 	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15649,7 +16010,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -25151,13 +25512,10 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 //     (https://cloud.google.com/dlp/docs/specifying-location): + Projects
 //     scope, location specified:
 //     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
-//     scope, no location specified (defaults to global):
-//     `organizations/`ORG_ID The following example `parent` string
-//     specifies a parent project with the identifier `example-project`,
-//     and specifies the `europe-west3` location for processing data:
+//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     following example `parent` string specifies a parent project with
+//     the identifier `example-project`, and specifies the `europe-west3`
+//     location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsLocationsStoredInfoTypesService) List(parentid string) *ProjectsLocationsStoredInfoTypesListCall {
 	c := &ProjectsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -25333,7 +25691,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -25988,13 +26346,10 @@ type ProjectsStoredInfoTypesListCall struct {
 //     (https://cloud.google.com/dlp/docs/specifying-location): + Projects
 //     scope, location specified:
 //     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
-//     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations
-//     scope, no location specified (defaults to global):
-//     `organizations/`ORG_ID The following example `parent` string
-//     specifies a parent project with the identifier `example-project`,
-//     and specifies the `europe-west3` location for processing data:
+//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     following example `parent` string specifies a parent project with
+//     the identifier `example-project`, and specifies the `europe-west3`
+//     location for processing data:
 //     parent=projects/example-project/locations/europe-west3.
 func (r *ProjectsStoredInfoTypesService) List(parentid string) *ProjectsStoredInfoTypesListCall {
 	c := &ProjectsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -26170,7 +26525,7 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

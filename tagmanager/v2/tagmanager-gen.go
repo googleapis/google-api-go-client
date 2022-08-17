@@ -3412,9 +3412,6 @@ type Zone struct {
 	// Notes: User notes on how to apply this zone in the container.
 	Notes string `json:"notes,omitempty"`
 
-	// Parameter: Additional parameters.
-	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// Path: GTM Zone's API relative path.
 	Path string `json:"path,omitempty"`
 

@@ -321,21 +321,26 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Default unspecified reason.
-	//   "CHARGEBACK" - Indicates a chargeback issued for a transaction with
-	// no other details. When possible, specify the type by using
-	// CHARGEBACK_FRAUD or CHARGEBACK_DISPUTE instead.
-	//   "CHARGEBACK_FRAUD" - Indicates a chargeback related to an alleged
-	// unauthorized transaction from the cardholder's perspective (for
-	// example, the card number was stolen).
-	//   "CHARGEBACK_DISPUTE" - Indicates a chargeback related to the
-	// cardholder having provided their card details but allegedly not being
-	// satisfied with the purchase (for example, misrepresentation,
-	// attempted cancellation).
-	//   "REFUND" - Indicates a refund of the complete payment by the
-	// seller.
-	//   "REFUND_FRAUD" - Indicates that a complete payment transaction was
-	// determined to be fraudulent by the seller, and was cancelled and
+	//   "CHARGEBACK" - Indicates that the transaction had a chargeback
+	// issued with no other details. When possible, specify the type by
+	// using CHARGEBACK_FRAUD or CHARGEBACK_DISPUTE instead.
+	//   "CHARGEBACK_FRAUD" - Indicates that the transaction had a
+	// chargeback issued related to an alleged unauthorized transaction from
+	// the cardholder's perspective (for example, the card number was
+	// stolen).
+	//   "CHARGEBACK_DISPUTE" - Indicates that the transaction had a
+	// chargeback issued related to the cardholder having provided their
+	// card details but allegedly not being satisfied with the purchase (for
+	// example, misrepresentation, attempted cancellation).
+	//   "REFUND" - Indicates that the completed payment transaction was
+	// refunded by the seller.
+	//   "REFUND_FRAUD" - Indicates that the completed payment transaction
+	// was determined to be fraudulent by the seller, and was cancelled and
 	// refunded as a result.
+	//   "TRANSACTION_ACCEPTED" - Indicates that the payment transaction was
+	// accepted, and the user was charged.
+	//   "TRANSACTION_DECLINED" - Indicates that the payment transaction was
+	// declined, for example due to invalid card details.
 	//   "PAYMENT_HEURISTICS" - Indicates the transaction associated with
 	// the assessment is suspected of being fraudulent based on the payment
 	// method, billing details, shipping address or other transaction

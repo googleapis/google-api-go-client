@@ -714,7 +714,7 @@ func (s *GoogleChromePolicyV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleChromePolicyV1PolicySchema: Resource representing a policy
-// schema. Next ID: 12
+// schema. Next ID: 13
 type GoogleChromePolicyV1PolicySchema struct {
 	// AccessRestrictions: Output only. Specific access restrictions related
 	// to this policy.
@@ -741,7 +741,10 @@ type GoogleChromePolicyV1PolicySchema struct {
 	// certain values in certain fields in the schema.
 	Notices []*GoogleChromePolicyV1PolicySchemaNoticeDescription `json:"notices,omitempty"`
 
-	// PolicyApiLifeycle: Output only. Current life cycle information.
+	// PolicyApiLifecycle: Output only. Current lifecycle information.
+	PolicyApiLifecycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifecycle,omitempty"`
+
+	// PolicyApiLifeycle: Deprecated field because of typo.
 	PolicyApiLifeycle *ChromeCrosDpanelAutosettingsProtoPolicyApiLifecycle `json:"policyApiLifeycle,omitempty"`
 
 	// PolicyDescription: Output only. Description about the policy schema

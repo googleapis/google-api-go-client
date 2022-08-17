@@ -152,7 +152,6 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
-	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Providers = NewProjectsLocationsProvidersService(s)
 	return rs
@@ -162,8 +161,6 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Connections *ProjectsLocationsConnectionsService
-
-	Global *ProjectsLocationsGlobalService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -203,51 +200,6 @@ type ProjectsLocationsConnectionsRuntimeEntitySchemasService struct {
 	s *Service
 }
 
-func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
-	rs := &ProjectsLocationsGlobalService{s: s}
-	rs.Providers = NewProjectsLocationsGlobalProvidersService(s)
-	return rs
-}
-
-type ProjectsLocationsGlobalService struct {
-	s *Service
-
-	Providers *ProjectsLocationsGlobalProvidersService
-}
-
-func NewProjectsLocationsGlobalProvidersService(s *Service) *ProjectsLocationsGlobalProvidersService {
-	rs := &ProjectsLocationsGlobalProvidersService{s: s}
-	rs.Connectors = NewProjectsLocationsGlobalProvidersConnectorsService(s)
-	return rs
-}
-
-type ProjectsLocationsGlobalProvidersService struct {
-	s *Service
-
-	Connectors *ProjectsLocationsGlobalProvidersConnectorsService
-}
-
-func NewProjectsLocationsGlobalProvidersConnectorsService(s *Service) *ProjectsLocationsGlobalProvidersConnectorsService {
-	rs := &ProjectsLocationsGlobalProvidersConnectorsService{s: s}
-	rs.Versions = NewProjectsLocationsGlobalProvidersConnectorsVersionsService(s)
-	return rs
-}
-
-type ProjectsLocationsGlobalProvidersConnectorsService struct {
-	s *Service
-
-	Versions *ProjectsLocationsGlobalProvidersConnectorsVersionsService
-}
-
-func NewProjectsLocationsGlobalProvidersConnectorsVersionsService(s *Service) *ProjectsLocationsGlobalProvidersConnectorsVersionsService {
-	rs := &ProjectsLocationsGlobalProvidersConnectorsVersionsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsGlobalProvidersConnectorsVersionsService struct {
-	s *Service
-}
-
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
 	rs := &ProjectsLocationsOperationsService{s: s}
 	return rs
@@ -259,10 +211,34 @@ type ProjectsLocationsOperationsService struct {
 
 func NewProjectsLocationsProvidersService(s *Service) *ProjectsLocationsProvidersService {
 	rs := &ProjectsLocationsProvidersService{s: s}
+	rs.Connectors = NewProjectsLocationsProvidersConnectorsService(s)
 	return rs
 }
 
 type ProjectsLocationsProvidersService struct {
+	s *Service
+
+	Connectors *ProjectsLocationsProvidersConnectorsService
+}
+
+func NewProjectsLocationsProvidersConnectorsService(s *Service) *ProjectsLocationsProvidersConnectorsService {
+	rs := &ProjectsLocationsProvidersConnectorsService{s: s}
+	rs.Versions = NewProjectsLocationsProvidersConnectorsVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsProvidersConnectorsService struct {
+	s *Service
+
+	Versions *ProjectsLocationsProvidersConnectorsVersionsService
+}
+
+func NewProjectsLocationsProvidersConnectorsVersionsService(s *Service) *ProjectsLocationsProvidersConnectorsVersionsService {
+	rs := &ProjectsLocationsProvidersConnectorsVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProvidersConnectorsVersionsService struct {
 	s *Service
 }
 
@@ -520,16 +496,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -707,7 +687,8 @@ type Connection struct {
 
 	// ConnectorVersion: Required. Connector version on which the connection
 	// is created. The format is:
-	// projects/*/locations/global/providers/*/connectors/*/versions/*
+	// projects/*/locations/*/providers/*/connectors/*/versions/* Only
+	// global location is supported for ConnectorVersion resource.
 	ConnectorVersion string `json:"connectorVersion,omitempty"`
 
 	// CreateTime: Output only. Created time.
@@ -715,6 +696,11 @@ type Connection struct {
 
 	// Description: Optional. Description of the resource.
 	Description string `json:"description,omitempty"`
+
+	// DestinationConfigs: Optional. Configuration of the Connector's
+	// destination. Only accepted for Connectors that accepts user defined
+	// destination(s).
+	DestinationConfigs []*DestinationConfig `json:"destinationConfigs,omitempty"`
 
 	// EnvoyImageLocation: Output only. GCR location where the envoy image
 	// is stored. formatted like: gcr.io/{bucketName}/{imageName}
@@ -736,6 +722,9 @@ type Connection struct {
 	// Name: Output only. Resource name of the Connection. Format:
 	// projects/{project}/locations/{location}/connections/{connection}
 	Name string `json:"name,omitempty"`
+
+	// NodeConfig: Optional. Configuration for the connection.
+	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// ServiceAccount: Optional. Service account needed for runtime plane to
 	// access GCP resources.
@@ -899,7 +888,8 @@ type Connector struct {
 
 	// Name: Output only. Resource name of the Connector. Format:
 	// projects/{project}/locations/{location}/providers/{provider}/connector
-	// s/{connector}
+	// s/{connector} Only global location is supported for Connector
+	// resource.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. Updated time.
@@ -973,7 +963,8 @@ type ConnectorVersion struct {
 
 	// Name: Output only. Resource name of the Version. Format:
 	// projects/{project}/locations/{location}/providers/{provider}/connector
-	// s/{connector}/versions/{version}
+	// s/{connector}/versions/{version} Only global location is supported
+	// for Connector resource.
 	Name string `json:"name,omitempty"`
 
 	// ReleaseVersion: Output only. ReleaseVersion of the connector, for
@@ -1019,6 +1010,73 @@ type ConnectorVersion struct {
 
 func (s *ConnectorVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type Destination struct {
+	// Host: For publicly routable host.
+	Host string `json:"host,omitempty"`
+
+	// Port: The port is the target port number that is accepted by the
+	// destination.
+	Port int64 `json:"port,omitempty"`
+
+	// ServiceAttachment: PSC service attachments. Format:
+	// projects/*/regions/*/serviceAttachments/*
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Host") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Destination) MarshalJSON() ([]byte, error) {
+	type NoMethod Destination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DestinationConfig: Define the Connectors target endpoint.
+type DestinationConfig struct {
+	// Destinations: The destinations for the key.
+	Destinations []*Destination `json:"destinations,omitempty"`
+
+	// Key: The key is the destination identifier that is supported by the
+	// Connector.
+	Key string `json:"key,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destinations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DestinationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1843,6 +1901,37 @@ func (s *LockConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeConfig: Configuration for the connection.
+type NodeConfig struct {
+	// MaxNodeCount: Maximum number of nodes in the runtime nodes.
+	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
+
+	// MinNodeCount: Minimum number of nodes in the runtime nodes.
+	MinNodeCount int64 `json:"minNodeCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxNodeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxNodeCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Oauth2ClientCredentials: Parameters to support Oauth 2.0 Client
 // Credentials Grant Authentication. See
 // https://tools.ietf.org/html/rfc6749#section-1.3.4 for more details.
@@ -2169,7 +2258,8 @@ type Provider struct {
 	LaunchStage string `json:"launchStage,omitempty"`
 
 	// Name: Output only. Resource name of the Provider. Format:
-	// projects/{project}/locations/{location}/providers/{provider}
+	// projects/{project}/locations/{location}/providers/{provider} Only
+	// global location is supported for Provider resource.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. Updated time.
@@ -5261,1084 +5351,6 @@ func (c *ProjectsLocationsConnectionsRuntimeEntitySchemasListCall) Pages(ctx con
 	}
 }
 
-// method id "connectors.projects.locations.global.providers.get":
-
-type ProjectsLocationsGlobalProvidersGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single Provider.
-//
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*`.
-func (r *ProjectsLocationsGlobalProvidersService) Get(name string) *ProjectsLocationsGlobalProvidersGetCall {
-	c := &ProjectsLocationsGlobalProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.get" call.
-// Exactly one of *Provider or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Provider.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersGetCall) Do(opts ...googleapi.CallOption) (*Provider, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Provider{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets details of a single Provider.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers/{providersId}",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/providers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Provider"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "connectors.projects.locations.global.providers.list":
-
-type ProjectsLocationsGlobalProvidersListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Providers in a given project and location.
-//
-//   - parent: Parent resource of the API, of the form:
-//     `projects/*/locations/*`.
-func (r *ProjectsLocationsGlobalProvidersService) List(parent string) *ProjectsLocationsGlobalProvidersListCall {
-	c := &ProjectsLocationsGlobalProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Page size.
-func (c *ProjectsLocationsGlobalProvidersListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalProvidersListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token.
-func (c *ProjectsLocationsGlobalProvidersListCall) PageToken(pageToken string) *ProjectsLocationsGlobalProvidersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersListCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/providers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.list" call.
-// Exactly one of *ListProvidersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListProvidersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersListCall) Do(opts ...googleapi.CallOption) (*ListProvidersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListProvidersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Providers in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource of the API, of the form: `projects/*/locations/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/providers",
-	//   "response": {
-	//     "$ref": "ListProvidersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalProvidersListCall) Pages(ctx context.Context, f func(*ListProvidersResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "connectors.projects.locations.global.providers.connectors.get":
-
-type ProjectsLocationsGlobalProvidersConnectorsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single Connector.
-//
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*/connectors/*`.
-func (r *ProjectsLocationsGlobalProvidersConnectorsService) Get(name string) *ProjectsLocationsGlobalProvidersConnectorsGetCall {
-	c := &ProjectsLocationsGlobalProvidersConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersConnectorsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersConnectorsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersConnectorsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.connectors.get" call.
-// Exactly one of *Connector or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Connector.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersConnectorsGetCall) Do(opts ...googleapi.CallOption) (*Connector, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Connector{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets details of a single Connector.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers/{providersId}/connectors/{connectorsId}",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.connectors.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/providers/[^/]+/connectors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Connector"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "connectors.projects.locations.global.providers.connectors.list":
-
-type ProjectsLocationsGlobalProvidersConnectorsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Connectors in a given project and location.
-//
-//   - parent: Parent resource of the connectors, of the form:
-//     `projects/*/locations/*/providers/*`.
-func (r *ProjectsLocationsGlobalProvidersConnectorsService) List(parent string) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c := &ProjectsLocationsGlobalProvidersConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Page size.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersConnectorsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectors")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.connectors.list" call.
-// Exactly one of *ListConnectorsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListConnectorsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) Do(opts ...googleapi.CallOption) (*ListConnectorsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListConnectorsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Connectors in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers/{providersId}/connectors",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.connectors.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/providers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/connectors",
-	//   "response": {
-	//     "$ref": "ListConnectorsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalProvidersConnectorsListCall) Pages(ctx context.Context, f func(*ListConnectorsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "connectors.projects.locations.global.providers.connectors.versions.get":
-
-type ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets details of a single connector version.
-//
-//   - name: Resource name of the form:
-//     `projects/*/locations/*/providers/*/connectors/*/versions/*`.
-func (r *ProjectsLocationsGlobalProvidersConnectorsVersionsService) Get(name string) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
-	c := &ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// View sets the optional parameter "view": Specifies which fields of
-// the ConnectorVersion are returned in the response. Defaults to
-// `CUSTOMER` view.
-//
-// Possible values:
-//
-//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
-//
-// CONNECTOR_VERSION_VIEW_UNSPECIFIED.
-//
-//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
-//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) View(view string) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.connectors.versions.get" call.
-// Exactly one of *ConnectorVersion or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ConnectorVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsGetCall) Do(opts ...googleapi.CallOption) (*ConnectorVersion, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ConnectorVersion{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets details of a single connector version.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers/{providersId}/connectors/{connectorsId}/versions/{versionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.connectors.versions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/providers/[^/]+/connectors/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Specifies which fields of the ConnectorVersion are returned in the response. Defaults to `CUSTOMER` view.",
-	//       "enum": [
-	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED",
-	//         "CONNECTOR_VERSION_VIEW_BASIC",
-	//         "CONNECTOR_VERSION_VIEW_FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED.",
-	//         "Do not include role grant configs.",
-	//         "Include role grant configs."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "ConnectorVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "connectors.projects.locations.global.providers.connectors.versions.list":
-
-type ProjectsLocationsGlobalProvidersConnectorsVersionsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Connector Versions in a given project and location.
-//
-//   - parent: Parent resource of the connectors, of the form:
-//     `projects/*/locations/*/providers/*/connectors/*`.
-func (r *ProjectsLocationsGlobalProvidersConnectorsVersionsService) List(parent string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c := &ProjectsLocationsGlobalProvidersConnectorsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Page size.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// View sets the optional parameter "view": Specifies which fields of
-// the ConnectorVersion are returned in the response. Defaults to
-// `CUSTOMER` view.
-//
-// Possible values:
-//
-//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
-//
-// CONNECTOR_VERSION_VIEW_UNSPECIFIED.
-//
-//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
-//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) View(view string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "connectors.projects.locations.global.providers.connectors.versions.list" call.
-// Exactly one of *ListConnectorVersionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListConnectorVersionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListConnectorVersionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListConnectorVersionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists Connector Versions in a given project and location.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/global/providers/{providersId}/connectors/{connectorsId}/versions",
-	//   "httpMethod": "GET",
-	//   "id": "connectors.projects.locations.global.providers.connectors.versions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*/connectors/*`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/global/providers/[^/]+/connectors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Specifies which fields of the ConnectorVersion are returned in the response. Defaults to `CUSTOMER` view.",
-	//       "enum": [
-	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED",
-	//         "CONNECTOR_VERSION_VIEW_BASIC",
-	//         "CONNECTOR_VERSION_VIEW_FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED.",
-	//         "Do not include role grant configs.",
-	//         "Include role grant configs."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/versions",
-	//   "response": {
-	//     "$ref": "ListConnectorVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalProvidersConnectorsVersionsListCall) Pages(ctx context.Context, f func(*ListConnectorVersionsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 // method id "connectors.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
@@ -6986,6 +5998,154 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "connectors.projects.locations.providers.get":
+
+type ProjectsLocationsProvidersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a provider.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/providers/*` Only global location is
+//     supported for Provider resource.
+func (r *ProjectsLocationsProvidersService) Get(name string) *ProjectsLocationsProvidersGetCall {
+	c := &ProjectsLocationsProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersGetCall) Context(ctx context.Context) *ProjectsLocationsProvidersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.get" call.
+// Exactly one of *Provider or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Provider.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersGetCall) Do(opts ...googleapi.CallOption) (*Provider, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Provider{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a provider.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*` Only global location is supported for Provider resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Provider"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "connectors.projects.locations.providers.getIamPolicy":
 
 type ProjectsLocationsProvidersGetIamPolicyCall struct {
@@ -7159,6 +6319,198 @@ func (c *ProjectsLocationsProvidersGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   ]
 	// }
 
+}
+
+// method id "connectors.projects.locations.providers.list":
+
+type ProjectsLocationsProvidersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Providers in a given project and location.
+//
+//   - parent: Parent resource of the API, of the form:
+//     `projects/*/locations/*` Only global location is supported for
+//     Provider resource.
+func (r *ProjectsLocationsProvidersService) List(parent string) *ProjectsLocationsProvidersListCall {
+	c := &ProjectsLocationsProvidersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsProvidersListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsProvidersListCall) PageToken(pageToken string) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersListCall) Context(ctx context.Context) *ProjectsLocationsProvidersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/providers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.list" call.
+// Exactly one of *ListProvidersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListProvidersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersListCall) Do(opts ...googleapi.CallOption) (*ListProvidersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListProvidersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Providers in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the API, of the form: `projects/*/locations/*` Only global location is supported for Provider resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/providers",
+	//   "response": {
+	//     "$ref": "ListProvidersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProvidersListCall) Pages(ctx context.Context, f func(*ListProvidersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "connectors.projects.locations.providers.setIamPolicy":
@@ -7456,4 +6808,748 @@ func (c *ProjectsLocationsProvidersTestIamPermissionsCall) Do(opts ...googleapi.
 	//   ]
 	// }
 
+}
+
+// method id "connectors.projects.locations.providers.connectors.get":
+
+type ProjectsLocationsProvidersConnectorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Connector.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/providers/*/connectors/*` Only global
+//     location is supported for Connector resource.
+func (r *ProjectsLocationsProvidersConnectorsService) Get(name string) *ProjectsLocationsProvidersConnectorsGetCall {
+	c := &ProjectsLocationsProvidersConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsGetCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.get" call.
+// Exactly one of *Connector or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Connector.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsGetCall) Do(opts ...googleapi.CallOption) (*Connector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Connector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single Connector.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors/{connectorsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*` Only global location is supported for Connector resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+/connectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Connector"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.providers.connectors.list":
+
+type ProjectsLocationsProvidersConnectorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Connectors in a given project and location.
+//
+//   - parent: Parent resource of the connectors, of the form:
+//     `projects/*/locations/*/providers/*` Only global location is
+//     supported for Connector resource.
+func (r *ProjectsLocationsProvidersConnectorsService) List(parent string) *ProjectsLocationsProvidersConnectorsListCall {
+	c := &ProjectsLocationsProvidersConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsProvidersConnectorsListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersConnectorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsProvidersConnectorsListCall) PageToken(pageToken string) *ProjectsLocationsProvidersConnectorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.list" call.
+// Exactly one of *ListConnectorsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListConnectorsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Do(opts ...googleapi.CallOption) (*ListConnectorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConnectorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Connectors in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*` Only global location is supported for Connector resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/connectors",
+	//   "response": {
+	//     "$ref": "ListConnectorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProvidersConnectorsListCall) Pages(ctx context.Context, f func(*ListConnectorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.providers.connectors.versions.get":
+
+type ProjectsLocationsProvidersConnectorsVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single connector version.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/providers/*/connectors/*/versions/*` Only
+//     global location is supported for ConnectorVersion resource.
+func (r *ProjectsLocationsProvidersConnectorsVersionsService) Get(name string) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c := &ProjectsLocationsProvidersConnectorsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields of
+// the ConnectorVersion are returned in the response. Defaults to
+// `CUSTOMER` view.
+//
+// Possible values:
+//
+//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
+//
+// CONNECTOR_VERSION_VIEW_UNSPECIFIED.
+//
+//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
+//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) View(view string) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.versions.get" call.
+// Exactly one of *ConnectorVersion or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConnectorVersion.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsVersionsGetCall) Do(opts ...googleapi.CallOption) (*ConnectorVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConnectorVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single connector version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors/{connectorsId}/versions/{versionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.versions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*` Only global location is supported for ConnectorVersion resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+/connectors/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields of the ConnectorVersion are returned in the response. Defaults to `CUSTOMER` view.",
+	//       "enum": [
+	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED",
+	//         "CONNECTOR_VERSION_VIEW_BASIC",
+	//         "CONNECTOR_VERSION_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED.",
+	//         "Do not include role grant configs.",
+	//         "Include role grant configs."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ConnectorVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.providers.connectors.versions.list":
+
+type ProjectsLocationsProvidersConnectorsVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Connector Versions in a given project and location.
+//
+//   - parent: Parent resource of the connectors, of the form:
+//     `projects/*/locations/*/providers/*/connectors/*` Only global
+//     location is supported for ConnectorVersion resource.
+func (r *ProjectsLocationsProvidersConnectorsVersionsService) List(parent string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c := &ProjectsLocationsProvidersConnectorsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) PageToken(pageToken string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields of
+// the ConnectorVersion are returned in the response. Defaults to
+// `BASIC` view.
+//
+// Possible values:
+//
+//	"CONNECTOR_VERSION_VIEW_UNSPECIFIED" -
+//
+// CONNECTOR_VERSION_VIEW_UNSPECIFIED.
+//
+//	"CONNECTOR_VERSION_VIEW_BASIC" - Do not include role grant configs.
+//	"CONNECTOR_VERSION_VIEW_FULL" - Include role grant configs.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) View(view string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.versions.list" call.
+// Exactly one of *ListConnectorVersionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConnectorVersionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListConnectorVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConnectorVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Connector Versions in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/providers/{providersId}/connectors/{connectorsId}/versions",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.providers.connectors.versions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*/connectors/*` Only global location is supported for ConnectorVersion resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/providers/[^/]+/connectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields of the ConnectorVersion are returned in the response. Defaults to `BASIC` view.",
+	//       "enum": [
+	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED",
+	//         "CONNECTOR_VERSION_VIEW_BASIC",
+	//         "CONNECTOR_VERSION_VIEW_FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "CONNECTOR_VERSION_VIEW_UNSPECIFIED.",
+	//         "Do not include role grant configs.",
+	//         "Include role grant configs."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/versions",
+	//   "response": {
+	//     "$ref": "ListConnectorVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProvidersConnectorsVersionsListCall) Pages(ctx context.Context, f func(*ListConnectorVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

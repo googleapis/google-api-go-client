@@ -1202,6 +1202,36 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
 	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
 	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
+	//   "AGE_RANGE_18_20" - The age range of the audience is 18 to 20, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_21_24" - The age range of the audience is 21 to 24, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_25_29" - The age range of the audience is 25 to 29, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_30_34" - The age range of the audience is 30 to 34, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_35_39" - The age range of the audience is 35 to 39, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_40_44" - The age range of the audience is 40 to 44, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_45_49" - The age range of the audience is 45 to 49, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_50_54" - The age range of the audience is 50 to 54, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_55_59" - The age range of the audience is 55 to 59, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_60_64" - The age range of the audience is 60 to 64, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
 	AgeRange string `json:"ageRange,omitempty"`
 
 	// TargetingOptionId: Required. The targeting_option_id of a
@@ -1248,6 +1278,36 @@ type AgeRangeTargetingOptionDetails struct {
 	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
 	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
 	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
+	//   "AGE_RANGE_18_20" - The age range of the audience is 18 to 20, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_21_24" - The age range of the audience is 21 to 24, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_25_29" - The age range of the audience is 25 to 29, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_30_34" - The age range of the audience is 30 to 34, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_35_39" - The age range of the audience is 35 to 39, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_40_44" - The age range of the audience is 40 to 44, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_45_49" - The age range of the audience is 45 to 49, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_50_54" - The age range of the audience is 50 to 54, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_55_59" - The age range of the audience is 55 to 59, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
+	//   "AGE_RANGE_60_64" - The age range of the audience is 60 to 64, only
+	// supported for the AdGroup of YouTube Programmatic Reservation line
+	// item.
 	AgeRange string `json:"ageRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
@@ -7582,9 +7642,12 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_FYBER" - Fyber.
 	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
 	//   "EXCHANGE_MEDIANET" - Media.net.
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
+	//   "EXCHANGE_VISTAR" - Vistar.
+	//   "EXCHANGE_DAX" - DAX.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -7693,9 +7756,12 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_FYBER" - Fyber.
 	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
 	//   "EXCHANGE_MEDIANET" - Media.net.
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
+	//   "EXCHANGE_VISTAR" - Vistar.
+	//   "EXCHANGE_DAX" - DAX.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -7803,9 +7869,12 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_FYBER" - Fyber.
 	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
 	//   "EXCHANGE_MEDIANET" - Media.net.
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
+	//   "EXCHANGE_VISTAR" - Vistar.
+	//   "EXCHANGE_DAX" - DAX.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8915,9 +8984,12 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_FYBER" - Fyber.
 	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
 	//   "EXCHANGE_MEDIANET" - Media.net.
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
+	//   "EXCHANGE_VISTAR" - Vistar.
+	//   "EXCHANGE_DAX" - DAX.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -9784,9 +9856,12 @@ type InventorySource struct {
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
 	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_FYBER" - Fyber.
 	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
 	//   "EXCHANGE_MEDIANET" - Media.net.
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
+	//   "EXCHANGE_VISTAR" - Vistar.
+	//   "EXCHANGE_DAX" - DAX.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that
@@ -22544,7 +22619,7 @@ type AdvertisersInsertionOrdersDeleteCall struct {
 //
 //   - advertiserId: The ID of the advertiser this insertion order belongs
 //     to.
-//   - insertionOrderId: The ID of the insertion order we need to delete.
+//   - insertionOrderId: The ID of the insertion order to delete.
 func (r *AdvertisersInsertionOrdersService) Delete(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersDeleteCall {
 	c := &AdvertisersInsertionOrdersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22657,7 +22732,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "insertionOrderId": {
-	//       "description": "The ID of the insertion order we need to delete.",
+	//       "description": "The ID of the insertion order to delete.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24900,7 +24975,7 @@ type AdvertisersLineItemsDeleteCall struct {
 // delete it.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
-// - lineItemId: The ID of the line item we need to fetch.
+// - lineItemId: The ID of the line item to delete.
 func (r *AdvertisersLineItemsService) Delete(advertiserId int64, lineItemId int64) *AdvertisersLineItemsDeleteCall {
 	c := &AdvertisersLineItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25013,7 +25088,7 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	//       "type": "string"
 	//     },
 	//     "lineItemId": {
-	//       "description": "The ID of the line item we need to fetch.",
+	//       "description": "The ID of the line item to delete.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -31669,7 +31744,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -31805,7 +31881,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -31938,7 +32014,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -32130,7 +32207,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",

@@ -1014,6 +1014,7 @@ var pointerFields = []fieldName{
 	{api: "sqladmin:v1beta4", schema: "Settings", field: "StorageAutoResize"},
 	{api: "sqladmin:v1", schema: "Settings", field: "StorageAutoResize"},
 	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
+	{api: "storage:v1", schema: "BucketLifecycleRuleCondition", field: "Age"},
 	{api: "storage:v1beta2", schema: "BucketLifecycleRuleCondition", field: "IsLive"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
 	{api: "youtube:v3", schema: "ChannelSectionSnippet", field: "Position"},

@@ -1225,7 +1225,7 @@
       }
     }
   },
-  "revision": "20220808",
+  "revision": "20220813",
   "rootUrl": "https://firebase.googleapis.com/",
   "schemas": {
     "AddFirebaseRequest": {
@@ -1341,20 +1341,6 @@
           "description": "Output only. Immutable. A user-assigned unique identifier of the parent FirebaseProject for the `AndroidApp`.",
           "readOnly": true,
           "type": "string"
-        },
-        "sha1Hashes": {
-          "description": "The SHA1 certificate hashes for the AndroidApp.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "sha256Hashes": {
-          "description": "The SHA256 certificate hashes for the AndroidApp.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         },
         "state": {
           "description": "Output only. The lifecycle state of the App.",

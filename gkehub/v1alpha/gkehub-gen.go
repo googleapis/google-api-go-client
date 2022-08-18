@@ -2638,12 +2638,6 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // member/cluster. Only one authentication method (e.g., OIDC and LDAP)
 // can be set per AuthMethod.
 type IdentityServiceAuthMethod struct {
-	// AzureadConfig: AzureAD specific Configuration.
-	AzureadConfig *IdentityServiceAzureADConfig `json:"azureadConfig,omitempty"`
-
-	// GoogleConfig: GoogleConfig specific configuration
-	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
-
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -2653,7 +2647,7 @@ type IdentityServiceAuthMethod struct {
 	// Proxy: Proxy server address to use for auth method.
 	Proxy string `json:"proxy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AzureadConfig") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2661,10 +2655,10 @@ type IdentityServiceAuthMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AzureadConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2672,81 +2666,6 @@ type IdentityServiceAuthMethod struct {
 
 func (s *IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceAuthMethod
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IdentityServiceAzureADConfig: Configuration for the AzureAD Auth
-// flow.
-type IdentityServiceAzureADConfig struct {
-	// ClientId: ID for the registered client application that makes
-	// authentication requests to the Azure AD identity provider.
-	ClientId string `json:"clientId,omitempty"`
-
-	// ClientSecret: Input only. Unencrypted AzureAD client secret will be
-	// passed to the GKE Hub CLH.
-	ClientSecret string `json:"clientSecret,omitempty"`
-
-	// EncryptedClientSecret: Output only. Encrypted AzureAD client secret.
-	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
-
-	// KubectlRedirectUri: The redirect URL that kubectl uses for
-	// authorization.
-	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
-
-	// Tenant: Kind of Azure AD account to be authenticated. Supported
-	// values are or for accounts belonging to a specific tenant.
-	Tenant string `json:"tenant,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClientId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IdentityServiceAzureADConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod IdentityServiceAzureADConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth
-// flow.
-type IdentityServiceGoogleConfig struct {
-	// Disable: Disable automatic configuration of Google Plugin on
-	// supported platforms.
-	Disable bool `json:"disable,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Disable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Disable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod IdentityServiceGoogleConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

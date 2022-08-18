@@ -1387,6 +1387,18 @@ type File struct {
 	// ResourceKey: A key needed to access the item via a shared link.
 	ResourceKey string `json:"resourceKey,omitempty"`
 
+	// Sha1Checksum: The SHA1 checksum associated with this file, if
+	// available. This field is only populated for files with content stored
+	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// files.
+	Sha1Checksum string `json:"sha1Checksum,omitempty"`
+
+	// Sha256Checksum: The SHA256 checksum associated with this file, if
+	// available. This field is only populated for files with content stored
+	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// files.
+	Sha256Checksum string `json:"sha256Checksum,omitempty"`
+
 	// Shared: Whether the file has been shared. Not populated for items in
 	// shared drives.
 	Shared bool `json:"shared,omitempty"`

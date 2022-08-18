@@ -2071,6 +2071,8 @@ func (s *ChromeOsDeviceTpmVersionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ChromeOsDeviceAction: The data regarding an action to update the
+// status of a Chrome OS device.
 type ChromeOsDeviceAction struct {
 	// Action: Action to be taken on the Chrome OS device.
 	Action string `json:"action,omitempty"`
@@ -7073,7 +7075,7 @@ type ChromeosdevicesMoveDevicesToOuCall struct {
 // MoveDevicesToOu: Moves or inserts multiple Chrome OS devices to an
 // organizational unit. You can move up to 50 devices at once.
 //
-// - customerId: Immutable ID of the Google Workspace account.
+// - customerId: Immutable. ID of the Google Workspace account.
 // - orgUnitPath: Full path of the target organizational unit or its ID.
 func (r *ChromeosdevicesService) MoveDevicesToOu(customerId string, orgUnitPath string, chromeosmovedevicestoou *ChromeOsMoveDevicesToOu) *ChromeosdevicesMoveDevicesToOuCall {
 	c := &ChromeosdevicesMoveDevicesToOuCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7159,7 +7161,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) Do(opts ...googleapi.CallOption) er
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable ID of the Google Workspace account",
+	//       "description": "Immutable. ID of the Google Workspace account",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7573,9 +7575,8 @@ type CustomerDevicesChromeosIssueCommandCall struct {
 
 // IssueCommand: Issues a command for the device to execute.
 //
-//   - customerId: Immutable. Immutable ID of the Google Workspace
-//     account.
-//   - deviceId: Immutable. Immutable ID of Chrome OS Device.
+// - customerId: Immutable. ID of the Google Workspace account.
+// - deviceId: Immutable. ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosService) IssueCommand(customerId string, deviceId string, directorychromeosdevicesissuecommandrequest *DirectoryChromeosdevicesIssueCommandRequest) *CustomerDevicesChromeosIssueCommandCall {
 	c := &CustomerDevicesChromeosIssueCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7688,13 +7689,13 @@ func (c *CustomerDevicesChromeosIssueCommandCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable. Immutable ID of the Google Workspace account.",
+	//       "description": "Immutable. ID of the Google Workspace account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "deviceId": {
-	//       "description": "Immutable. Immutable ID of Chrome OS Device.",
+	//       "description": "Immutable. ID of Chrome OS Device.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7729,10 +7730,9 @@ type CustomerDevicesChromeosCommandsGetCall struct {
 
 // Get: Gets command data a specific command issued to the device.
 //
-//   - commandId: Immutable. Immutable ID of Chrome OS Device Command.
-//   - customerId: Immutable. Immutable ID of the Google Workspace
-//     account.
-//   - deviceId: Immutable. Immutable ID of Chrome OS Device.
+// - commandId: Immutable. ID of Chrome OS Device Command.
+// - customerId: Immutable. ID of the Google Workspace account.
+// - deviceId: Immutable. ID of Chrome OS Device.
 func (r *CustomerDevicesChromeosCommandsService) Get(customerId string, deviceId string, commandId int64) *CustomerDevicesChromeosCommandsGetCall {
 	c := &CustomerDevicesChromeosCommandsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -7853,20 +7853,20 @@ func (c *CustomerDevicesChromeosCommandsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "commandId": {
-	//       "description": "Immutable. Immutable ID of Chrome OS Device Command.",
+	//       "description": "Immutable. ID of Chrome OS Device Command.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Immutable. Immutable ID of the Google Workspace account.",
+	//       "description": "Immutable. ID of the Google Workspace account.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "deviceId": {
-	//       "description": "Immutable. Immutable ID of Chrome OS Device.",
+	//       "description": "Immutable. ID of Chrome OS Device.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12412,7 +12412,13 @@ type MembersHasMemberCall struct {
 }
 
 // HasMember: Checks whether the given user is a member of the group.
-// Membership can be direct or nested.
+// Membership can be direct or nested, but if nested, the `memberKey`
+// and `groupKey` must be entities in the same domain or an `Invalid
+// input` error is returned. To check for nested memberships that
+// include entities outside of the group's domain, use the
+// `checkTransitiveMembership()`
+// (https://cloud.google.com/identity/docs/reference/rest/v1/groups.memberships/checkTransitiveMembership)
+// method in the Cloud Identity Groups API.
 //
 //   - groupKey: Identifies the group in the API request. The value can be
 //     the group's email address, group alias, or the unique group ID.
@@ -12525,7 +12531,7 @@ func (c *MembersHasMemberCall) Do(opts ...googleapi.CallOption) (*MembersHasMemb
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks whether the given user is a member of the group. Membership can be direct or nested.",
+	//   "description": "Checks whether the given user is a member of the group. Membership can be direct or nested, but if nested, the `memberKey` and `groupKey` must be entities in the same domain or an `Invalid input` error is returned. To check for nested memberships that include entities outside of the group's domain, use the [`checkTransitiveMembership()`](https://cloud.google.com/identity/docs/reference/rest/v1/groups.memberships/checkTransitiveMembership) method in the Cloud Identity Groups API.",
 	//   "flatPath": "admin/directory/v1/groups/{groupKey}/hasMember/{memberKey}",
 	//   "httpMethod": "GET",
 	//   "id": "directory.members.hasMember",

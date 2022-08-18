@@ -235,8 +235,7 @@ type AmpInspectionResult struct {
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
 	//   "PASS" - Equivalent to "Valid" for the page or item in Search
 	// Console.
-	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
-	// item in Search Console.
+	//   "PARTIAL" - Reserved, no longer in use.
 	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
 	// Search Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
@@ -304,8 +303,7 @@ type AmpInspectionResult struct {
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
 	//   "PASS" - Equivalent to "Valid" for the page or item in Search
 	// Console.
-	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
-	// item in Search Console.
+	//   "PARTIAL" - Reserved, no longer in use.
 	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
 	// Search Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
@@ -698,8 +696,7 @@ type IndexStatusInspectionResult struct {
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
 	//   "PASS" - Equivalent to "Valid" for the page or item in Search
 	// Console.
-	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
-	// item in Search Console.
+	//   "PARTIAL" - Reserved, no longer in use.
 	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
 	// Search Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
@@ -896,8 +893,7 @@ type MobileUsabilityInspectionResult struct {
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
 	//   "PASS" - Equivalent to "Valid" for the page or item in Search
 	// Console.
-	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
-	// item in Search Console.
+	//   "PARTIAL" - Reserved, no longer in use.
 	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
 	// Search Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
@@ -1031,8 +1027,7 @@ type RichResultsInspectionResult struct {
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
 	//   "PASS" - Equivalent to "Valid" for the page or item in Search
 	// Console.
-	//   "PARTIAL" - Equivalent to "Valid with warnings" for the page or
-	// item in Search Console.
+	//   "PARTIAL" - Reserved, no longer in use.
 	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
 	// Search Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search

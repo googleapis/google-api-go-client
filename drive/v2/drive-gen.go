@@ -2165,6 +2165,18 @@ type File struct {
 	// SelfLink: A link back to this file.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// Sha1Checksum: The SHA1 checksum associated with this file, if
+	// available. This field is only populated for files with content stored
+	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// files.
+	Sha1Checksum string `json:"sha1Checksum,omitempty"`
+
+	// Sha256Checksum: The SHA256 checksum associated with this file, if
+	// available. This field is only populated for files with content stored
+	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// files.
+	Sha256Checksum string `json:"sha256Checksum,omitempty"`
+
 	// Shareable: Deprecated: use capabilities/canShare.
 	Shareable bool `json:"shareable,omitempty"`
 

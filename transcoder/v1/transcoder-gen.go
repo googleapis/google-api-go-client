@@ -537,6 +537,48 @@ func (s *AudioStream) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BwdifConfig: Bob Weaver Deinterlacing Filter Configuration.
+type BwdifConfig struct {
+	// DeinterlaceAllFrames: Deinterlace all frames rather than just the
+	// frames identified as interlaced. The default is `false`.
+	DeinterlaceAllFrames bool `json:"deinterlaceAllFrames,omitempty"`
+
+	// Mode: Specifies the deinterlacing mode to adopt. The default is
+	// `send_frame`. Supported values: - `send_frame`: Output one frame for
+	// each frame - `send_field`: Output one frame for each field
+	Mode string `json:"mode,omitempty"`
+
+	// Parity: The picture field parity assumed for the input interlaced
+	// video. The default is `auto`. Supported values: - `tff`: Assume the
+	// top field is first - `bff`: Assume the bottom field is first -
+	// `auto`: Enable automatic detection of field parity
+	Parity string `json:"parity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeinterlaceAllFrames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeinterlaceAllFrames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BwdifConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BwdifConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Color: Color preprocessing configuration. **Note:** This
 // configuration is not supported.
 type Color struct {
@@ -684,6 +726,37 @@ func (s *Deblock) UnmarshalJSON(data []byte) error {
 	}
 	s.Strength = float64(s1.Strength)
 	return nil
+}
+
+// Deinterlace: Deinterlace configuration for input video.
+type Deinterlace struct {
+	// Bwdif: Specifies the Bob Weaver Deinterlacing Filter Configuration.
+	Bwdif *BwdifConfig `json:"bwdif,omitempty"`
+
+	// Yadif: Specifies the Yet Another Deinterlacing Filter Configuration.
+	Yadif *YadifConfig `json:"yadif,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bwdif") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bwdif") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Deinterlace) MarshalJSON() ([]byte, error) {
+	type NoMethod Deinterlace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Denoise: Denoise preprocessing configuration. **Note:** This
@@ -1761,6 +1834,9 @@ type PreprocessingConfig struct {
 	// Deblock: Deblock preprocessing configuration.
 	Deblock *Deblock `json:"deblock,omitempty"`
 
+	// Deinterlace: Specify the video deinterlace configuration.
+	Deinterlace *Deinterlace `json:"deinterlace,omitempty"`
+
 	// Denoise: Denoise preprocessing configuration.
 	Denoise *Denoise `json:"denoise,omitempty"`
 
@@ -2184,6 +2260,52 @@ func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
 	}
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// YadifConfig: Yet Another Deinterlacing Filter Configuration.
+type YadifConfig struct {
+	// DeinterlaceAllFrames: Deinterlace all frames rather than just the
+	// frames identified as interlaced. The default is `false`.
+	DeinterlaceAllFrames bool `json:"deinterlaceAllFrames,omitempty"`
+
+	// DisableSpatialInterlacing: Disable spacial interlacing. The default
+	// is `false`.
+	DisableSpatialInterlacing bool `json:"disableSpatialInterlacing,omitempty"`
+
+	// Mode: Specifies the deinterlacing mode to adopt. The default is
+	// `send_frame`. Supported values: - `send_frame`: Output one frame for
+	// each frame - `send_field`: Output one frame for each field
+	Mode string `json:"mode,omitempty"`
+
+	// Parity: The picture field parity assumed for the input interlaced
+	// video. The default is `auto`. Supported values: - `tff`: Assume the
+	// top field is first - `bff`: Assume the bottom field is first -
+	// `auto`: Enable automatic detection of field parity
+	Parity string `json:"parity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeinterlaceAllFrames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeinterlaceAllFrames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YadifConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod YadifConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "transcoder.projects.locations.jobTemplates.create":

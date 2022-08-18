@@ -279,9 +279,8 @@ type AppsServicesVersionsInstancesService struct {
 	s *APIService
 }
 
-// ApiConfigHandler: Google Cloud Endpoints
-// (https://cloud.google.com/appengine/docs/python/endpoints/)
-// configuration for API handlers.
+// ApiConfigHandler: Cloud Endpoints
+// (https://cloud.google.com/endpoints/) configuration for API handlers.
 type ApiConfigHandler struct {
 	// AuthFailAction: Action to take when users access resources that
 	// require authentication. Defaults to redirect.
@@ -3472,9 +3471,9 @@ func (s *UrlMap) MarshalJSON() ([]byte, error) {
 // Version: A Version resource is a specific set of source code and
 // configuration files that are deployed into a service.
 type Version struct {
-	// ApiConfig: Serving configuration for Google Cloud Endpoints
-	// (https://cloud.google.com/appengine/docs/python/endpoints/).Only
-	// returned in GET requests if view=FULL is set.
+	// ApiConfig: Serving configuration for Cloud Endpoints
+	// (https://cloud.google.com/endpoints/).Only returned in GET requests
+	// if view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
 
 	// AppEngineApis: Allows App Engine second generation runtimes to access

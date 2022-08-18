@@ -6,7 +6,7 @@
 
 // Package identitytoolkit provides access to the Identity Toolkit API.
 //
-// For product documentation, see: https://firebase.google.com/docs/auth/
+// For product documentation, see: https://cloud.google.com/identity-platform
 //
 // # Creating a client
 //
@@ -416,6 +416,73 @@ type GoogleCloudIdentitytoolkitAdminV2ClientConfig struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2ClientConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig: Options
+// related to how clients making requests on behalf of a tenant should
+// be configured.
+type GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig struct {
+	// Permissions: Configuration related to restricting a user's ability to
+	// affect their account.
+	Permissions *GoogleCloudIdentitytoolkitAdminV2ClientPermissions `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2ClientPermissions: Configuration
+// related to restricting a user's ability to affect their account.
+type GoogleCloudIdentitytoolkitAdminV2ClientPermissions struct {
+	// DisabledUserDeletion: When true, end users cannot delete their
+	// account on the associated project through any of our API methods
+	DisabledUserDeletion bool `json:"disabledUserDeletion,omitempty"`
+
+	// DisabledUserSignup: When true, end users cannot sign up for a new
+	// account on the associated project through any of our API methods
+	DisabledUserSignup bool `json:"disabledUserSignup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisabledUserDeletion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisabledUserDeletion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2ClientPermissions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2ClientPermissions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1921,6 +1988,10 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// AutodeleteAnonymousUsers: Whether anonymous users will be
 	// auto-deleted after a period of 30 days.
 	AutodeleteAnonymousUsers bool `json:"autodeleteAnonymousUsers,omitempty"`
+
+	// Client: Options related to how clients making requests on behalf of a
+	// project should be configured.
+	Client *GoogleCloudIdentitytoolkitAdminV2ClientPermissionConfig `json:"client,omitempty"`
 
 	// DisableAuth: Whether authentication is disabled for the tenant. If
 	// true, the users under the disabled tenant are not allowed to sign-in.

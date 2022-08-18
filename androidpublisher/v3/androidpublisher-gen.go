@@ -4582,7 +4582,7 @@ type SubscriptionPurchase struct {
 	// are: 0. Payment pending 1. Payment received 2. Free trial 3. Pending
 	// deferred upgrade/downgrade Not present for canceled, expired
 	// subscriptions.
-	PaymentState int64 `json:"paymentState,omitempty"`
+	PaymentState *int64 `json:"paymentState,omitempty"`
 
 	// PriceAmountMicros: Price of the subscription, For tax exclusive
 	// countries, the price doesn't include tax. For tax inclusive

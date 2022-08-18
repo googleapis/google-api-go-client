@@ -148,6 +148,10 @@ type V1Service struct {
 // AccountDetails: Contains the account information such as the
 // licensing status for the user in the scope.
 type AccountDetails struct {
+	// AccountRiskVerdict: Details about the account risk for the user in
+	// the scope. This feature is available only to selected developers.
+	AccountRiskVerdict *AccountRiskVerdict `json:"accountRiskVerdict,omitempty"`
+
 	// AppLicensingVerdict: Required. Details about the licensing status of
 	// the user for the app in the scope.
 	//
@@ -163,7 +167,7 @@ type AccountDetails struct {
 	// meet the minimum bar or the application was not a known Play version.
 	AppLicensingVerdict string `json:"appLicensingVerdict,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AppLicensingVerdict")
+	// ForceSendFields is a list of field names (e.g. "AccountRiskVerdict")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -171,7 +175,7 @@ type AccountDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppLicensingVerdict") to
+	// NullFields is a list of field names (e.g. "AccountRiskVerdict") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -183,6 +187,54 @@ type AccountDetails struct {
 
 func (s *AccountDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountRiskVerdict: Contains information about account risk that
+// indicates if the current user session seems low risk, unknown, or
+// risky before you allow important actions to proceed.
+type AccountRiskVerdict struct {
+	// RiskLevel: Required. Indicates the account risk level of the current
+	// user session.
+	//
+	// Possible values:
+	//   "RISK_LEVEL_UNSPECIFIED" - Risk level has not been set.
+	//   "RISK_LEVEL_UNEVALUATED" - The account risk is not evaluated,
+	// because the device is not trusted or the user does not have a Play
+	// app license.
+	//   "RISK_LEVEL_RISK" - Play thinks that at least one of the user
+	// accounts on the device has some unusual store engagement behavior
+	// that could be risky.
+	//   "RISK_LEVEL_UNKNOWN" - Play does not have sufficient information to
+	// assess the risk. The account may be new, or it may lack activity on
+	// the Play Store.
+	//   "RISK_LEVEL_LOW_RISK" - Play thinks the user could be genuine,
+	// since there is some store engagement. However, some signals to
+	// support the trust level are missing.
+	//   "RISK_LEVEL_LOWEST_RISK" - Play thinks the user is more likely to
+	// be genuine due to harder to replicate store engagement signals.
+	RiskLevel string `json:"riskLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RiskLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RiskLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountRiskVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountRiskVerdict
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

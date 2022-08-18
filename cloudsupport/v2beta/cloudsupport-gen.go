@@ -373,7 +373,7 @@ type Case struct {
 	// severity.
 	//
 	// Possible values:
-	//   "PRIORITY_UNSPECIFIED" - Severity is undefined or has not been set
+	//   "PRIORITY_UNSPECIFIED" - Priority is undefined or has not been set
 	// yet.
 	//   "P0" - Extreme impact on a production service. Service is hard
 	// down.

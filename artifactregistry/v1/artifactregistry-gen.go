@@ -506,6 +506,10 @@ type DockerImage struct {
 	// Tags: Tags attached to this image.
 	Tags []string `json:"tags,omitempty"`
 
+	// UpdateTime: Output only. The time when the docker image was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// UploadTime: Time the image was uploaded.
 	UploadTime string `json:"uploadTime,omitempty"`
 
@@ -4965,6 +4969,13 @@ func (r *ProjectsLocationsRepositoriesDockerImagesService) List(parent string) *
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesDockerImagesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesDockerImagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of artifacts to return.
 func (c *ProjectsLocationsRepositoriesDockerImagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesDockerImagesListCall {
@@ -5086,6 +5097,11 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) Do(opts ...googleapi
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "The field to order the results by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of artifacts to return.",
 	//       "format": "int32",

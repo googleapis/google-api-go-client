@@ -3326,16 +3326,20 @@ type GoogleIamV1Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -4469,9 +4473,9 @@ func (r *OrganizationsLocationsInsightsService) ConfiguredInsight(insight string
 	return c
 }
 
-// Aggregation sets the optional parameter "aggregation": Aggregation
-// type. Available aggregation could be fetched by calling insight list
-// and get APIs in `BASIC` view.
+// Aggregation sets the optional parameter "aggregation": Required.
+// Aggregation type. Available aggregation could be fetched by calling
+// insight list and get APIs in `BASIC` view.
 //
 // Possible values:
 //
@@ -4676,7 +4680,7 @@ func (c *OrganizationsLocationsInsightsConfiguredInsightCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "aggregation": {
-	//       "description": "Optional. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "description": "Required. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
 	//       "enum": [
 	//         "AGGREGATION_UNSPECIFIED",
 	//         "HOURLY",
@@ -4794,10 +4798,11 @@ type OrganizationsLocationsInsightsGetCall struct {
 // Get: Gets the value for a selected particular insight with default
 // configuration. The default aggregation level is 'DAILY' and no
 // grouping will be applied or default grouping if applicable. The data
-// will be returned for recent 7 days. Use the organization level path
-// for fetching at org level and project level path for fetching the
-// insight value specific to a particular project. Setting the `view` to
-// `BASIC` will only return the metadata for the insight.
+// will be returned for recent 7 days starting the day before. The
+// insight data size will be limited to 50 rows. Use the organization
+// level path for fetching at org level and project level path for
+// fetching the insight value specific to a particular project. Setting
+// the `view` to `BASIC` will only return the metadata for the insight.
 //
 //   - name: The resource name of the insight using the form:
 //     `organizations/{organization_id}/locations/{location_id}/insights/{i
@@ -4932,7 +4937,7 @@ func (c *OrganizationsLocationsInsightsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
+	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days starting the day before. The insight data size will be limited to 50 rows. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
 	//   "flatPath": "v1alpha/organizations/{organizationsId}/locations/{locationsId}/insights/{insightsId}",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.organizations.locations.insights.get",
@@ -16580,9 +16585,9 @@ func (r *ProjectsLocationsInsightsService) ConfiguredInsight(insight string) *Pr
 	return c
 }
 
-// Aggregation sets the optional parameter "aggregation": Aggregation
-// type. Available aggregation could be fetched by calling insight list
-// and get APIs in `BASIC` view.
+// Aggregation sets the optional parameter "aggregation": Required.
+// Aggregation type. Available aggregation could be fetched by calling
+// insight list and get APIs in `BASIC` view.
 //
 // Possible values:
 //
@@ -16787,7 +16792,7 @@ func (c *ProjectsLocationsInsightsConfiguredInsightCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "aggregation": {
-	//       "description": "Optional. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
+	//       "description": "Required. Aggregation type. Available aggregation could be fetched by calling insight list and get APIs in `BASIC` view.",
 	//       "enum": [
 	//         "AGGREGATION_UNSPECIFIED",
 	//         "HOURLY",
@@ -16905,10 +16910,11 @@ type ProjectsLocationsInsightsGetCall struct {
 // Get: Gets the value for a selected particular insight with default
 // configuration. The default aggregation level is 'DAILY' and no
 // grouping will be applied or default grouping if applicable. The data
-// will be returned for recent 7 days. Use the organization level path
-// for fetching at org level and project level path for fetching the
-// insight value specific to a particular project. Setting the `view` to
-// `BASIC` will only return the metadata for the insight.
+// will be returned for recent 7 days starting the day before. The
+// insight data size will be limited to 50 rows. Use the organization
+// level path for fetching at org level and project level path for
+// fetching the insight value specific to a particular project. Setting
+// the `view` to `BASIC` will only return the metadata for the insight.
 //
 //   - name: The resource name of the insight using the form:
 //     `organizations/{organization_id}/locations/{location_id}/insights/{i
@@ -17043,7 +17049,7 @@ func (c *ProjectsLocationsInsightsGetCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
+	//   "description": "Gets the value for a selected particular insight with default configuration. The default aggregation level is 'DAILY' and no grouping will be applied or default grouping if applicable. The data will be returned for recent 7 days starting the day before. The insight data size will be limited to 50 rows. Use the organization level path for fetching at org level and project level path for fetching the insight value specific to a particular project. Setting the `view` to `BASIC` will only return the metadata for the insight.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/insights/{insightsId}",
 	//   "httpMethod": "GET",
 	//   "id": "beyondcorp.projects.locations.insights.get",

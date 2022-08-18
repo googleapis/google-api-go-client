@@ -409,7 +409,10 @@ func (s *FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 // GenerateVerificationTokenRequest: Request message for
 // Verifications.GenerateVerificationToken.
 type GenerateVerificationTokenRequest struct {
-	// Location: Required. The target location.
+	// Location: Required. The target location. Note: The location
+	// information should exactly match the target Location, otherwise the
+	// generated verification token won't be able to verify the target
+	// Location.
 	Location *Location `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to

@@ -1556,9 +1556,7 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter str
 	//   "OPERATION_UNSPECIFIED" - Unspecified.
 	//   "EQUAL" - Equal.
 	//   "LESS_THAN" - Less than.
-	//   "LESS_THAN_OR_EQUAL" - Less than or equal.
 	//   "GREATER_THAN" - Greater than.
-	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal.
 	Operation string `json:"operation,omitempty"`
 
 	// Value: Required. The numeric or date value to match against.
@@ -1651,8 +1649,6 @@ type GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter stru
 	//   "CONTAINS" - Contains the string value.
 	//   "FULL_REGEXP" - Full regular expression matches with the string
 	// value.
-	//   "PARTIAL_REGEXP" - Partial regular expression matches with the
-	// string value.
 	MatchType string `json:"matchType,omitempty"`
 
 	// Value: Required. The string value to be matched against.
@@ -10003,7 +9999,7 @@ type PropertiesAudiencesGetCall struct {
 }
 
 // Get: Lookup for a single Audience. Audiences created before 2020 may
-// not be supported.
+// not be supported. Default audiences will not show filter definitions.
 //
 //   - name: The name of the Audience to get. Example format:
 //     properties/1234/audiences/5678.
@@ -10113,7 +10109,7 @@ func (c *PropertiesAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 	}
 	return ret, nil
 	// {
-	//   "description": "Lookup for a single Audience. Audiences created before 2020 may not be supported.",
+	//   "description": "Lookup for a single Audience. Audiences created before 2020 may not be supported. Default audiences will not show filter definitions.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences/{audiencesId}",
 	//   "httpMethod": "GET",
 	//   "id": "analyticsadmin.properties.audiences.get",
@@ -10153,7 +10149,8 @@ type PropertiesAudiencesListCall struct {
 }
 
 // List: Lists Audiences on a property. Audiences created before 2020
-// may not be supported.
+// may not be supported. Default audiences will not show filter
+// definitions.
 //
 // - parent: Example format: properties/1234.
 func (r *PropertiesAudiencesService) List(parent string) *PropertiesAudiencesListCall {
@@ -10282,7 +10279,7 @@ func (c *PropertiesAudiencesListCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Audiences on a property. Audiences created before 2020 may not be supported.",
+	//   "description": "Lists Audiences on a property. Audiences created before 2020 may not be supported. Default audiences will not show filter definitions.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/audiences",
 	//   "httpMethod": "GET",
 	//   "id": "analyticsadmin.properties.audiences.list",

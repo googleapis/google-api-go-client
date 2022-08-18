@@ -221,9 +221,10 @@ type ProjectsLocationsOperationsService struct {
 // AuthorizationAttemptInfo: State of the latest attempt to authorize a
 // domain for certificate issuance.
 type AuthorizationAttemptInfo struct {
-	// Details: Human readable explanation for reaching the state. Provided
-	// to help address the configuration issues. Not guaranteed to be
-	// stable. For programmatic access use Reason enum.
+	// Details: Output only. Human readable explanation for reaching the
+	// state. Provided to help address the configuration issues. Not
+	// guaranteed to be stable. For programmatic access use FailureReason
+	// enum.
 	Details string `json:"details,omitempty"`
 
 	// Domain: Domain name of the authorization attempt.
@@ -242,7 +243,8 @@ type AuthorizationAttemptInfo struct {
 	// domain, e.g. for certificates per top-level private domain.
 	FailureReason string `json:"failureReason,omitempty"`
 
-	// State: State of the domain for managed certificate issuance.
+	// State: Output only. State of the domain for managed certificate
+	// issuance.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED"
@@ -600,17 +602,17 @@ type Empty struct {
 
 // GclbTarget: Describes a Target Proxy which uses this Certificate Map.
 type GclbTarget struct {
-	// IpConfigs: IP configurations for this Target Proxy where the
-	// Certificate Map is serving.
+	// IpConfigs: Output only. IP configurations for this Target Proxy where
+	// the Certificate Map is serving.
 	IpConfigs []*IpConfig `json:"ipConfigs,omitempty"`
 
-	// TargetHttpsProxy: This field returns the resource name in the
-	// following format:
+	// TargetHttpsProxy: Output only. This field returns the resource name
+	// in the following format:
 	// `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
 	TargetHttpsProxy string `json:"targetHttpsProxy,omitempty"`
 
-	// TargetSslProxy: This field returns the resource name in the following
-	// format:
+	// TargetSslProxy: Output only. This field returns the resource name in
+	// the following format:
 	// `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
 	TargetSslProxy string `json:"targetSslProxy,omitempty"`
 
@@ -640,10 +642,10 @@ func (s *GclbTarget) MarshalJSON() ([]byte, error) {
 // IpConfig: Defines IP configuration where this Certificate Map is
 // serving.
 type IpConfig struct {
-	// IpAddress: An external IP address.
+	// IpAddress: Output only. An external IP address.
 	IpAddress string `json:"ipAddress,omitempty"`
 
-	// Ports: Ports.
+	// Ports: Output only. Ports.
 	Ports []int64 `json:"ports,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
@@ -984,8 +986,8 @@ type ManagedCertificate struct {
 	// challenge resolution.
 	Domains []string `json:"domains,omitempty"`
 
-	// ProvisioningIssue: Information about issues with provisioning a
-	// Managed Certificate.
+	// ProvisioningIssue: Output only. Information about issues with
+	// provisioning a Managed Certificate.
 	ProvisioningIssue *ProvisioningIssue `json:"provisioningIssue,omitempty"`
 
 	// State: Output only. State of the managed certificate resource.
@@ -1143,12 +1145,12 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // ProvisioningIssue: Information about issues with provisioning a
 // Managed Certificate.
 type ProvisioningIssue struct {
-	// Details: Human readable explanation about the issue. Provided to help
-	// address the configuration issues. Not guaranteed to be stable. For
-	// programmatic access use Reason enum.
+	// Details: Output only. Human readable explanation about the issue.
+	// Provided to help address the configuration issues. Not guaranteed to
+	// be stable. For programmatic access use Reason enum.
 	Details string `json:"details,omitempty"`
 
-	// Reason: Reason for provisioning failures.
+	// Reason: Output only. Reason for provisioning failures.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED"

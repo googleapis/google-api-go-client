@@ -1737,6 +1737,32 @@ type GoogleCloudApigeeV1ApiProduct struct {
 	// hours.
 	Quota string `json:"quota,omitempty"`
 
+	// QuotaCounterScope: Scope of the quota decides how the quota counter
+	// gets applied and evaluate for quota violation. If the Scope is set as
+	// PROXY, then all the operations defined for the APIproduct that are
+	// associated with the same proxy will share the same quota counter set
+	// at the APIproduct level, making it a global counter at a proxy level.
+	// If the Scope is set as OPERATION, then each operations get the
+	// counter set at the API product dedicated, making it a local counter.
+	// Note that, the QuotaCounterScope applies only when an operation does
+	// not have dedicated quota set for itself.
+	//
+	// Possible values:
+	//   "QUOTA_COUNTER_SCOPE_UNSPECIFIED" - When quota is not explicitly
+	// defined for each operation(REST/GraphQL), the limits set at product
+	// level will be used as a local counter for quota evaluation by all the
+	// operations, independent of proxy association.
+	//   "PROXY" - When quota is not explicitly defined for each
+	// operation(REST/GraphQL), set at product level will be used as a
+	// global counter for quota evaluation by all the operations associated
+	// with a particular proxy.
+	//   "OPERATION" - When quota is not explicitly defined for each
+	// operation(REST/GraphQL), the limits set at product level will be used
+	// as a local counter for quota evaluation by all the operations,
+	// independent of proxy association. This behavior mimics the same as
+	// QUOTA_COUNTER_SCOPE_UNSPECIFIED.
+	QuotaCounterScope string `json:"quotaCounterScope,omitempty"`
+
 	// QuotaInterval: Time interval over which the number of request
 	// messages is calculated.
 	QuotaInterval string `json:"quotaInterval,omitempty"`
@@ -4247,6 +4273,28 @@ func (s *GoogleCloudApigeeV1DimensionMetric) MarshalJSON() ([]byte, error) {
 // For more information, see [Southbound networking patterns]
 // (https://cloud.google.com/apigee/docs/api-platform/architecture/southbound-networking-patterns-endpoints).
 type GoogleCloudApigeeV1EndpointAttachment struct {
+	// ConnectionState: Output only. State of the endpoint attachment
+	// connection to the service attachment.
+	//
+	// Possible values:
+	//   "CONNECTION_STATE_UNSPECIFIED" - The connection state has not been
+	// set.
+	//   "UNAVAILABLE" - The connection state is unavailable at this time,
+	// possibly because the endpoint attachment is currently being
+	// provisioned.
+	//   "PENDING" - The connection is pending acceptance by the PSC
+	// producer.
+	//   "ACCEPTED" - The connection has been accepted by the PSC producer.
+	//   "REJECTED" - The connection has been rejected by the PSC producer.
+	//   "CLOSED" - The connection has been closed by the PSC producer and
+	// will not serve traffic going forward.
+	//   "FROZEN" - The connection has been frozen by the PSC producer and
+	// will not serve traffic.
+	//   "NEEDS_ATTENTION" - The connection has been accepted by the PSC
+	// producer, but it is not ready to serve the traffic due to producer
+	// side issues.
+	ConnectionState string `json:"connectionState,omitempty"`
+
 	// Host: Output only. Host that can be used in either the HTTP target
 	// endpoint directly or as the host in target server.
 	Host string `json:"host,omitempty"`
@@ -4277,7 +4325,7 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Host") to
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4285,12 +4333,13 @@ type GoogleCloudApigeeV1EndpointAttachment struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConnectionState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

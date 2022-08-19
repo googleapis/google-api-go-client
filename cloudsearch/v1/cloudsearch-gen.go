@@ -5657,10 +5657,6 @@ type CallInfo struct {
 	// session is included if there's no active one.
 	StreamingSessions []*StreamingSessionInfo `json:"streamingSessions,omitempty"`
 
-	// SupportedCaptionLanguages: Supported caption languages in BCP 47
-	// language code format, e.g.'en-US'.
-	SupportedCaptionLanguages []string `json:"supportedCaptionLanguages,omitempty"`
-
 	// TranscriptionSessionInfo: Information about active transcription
 	// session in the ongoing conference.
 	TranscriptionSessionInfo *TranscriptionSessionInfo `json:"transcriptionSessionInfo,omitempty"`
@@ -21407,10 +21403,6 @@ type WhiteboardInfo struct {
 
 	// Uri: The uri for whiteboard document.
 	Uri string `json:"uri,omitempty"`
-
-	// WhiteboardUri: This field is deprecated and will be removed. Please
-	// use "uri" instead.
-	WhiteboardUri string `json:"whiteboardUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with

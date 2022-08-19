@@ -214,6 +214,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
 	// document.
 	IndividualBatchDeleteStatuses []*GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus `json:"individualBatchDeleteStatuses,omitempty"`
 
+	// TotalDocumentCount: Total number of documents deleting from dataset.
+	TotalDocumentCount int64 `json:"totalDocumentCount,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -245,7 +248,7 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDe
 	// DocumentId: The document id of the document.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
 
-	// Status: The status of deleting the document.
+	// Status: The status of deleting the document in storage.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DocumentId") to
@@ -866,6 +869,10 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// ImportConfigValidationResults: Validation statuses of the batch
+	// documents import config.
+	ImportConfigValidationResults []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult `json:"importConfigValidationResults,omitempty"`
+
 	// IndividualImportStatuses: The list of response details of each
 	// document.
 	IndividualImportStatuses []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus `json:"individualImportStatuses,omitempty"`
@@ -894,6 +901,42 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValid
+// ationResult: The validation status of each import config. Status is
+// ok if the configuration is valid and the specified documents are
+// valid for importing. Otherwise status will be set as errors.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult struct {
+	// InputGcsSource: The source Cloud Storage URI specified in the import
+	// config.
+	InputGcsSource string `json:"inputGcsSource,omitempty"`
+
+	// Status: The validation status of import config.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputGcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputGcsSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -946,6 +989,16 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// DatasetResyncStatuses: The list of dataset resync statuses. Not
+	// checked when `dataset_documents` is specified in ResyncRequest.
+	DatasetResyncStatuses []*GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus `json:"datasetResyncStatuses,omitempty"`
+
+	// IndividualDocumentResyncStatuses: The list of document resync
+	// statuses. The same document could have multiple
+	// `individual_document_resync_statuses` if it has multiple
+	// inconsistencies.
+	IndividualDocumentResyncStatuses []*GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus `json:"individualDocumentResyncStatuses,omitempty"`
+
 	// NewlyAddedDocuments: Returns the newly added document Cloud Storage
 	// prefix if the documents are founded in Cloud Storage while not in
 	// Document Service storage.
@@ -971,6 +1024,94 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus
+// : Resync status against inconsistency types on the dataset level.
+type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus struct {
+	// DatasetInconsistencyType: The type of the inconsistency of the
+	// dataset.
+	//
+	// Possible values:
+	//   "DATASET_INCONSISTENCY_TYPE_UNSPECIFIED" - Default value.
+	//   "DATASET_INCONSISTENCY_TYPE_NO_STORAGE_MARKER" - The marker file
+	// under the dataset folder is not found.
+	DatasetInconsistencyType string `json:"datasetInconsistencyType,omitempty"`
+
+	// Status: The status of resyncing the dataset with regards to the
+	// detected inconsistency. Empty if `validate_only` is true in the
+	// request.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DatasetInconsistencyType") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetInconsistencyType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentR
+// esyncStatus: Resync status for each document per inconsistency type.
+type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus struct {
+	// DocumentId: The document identifier.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
+	// DocumentInconsistencyType: The type of document inconsistency.
+	//
+	// Possible values:
+	//   "DOCUMENT_INCONSISTENCY_TYPE_UNSPECIFIED" - Default value.
+	//   "DOCUMENT_INCONSISTENCY_TYPE_INVALID_DOCPROTO" - The document proto
+	// is invalid.
+	//   "DOCUMENT_INCONSISTENCY_TYPE_MISMATCHED_METADATA" - Indexed
+	// docproto metadata is mismatched.
+	//   "DOCUMENT_INCONSISTENCY_TYPE_NO_PAGE_IMAGE" - The page image or
+	// thumbnails are missing.
+	DocumentInconsistencyType string `json:"documentInconsistencyType,omitempty"`
+
+	// Status: The status of resyncing the document with regards to the
+	// detected inconsistency. Empty if `validate_only` is true in the
+	// request.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2147,13 +2288,6 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Amphitheatre Pkwy`. If the entity is not present in the document,
 	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
-
-	// NonPresent: Optional. This attribute indicates that the processing
-	// didn't actually identify this entity, but a confidence score was
-	// assigned that represent the potential that this could be a false
-	// negative. A non-present entity should have an empty mention_text and
-	// text_anchor.
-	NonPresent bool `json:"nonPresent,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
 	// extracted value could not be converted or the type (e.g. address) is
@@ -4216,13 +4350,6 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Amphitheatre Pkwy`. If the entity is not present in the document,
 	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
-
-	// NonPresent: Optional. This attribute indicates that the processing
-	// didn't actually identify this entity, but a confidence score was
-	// assigned that represent the potential that this could be a false
-	// negative. A non-present entity should have an empty mention_text and
-	// text_anchor.
-	NonPresent bool `json:"nonPresent,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
 	// extracted value could not be converted or the type (e.g. address) is

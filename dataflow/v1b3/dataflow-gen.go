@@ -2117,6 +2117,10 @@ type FlexTemplateRuntimeEnvironment struct {
 	// user is given the opportunity to download the heap file.
 	DumpHeapOnOom bool `json:"dumpHeapOnOom,omitempty"`
 
+	// EnableLauncherVmSerialPortLogging: If true serial port logging will
+	// be enabled for the launcher VM.
+	EnableLauncherVmSerialPortLogging bool `json:"enableLauncherVmSerialPortLogging,omitempty"`
+
 	// EnableStreamingEngine: Whether to enable Streaming Engine for the
 	// job.
 	EnableStreamingEngine bool `json:"enableStreamingEngine,omitempty"`

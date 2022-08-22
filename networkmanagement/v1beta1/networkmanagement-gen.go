@@ -239,6 +239,12 @@ type AbortInfo struct {
 	//   "UNSUPPORTED" - Aborted because the test scenario is not supported.
 	Cause string `json:"cause,omitempty"`
 
+	// ProjectsMissingPermission: List of project IDs that the user has
+	// specified in the request but does not have permission to access
+	// network configs. Analysis is aborted in this case with the
+	// PERMISSION_DENIED cause.
+	ProjectsMissingPermission []string `json:"projectsMissingPermission,omitempty"`
+
 	// ResourceUri: URI of the resource that caused the abort.
 	ResourceUri string `json:"resourceUri,omitempty"`
 
@@ -261,44 +267,6 @@ type AbortInfo struct {
 
 func (s *AbortInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AbortInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppEngineVersionInfo: For display only. Metadata associated with an
-// App Engine version.
-type AppEngineVersionInfo struct {
-	// DisplayName: Name of an App Engine version.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Environment: App Engine execution environment for a version.
-	Environment string `json:"environment,omitempty"`
-
-	// Runtime: Runtime of the App Engine version.
-	Runtime string `json:"runtime,omitempty"`
-
-	// Uri: URI of an App Engine version.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppEngineVersionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod AppEngineVersionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -420,16 +388,20 @@ type Binding struct {
 	// who is authenticated with a Google account or a service account. *
 	// `user:{emailid}`: An email address that represents a specific Google
 	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a
+	// `serviceAccount:{emailid}`: An email address that represents a Google
 	// service account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
-	// email address that represents a Google group. For example,
-	// `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
+	// `my-other-app@appspot.gserviceaccount.com`. *
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
+	//  An identifier for a Kubernetes service account
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`. *
+	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently
+	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
+	// If the user is recovered, this value reverts to `user:{emailid}` and
+	// the recovered user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -752,7 +724,7 @@ type DropInfo struct {
 	//   "UNKNOWN_EXTERNAL_ADDRESS" - Destination external address cannot be
 	// resolved to a known target. If the address is used in a Google Cloud
 	// project, provide the project ID as test input.
-	//   "FOREIGN_IP_DISALLOWED" - a Compute Engine instance can only send
+	//   "FOREIGN_IP_DISALLOWED" - A Compute Engine instance can only send
 	// or receive a packet with a foreign IP address if ip_forward is
 	// enabled.
 	//   "FIREWALL_RULE" - Dropped due to a firewall rule, unless allowed
@@ -822,6 +794,10 @@ type DropInfo struct {
 	// global access.
 	//   "PSC_CONNECTION_NOT_ACCEPTED" - Privte Service Connect (PSC)
 	// connection is not in accepted state.
+	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster
+	// that is not in running state.
+	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud
+	// SQL instance that is not in running state.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -1117,6 +1093,8 @@ type FirewallInfo struct {
 	// details, see [VPC connector's implicit
 	// rules](https://cloud.google.com/functions/docs/networking/connecting-v
 	// pc#restrict-access).
+	//   "NETWORK_FIREWALL_POLICY_RULE" - Global network firewall policy
+	// rule.
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is
@@ -1184,6 +1162,7 @@ type ForwardInfo struct {
 	//   "IMPORTED_CUSTOM_ROUTE_NEXT_HOP" - Forwarded to the next hop of a
 	// custom route imported from a peering VPC.
 	//   "CLOUD_SQL_INSTANCE" - Forwarded to a Cloud SQL instance.
+	//   "ANOTHER_PROJECT" - Forwarded to a VPC network in another project.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -2262,10 +2241,6 @@ type Step struct {
 	// Abort: Display information of the final state "abort" and reason.
 	Abort *AbortInfo `json:"abort,omitempty"`
 
-	// AppEngineVersion: Display information of an App Engine service
-	// version.
-	AppEngineVersion *AppEngineVersionInfo `json:"appEngineVersion,omitempty"`
-
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`
 
@@ -2343,9 +2318,6 @@ type Step struct {
 	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating
 	// from a Cloud function. A CloudFunctionInfo is populated with starting
 	// function information.
-	//   "START_FROM_APP_ENGINE_VERSION" - Initial state: packet originating
-	// from an App Engine service version. An AppEngineVersionInfo is
-	// populated with starting version information.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress

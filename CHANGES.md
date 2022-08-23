@@ -1,5 +1,22 @@
 # Changes
 
+## [0.94.0](https://github.com/googleapis/google-api-go-client/compare/v0.93.0...v0.94.0) (2022-08-23)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1676](https://github.com/googleapis/google-api-go-client/issues/1676) [#1673](https://github.com/googleapis/google-api-go-client/issues/1673) [#1672](https://github.com/googleapis/google-api-go-client/issues/1672) [#1671](https://github.com/googleapis/google-api-go-client/issues/1671) [#1667](https://github.com/googleapis/google-api-go-client/issues/1667)
+
+
+### Bug Fixes
+
+* **storage:** *int64 instead of int64 for Age cond ([#1598](https://github.com/googleapis/google-api-go-client/issues/1598)) ([9ea025d](https://github.com/googleapis/google-api-go-client/commit/9ea025dcfe9b67a95e08f4ec94ed4fb6a9767b8c))
+
+
+### Documentation
+
+* **option:** clarify behavior of WithScopes ([#1670](https://github.com/googleapis/google-api-go-client/issues/1670)) ([07ceb9d](https://github.com/googleapis/google-api-go-client/commit/07ceb9d607c85ffaa5bea97be66cf9d426ec55bb)), refs [#1644](https://github.com/googleapis/google-api-go-client/issues/1644)
+
 ## [0.93.0](https://github.com/googleapis/google-api-go-client/compare/v0.92.0...v0.93.0) (2022-08-16)
 
 

@@ -837,17 +837,11 @@ type GoogleLongrunningOperation struct {
 	// cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// Metadata: This field will contain a `SubmitUriMetadata` object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: This will match the pattern
+	// `/v1/{project-name}/operations/{operation-id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success. If

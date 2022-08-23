@@ -189,13 +189,13 @@ func testBYOID(t *testing.T, c config) {
 
 // These structs makes writing our config as json to a file much easier.
 type config struct {
-	Type                           string           `json:"type"`
-	Audience                       string           `json:"audience"`
-	SubjectTokenType               string           `json:"subject_token_type"`
-	TokenURL                       string           `json:"token_url"`
-	ServiceAccountImpersonationURL string           `json:"service_account_impersonation_url"`
-	ServiceAccountImpersonation    serviceAccountImpersonationInfo  `json:"service_account_impersonation,omitempty"`
-	CredentialSource               credentialSource `json:"credential_source"`
+	Type                           string                          `json:"type"`
+	Audience                       string                          `json:"audience"`
+	SubjectTokenType               string                          `json:"subject_token_type"`
+	TokenURL                       string                          `json:"token_url"`
+	ServiceAccountImpersonationURL string                          `json:"service_account_impersonation_url"`
+	ServiceAccountImpersonation    serviceAccountImpersonationInfo `json:"service_account_impersonation,omitempty"`
+	CredentialSource               credentialSource                `json:"credential_source"`
 }
 
 type serviceAccountImpersonationInfo struct {

@@ -5027,7 +5027,8 @@ func (c *ProjectsAndroidAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Opera
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -5175,7 +5176,8 @@ func (c *ProjectsAndroidAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -7015,7 +7017,8 @@ func (c *ProjectsIosAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Operation
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -7162,7 +7165,8 @@ func (c *ProjectsIosAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -8156,7 +8160,8 @@ func (c *ProjectsWebAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Operation
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 
@@ -8303,7 +8308,8 @@ func (c *ProjectsWebAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase"
 	//   ]
 	// }
 

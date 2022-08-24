@@ -4846,7 +4846,7 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceSearchResult: A result of Resource Search, containing
-// information of a cloud resource. Next ID: 29
+// information of a cloud resource. Next ID: 31
 type ResourceSearchResult struct {
 	// AdditionalAttributes: The additional searchable attributes of this
 	// resource. The attributes may vary from one resource type to another.
@@ -4860,14 +4860,14 @@ type ResourceSearchResult struct {
 	// fields through free text search. However, you should not consume the
 	// field programically as the field names and values may change as the
 	// GCP service updates to a new incompatible API version. To search
-	// against the `additional_attributes`: * use a free text query to match
+	// against the `additional_attributes`: * Use a free text query to match
 	// the attributes values. Example: to search `additional_attributes = {
 	// dnsName: "foobar" }`, you can issue a query `foobar`.
 	AdditionalAttributes googleapi.RawMessage `json:"additionalAttributes,omitempty"`
 
 	// AssetType: The type of this resource. Example:
 	// `compute.googleapis.com/Disk`. To search against the `asset_type`: *
-	// specify the `asset_type` field in your search request.
+	// Specify the `asset_type` field in your search request.
 	AssetType string `json:"assetType,omitempty"`
 
 	// AttachedResources: Attached resources of this resource. For example,
@@ -4882,7 +4882,7 @@ type ResourceSearchResult struct {
 	// CreateTime: The create timestamp of this resource, at which the
 	// resource was created. The granularity is in seconds. Timestamp.nanos
 	// will always be 0. This field is available only when the resource's
-	// Protobuf contains it. To search against `create_time`: * use a field
+	// Protobuf contains it. To search against `create_time`: * Use a field
 	// query. - value in seconds since unix epoch. Example: `createTime >
 	// 1609459200` - value in date string. Example: `createTime >
 	// 2021-01-01` - value in date-time string (must be quoted). Example:
@@ -4892,23 +4892,23 @@ type ResourceSearchResult struct {
 	// Description: One or more paragraphs of text description of this
 	// resource. Maximum length could be up to 1M bytes. This field is
 	// available only when the resource's Protobuf contains it. To search
-	// against the `description`: * use a field query. Example:
-	// `description:"important instance" * use a free text query. Example:
+	// against the `description`: * Use a field query. Example:
+	// `description:"important instance" * Use a free text query. Example:
 	// "important instance"
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The display name of this resource. This field is
 	// available only when the resource's Protobuf contains it. To search
-	// against the `display_name`: * use a field query. Example:
-	// `displayName:"My Instance" * use a free text query. Example: "My
+	// against the `display_name`: * Use a field query. Example:
+	// `displayName:"My Instance" * Use a free text query. Example: "My
 	// Instance"
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Folders: The folder(s) that this resource belongs to, in the form of
 	// folders/{FOLDER_NUMBER}. This field is available when the resource
-	// belongs to one or more folders. To search against `folders`: * use a
-	// field query. Example: `folders:(123 OR 456)` * use a free text query.
-	// Example: `123` * specify the `scope` field as this folder in your
+	// belongs to one or more folders. To search against `folders`: * Use a
+	// field query. Example: `folders:(123 OR 456)` * Use a free text query.
+	// Example: `123` * Specify the `scope` field as this folder in your
 	// search request.
 	Folders []string `json:"folders,omitempty"`
 
@@ -4917,8 +4917,8 @@ type ResourceSearchResult struct {
 	// name or CryptoKeyVersion
 	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions)
 	// name. This field is available only when the resource's Protobuf
-	// contains it. To search against the `kms_key`: * use a field query.
-	// Example: `kmsKey:key` * use a free text query. Example: `key`
+	// contains it. To search against the `kms_key`: * Use a field query.
+	// Example: `kmsKey:key` * Use a free text query. Example: `key`
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Labels associated with this resource. See Labelling and
@@ -4926,16 +4926,16 @@ type ResourceSearchResult struct {
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
 	// resource's Protobuf contains it. To search against the `labels`: *
-	// use a field query: - query on any label's key or value. Example:
+	// Use a field query: - query on any label's key or value. Example:
 	// `labels:prod` - query by a given label. Example: `labels.env:prod` -
-	// query by a given label's existence. Example: `labels.env:*` * use a
+	// query by a given label's existence. Example: `labels.env:*` * Use a
 	// free text query. Example: `prod`
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: Location can be `global`, regional like `us-east1`, or
 	// zonal like `us-west1-b`. This field is available only when the
 	// resource's Protobuf contains it. To search against the `location`: *
-	// use a field query. Example: `location:us-west*` * use a free text
+	// Use a field query. Example: `location:us-west*` * Use a free text
 	// query. Example: `us-west*`
 	Location string `json:"location,omitempty"`
 
@@ -4943,8 +4943,8 @@ type ResourceSearchResult struct {
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1`. See Cloud Asset Inventory Resource Name Format
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
-	// for more information. To search against the `name`: * use a field
-	// query. Example: `name:instance1` * use a free text query. Example:
+	// for more information. To search against the `name`: * Use a field
+	// query. Example: `name:instance1` * Use a free text query. Example:
 	// `instance1`
 	Name string `json:"name,omitempty"`
 
@@ -4954,38 +4954,38 @@ type ResourceSearchResult struct {
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
 	// resource's Protobuf contains it. To search against the
-	// `network_tags`: * use a field query. Example: `networkTags:internal`
-	// * use a free text query. Example: `internal`
+	// `network_tags`: * Use a field query. Example: `networkTags:internal`
+	// * Use a free text query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// Organization: The organization that this resource belongs to, in the
 	// form of organizations/{ORGANIZATION_NUMBER}. This field is available
 	// when the resource belongs to an organization. To search against
-	// `organization`: * use a field query. Example: `organization:123` *
-	// use a free text query. Example: `123` * specify the `scope` field as
+	// `organization`: * Use a field query. Example: `organization:123` *
+	// Use a free text query. Example: `123` * Specify the `scope` field as
 	// this organization in your search request.
 	Organization string `json:"organization,omitempty"`
 
 	// ParentAssetType: The type of this resource's immediate parent, if
-	// there is one. To search against the `parent_asset_type`: * use a
+	// there is one. To search against the `parent_asset_type`: * Use a
 	// field query. Example:
-	// `parentAssetType:"cloudresourcemanager.googleapis.com/Project" * use
+	// `parentAssetType:"cloudresourcemanager.googleapis.com/Project" * Use
 	// a free text query. Example:
 	// `cloudresourcemanager.googleapis.com/Project`
 	ParentAssetType string `json:"parentAssetType,omitempty"`
 
 	// ParentFullResourceName: The full resource name of this resource's
 	// parent, if it has one. To search against the
-	// `parent_full_resource_name`: * use a field query. Example:
-	// `parentFullResourceName:"project-name" * use a free text query.
+	// `parent_full_resource_name`: * Use a field query. Example:
+	// `parentFullResourceName:"project-name" * Use a free text query.
 	// Example: `project-name`
 	ParentFullResourceName string `json:"parentFullResourceName,omitempty"`
 
 	// Project: The project that this resource belongs to, in the form of
 	// projects/{PROJECT_NUMBER}. This field is available when the resource
-	// belongs to a project. To search against `project`: * use a field
-	// query. Example: `project:12345` * use a free text query. Example:
-	// `12345` * specify the `scope` field as this project in your search
+	// belongs to a project. To search against `project`: * Use a field
+	// query. Example: `project:12345` * Use a free text query. Example:
+	// `12345` * Specify the `scope` field as this project in your search
 	// request.
 	Project string `json:"project,omitempty"`
 
@@ -5010,36 +5010,36 @@ type ResourceSearchResult struct {
 	// DELETE_REQUESTED and DELETE_IN_PROGRESS. See `lifecycleState`
 	// definition in API Reference
 	// (https://cloud.google.com/resource-manager/reference/rest/v1/projects).
-	// To search against the `state`: * use a field query. Example:
-	// `state:RUNNING` * use a free text query. Example: `RUNNING`
+	// To search against the `state`: * Use a field query. Example:
+	// `state:RUNNING` * Use a free text query. Example: `RUNNING`
 	State string `json:"state,omitempty"`
 
 	// TagKeys: TagKey namespaced names, in the format of
-	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * use
+	// {ORG_ID}/{TAG_KEY_SHORT_NAME}. To search against the `tagKeys`: * Use
 	// a field query. Example: - `tagKeys:"123456789/env*" -
-	// `tagKeys="123456789/env" - `tagKeys:"env" * use a free text query.
+	// `tagKeys="123456789/env" - `tagKeys:"env" * Use a free text query.
 	// Example: - `env`
 	TagKeys []string `json:"tagKeys,omitempty"`
 
 	// TagValueIds: TagValue IDs, in the format of tagValues/{TAG_VALUE_ID}.
-	// To search against the `tagValueIds`: * use a field query. Example: -
-	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * use a free text
+	// To search against the `tagValueIds`: * Use a field query. Example: -
+	// `tagValueIds:"456" - `tagValueIds="tagValues/456" * Use a free text
 	// query. Example: - `456`
 	TagValueIds []string `json:"tagValueIds,omitempty"`
 
 	// TagValues: TagValue namespaced names, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}/{TAG_VALUE_SHORT_NAME}. To search
-	// against the `tagValues`: * use a field query. Example: -
+	// against the `tagValues`: * Use a field query. Example: -
 	// `tagValues:"env" - `tagValues:"env/prod" -
 	// `tagValues:"123456789/env/prod*" - `tagValues="123456789/env/prod"
-	// * use a free text query. Example: - `prod`
+	// * Use a free text query. Example: - `prod`
 	TagValues []string `json:"tagValues,omitempty"`
 
 	// UpdateTime: The last update timestamp of this resource, at which the
 	// resource was last modified or deleted. The granularity is in seconds.
 	// Timestamp.nanos will always be 0. This field is available only when
 	// the resource's Protobuf contains it. To search against `update_time`:
-	// * use a field query. - value in seconds since unix epoch. Example:
+	// * Use a field query. - value in seconds since unix epoch. Example:
 	// `updateTime < 1609459200` - value in date string. Example:
 	// `updateTime < 2021-01-01` - value in date-time string (must be
 	// quoted). Example: `updateTime < "2021-01-01T00:00:00"

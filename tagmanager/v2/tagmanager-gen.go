@@ -437,7 +437,7 @@ func (s *AccountAccess) MarshalJSON() ([]byte, error) {
 
 // BuiltInVariable: Built-in variables are a special category of
 // variables that are pre-created and non-customizable. They provide
-// common functionality like accessing propeties of the gtm data layer,
+// common functionality like accessing properties of the gtm data layer,
 // monitoring clicks, or accessing elements of a page URL.
 type BuiltInVariable struct {
 	// AccountId: GTM Account ID.
@@ -1003,7 +1003,7 @@ type ContainerVersionHeader struct {
 	// NumZones: Number of zones in the container version.
 	NumZones string `json:"numZones,omitempty"`
 
-	// Path: GTM Container Versions's API relative path.
+	// Path: GTM Container Version's API relative path.
 	Path string `json:"path,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -13902,7 +13902,7 @@ type AccountsContainersWorkspacesTriggersCreateCall struct {
 
 // Create: Creates a GTM Trigger.
 //
-//   - parent: GTM Workspaces's API relative path. Example:
+//   - parent: GTM Workspace's API relative path. Example:
 //     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
 //     e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Create(parent string, trigger *Trigger) *AccountsContainersWorkspacesTriggersCreateCall {
@@ -14012,7 +14012,7 @@ func (c *AccountsContainersWorkspacesTriggersCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "GTM Workspaces's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
 	//       "required": true,
@@ -14301,7 +14301,7 @@ type AccountsContainersWorkspacesTriggersListCall struct {
 
 // List: Lists all GTM Triggers of a Container.
 //
-//   - parent: GTM Workspaces's API relative path. Example:
+//   - parent: GTM Workspace's API relative path. Example:
 //     accounts/{account_id}/containers/{container_id}/workspaces/{workspac
 //     e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) List(parent string) *AccountsContainersWorkspacesTriggersListCall {
@@ -14430,7 +14430,7 @@ func (c *AccountsContainersWorkspacesTriggersListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "GTM Workspaces's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
 	//       "required": true,

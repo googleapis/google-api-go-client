@@ -712,7 +712,7 @@ func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) Mars
 // GoogleCloudAssuredworkloadsV1beta1Workload: An Workload object for
 // managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1beta1Workload struct {
-	// BillingAccount: Input only. The billing account used for the
+	// BillingAccount: Output only. The billing account used for the
 	// resources which are direct children of workload. This billing account
 	// is initially associated with the resources created as part of
 	// Workload creation. After the initial creation of these resources, the

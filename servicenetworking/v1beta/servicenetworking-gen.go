@@ -2994,15 +2994,6 @@ func (s *MonitoringDestination) MarshalJSON() ([]byte, error) {
 // accepted and passed to the backend, a request can still fail due to
 // the backend requiring additional scopes or permissions.
 type OAuthRequirements struct {
-	// AllowAnyScope: UNIMPLEMENTED: If enabled, ESF will allow OAuth
-	// credentials with any scope, more details in
-	// http://go/esf-oauth-any-scope. WARNING: Enabling this option will
-	// bring security risks. Customers enabling this feature accidentally
-	// may have the risk of losing authentication enforcement. Please reach
-	// out to api-auth@ and esf-team@ for approval and allowlisting before
-	// you enable this option.
-	AllowAnyScope bool `json:"allowAnyScope,omitempty"`
-
 	// CanonicalScopes: The list of publicly documented OAuth scopes that
 	// are allowed access. An OAuth token containing any of these scopes
 	// will be accepted. Example: canonical_scopes:
@@ -3010,7 +3001,7 @@ type OAuthRequirements struct {
 	// https://www.googleapis.com/auth/calendar.read
 	CanonicalScopes string `json:"canonicalScopes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllowAnyScope") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalScopes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3018,12 +3009,13 @@ type OAuthRequirements struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowAnyScope") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CanonicalScopes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

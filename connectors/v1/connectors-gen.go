@@ -354,6 +354,7 @@ type AuthConfig struct {
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
+	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	AuthType string `json:"authType,omitempty"`
 
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
@@ -405,6 +406,7 @@ type AuthConfigTemplate struct {
 	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
 	// Authentication
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
+	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	AuthType string `json:"authType,omitempty"`
 
 	// ConfigVariableTemplates: Config variables to describe an `AuthConfig`

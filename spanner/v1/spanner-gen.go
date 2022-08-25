@@ -1296,11 +1296,12 @@ type Database struct {
 
 	// EncryptionInfo: Output only. For databases that are using customer
 	// managed encryption, this field contains the encryption information
-	// for the database, such as encryption state and the Cloud KMS key
-	// versions that are in use. For databases that are using Google default
-	// or other types of encryption, this field is empty. This field is
-	// propagated lazily from the backend. There might be a delay from when
-	// a key version is being used and when it appears in this field.
+	// for the database, such as all Cloud KMS key versions that are in use.
+	// The `encryption_status' field inside of each `EncryptionInfo` is not
+	// populated. For databases that are using Google default or other types
+	// of encryption, this field is empty. This field is propagated lazily
+	// from the backend. There might be a delay from when a key version is
+	// being used and when it appears in this field.
 	EncryptionInfo []*EncryptionInfo `json:"encryptionInfo,omitempty"`
 
 	// Name: Required. The name of the database. Values are of the form
@@ -1364,9 +1365,8 @@ func (s *Database) MarshalJSON() ([]byte, error) {
 // DatabaseRole: A Cloud Spanner database role.
 type DatabaseRole struct {
 	// Name: Required. The name of the database role. Values are of the form
-	// `projects//instances//databases//databaseRoles/ {role}`, where `` is
-	// as specified in the `CREATE ROLE` DDL statement. This name can be
-	// passed to Get/Set IAMPolicy methods to identify the database role.
+	// `projects//instances//databases//databaseRoles/ `, where `` is as
+	// specified in the `CREATE ROLE` DDL statement.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

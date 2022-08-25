@@ -650,7 +650,7 @@ type Account struct {
 	// process of being linked with the Merchant Center account.
 	GoogleMyBusinessLink *AccountGoogleMyBusinessLink `json:"googleMyBusinessLink,omitempty"`
 
-	// Id: Required for update. Merchant Center account ID.
+	// Id: Required. 64-bit Merchant Center account ID.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed

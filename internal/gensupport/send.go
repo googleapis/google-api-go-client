@@ -17,6 +17,27 @@ import (
 	"github.com/googleapis/gax-go/v2"
 )
 
+// Use this error type to return an error which allows introspection of both
+// the context error and the error from the service.
+type wrappedCallErr struct {
+	ctxErr     error
+	wrappedErr error
+}
+
+func (e wrappedCallErr) Error() string {
+	return fmt.Sprintf("retry failed with %v; last error: %v", e.ctxErr, e.wrappedErr)
+}
+
+func (e wrappedCallErr) Unwrap() error {
+	return e.wrappedErr
+}
+
+// Is allows errors.Is to match the error from the call as well as context
+// sentinel errors.
+func (e wrappedCallErr) Is(target error) bool {
+	return errors.Is(e.ctxErr, target) || errors.Is(e.wrappedErr, target)
+}
+
 // SendRequest sends a single HTTP request using the given client.
 // If ctx is non-nil, it calls all hooks, then sends the request with
 // req.WithContext, then calls any functions returned by the hooks in
@@ -43,7 +64,7 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 	if err != nil {
 		select {
 		case <-ctx.Done():
-			err = ctx.Err()
+			err = wrappedCallErr{ctx.Err(), err}
 		default:
 		}
 	}
@@ -98,11 +119,10 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 		case <-ctx.Done():
 			// If we got an error, and the context has been canceled,
 			// the context's error is probably more useful.
-			retErr := ctx.Err()
-			if err != nil { // let's still return a previous error if any
-				retErr = fmt.Errorf("context error: %v. previous send error: %w", ctx.Err(), err)
+			if err != nil {
+				return resp, wrappedCallErr{ctx.Err(), err}
 			}
-			return resp, retErr
+			return resp, ctx.Err()
 		case <-time.After(pause):
 		}
 
@@ -111,10 +131,10 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 			// select is satisfied at the same time, Go will choose one arbitrarily.
 			// That can cause an operation to go through even if the context was
 			// canceled before.
-			if err == nil {
-				err = ctx.Err()
+			if err != nil {
+				return resp, wrappedCallErr{ctx.Err(), err}
 			}
-			return resp, err
+			return resp, ctx.Err()
 		}
 		invocationHeader := fmt.Sprintf("gccl-invocation-id/%s gccl-attempt-count/%d", invocationID, attempts)
 		xGoogHeader := strings.Join([]string{invocationHeader, baseXGoogHeader}, " ")

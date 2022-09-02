@@ -98,10 +98,11 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 		case <-ctx.Done():
 			// If we got an error, and the context has been canceled,
 			// the context's error is probably more useful.
-			if err == nil {
-				err = ctx.Err()
+			retErr := ctx.Err()
+			if err != nil { // let's still return a previous error if any
+				retErr = fmt.Errorf("context error: %v. previous send error: %w", ctx.Err(), err)
 			}
-			return resp, err
+			return resp, retErr
 		case <-time.After(pause):
 		}
 

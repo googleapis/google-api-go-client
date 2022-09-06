@@ -194,6 +194,83 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AlloyDbConnectionProfile: Specifies required connection parameters,
+// and the parameters required to create an AlloyDB destination cluster.
+type AlloyDbConnectionProfile struct {
+	// ClusterId: Required. The AlloyDB cluster ID that this connection
+	// profile is associated with.
+	ClusterId string `json:"clusterId,omitempty"`
+
+	// Settings: Immutable. Metadata used to create the destination AlloyDB
+	// cluster.
+	Settings *AlloyDbSettings `json:"settings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlloyDbConnectionProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDbConnectionProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AlloyDbSettings: Settings for creating an AlloyDB cluster.
+type AlloyDbSettings struct {
+	// InitialUser: Required. Input only. Initial user to setup during
+	// cluster creation. Required.
+	InitialUser *UserPassword `json:"initialUser,omitempty"`
+
+	// Labels: Labels for the AlloyDB cluster created by DMS. An object
+	// containing a list of 'key', 'value' pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	PrimaryInstanceSettings *PrimaryInstanceSettings `json:"primaryInstanceSettings,omitempty"`
+
+	// VpcNetwork: Required. The resource link for the VPC network in which
+	// cluster resources are created and from which they are accessible via
+	// Private IP. The network must belong to the same project as the
+	// cluster. It is specified in the form:
+	// "projects/{project_number}/global/networks/{network_id}". This is
+	// required to create a cluster.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InitialUser") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InitialUser") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlloyDbSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloyDbSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -540,6 +617,9 @@ func (s *CloudSqlSettings) MarshalJSON() ([]byte, error) {
 
 // ConnectionProfile: A connection profile definition.
 type ConnectionProfile struct {
+	// Alloydb: An AlloyDB cluster connection profile.
+	Alloydb *AlloyDbConnectionProfile `json:"alloydb,omitempty"`
+
 	// Cloudsql: A CloudSQL database connection profile.
 	Cloudsql *CloudSqlConnectionProfile `json:"cloudsql,omitempty"`
 
@@ -578,6 +658,7 @@ type ConnectionProfile struct {
 	//   "CLOUDSQL" - CloudSQL runs the database.
 	//   "RDS" - RDS runs the database.
 	//   "AURORA" - Amazon Aurora.
+	//   "ALLOYDB" - AlloyDB.
 	Provider string `json:"provider,omitempty"`
 
 	// State: The current connection profile state (e.g. DRAFT, READY, or
@@ -605,7 +686,7 @@ type ConnectionProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Cloudsql") to
+	// ForceSendFields is a list of field names (e.g. "Alloydb") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -613,7 +694,7 @@ type ConnectionProfile struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cloudsql") to include in
+	// NullFields is a list of field names (e.g. "Alloydb") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -646,6 +727,7 @@ type DatabaseType struct {
 	//   "CLOUDSQL" - CloudSQL runs the database.
 	//   "RDS" - RDS runs the database.
 	//   "AURORA" - Amazon Aurora.
+	//   "ALLOYDB" - AlloyDB.
 	Provider string `json:"provider,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Engine") to
@@ -1094,6 +1176,35 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MachineConfig: MachineConfig describes the configuration of a
+// machine.
+type MachineConfig struct {
+	// CpuCount: The number of CPU's in the VM instance.
+	CpuCount int64 `json:"cpuCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MachineConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MachineConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1559,6 +1670,18 @@ type PostgreSqlConnectionProfile struct {
 	// Host: Required. The IP or hostname of the source PostgreSQL database.
 	Host string `json:"host,omitempty"`
 
+	// NetworkArchitecture: Output only. If the source is a Cloud SQL
+	// database, this field indicates the network architecture it's
+	// associated with.
+	//
+	// Possible values:
+	//   "NETWORK_ARCHITECTURE_UNSPECIFIED"
+	//   "NETWORK_ARCHITECTURE_OLD_CSQL_PRODUCER" - Instance is in Cloud
+	// SQL's old producer network architecture.
+	//   "NETWORK_ARCHITECTURE_NEW_CSQL_PRODUCER" - Instance is in Cloud
+	// SQL's new producer network architecture.
+	NetworkArchitecture string `json:"networkArchitecture,omitempty"`
+
 	// Password: Required. Input only. The password for the user that
 	// Database Migration Service will be using to connect to the database.
 	// This field is not returned on request, and the value is encrypted
@@ -1600,6 +1723,52 @@ type PostgreSqlConnectionProfile struct {
 
 func (s *PostgreSqlConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod PostgreSqlConnectionProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrimaryInstanceSettings: Settings for the cluster's primary instance
+type PrimaryInstanceSettings struct {
+	// DatabaseFlags: Database flags to pass to AlloyDB when DMS is creating
+	// the AlloyDB cluster and instances. See the AlloyDB documentation for
+	// how these can be used.
+	DatabaseFlags map[string]string `json:"databaseFlags,omitempty"`
+
+	// Id: Required. The ID of the AlloyDB primary instance. The ID must
+	// satisfy the regex expression "[a-z0-9-]+".
+	Id string `json:"id,omitempty"`
+
+	// Labels: Labels for the AlloyDB primary instance created by DMS. An
+	// object containing a list of 'key', 'value' pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MachineConfig: Configuration for the machines that host the
+	// underlying database engine.
+	MachineConfig *MachineConfig `json:"machineConfig,omitempty"`
+
+	// PrivateIp: Output only. The private IP address for the Instance. This
+	// is the connection endpoint for an end-user application.
+	PrivateIp string `json:"privateIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseFlags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseFlags") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrimaryInstanceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PrimaryInstanceSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1995,6 +2164,42 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserPassword: The username/password for a database user. Used for
+// specifying initial users at cluster creation time.
+type UserPassword struct {
+	// Password: The initial password for the user.
+	Password string `json:"password,omitempty"`
+
+	// PasswordSet: Output only. Indicates if the initial_user.password
+	// field has been set.
+	PasswordSet bool `json:"passwordSet,omitempty"`
+
+	// User: The database username.
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Password") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserPassword) MarshalJSON() ([]byte, error) {
+	type NoMethod UserPassword
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

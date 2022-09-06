@@ -300,7 +300,9 @@ type AllowedClient struct {
 	// when using identity authentication.
 	NoRootSquash bool `json:"noRootSquash,omitempty"`
 
-	// ShareIp: The IP address of the share on this network.
+	// ShareIp: Output only. The IP address of the share on this network.
+	// Assigned automatically during provisioning based on the network's
+	// services_cidr.
 	ShareIp string `json:"shareIp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowDev") to
@@ -1259,17 +1261,28 @@ type Network struct {
 	// IpAddress: IP address configured.
 	IpAddress string `json:"ipAddress,omitempty"`
 
+	// JumboFramesEnabled: Whether network uses standard frames or jumbo
+	// ones.
+	JumboFramesEnabled bool `json:"jumboFramesEnabled,omitempty"`
+
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MacAddress: List of physical interfaces.
 	MacAddress []string `json:"macAddress,omitempty"`
 
+	// MountPoints: Input only. List of mount points to attach the network
+	// to.
+	MountPoints []*NetworkMountPoint `json:"mountPoints,omitempty"`
+
 	// Name: Output only. The resource name of this `Network`. Resource
 	// names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. Format:
 	// `projects/{project}/locations/{location}/networks/{network}`
 	Name string `json:"name,omitempty"`
+
+	// Pod: Output only. Pod name.
+	Pod string `json:"pod,omitempty"`
 
 	// Reservations: List of IP address reservations in this network. When
 	// updating this field, an error will be generated if a reservation
@@ -1491,6 +1504,44 @@ func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NetworkMountPoint: Mount point for a network.
+type NetworkMountPoint struct {
+	// DefaultGateway: Network should be a default gateway.
+	DefaultGateway bool `json:"defaultGateway,omitempty"`
+
+	// Instance: Instance to attach network to.
+	Instance string `json:"instance,omitempty"`
+
+	// IpAddress: Ip address of the server.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// LogicalInterface: Logical interface to detach from.
+	LogicalInterface string `json:"logicalInterface,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultGateway") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultGateway") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkMountPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkMountPoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkUsage: Network with all used IP addresses.
 type NetworkUsage struct {
 	// Network: Network.
@@ -1589,7 +1640,7 @@ type NfsShare struct {
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The name of the NFS share.
+	// Name: Immutable. The name of the NFS share.
 	Name string `json:"name,omitempty"`
 
 	// NfsShareId: Output only. An identifier for the NFS share, generated
@@ -1600,7 +1651,7 @@ type NfsShare struct {
 	// RequestedSizeGib: The requested size, in GiB.
 	RequestedSizeGib int64 `json:"requestedSizeGib,omitempty,string"`
 
-	// State: The state of the NFS share.
+	// State: Output only. The state of the NFS share.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The share is in an unknown state.
@@ -1610,7 +1661,17 @@ type NfsShare struct {
 	//   "DELETING" - The NFS Share has been requested to be deleted.
 	State string `json:"state,omitempty"`
 
-	// Volume: The volume containing the share.
+	// StorageType: Immutable. The storage type of the underlying volume.
+	//
+	// Possible values:
+	//   "STORAGE_TYPE_UNSPECIFIED" - The storage type for this volume is
+	// unknown.
+	//   "SSD" - The storage type for this volume is SSD.
+	//   "HDD" - This storage type for this volume is HDD.
+	StorageType string `json:"storageType,omitempty"`
+
+	// Volume: Output only. The underlying volume of the share. Created
+	// automatically during provisioning.
 	Volume string `json:"volume,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2235,7 +2296,10 @@ type VRF struct {
 	// Name: The name of the VRF.
 	Name string `json:"name,omitempty"`
 
-	// QosPolicy: The QOS policy applied to this VRF.
+	// QosPolicy: The QOS policy applied to this VRF. The value is only
+	// meaningful when all the vlan attachments have the same QoS. This
+	// field should not be used for new integrations, use vlan attachment
+	// level qos instead. The field is left for backward-compatibility.
 	QosPolicy *QosPolicy `json:"qosPolicy,omitempty"`
 
 	// State: The possible state of VRF.
@@ -2274,16 +2338,23 @@ func (s *VRF) MarshalJSON() ([]byte, error) {
 
 // VlanAttachment: VLAN attachment details.
 type VlanAttachment struct {
+	// PairingKey: Input only. Pairing key.
+	PairingKey string `json:"pairingKey,omitempty"`
+
 	// PeerIp: The peer IP of the attachment.
 	PeerIp string `json:"peerIp,omitempty"`
 
 	// PeerVlanId: The peer vlan ID of the attachment.
 	PeerVlanId int64 `json:"peerVlanId,omitempty,string"`
 
+	// QosPolicy: The QOS policy applied to this VLAN attachment. This value
+	// should be preferred to using qos at vrf level.
+	QosPolicy *QosPolicy `json:"qosPolicy,omitempty"`
+
 	// RouterIp: The router IP of the attachment.
 	RouterIp string `json:"routerIp,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PeerIp") to
+	// ForceSendFields is a list of field names (e.g. "PairingKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2291,8 +2362,8 @@ type VlanAttachment struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PeerIp") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "PairingKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4889,6 +4960,281 @@ func (c *ProjectsLocationsNetworksPatchCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "baremetalsolution.projects.locations.nfsShares.create":
+
+type ProjectsLocationsNfsSharesCreateCall struct {
+	s          *Service
+	parent     string
+	nfsshare   *NfsShare
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Create an NFS share.
+//
+// - parent: The parent project and location.
+func (r *ProjectsLocationsNfsSharesService) Create(parent string, nfsshare *NfsShare) *ProjectsLocationsNfsSharesCreateCall {
+	c := &ProjectsLocationsNfsSharesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.nfsshare = nfsshare
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNfsSharesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfsSharesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNfsSharesCreateCall) Context(ctx context.Context) *ProjectsLocationsNfsSharesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNfsSharesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNfsSharesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.nfsshare)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/nfsShares")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.nfsShares.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNfsSharesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an NFS share.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares",
+	//   "httpMethod": "POST",
+	//   "id": "baremetalsolution.projects.locations.nfsShares.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent project and location.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/nfsShares",
+	//   "request": {
+	//     "$ref": "NfsShare"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "baremetalsolution.projects.locations.nfsShares.delete":
+
+type ProjectsLocationsNfsSharesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete an NFS share. The underlying volume is automatically
+// deleted.
+//
+// - name: The name of the NFS share to delete.
+func (r *ProjectsLocationsNfsSharesService) Delete(name string) *ProjectsLocationsNfsSharesDeleteCall {
+	c := &ProjectsLocationsNfsSharesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsNfsSharesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsNfsSharesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsNfsSharesDeleteCall) Context(ctx context.Context) *ProjectsLocationsNfsSharesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsNfsSharesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsNfsSharesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "baremetalsolution.projects.locations.nfsShares.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsNfsSharesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete an NFS share. The underlying volume is automatically deleted.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/nfsShares/{nfsSharesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "baremetalsolution.projects.locations.nfsShares.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the NFS share to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "baremetalsolution.projects.locations.nfsShares.get":
 
 type ProjectsLocationsNfsSharesGetCall struct {
@@ -5252,7 +5598,7 @@ type ProjectsLocationsNfsSharesPatchCall struct {
 
 // Patch: Update details of a single NFS share.
 //
-// - name: Output only. The name of the NFS share.
+// - name: Immutable. The name of the NFS share.
 func (r *ProjectsLocationsNfsSharesService) Patch(name string, nfsshare *NfsShare) *ProjectsLocationsNfsSharesPatchCall {
 	c := &ProjectsLocationsNfsSharesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5262,6 +5608,7 @@ func (r *ProjectsLocationsNfsSharesService) Patch(name string, nfsshare *NfsShar
 
 // UpdateMask sets the optional parameter "updateMask": The list of
 // fields to update. The only currently supported fields are: `labels`
+// `allowed_clients`
 func (c *ProjectsLocationsNfsSharesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsNfsSharesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5367,14 +5714,14 @@ func (c *ProjectsLocationsNfsSharesPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The name of the NFS share.",
+	//       "description": "Immutable. The name of the NFS share.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nfsShares/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The list of fields to update. The only currently supported fields are: `labels`",
+	//       "description": "The list of fields to update. The only currently supported fields are: `labels` `allowed_clients`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

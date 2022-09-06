@@ -1478,6 +1478,7 @@ type GeocodingSummary struct {
 	// authoritative source, such as a government-designated COVID
 	// containment zone. Features of this type should have one or more gcids
 	// corresponding to their specific regulation.
+	//   "typeLogicalBorder" - RESERVED
 	//   "typeDoNotUseReservedToCatchGeneratedFiles" - DEPRECATED
 	//   "typeUnknown" - A feature of completely unknown type. This should
 	// only be used when absolutely necessary. One example in which this

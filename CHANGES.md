@@ -1,5 +1,14 @@
 # Changes
 
+## [0.95.0](https://github.com/googleapis/google-api-go-client/compare/v0.94.0...v0.95.0) (2022-09-06)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1677](https://github.com/googleapis/google-api-go-client/issues/1677)) ([8757dbf](https://github.com/googleapis/google-api-go-client/commit/8757dbf5811cc9f4092a8259d859c35ad3cc6442))
+* **all:** Auto-regenerate discovery clients ([#1680](https://github.com/googleapis/google-api-go-client/issues/1680)) ([8c72fb3](https://github.com/googleapis/google-api-go-client/commit/8c72fb345fb6e377fa984053ca9c00aa0c3a0985))
+* **option:** Officially deprecate ImpersonateCredentials ([#1683](https://github.com/googleapis/google-api-go-client/issues/1683)) ([9a84077](https://github.com/googleapis/google-api-go-client/commit/9a84077014f9a37335d29132e373b92adf49f904))
+
 ## [0.94.0](https://github.com/googleapis/google-api-go-client/compare/v0.93.0...v0.94.0) (2022-08-23)
 
 

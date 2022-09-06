@@ -19,6 +19,7 @@ export GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME=`cat ${KOKORO_GFILE_DIR}/secret_manager
 export GCLOUD_TESTS_GOLANG_AWS_ROLE_ID="arn:aws:iam::$GCLOUD_TESTS_GOLANG_AWS_ACCOUNT_ID:role/$GCLOUD_TESTS_GOLANG_AWS_ROLE_NAME"
 export GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aud-oidc`
 export GCLOUD_TESTS_GOLANG_AUDIENCE_AWS=`cat ${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-byoid-aud-aws`
+export GOOGLE_EXTERNAL_ACCOUNT_ALLOW_EXECUTABLES="1"
 
 # Display commands being run
 set -x

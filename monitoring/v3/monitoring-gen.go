@@ -2469,6 +2469,10 @@ type HttpCheck struct {
 	// automatically.
 	Path string `json:"path,omitempty"`
 
+	// PingConfig: Contains information needed to add pings to an HTTP
+	// check.
+	PingConfig *PingConfig `json:"pingConfig,omitempty"`
+
 	// Port: Optional (defaults to 80 when use_ssl is false, and 443 when
 	// use_ssl is true). The TCP port on the HTTP server against which to
 	// run the check. Will be combined with host (specified within the
@@ -4662,6 +4666,37 @@ func (s *PerformanceThreshold) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// PingConfig: Information involved in sending ICMP pings alongside
+// public HTTP/TCP checks. For HTTP, the pings are performed for each
+// part of the redirect chain.
+type PingConfig struct {
+	// PingsCount: Number of ICMP pings. A maximum of 3 ICMP pings is
+	// currently supported.
+	PingsCount int64 `json:"pingsCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PingsCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PingsCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Point: A single data point in a time series.
 type Point struct {
 	// Interval: The time interval to which the data point applies. For
@@ -5340,12 +5375,15 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // TcpCheck: Information required for a TCP Uptime check request.
 type TcpCheck struct {
+	// PingConfig: Contains information needed to add pings to a TCP check.
+	PingConfig *PingConfig `json:"pingConfig,omitempty"`
+
 	// Port: The TCP port on the server against which to run the check. Will
 	// be combined with host (specified within the monitored_resource) to
 	// construct the full URL. Required.
 	Port int64 `json:"port,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Port") to
+	// ForceSendFields is a list of field names (e.g. "PingConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5353,8 +5391,8 @@ type TcpCheck struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Port") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "PingConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -15185,6 +15223,15 @@ func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeC
 	return c
 }
 
+// Filter sets the optional parameter "filter": If provided, this field
+// specifies the criteria that must be met by uptime checks to be
+// included in the response.For more details, see Filtering syntax
+// (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering#filter_syntax).
+func (c *ProjectsUptimeCheckConfigsListCall) Filter(filter string) *ProjectsUptimeCheckConfigsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return in a single response. The server may further
 // constrain the maximum number of results returned in a single page. If
@@ -15311,6 +15358,11 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "If provided, this field specifies the criteria that must be met by uptime checks to be included in the response.For more details, see Filtering syntax (https://cloud.google.com/monitoring/api/v3/sorting-and-filtering#filter_syntax).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of results to return in a single response. The server may further constrain the maximum number of results returned in a single page. If the page_size is \u003c=0, the server will decide the number of results to be returned.",
 	//       "format": "int32",

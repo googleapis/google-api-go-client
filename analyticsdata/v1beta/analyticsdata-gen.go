@@ -1952,8 +1952,18 @@ type PropertyQuota struct {
 	// TokensPerHour: Standard Analytics Properties can use up to 5,000
 	// tokens per hour; Analytics 360 Properties can use 50,000 tokens per
 	// hour. An API request consumes a single number of tokens, and that
-	// number is deducted from both the hourly and daily quotas.
+	// number is deducted from all of the hourly, daily, and per project
+	// hourly quotas.
 	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
+
+	// TokensPerProjectPerHour: Analytics Properties can use up to 25% of
+	// their tokens per project per hour. This amounts to standard Analytics
+	// Properties can use up to 1,250 tokens per project per hour, and
+	// Analytics 360 Properties can use 12,500 tokens per project per hour.
+	// An API request consumes a single number of tokens, and that number is
+	// deducted from all of the hourly, daily, and per project hourly
+	// quotas.
+	TokensPerProjectPerHour *QuotaStatus `json:"tokensPerProjectPerHour,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConcurrentRequests")
 	// to unconditionally include in API requests. By default, fields with

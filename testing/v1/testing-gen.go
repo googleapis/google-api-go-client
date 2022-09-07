@@ -860,6 +860,12 @@ type ApkManifest struct {
 	// UsesPermission: Permissions declared to be used by the application
 	UsesPermission []string `json:"usesPermission,omitempty"`
 
+	// VersionCode: Version number used internally by the app.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// VersionName: Version number shown to users.
+	VersionName string `json:"versionName,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApplicationLabel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

@@ -8750,9 +8750,9 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -8799,9 +8799,9 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ParticipantRole") to
@@ -9390,6 +9390,33 @@ func (s *GoogleCloudDialogflowV2ConversationProfile) MarshalJSON() ([]byte, erro
 // GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata:
 // Metadata for ConversationDatasets.
 type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
+	// ConversationDataset: The resource name of the conversation dataset
+	// that will be created. Format:
+	// `projects//locations//conversationDatasets/`
+	ConversationDataset string `json:"conversationDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationDataset")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationDataset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetad
@@ -15047,9 +15074,9 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -15698,9 +15725,9 @@ type GoogleCloudDialogflowV2SuggestionFeature struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -16504,9 +16531,11 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -19674,9 +19703,11 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")

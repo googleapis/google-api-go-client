@@ -552,11 +552,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -657,21 +658,18 @@ func (s *ConfigMapEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapKeySelector: Not supported by Cloud Run. Selects a key from
-// a ConfigMap.
+// ConfigMapKeySelector: Not supported by Cloud Run.
 type ConfigMapKeySelector struct {
-	// Key: Required. The key to select.
+	// Key: Required. Not supported by Cloud Run.
 	Key string `json:"key,omitempty"`
 
-	// LocalObjectReference: This field should not be used directly as it is
-	// meant to be inlined directly into the message. Use the "name" field
-	// instead.
+	// LocalObjectReference: Not supported by Cloud Run.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Required. The ConfigMap to select from.
+	// Name: Required. Not supported by Cloud Run.
 	Name string `json:"name,omitempty"`
 
-	// Optional: Specify whether the ConfigMap or its key must be defined
+	// Optional: Not supported by Cloud Run.
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -898,24 +896,13 @@ func (s *ConfigurationStatus) MarshalJSON() ([]byte, error) {
 // supplied by the system to the container at runtime.
 type Container struct {
 	// Args: Arguments to the entrypoint. The docker image's CMD is used if
-	// this is not provided. Variable references $(VAR_NAME) are expanded
-	// using the container's environment. If a variable cannot be resolved,
-	// the reference in the input string will be unchanged. The $(VAR_NAME)
-	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
-	// references will never be expanded, regardless of whether the variable
-	// exists or not. More info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// this is not provided. Variable references are not supported in Cloud
+	// Run.
 	Args []string `json:"args,omitempty"`
 
 	// Command: Entrypoint array. Not executed within a shell. The docker
 	// image's ENTRYPOINT is used if this is not provided. Variable
-	// references $(VAR_NAME) are expanded using the container's
-	// environment. If a variable cannot be resolved, the reference in the
-	// input string will be unchanged. The $(VAR_NAME) syntax can be escaped
-	// with a double $$, ie: $$(VAR_NAME). Escaped references will never be
-	// expanded, regardless of whether the variable exists or not. More
-	// info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// references are not supported in Cloud Run.
 	Command []string `json:"command,omitempty"`
 
 	// Env: List of environment variables to set in the container.
@@ -1241,13 +1228,8 @@ type EnvVar struct {
 	// C_IDENTIFIER.
 	Name string `json:"name,omitempty"`
 
-	// Value: Variable references $(VAR_NAME) are expanded using the
-	// previous defined environment variables in the container and any route
-	// environment variables. If a variable cannot be resolved, the
-	// reference in the input string will be unchanged. The $(VAR_NAME)
-	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
-	// references will never be expanded, regardless of whether the variable
-	// exists or not. Defaults to "".
+	// Value: Value of the environment variable. Defaults to "". Variable
+	// references are not supported in Cloud Run.
 	Value string `json:"value,omitempty"`
 
 	// ValueFrom: Source for the environment variable's value. Only supports
@@ -1280,8 +1262,8 @@ func (s *EnvVar) MarshalJSON() ([]byte, error) {
 // EnvVarSource: EnvVarSource represents a source for the value of an
 // EnvVar.
 type EnvVarSource struct {
-	// ConfigMapKeyRef: Not supported by Cloud Run. Selects a key of a
-	// ConfigMap.
+	// ConfigMapKeyRef: Not supported by Cloud Run. Not supported in Cloud
+	// Run.
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
 	// SecretKeyRef: Selects a key (version) of a secret in Secret Manager.
@@ -1498,8 +1480,13 @@ type ExecutionStatus struct {
 	// in UTC. +optional
 	CompletionTime string `json:"completionTime,omitempty"`
 
-	// Conditions: Optional. The latest available observations of an
-	// execution's current state.
+	// Conditions: Optional. Conditions communicate information about
+	// ongoing/complete reconciliation processes that bring the "spec"
+	// inline with the observed state of the world. Execution-specific
+	// conditions include: * `ResourcesAvailable`: `True` when underlying
+	// resources have been provisioned. * `Started`: `True` when the
+	// execution has started to execute. * `Completed`: `True` when the
+	// execution has succeeded. `False` when the execution has failed.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
 	// FailedCount: Optional. The number of tasks which reached phase
@@ -1957,9 +1944,10 @@ func (s *JobSpec) MarshalJSON() ([]byte, error) {
 
 // JobStatus: JobStatus represents the current state of a Job.
 type JobStatus struct {
-	// Conditions: The latest available observations of a job's current
-	// state. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/job/
+	// Conditions: Conditions communicate information about ongoing/complete
+	// reconciliation processes that bring the "spec" inline with the
+	// observed state of the world. Job-specific conditions include: *
+	// `Ready`: `True` when the job is ready to be executed.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
 	// ExecutionCount: Number of executions created for this job.
@@ -2672,28 +2660,30 @@ type ObjectMeta struct {
 	// https://kubernetes.io/docs/user-guide/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The immutable name of the resource. In Cloud Run, name is
-	// required when creating top-level resources (Service, Job), and must
-	// be unique within a Cloud Run project/region. More info:
+	// Name: Required. The name of the resource. In Cloud Run, name is
+	// required when creating top-level resources (Service, Job), must be
+	// unique within a Cloud Run project/region, and cannot be changed once
+	// created. More info:
 	// https://kubernetes.io/docs/user-guide/identifiers#names If ObjectMeta
 	// is part of a CreateServiceRequest, name must contain fewer than 50
-	// characters. Otherwise,
+	// characters.
 	Name string `json:"name,omitempty"`
 
-	// Namespace: Defines the space within each name must be unique within a
-	// Cloud Run region. In Cloud Run, it must be project ID or number.
+	// Namespace: Required. Defines the space within each name must be
+	// unique within a Cloud Run region. In Cloud Run, it must be project ID
+	// or number.
 	Namespace string `json:"namespace,omitempty"`
 
 	// OwnerReferences: Not supported by Cloud Run
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
-	// ResourceVersion: Optional. Opaque, system-generated value that
-	// represents the internal version of this object that can be used by
-	// clients to determine when objects have changed. May be used for
-	// optimistic concurrency, change detection, and the watch operation on
-	// a resource or set of resources. Clients must treat these values as
-	// opaque and passed unmodified back to the server or omit the value to
-	// disable conflict-detection. More info:
+	// ResourceVersion: Opaque, system-generated value that represents the
+	// internal version of this object that can be used by clients to
+	// determine when objects have changed. May be used for optimistic
+	// concurrency, change detection, and the watch operation on a resource
+	// or set of resources. Clients must treat these values as opaque and
+	// passed unmodified back to the server or omit the value to disable
+	// conflict-detection. More info:
 	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
@@ -3085,7 +3075,7 @@ func (s *Revision) MarshalJSON() ([]byte, error) {
 type RevisionSpec struct {
 	// ContainerConcurrency: ContainerConcurrency specifies the maximum
 	// allowed in-flight (concurrent) requests per container instance of the
-	// Revision. Cloud Run: supported, defaults to 80
+	// Revision. If not specified, defaults to 80.
 	ContainerConcurrency int64 `json:"containerConcurrency,omitempty"`
 
 	// Containers: Containers holds the single container that defines the
@@ -3144,14 +3134,14 @@ func (s *RevisionSpec) MarshalJSON() ([]byte, error) {
 // RevisionStatus: RevisionStatus communicates the observed state of the
 // Revision (from the controller).
 type RevisionStatus struct {
-	// Conditions: Conditions communicates information about
-	// ongoing/complete reconciliation processes that bring the "spec"
-	// inline with the observed state of the world. As a Revision is being
-	// prepared, it will incrementally update conditions. Revision-specific
-	// conditions include: * "ResourcesAvailable": True when underlying
-	// resources have been provisioned. * "ContainerHealthy": True when the
-	// Revision readiness check completes. * "Active": True when the
-	// Revision may receive traffic.
+	// Conditions: Conditions communicate information about ongoing/complete
+	// reconciliation processes that bring the "spec" inline with the
+	// observed state of the world. As a Revision is being prepared, it will
+	// incrementally update conditions. Revision-specific conditions
+	// include: * `ResourcesAvailable`: `True` when underlying resources
+	// have been provisioned. * `ContainerHealthy`: `True` when the Revision
+	// readiness check completes. * `Active`: `True` when the Revision may
+	// receive traffic.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
 	// ImageDigest: ImageDigest holds the resolved digest for the image
@@ -3700,7 +3690,7 @@ type ServiceStatus struct {
 	// available on HTTP.
 	Address *Addressable `json:"address,omitempty"`
 
-	// Conditions: Communicates information about ongoing/complete
+	// Conditions: Conditions communicate information about ongoing/complete
 	// reconciliation processes that bring the `spec` inline with the
 	// observed state of the world. Service-specific conditions include: *
 	// `ConfigurationsReady`: `True` when the underlying Configuration is
@@ -4142,9 +4132,12 @@ type TaskStatus struct {
 	// in UTC.
 	CompletionTime string `json:"completionTime,omitempty"`
 
-	// Conditions: Optional. The latest available observations of a task's
-	// current state. More info:
-	// https://kubernetes.io/docs/concepts/workloads/controllers/job/
+	// Conditions: Optional. Conditions communicate information about
+	// ongoing/complete reconciliation processes that bring the "spec"
+	// inline with the observed state of the world. Task-specific conditions
+	// include: * `Started`: `True` when the task has started to execute. *
+	// `Completed`: `True` when the task has succeeded. `False` when the
+	// task has failed.
 	Conditions []*GoogleCloudRunV1Condition `json:"conditions,omitempty"`
 
 	// Index: Required. Index of the task, unique per execution, and
@@ -4356,10 +4349,7 @@ func (s *TrafficTarget) MarshalJSON() ([]byte, error) {
 
 // Volume: Volume represents a named volume in a container.
 type Volume struct {
-	// ConfigMap: Adapts a ConfigMap into a volume. The contents of the
-	// target ConfigMap's Data field will be presented in a volume as files
-	// using the keys in the Data field as the file names, unless the items
-	// element is populated with specific mappings of keys to paths.
+	// ConfigMap: Not supported in Cloud Run.
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
 	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql'
@@ -5925,7 +5915,7 @@ func (c *NamespacesExecutionsDeleteCall) Kind(kind string) *NamespacesExecutions
 // PropagationPolicy sets the optional parameter "propagationPolicy":
 // Specifies the propagation policy of delete. Cloud Run currently
 // ignores this setting, and deletes in the background. Please see
-// http://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/
+// https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/
 // for more information.
 func (c *NamespacesExecutionsDeleteCall) PropagationPolicy(propagationPolicy string) *NamespacesExecutionsDeleteCall {
 	c.urlParams_.Set("propagationPolicy", propagationPolicy)
@@ -6044,7 +6034,7 @@ func (c *NamespacesExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Stat
 	//       "type": "string"
 	//     },
 	//     "propagationPolicy": {
-	//       "description": "Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see http://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for more information.",
+	//       "description": "Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see https://kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8412,7 +8402,9 @@ type NamespacesServicesCreateCall struct {
 // the Service is ready.
 //
 //   - parent: The resource's parent. In Cloud Run, it may be one of the
-//     following: * `namespaces/{project_id_or_number}` *
+//     following: * `{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/services` *
 //     `projects/{project_id_or_number}/locations/{region}` *
 //     `projects/{project_id_or_number}/regions/{region}`.
 func (r *NamespacesServicesService) Create(parent string, service *Service) *NamespacesServicesCreateCall {
@@ -8535,7 +8527,7 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The resource's parent. In Cloud Run, it may be one of the following: * `namespaces/{project_id_or_number}` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
+	//       "description": "Required. The resource's parent. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/services` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -8721,7 +8713,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8878,7 +8870,7 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8911,7 +8903,8 @@ type NamespacesServicesListCall struct {
 //
 //   - parent: The parent from where the resources should be listed. In
 //     Cloud Run, it may be one of the following: *
-//     `namespaces/{project_id_or_number}` *
+//     `{project_id_or_number}` * `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/services` *
 //     `projects/{project_id_or_number}/locations/{region}` *
 //     `projects/{project_id_or_number}/regions/{region}`.
 func (r *NamespacesServicesService) List(parent string) *NamespacesServicesListCall {
@@ -9078,7 +9071,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional. Encoded string to continue paging.",
+	//       "description": "Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9098,13 +9091,13 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "Optional. The maximum number of records that should be returned.",
+	//       "description": "The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `namespaces/{project_id_or_number}` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
+	//       "description": "Required. The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/services` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+$",
 	//       "required": true,
@@ -9276,7 +9269,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9490,7 +9483,19 @@ func (c *NamespacesTasksListCall) IncludeUninitialized(includeUninitialized bool
 
 // LabelSelector sets the optional parameter "labelSelector": Allows to
 // filter resources based on a label. Supported operations are =, !=,
-// exists, in, and notIn.
+// exists, in, and notIn. For example, to list all tasks of execution
+// "foo" in succeeded state:
+// `run.googleapis.com/execution=foo,run.googleapis.com/runningState=Succ
+// eeded`. Supported states are: * `Pending`: Initial state of all
+// tasks. The task has not yet started but eventually will. * `Running`:
+// Container instances for this task are running or will be running
+// shortly. * `Succeeded`: No more container instances to run for the
+// task, and the last attempt succeeded. * `Failed`: No more container
+// instances to run for the task, and the last attempt failed. This task
+// has run out of retry attempts. * `Cancelled`: Task was running but
+// got stopped because its parent execution has been aborted. *
+// `Abandoned`: The task has not yet started and never will because its
+// parent execution has been aborted.
 func (c *NamespacesTasksListCall) LabelSelector(labelSelector string) *NamespacesTasksListCall {
 	c.urlParams_.Set("labelSelector", labelSelector)
 	return c
@@ -9640,7 +9645,7 @@ func (c *NamespacesTasksListCall) Do(opts ...googleapi.CallOption) (*ListTasksRe
 	//       "type": "boolean"
 	//     },
 	//     "labelSelector": {
-	//       "description": "Optional. Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.",
+	//       "description": "Optional. Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn. For example, to list all tasks of execution \"foo\" in succeeded state: `run.googleapis.com/execution=foo,run.googleapis.com/runningState=Succeeded`. Supported states are: * `Pending`: Initial state of all tasks. The task has not yet started but eventually will. * `Running`: Container instances for this task are running or will be running shortly. * `Succeeded`: No more container instances to run for the task, and the last attempt succeeded. * `Failed`: No more container instances to run for the task, and the last attempt failed. This task has run out of retry attempts. * `Cancelled`: Task was running but got stopped because its parent execution has been aborted. * `Abandoned`: The task has not yet started and never will because its parent execution has been aborted.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12835,7 +12840,9 @@ type ProjectsLocationsServicesCreateCall struct {
 // the Service is ready.
 //
 //   - parent: The resource's parent. In Cloud Run, it may be one of the
-//     following: * `namespaces/{project_id_or_number}` *
+//     following: * `{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/services` *
 //     `projects/{project_id_or_number}/locations/{region}` *
 //     `projects/{project_id_or_number}/regions/{region}`.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
@@ -12958,7 +12965,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The resource's parent. In Cloud Run, it may be one of the following: * `namespaces/{project_id_or_number}` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
+	//       "description": "Required. The resource's parent. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/services` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13144,7 +13151,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13301,7 +13308,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13509,7 +13516,8 @@ type ProjectsLocationsServicesListCall struct {
 //
 //   - parent: The parent from where the resources should be listed. In
 //     Cloud Run, it may be one of the following: *
-//     `namespaces/{project_id_or_number}` *
+//     `{project_id_or_number}` * `namespaces/{project_id_or_number}` *
+//     `namespaces/{project_id_or_number}/services` *
 //     `projects/{project_id_or_number}/locations/{region}` *
 //     `projects/{project_id_or_number}/regions/{region}`.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
@@ -13676,7 +13684,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional. Encoded string to continue paging.",
+	//       "description": "Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13696,13 +13704,13 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "Optional. The maximum number of records that should be returned.",
+	//       "description": "The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "parent": {
-	//       "description": "The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `namespaces/{project_id_or_number}` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
+	//       "description": "Required. The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/services` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13874,7 +13882,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

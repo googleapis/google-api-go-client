@@ -195,6 +195,26 @@ func (s *AccountDetails) MarshalJSON() ([]byte, error) {
 // indicates if the current user session seems low risk, unknown, or
 // risky before you allow important actions to proceed.
 type AccountRiskVerdict struct {
+	// Risk: Required. Indicates the account risk level of the current user
+	// session.
+	//
+	// Possible values:
+	//   "RISK_UNSPECIFIED" - Risk has not been set.
+	//   "UNEVALUATED" - The account risk is not evaluated, because the
+	// device is not trusted or the user does not have a Play app license.
+	//   "HIGHER" - Play thinks that at least one of the user accounts on
+	// the device has some unusual store engagement behavior that could be
+	// risky.
+	//   "UNKNOWN" - Play does not have sufficient information to assess the
+	// risk. The account may be new, or it may lack activity on the Play
+	// Store.
+	//   "LOWER" - Play thinks the user could be genuine, since there is
+	// some store engagement. However, some signals to support the trust
+	// level are missing.
+	//   "LOWEST" - Play thinks the user is more likely to be genuine due to
+	// harder to replicate store engagement signals.
+	Risk string `json:"risk,omitempty"`
+
 	// RiskLevel: Required. Indicates the account risk level of the current
 	// user session.
 	//
@@ -216,7 +236,7 @@ type AccountRiskVerdict struct {
 	// be genuine due to harder to replicate store engagement signals.
 	RiskLevel string `json:"riskLevel,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RiskLevel") to
+	// ForceSendFields is a list of field names (e.g. "Risk") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -224,8 +244,8 @@ type AccountRiskVerdict struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RiskLevel") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Risk") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -256,9 +276,9 @@ type AppIntegrity struct {
 	// meet the minimum bar.
 	AppRecognitionVerdict string `json:"appRecognitionVerdict,omitempty"`
 
-	// CertificateSha256Digest: Hex fingerprint of the application signing
-	// certificate. e.g. “ABCE1F....” Set iff app_recognition_verdict !=
-	// UNEVALUATED.
+	// CertificateSha256Digest: The SHA256 hash of the requesting app's
+	// signing certificates (base64 web-safe encoded). Set iff
+	// app_recognition_verdict != UNEVALUATED.
 	CertificateSha256Digest []string `json:"certificateSha256Digest,omitempty"`
 
 	// PackageName: Package name of the application under attestation. Set

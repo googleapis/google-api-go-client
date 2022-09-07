@@ -1542,8 +1542,8 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 
 // ExecutionConfig: Execution configuration for a workload.
 type ExecutionConfig struct {
-	// IdleTtl: Optional. The duration to keep the underlying cluster alive
-	// while idling Passing this threshold will cause the cluster to be
+	// IdleTtl: Optional. The duration to keep the session alive while it's
+	// idling. Passing this threshold will cause the session to be
 	// terminated. Minimum value is 30 minutes; maximum value is 14 days
 	// (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
@@ -2647,6 +2647,9 @@ type Job struct {
 
 	// StatusHistory: Output only. The previous job status.
 	StatusHistory []*JobStatus `json:"statusHistory,omitempty"`
+
+	// TrinoJob: Optional. Job is a Trino job.
+	TrinoJob *TrinoJob `json:"trinoJob,omitempty"`
 
 	// YarnApplications: Output only. The collection of YARN applications
 	// spun up by this job.Beta Feature: This report is available for
@@ -3835,6 +3838,9 @@ type OrderedJob struct {
 	// with underscore or hyphen. Must consist of between 3 and 50
 	// characters.
 	StepId string `json:"stepId,omitempty"`
+
+	// TrinoJob: Optional. Job is a Trino job.
+	TrinoJob *TrinoJob `json:"trinoJob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HadoopJob") to
 	// unconditionally include in API requests. By default, fields with
@@ -5499,6 +5505,62 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TrinoJob: A Dataproc job for running Trino (https://trino.io/)
+// queries. IMPORTANT: The Dataproc Trino Optional Component
+// (https://cloud.google.com/dataproc/docs/concepts/components/trino)
+// must be enabled when the cluster is created to submit a Trino job to
+// the cluster.
+type TrinoJob struct {
+	// ClientTags: Optional. Trino client tags to attach to this query
+	ClientTags []string `json:"clientTags,omitempty"`
+
+	// ContinueOnFailure: Optional. Whether to continue executing queries if
+	// a query fails. The default value is false. Setting to true can be
+	// useful when executing independent parallel queries.
+	ContinueOnFailure bool `json:"continueOnFailure,omitempty"`
+
+	// LoggingConfig: Optional. The runtime log config for job execution.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
+	// OutputFormat: Optional. The format in which query output will be
+	// displayed. See the Trino documentation for supported output formats
+	OutputFormat string `json:"outputFormat,omitempty"`
+
+	// Properties: Optional. A mapping of property names to values. Used to
+	// set Trino session properties
+	// (https://trino.io/docs/current/sql/set-session.html) Equivalent to
+	// using the --session flag in the Trino CLI
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// QueryFileUri: The HCFS URI of the script that contains SQL queries.
+	QueryFileUri string `json:"queryFileUri,omitempty"`
+
+	// QueryList: A list of queries.
+	QueryList *QueryList `json:"queryList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientTags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientTags") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrinoJob) MarshalJSON() ([]byte, error) {
+	type NoMethod TrinoJob
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -719,8 +719,8 @@ type Domain struct {
 	// domain because it is expired and needs to be renewed with Google
 	// Domains.
 	//   "DELETED" - A `Registration` resource cannot be created for this
-	// domain because it is deleted, but can be restored with Google
-	// Domains.
+	// domain because it is deleted, but it may be possible to restore it
+	// with Google Domains.
 	ResourceState string `json:"resourceState,omitempty"`
 
 	// YearlyPrice: Price to renew the domain for one year. Only set when
@@ -2311,8 +2311,8 @@ type TransferParameters struct {
 	// CurrentRegistrar: The registrar that currently manages the domain.
 	CurrentRegistrar string `json:"currentRegistrar,omitempty"`
 
-	// CurrentRegistrarUri: The URL of registrar that currently manages the
-	// domain.
+	// CurrentRegistrarUri: The URL of the registrar that currently manages
+	// the domain.
 	CurrentRegistrarUri string `json:"currentRegistrarUri,omitempty"`
 
 	// DomainName: The domain name. Unicode domain names are expressed in
@@ -5141,8 +5141,8 @@ type ProjectsLocationsRegistrationsRetrieveImportableDomainsCall struct {
 // (https://domains.google/) that can be imported to Cloud Domains using
 // the `ImportDomain` method. Since individual users can own domains in
 // Google Domains, the list of domains returned depends on the
-// individual user making the call. Domains supported by Google Domains,
-// but not supported by Cloud Domains, are not returned.
+// individual user making the call. Domains already managed by Cloud
+// Domains are not returned.
 //
 //   - location: The location. Must be in the format
 //     `projects/*/locations/*`.
@@ -5267,7 +5267,7 @@ func (c *ProjectsLocationsRegistrationsRetrieveImportableDomainsCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists domain names from [Google Domains](https://domains.google/) that can be imported to Cloud Domains using the `ImportDomain` method. Since individual users can own domains in Google Domains, the list of domains returned depends on the individual user making the call. Domains supported by Google Domains, but not supported by Cloud Domains, are not returned.",
+	//   "description": "Lists domain names from [Google Domains](https://domains.google/) that can be imported to Cloud Domains using the `ImportDomain` method. Since individual users can own domains in Google Domains, the list of domains returned depends on the individual user making the call. Domains already managed by Cloud Domains are not returned.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registrations:retrieveImportableDomains",
 	//   "httpMethod": "GET",
 	//   "id": "domains.projects.locations.registrations.retrieveImportableDomains",

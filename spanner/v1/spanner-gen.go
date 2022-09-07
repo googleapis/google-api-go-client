@@ -339,8 +339,8 @@ type Backup struct {
 	//   "POSTGRESQL" - PostgreSQL supported SQL.
 	DatabaseDialect string `json:"databaseDialect,omitempty"`
 
-	// EncryptionInfo: Output only. The encryption information for the
-	// backup.
+	// EncryptionInfo: Output only. Output only. The encryption information
+	// for the backup. .
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 
 	// ExpireTime: Required for the CreateBackup operation. The expiration
@@ -1365,7 +1365,7 @@ func (s *Database) MarshalJSON() ([]byte, error) {
 // DatabaseRole: A Cloud Spanner database role.
 type DatabaseRole struct {
 	// Name: Required. The name of the database role. Values are of the form
-	// `projects//instances//databases//databaseRoles/ `, where `` is as
+	// `projects//instances//databases//databaseRoles/` where `` is as
 	// specified in the `CREATE ROLE` DDL statement.
 	Name string `json:"name,omitempty"`
 

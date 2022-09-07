@@ -2778,9 +2778,9 @@ type GoogleCloudHealthcareV1DicomBigQueryDestination struct {
 	//   "WRITE_DISPOSITION_UNSPECIFIED" - Default behavior is the same as
 	// WRITE_EMPTY.
 	//   "WRITE_EMPTY" - Only export data if the destination table is empty.
-	//   "WRITE_TRUNCATE" - Erase all existing data in a table before
-	// writing the instances.
-	//   "WRITE_APPEND" - Append data to the existing table.
+	//   "WRITE_TRUNCATE" - Erase all existing data in the destination table
+	// before writing the instances.
+	//   "WRITE_APPEND" - Append data to the destination table.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Force") to
@@ -2938,9 +2938,9 @@ type GoogleCloudHealthcareV1FhirBigQueryDestination struct {
 	// WRITE_EMPTY.
 	//   "WRITE_EMPTY" - Only export data if the destination tables are
 	// empty.
-	//   "WRITE_TRUNCATE" - Erase all existing data in the tables before
-	// writing the instances.
-	//   "WRITE_APPEND" - Append data to the existing tables.
+	//   "WRITE_TRUNCATE" - Erase all existing data in the destination
+	// tables before writing the FHIR resources.
+	//   "WRITE_APPEND" - Append data to the destination tables.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetUri") to

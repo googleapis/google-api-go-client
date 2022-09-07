@@ -448,14 +448,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]by
 
 type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
 	// Filter: Optional. Specifies the filters for the promotion results.
-	// The syntax defined in the EBNF grammar:
-	// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
-	// be thrown if any specified parameter is not supported. Currently, it
-	// can only be used by Youtube partners. Allowed parameters are: -
-	// regionCodes - zipCode - eligibilityId - applicableProducts Multiple
-	// parameters can be specified, for example: "regionCodes=US
-	// zipCode=94043 eligibilityId=2022H1Campaign", or
-	// "applicableProducts=partners/p1/products/product2"
+	// The syntax is defined in https://google.aip.dev/160 with the
+	// following caveats: - Only the following features are supported: -
+	// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
+	// Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only
+	// the following fields are supported: - `applicable_products` -
+	// `region_codes` - `youtube_payload.partner_eligibility_id` -
+	// `youtube_payload.postal_code` - Unless explicitly mentioned above,
+	// other features are not supported. Example:
+	// `applicable_products:partners/partner1/products/product1 AND
+	// region_codes:US AND youtube_payload.postal_code=94043 AND
+	// youtube_payload.partner_eligibility_id=eligibility-id`
 	Filter string `json:"filter,omitempty"`
 
 	// PageSize: Optional. The maximum number of promotions to return. The
@@ -876,9 +879,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// LineItems: Required. The line items of the subscription.
 	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
 
-	// Name: Output only. Response only. Resource name of the subscription.
-	// It will have the format of
-	// "partners/{partner_id}/subscriptions/{subscription_id}"
+	// Name: Optional. Resource name of the subscription. It will have the
+	// format of "partners/{partner_id}/subscriptions/{subscription_id}".
+	// This is available for authorizeAddon, but otherwise is response only.
 	Name string `json:"name,omitempty"`
 
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
@@ -1333,13 +1336,17 @@ func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall 
 }
 
 // Filter sets the optional parameter "filter": Specifies the filters
-// for the products results. The syntax defined in the EBNF grammar:
-// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
-// be thrown if any specified parameter is not supported. Currently, it
-// can only be used by Youtube partners. Allowed parameters are: -
-// regionCodes - zipCode - eligibilityId Multiple parameters can be
-// specified, for example: "regionCodes=US zipCode=94043
-// eligibilityId=2022H1Campaign"
+// for the product results. The syntax is defined in
+// https://google.aip.dev/160 with the following caveats: - Only the
+// following features are supported: - Logical operator `AND` -
+// Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
+// Has operator `:` (no wildcards `*`) - Only the following fields are
+// supported: - `region_codes` -
+// `youtube_payload.partner_eligibility_id` -
+// `youtube_payload.postal_code` - Unless explicitly mentioned above,
+// other features are not supported. Example: `region_codes:US AND
+// youtube_payload.postal_code=94043 AND
+// youtube_payload.partner_eligibility_id=eligibility-id`
 func (c *PartnersProductsListCall) Filter(filter string) *PartnersProductsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1475,7 +1482,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the products results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if any specified parameter is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - regionCodes - zipCode - eligibilityId Multiple parameters can be specified, for example: \"regionCodes=US zipCode=94043 eligibilityId=2022H1Campaign\"",
+	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `region_codes` - `youtube_payload.partner_eligibility_id` - `youtube_payload.postal_code` - Unless explicitly mentioned above, other features are not supported. Example: `region_codes:US AND youtube_payload.postal_code=94043 AND youtube_payload.partner_eligibility_id=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1719,13 +1726,18 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 }
 
 // Filter sets the optional parameter "filter": Specifies the filters
-// for the promotion results. The syntax defined in the EBNF grammar:
-// https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will
-// be thrown if the specified parameter(s) is not supported. Currently,
-// it can only be used by Youtube partners. Allowed parameters are: -
-// region_codes: "US" - zip_code: "94043" - eligibility_id:
-// "2022H1Campaign" Multiple parameters can be specified, for example:
-// "region_codes=US zip_code=94043 eligibility_id=2022H1Campaign"
+// for the promotion results. The syntax is defined in
+// https://google.aip.dev/160 with the following caveats: - Only the
+// following features are supported: - Logical operator `AND` -
+// Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
+// Has operator `:` (no wildcards `*`) - Only the following fields are
+// supported: - `applicable_products` - `region_codes` -
+// `youtube_payload.partner_eligibility_id` -
+// `youtube_payload.postal_code` - Unless explicitly mentioned above,
+// other features are not supported. Example:
+// `applicable_products:partners/partner1/products/product1 AND
+// region_codes:US AND youtube_payload.postal_code=94043 AND
+// youtube_payload.partner_eligibility_id=eligibility-id`
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1861,7 +1873,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax defined in the EBNF grammar: https://google.aip.dev/assets/misc/ebnf-filtering.txt. An error will be thrown if the specified parameter(s) is not supported. Currently, it can only be used by Youtube partners. Allowed parameters are: - region_codes: \"US\" - zip_code: \"94043\" - eligibility_id: \"2022H1Campaign\" Multiple parameters can be specified, for example: \"region_codes=US zip_code=94043 eligibility_id=2022H1Campaign\"",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `applicable_products` - `region_codes` - `youtube_payload.partner_eligibility_id` - `youtube_payload.postal_code` - Unless explicitly mentioned above, other features are not supported. Example: `applicable_products:partners/partner1/products/product1 AND region_codes:US AND youtube_payload.postal_code=94043 AND youtube_payload.partner_eligibility_id=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

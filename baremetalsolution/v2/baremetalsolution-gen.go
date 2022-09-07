@@ -2338,6 +2338,9 @@ func (s *VRF) MarshalJSON() ([]byte, error) {
 
 // VlanAttachment: VLAN attachment details.
 type VlanAttachment struct {
+	// Id: Immutable. The identifier of the attachment within vrf.
+	Id string `json:"id,omitempty"`
+
 	// PairingKey: Input only. Pairing key.
 	PairingKey string `json:"pairingKey,omitempty"`
 
@@ -2354,7 +2357,7 @@ type VlanAttachment struct {
 	// RouterIp: The router IP of the attachment.
 	RouterIp string `json:"routerIp,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PairingKey") to
+	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2362,8 +2365,8 @@ type VlanAttachment struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PairingKey") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2414,8 +2417,23 @@ type Volume struct {
 	// `projects/{project}/locations/{location}/volumes/{volume}`
 	Name string `json:"name,omitempty"`
 
+	// Notes: Input only. User-specified notes for new Volume. Used to
+	// provision Volumes that require manual intervention.
+	Notes string `json:"notes,omitempty"`
+
 	// OriginallyRequestedSizeGib: Originally requested size, in GiB.
 	OriginallyRequestedSizeGib int64 `json:"originallyRequestedSizeGib,omitempty,string"`
+
+	// PerformanceTier: Immutable. Performance tier of the Volume. Default
+	// is SHARED.
+	//
+	// Possible values:
+	//   "VOLUME_PERFORMANCE_TIER_UNSPECIFIED" - Value is not specified.
+	//   "VOLUME_PERFORMANCE_TIER_SHARED" - Regular volumes, shared
+	// aggregates.
+	//   "VOLUME_PERFORMANCE_TIER_DEDICATED" - Dedicated (assigned)
+	// aggregates.
+	PerformanceTier string `json:"performanceTier,omitempty"`
 
 	// Pod: Immutable. Pod name.
 	Pod string `json:"pod,omitempty"`
@@ -2529,6 +2547,16 @@ type VolumeConfig struct {
 
 	// NfsExports: NFS exports. Set only when protocol is PROTOCOL_NFS.
 	NfsExports []*NfsExport `json:"nfsExports,omitempty"`
+
+	// PerformanceTier: Performance tier of the Volume. Default is SHARED.
+	//
+	// Possible values:
+	//   "VOLUME_PERFORMANCE_TIER_UNSPECIFIED" - Value is not specified.
+	//   "VOLUME_PERFORMANCE_TIER_SHARED" - Regular volumes, shared
+	// aggregates.
+	//   "VOLUME_PERFORMANCE_TIER_DEDICATED" - Dedicated (assigned)
+	// aggregates.
+	PerformanceTier string `json:"performanceTier,omitempty"`
 
 	// Protocol: Volume protocol.
 	//

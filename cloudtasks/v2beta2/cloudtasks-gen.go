@@ -603,11 +603,14 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferQueueRequest: Request message for BufferQueue.
-type BufferQueueRequest struct {
+// BufferTaskRequest: Request message for BufferTask.
+type BufferTaskRequest struct {
 	// Body: Body of the HTTP request. The body can take any generic value.
 	// The value will be written to the HttpRequest of the [Task].
 	Body *HttpBody `json:"body,omitempty"`
+
+	// TaskId: Optional. The user-specified ID for the task.
+	TaskId string `json:"taskId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
@@ -626,18 +629,16 @@ type BufferQueueRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BufferQueueRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod BufferQueueRequest
+func (s *BufferTaskRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BufferTaskRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferQueueResponse: Response message for BufferQueue.
-type BufferQueueResponse struct {
-	// Task: The name of the created task. For example:
-	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-	// ID`. TASK_ID is randomly generated and is unique within the queue.
-	Task string `json:"task,omitempty"`
+// BufferTaskResponse: Response message for BufferTask.
+type BufferTaskResponse struct {
+	// Task: The created task.
+	Task *Task `json:"task,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -660,8 +661,8 @@ type BufferQueueResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BufferQueueResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod BufferQueueResponse
+func (s *BufferTaskResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BufferTaskResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2933,29 +2934,27 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 // method id "cloudtasks.projects.locations.queues.buffer":
 
 type ProjectsLocationsQueuesBufferCall struct {
-	s                  *Service
-	name               string
-	bufferqueuerequest *BufferQueueRequest
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
+	s                 *Service
+	queue             string
+	buffertaskrequest *BufferTaskRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
 }
 
-// Buffer: Note: This feature is in its experimental stage. You must
-// request access to the API through the Cloud Tasks BufferQueues
-// Experiment Signup form (https://forms.gle/X8Zr5hiXH5tTGFqh8). Creates
-// and buffers a new task without the need to explicitly define a Task
-// message. The queue must be an http queue (i.e., must have HTTP
-// target). This method is used for a simplified application of Cloud
-// Tasks queues in buffer and rate limitting HTTP requests.
+// Buffer: Creates and buffers a new task without the need to explicitly
+// define a Task message. The queue must have HTTP target. Note: This
+// feature is in its experimental stage. You must request access to the
+// API through the Cloud Tasks BufferTasks Experiment Signup form
+// (https://forms.gle/X8Zr5hiXH5tTGFqh8).
 //
-//   - name: The queue name. For example:
+//   - queue: The parent queue name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
 //     queue must already exist.
-func (r *ProjectsLocationsQueuesService) Buffer(name string, bufferqueuerequest *BufferQueueRequest) *ProjectsLocationsQueuesBufferCall {
+func (r *ProjectsLocationsQueuesService) Buffer(queue string, buffertaskrequest *BufferTaskRequest) *ProjectsLocationsQueuesBufferCall {
 	c := &ProjectsLocationsQueuesBufferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.bufferqueuerequest = bufferqueuerequest
+	c.queue = queue
+	c.buffertaskrequest = buffertaskrequest
 	return c
 }
 
@@ -2992,14 +2991,14 @@ func (c *ProjectsLocationsQueuesBufferCall) doRequest(alt string) (*http.Respons
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bufferqueuerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.buffertaskrequest)
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+name}:buffer")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+queue}:buffer")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3007,19 +3006,19 @@ func (c *ProjectsLocationsQueuesBufferCall) doRequest(alt string) (*http.Respons
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"queue": c.queue,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.buffer" call.
-// Exactly one of *BufferQueueResponse or error will be non-nil. Any
+// Exactly one of *BufferTaskResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
-// *BufferQueueResponse.ServerResponse.Header or (if a response was
+// *BufferTaskResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsQueuesBufferCall) Do(opts ...googleapi.CallOption) (*BufferQueueResponse, error) {
+func (c *ProjectsLocationsQueuesBufferCall) Do(opts ...googleapi.CallOption) (*BufferTaskResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3038,7 +3037,7 @@ func (c *ProjectsLocationsQueuesBufferCall) Do(opts ...googleapi.CallOption) (*B
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &BufferQueueResponse{
+	ret := &BufferTaskResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3050,28 +3049,28 @@ func (c *ProjectsLocationsQueuesBufferCall) Do(opts ...googleapi.CallOption) (*B
 	}
 	return ret, nil
 	// {
-	//   "description": "Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferQueues Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8). Creates and buffers a new task without the need to explicitly define a Task message. The queue must be an http queue (i.e., must have HTTP target). This method is used for a simplified application of Cloud Tasks queues in buffer and rate limitting HTTP requests.",
+	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferTasks Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8).",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:buffer",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.buffer",
 	//   "parameterOrder": [
-	//     "name"
+	//     "queue"
 	//   ],
 	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
+	//     "queue": {
+	//       "description": "Required. The parent queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta2/{+name}:buffer",
+	//   "path": "v2beta2/{+queue}:buffer",
 	//   "request": {
-	//     "$ref": "BufferQueueRequest"
+	//     "$ref": "BufferTaskRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "BufferQueueResponse"
+	//     "$ref": "BufferTaskResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -244,6 +244,10 @@ type BackfillAllStrategy struct {
 	// backfilling.
 	OracleExcludedObjects *OracleRdbms `json:"oracleExcludedObjects,omitempty"`
 
+	// PostgresqlExcludedObjects: PostgreSQL data source objects to avoid
+	// backfilling.
+	PostgresqlExcludedObjects *PostgresqlRdbms `json:"postgresqlExcludedObjects,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "MysqlExcludedObjects") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -335,6 +339,47 @@ func (s *BackfillJob) MarshalJSON() ([]byte, error) {
 type BackfillNoneStrategy struct {
 }
 
+type BigQueryDestinationConfig struct {
+	// DataFreshness: The guaranteed data freshness (in seconds) when
+	// querying tables created by the stream. Editing this field will only
+	// affect new tables created in the future, but existing tables will not
+	// be impacted. Lower values mean that queries will return fresher data,
+	// but may result in higher cost.
+	DataFreshness string `json:"dataFreshness,omitempty"`
+
+	// SingleTargetDataset: Single destination dataset.
+	SingleTargetDataset *SingleTargetDataset `json:"singleTargetDataset,omitempty"`
+
+	// SourceHierarchyDatasets: Source hierarchy datasets.
+	SourceHierarchyDatasets *SourceHierarchyDatasets `json:"sourceHierarchyDatasets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataFreshness") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataFreshness") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryDestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDestinationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryProfile: BigQuery warehouse profile.
+type BigQueryProfile struct {
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -343,6 +388,9 @@ type CancelOperationRequest struct {
 // ConnectionProfile: A set of reusable connection configurations to be
 // used as a source or destination for a stream.
 type ConnectionProfile struct {
+	// BigqueryProfile: BigQuery Connection Profile configuration.
+	BigqueryProfile *BigQueryProfile `json:"bigqueryProfile,omitempty"`
+
 	// CreateTime: Output only. The create time of the resource.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -367,6 +415,9 @@ type ConnectionProfile struct {
 	// OracleProfile: Oracle ConnectionProfile configuration.
 	OracleProfile *OracleProfile `json:"oracleProfile,omitempty"`
 
+	// PostgresqlProfile: PostgreSQL Connection Profile configuration.
+	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
+
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
 
@@ -380,7 +431,7 @@ type ConnectionProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BigqueryProfile") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -388,12 +439,13 @@ type ConnectionProfile struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BigqueryProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -403,8 +455,57 @@ func (s *ConnectionProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetTemplate: Dataset template used for dynamic dataset creation.
+type DatasetTemplate struct {
+	// DatasetIdPrefix: If supplied, every created dataset will have its
+	// name prefixed by the provided value. The prefix and name will be
+	// separated by an underscore. i.e. _.
+	DatasetIdPrefix string `json:"datasetIdPrefix,omitempty"`
+
+	// KmsKeyName: Describes the Cloud KMS encryption key that will be used
+	// to protect destination BigQuery table. The BigQuery Service Account
+	// associated with your project requires access to this encryption key.
+	// i.e.
+	// projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys
+	// /{cryptoKey}. See
+	// https://cloud.google.com/bigquery/docs/customer-managed-encryption
+	// for more information.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// Location: Required. The geographic location where the dataset should
+	// reside. See https://cloud.google.com/bigquery/docs/locations for
+	// supported locations.
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetIdPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetIdPrefix") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatasetTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod DatasetTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DestinationConfig: The configuration of the stream destination.
 type DestinationConfig struct {
+	// BigqueryDestinationConfig: BigQuery destination configuration.
+	BigqueryDestinationConfig *BigQueryDestinationConfig `json:"bigqueryDestinationConfig,omitempty"`
+
 	// DestinationConnectionProfile: Required. Destination connection
 	// profile resource. Format:
 	// `projects/{project}/locations/{location}/connectionProfiles/{name}`
@@ -415,7 +516,7 @@ type DestinationConfig struct {
 	GcsDestinationConfig *GcsDestinationConfig `json:"gcsDestinationConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "DestinationConnectionProfile") to unconditionally include in API
+	// "BigqueryDestinationConfig") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -424,10 +525,10 @@ type DestinationConfig struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "DestinationConnectionProfile") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
+	// "BigqueryDestinationConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
 	// null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -464,6 +565,10 @@ type DiscoverConnectionProfileRequest struct {
 	// metadata.
 	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
 
+	// PostgresqlRdbms: PostgreSQL RDBMS to enrich with child data objects
+	// and metadata.
+	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ConnectionProfile")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -495,6 +600,9 @@ type DiscoverConnectionProfileResponse struct {
 
 	// OracleRdbms: Enriched Oracle RDBMS object.
 	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
+
+	// PostgresqlRdbms: Enriched PostgreSQL RDBMS object.
+	PostgresqlRdbms *PostgresqlRdbms `json:"postgresqlRdbms,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1807,6 +1915,260 @@ func (s *OracleTable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PostgresqlColumn: PostgreSQL Column.
+type PostgresqlColumn struct {
+	// Column: Column name.
+	Column string `json:"column,omitempty"`
+
+	// DataType: The PostgreSQL data type.
+	DataType string `json:"dataType,omitempty"`
+
+	// Length: Column length.
+	Length int64 `json:"length,omitempty"`
+
+	// Nullable: Whether or not the column can accept a null value.
+	Nullable bool `json:"nullable,omitempty"`
+
+	// OrdinalPosition: The ordinal position of the column in the table.
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
+
+	// Precision: Column precision.
+	Precision int64 `json:"precision,omitempty"`
+
+	// PrimaryKey: Whether or not the column represents a primary key.
+	PrimaryKey bool `json:"primaryKey,omitempty"`
+
+	// Scale: Column scale.
+	Scale int64 `json:"scale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlObjectIdentifier: PostgreSQL data source object identifier.
+type PostgresqlObjectIdentifier struct {
+	// Schema: Required. The schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// Table: Required. The table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlProfile: PostgreSQL database profile.
+type PostgresqlProfile struct {
+	// Database: Required. Database for the PostgreSQL connection.
+	Database string `json:"database,omitempty"`
+
+	// Hostname: Required. Hostname for the PostgreSQL connection.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Password: Required. Password for the PostgreSQL connection.
+	Password string `json:"password,omitempty"`
+
+	// Port: Port for the PostgreSQL connection, default value is 5432.
+	Port int64 `json:"port,omitempty"`
+
+	// Username: Required. Username for the PostgreSQL connection.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlRdbms: PostgreSQL database structure.
+type PostgresqlRdbms struct {
+	// PostgresqlSchemas: PostgreSQL schemas in the database server.
+	PostgresqlSchemas []*PostgresqlSchema `json:"postgresqlSchemas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PostgresqlSchemas")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostgresqlSchemas") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlRdbms) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlRdbms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlSchema: PostgreSQL schema.
+type PostgresqlSchema struct {
+	// PostgresqlTables: Tables in the schema.
+	PostgresqlTables []*PostgresqlTable `json:"postgresqlTables,omitempty"`
+
+	// Schema: Schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PostgresqlTables") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostgresqlTables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlSourceConfig: PostgreSQL data source configuration
+type PostgresqlSourceConfig struct {
+	// ExcludeObjects: PostgreSQL objects to exclude from the stream.
+	ExcludeObjects *PostgresqlRdbms `json:"excludeObjects,omitempty"`
+
+	// IncludeObjects: PostgreSQL objects to include in the stream.
+	IncludeObjects *PostgresqlRdbms `json:"includeObjects,omitempty"`
+
+	// Publication: Required. The name of the publication that includes the
+	// set of all tables that are defined in the stream's include_objects.
+	Publication string `json:"publication,omitempty"`
+
+	// ReplicationSlot: Required. The name of the logical replication slot
+	// that's configured with the pgoutput plugin.
+	ReplicationSlot string `json:"replicationSlot,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlSourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PostgresqlTable: PostgreSQL table.
+type PostgresqlTable struct {
+	// PostgresqlColumns: PostgreSQL columns in the schema. When unspecified
+	// as part of include/exclude objects, includes/excludes everything.
+	PostgresqlColumns []*PostgresqlColumn `json:"postgresqlColumns,omitempty"`
+
+	// Table: Table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PostgresqlColumns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostgresqlColumns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PostgresqlTable) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresqlTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PrivateConnection: The PrivateConnection resource is used to
 // establish private connectivity between Datastream and a customer's
 // network.
@@ -1956,6 +2318,34 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SingleTargetDataset: A single target dataset to which all data will
+// be streamed.
+type SingleTargetDataset struct {
+	DatasetId string `json:"datasetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SingleTargetDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleTargetDataset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SourceConfig: The configuration of the stream source.
 type SourceConfig struct {
 	// MysqlSourceConfig: MySQL data source configuration.
@@ -1963,6 +2353,9 @@ type SourceConfig struct {
 
 	// OracleSourceConfig: Oracle data source configuration.
 	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
+
+	// PostgresqlSourceConfig: PostgreSQL data source configuration.
+	PostgresqlSourceConfig *PostgresqlSourceConfig `json:"postgresqlSourceConfig,omitempty"`
 
 	// SourceConnectionProfile: Required. Source connection profile
 	// resoource. Format:
@@ -1993,6 +2386,36 @@ func (s *SourceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SourceHierarchyDatasets: Destination datasets are created so that
+// hierarchy of the destination data objects matches the source
+// hierarchy.
+type SourceHierarchyDatasets struct {
+	DatasetTemplate *DatasetTemplate `json:"datasetTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetTemplate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceHierarchyDatasets) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceHierarchyDatasets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SourceObjectIdentifier: Represents an identifier of an object in the
 // data source.
 type SourceObjectIdentifier struct {
@@ -2001,6 +2424,9 @@ type SourceObjectIdentifier struct {
 
 	// OracleIdentifier: Oracle data source object identifier.
 	OracleIdentifier *OracleObjectIdentifier `json:"oracleIdentifier,omitempty"`
+
+	// PostgresqlIdentifier: PostgreSQL data source object identifier.
+	PostgresqlIdentifier *PostgresqlObjectIdentifier `json:"postgresqlIdentifier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MysqlIdentifier") to
 	// unconditionally include in API requests. By default, fields with

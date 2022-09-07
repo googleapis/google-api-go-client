@@ -280,8 +280,7 @@ type AppsServicesVersionsInstancesService struct {
 }
 
 // ApiConfigHandler: Google Cloud Endpoints
-// (https://cloud.google.com/appengine/docs/python/endpoints/)
-// configuration for API handlers.
+// (https://cloud.google.com/endpoints) configuration for API handlers.
 type ApiConfigHandler struct {
 	// AuthFailAction: Action to take when users access resources that
 	// require authentication. Defaults to redirect.
@@ -1324,7 +1323,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EndpointsApiService: Cloud Endpoints
+// EndpointsApiService: Google Cloud Endpoints
 // (https://cloud.google.com/endpoints) configuration. The Endpoints API
 // Service provides tooling for serving Open API and gRPC endpoints via
 // an NGINX proxy. Only valid for App Engine Flexible environment
@@ -3568,8 +3567,8 @@ func (s *UrlMap) MarshalJSON() ([]byte, error) {
 // configuration files that are deployed into a service.
 type Version struct {
 	// ApiConfig: Serving configuration for Google Cloud Endpoints
-	// (https://cloud.google.com/appengine/docs/python/endpoints/).Only
-	// returned in GET requests if view=FULL is set.
+	// (https://cloud.google.com/endpoints).Only returned in GET requests if
+	// view=FULL is set.
 	ApiConfig *ApiConfigHandler `json:"apiConfig,omitempty"`
 
 	// AppEngineApis: Allows App Engine second generation runtimes to access

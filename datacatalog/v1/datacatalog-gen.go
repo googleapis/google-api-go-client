@@ -307,11 +307,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -1358,7 +1359,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
 	Type string `json:"type,omitempty"`
 
-	// UsageSignal: Output only. Resource usage statistics.
+	// UsageSignal: Resource usage statistics.
 	UsageSignal *GoogleCloudDatacatalogV1UsageSignal `json:"usageSignal,omitempty"`
 
 	// UserSpecifiedSystem: Indicates the entry's source system that Data
@@ -3414,14 +3415,18 @@ type GoogleCloudDatacatalogV1UnstarEntryResponse struct {
 // daily. In rare cases, an update may fail but will be performed again
 // on the next day.
 type GoogleCloudDatacatalogV1UsageSignal struct {
+	// FavoriteCount: Favorite count in the source system.
+	FavoriteCount int64 `json:"favoriteCount,omitempty,string"`
+
 	// UpdateTime: The end timestamp of the duration of usage statistics.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// UsageWithinTimeRange: Usage statistics over each of the predefined
-	// time ranges. Supported time ranges are `{"24H", "7D", "30D"}`.
+	// UsageWithinTimeRange: Output only. BigQuery usage statistics over
+	// each of the predefined time ranges. Supported time ranges are
+	// `{"24H", "7D", "30D"}`.
 	UsageWithinTimeRange map[string]GoogleCloudDatacatalogV1UsageStats `json:"usageWithinTimeRange,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UpdateTime") to
+	// ForceSendFields is a list of field names (e.g. "FavoriteCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3429,10 +3434,10 @@ type GoogleCloudDatacatalogV1UsageSignal struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UpdateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FavoriteCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

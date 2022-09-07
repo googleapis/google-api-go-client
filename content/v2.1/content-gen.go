@@ -3211,27 +3211,40 @@ func (s *CollectionStatus) MarshalJSON() ([]byte, error) {
 
 // CollectionStatusDestinationStatus: Destination status message.
 type CollectionStatusDestinationStatus struct {
+	// ApprovedCountries: Country codes (ISO 3166-1 alpha-2) where the
+	// collection is approved.
+	ApprovedCountries []string `json:"approvedCountries,omitempty"`
+
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
+
+	// DisapprovedCountries: Country codes (ISO 3166-1 alpha-2) where the
+	// collection is disapproved.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+
+	// PendingCountries: Country codes (ISO 3166-1 alpha-2) where the
+	// collection is pending approval.
+	PendingCountries []string `json:"pendingCountries,omitempty"`
 
 	// Status: The status for the specified destination in the collections
 	// target country.
 	Status string `json:"status,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Destination") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ApprovedCountries")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Destination") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApprovedCountries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3243,6 +3256,10 @@ func (s *CollectionStatusDestinationStatus) MarshalJSON() ([]byte, error) {
 
 // CollectionStatusItemLevelIssue: Issue associated with the collection.
 type CollectionStatusItemLevelIssue struct {
+	// ApplicableCountries: Country codes (ISO 3166-1 alpha-2) where issue
+	// applies to the offer.
+	ApplicableCountries []string `json:"applicableCountries,omitempty"`
+
 	// AttributeName: The attribute's name, if the issue is caused by a
 	// single attribute.
 	AttributeName string `json:"attributeName,omitempty"`
@@ -3269,20 +3286,21 @@ type CollectionStatusItemLevelIssue struct {
 	// Servability: How this issue affects the serving of the collection.
 	Servability string `json:"servability,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AttributeName") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ApplicableCountries")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttributeName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApplicableCountries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6259,6 +6277,12 @@ type LocalInventory struct {
 	// Availability: Availability of the product. For accepted attribute
 	// values, see the local product inventory feed specification.
 	Availability string `json:"availability,omitempty"`
+
+	// CustomAttributes: A list of custom (merchant-provided) attributes.
+	// Can also be used to submit any attribute of the feed specification in
+	// its generic form, for example, `{ "name": "size type", "value":
+	// "regular" }`.
+	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 
 	// InstoreProductLocation: In-store product location.
 	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`

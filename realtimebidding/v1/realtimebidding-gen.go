@@ -2232,6 +2232,10 @@ type PolicyCompliance struct {
 	//   "PENDING_REVIEW" - Creative is pending review.
 	//   "DISAPPROVED" - Creative cannot serve.
 	//   "APPROVED" - Creative is approved.
+	//   "CERTIFICATE_REQUIRED" - Certificates are required for the creative
+	// to be served in some regions. For more information about creative
+	// certification, refer to:
+	// https://support.google.com/authorizedbuyers/answer/7450776
 	Status string `json:"status,omitempty"`
 
 	// Topics: Topics related to the policy compliance for this transaction
@@ -2531,6 +2535,7 @@ type PretargetingConfig struct {
 	// or the `BidRequest.site.publisher.id` / `BidRequest.app.publisher.id`
 	// field on the OpenRTB protocol
 	// (https://developers.google.com/authorized-buyers/rtb/downloads/openrtb-adx-proto).
+	// Publisher IDs will be returned in the order that they were entered.
 	PublisherTargeting *StringTargetingDimension `json:"publisherTargeting,omitempty"`
 
 	// State: Output only. The state of this pretargeting configuration.
@@ -6769,8 +6774,9 @@ func (c *BiddersPublisherConnectionsListCall) Filter(filter string) *BiddersPubl
 
 // OrderBy sets the optional parameter "orderBy": Order specification by
 // which results should be sorted. If no sort order is specified, the
-// results will be returned in an arbitrary order. Currently results can
-// be sorted by `createTime`. Example: 'createTime DESC'.
+// results will be returned in alphabetic order based on the publisher's
+// publisher code. Results can be sorted by `createTime`. Example:
+// 'createTime DESC'.
 func (c *BiddersPublisherConnectionsListCall) OrderBy(orderBy string) *BiddersPublisherConnectionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6909,7 +6915,7 @@ func (c *BiddersPublisherConnectionsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Order specification by which results should be sorted. If no sort order is specified, the results will be returned in an arbitrary order. Currently results can be sorted by `createTime`. Example: 'createTime DESC'.",
+	//       "description": "Order specification by which results should be sorted. If no sort order is specified, the results will be returned in alphabetic order based on the publisher's publisher code. Results can be sorted by `createTime`. Example: 'createTime DESC'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

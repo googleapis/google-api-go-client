@@ -6353,7 +6353,14 @@ type GoogleCloudRetailV2alphaModel struct {
 	// If not specified, we choose default based on model type. Default
 	// depends on type of recommendation: `recommended-for-you` => `ctr`
 	// `others-you-may-like` => `ctr` `frequently-bought-together` =>
-	// `revenue_per_order`
+	// `revenue_per_order` This field together with optimization_objective
+	// describe model metadata to use to control model training and serving.
+	// See https://cloud.google.com/retail/docs/models for more details on
+	// what the model metadata control and which combination of parameters
+	// are valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
 	OptimizationObjective string `json:"optimizationObjective,omitempty"`
 
 	// PageOptimizationConfig: Optional. The page optimization config.
@@ -6415,7 +6422,15 @@ type GoogleCloudRetailV2alphaModel struct {
 	// Type: Required. The type of model e.g. `home-page`. Currently
 	// supported values: `recommended-for-you`, `others-you-may-like`,
 	// `frequently-bought-together`, `page-optimization`, `similar-items`,
-	// `buy-it-again`, and `recently-viewed`(readonly value).
+	// `buy-it-again`, and `recently-viewed`(readonly value). This field
+	// together with optimization_objective describe model metadata to use
+	// to control model training and serving. See
+	// https://cloud.google.com/retail/docs/models for more details on what
+	// the model metadata control and which combination of parameters are
+	// valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. Timestamp the Recommendation Model was last

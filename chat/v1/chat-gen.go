@@ -956,6 +956,7 @@ type CommonEventObject struct {
 	//   "DRIVE" - The add-on launches from Google Drive.
 	//   "DEMO" - Not used.
 	//   "DOCS" - The add-on launches from Google Docs.
+	//   "MEET" - The add-on launches from Google Meet.
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
@@ -3400,8 +3401,8 @@ type Space struct {
 	// Name: Resource name of the space. Format: spaces/{space}
 	Name string `json:"name,omitempty"`
 
-	// SingleUserBotDm: Output only. Whether the space is a DM between a
-	// Chat app and a single human.
+	// SingleUserBotDm: Optional. Whether the space is a DM between a Chat
+	// app and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
 	// SpaceDetails: Details about the space including description and
@@ -6319,7 +6320,8 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field paths to update. Separate multiple values with commas.
 // Currently supported field paths: - text - cards (Requires service
-// account authentication (/chat/api/guides/auth/service-accounts).)
+// account authentication (/chat/api/guides/auth/service-accounts).) -
+// cards_v2
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6432,7 +6434,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) ",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - cards_v2 ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

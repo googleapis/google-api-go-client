@@ -196,6 +196,7 @@ type DefaultSupportedIdpsService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.DefaultSupportedIdpConfigs = NewProjectsDefaultSupportedIdpConfigsService(s)
+	rs.IdentityPlatform = NewProjectsIdentityPlatformService(s)
 	rs.InboundSamlConfigs = NewProjectsInboundSamlConfigsService(s)
 	rs.OauthIdpConfigs = NewProjectsOauthIdpConfigsService(s)
 	rs.Tenants = NewProjectsTenantsService(s)
@@ -206,6 +207,8 @@ type ProjectsService struct {
 	s *Service
 
 	DefaultSupportedIdpConfigs *ProjectsDefaultSupportedIdpConfigsService
+
+	IdentityPlatform *ProjectsIdentityPlatformService
 
 	InboundSamlConfigs *ProjectsInboundSamlConfigsService
 
@@ -220,6 +223,15 @@ func NewProjectsDefaultSupportedIdpConfigsService(s *Service) *ProjectsDefaultSu
 }
 
 type ProjectsDefaultSupportedIdpConfigsService struct {
+	s *Service
+}
+
+func NewProjectsIdentityPlatformService(s *Service) *ProjectsIdentityPlatformService {
+	rs := &ProjectsIdentityPlatformService{s: s}
+	return rs
+}
+
+type ProjectsIdentityPlatformService struct {
 	s *Service
 }
 
@@ -1081,6 +1093,19 @@ func (s *GoogleCloudIdentitytoolkitAdminV2Inheritance) MarshalJSON() ([]byte, er
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Inheritance
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest:
+// Request for InitializeIdentityPlatform.
+type GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest struct {
+}
+
+// GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse:
+// Response for InitializeIdentityPlatform. Empty for now.
+type GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudIdentitytoolkitAdminV2ListDefaultSupportedIdpConfigsRespons
@@ -2789,11 +2814,12 @@ type GoogleIamV1Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -5139,6 +5165,157 @@ func (c *ProjectsDefaultSupportedIdpConfigsPatchCall) Do(opts ...googleapi.CallO
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "identitytoolkit.projects.identityPlatform.initializeAuth":
+
+type ProjectsIdentityPlatformInitializeAuthCall struct {
+	s                                                                  *Service
+	project                                                            string
+	googlecloudidentitytoolkitadminv2initializeidentityplatformrequest *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest
+	urlParams_                                                         gensupport.URLParams
+	ctx_                                                               context.Context
+	header_                                                            http.Header
+}
+
+// InitializeAuth: Initialize Identity Platform for a Cloud project.
+// Identity Platform is an end-to-end authentication system for
+// third-party users to access your apps and services. These could
+// include mobile/web apps, games, APIs and beyond. This is the publicly
+// available variant of EnableIdentityPlatform that is only available to
+// billing-enabled projects.
+//
+//   - project: The resource name of the target project the developer
+//     wants to enable Identity Platform for.
+func (r *ProjectsIdentityPlatformService) InitializeAuth(project string, googlecloudidentitytoolkitadminv2initializeidentityplatformrequest *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest) *ProjectsIdentityPlatformInitializeAuthCall {
+	c := &ProjectsIdentityPlatformInitializeAuthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.googlecloudidentitytoolkitadminv2initializeidentityplatformrequest = googlecloudidentitytoolkitadminv2initializeidentityplatformrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsIdentityPlatformInitializeAuthCall) Fields(s ...googleapi.Field) *ProjectsIdentityPlatformInitializeAuthCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsIdentityPlatformInitializeAuthCall) Context(ctx context.Context) *ProjectsIdentityPlatformInitializeAuthCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsIdentityPlatformInitializeAuthCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsIdentityPlatformInitializeAuthCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudidentitytoolkitadminv2initializeidentityplatformrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+project}/identityPlatform:initializeAuth")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "identitytoolkit.projects.identityPlatform.initializeAuth" call.
+// Exactly one of
+// *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse.S
+// erverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsIdentityPlatformInitializeAuthCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Initialize Identity Platform for a Cloud project. Identity Platform is an end-to-end authentication system for third-party users to access your apps and services. These could include mobile/web apps, games, APIs and beyond. This is the publicly available variant of EnableIdentityPlatform that is only available to billing-enabled projects.",
+	//   "flatPath": "v2/projects/{projectsId}/identityPlatform:initializeAuth",
+	//   "httpMethod": "POST",
+	//   "id": "identitytoolkit.projects.identityPlatform.initializeAuth",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "The resource name of the target project the developer wants to enable Identity Platform for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+project}/identityPlatform:initializeAuth",
+	//   "request": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIdentitytoolkitAdminV2InitializeIdentityPlatformResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

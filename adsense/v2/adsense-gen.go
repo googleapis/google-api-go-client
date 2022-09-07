@@ -1908,7 +1908,8 @@ func (c *AccountsGetAdBlockingRecoveryTagCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "AdBlockingRecoveryTag"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adsense"
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
 	//   ]
 	// }
 
@@ -4785,6 +4786,11 @@ func (c *AccountsReportsGenerateCall) DateRange(dateRange string) *AccountsRepor
 //
 // dimension match the values from AdClient.reporting_dimension_id.
 //
+//	"HOSTED_AD_CLIENT_ID" - Unique ID of a sub-account's ad client. The
+//
+// members of this dimension match the values from
+// AdClient.reporting_dimension_id (for the sub-account).
+//
 //	"PRODUCT_NAME" - Localized product name (e.g. "AdSense for
 //
 // Content", "AdSense for Search").
@@ -5333,6 +5339,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "MONTH",
 	//         "ACCOUNT_NAME",
 	//         "AD_CLIENT_ID",
+	//         "HOSTED_AD_CLIENT_ID",
 	//         "PRODUCT_NAME",
 	//         "PRODUCT_CODE",
 	//         "AD_UNIT_NAME",
@@ -5381,6 +5388,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//         "Month dimension in YYYY-MM format (e.g. \"2010-02\").",
 	//         "Account name. The members of this dimension match the values from Account.display_name.",
 	//         "Unique ID of an ad client. The members of this dimension match the values from AdClient.reporting_dimension_id.",
+	//         "Unique ID of a sub-account's ad client. The members of this dimension match the values from AdClient.reporting_dimension_id (for the sub-account).",
 	//         "Localized product name (e.g. \"AdSense for Content\", \"AdSense for Search\").",
 	//         "Product code (e.g. \"AFC\", \"AFS\"). The members of this dimension match the values from AdClient.product_code.",
 	//         "Ad unit name (within which an ad was served). The members of this dimension match the values from AdUnit.display_name.",
@@ -5671,6 +5679,11 @@ func (c *AccountsReportsGenerateCsvCall) DateRange(dateRange string) *AccountsRe
 //	"AD_CLIENT_ID" - Unique ID of an ad client. The members of this
 //
 // dimension match the values from AdClient.reporting_dimension_id.
+//
+//	"HOSTED_AD_CLIENT_ID" - Unique ID of a sub-account's ad client. The
+//
+// members of this dimension match the values from
+// AdClient.reporting_dimension_id (for the sub-account).
 //
 //	"PRODUCT_NAME" - Localized product name (e.g. "AdSense for
 //
@@ -6220,6 +6233,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "MONTH",
 	//         "ACCOUNT_NAME",
 	//         "AD_CLIENT_ID",
+	//         "HOSTED_AD_CLIENT_ID",
 	//         "PRODUCT_NAME",
 	//         "PRODUCT_CODE",
 	//         "AD_UNIT_NAME",
@@ -6268,6 +6282,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//         "Month dimension in YYYY-MM format (e.g. \"2010-02\").",
 	//         "Account name. The members of this dimension match the values from Account.display_name.",
 	//         "Unique ID of an ad client. The members of this dimension match the values from AdClient.reporting_dimension_id.",
+	//         "Unique ID of a sub-account's ad client. The members of this dimension match the values from AdClient.reporting_dimension_id (for the sub-account).",
 	//         "Localized product name (e.g. \"AdSense for Content\", \"AdSense for Search\").",
 	//         "Product code (e.g. \"AFC\", \"AFS\"). The members of this dimension match the values from AdClient.product_code.",
 	//         "Ad unit name (within which an ad was served). The members of this dimension match the values from AdUnit.display_name.",

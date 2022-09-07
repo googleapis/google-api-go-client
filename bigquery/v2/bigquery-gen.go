@@ -1336,11 +1336,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -5167,6 +5168,9 @@ type JobStatistics2 struct {
 	// SearchStatistics: [Output-only] Search query specific statistics.
 	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
 
+	// SparkStatistics: [Output-only] Statistics of a Spark procedure job.
+	SparkStatistics *SparkStatistics `json:"sparkStatistics,omitempty"`
+
 	// StatementType: The type of query statement, if valid. Possible values
 	// (new values might be added in the future): "SELECT": SELECT query.
 	// "INSERT": INSERT query; see
@@ -7445,6 +7449,36 @@ func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SparkLoggingInfo struct {
+	// ProjectId: [Output-only] Project ID used for logging
+	ProjectId string `json:"project_id,omitempty"`
+
+	// ResourceType: [Output-only] Resource type used for logging
+	ResourceType string `json:"resource_type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SparkLoggingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkLoggingInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SparkOptions: Options for a user-defined Spark routine.
 type SparkOptions struct {
 	// ArchiveUris: Archive files to be extracted into the working directory
@@ -7510,6 +7544,45 @@ type SparkOptions struct {
 
 func (s *SparkOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SparkStatistics struct {
+	// Endpoints: [Output-only] Endpoints generated for the Spark job.
+	Endpoints map[string]string `json:"endpoints,omitempty"`
+
+	// LoggingInfo: [Output-only] Logging info is used to generate a link to
+	// Cloud Logging.
+	LoggingInfo *SparkLoggingInfo `json:"logging_info,omitempty"`
+
+	// SparkJobId: [Output-only] Spark job id if a Spark job is created
+	// successfully.
+	SparkJobId string `json:"spark_job_id,omitempty"`
+
+	// SparkJobLocation: [Output-only] Location where the Spark job is
+	// executed.
+	SparkJobLocation string `json:"spark_job_location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoints") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SparkStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

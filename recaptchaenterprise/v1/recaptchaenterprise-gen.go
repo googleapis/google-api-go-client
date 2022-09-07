@@ -358,6 +358,9 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// password.
 	//   "INCORRECT_PASSWORD" - Indicates the user provided an incorrect
 	// password.
+	//   "SOCIAL_SPAM" - Indicates that the user sent unwanted and abusive
+	// messages to other users of the platform, such as spam, scams,
+	// phishing, or social engineering.
 	Reasons []string `json:"reasons,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotation") to

@@ -714,7 +714,7 @@ func (s *GoogleChromePolicyV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleChromePolicyV1PolicySchema: Resource representing a policy
-// schema. Next ID: 13
+// schema. Next ID: 14
 type GoogleChromePolicyV1PolicySchema struct {
 	// AccessRestrictions: Output only. Specific access restrictions related
 	// to this policy.
@@ -725,6 +725,10 @@ type GoogleChromePolicyV1PolicySchema struct {
 	// `policyTargetKey`, each of the additional keys specified here will
 	// have to be included in the `additionalTargetKeys` map.
 	AdditionalTargetKeyNames []*GoogleChromePolicyV1AdditionalTargetKeyName `json:"additionalTargetKeyNames,omitempty"`
+
+	// CategoryTitle: Output only. Title of the category in which a setting
+	// belongs.
+	CategoryTitle string `json:"categoryTitle,omitempty"`
 
 	// Definition: Schema definition using proto descriptor.
 	Definition *Proto2FileDescriptorProto `json:"definition,omitempty"`

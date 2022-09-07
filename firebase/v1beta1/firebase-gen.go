@@ -519,8 +519,12 @@ type AndroidApp struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The normal and active state.
-	//   "DELETED" - The app has been soft deleted.
+	//   "ACTIVE" - The App is active.
+	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
+	// deletes an App after it has been in the `DELETED` state for more than
+	// 30 days. Up until this time, you can restore the App by calling
+	// `Undelete` ([Android](projects.androidApps/undelete) |
+	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -749,8 +753,12 @@ type FirebaseAppInfo struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The normal and active state.
-	//   "DELETED" - The app has been soft deleted.
+	//   "ACTIVE" - The App is active.
+	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
+	// deletes an App after it has been in the `DELETED` state for more than
+	// 30 days. Up until this time, you can restore the App by calling
+	// `Undelete` ([Android](projects.androidApps/undelete) |
+	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiKeyId") to
@@ -830,15 +838,12 @@ type FirebaseProject struct {
 	// with the Project.
 	Resources *DefaultResources `json:"resources,omitempty"`
 
-	// State: Output only. The lifecycle state of the Project. Updates to
-	// the state must be performed via
-	// com.google.cloudresourcemanager.v1.Projects.DeleteProject and
-	// com.google.cloudresourcemanager.v1.Projects.UndeleteProject
+	// State: Output only. The lifecycle state of the Project.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The normal and active state.
-	//   "DELETED" - The Project has been marked for deletion by the user.
+	//   "ACTIVE" - The Project is active.
+	//   "DELETED" - The Project has been soft-deleted.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -926,8 +931,12 @@ type IosApp struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The normal and active state.
-	//   "DELETED" - The app has been soft deleted.
+	//   "ACTIVE" - The App is active.
+	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
+	// deletes an App after it has been in the `DELETED` state for more than
+	// 30 days. Up until this time, you can restore the App by calling
+	// `Undelete` ([Android](projects.androidApps/undelete) |
+	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
 	// TeamId: The Apple Developer Team ID associated with the App in the
@@ -1488,8 +1497,8 @@ type RemoveAndroidAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// delete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be removed.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
@@ -1524,8 +1533,8 @@ type RemoveIosAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// delete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be removed.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
@@ -1560,8 +1569,8 @@ type RemoveWebAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// delete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be removed.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
@@ -1825,8 +1834,8 @@ type UndeleteAndroidAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// undelete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be undeleted.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1857,8 +1866,8 @@ type UndeleteIosAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// undelete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be undeleted.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1889,8 +1898,8 @@ type UndeleteWebAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ValidateOnly: If set to true, only validate the request and do not
-	// undelete the app.
+	// ValidateOnly: If set to true, the request is only validated. The App
+	// will _not_ be undeleted.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
@@ -1969,8 +1978,12 @@ type WebApp struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The normal and active state.
-	//   "DELETED" - The app has been soft deleted.
+	//   "ACTIVE" - The App is active.
+	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
+	// deletes an App after it has been in the `DELETED` state for more than
+	// 30 days. Up until this time, you can restore the App by calling
+	// `Undelete` ([Android](projects.androidApps/undelete) |
+	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
 	// WebId: Output only. Immutable. A unique, Firebase-assigned identifier
@@ -3300,8 +3313,8 @@ func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Projects in the DELETING state should be returned. Defaults
-// to false.
+// whether Projects in the DELETED state should be returned in the
+// response. If not specified, only `ACTIVE` Projects will be returned.
 func (c *ProjectsListCall) ShowDeleted(showDeleted bool) *ProjectsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -3421,7 +3434,7 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ListFirebaseProjec
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Optional. Controls whether Projects in the DELETING state should be returned. Defaults to false.",
+	//       "description": "Optional. Controls whether Projects in the DELETED state should be returned in the response. If not specified, only `ACTIVE` Projects will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -3491,9 +3504,13 @@ func (r *ProjectsService) Patch(nameid string, firebaseproject *FirebaseProject)
 }
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
-// fields to update. If this list is empty, then no state will be
-// updated. Note that the fields `name`, `projectId`, and
-// `projectNumber` are all immutable.
+// fields of the FirebaseProject to update. Note that the following
+// fields are immutable: `name`, `project_id`, and `project_number`. To
+// update `state`, use any of the following Google Cloud endpoints:
+// `projects.delete`
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects/delete)
+// or `projects.undelete`
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects/undelete)
 func (c *ProjectsPatchCall) UpdateMask(updateMask string) *ProjectsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3606,7 +3623,7 @@ func (c *ProjectsPatchCall) Do(opts ...googleapi.CallOption) (*FirebaseProject, 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. If this list is empty, then no state will be updated. Note that the fields `name`, `projectId`, and `projectNumber` are all immutable.",
+	//       "description": "Specifies which fields of the FirebaseProject to update. Note that the following fields are immutable: `name`, `project_id`, and `project_number`. To update `state`, use any of the following Google Cloud endpoints: [`projects.delete`](https://cloud.google.com/resource-manager/reference/rest/v1/projects/delete) or [`projects.undelete`](https://cloud.google.com/resource-manager/reference/rest/v1/projects/undelete)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3858,8 +3875,8 @@ func (c *ProjectsSearchAppsCall) PageToken(pageToken string) *ProjectsSearchApps
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Apps in the DELETED state should be returned. Defaults to
-// false.
+// whether Apps in the DELETED state should be returned. If not
+// specified, only `ACTIVE` Apps will be returned.
 func (c *ProjectsSearchAppsCall) ShowDeleted(showDeleted bool) *ProjectsSearchAppsCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -3996,7 +4013,7 @@ func (c *ProjectsSearchAppsCall) Do(opts ...googleapi.CallOption) (*SearchFireba
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "description": "Controls whether Apps in the DELETED state should be returned. If not specified, only `ACTIVE` Apps will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4544,8 +4561,8 @@ func (c *ProjectsAndroidAppsListCall) PageToken(pageToken string) *ProjectsAndro
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Apps in the DELETED state should be returned. Defaults to
-// false.
+// whether Apps in the DELETED state should be returned in the response.
+// If not specified, only `ACTIVE` Apps will be returned.
 func (c *ProjectsAndroidAppsListCall) ShowDeleted(showDeleted bool) *ProjectsAndroidAppsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -4677,7 +4694,7 @@ func (c *ProjectsAndroidAppsListCall) Do(opts ...googleapi.CallOption) (*ListAnd
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "description": "Controls whether Apps in the DELETED state should be returned in the response. If not specified, only `ACTIVE` Apps will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4750,8 +4767,10 @@ func (r *ProjectsAndroidAppsService) Patch(nameid string, androidapp *AndroidApp
 }
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
-// fields to update. Note that the fields `name`, `app_id`,
-// `project_id`, `package_name`, and `state` are all immutable.
+// fields of the AndroidApp to update. Note that the following fields
+// are immutable: `name`, `app_id`, `project_id`, and `package_name`. To
+// update `state`, use any of the following endpoints: RemoveAndroidApp
+// or UndeleteAndroidApp.
 func (c *ProjectsAndroidAppsPatchCall) UpdateMask(updateMask string) *ProjectsAndroidAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4864,7 +4883,7 @@ func (c *ProjectsAndroidAppsPatchCall) Do(opts ...googleapi.CallOption) (*Androi
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `app_id`, `project_id`, `package_name`, and `state` are all immutable.",
+	//       "description": "Specifies which fields of the AndroidApp to update. Note that the following fields are immutable: `name`, `app_id`, `project_id`, and `package_name`. To update `state`, use any of the following endpoints: RemoveAndroidApp or UndeleteAndroidApp.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4896,7 +4915,7 @@ type ProjectsAndroidAppsRemoveCall struct {
 	header_                 http.Header
 }
 
-// Remove: Removes the specified AndroidApp from the project.
+// Remove: Removes the specified AndroidApp from the FirebaseProject.
 //
 //   - name: The resource name of the AndroidApp, in the format: projects/
 //     PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
@@ -5003,7 +5022,7 @@ func (c *ProjectsAndroidAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes the specified AndroidApp from the project.",
+	//   "description": "Removes the specified AndroidApp from the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/androidApps/{androidAppsId}:remove",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.androidApps.remove",
@@ -5045,7 +5064,7 @@ type ProjectsAndroidAppsUndeleteCall struct {
 	header_                   http.Header
 }
 
-// Undelete: Restores the specified AndroidApp to the project.
+// Undelete: Restores the specified AndroidApp to the FirebaseProject.
 //
 //   - name: The resource name of the AndroidApp, in the format: projects/
 //     PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique
@@ -5152,7 +5171,7 @@ func (c *ProjectsAndroidAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the specified AndroidApp to the project.",
+	//   "description": "Restores the specified AndroidApp to the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/androidApps/{androidAppsId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.androidApps.undelete",
@@ -6536,8 +6555,8 @@ func (c *ProjectsIosAppsListCall) PageToken(pageToken string) *ProjectsIosAppsLi
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Apps in the DELETED state should be returned. Defaults to
-// false.
+// whether Apps in the DELETED state should be returned in the response.
+// If not specified, only `ACTIVE` Apps will be returned.
 func (c *ProjectsIosAppsListCall) ShowDeleted(showDeleted bool) *ProjectsIosAppsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -6669,7 +6688,7 @@ func (c *ProjectsIosAppsListCall) Do(opts ...googleapi.CallOption) (*ListIosApps
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "description": "Controls whether Apps in the DELETED state should be returned in the response. If not specified, only `ACTIVE` Apps will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6741,8 +6760,10 @@ func (r *ProjectsIosAppsService) Patch(nameid string, iosapp *IosApp) *ProjectsI
 }
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
-// fields to update. Note that the fields `name`, `appId`, `projectId`,
-// `bundleId`, and `state` are all immutable
+// fields of the IosApp to update. Note that the following fields are
+// immutable: `name`, `app_id`, `project_id`, and `bundle_id`. To update
+// `state`, use any of the following endpoints: RemoveIosApp or
+// UndeleteIosApp.
 func (c *ProjectsIosAppsPatchCall) UpdateMask(updateMask string) *ProjectsIosAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6855,7 +6876,7 @@ func (c *ProjectsIosAppsPatchCall) Do(opts ...googleapi.CallOption) (*IosApp, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, `projectId`, `bundleId`, and `state` are all immutable",
+	//       "description": "Specifies which fields of the IosApp to update. Note that the following fields are immutable: `name`, `app_id`, `project_id`, and `bundle_id`. To update `state`, use any of the following endpoints: RemoveIosApp or UndeleteIosApp.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6887,7 +6908,7 @@ type ProjectsIosAppsRemoveCall struct {
 	header_             http.Header
 }
 
-// Remove: Removes the specified IosApp from the project.
+// Remove: Removes the specified IosApp from the FirebaseProject.
 //
 //   - name: The resource name of the IosApp, in the format: projects/
 //     PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique
@@ -6993,7 +7014,7 @@ func (c *ProjectsIosAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes the specified IosApp from the project.",
+	//   "description": "Removes the specified IosApp from the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/iosApps/{iosAppsId}:remove",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.iosApps.remove",
@@ -7035,7 +7056,7 @@ type ProjectsIosAppsUndeleteCall struct {
 	header_               http.Header
 }
 
-// Undelete: Restores the specified IosApp to the project.
+// Undelete: Restores the specified IosApp to the FirebaseProject.
 //
 //   - name: The resource name of the IosApp, in the format: projects/
 //     PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique
@@ -7141,7 +7162,7 @@ func (c *ProjectsIosAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the specified IosApp to the project.",
+	//   "description": "Restores the specified IosApp to the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/iosApps/{iosAppsId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.iosApps.undelete",
@@ -7679,8 +7700,8 @@ func (c *ProjectsWebAppsListCall) PageToken(pageToken string) *ProjectsWebAppsLi
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Controls
-// whether Apps in the DELETED state should be returned. Defaults to
-// false.
+// whether Apps in the DELETED state should be returned in the response.
+// If not specified, only `ACTIVE` Apps will be returned.
 func (c *ProjectsWebAppsListCall) ShowDeleted(showDeleted bool) *ProjectsWebAppsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -7812,7 +7833,7 @@ func (c *ProjectsWebAppsListCall) Do(opts ...googleapi.CallOption) (*ListWebApps
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Controls whether Apps in the DELETED state should be returned. Defaults to false.",
+	//       "description": "Controls whether Apps in the DELETED state should be returned in the response. If not specified, only `ACTIVE` Apps will be returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -7884,8 +7905,9 @@ func (r *ProjectsWebAppsService) Patch(nameid string, webapp *WebApp) *ProjectsW
 }
 
 // UpdateMask sets the optional parameter "updateMask": Specifies which
-// fields to update. Note that the fields `name`, `appId`, `projectId`
-// and `state` are all immutable
+// fields of the WebApp to update. Note that the following fields are
+// immutable: `name`, `app_id`, and `project_id`. To update `state`, use
+// any of the following endpoints: RemoveWebApp or UndeleteWebApp.
 func (c *ProjectsWebAppsPatchCall) UpdateMask(updateMask string) *ProjectsWebAppsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7998,7 +8020,7 @@ func (c *ProjectsWebAppsPatchCall) Do(opts ...googleapi.CallOption) (*WebApp, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Specifies which fields to update. Note that the fields `name`, `appId`, `projectId` and `state` are all immutable",
+	//       "description": "Specifies which fields of the WebApp to update. Note that the following fields are immutable: `name`, `app_id`, and `project_id`. To update `state`, use any of the following endpoints: RemoveWebApp or UndeleteWebApp.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8030,7 +8052,7 @@ type ProjectsWebAppsRemoveCall struct {
 	header_             http.Header
 }
 
-// Remove: Removes the specified WebApp from the project.
+// Remove: Removes the specified WebApp from the FirebaseProject.
 //
 //   - name: The resource name of the WebApp, in the format: projects/
 //     PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique
@@ -8136,7 +8158,7 @@ func (c *ProjectsWebAppsRemoveCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes the specified WebApp from the project.",
+	//   "description": "Removes the specified WebApp from the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/webApps/{webAppsId}:remove",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.webApps.remove",
@@ -8178,7 +8200,7 @@ type ProjectsWebAppsUndeleteCall struct {
 	header_               http.Header
 }
 
-// Undelete: Restores the specified WebApp to the project.
+// Undelete: Restores the specified WebApp to the FirebaseProject.
 //
 //   - name: The resource name of the WebApp, in the format: projects/
 //     PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique
@@ -8284,7 +8306,7 @@ func (c *ProjectsWebAppsUndeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the specified WebApp to the project.",
+	//   "description": "Restores the specified WebApp to the FirebaseProject.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/webApps/{webAppsId}:undelete",
 	//   "httpMethod": "POST",
 	//   "id": "firebase.projects.webApps.undelete",

@@ -449,7 +449,7 @@ type Access struct {
 	// supports principals that aren't associated with email addresses, such
 	// as third party principals. For most identities, the format will be
 	// `principal://iam.googleapis.com/{identity pool
-	// name}/subject/{subject)` except for some GKE identities
+	// name}/subjects/{subject}` except for some GKE identities
 	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
 	// legacy format `serviceAccount:{identity pool name}[{subject}]`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
@@ -1430,7 +1430,7 @@ type Finding struct {
 	// to:
 	// https://cloud.google.com/resource-manager/docs/managing-notification-contacts#notification-categories
 	// { "security": { "contacts": [ { "email": "person1@company.com" }, {
-	// "email": "person2@company.com" } ] }
+	// "email": "person2@company.com" } ] } }
 	Contacts map[string]ContactDetails `json:"contacts,omitempty"`
 
 	// Containers: Containers associated with the finding. containers
@@ -2511,7 +2511,7 @@ type Indicator struct {
 	// process is present in the environment.
 	Signatures []*ProcessSignature `json:"signatures,omitempty"`
 
-	// Uris: The list of URIs associated to the Findings
+	// Uris: The list of URIs associated to the Findings.
 	Uris []string `json:"uris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domains") to
@@ -3354,7 +3354,7 @@ func (s *SecurityMarks) MarshalJSON() ([]byte, error) {
 // ServiceAccountDelegationInfo: Identity delegation history of an
 // authenticated service account.
 type ServiceAccountDelegationInfo struct {
-	// PrincipalEmail: The email address of a Google account. .
+	// PrincipalEmail: The email address of a Google account.
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: A string representing the principal_subject
@@ -3362,7 +3362,7 @@ type ServiceAccountDelegationInfo struct {
 	// supports principals that aren't associated with email addresses, such
 	// as third party principals. For most identities, the format will be
 	// `principal://iam.googleapis.com/{identity pool
-	// name}/subject/{subject)` except for some GKE identities
+	// name}/subjects/{subject}` except for some GKE identities
 	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
 	// legacy format `serviceAccount:{identity pool name}[{subject}]`
 	PrincipalSubject string `json:"principalSubject,omitempty"`

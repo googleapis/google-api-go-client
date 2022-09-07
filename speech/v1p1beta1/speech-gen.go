@@ -607,6 +607,10 @@ type LongRunningRecognizeResponse struct {
 	// relevant error.
 	OutputError *Status `json:"outputError,omitempty"`
 
+	// RequestId: The ID associated with the request. This is a unique ID
+	// specific only to the given request.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
 	// Results: Sequential list of transcription results corresponding to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
@@ -1274,6 +1278,10 @@ func (s *RecognizeRequest) MarshalJSON() ([]byte, error) {
 // `Recognize` method. It contains the result as zero or more sequential
 // `SpeechRecognitionResult` messages.
 type RecognizeResponse struct {
+	// RequestId: The ID associated with the request. This is a unique ID
+	// specific only to the given request.
+	RequestId int64 `json:"requestId,omitempty,string"`
+
 	// Results: Sequential list of transcription results corresponding to
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
@@ -1286,7 +1294,7 @@ type RecognizeResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Results") to
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1294,7 +1302,7 @@ type RecognizeResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Results") to include in
+	// NullFields is a list of field names (e.g. "RequestId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

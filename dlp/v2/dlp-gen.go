@@ -495,7 +495,7 @@ type GooglePrivacyDlpV2Action struct {
 	// and editors on job's completion/failure.
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 
-	// PubSub: Publish a notification to a pubsub topic.
+	// PubSub: Publish a notification to a Pub/Sub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
 
 	// PublishFindingsToCloudDataCatalog: Publish findings to Cloud Datahub.
@@ -2415,7 +2415,7 @@ func (s *GooglePrivacyDlpV2DataProfileLocation) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2DataProfilePubSubCondition: A condition for
-// determining whether a PubSub should be triggered.
+// determining whether a Pub/Sub should be triggered.
 type GooglePrivacyDlpV2DataProfilePubSubCondition struct {
 	// Expressions: An expression.
 	Expressions *GooglePrivacyDlpV2PubSubExpressions `json:"expressions,omitempty"`
@@ -2447,7 +2447,6 @@ func (s *GooglePrivacyDlpV2DataProfilePubSubCondition) MarshalJSON() ([]byte, er
 // a DataProfileAction.PubSubNotification event. To receive a message of
 // protocol buffer schema type, convert the message data to an object of
 // this proto class.
-// https://cloud.google.com/pubsub/docs/samples/pubsub-subscribe-proto-messages
 type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	// Event: The event that caused the Pub/Sub message to be sent.
 	//

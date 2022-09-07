@@ -388,6 +388,7 @@ func NewProjectsConversationsService(s *Service) *ProjectsConversationsService {
 	rs := &ProjectsConversationsService{s: s}
 	rs.Messages = NewProjectsConversationsMessagesService(s)
 	rs.Participants = NewProjectsConversationsParticipantsService(s)
+	rs.Suggestions = NewProjectsConversationsSuggestionsService(s)
 	return rs
 }
 
@@ -397,6 +398,8 @@ type ProjectsConversationsService struct {
 	Messages *ProjectsConversationsMessagesService
 
 	Participants *ProjectsConversationsParticipantsService
+
+	Suggestions *ProjectsConversationsSuggestionsService
 }
 
 func NewProjectsConversationsMessagesService(s *Service) *ProjectsConversationsMessagesService {
@@ -426,6 +429,15 @@ func NewProjectsConversationsParticipantsSuggestionsService(s *Service) *Project
 }
 
 type ProjectsConversationsParticipantsSuggestionsService struct {
+	s *Service
+}
+
+func NewProjectsConversationsSuggestionsService(s *Service) *ProjectsConversationsSuggestionsService {
+	rs := &ProjectsConversationsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsConversationsSuggestionsService struct {
 	s *Service
 }
 
@@ -664,6 +676,7 @@ func NewProjectsLocationsConversationsService(s *Service) *ProjectsLocationsConv
 	rs := &ProjectsLocationsConversationsService{s: s}
 	rs.Messages = NewProjectsLocationsConversationsMessagesService(s)
 	rs.Participants = NewProjectsLocationsConversationsParticipantsService(s)
+	rs.Suggestions = NewProjectsLocationsConversationsSuggestionsService(s)
 	return rs
 }
 
@@ -673,6 +686,8 @@ type ProjectsLocationsConversationsService struct {
 	Messages *ProjectsLocationsConversationsMessagesService
 
 	Participants *ProjectsLocationsConversationsParticipantsService
+
+	Suggestions *ProjectsLocationsConversationsSuggestionsService
 }
 
 func NewProjectsLocationsConversationsMessagesService(s *Service) *ProjectsLocationsConversationsMessagesService {
@@ -702,6 +717,15 @@ func NewProjectsLocationsConversationsParticipantsSuggestionsService(s *Service)
 }
 
 type ProjectsLocationsConversationsParticipantsSuggestionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConversationsSuggestionsService(s *Service) *ProjectsLocationsConversationsSuggestionsService {
+	rs := &ProjectsLocationsConversationsSuggestionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConversationsSuggestionsService struct {
 	s *Service
 }
 
@@ -7796,9 +7820,9 @@ type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -8031,6 +8055,33 @@ func (s *GoogleCloudDialogflowV2ConversationModel) MarshalJSON() ([]byte, error)
 // GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata:
 // Metadata for ConversationDatasets.
 type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
+	// ConversationDataset: The resource name of the conversation dataset
+	// that will be created. Format:
+	// `projects//locations//conversationDatasets/`
+	ConversationDataset string `json:"conversationDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationDataset")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationDataset") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2CreateConversationModelEvaluationOperationMetad
@@ -10651,9 +10702,9 @@ type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
-	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
+	//   "FAQ" - Run FAQ model for chat.
+	//   "SMART_REPLY" - Run smart reply model for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -12373,9 +12424,11 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigOperationMetadata s
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -12422,9 +12475,11 @@ type GoogleCloudDialogflowV2beta1ClearSuggestionFeatureConfigRequest struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ParticipantRole") to
@@ -18935,9 +18990,11 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigOperationMetadata str
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	SuggestionFeatureType string `json:"suggestionFeatureType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConversationProfile")
@@ -19296,6 +19353,126 @@ func (s *GoogleCloudDialogflowV2beta1SuggestArticlesResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest: The
+// request message for Conversations.SuggestConversationSummary.
+type GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest struct {
+	// ContextSize: Max number of messages prior to and including
+	// [latest_message] to use as context when compiling the suggestion. By
+	// default 500 and at most 1000.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for compiling suggestion. If empty, the latest message of the
+	// conversation will be used. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse: The
+// response message for Conversations.SuggestConversationSummary.
+type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse struct {
+	// ContextSize: Number of messages prior to and including
+	// last_conversation_message used to compile the suggestion. It may be
+	// smaller than the SuggestSummaryRequest.context_size field in the
+	// request if there weren't that many messages in the conversation.
+	ContextSize int64 `json:"contextSize,omitempty"`
+
+	// LatestMessage: The name of the latest conversation message used as
+	// context for compiling suggestion. Format:
+	// `projects//locations//conversations//messages/`.
+	LatestMessage string `json:"latestMessage,omitempty"`
+
+	// Summary: Generated summary.
+	Summary *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary `json:"summary,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ContextSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContextSize") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary:
+//
+//	Generated summary for a conversation.
+type GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary struct {
+	// AnswerRecord: The name of the answer record. Format:
+	// "projects//answerRecords/"
+	AnswerRecord string `json:"answerRecord,omitempty"`
+
+	// Text: The summary content that is concatenated into one string.
+	Text string `json:"text,omitempty"`
+
+	// TextSections: The summary content that is divided into sections. The
+	// key is the section's name and the value is the section's content.
+	// There is no specific format for the key or value.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnswerRecord") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnswerRecord") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponseSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest: The request
 // message for Participants.SuggestFaqAnswers.
 type GoogleCloudDialogflowV2beta1SuggestFaqAnswersRequest struct {
@@ -19632,9 +19809,11 @@ type GoogleCloudDialogflowV2beta1SuggestionFeature struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified feature type.
-	//   "ARTICLE_SUGGESTION" - Run article suggestion model.
+	//   "ARTICLE_SUGGESTION" - Run article suggestion model for chat.
 	//   "FAQ" - Run FAQ model.
-	//   "SMART_REPLY" - Run smart reply model.
+	//   "SMART_REPLY" - Run smart reply model for chat.
+	//   "CONVERSATION_SUMMARIZATION" - Run conversation summarization model
+	// for chat.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -37596,6 +37775,155 @@ func (c *ProjectsConversationsParticipantsSuggestionsSuggestSmartRepliesCall) Do
 
 }
 
+// method id "dialogflow.projects.conversations.suggestions.suggestConversationSummary":
+
+type ProjectsConversationsSuggestionsSuggestConversationSummaryCall struct {
+	s                                                             *Service
+	conversation                                                  string
+	googleclouddialogflowv2beta1suggestconversationsummaryrequest *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// SuggestConversationSummary: Suggest summary for a conversation based
+// on specific historical messages. The range of the messages to be used
+// for summary can be specified in the request.
+//
+//   - conversation: The conversation to fetch suggestion for. Format:
+//     `projects//locations//conversations/`.
+func (r *ProjectsConversationsSuggestionsService) SuggestConversationSummary(conversation string, googleclouddialogflowv2beta1suggestconversationsummaryrequest *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest) *ProjectsConversationsSuggestionsSuggestConversationSummaryCall {
+	c := &ProjectsConversationsSuggestionsSuggestConversationSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversation = conversation
+	c.googleclouddialogflowv2beta1suggestconversationsummaryrequest = googleclouddialogflowv2beta1suggestconversationsummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) Fields(s ...googleapi.Field) *ProjectsConversationsSuggestionsSuggestConversationSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) Context(ctx context.Context) *ProjectsConversationsSuggestionsSuggestConversationSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1suggestconversationsummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+conversation}/suggestions:suggestConversationSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversation": c.conversation,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.conversations.suggestions.suggestConversationSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsConversationsSuggestionsSuggestConversationSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Suggest summary for a conversation based on specific historical messages. The range of the messages to be used for summary can be specified in the request.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/suggestions:suggestConversationSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.conversations.suggestions.suggestConversationSummary",
+	//   "parameterOrder": [
+	//     "conversation"
+	//   ],
+	//   "parameters": {
+	//     "conversation": {
+	//       "description": "Required. The conversation to fetch suggestion for. Format: `projects//locations//conversations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+conversation}/suggestions:suggestConversationSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.knowledgeBases.create":
 
 type ProjectsKnowledgeBasesCreateCall struct {
@@ -54516,6 +54844,155 @@ func (c *ProjectsLocationsConversationsParticipantsSuggestionsSuggestSmartReplie
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDialogflowV2beta1SuggestSmartRepliesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.conversations.suggestions.suggestConversationSummary":
+
+type ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall struct {
+	s                                                             *Service
+	conversation                                                  string
+	googleclouddialogflowv2beta1suggestconversationsummaryrequest *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// SuggestConversationSummary: Suggest summary for a conversation based
+// on specific historical messages. The range of the messages to be used
+// for summary can be specified in the request.
+//
+//   - conversation: The conversation to fetch suggestion for. Format:
+//     `projects//locations//conversations/`.
+func (r *ProjectsLocationsConversationsSuggestionsService) SuggestConversationSummary(conversation string, googleclouddialogflowv2beta1suggestconversationsummaryrequest *GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest) *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall {
+	c := &ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversation = conversation
+	c.googleclouddialogflowv2beta1suggestconversationsummaryrequest = googleclouddialogflowv2beta1suggestconversationsummaryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall) Context(ctx context.Context) *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1suggestconversationsummaryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+conversation}/suggestions:suggestConversationSummary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversation": c.conversation,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.conversations.suggestions.suggestConversationSummary" call.
+// Exactly one of
+// *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversationsSuggestionsSuggestConversationSummaryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Suggest summary for a conversation based on specific historical messages. The range of the messages to be used for summary can be specified in the request.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/conversations/{conversationsId}/suggestions:suggestConversationSummary",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.conversations.suggestions.suggestConversationSummary",
+	//   "parameterOrder": [
+	//     "conversation"
+	//   ],
+	//   "parameters": {
+	//     "conversation": {
+	//       "description": "Required. The conversation to fetch suggestion for. Format: `projects//locations//conversations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+conversation}/suggestions:suggestConversationSummary",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1SuggestConversationSummaryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1SuggestConversationSummaryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

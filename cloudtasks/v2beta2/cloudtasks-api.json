@@ -180,28 +180,28 @@
             "queues": {
               "methods": {
                 "buffer": {
-                  "description": "Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferQueues Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8). Creates and buffers a new task without the need to explicitly define a Task message. The queue must be an http queue (i.e., must have HTTP target). This method is used for a simplified application of Cloud Tasks queues in buffer and rate limitting HTTP requests.",
+                  "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferTasks Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8).",
                   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:buffer",
                   "httpMethod": "POST",
                   "id": "cloudtasks.projects.locations.queues.buffer",
                   "parameterOrder": [
-                    "name"
+                    "queue"
                   ],
                   "parameters": {
-                    "name": {
-                      "description": "Required. The queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
+                    "queue": {
+                      "description": "Required. The parent queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v2beta2/{+name}:buffer",
+                  "path": "v2beta2/{+queue}:buffer",
                   "request": {
-                    "$ref": "BufferQueueRequest"
+                    "$ref": "BufferTaskRequest"
                   },
                   "response": {
-                    "$ref": "BufferQueueResponse"
+                    "$ref": "BufferTaskResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -837,7 +837,7 @@
       }
     }
   },
-  "revision": "20220825",
+  "revision": "20220906",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {
@@ -985,24 +985,28 @@
       },
       "type": "object"
     },
-    "BufferQueueRequest": {
-      "description": "Request message for BufferQueue.",
-      "id": "BufferQueueRequest",
+    "BufferTaskRequest": {
+      "description": "Request message for BufferTask.",
+      "id": "BufferTaskRequest",
       "properties": {
         "body": {
           "$ref": "HttpBody",
           "description": "Body of the HTTP request. The body can take any generic value. The value will be written to the HttpRequest of the [Task]."
+        },
+        "taskId": {
+          "description": "Optional. The user-specified ID for the task.",
+          "type": "string"
         }
       },
       "type": "object"
     },
-    "BufferQueueResponse": {
-      "description": "Response message for BufferQueue.",
-      "id": "BufferQueueResponse",
+    "BufferTaskResponse": {
+      "description": "Response message for BufferTask.",
+      "id": "BufferTaskResponse",
       "properties": {
         "task": {
-          "description": "The name of the created task. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`. TASK_ID is randomly generated and is unique within the queue.",
-          "type": "string"
+          "$ref": "Task",
+          "description": "The created task."
         }
       },
       "type": "object"

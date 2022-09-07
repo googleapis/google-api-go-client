@@ -244,7 +244,7 @@ type ProjectsLocationsOperationsService struct {
 
 // AnthosObservabilityFeatureSpec: **Anthos Observability**: Spec
 type AnthosObservabilityFeatureSpec struct {
-	// DefaultMembershipSpec: default membership spec for unconfigured
+	// DefaultMembershipSpec: Default membership spec for unconfigured
 	// memberships
 	DefaultMembershipSpec *AnthosObservabilityMembershipSpec `json:"defaultMembershipSpec,omitempty"`
 
@@ -276,14 +276,13 @@ func (s *AnthosObservabilityFeatureSpec) MarshalJSON() ([]byte, error) {
 // AnthosObservabilityMembershipSpec: **Anthosobservability**:
 // Per-Membership Feature spec.
 type AnthosObservabilityMembershipSpec struct {
-	// DoNotOptimizeMetrics: use full of metrics rather than optimized
+	// DoNotOptimizeMetrics: Use full of metrics rather than optimized
 	// metrics. See
 	// https://cloud.google.com/anthos/clusters/docs/on-prem/1.8/concepts/logging-and-monitoring#optimized_metrics_default_metrics
 	DoNotOptimizeMetrics bool `json:"doNotOptimizeMetrics,omitempty"`
 
-	// EnableStackdriverOnApplications: enable collecting and reporting
-	// metrics and logs from user apps See
-	// go/onyx-application-metrics-logs-user-guide
+	// EnableStackdriverOnApplications: Enable collecting and reporting
+	// metrics and logs from user apps.
 	EnableStackdriverOnApplications bool `json:"enableStackdriverOnApplications,omitempty"`
 
 	// Version: the version of stackdriver operator used by this feature
@@ -711,11 +710,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -1046,7 +1046,7 @@ type ConfigManagementConfigSync struct {
 	PreventDrift bool `json:"preventDrift,omitempty"`
 
 	// SourceFormat: Specifies whether the Config Sync Repo is in
-	// “hierarchical” or “unstructured” mode.
+	// "hierarchical" or "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
@@ -2638,6 +2638,9 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // member/cluster. Only one authentication method (e.g., OIDC and LDAP)
 // can be set per AuthMethod.
 type IdentityServiceAuthMethod struct {
+	// GoogleConfig: GoogleConfig specific configuration
+	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
+
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -2647,7 +2650,7 @@ type IdentityServiceAuthMethod struct {
 	// Proxy: Proxy server address to use for auth method.
 	Proxy string `json:"proxy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "GoogleConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2655,10 +2658,10 @@ type IdentityServiceAuthMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "GoogleConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2666,6 +2669,36 @@ type IdentityServiceAuthMethod struct {
 
 func (s *IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceAuthMethod
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth
+// flow.
+type IdentityServiceGoogleConfig struct {
+	// Disable: Disable automatic configuration of Google Plugin on
+	// supported platforms.
+	Disable bool `json:"disable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGoogleConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4134,10 +4167,10 @@ type PolicyControllerMembershipState struct {
 	// expected to be taking actions to install the PC on the cluster.
 	//   "ACTIVE" - The PC is fully installed on the cluster and in an
 	// operational mode. In this state PCH will be reconciling state with
-	// the PC, and the PC will be performing it’s operational tasks per
-	// that software. Entering a READY state requires that the hub has
-	// confirmed the PC is installed and its pods are operational with the
-	// version of the PC the PCH expects.
+	// the PC, and the PC will be performing it's operational tasks per that
+	// software. Entering a READY state requires that the hub has confirmed
+	// the PC is installed and its pods are operational with the version of
+	// the PC the PCH expects.
 	//   "UPDATING" - The PC is fully installed, but in the process of
 	// changing the configuration (including changing the version of PC
 	// either up and down, or modifying the manifests of PC) of the
@@ -4152,13 +4185,16 @@ type PolicyControllerMembershipState struct {
 	// cluster is non-operative or that the cluster does not meet
 	// requirements set for the PCH to administer the cluster but has
 	// nevertheless been given an instruction to do so (such as
-	// ‘install’).
+	// ‘install').
 	//   "HUB_ERROR" - In this state, the PC may still be operational, and
 	// only the PCH is unable to act. The hub should not issue instructions
 	// to change the PC state, or otherwise interfere with the on-cluster
 	// resources. Entering a HUB_ERROR state happens automatically when the
 	// PCH determines the hub is in an unhealthy state and it wishes to
-	// ‘take hands off’ to avoid corrupting the PC or other data.
+	// ‘take hands off' to avoid corrupting the PC or other data.
+	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended.
+	// This means that the policies are not enforced, but violations are
+	// still recorded (through audit).
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
@@ -4240,10 +4276,10 @@ type PolicyControllerOnClusterState struct {
 	// expected to be taking actions to install the PC on the cluster.
 	//   "ACTIVE" - The PC is fully installed on the cluster and in an
 	// operational mode. In this state PCH will be reconciling state with
-	// the PC, and the PC will be performing it’s operational tasks per
-	// that software. Entering a READY state requires that the hub has
-	// confirmed the PC is installed and its pods are operational with the
-	// version of the PC the PCH expects.
+	// the PC, and the PC will be performing it's operational tasks per that
+	// software. Entering a READY state requires that the hub has confirmed
+	// the PC is installed and its pods are operational with the version of
+	// the PC the PCH expects.
 	//   "UPDATING" - The PC is fully installed, but in the process of
 	// changing the configuration (including changing the version of PC
 	// either up and down, or modifying the manifests of PC) of the
@@ -4258,13 +4294,16 @@ type PolicyControllerOnClusterState struct {
 	// cluster is non-operative or that the cluster does not meet
 	// requirements set for the PCH to administer the cluster but has
 	// nevertheless been given an instruction to do so (such as
-	// ‘install’).
+	// ‘install').
 	//   "HUB_ERROR" - In this state, the PC may still be operational, and
 	// only the PCH is unable to act. The hub should not issue instructions
 	// to change the PC state, or otherwise interfere with the on-cluster
 	// resources. Entering a HUB_ERROR state happens automatically when the
 	// PCH determines the hub is in an unhealthy state and it wishes to
-	// ‘take hands off’ to avoid corrupting the PC or other data.
+	// ‘take hands off' to avoid corrupting the PC or other data.
+	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended.
+	// This means that the policies are not enforced, but violations are
+	// still recorded (through audit).
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

@@ -2670,7 +2670,9 @@ func (s *FilePushedEvent) MarshalJSON() ([]byte, error) {
 // device’s system clock reads Feb. 29th, it’s treated as Feb. 28th.
 // * When calculating the number of days in a freeze period or the time
 // between two freeze periods, Feb. 29th is ignored and not counted as a
-// day.
+// day.Note: For Freeze Periods to take effect, SystemUpdateType cannot
+// be specified as SYSTEM_UPDATE_TYPE_UNSPECIFIED, because freeze
+// periods require a defined policy to be specified.
 type FreezePeriod struct {
 	// EndDate: The end date (inclusive) of the freeze period. Must be no
 	// later than 90 days from the start date. If the end date is earlier
@@ -5168,7 +5170,8 @@ type Policy struct {
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
 
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
-	// disabled.
+	// disabled. This prevents apps from being uninstalled, even those
+	// removed using applications
 	UninstallAppsDisabled bool `json:"uninstallAppsDisabled,omitempty"`
 
 	// UnmuteMicrophoneDisabled: If microphone_access is set to any value
@@ -5182,7 +5185,7 @@ type Policy struct {
 	UsageLog *UsageLog `json:"usageLog,omitempty"`
 
 	// UsbFileTransferDisabled: Whether transferring files over USB is
-	// disabled.
+	// disabled. This is supported only on company-owned devices.
 	UsbFileTransferDisabled bool `json:"usbFileTransferDisabled,omitempty"`
 
 	// UsbMassStorageEnabled: Whether USB storage is enabled. Deprecated.

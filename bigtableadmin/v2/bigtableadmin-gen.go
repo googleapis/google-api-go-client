@@ -1718,7 +1718,7 @@ type Instance struct {
 	// globally unique to avoid confusion.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Labels: Required. Labels are a flexible and lightweight mechanism for
+	// Labels: Labels are a flexible and lightweight mechanism for
 	// organizing cloud resources into groups that reflect a customer's
 	// organizational needs and deployment strategies. They can be used to
 	// filter resources and aggregate metrics. * Label keys must be between
@@ -1748,7 +1748,7 @@ type Instance struct {
 	// destroyed if the creation process encounters an error.
 	State string `json:"state,omitempty"`
 
-	// Type: Required. The type of the instance. Defaults to `PRODUCTION`.
+	// Type: The type of the instance. Defaults to `PRODUCTION`.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the instance is unspecified. If

@@ -117,8 +117,8 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 	for {
 		select {
 		case <-ctx.Done():
-			// If we got an error, and the context has been canceled,
-			// the context's error is probably more useful.
+			// If we got an error and the context has been canceled, return an error acknowledging
+			// both the context cancelation and the service error.
 			if err != nil {
 				return resp, wrappedCallErr{ctx.Err(), err}
 			}

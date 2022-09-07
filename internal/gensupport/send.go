@@ -64,7 +64,7 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 	if err != nil {
 		select {
 		case <-ctx.Done():
-			err = wrappedCallErr{ctx.Err(), err}
+			err = ctx.Err()
 		default:
 		}
 	}

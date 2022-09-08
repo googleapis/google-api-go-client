@@ -8607,7 +8607,8 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// JobTrigger we will automatically figure out a valid start_time to
 	// avoid scanning files that have not been modified since the last time
 	// the JobTrigger executed. This will be based on the time of the
-	// execution of the last run of the JobTrigger.
+	// execution of the last run of the JobTrigger or the timespan end_time
+	// used in the last run of the JobTrigger.
 	EnableAutoPopulationOfTimespanConfig bool `json:"enableAutoPopulationOfTimespanConfig,omitempty"`
 
 	// EndTime: Exclude files, tables, or rows newer than this value. If not

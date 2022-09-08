@@ -712,12 +712,12 @@ func (s *GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata) Mars
 // GoogleCloudAssuredworkloadsV1beta1Workload: An Workload object for
 // managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1beta1Workload struct {
-	// BillingAccount: Output only. The billing account used for the
-	// resources which are direct children of workload. This billing account
-	// is initially associated with the resources created as part of
-	// Workload creation. After the initial creation of these resources, the
-	// customer can change the assigned billing account. The resource name
-	// has the form `billingAccounts/{billing_account_id}`. For example,
+	// BillingAccount: Optional. The billing account used for the resources
+	// which are direct children of workload. This billing account is
+	// initially associated with the resources created as part of Workload
+	// creation. After the initial creation of these resources, the customer
+	// can change the assigned billing account. The resource name has the
+	// form `billingAccounts/{billing_account_id}`. For example,
 	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccount string `json:"billingAccount,omitempty"`
 
@@ -748,6 +748,13 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
 	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// CompliantButDisallowedServices: Output only. Urls for services which
+	// are compliant for this Assured Workload, but which are currently
+	// disallowed by the ResourceUsageRestriction org policy. Invoke
+	// RestrictAllowedResources endpoint to allow your project developers to
+	// use these services in their environment."
+	CompliantButDisallowedServices []string `json:"compliantButDisallowedServices,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1223,12 +1230,12 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetad
 // GoogleCloudAssuredworkloadsVersioningV1mainWorkload: An Workload
 // object for managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
-	// BillingAccount: Input only. The billing account used for the
-	// resources which are direct children of workload. This billing account
-	// is initially associated with the resources created as part of
-	// Workload creation. After the initial creation of these resources, the
-	// customer can change the assigned billing account. The resource name
-	// has the form `billingAccounts/{billing_account_id}`. For example,
+	// BillingAccount: Optional. The billing account used for the resources
+	// which are direct children of workload. This billing account is
+	// initially associated with the resources created as part of Workload
+	// creation. After the initial creation of these resources, the customer
+	// can change the assigned billing account. The resource name has the
+	// form `billingAccounts/{billing_account_id}`. For example,
 	// `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccount string `json:"billingAccount,omitempty"`
 
@@ -1263,6 +1270,13 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	// ComplianceStatus: Output only. Count of active Violations in the
 	// Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadComplianceStatus `json:"complianceStatus,omitempty"`
+
+	// CompliantButDisallowedServices: Output only. Urls for services which
+	// are compliant for this Assured Workload, but which are currently
+	// disallowed by the ResourceUsageRestriction org policy. Invoke
+	// RestrictAllowedResources endpoint to allow your project developers to
+	// use these services in their environment."
+	CompliantButDisallowedServices []string `json:"compliantButDisallowedServices,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`

@@ -8890,7 +8890,10 @@ type BuyersPublisherProfilesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists publisher profiles
+// List: Lists publisher profiles. The returned publisher profiles
+// aren't in any defined order. The order of the results might change. A
+// new publisher profile can appear in any place in the list of returned
+// results.
 //
 //   - parent: Parent that owns the collection of publisher profiles
 //     Format: `buyers/{buyerId}`.
@@ -9024,7 +9027,7 @@ func (c *BuyersPublisherProfilesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists publisher profiles",
+	//   "description": "Lists publisher profiles. The returned publisher profiles aren't in any defined order. The order of the results might change. A new publisher profile can appear in any place in the list of returned results.",
 	//   "flatPath": "v1/buyers/{buyersId}/publisherProfiles",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.publisherProfiles.list",

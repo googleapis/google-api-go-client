@@ -6776,10 +6776,6 @@ func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesL
 //
 // [chromeosdevices](/admin-sdk/directory/v1/reference/chromeosdevices.ht
 // ml).
-//
-//	"supportEndDate" - Chrome device support end date. This is
-//
-// applicable only for devices purchased directly from Google.
 func (c *ChromeosdevicesListCall) OrderBy(orderBy string) *ChromeosdevicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6971,8 +6967,7 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//         "lastSync",
 	//         "notes",
 	//         "serialNumber",
-	//         "status",
-	//         "supportEndDate"
+	//         "status"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Chrome device location as annotated by the administrator.",
@@ -6980,8 +6975,7 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//         "The date and time the Chrome device was last synchronized with the policy settings in the Admin console.",
 	//         "Chrome device notes as annotated by the administrator.",
 	//         "The Chrome device serial number entered when the device was enabled.",
-	//         "Chrome device status. For more information, see the \u003ca [chromeosdevices](/admin-sdk/directory/v1/reference/chromeosdevices.html).",
-	//         "Chrome device support end date. This is applicable only for devices purchased directly from Google."
+	//         "Chrome device status. For more information, see the \u003ca [chromeosdevices](/admin-sdk/directory/v1/reference/chromeosdevices.html)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

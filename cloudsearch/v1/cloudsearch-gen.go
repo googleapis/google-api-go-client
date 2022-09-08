@@ -1156,16 +1156,12 @@ func (s *AppsDynamiteSharedActionActionParameter) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 5
+// AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 6
 type AppsDynamiteSharedActivityFeedAnnotationData struct {
-	// ActivityFeedMessageId: Unique id of the Activity Feed message. This
-	// will be in the form of "space-id/message-id" or "dm-id/message-id",
-	// where the space-/dm-id and message-id components are extracted from
-	// the top-level MessageId in message.proto (http://shortn/_SulV51DNfF).
-	// This is copied into annotations so that no client changes are needed
-	// to access this value. Clients will need a unique id for every
-	// Activity Feed message to implement click-to-source.
-	ActivityFeedMessageId string `json:"activityFeedMessageId,omitempty"`
+	// ActivityFeedMessageId: Unique id of the Activity Feed message used by
+	// clients to implement click-to-source. This is the same messageId as
+	// the top-level id field for the Activity Feed item.
+	ActivityFeedMessageId *MessageId `json:"activityFeedMessageId,omitempty"`
 
 	ChatItem *AppsDynamiteSharedChatItem `json:"chatItem,omitempty"`
 
@@ -3583,11 +3579,20 @@ func (s *AppsDynamiteSharedMeetMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // AppsDynamiteSharedMessageInfo: Information that references a Dynamite
-// chat message.
+// chat message. This is only used for Activity Feed messages.
 type AppsDynamiteSharedMessageInfo struct {
 	// MessageId: Id of the source chat message. This is kept here because
 	// the top-level message ID to refers the AF message ID.
 	MessageId *MessageId `json:"messageId,omitempty"`
+
+	// MessageType: The type of the source chat message.
+	//
+	// Possible values:
+	//   "MESSAGE_TYPE_UNSPECIFIED" - Default value where type is not
+	// specified.
+	//   "INLINE_REPLY" - The source chat message is a threaded reply to
+	// another message.
+	MessageType string `json:"messageType,omitempty"`
 
 	// TopicReadTimeUsec: Timestamp of when the topic containing the message
 	// has been read by the user. This is populated if the message
@@ -5715,7 +5720,6 @@ type CallSettings struct {
 	CseEnabled bool `json:"cseEnabled,omitempty"`
 
 	// ModerationEnabled: Indicates whether the current call is moderated.
-	// go/meet-multimod-dd
 	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
 
 	// PresentLock: Indicates whether the present lock is currently on or
@@ -13711,8 +13715,7 @@ type MeetingSpace struct {
 	// MeetingAlias: An optional alias for the meeting space. The alias can
 	// in some cases be resolved to the meeting space, similar to the
 	// meeting code. The limitation is that the user needs to be in the same
-	// meeting domain as the meeting space. See
-	// go/thor-backend/meeting-alias for more details.
+	// meeting domain as the meeting space.
 	MeetingAlias string `json:"meetingAlias,omitempty"`
 
 	// MeetingCode: A meeting code is a globally unique code which points to
@@ -13734,7 +13737,7 @@ type MeetingSpace struct {
 	// MoreJoinUrl: Output only. A URL that clients (e.g. Calendar) can use
 	// to show the web page with all join methods available for this meeting
 	// space. This link is also used in iOS universal links and Android
-	// intents, used for opening the "More ways to join" view in the Thor
+	// intents, used for opening the "More ways to join" view in the Meet
 	// mobile apps. Example: https://tel.meet/mee-ting-cod?pin=1234567891011
 	// Here, "pin" is the universal phone PIN. We include it explicitly to
 	// better support the offline case on the mobile. This is set when the
@@ -14174,6 +14177,13 @@ type Message struct {
 
 	// Id: ID of the resource.
 	Id *MessageId `json:"id,omitempty"`
+
+	// IsContentPurged: Whether the message is content purged. Content
+	// purged messages contain only data required for tombstone (see
+	// go/chat-infinite-tombstone). This field is only used by Vault to
+	// display tombstone and should only be set to true if the message is a
+	// tombstone.
+	IsContentPurged bool `json:"isContentPurged,omitempty"`
 
 	// IsInlineReply: Output only. Indicates if the message is an inline
 	// reply. Set to true only if the message's ParentPath is non-NULL.
@@ -16827,9 +16837,8 @@ type RecordingInfo struct {
 	//   "RECORDING_APPLICATION_TYPE_UNSPECIFIED" - This is never used.
 	//   "RECORDING" - A meeting recording saved to a video file in Google
 	// Drive.
-	//   "GLIVE_STREAM" - A *Google Live* managed stream. See
-	// go/thor-managed-streaming.
-	//   "BROADCAST" - A meeting broadcast. See go/thor-streaming-prd.
+	//   "GLIVE_STREAM" - A *Google Live* managed stream.
+	//   "BROADCAST" - A meeting broadcast.
 	RecordingApplicationType string `json:"recordingApplicationType,omitempty"`
 
 	// RecordingId: An identifier for the current recording, if any. This is
@@ -17053,6 +17062,7 @@ type RequiredMessageFeaturesMetadata struct {
 	// Possible values:
 	//   "REQUIRED_FEATURE_UNSPECIFIED"
 	//   "REQUIRED_FEATURE_MESSAGE_QUOTING"
+	//   "REQUIRED_FEATURE_TOMBSTONES_IN_DMS_AND_UFRS"
 	RequiredFeatures []string `json:"requiredFeatures,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequiredFeatures") to
@@ -18514,7 +18524,6 @@ type Settings struct {
 	DefaultAsViewer bool `json:"defaultAsViewer,omitempty"`
 
 	// ModerationEnabled: Indicates whether the meeting space is moderated.
-	// go/meet-multimod-dd
 	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
 
 	// PresentLock: The present lock of the meeting space that lets owner
@@ -19392,9 +19401,8 @@ type StreamingSessionInfo struct {
 	//   "RECORDING_APPLICATION_TYPE_UNSPECIFIED" - This is never used.
 	//   "RECORDING" - A meeting recording saved to a video file in Google
 	// Drive.
-	//   "GLIVE_STREAM" - A *Google Live* managed stream. See
-	// go/thor-managed-streaming.
-	//   "BROADCAST" - A meeting broadcast. See go/thor-streaming-prd.
+	//   "GLIVE_STREAM" - A *Google Live* managed stream.
+	//   "BROADCAST" - A meeting broadcast.
 	ApplicationType string `json:"applicationType,omitempty"`
 
 	// LatestSessionEvent: The latest streaming session event. This can be
@@ -20945,7 +20953,7 @@ func (s *UserId) MarshalJSON() ([]byte, error) {
 }
 
 // UserInfo: Contains info regarding the updater of an Activity Feed
-// item. Next Id: 6
+// item. Next Id: 7
 type UserInfo struct {
 	// UpdaterCountDisplayType: Describes how updater_count_to_show should
 	// be used.
@@ -20973,6 +20981,13 @@ type UserInfo struct {
 	// used for Gmail items. If the updater is an external user, the email
 	// field below should be populated.
 	UpdaterToShowGaiaId int64 `json:"updaterToShowGaiaId,omitempty,string"`
+
+	// UpdaterToShowName: The display name of the updater for clients to
+	// show used for Gmail items. This (along with the updater fields above)
+	// will be populated in the thread pipeline (http://shortn/_rPS0GCp94Y)
+	// when converting Activity Feed message attributes into
+	// client-renderable Activity Feed items.
+	UpdaterToShowName string `json:"updaterToShowName,omitempty"`
 
 	// UpdaterToShowUserId: The updater for clients to show used for
 	// Dynamite Chat items.

@@ -506,7 +506,7 @@ func (s *GoogleCloudRecommenderV1Impact) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRecommenderV1Insight: An insight along with the
 // information used to derive the insight. The insight may have
-// associated recomendations as well.
+// associated recommendations as well.
 type GoogleCloudRecommenderV1Insight struct {
 	// AssociatedRecommendations: Recommendations derived from this insight.
 	AssociatedRecommendations []*GoogleCloudRecommenderV1InsightRecommendationReference `json:"associatedRecommendations,omitempty"`

@@ -911,7 +911,7 @@ type ContainerVersion struct {
 	// tagmanager.accounts.containers.versions.update
 	Name string `json:"name,omitempty"`
 
-	// Path: GTM ContainerVersions's API relative path.
+	// Path: GTM Container Version's API relative path.
 	Path string `json:"path,omitempty"`
 
 	// Tag: The tags in the container that this version was taken from.
@@ -3563,7 +3563,7 @@ type AccountsGetCall struct {
 
 // Get: Gets a GTM Account.
 //
-//   - path: GTM Accounts's API relative path. Example:
+//   - path: GTM Account's API relative path. Example:
 //     accounts/{account_id}.
 func (r *AccountsService) Get(path string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3679,7 +3679,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//   ],
 	//   "parameters": {
 	//     "path": {
-	//       "description": "GTM Accounts's API relative path. Example: accounts/{account_id}",
+	//       "description": "GTM Account's API relative path. Example: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,

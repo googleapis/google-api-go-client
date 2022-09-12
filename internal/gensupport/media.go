@@ -319,6 +319,13 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 		body = combined
 	}
 	if mi.buffer != nil && mi.mType != "" && !mi.singleChunk {
+		fb := readerFunc(body)
+		if fb != nil {
+			getBody = func() (io.ReadCloser, error) {
+				rb := ioutil.NopCloser(fb())
+				return rb, nil
+			}
+		}
 		reqHeaders.Set("X-Upload-Content-Type", mi.mType)
 	}
 	return body, getBody, cleanup

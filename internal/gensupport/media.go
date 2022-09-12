@@ -289,13 +289,12 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 		// be retried because the data is stored in the MediaBuffer.
 		media, _, _, _ = mi.buffer.Chunk()
 	}
+	toCleanup := []io.Closer{}
 	if media != nil {
 		fb := readerFunc(body)
 		fm := readerFunc(media)
 		combined, ctype := CombineBodyMedia(body, "application/json", media, mi.mType)
-		toCleanup := []io.Closer{
-			combined,
-		}
+		toCleanup = append(toCleanup, combined)
 		if fb != nil && fm != nil {
 			getBody = func() (io.ReadCloser, error) {
 				rb := ioutil.NopCloser(fb())
@@ -309,12 +308,6 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 				return r, nil
 			}
 		}
-		cleanup = func() {
-			for _, closer := range toCleanup {
-				_ = closer.Close()
-			}
-
-		}
 		reqHeaders.Set("Content-Type", ctype)
 		body = combined
 	}
@@ -323,10 +316,17 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 		if fb != nil {
 			getBody = func() (io.ReadCloser, error) {
 				rb := ioutil.NopCloser(fb())
+				toCleanup = append(toCleanup, rb)
 				return rb, nil
 			}
 		}
 		reqHeaders.Set("X-Upload-Content-Type", mi.mType)
+	}
+	cleanup = func() {
+		for _, closer := range toCleanup {
+			_ = closer.Close()
+		}
+
 	}
 	return body, getBody, cleanup
 }

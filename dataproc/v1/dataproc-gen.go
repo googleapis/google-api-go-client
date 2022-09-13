@@ -751,11 +751,12 @@ type Binding struct {
 	// special identifier that represents anyone who is on the internet;
 	// with or without a Google account. allAuthenticatedUsers: A special
 	// identifier that represents anyone who is authenticated with a Google
-	// account or a service account. user:{emailid}: An email address that
-	// represents a specific Google account. For example, alice@example.com
-	// . serviceAccount:{emailid}: An email address that represents a Google
-	// service account. For example,
-	// my-other-app@appspot.gserviceaccount.com.
+	// account or a service account. Does not include identities that come
+	// from external identity providers (IdPs) through identity federation.
+	// user:{emailid}: An email address that represents a specific Google
+	// account. For example, alice@example.com . serviceAccount:{emailid}:
+	// An email address that represents a Google service account. For
+	// example, my-other-app@appspot.gserviceaccount.com.
 	// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]:
 	// An identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
@@ -1781,6 +1782,66 @@ func (s *GceClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GceNodePoolOperationMetadata: Metadata describing the Compute Engine
+// node pool operation.
+type GceNodePoolOperationMetadata struct {
+	// ClusterUuid: Output only. Cluster UUID associated with the Compute
+	// Engine node pool operation.
+	ClusterUuid string `json:"clusterUuid,omitempty"`
+
+	// Description: Output only. Short description of operation.
+	Description string `json:"description,omitempty"`
+
+	// GceNodePoolId: Output only. Compute Engine node pool ID for the
+	// operation.
+	GceNodePoolId string `json:"gceNodePoolId,omitempty"`
+
+	// Labels: Output only. Labels associated with the operation
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "GCE_NODE_POOL_OPERATION_TYPE_UNSPECIFIED" - Compute Engine node
+	// pool operation type is unknown.
+	//   "CREATE" - Create Compute Engine node pool operation type.
+	//   "UPDATE" - Update Compute Engine node pool operation type.
+	//   "DELETE" - Delete Compute Engine node pool operation type.
+	//   "RESIZE" - Resize Compute Engine node pool operation type.
+	OperationType string `json:"operationType,omitempty"`
+
+	// Status: Output only. Current operation status.
+	Status *ClusterOperationStatus `json:"status,omitempty"`
+
+	// StatusHistory: Output only. The previous operation status.
+	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
+
+	// Warnings: Output only. Errors encountered during operation execution.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterUuid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterUuid") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GceNodePoolOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GceNodePoolOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetIamPolicyRequest: Request message for GetIamPolicy method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A GetPolicyOptions object for specifying options
@@ -2462,6 +2523,9 @@ type InstanceGroupConfig struct {
 	// Master and Worker instance groups.
 	//   "PREEMPTIBLE" - Instances are preemptible.This option is allowed
 	// only for secondary worker groups.
+	//   "SPOT" - Instances are Spot VMsThis option is allowed only for
+	// secondary worker groups. See Spot VMs
+	// (https://cloud.google.com/compute/docs/instances/spot).
 	Preemptibility string `json:"preemptibility,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
@@ -7434,7 +7498,9 @@ type ProjectsLocationsBatchesDeleteCall struct {
 // terminal state, the delete fails and the response returns
 // FAILED_PRECONDITION.
 //
-// - name: The name of the batch resource to delete.
+//   - name: The fully qualified name of the batch to retrieve in the
+//     format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID".
 func (r *ProjectsLocationsBatchesService) Delete(name string) *ProjectsLocationsBatchesDeleteCall {
 	c := &ProjectsLocationsBatchesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7536,7 +7602,7 @@ func (c *ProjectsLocationsBatchesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the batch resource to delete.",
+	//       "description": "Required. The fully qualified name of the batch to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+$",
 	//       "required": true,
@@ -7567,7 +7633,9 @@ type ProjectsLocationsBatchesGetCall struct {
 
 // Get: Gets the batch workload resource representation.
 //
-// - name: The name of the batch to retrieve.
+//   - name: The fully qualified name of the batch to retrieve in the
+//     format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID".
 func (r *ProjectsLocationsBatchesService) Get(name string) *ProjectsLocationsBatchesGetCall {
 	c := &ProjectsLocationsBatchesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7682,7 +7750,7 @@ func (c *ProjectsLocationsBatchesGetCall) Do(opts ...googleapi.CallOption) (*Bat
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the batch to retrieve.",
+	//       "description": "Required. The fully qualified name of the batch to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+$",
 	//       "required": true,

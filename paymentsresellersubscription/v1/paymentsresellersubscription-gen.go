@@ -452,13 +452,13 @@ type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest stru
 	// following caveats: - Only the following features are supported: -
 	// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
 	// Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only
-	// the following fields are supported: - `applicable_products` -
-	// `region_codes` - `youtube_payload.partner_eligibility_id` -
-	// `youtube_payload.postal_code` - Unless explicitly mentioned above,
+	// the following fields are supported: - `applicableProducts` -
+	// `regionCodes` - `youtubePayload.partnerEligibilityId` -
+	// `youtubePayload.postalCode` - Unless explicitly mentioned above,
 	// other features are not supported. Example:
-	// `applicable_products:partners/partner1/products/product1 AND
-	// region_codes:US AND youtube_payload.postal_code=94043 AND
-	// youtube_payload.partner_eligibility_id=eligibility-id`
+	// `applicableProducts:partners/partner1/products/product1 AND
+	// regionCodes:US AND youtubePayload.postalCode=94043 AND
+	// youtubePayload.partnerEligibilityId=eligibility-id`
 	Filter string `json:"filter,omitempty"`
 
 	// PageSize: Optional. The maximum number of promotions to return. The
@@ -1341,12 +1341,11 @@ func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall 
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
 // Has operator `:` (no wildcards `*`) - Only the following fields are
-// supported: - `region_codes` -
-// `youtube_payload.partner_eligibility_id` -
-// `youtube_payload.postal_code` - Unless explicitly mentioned above,
-// other features are not supported. Example: `region_codes:US AND
-// youtube_payload.postal_code=94043 AND
-// youtube_payload.partner_eligibility_id=eligibility-id`
+// supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` -
+// `youtubePayload.postalCode` - Unless explicitly mentioned above,
+// other features are not supported. Example: `regionCodes:US AND
+// youtubePayload.postalCode=94043 AND
+// youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersProductsListCall) Filter(filter string) *PartnersProductsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1482,7 +1481,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `region_codes` - `youtube_payload.partner_eligibility_id` - `youtube_payload.postal_code` - Unless explicitly mentioned above, other features are not supported. Example: `region_codes:US AND youtube_payload.postal_code=94043 AND youtube_payload.partner_eligibility_id=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1731,13 +1730,12 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
 // Has operator `:` (no wildcards `*`) - Only the following fields are
-// supported: - `applicable_products` - `region_codes` -
-// `youtube_payload.partner_eligibility_id` -
-// `youtube_payload.postal_code` - Unless explicitly mentioned above,
-// other features are not supported. Example:
-// `applicable_products:partners/partner1/products/product1 AND
-// region_codes:US AND youtube_payload.postal_code=94043 AND
-// youtube_payload.partner_eligibility_id=eligibility-id`
+// supported: - `applicableProducts` - `regionCodes` -
+// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` -
+// Unless explicitly mentioned above, other features are not supported.
+// Example: `applicableProducts:partners/partner1/products/product1 AND
+// regionCodes:US AND youtubePayload.postalCode=94043 AND
+// youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1873,7 +1871,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `applicable_products` - `region_codes` - `youtube_payload.partner_eligibility_id` - `youtube_payload.postal_code` - Unless explicitly mentioned above, other features are not supported. Example: `applicable_products:partners/partner1/products/product1 AND region_codes:US AND youtube_payload.postal_code=94043 AND youtube_payload.partner_eligibility_id=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

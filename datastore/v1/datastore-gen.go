@@ -1018,7 +1018,7 @@ type GoogleDatastoreAdminV1Index struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Properties: Required. An ordered sequence of property names and their
-	// index attributes.
+	// index attributes. Requires: * A maximum of 100 properties.
 	Properties []*GoogleDatastoreAdminV1IndexedProperty `json:"properties,omitempty"`
 
 	// State: Output only. The state of the index.

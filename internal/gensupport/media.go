@@ -312,6 +312,9 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 		body = combined
 	}
 	if mi.buffer != nil && mi.mType != "" && !mi.singleChunk {
+		// This happens when initiating a resumable upload session.
+		// The initial request includes a body but no media. It can be
+		// retried with a getBody function that re-creates the request body.
 		fb := readerFunc(body)
 		if fb != nil {
 			getBody = func() (io.ReadCloser, error) {
@@ -322,6 +325,7 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 		}
 		reqHeaders.Set("X-Upload-Content-Type", mi.mType)
 	}
+	// Ensure that any bodies created in getBody are cleaned up.
 	cleanup = func() {
 		for _, closer := range toCleanup {
 			_ = closer.Close()

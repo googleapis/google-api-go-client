@@ -839,7 +839,8 @@ func (s *GoogleChromePolicyV1PolicySchemaFieldDependencies) MarshalJSON() ([]byt
 // GoogleChromePolicyV1PolicySchemaFieldDescription: Provides detailed
 // information for a particular field that is part of a PolicySchema.
 type GoogleChromePolicyV1PolicySchemaFieldDescription struct {
-	// Description: Output only. The description for the field.
+	// Description: Deprecated. Use name and field_description instead. The
+	// description for the field.
 	Description string `json:"description,omitempty"`
 
 	// Field: Output only. The name of the field for associated with this
@@ -851,6 +852,9 @@ type GoogleChromePolicyV1PolicySchemaFieldDescription struct {
 	// for this field to be allowed to be set.
 	FieldDependencies []*GoogleChromePolicyV1PolicySchemaFieldDependencies `json:"fieldDependencies,omitempty"`
 
+	// FieldDescription: Output only. The description of the field.
+	FieldDescription string `json:"fieldDescription,omitempty"`
+
 	// InputConstraint: Output only. Any input constraints associated on the
 	// values for the field.
 	InputConstraint string `json:"inputConstraint,omitempty"`
@@ -858,6 +862,9 @@ type GoogleChromePolicyV1PolicySchemaFieldDescription struct {
 	// KnownValueDescriptions: Output only. If the field has a set of known
 	// values, this field will provide a description for these values.
 	KnownValueDescriptions []*GoogleChromePolicyV1PolicySchemaFieldKnownValueDescription `json:"knownValueDescriptions,omitempty"`
+
+	// Name: Output only. The name of the field.
+	Name string `json:"name,omitempty"`
 
 	// NestedFieldDescriptions: Output only. Provides the description of the
 	// fields nested in this field, if the field is a message type that

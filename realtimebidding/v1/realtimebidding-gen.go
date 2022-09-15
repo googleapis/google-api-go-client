@@ -666,14 +666,14 @@ func (s *BatchRejectPublisherConnectionsResponse) MarshalJSON() ([]byte, error) 
 
 // Bidder: Bidder settings.
 type Bidder struct {
-	// BypassNonguaranteedDealsPretargeting: Output only. A flag to bypass
-	// pretargeting for private auctions and preferred deals. When true, bid
-	// requests from these nonguaranteed deals will always be sent. When
-	// false, bid requests will be subject to regular pretargeting
-	// configurations. Programmatic Guaranteed deals will always be sent to
-	// the bidder, regardless of the value for this flag. Auction packages
-	// are not impacted by this value and are subject to the regular
-	// pretargeting configurations.
+	// BypassNonguaranteedDealsPretargeting: Output only. An option to
+	// bypass pretargeting for private auctions and preferred deals. When
+	// true, bid requests from these nonguaranteed deals will always be
+	// sent. When false, bid requests will be subject to regular
+	// pretargeting configurations. Programmatic Guaranteed deals will
+	// always be sent to the bidder, regardless of the value for this flag.
+	// Auction packages are not impacted by this value and are subject to
+	// the regular pretargeting configurations.
 	BypassNonguaranteedDealsPretargeting bool `json:"bypassNonguaranteedDealsPretargeting,omitempty"`
 
 	// CookieMatchingNetworkId: Output only. The buyer's network ID used for
@@ -733,8 +733,8 @@ func (s *Bidder) MarshalJSON() ([]byte, error) {
 // Buyer: RTB Buyer account information.
 type Buyer struct {
 	// ActiveCreativeCount: Output only. The number of creatives that this
-	// buyer submitted via the API or bid with in the last 30 days. This is
-	// counted against the maximum number of active creatives.
+	// buyer submitted through the API or bid with in the last 30 days. This
+	// is counted against the maximum number of active creatives.
 	ActiveCreativeCount int64 `json:"activeCreativeCount,omitempty,string"`
 
 	// Bidder: Output only. The name of the bidder resource that is
@@ -820,7 +820,7 @@ type Creative struct {
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
 	// ApiUpdateTime: Output only. The last update timestamp of the creative
-	// via API.
+	// through the API.
 	ApiUpdateTime string `json:"apiUpdateTime,omitempty"`
 
 	// CreativeFormat: Output only. The format of this creative. Can be used
@@ -1269,12 +1269,12 @@ type DestinationNotCrawlableEvidence struct {
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Default value that should never be used.
-	//   "UNREACHABLE_ROBOTS" - Site's robots exclusion file (e.g.,
+	//   "UNREACHABLE_ROBOTS" - Site's robots exclusion file (for example,
 	// robots.txt) was unreachable.
 	//   "TIMEOUT_ROBOTS" - Timed out reading site's robots exclusion file
-	// (e.g., robots.txt).
+	// (for example, robots.txt).
 	//   "ROBOTED_DENIED" - Crawler was disallowed by the site's robots
-	// exclusion file (e.g., robots.txt).
+	// exclusion file (for example, robots.txt).
 	//   "UNKNOWN" - Unknown reason.
 	Reason string `json:"reason,omitempty"`
 
@@ -1318,7 +1318,7 @@ type DestinationNotWorkingEvidence struct {
 	// ExpandedUrl: The full non-working URL.
 	ExpandedUrl string `json:"expandedUrl,omitempty"`
 
-	// HttpError: HTTP error code (e.g. 404 or 5xx)
+	// HttpError: HTTP error code (for example, 404 or 5xx)
 	HttpError int64 `json:"httpError,omitempty"`
 
 	// InvalidPage: Page was crawled successfully, but was detected as
@@ -1419,8 +1419,8 @@ func (s *DestinationUrlEvidence) MarshalJSON() ([]byte, error) {
 // DomainCallEvidence: Number of HTTP calls made by a creative, broken
 // down by domain.
 type DomainCallEvidence struct {
-	// TopHttpCallDomains: Breakdown of the most frequent domains called via
-	// HTTP by the creative.
+	// TopHttpCallDomains: Breakdown of the most frequent domains called
+	// through HTTP by the creative.
 	TopHttpCallDomains []*DomainCalls `json:"topHttpCallDomains,omitempty"`
 
 	// TotalHttpCallCount: The total number of HTTP calls made by the
@@ -2223,9 +2223,9 @@ type OpenUserListRequest struct {
 // PolicyCompliance: Policy compliance of the creative for a transaction
 // type or a region.
 type PolicyCompliance struct {
-	// Status: Serving status for the given transaction type (e.g., open
-	// auction, deals) or region (e.g., China, Russia). Can be used to
-	// filter the response of the creatives.list method.
+	// Status: Serving status for the given transaction type (for example,
+	// open auction, deals) or region (for example, China, Russia). Can be
+	// used to filter the response of the creatives.list method.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Default value that should never be used.
@@ -2239,8 +2239,8 @@ type PolicyCompliance struct {
 	Status string `json:"status,omitempty"`
 
 	// Topics: Topics related to the policy compliance for this transaction
-	// type (e.g., open auction, deals) or region (e.g., China, Russia).
-	// Topics may be present only if status is DISAPPROVED.
+	// type (for example, open auction, deals) or region (for example,
+	// China, Russia). Topics may be present only if status is DISAPPROVED.
 	Topics []*PolicyTopicEntry `json:"topics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Status") to
@@ -3079,7 +3079,7 @@ type WatchCreativesResponse struct {
 	// `projects/{project_id}/subscriptions/{subscription_id}`. Subscription
 	// is created with pull delivery. All service accounts belonging to the
 	// bidder will have read access to this subscription. Subscriptions that
-	// are inactive for more than 90 days will be disabled. Please use
+	// are inactive for more than 90 days will be disabled. Use
 	// watchCreatives to re-enable the subscription.
 	Subscription string `json:"subscription,omitempty"`
 
@@ -3472,8 +3472,8 @@ type BiddersCreativesListCall struct {
 //     bidder itself. So for listing creatives pertaining to bidder
 //     (`123`), you would use `buyers/123`. If you want to access all
 //     creatives pertaining to both the bidder and all of its child seat
-//     accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
-//     creatives pertaining to bidder (`123`), use `bidders/123`.
+//     accounts, you would use `bidders/{bidderAccountId}`, for example,
+//     for all creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BiddersCreativesService) List(parent string) *BiddersCreativesListCall {
 	c := &BiddersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3492,7 +3492,7 @@ func (c *BiddersCreativesListCall) Filter(filter string) *BiddersCreativesListCa
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The server may return fewer creatives than requested (due to timeout
-// constraint) even if more are available via another call. If
+// constraint) even if more are available through another call. If
 // unspecified, server will pick an appropriate default. Acceptable
 // values are 1 to 1000, inclusive.
 func (c *BiddersCreativesListCall) PageSize(pageSize int64) *BiddersCreativesListCall {
@@ -3648,7 +3648,7 @@ func (c *BiddersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreati
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available via another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available through another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3659,7 +3659,7 @@ func (c *BiddersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreati
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, e.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
+	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, for example, for all creatives pertaining to bidder (`123`), use `bidders/123`.",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
@@ -6784,7 +6784,7 @@ func (c *BiddersPublisherConnectionsListCall) OrderBy(orderBy string) *BiddersPu
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The server may return fewer results than requested (due to timeout
-// constraint) even if more are available via another call. If
+// constraint) even if more are available through another call. If
 // unspecified, the server will pick an appropriate default. Acceptable
 // values are 1 to 5000, inclusive.
 func (c *BiddersPublisherConnectionsListCall) PageSize(pageSize int64) *BiddersPublisherConnectionsListCall {
@@ -6920,7 +6920,7 @@ func (c *BiddersPublisherConnectionsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested (due to timeout constraint) even if more are available via another call. If unspecified, the server will pick an appropriate default. Acceptable values are 1 to 5000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer results than requested (due to timeout constraint) even if more are available through another call. If unspecified, the server will pick an appropriate default. Acceptable values are 1 to 5000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7815,8 +7815,8 @@ type BuyersCreativesListCall struct {
 //     bidder itself. So for listing creatives pertaining to bidder
 //     (`123`), you would use `buyers/123`. If you want to access all
 //     creatives pertaining to both the bidder and all of its child seat
-//     accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
-//     creatives pertaining to bidder (`123`), use `bidders/123`.
+//     accounts, you would use `bidders/{bidderAccountId}`, for example,
+//     for all creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BuyersCreativesService) List(parent string) *BuyersCreativesListCall {
 	c := &BuyersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7835,7 +7835,7 @@ func (c *BuyersCreativesListCall) Filter(filter string) *BuyersCreativesListCall
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The server may return fewer creatives than requested (due to timeout
-// constraint) even if more are available via another call. If
+// constraint) even if more are available through another call. If
 // unspecified, server will pick an appropriate default. Acceptable
 // values are 1 to 1000, inclusive.
 func (c *BuyersCreativesListCall) PageSize(pageSize int64) *BuyersCreativesListCall {
@@ -7991,7 +7991,7 @@ func (c *BuyersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativ
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available via another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available through another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8002,7 +8002,7 @@ func (c *BuyersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativ
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, e.g., for all creatives pertaining to bidder (`123`), use `bidders/123`.",
+	//       "description": "Required. Name of the parent buyer that owns the creatives. The pattern for this resource is either `buyers/{buyerAccountId}` or `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the `buyerAccountId` can be one of the following: 1. The ID of the buyer that is accessing their own creatives. 2. The ID of the child seat buyer under a bidder account. So for listing creatives pertaining to the child seat buyer (`456`) under bidder account (`123`), you would use the pattern: `buyers/456`. 3. The ID of the bidder itself. So for listing creatives pertaining to bidder (`123`), you would use `buyers/123`. If you want to access all creatives pertaining to both the bidder and all of its child seat accounts, you would use `bidders/{bidderAccountId}`, for example, for all creatives pertaining to bidder (`123`), use `bidders/123`.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,

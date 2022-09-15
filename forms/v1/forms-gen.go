@@ -1286,7 +1286,8 @@ type ListFormResponsesResponse struct {
 	// of responses, provide this as `page_token` in a future request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Responses: The returned responses.
+	// Responses: The returned form responses. Note: The `formId` field is
+	// not returned in the `FormResponse` object for list requests.
 	Responses []*FormResponse `json:"responses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

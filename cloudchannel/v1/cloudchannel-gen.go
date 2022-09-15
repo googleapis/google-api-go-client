@@ -1995,8 +1995,8 @@ func (s *GoogleCloudChannelV1ListTransferableOffersResponse) MarshalJSON() ([]by
 // GoogleCloudChannelV1ListTransferableSkusRequest: Request message for
 // CloudChannelService.ListTransferableSkus
 type GoogleCloudChannelV1ListTransferableSkusRequest struct {
-	// AuthToken: The super admin of the resold customer generates this
-	// token to authorize a reseller to access their Cloud Identity and
+	// AuthToken: Optional. The super admin of the resold customer generates
+	// this token to authorize a reseller to access their Cloud Identity and
 	// purchase entitlements on their behalf. You can omit this token after
 	// authorization. See https://support.google.com/a/answer/7643790 for
 	// more details.
@@ -5222,11 +5222,11 @@ type AccountsListTransferableOffersCall struct {
 // customer. The reseller should provide the customer's Cloud Identity
 // ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The
 // customer doesn't belong to the reseller and has no auth token. * The
-// supplied auth token is invalid. * The reseller account making the
-// request is different from the reseller account in the query. *
-// INVALID_ARGUMENT: Required request parameters are missing or invalid.
-// Return value: List of TransferableOffer for the given customer and
-// SKU.
+// customer provided incorrect reseller information when generating auth
+// token. * The reseller account making the request is different from
+// the reseller account in the query. * INVALID_ARGUMENT: Required
+// request parameters are missing or invalid. Return value: List of
+// TransferableOffer for the given customer and SKU.
 //
 // - parent: The resource name of the reseller's account.
 func (r *AccountsService) ListTransferableOffers(parent string, googlecloudchannelv1listtransferableoffersrequest *GoogleCloudChannelV1ListTransferableOffersRequest) *AccountsListTransferableOffersCall {
@@ -5329,7 +5329,7 @@ func (c *AccountsListTransferableOffersCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "List TransferableOffers of a customer based on Cloud Identity ID or Customer Name in the request. Use this method when a reseller gets the entitlement information of an unowned customer. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The supplied auth token is invalid. * The reseller account making the request is different from the reseller account in the query. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of TransferableOffer for the given customer and SKU.",
+	//   "description": "List TransferableOffers of a customer based on Cloud Identity ID or Customer Name in the request. Use this method when a reseller gets the entitlement information of an unowned customer. The reseller should provide the customer's Cloud Identity ID or Customer Name. Possible error codes: * PERMISSION_DENIED: * The customer doesn't belong to the reseller and has no auth token. * The customer provided incorrect reseller information when generating auth token. * The reseller account making the request is different from the reseller account in the query. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of TransferableOffer for the given customer and SKU.",
 	//   "flatPath": "v1/accounts/{accountsId}:listTransferableOffers",
 	//   "httpMethod": "POST",
 	//   "id": "cloudchannel.accounts.listTransferableOffers",

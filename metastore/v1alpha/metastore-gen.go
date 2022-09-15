@@ -2158,9 +2158,9 @@ type Service struct {
 	MetadataManagementActivity *MetadataManagementActivity `json:"metadataManagementActivity,omitempty"`
 
 	// Name: Immutable. The relative resource name of the metastore service,
-	// of the
-	// form:projects/{project_number}/locations/{location_id}/services/{servi
-	// ce_id}.
+	// in the following
+	// format:projects/{project_number}/locations/{location_id}/services/{ser
+	// vice_id}.
 	Name string `json:"name,omitempty"`
 
 	// Network: Immutable. The relative resource name of the VPC network on
@@ -5667,9 +5667,9 @@ type ProjectsLocationsServicesPatchCall struct {
 // Patch: Updates the parameters of a single service.
 //
 //   - name: Immutable. The relative resource name of the metastore
-//     service, of the
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}.
+//     service, in the following
+//     format:projects/{project_number}/locations/{location_id}/services/{s
+//     ervice_id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5802,7 +5802,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The relative resource name of the metastore service, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
+	//       "description": "Immutable. The relative resource name of the metastore service, in the following format:projects/{project_number}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

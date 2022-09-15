@@ -624,7 +624,7 @@ type AdSize struct {
 	// pixels.
 	//   "INTERSTITIAL" - Special size to describe an interstitial ad slot.
 	//   "NATIVE" - Native (mobile) ads rendered by the publisher.
-	//   "FLUID" - Fluid size (i.e., responsive size) can be resized
+	//   "FLUID" - Fluid size (for example, responsive size) can be resized
 	// automatically with the change of outside environment.
 	SizeType string `json:"sizeType,omitempty"`
 
@@ -1144,8 +1144,8 @@ func (s *Client) MarshalJSON() ([]byte, error) {
 // ClientUser: A client user is created under a client buyer and has
 // restricted access to the Marketplace and certain other sections of
 // the Authorized Buyers UI based on the role granted to the associated
-// client buyer. The only way a new client user can be created is via
-// accepting an email invitation (see the
+// client buyer. The only way a new client user can be created is
+// through accepting an email invitation (see the
 // accounts.clients.invitations.create method). All fields are required
 // unless otherwise specified.
 type ClientUser struct {
@@ -1369,7 +1369,7 @@ type Creative struct {
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
 	// ApiUpdateTime: Output only. The last update timestamp of the creative
-	// via API.
+	// through the API.
 	ApiUpdateTime string `json:"apiUpdateTime,omitempty"`
 
 	// Attributes: All attributes for the ads that may be shown from this
@@ -1537,7 +1537,7 @@ type Creative struct {
 	// ServingRestrictions: Output only. The granular status of this ad in
 	// specific contexts. A context here relates to where something
 	// ultimately serves (for example, a physical location, a platform, an
-	// HTTPS vs HTTP request, or the type of auction).
+	// HTTPS versus HTTP request, or the type of auction).
 	ServingRestrictions []*ServingRestriction `json:"servingRestrictions,omitempty"`
 
 	// VendorIds: All vendor IDs for the ads that may be shown from this
@@ -2013,8 +2013,8 @@ type Deal struct {
 	// AvailableStartTime: Optional. Proposed flight start time of the deal.
 	// This will generally be stored in the granularity of one second since
 	// deal serving starts at seconds boundary. Any time specified with more
-	// granularity (e.g., in milliseconds) will be truncated towards the
-	// start of time in seconds.
+	// granularity (for example, in milliseconds) will be truncated towards
+	// the start of time in seconds.
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// BuyerPrivateData: Buyer private data (hidden from seller).
@@ -2050,7 +2050,7 @@ type Deal struct {
 	CreativePreApprovalPolicy string `json:"creativePreApprovalPolicy,omitempty"`
 
 	// CreativeRestrictions: Output only. Restricitions about the creatives
-	// associated with the deal (i.e., size) This is available for
+	// associated with the deal (for example, size) This is available for
 	// Programmatic Guaranteed/Preferred Deals in Ad Manager.
 	CreativeRestrictions *CreativeRestrictions `json:"creativeRestrictions,omitempty"`
 
@@ -2251,8 +2251,9 @@ func (s *DealServingMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // DealTerms: The deal terms specify the details of a Product/deal. They
-// specify things like price per buyer, the type of pricing model (e.g.,
-// fixed price, auction) and expected impressions from the publisher.
+// specify things like price per buyer, the type of pricing model (for
+// example, fixed price, auction) and expected impressions from the
+// publisher.
 type DealTerms struct {
 	// BrandingType: Visibility of the URL in bid requests. (default:
 	// BRANDED)
@@ -2583,8 +2584,8 @@ type Empty struct {
 // FilterSet: A set of filters that is applied to a request for data.
 // Within a filter set, an AND operation is performed across the filters
 // represented by each field. An OR operation is performed across the
-// filters represented by the multiple values of a repeated field, e.g.,
-// "format=VIDEO AND deal_id=12 AND (seller_network_id=34 OR
+// filters represented by the multiple values of a repeated field, for
+// example, "format=VIDEO AND deal_id=12 AND (seller_network_id=34 OR
 // seller_network_id=56)".
 type FilterSet struct {
 	// AbsoluteDateRange: An absolute date range, defined by a start date
@@ -2605,13 +2606,13 @@ type FilterSet struct {
 
 	// CreativeId: The ID of the creative on which to filter; optional. This
 	// field may be set only for a filter set that accesses account-level
-	// troubleshooting data, i.e., one whose name matches the
+	// troubleshooting data, for example, one whose name matches the
 	// `bidders/*/accounts/*/filterSets/*` pattern.
 	CreativeId string `json:"creativeId,omitempty"`
 
 	// DealId: The ID of the deal on which to filter; optional. This field
 	// may be set only for a filter set that accesses account-level
-	// troubleshooting data, i.e., one whose name matches the
+	// troubleshooting data, for example, one whose name matches the
 	// `bidders/*/accounts/*/filterSets/*` pattern.
 	DealId int64 `json:"dealId,omitempty,string"`
 
@@ -2630,11 +2631,11 @@ type FilterSet struct {
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
 	// indicates that no format filter will be applied.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
-	// (i.e., image) format.
+	// (for example, image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
 	// format.
 	//   "NON_NATIVE_DISPLAY" - The ad impression is not a native ad, and
-	// display (i.e., image) format.
+	// display (for example, image) format.
 	//   "NON_NATIVE_VIDEO" - The ad impression is not a native ad, and
 	// video format.
 	Format string `json:"format,omitempty"`
@@ -2648,11 +2649,11 @@ type FilterSet struct {
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
 	// indicates that no format filter will be applied.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
-	// (i.e., image) format.
+	// (for example, image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
 	// format.
 	//   "NON_NATIVE_DISPLAY" - The ad impression is not a native ad, and
-	// display (i.e., image) format.
+	// display (for example, image) format.
 	//   "NON_NATIVE_VIDEO" - The ad impression is not a native ad, and
 	// video format.
 	Formats []string `json:"formats,omitempty"`
@@ -2666,8 +2667,8 @@ type FilterSet struct {
 	Name string `json:"name,omitempty"`
 
 	// Platforms: The list of platforms on which to filter; may be empty.
-	// The filters represented by multiple platforms are ORed together
-	// (i.e., if non-empty, results must match any one of the platforms).
+	// The filters represented by multiple platforms are ORed together (for
+	// example, if non-empty, results must match any one of the platforms).
 	//
 	// Possible values:
 	//   "PLATFORM_UNSPECIFIED" - A placeholder for an undefined platform;
@@ -2693,14 +2694,14 @@ type FilterSet struct {
 	// SellerNetworkIds: For Authorized Buyers only. The list of IDs of the
 	// seller (publisher) networks on which to filter; may be empty. The
 	// filters represented by multiple seller network IDs are ORed together
-	// (i.e., if non-empty, results must match any one of the publisher
-	// networks). See seller-network-ids
+	// (for example, if non-empty, results must match any one of the
+	// publisher networks). See seller-network-ids
 	// (https://developers.google.com/authorized-buyers/rtb/downloads/seller-network-ids)
 	// file for the set of existing seller network IDs.
 	SellerNetworkIds []int64 `json:"sellerNetworkIds,omitempty"`
 
 	// TimeSeriesGranularity: The granularity of time intervals if a time
-	// series breakdown is desired; optional.
+	// series breakdown is preferred; optional.
 	//
 	// Possible values:
 	//   "TIME_SERIES_GRANULARITY_UNSPECIFIED" - A placeholder for an
@@ -2776,7 +2777,8 @@ func (s *FilteredBidCreativeRow) MarshalJSON() ([]byte, error) {
 
 // FilteredBidDetailRow: The number of filtered bids with the specified
 // dimension values, among those filtered due to the requested filtering
-// reason (i.e. creative status), that have the specified detail.
+// reason (for example, creative status), that have the specified
+// detail.
 type FilteredBidDetailRow struct {
 	// BidCount: The number of bids with the specified detail.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
@@ -3657,7 +3659,7 @@ func (s *ListFilteredBidRequestsResponse) MarshalJSON() ([]byte, error) {
 // that bids were filtered from the auction.
 type ListFilteredBidsResponse struct {
 	// CreativeStatusRows: List of rows, with counts of filtered bids
-	// aggregated by filtering reason (i.e. creative status).
+	// aggregated by filtering reason (for example, creative status).
 	CreativeStatusRows []*CreativeStatusRow `json:"creativeStatusRows,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. Pass
@@ -3740,7 +3742,7 @@ func (s *ListImpressionMetricsResponse) MarshalJSON() ([]byte, error) {
 // bids lost in the auction.
 type ListLosingBidsResponse struct {
 	// CreativeStatusRows: List of rows, with counts of losing bids
-	// aggregated by loss reason (i.e. creative status).
+	// aggregated by loss reason (for example, creative status).
 	CreativeStatusRows []*CreativeStatusRow `json:"creativeStatusRows,omitempty"`
 
 	// NextPageToken: A token to retrieve the next page of results. Pass
@@ -3930,7 +3932,7 @@ func (s *ListPublisherProfilesResponse) MarshalJSON() ([]byte, error) {
 // applies to.
 type LocationContext struct {
 	// GeoCriteriaIds: IDs representing the geo location for this context.
-	// Please refer to the geo-table.csv
+	// Refer to the geo-table.csv
 	// (https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv)
 	// file for different geo criteria IDs.
 	GeoCriteriaIds []int64 `json:"geoCriteriaIds,omitempty"`
@@ -3971,11 +3973,11 @@ type MarketplaceTargeting struct {
 	// InventorySizeTargeting: Inventory sizes to be included/excluded.
 	InventorySizeTargeting *InventorySizeTargeting `json:"inventorySizeTargeting,omitempty"`
 
-	// PlacementTargeting: Placement targeting information, e.g., URL,
-	// mobile applications.
+	// PlacementTargeting: Placement targeting information, for example,
+	// URL, mobile applications.
 	PlacementTargeting *PlacementTargeting `json:"placementTargeting,omitempty"`
 
-	// TechnologyTargeting: Technology targeting information, e.g.,
+	// TechnologyTargeting: Technology targeting information, for example,
 	// operating system, device category.
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
@@ -4006,19 +4008,19 @@ func (s *MarketplaceTargeting) MarshalJSON() ([]byte, error) {
 }
 
 // MetricValue: A metric value, with an expected value and a variance;
-// represents a count that may be either exact or estimated (i.e. when
-// sampled).
+// represents a count that may be either exact or estimated (for
+// example, when sampled).
 type MetricValue struct {
 	// Value: The expected value of the metric.
 	Value int64 `json:"value,omitempty,string"`
 
-	// Variance: The variance (i.e. square of the standard deviation) of the
-	// metric value. If value is exact, variance is 0. Can be used to
-	// calculate margin of error as a percentage of value, using the
-	// following formula, where Z is the standard constant that depends on
-	// the desired size of the confidence interval (e.g. for 90% confidence
-	// interval, use Z = 1.645): marginOfError = 100 * Z * sqrt(variance) /
-	// value
+	// Variance: The variance (for example, square of the standard
+	// deviation) of the metric value. If value is exact, variance is 0. Can
+	// be used to calculate margin of error as a percentage of value, using
+	// the following formula, where Z is the standard constant that depends
+	// on the preferred size of the confidence interval (for example, for
+	// 90% confidence interval, use Z = 1.645): marginOfError = 100 * Z *
+	// sqrt(variance) / value
 	Variance int64 `json:"variance,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
@@ -4472,7 +4474,7 @@ func (s *PauseProposalRequest) MarshalJSON() ([]byte, error) {
 }
 
 // PlacementTargeting: Represents targeting about where the ads can
-// appear, e.g., certain sites or mobile applications. Different
+// appear, for example, certain sites or mobile applications. Different
 // placement targeting types will be logically OR'ed.
 type PlacementTargeting struct {
 	// MobileApplicationTargeting: Mobile application targeting information
@@ -4653,7 +4655,7 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Product: A product is a segment of inventory that a seller wishes to
+// Product: A product is a segment of inventory that a seller wants to
 // sell. It is associated with certain terms and targeting information
 // which helps the buyer know more about the inventory.
 type Product struct {
@@ -5073,17 +5075,17 @@ func (s *RealtimeTimeRange) MarshalJSON() ([]byte, error) {
 
 // RelativeDateRange: A relative date range, specified by an offset and
 // a duration. The supported range of dates begins 30 days before today
-// and ends today, i.e., the limits for these values are: offset_days >=
-// 0 duration_days >= 1 offset_days + duration_days <= 30
+// and ends today, for example, the limits for these values are:
+// offset_days >= 0 duration_days >= 1 offset_days + duration_days <= 30
 type RelativeDateRange struct {
-	// DurationDays: The number of days in the requested date range, e.g.,
-	// for a range spanning today: 1. For a range spanning the last 7 days:
-	// 7.
+	// DurationDays: The number of days in the requested date range, for
+	// example, for a range spanning today: 1. For a range spanning the last
+	// 7 days: 7.
 	DurationDays int64 `json:"durationDays,omitempty"`
 
 	// OffsetDays: The end date of the filter set, specified as the number
-	// of days before today, e.g., for a range where the last date is today:
-	// 0.
+	// of days before today, for example, for a range where the last date is
+	// today: 0.
 	OffsetDays int64 `json:"offsetDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationDays") to
@@ -5329,7 +5331,7 @@ func (s *ServingContext) MarshalJSON() ([]byte, error) {
 // ServingRestriction: Output only. A representation of the status of an
 // ad in a specific context. A context here relates to where something
 // ultimately serves (for example, a user or publisher geo, a platform,
-// an HTTPS vs HTTP request, or the type of auction).
+// an HTTPS versus HTTP request, or the type of auction).
 type ServingRestriction struct {
 	// Contexts: The contexts for the restriction.
 	Contexts []*ServingContext `json:"contexts,omitempty"`
@@ -5341,8 +5343,7 @@ type ServingRestriction struct {
 
 	// DisapprovalReasons: Any disapprovals bound to this restriction. Only
 	// present if status=DISAPPROVED. Can be used to filter the response of
-	// the creatives.list method. Deprecated; please use disapproval field
-	// instead.
+	// the creatives.list method. Deprecated; use disapproval field instead.
 	DisapprovalReasons []*Disapproval `json:"disapprovalReasons,omitempty"`
 
 	// Status: The status of the creative in this context (for example, it
@@ -5616,9 +5617,9 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UrlTargeting: Represents a list of targeted and excluded URLs (e.g.,
-// google.com). For Private Auction and AdX Preferred Deals, URLs are
-// either included or excluded. For Programmatic Guaranteed and
+// UrlTargeting: Represents a list of targeted and excluded URLs (for
+// example, google.com). For Private Auction and AdX Preferred Deals,
+// URLs are either included or excluded. For Programmatic Guaranteed and
 // Preferred Deals, this doesn't apply.
 type UrlTargeting struct {
 	// ExcludedUrls: A list of URLs to be excluded.
@@ -7888,7 +7889,7 @@ func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesList
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The server may return fewer creatives than requested (due to timeout
-// constraint) even if more are available via another call. If
+// constraint) even if more are available through another call. If
 // unspecified, server will pick an appropriate default. Acceptable
 // values are 1 to 1000, inclusive.
 func (c *AccountsCreativesListCall) PageSize(pageSize int64) *AccountsCreativesListCall {
@@ -8035,7 +8036,7 @@ func (c *AccountsCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available via another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
+	//       "description": "Requested page size. The server may return fewer creatives than requested (due to timeout constraint) even if more are available through another call. If unspecified, server will pick an appropriate default. Acceptable values are 1 to 1000, inclusive.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9338,7 +9339,7 @@ type AccountsFinalizedProposalsPauseCall struct {
 // Pause: Update given deals to pause serving. This method will set the
 // `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true
 // for all listed deals in the request. Currently, this method only
-// applies to PG and PD deals. For PA deals, please call
+// applies to PG and PD deals. For PA deals, call
 // accounts.proposals.pause endpoint. It is a no-op to pause
 // already-paused deals. It is an error to call PauseProposalDeals for
 // deals which are not part of the proposal of proposal_id or which are
@@ -9446,7 +9447,7 @@ func (c *AccountsFinalizedProposalsPauseCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Update given deals to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.pause endpoint. It is a no-op to pause already-paused deals. It is an error to call PauseProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "description": "Update given deals to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, call accounts.proposals.pause endpoint. It is a no-op to pause already-paused deals. It is an error to call PauseProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.finalizedProposals.pause",
@@ -9497,7 +9498,7 @@ type AccountsFinalizedProposalsResumeCall struct {
 // Resume: Update given deals to resume serving. This method will set
 // the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to
 // false for all listed deals in the request. Currently, this method
-// only applies to PG and PD deals. For PA deals, please call
+// only applies to PG and PD deals. For PA deals, call
 // accounts.proposals.resume endpoint. It is a no-op to resume running
 // deals or deals paused by the other party. It is an error to call
 // ResumeProposalDeals for deals which are not part of the proposal of
@@ -9605,7 +9606,7 @@ func (c *AccountsFinalizedProposalsResumeCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Update given deals to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.resume endpoint. It is a no-op to resume running deals or deals paused by the other party. It is an error to call ResumeProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "description": "Update given deals to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, call accounts.proposals.resume endpoint. It is a no-op to resume running deals or deals paused by the other party. It is an error to call ResumeProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
 	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer2.accounts.finalizedProposals.resume",

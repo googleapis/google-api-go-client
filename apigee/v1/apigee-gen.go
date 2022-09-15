@@ -5637,7 +5637,8 @@ func (s *GoogleCloudApigeeV1KeyAliasReference) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudApigeeV1KeyValueEntry: Key value map pair where the value
-// represents the data associated with the corresponding key.
+// represents the data associated with the corresponding key. **Note**:
+// Supported for Apigee hybrid 1.8.x and higher.
 type GoogleCloudApigeeV1KeyValueEntry struct {
 	// Name: Resource URI that can be used to identify the scope of the key
 	// value map entries.
@@ -6524,7 +6525,7 @@ func (s *GoogleCloudApigeeV1ListInstancesResponse) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudApigeeV1ListKeyValueEntriesResponse: The request structure
-// for listing Key value map keys and its corrresponding values.
+// for listing key value map keys and its corresponding values.
 type GoogleCloudApigeeV1ListKeyValueEntriesResponse struct {
 	// KeyValueEntries: One or more key value map keys and values.
 	KeyValueEntries []*GoogleCloudApigeeV1KeyValueEntry `json:"keyValueEntries,omitempty"`
@@ -18228,7 +18229,8 @@ type OrganizationsApisKeyvaluemapsEntriesCreateCall struct {
 }
 
 // Create: Creates key value entries in a key value map scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to create the key
 //     value map entry. Use **one** of the following structures in your
@@ -18336,7 +18338,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.create",
@@ -18377,10 +18379,10 @@ type OrganizationsApisKeyvaluemapsEntriesDeleteCall struct {
 }
 
 // Delete: Deletes a key value entry from a key value map scoped to an
-// organization, environment, or API proxy. **Note:** After you delete
-// the key value entry, the policy consuming the entry will continue to
-// function with its cached values for a few minutes. This is expected
-// behavior.
+// organization, environment, or API proxy. **Notes:** * After you
+// delete the key value entry, the policy consuming the entry will
+// continue to function with its cached values for a few minutes. This
+// is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to delete the key
 //     value map entry. Use **one** of the following structures in your
@@ -18483,7 +18485,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.delete",
@@ -18521,8 +18523,9 @@ type OrganizationsApisKeyvaluemapsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the Key value entry value for org, env or apis scoped Key
-// value map.
+// Get: Get the key value entry value for a key value map scoped to an
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to fetch the key value
 //     map entry/value. Use **one** of the following structures in your
@@ -18638,7 +18641,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "description": "Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.get",
@@ -18677,7 +18680,8 @@ type OrganizationsApisKeyvaluemapsEntriesListCall struct {
 }
 
 // List: Lists key value entries for key values maps scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to list key value
 //     maps. Use **one** of the following structures in your request: *
@@ -18809,7 +18813,7 @@ func (c *OrganizationsApisKeyvaluemapsEntriesListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.apis.keyvaluemaps.entries.list",
@@ -37294,7 +37298,8 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall struct {
 }
 
 // Create: Creates key value entries in a key value map scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to create the key
 //     value map entry. Use **one** of the following structures in your
@@ -37402,7 +37407,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.create",
@@ -37443,10 +37448,10 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall struct {
 }
 
 // Delete: Deletes a key value entry from a key value map scoped to an
-// organization, environment, or API proxy. **Note:** After you delete
-// the key value entry, the policy consuming the entry will continue to
-// function with its cached values for a few minutes. This is expected
-// behavior.
+// organization, environment, or API proxy. **Notes:** * After you
+// delete the key value entry, the policy consuming the entry will
+// continue to function with its cached values for a few minutes. This
+// is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to delete the key
 //     value map entry. Use **one** of the following structures in your
@@ -37549,7 +37554,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesDeleteCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.delete",
@@ -37587,8 +37592,9 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the Key value entry value for org, env or apis scoped Key
-// value map.
+// Get: Get the key value entry value for a key value map scoped to an
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to fetch the key value
 //     map entry/value. Use **one** of the following structures in your
@@ -37704,7 +37710,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesGetCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "description": "Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.get",
@@ -37743,7 +37749,8 @@ type OrganizationsEnvironmentsKeyvaluemapsEntriesListCall struct {
 }
 
 // List: Lists key value entries for key values maps scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to list key value
 //     maps. Use **one** of the following structures in your request: *
@@ -37875,7 +37882,7 @@ func (c *OrganizationsEnvironmentsKeyvaluemapsEntriesListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.environments.keyvaluemaps.entries.list",
@@ -49153,7 +49160,8 @@ type OrganizationsKeyvaluemapsEntriesCreateCall struct {
 }
 
 // Create: Creates key value entries in a key value map scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to create the key
 //     value map entry. Use **one** of the following structures in your
@@ -49261,7 +49269,7 @@ func (c *OrganizationsKeyvaluemapsEntriesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy.",
+	//   "description": "Creates key value entries in a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "POST",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.create",
@@ -49302,10 +49310,10 @@ type OrganizationsKeyvaluemapsEntriesDeleteCall struct {
 }
 
 // Delete: Deletes a key value entry from a key value map scoped to an
-// organization, environment, or API proxy. **Note:** After you delete
-// the key value entry, the policy consuming the entry will continue to
-// function with its cached values for a few minutes. This is expected
-// behavior.
+// organization, environment, or API proxy. **Notes:** * After you
+// delete the key value entry, the policy consuming the entry will
+// continue to function with its cached values for a few minutes. This
+// is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to delete the key
 //     value map entry. Use **one** of the following structures in your
@@ -49408,7 +49416,7 @@ func (c *OrganizationsKeyvaluemapsEntriesDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Note:** After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior.",
+	//   "description": "Deletes a key value entry from a key value map scoped to an organization, environment, or API proxy. **Notes:** * After you delete the key value entry, the policy consuming the entry will continue to function with its cached values for a few minutes. This is expected behavior. * Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.delete",
@@ -49446,8 +49454,9 @@ type OrganizationsKeyvaluemapsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the Key value entry value for org, env or apis scoped Key
-// value map.
+// Get: Get the key value entry value for a key value map scoped to an
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - name: Scope as indicated by the URI in which to fetch the key value
 //     map entry/value. Use **one** of the following structures in your
@@ -49563,7 +49572,7 @@ func (c *OrganizationsKeyvaluemapsEntriesGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the Key value entry value for org, env or apis scoped Key value map.",
+	//   "description": "Get the key value entry value for a key value map scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries/{entriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.get",
@@ -49602,7 +49611,8 @@ type OrganizationsKeyvaluemapsEntriesListCall struct {
 }
 
 // List: Lists key value entries for key values maps scoped to an
-// organization, environment, or API proxy.
+// organization, environment, or API proxy. **Note**: Supported for
+// Apigee hybrid 1.8.x and higher.
 //
 //   - parent: Scope as indicated by the URI in which to list key value
 //     maps. Use **one** of the following structures in your request: *
@@ -49734,7 +49744,7 @@ func (c *OrganizationsKeyvaluemapsEntriesListCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy.",
+	//   "description": "Lists key value entries for key values maps scoped to an organization, environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and higher.",
 	//   "flatPath": "v1/organizations/{organizationsId}/keyvaluemaps/{keyvaluemapsId}/entries",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.keyvaluemaps.entries.list",

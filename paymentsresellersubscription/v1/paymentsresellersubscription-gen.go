@@ -170,6 +170,41 @@ type PartnersSubscriptionsService struct {
 	s *Service
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1Amount: Describes the amount
+// unit including the currency code.
+type GoogleCloudPaymentsResellerSubscriptionV1Amount struct {
+	// AmountMicros: Required. Amount in micros (1_000_000 micros = 1
+	// currency unit)
+	AmountMicros int64 `json:"amountMicros,omitempty,string"`
+
+	// CurrencyCode: Required. Currency codes in accordance with [ISO-4217
+	// Currency Codes] (https://en.wikipedia.org/wiki/ISO_4217). For
+	// example, USD.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AmountMicros") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Amount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, the subscription will be
 	// cancelled immediately. Otherwise, the subscription will be cancelled
@@ -639,10 +674,13 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byt
 // GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource
 // that defines a subscription service that can be resold.
 type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
-	// Name: Output only. Response only. Resource name of the subscription.
-	// It will have the format of
-	// "partners/{partner_id}/products/{product_id}"
+	// Name: Output only. Response only. Resource name of the product. It
+	// will have the format of "partners/{partner_id}/products/{product_id}"
 	Name string `json:"name,omitempty"`
+
+	// PriceConfigs: Output only. Price configs for the product in the
+	// available regions.
+	PriceConfigs []*GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig `json:"priceConfigs,omitempty"`
 
 	// RegionCodes: Output only. 2-letter ISO region code where the product
 	// is available in. Ex. "US" Please refers to:
@@ -675,6 +713,39 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig: Configs
+// the prices in an available region.
+type GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig struct {
+	// Amount: Output only. The price in the region.
+	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
+
+	// RegionCode: Output only. 2-letter ISO region code where the product
+	// is available in. Ex. "US".
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Amount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -787,11 +858,19 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDe
 // etailsIntroductoryPricingSpec: The duration of an introductory
 // pricing promotion.
 type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
+	// DiscountAmount: Output only. The discount amount. The value is
+	// positive.
+	DiscountAmount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"discountAmount,omitempty"`
+
+	// DiscountRatioMicros: Output only. The discount percentage in micros.
+	// For example, 50,000 represents 5%.
+	DiscountRatioMicros int64 `json:"discountRatioMicros,omitempty,string"`
+
 	// RecurrenceCount: Output only. Output Only. The duration of an
 	// introductory offer in billing cycles.
 	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RecurrenceCount") to
+	// ForceSendFields is a list of field names (e.g. "DiscountAmount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -799,7 +878,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RecurrenceCount") to
+	// NullFields is a list of field names (e.g. "DiscountAmount") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

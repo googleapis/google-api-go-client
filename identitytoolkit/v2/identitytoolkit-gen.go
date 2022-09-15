@@ -2047,6 +2047,9 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// MfaConfig: The tenant-level configuration of MFA options.
 	MfaConfig *GoogleCloudIdentitytoolkitAdminV2MultiFactorAuthConfig `json:"mfaConfig,omitempty"`
 
+	// Monitoring: Configuration related to monitoring project activity.
+	Monitoring *GoogleCloudIdentitytoolkitAdminV2MonitoringConfig `json:"monitoring,omitempty"`
+
 	// Name: Output only. Resource name of a tenant. For example:
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`

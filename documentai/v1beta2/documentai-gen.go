@@ -3656,6 +3656,10 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
+	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// https://www.w3schools.com/cssref/pr_font_font-family.asp
+	FontFamily string `json:"fontFamily,omitempty"`
+
 	// FontSize: Font size.
 	FontSize *GoogleCloudDocumentaiV1beta1DocumentStyleFontSize `json:"fontSize,omitempty"`
 
@@ -5772,6 +5776,10 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
+
+	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// https://www.w3schools.com/cssref/pr_font_font-family.asp
+	FontFamily string `json:"fontFamily,omitempty"`
 
 	// FontSize: Font size.
 	FontSize *GoogleCloudDocumentaiV1beta2DocumentStyleFontSize `json:"fontSize,omitempty"`

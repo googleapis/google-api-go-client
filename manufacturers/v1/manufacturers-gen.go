@@ -218,8 +218,8 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#gender.
 	Gender string `json:"gender,omitempty"`
 
-	// Grocery: Grocery Attributes. For more information, see
-	// go/mfc-nutrition-attributes.
+	// Grocery: Grocery Attributes. See more at
+	// https://support.google.com/manufacturers/answer/12098458#grocery.
 	Grocery *Grocery `json:"grocery,omitempty"`
 
 	// Gtin: The Global Trade Item Number (GTIN) of the product. For more
@@ -251,8 +251,8 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#mpn.
 	Mpn string `json:"mpn,omitempty"`
 
-	// Nutrition: Nutrition Attributes. For more information, see
-	// go/mfc-nutrition-attributes.
+	// Nutrition: Nutrition Attributes. See more at
+	// https://support.google.com/manufacturers/answer/12098458#food-servings.
 	Nutrition *Nutrition `json:"nutrition,omitempty"`
 
 	// Pattern: The pattern of the product. For more information, see
@@ -507,7 +507,7 @@ func (s *FeatureDescription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FloatUnit: Combination of float amout and unit.
+// FloatUnit: Combination of float amount and unit.
 type FloatUnit struct {
 	// Amount: amount.
 	Amount float64 `json:"amount,omitempty"`

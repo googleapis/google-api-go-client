@@ -205,8 +205,6 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -360,9 +358,14 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// CompliantButDisallowedServices: Output only. Urls for services which
+	// are compliant for this Assured Workload, but which are currently
+	// disallowed by the ResourceUsageRestriction org policy. Invoke
+	// RestrictAllowedResources endpoint to allow your project developers to
+	// use these services in their environment."
+	CompliantButDisallowedServices []string `json:"compliantButDisallowedServices,omitempty"`
 
 	// CreateTime: Output only. Immutable. The Workload creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
@@ -668,8 +671,6 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -745,8 +746,6 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CompliantButDisallowedServices: Output only. Urls for services which
@@ -1186,8 +1185,6 @@ type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata 
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1263,8 +1260,6 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
-	// Regions and Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the

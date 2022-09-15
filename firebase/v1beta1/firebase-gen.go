@@ -515,6 +515,12 @@ type AndroidApp struct {
 	// of the parent FirebaseProject for the `AndroidApp`.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// Sha1Hashes: The SHA1 certificate hashes for the AndroidApp.
+	Sha1Hashes []string `json:"sha1Hashes,omitempty"`
+
+	// Sha256Hashes: The SHA256 certificate hashes for the AndroidApp.
+	Sha256Hashes []string `json:"sha256Hashes,omitempty"`
+
 	// State: Output only. The lifecycle state of the App.
 	//
 	// Possible values:

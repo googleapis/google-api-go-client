@@ -459,6 +459,11 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// `compute.googleapis.com/Instance`.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
 
+	// UpdateTime: Output only. The last time this custom constraint was
+	// updated. This represents the last time that the
+	// `CreateCustomConstraint` or `UpdateCustomConstraint` RPC was called
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

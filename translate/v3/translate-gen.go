@@ -1622,6 +1622,12 @@ func (s *SupportedLanguages) MarshalJSON() ([]byte, error) {
 
 // TranslateDocumentRequest: A document translation request.
 type TranslateDocumentRequest struct {
+	// CustomizedAttribution: Optional. This flag is to support user
+	// customized attribution. If not provided, the default is `Machine
+	// Translated by Google`. Customized attribution should follow rules in
+	// https://cloud.google.com/translate/attribution#attribution_and_logos
+	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
+
 	// DocumentInputConfig: Required. Input configurations.
 	DocumentInputConfig *DocumentInputConfig `json:"documentInputConfig,omitempty"`
 
@@ -1669,15 +1675,16 @@ type TranslateDocumentRequest struct {
 	// listed in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DocumentInputConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomizedAttribution") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DocumentInputConfig") to
+	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

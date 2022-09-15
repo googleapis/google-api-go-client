@@ -1026,6 +1026,10 @@ func (s *ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
+	// AllowVerticalScale: Set to true to allow the vertical scaling.
+	// Defaults to false which disallows vertical scaling.
+	AllowVerticalScale bool `json:"allowVerticalScale,omitempty"`
+
 	// Enabled: Enables the installation of ConfigSync. If set to true,
 	// ConfigSync resources will be created and the other ConfigSync fields
 	// will be applied if exist. If set to false, all other ConfigSync
@@ -1049,20 +1053,21 @@ type ConfigManagementConfigSync struct {
 	// "hierarchical" or "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowVerticalScale") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4683,6 +4688,16 @@ type ServiceMeshMembershipSpec struct {
 	// stable and reliable in production.
 	DefaultChannel string `json:"defaultChannel,omitempty"`
 
+	// Management: Enables automatic Service Mesh management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google should manage my Service Mesh for
+	// the cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually configure their service
+	// mesh components.
+	Management string `json:"management,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ControlPlane") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5006,6 +5021,114 @@ type TypeMeta struct {
 
 func (s *TypeMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod TypeMeta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidateCreateMembershipRequest: Request message for the
+// `GkeHub.ValidateCreateMembership` method.
+type ValidateCreateMembershipRequest struct {
+	// Membership: Required. Membership resource to be created.
+	Membership *Membership `json:"membership,omitempty"`
+
+	// MembershipId: Required. Client chosen membership id.
+	MembershipId string `json:"membershipId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Membership") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Membership") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateCreateMembershipRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateCreateMembershipRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidateCreateMembershipResponse: Response message for the
+// `GkeHub.ValidateCreateMembership` method.
+type ValidateCreateMembershipResponse struct {
+	// ValidationResults: Wraps all the validator results.
+	ValidationResults []*ValidationResult `json:"validationResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ValidationResults")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ValidationResults") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateCreateMembershipResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateCreateMembershipResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidationResult: ValidationResults are results set by each validator
+// running during ValidateCreateMembership.
+type ValidationResult struct {
+	// Result: Additional information for the validation.
+	Result string `json:"result,omitempty"`
+
+	// Success: Whether the validation is passed or not.
+	Success bool `json:"success,omitempty"`
+
+	// Validator: Validator type to validate membership with.
+	//
+	// Possible values:
+	//   "VALIDATOR_TYPE_UNSPECIFIED" - UNSPECIFIED validator.
+	//   "MEMBERSHIP_ID" - MEMBERSHIP_ID validator validates the
+	// membership_id is still available.
+	//   "CROSS_PROJECT_PERMISSION" - CROSS_PROJECT_PERMISSION validator
+	// validates the cross-project P4SA binding is in place.
+	Validator string `json:"validator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Result") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidationResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9527,6 +9650,152 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.validateCreate":
+
+type ProjectsLocationsMembershipsValidateCreateCall struct {
+	s                               *Service
+	parent                          string
+	validatecreatemembershiprequest *ValidateCreateMembershipRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// ValidateCreate: ValidateCreateMembership is a preflight check for
+// CreateMembership. It checks the following: 1. Caller has the required
+// `gkehub.memberships.create` permission. 2. The membership_id is still
+// available.
+//
+//   - parent: The parent (project and location) where the Memberships
+//     will be created. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) ValidateCreate(parent string, validatecreatemembershiprequest *ValidateCreateMembershipRequest) *ProjectsLocationsMembershipsValidateCreateCall {
+	c := &ProjectsLocationsMembershipsValidateCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.validatecreatemembershiprequest = validatecreatemembershiprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsValidateCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsValidateCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsValidateCreateCall) Context(ctx context.Context) *ProjectsLocationsMembershipsValidateCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsValidateCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsValidateCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validatecreatemembershiprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships:validateCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.validateCreate" call.
+// Exactly one of *ValidateCreateMembershipResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ValidateCreateMembershipResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsValidateCreateCall) Do(opts ...googleapi.CallOption) (*ValidateCreateMembershipResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ValidateCreateMembershipResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ValidateCreateMembership is a preflight check for CreateMembership. It checks the following: 1. Caller has the required `gkehub.memberships.create` permission. 2. The membership_id is still available.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships:validateCreate",
+	//   "httpMethod": "POST",
+	//   "id": "gkehub.projects.locations.memberships.validateCreate",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships will be created. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships:validateCreate",
+	//   "request": {
+	//     "$ref": "ValidateCreateMembershipRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateCreateMembershipResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

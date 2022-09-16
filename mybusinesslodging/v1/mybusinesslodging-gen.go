@@ -5195,7 +5195,9 @@ type SustainabilityCertifications struct {
 	// EcoCertifications: The eco certificates awarded to the hotel.
 	EcoCertifications []*EcoCertification `json:"ecoCertifications,omitempty"`
 
-	// LeedCertification: LEED certification.
+	// LeedCertification: LEED certification. Deprecated: this field is no
+	// longer populated. LEED certification status is now provided directly
+	// by USGBC.
 	//
 	// Possible values:
 	//   "LEED_CERTIFICATION_UNSPECIFIED" - Default LeedCertification. Do
@@ -5207,7 +5209,9 @@ type SustainabilityCertifications struct {
 	//   "LEED_PLATINUM" - LEED Platinum.
 	LeedCertification string `json:"leedCertification,omitempty"`
 
-	// LeedCertificationException: LEED certification exception.
+	// LeedCertificationException: LEED certification exception. Deprecated:
+	// this field is no longer populated. LEED certification status is now
+	// provided directly by USGBC.
 	//
 	// Possible values:
 	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this

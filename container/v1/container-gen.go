@@ -562,7 +562,7 @@ type AutoprovisioningNodePoolDefaults struct {
 	// platforms, such as minCpuPlatform: Intel Haswell or minCpuPlatform:
 	// Intel Sandy Bridge. For more information, read how to specify min CPU
 	// platform
-	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform).
 	// This field is deprecated, min_cpu_platform should be specified using
 	// https://cloud.google.com/requested-min-cpu-platform label selector on
 	// the pod. To unset the min cpu platform field pass "automatic" as
@@ -4838,8 +4838,8 @@ type ReservationAffinity struct {
 
 	// Key: Corresponds to the label key of a reservation resource. To
 	// target a SPECIFIC_RESERVATION by name, specify
-	// "googleapis.com/reservation-name" as the key and specify the name of
-	// your reservation as its value.
+	// "compute.googleapis.com/reservation-name" as the key and specify the
+	// name of your reservation as its value.
 	Key string `json:"key,omitempty"`
 
 	// Values: Corresponds to the label value(s) of reservation resource(s).

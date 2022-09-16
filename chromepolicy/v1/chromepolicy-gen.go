@@ -1261,9 +1261,9 @@ func (s *GoogleChromePolicyV1UpdateGroupPriorityOrderingRequest) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyV1UploadPolicyFileRequest: Request message for
-// uploading a file for a policy. Next ID: 5
-type GoogleChromePolicyV1UploadPolicyFileRequest struct {
+// GoogleChromePolicyVersionsV1UploadPolicyFileRequest: Request message
+// for uploading a file for a policy. Next ID: 5
+type GoogleChromePolicyVersionsV1UploadPolicyFileRequest struct {
 	// PolicyField: Required. The fully qualified policy schema and field
 	// name this file is uploaded for. This information will be used to
 	// validate the content type of the file.
@@ -1286,15 +1286,15 @@ type GoogleChromePolicyV1UploadPolicyFileRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyV1UploadPolicyFileRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChromePolicyV1UploadPolicyFileRequest
+func (s *GoogleChromePolicyVersionsV1UploadPolicyFileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromePolicyV1UploadPolicyFileResponse: Response message for
-// downloading an uploaded file. Next ID: 2
-type GoogleChromePolicyV1UploadPolicyFileResponse struct {
+// GoogleChromePolicyVersionsV1UploadPolicyFileResponse: Response
+// message for downloading an uploaded file. Next ID: 2
+type GoogleChromePolicyVersionsV1UploadPolicyFileResponse struct {
 	// DownloadUri: The uri for end user to download the file.
 	DownloadUri string `json:"downloadUri,omitempty"`
 
@@ -1319,8 +1319,8 @@ type GoogleChromePolicyV1UploadPolicyFileResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromePolicyV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChromePolicyV1UploadPolicyFileResponse
+func (s *GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1UploadPolicyFileResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3069,23 +3069,23 @@ func (c *CustomersPolicySchemasListCall) Pages(ctx context.Context, f func(*Goog
 // method id "chromepolicy.media.upload":
 
 type MediaUploadCall struct {
-	s                                           *Service
-	customer                                    string
-	googlechromepolicyv1uploadpolicyfilerequest *GoogleChromePolicyV1UploadPolicyFileRequest
-	urlParams_                                  gensupport.URLParams
-	mediaInfo_                                  *gensupport.MediaInfo
-	ctx_                                        context.Context
-	header_                                     http.Header
+	s                                                   *Service
+	customer                                            string
+	googlechromepolicyversionsv1uploadpolicyfilerequest *GoogleChromePolicyVersionsV1UploadPolicyFileRequest
+	urlParams_                                          gensupport.URLParams
+	mediaInfo_                                          *gensupport.MediaInfo
+	ctx_                                                context.Context
+	header_                                             http.Header
 }
 
 // Upload: Creates an enterprise file from the content provided by user.
 // Returns a public download url for end user.
 //
 // - customer: The customer for which the file upload will apply.
-func (r *MediaService) Upload(customer string, googlechromepolicyv1uploadpolicyfilerequest *GoogleChromePolicyV1UploadPolicyFileRequest) *MediaUploadCall {
+func (r *MediaService) Upload(customer string, googlechromepolicyversionsv1uploadpolicyfilerequest *GoogleChromePolicyVersionsV1UploadPolicyFileRequest) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
-	c.googlechromepolicyv1uploadpolicyfilerequest = googlechromepolicyv1uploadpolicyfilerequest
+	c.googlechromepolicyversionsv1uploadpolicyfilerequest = googlechromepolicyversionsv1uploadpolicyfilerequest
 	return c
 }
 
@@ -3161,7 +3161,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyv1uploadpolicyfilerequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechromepolicyversionsv1uploadpolicyfilerequest)
 	if err != nil {
 		return nil, err
 	}
@@ -3193,15 +3193,15 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "chromepolicy.media.upload" call.
-// Exactly one of *GoogleChromePolicyV1UploadPolicyFileResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleChromePolicyV1UploadPolicyFileResponse.ServerResponse.Header
-// or (if a response was returned at all) in
+// Exactly one of *GoogleChromePolicyVersionsV1UploadPolicyFileResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleChromePolicyVersionsV1UploadPolicyFileResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV1UploadPolicyFileResponse, error) {
+func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyVersionsV1UploadPolicyFileResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3237,7 +3237,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV
 			return nil, err
 		}
 	}
-	ret := &GoogleChromePolicyV1UploadPolicyFileResponse{
+	ret := &GoogleChromePolicyVersionsV1UploadPolicyFileResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3278,10 +3278,10 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleChromePolicyV
 	//   },
 	//   "path": "v1/{+customer}/policies/files:uploadPolicyFile",
 	//   "request": {
-	//     "$ref": "GoogleChromePolicyV1UploadPolicyFileRequest"
+	//     "$ref": "GoogleChromePolicyVersionsV1UploadPolicyFileRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleChromePolicyV1UploadPolicyFileResponse"
+	//     "$ref": "GoogleChromePolicyVersionsV1UploadPolicyFileResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chrome.management.policy"

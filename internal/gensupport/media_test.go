@@ -310,11 +310,11 @@ func TestUploadRequestGetBody(t *testing.T) {
 		},
 		{
 			desc: "chunk size < data size: MediaBuffer, >1 chunk, no getBody",
-			// No getBody here, because the initial request contains no media data
+			// Test that the initial request results in a getBody function that is non-nil.
 			// Note that ChunkSize = 1 is rounded up to googleapi.MinUploadChunkSize.
 			r:           &nullReader{2 * googleapi.MinUploadChunkSize},
 			chunkSize:   1,
-			wantGetBody: false,
+			wantGetBody: true,
 		},
 	} {
 		cryptorand.Reader = mathrand.New(mathrand.NewSource(int64(i)))

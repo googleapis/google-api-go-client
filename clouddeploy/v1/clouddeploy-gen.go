@@ -409,11 +409,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -506,6 +507,75 @@ func (s *BuildArtifact) MarshalJSON() ([]byte, error) {
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CloudRunLocation: Information specifying where to deploy a Cloud Run
+// Service.
+type CloudRunLocation struct {
+	// Location: Required. The location where the Cloud Run Service should
+	// be located. Format is `projects/{project}/locations/{location}`.
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRunLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudRunMetadata: CloudRunMetadata contains information from a Cloud
+// Run deployment.
+type CloudRunMetadata struct {
+	// Revision: Output only. The Cloud Run Revision id associated with a
+	// `Rollout`.
+	Revision string `json:"revision,omitempty"`
+
+	// Service: Output only. The name of the Cloud Run Service that is
+	// associated with a `Rollout`. Format is
+	// projects/{project}/locations/{location}/services/{service}.
+	Service string `json:"service,omitempty"`
+
+	// ServiceUrls: Output only. The Cloud Run Service urls that are
+	// associated with a `Rollout`.
+	ServiceUrls []string `json:"serviceUrls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Revision") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Revision") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRunMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Config: Service-wide configuration.
@@ -1223,6 +1293,36 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Metadata: Metadata surfaces information associated with a `Rollout`
+// to the user.
+type Metadata struct {
+	// CloudRun: Output only. The name of the Cloud Run Service that is
+	// associated with a `Rollout`.
+	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudRun") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudRun") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1843,6 +1943,10 @@ type Rollout struct {
 	// are additionally constrained to be <= 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// Metadata: Output only. Metadata contains information about the
+	// rollout.
+	Metadata *Metadata `json:"metadata,omitempty"`
+
 	// Name: Optional. Name of the `Rollout`. Format is projects/{project}/
 	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
 	// releases/{release}/rollouts/a-z{0,62}.
@@ -2186,6 +2290,9 @@ type Target struct {
 	// approval.
 	RequireApproval bool `json:"requireApproval,omitempty"`
 
+	// Run: Information specifying a Cloud Run deployment target.
+	Run *CloudRunLocation `json:"run,omitempty"`
+
 	// TargetId: Output only. Resource id of the `Target`.
 	TargetId string `json:"targetId,omitempty"`
 
@@ -2320,6 +2427,10 @@ type TargetRender struct {
 	//   "EXECUTION_FAILED" - The render operation did not complete
 	// successfully; check Cloud Build logs.
 	FailureCause string `json:"failureCause,omitempty"`
+
+	// FailureMessage: Output only. Additional information about the render
+	// failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
 
 	// RenderingBuild: Output only. The resource name of the Cloud Build
 	// `Build` object that is used to render the manifest for this target.

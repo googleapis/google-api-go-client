@@ -1,5 +1,19 @@
 # Changes
 
+## [0.96.0](https://github.com/googleapis/google-api-go-client/compare/v0.95.0...v0.96.0) (2022-09-14)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1686](https://github.com/googleapis/google-api-go-client/issues/1686)) ([ce5ed41](https://github.com/googleapis/google-api-go-client/commit/ce5ed411756019b79c77e580670fccc8c08cccca))
+* **all:** Auto-regenerate discovery clients ([#1688](https://github.com/googleapis/google-api-go-client/issues/1688)) ([bc29a6b](https://github.com/googleapis/google-api-go-client/commit/bc29a6b8a0489e88796d5a00d4c06769793ace0d))
+* **all:** Auto-regenerate discovery clients ([#1689](https://github.com/googleapis/google-api-go-client/issues/1689)) ([e801e10](https://github.com/googleapis/google-api-go-client/commit/e801e1051020e6721f2217f5aa3a4064399115e1))
+
+
+### Bug Fixes
+
+* Upgrade version of golang.org/x/net ([#1692](https://github.com/googleapis/google-api-go-client/issues/1692)) ([0f7c1ed](https://github.com/googleapis/google-api-go-client/commit/0f7c1ed65ca2c6212f21e7fce20aa5ab9952bdbc)), refs [#1691](https://github.com/googleapis/google-api-go-client/issues/1691)
+
 ## [0.95.0](https://github.com/googleapis/google-api-go-client/compare/v0.94.0...v0.95.0) (2022-09-06)
 
 

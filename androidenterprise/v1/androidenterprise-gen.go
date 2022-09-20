@@ -7096,7 +7096,9 @@ type EntitlementsDeleteCall struct {
 	header_       http.Header
 }
 
-// Delete: Removes an entitlement to an app for a user.
+// Delete: Removes an entitlement to an app for a user. **Note:** This
+// item has been deprecated. New integrations cannot use this method and
+// can refer to our new recommendations.
 //
 //   - enterpriseId: The ID of the enterprise.
 //   - entitlementId: The ID of the entitlement (a product ID), e.g.
@@ -7173,7 +7175,7 @@ func (c *EntitlementsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Removes an entitlement to an app for a user.",
+	//   "description": "Removes an entitlement to an app for a user. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidenterprise.entitlements.delete",
@@ -7223,7 +7225,9 @@ type EntitlementsGetCall struct {
 	header_       http.Header
 }
 
-// Get: Retrieves details of an entitlement.
+// Get: Retrieves details of an entitlement. **Note:** This item has
+// been deprecated. New integrations cannot use this method and can
+// refer to our new recommendations.
 //
 //   - enterpriseId: The ID of the enterprise.
 //   - entitlementId: The ID of the entitlement (a product ID), e.g.
@@ -7338,7 +7342,7 @@ func (c *EntitlementsGetCall) Do(opts ...googleapi.CallOption) (*Entitlement, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves details of an entitlement.",
+	//   "description": "Retrieves details of an entitlement. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.entitlements.get",
@@ -7391,7 +7395,8 @@ type EntitlementsListCall struct {
 }
 
 // List: Lists all entitlements for the specified user. Only the ID is
-// set.
+// set. **Note:** This item has been deprecated. New integrations cannot
+// use this method and can refer to our new recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - userId: The ID of the user.
@@ -7502,7 +7507,7 @@ func (c *EntitlementsListCall) Do(opts ...googleapi.CallOption) (*EntitlementsLi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all entitlements for the specified user. Only the ID is set.",
+	//   "description": "Lists all entitlements for the specified user. Only the ID is set. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.entitlements.list",
@@ -7549,6 +7554,8 @@ type EntitlementsUpdateCall struct {
 }
 
 // Update: Adds or updates an entitlement to an app for a user.
+// **Note:** This item has been deprecated. New integrations cannot use
+// this method and can refer to our new recommendations.
 //
 //   - enterpriseId: The ID of the enterprise.
 //   - entitlementId: The ID of the entitlement (a product ID), e.g.
@@ -7666,7 +7673,7 @@ func (c *EntitlementsUpdateCall) Do(opts ...googleapi.CallOption) (*Entitlement,
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds or updates an entitlement to an app for a user.",
+	//   "description": "Adds or updates an entitlement to an app for a user. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/entitlements/{entitlementId}",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.entitlements.update",
@@ -7727,7 +7734,8 @@ type GrouplicensesGetCall struct {
 }
 
 // Get: Retrieves details of an enterprise's group license for a
-// product.
+// product. **Note:** This item has been deprecated. New integrations
+// cannot use this method and can refer to our new recommendations.
 //
 //   - enterpriseId: The ID of the enterprise.
 //   - groupLicenseId: The ID of the product the group license is for,
@@ -7839,7 +7847,7 @@ func (c *GrouplicensesGetCall) Do(opts ...googleapi.CallOption) (*GroupLicense, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves details of an enterprise's group license for a product.",
+	//   "description": "Retrieves details of an enterprise's group license for a product. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenses.get",
@@ -7884,7 +7892,9 @@ type GrouplicensesListCall struct {
 }
 
 // List: Retrieves IDs of all products for which the enterprise has a
-// group license.
+// group license. **Note:** This item has been deprecated. New
+// integrations cannot use this method and can refer to our new
+// recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 func (r *GrouplicensesService) List(enterpriseId string) *GrouplicensesListCall {
@@ -7992,7 +8002,7 @@ func (c *GrouplicensesListCall) Do(opts ...googleapi.CallOption) (*GroupLicenses
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves IDs of all products for which the enterprise has a group license.",
+	//   "description": "Retrieves IDs of all products for which the enterprise has a group license. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenses.list",
@@ -8031,7 +8041,9 @@ type GrouplicenseusersListCall struct {
 }
 
 // List: Retrieves the IDs of the users who have been granted
-// entitlements under the license.
+// entitlements under the license. **Note:** This item has been
+// deprecated. New integrations cannot use this method and can refer to
+// our new recommendations.
 //
 //   - enterpriseId: The ID of the enterprise.
 //   - groupLicenseId: The ID of the product the group license is for,
@@ -8143,7 +8155,7 @@ func (c *GrouplicenseusersListCall) Do(opts ...googleapi.CallOption) (*GroupLice
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the IDs of the users who have been granted entitlements under the license.",
+	//   "description": "Retrieves the IDs of the users who have been granted entitlements under the license. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/groupLicenses/{groupLicenseId}/users",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.grouplicenseusers.list",
@@ -10460,7 +10472,9 @@ type ProductsApproveCall struct {
 // permissions, if any. The maximum number of products that you can
 // approve per enterprise customer is 1,000. To learn how to use managed
 // Google Play to design and create a store layout to display approved
-// products to your users, see Store Layout Design.
+// products to your users, see Store Layout Design. **Note:** This item
+// has been deprecated. New integrations cannot use this method and can
+// refer to our new recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - productId: The ID of the product.
@@ -10539,7 +10553,7 @@ func (c *ProductsApproveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": " Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000. To learn how to use managed Google Play to design and create a store layout to display approved products to your users, see Store Layout Design. ",
+	//   "description": " Approves the specified product and the relevant app permissions, if any. The maximum number of products that you can approve per enterprise customer is 1,000. To learn how to use managed Google Play to design and create a store layout to display approved products to your users, see Store Layout Design. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations. ",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/approve",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.approve",
@@ -10591,7 +10605,9 @@ type ProductsGenerateApprovalUrlCall struct {
 // separate UI element in the EMM console, which in turn should trigger
 // the use of this URL as the approvalUrlInfo.approvalUrl property in a
 // Products.approve call to approve the product. This URL can only be
-// used to display permissions for up to 1 day.
+// used to display permissions for up to 1 day. **Note:** This item has
+// been deprecated. New integrations cannot use this method and can
+// refer to our new recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - productId: The ID of the product.
@@ -10698,7 +10714,7 @@ func (c *ProductsGenerateApprovalUrlCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a URL that can be rendered in an iframe to display the permissions (if any) of a product. An enterprise admin must view these permissions and accept them on behalf of their organization in order to approve that product. Admins should accept the displayed permissions by interacting with a separate UI element in the EMM console, which in turn should trigger the use of this URL as the approvalUrlInfo.approvalUrl property in a Products.approve call to approve the product. This URL can only be used to display permissions for up to 1 day.",
+	//   "description": "Generates a URL that can be rendered in an iframe to display the permissions (if any) of a product. An enterprise admin must view these permissions and accept them on behalf of their organization in order to approve that product. Admins should accept the displayed permissions by interacting with a separate UI element in the EMM console, which in turn should trigger the use of this URL as the approvalUrlInfo.approvalUrl property in a Products.approve call to approve the product. This URL can only be used to display permissions for up to 1 day. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations. ",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/generateApprovalUrl",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.generateApprovalUrl",
@@ -11248,7 +11264,9 @@ type ProductsListCall struct {
 }
 
 // List: Finds approved products that match a query, or all approved
-// products if there is no query.
+// products if there is no query. **Note:** This item has been
+// deprecated. New integrations cannot use this method and can refer to
+// our new recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 func (r *ProductsService) List(enterpriseId string) *ProductsListCall {
@@ -11398,7 +11416,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Finds approved products that match a query, or all approved products if there is no query.",
+	//   "description": "Finds approved products that match a query, or all approved products if there is no query. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations. ",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.products.list",
@@ -11462,7 +11480,9 @@ type ProductsUnapproveCall struct {
 }
 
 // Unapprove: Unapproves the specified product (and the relevant app
-// permissions, if any)
+// permissions, if any) **Note:** This item has been deprecated. New
+// integrations cannot use this method and can refer to our new
+// recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - productId: The ID of the product.
@@ -11535,7 +11555,7 @@ func (c *ProductsUnapproveCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Unapproves the specified product (and the relevant app permissions, if any)",
+	//   "description": "Unapproves the specified product (and the relevant app permissions, if any) **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/products/{productId}/unapprove",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.products.unapprove",
@@ -13878,7 +13898,9 @@ type UsersGetAvailableProductSetCall struct {
 }
 
 // GetAvailableProductSet: Retrieves the set of products a user is
-// entitled to access.
+// entitled to access. **Note:** This item has been deprecated. New
+// integrations cannot use this method and can refer to our new
+// recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - userId: The ID of the user.
@@ -13989,7 +14011,7 @@ func (c *UsersGetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the set of products a user is entitled to access.",
+	//   "description": "Retrieves the set of products a user is entitled to access. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.getAvailableProductSet",
@@ -14456,7 +14478,9 @@ type UsersSetAvailableProductSetCall struct {
 // SetAvailableProductSet: Modifies the set of products that a user is
 // entitled to access (referred to as *whitelisted* products). Only
 // products that are approved or products that were previously approved
-// (products with revoked approval) can be whitelisted.
+// (products with revoked approval) can be whitelisted. **Note:** This
+// item has been deprecated. New integrations cannot use this method and
+// can refer to our new recommendations.
 //
 // - enterpriseId: The ID of the enterprise.
 // - userId: The ID of the user.
@@ -14560,7 +14584,7 @@ func (c *UsersSetAvailableProductSetCall) Do(opts ...googleapi.CallOption) (*Pro
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the set of products that a user is entitled to access (referred to as *whitelisted* products). Only products that are approved or products that were previously approved (products with revoked approval) can be whitelisted.",
+	//   "description": "Modifies the set of products that a user is entitled to access (referred to as *whitelisted* products). Only products that are approved or products that were previously approved (products with revoked approval) can be whitelisted. **Note:** This item has been deprecated. New integrations cannot use this method and can refer to our new recommendations.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/users/{userId}/availableProductSet",
 	//   "httpMethod": "PUT",
 	//   "id": "androidenterprise.users.setAvailableProductSet",

@@ -563,6 +563,10 @@ type BackupRun struct {
 	//   "DELETED" - The backup has been deleted.
 	Status string `json:"status,omitempty"`
 
+	// TimeZone: Backup time zone to prevent restores to an instance with a
+	// different time zone. Now relevant only for SQL Server.
+	TimeZone string `json:"timeZone,omitempty"`
+
 	// Type: The type of this run; can be either "AUTOMATED" or "ON_DEMAND"
 	// or "FINAL". This field defaults to "ON_DEMAND" and is ignored, when
 	// specified for insert requests.
@@ -699,6 +703,10 @@ type CloneContext struct {
 	// the source instance is cloned up to the most recent binary log
 	// coordinates.
 	BinLogCoordinates *BinLogCoordinates `json:"binLogCoordinates,omitempty"`
+
+	// DatabaseNames: (SQL Server only) Clone only the specified databases
+	// from the source instance. Clone all databases if empty.
+	DatabaseNames []string `json:"databaseNames,omitempty"`
 
 	// DestinationInstanceName: Name of the Cloud SQL instance to be created
 	// as a clone.
@@ -3463,13 +3471,14 @@ type Settings struct {
 	Collation string `json:"collation,omitempty"`
 
 	// ConnectorEnforcement: Specifies if connections must use Cloud SQL
-	// connectors. Option values include the following: * `NOT_REQUIRED`:
-	// Cloud SQL instances can be connected without Cloud SQL Connectors. *
-	// `REQUIRED`: Only allow connections that use Cloud SQL Connectors.
-	// Note that using REQUIRED disables all existing authorized networks.
-	// If this field is not specified when creating a new instance,
-	// NOT_REQUIRED is used. If this field is not specified when patching or
-	// updating an existing instance, it is left unchanged in the instance.
+	// connectors. Option values include the following: `NOT_REQUIRED`
+	// (Cloud SQL instances can be connected without Cloud SQL Connectors)
+	// and `REQUIRED` (Only allow connections that use Cloud SQL
+	// Connectors). Note that using REQUIRED disables all existing
+	// authorized networks. If this field is not specified when creating a
+	// new instance, NOT_REQUIRED is used. If this field is not specified
+	// when patching or updating an existing instance, it is left unchanged
+	// in the instance.
 	//
 	// Possible values:
 	//   "CONNECTOR_ENFORCEMENT_UNSPECIFIED" - The requirement for Cloud SQL
@@ -3592,6 +3601,10 @@ type Settings struct {
 	// Tier: The tier (or machine type) for this instance, for example
 	// `db-custom-1-3840`. WARNING: Changing this restarts the instance.
 	Tier string `json:"tier,omitempty"`
+
+	// TimeZone: Server timezone, relevant only for Cloud SQL for SQL
+	// Server.
+	TimeZone string `json:"timeZone,omitempty"`
 
 	// UserLabels: User-provided labels, represented as a dictionary where
 	// each label is a single key value pair.
@@ -8531,7 +8544,8 @@ type InstancesPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Updates settings of a Cloud SQL instance. This method supports
+// Patch: Partially updates settings of a Cloud SQL instance by merging
+// the request with the current configuration. This method supports
 // patch semantics.
 //
 //   - instance: Cloud SQL instance ID. This does not include the project
@@ -8637,7 +8651,7 @@ func (c *InstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates settings of a Cloud SQL instance. This method supports patch semantics.",
+	//   "description": "Partially updates settings of a Cloud SQL instance by merging the request with the current configuration. This method supports patch semantics.",
 	//   "flatPath": "v1/projects/{project}/instances/{instance}",
 	//   "httpMethod": "PATCH",
 	//   "id": "sql.instances.patch",

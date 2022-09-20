@@ -4317,6 +4317,9 @@ type JobConfigurationLoad struct {
 	// table will be first partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
+	// ConnectionProperties: Connection properties.
+	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
+
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
 	// create new tables. The following values are supported:
 	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
@@ -6967,6 +6970,7 @@ type Routine struct {
 	//   "LANGUAGE_UNSPECIFIED"
 	//   "SQL" - SQL language.
 	//   "JAVASCRIPT" - JavaScript language.
+	//   "PYTHON" - Python language.
 	Language string `json:"language,omitempty"`
 
 	// LastModifiedTime: Output only. The time when this routine was last
@@ -7591,8 +7595,8 @@ func (s *SparkStatistics) MarshalJSON() ([]byte, error) {
 // argument. Examples include: * INT64: `{"typeKind": "INT64"}` * ARRAY:
 // { "typeKind": "ARRAY", "arrayElementType": {"typeKind": "STRING"} } *
 // STRUCT>: { "typeKind": "STRUCT", "structType": { "fields": [ {
-// "name": "x", "type": {"typeKind: "STRING"} }, { "name": "y", "type":
-// { "typeKind": "ARRAY", "arrayElementType": {"typekind": "DATE"} } } ]
+// "name": "x", "type": {"typeKind": "STRING"} }, { "name": "y", "type":
+// { "typeKind": "ARRAY", "arrayElementType": {"typeKind": "DATE"} } } ]
 // } }
 type StandardSqlDataType struct {
 	// ArrayElementType: The type of the array's elements, if type_kind =

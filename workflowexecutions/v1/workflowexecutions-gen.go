@@ -273,6 +273,19 @@ type Execution struct {
 	//   "CANCELLED" - The execution was stopped intentionally.
 	State string `json:"state,omitempty"`
 
+	// Status: Output only. Status tracks the current steps and progress
+	// data of this execution. > **Preview:** This field is covered by the >
+	// Pre-GA Offerings Terms (https://cloud.google.com/terms/service-terms)
+	// of > the Google Cloud Terms of Service. Pre-GA features might have
+	// limited > support, and changes to pre-GA features might not be
+	// compatible with > other pre-GA versions. For more information, see
+	// the > launch stage descriptions
+	// (https://cloud.google.com/products#product-launch-stages). > This
+	// field is usable only if your project has access. See the > access
+	// request page
+	// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
+	Status *Status `json:"status,omitempty"`
+
 	// WorkflowRevisionId: Output only. Revision of the workflow this
 	// execution is using.
 	WorkflowRevisionId string `json:"workflowRevisionId,omitempty"`
@@ -504,6 +517,81 @@ type StackTraceElement struct {
 
 func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTraceElement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: > **Preview:** This field is covered by the > Pre-GA
+// Offerings Terms (https://cloud.google.com/terms/service-terms) of >
+// the Google Cloud Terms of Service. Pre-GA features might have limited
+// > support, and changes to pre-GA features might not be compatible
+// with > other pre-GA versions. For more information, see the > launch
+// stage descriptions
+// (https://cloud.google.com/products#product-launch-stages). > This
+// field is usable only if your project has access. See the > access
+// request page
+// (https://docs.google.com/forms/d/e/1FAIpQLSdgwrSV8Y4xZv_tvI6X2JEGX1-ty9yizv3_EAOVHWVKXvDLEA/viewform).
+// Represents the current status of this execution.
+type Status struct {
+	// CurrentSteps: A list of currently executing or last executed step
+	// names for the workflow execution currently running. If the workflow
+	// has succeeded or failed, this is the last attempted or executed step.
+	// Presently, if the current step is inside a subworkflow, the list only
+	// includes that step. In the future, the list will contain items for
+	// each step in the call stack, starting with the outermost step in the
+	// `main` subworkflow, and ending with the most deeply nested step.
+	CurrentSteps []*Step `json:"currentSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentSteps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentSteps") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Step: Represents a step of the workflow this execution is running.
+type Step struct {
+	// Routine: Name of a routine within the workflow.
+	Routine string `json:"routine,omitempty"`
+
+	// Step: Name of a step within the routine.
+	Step string `json:"step,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Routine") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Routine") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Step) MarshalJSON() ([]byte, error) {
+	type NoMethod Step
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

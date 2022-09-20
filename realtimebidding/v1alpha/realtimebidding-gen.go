@@ -190,7 +190,7 @@ type BiddingFunction struct {
 	// functions per account.
 	//   "ARCHIVED" - A function that is no longer made available for
 	// invocation in a simulation and instead archived. An archived function
-	// can later be made active by activating the function via
+	// can later be made active by activating the function through
 	// `ActivateBiddingFunction`.
 	State string `json:"state,omitempty"`
 
@@ -291,9 +291,9 @@ type BiddingFunction struct {
 	// (https://developers.google.com/authorized-buyers/rtb/openrtb-guide#bidfeedback),
 	// for the Google protocol and OpenRTB protocol respectively. In
 	// addition, the debug string can be inserted into the creative HTML
-	// snippet via macro substitution if the following string is included in
-	// the snippet: “%%DEBUG_STRING%%”. Please ensure the debug string
-	// complies with [Platform Program
+	// snippet through macro substitution if the following string is
+	// included in the snippet: “%%DEBUG_STRING%%”. Ensure the debug
+	// string complies with [Platform Program
 	// Policies](https://support.google.com/platformspolicy/answer/3013851).
 	// Sample Bidding Function: ``` function biddingFunction(inputs) { ...
 	// return { "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,

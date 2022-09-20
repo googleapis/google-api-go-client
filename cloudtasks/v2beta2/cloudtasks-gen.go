@@ -606,8 +606,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // BufferTaskRequest: Request message for BufferTask.
 type BufferTaskRequest struct {
 	// Body: Optional. Body of the HTTP request. The body can take any
-	// generic value. The value will be written to the HttpRequest of the
-	// [Task].
+	// generic value. The value is written to the HttpRequest of the [Task].
 	Body *HttpBody `json:"body,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
@@ -936,8 +935,10 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // Header: Defines a header message. A header can have a key and a
 // value.
 type Header struct {
+	// Key: The key of the header.
 	Key string `json:"key,omitempty"`
 
+	// Value: The value of the header.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -4840,7 +4841,8 @@ func (c *ProjectsLocationsQueuesTasksAcknowledgeCall) Do(opts ...googleapi.CallO
 
 type ProjectsLocationsQueuesTasksBufferCall struct {
 	s                 *Service
-	parent            string
+	queue             string
+	taskId            string
 	buffertaskrequest *BufferTaskRequest
 	urlParams_        gensupport.URLParams
 	ctx_              context.Context
@@ -4848,17 +4850,26 @@ type ProjectsLocationsQueuesTasksBufferCall struct {
 }
 
 // Buffer: Creates and buffers a new task without the need to explicitly
-// define a Task message. The queue must have HTTP target. Note: This
-// feature is in its experimental stage. You must request access to the
-// API through the Cloud Tasks BufferTasks Experiment Signup form
-// (https://forms.gle/X8Zr5hiXH5tTGFqh8).
+// define a Task message. The queue must have HTTP target. To create the
+// task with a custom ID, use the following format and set TASK_ID to
+// your desired ID:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_I
+// D:buffer To create the task with an automatically generated ID, use
+// the following format:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer
+// . Note: This feature is in its experimental stage. You must request
+// access to the API through the Cloud Tasks BufferTask Experiment
+// Signup form (https://forms.gle/X8Zr5hiXH5tTGFqh8).
 //
-//   - parent: The parent queue name. For example:
+//   - queue: The parent queue name. For example:
 //     projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
 //     queue must already exist.
-func (r *ProjectsLocationsQueuesTasksService) Buffer(parent string, buffertaskrequest *BufferTaskRequest) *ProjectsLocationsQueuesTasksBufferCall {
+//   - taskId: Optional. Task ID for the task being created. If not
+//     provided, a random task ID is assigned to the task.
+func (r *ProjectsLocationsQueuesTasksService) Buffer(queue string, taskId string, buffertaskrequest *BufferTaskRequest) *ProjectsLocationsQueuesTasksBufferCall {
 	c := &ProjectsLocationsQueuesTasksBufferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.queue = queue
+	c.taskId = taskId
 	c.buffertaskrequest = buffertaskrequest
 	return c
 }
@@ -4903,7 +4914,7 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+parent}/tasks:buffer")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+queue}/tasks/{taskId}:buffer")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -4911,7 +4922,8 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) doRequest(alt string) (*http.Re
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"queue":  c.queue,
+		"taskId": c.taskId,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -4954,23 +4966,30 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferTasks Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8).",
-	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:buffer",
+	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer. Note: This feature is in its experimental stage. You must request access to the API through the [Cloud Tasks BufferTask Experiment Signup form](https://forms.gle/X8Zr5hiXH5tTGFqh8).",
+	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{taskId}:buffer",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.buffer",
 	//   "parameterOrder": [
-	//     "parent"
+	//     "queue",
+	//     "taskId"
 	//   ],
 	//   "parameters": {
-	//     "parent": {
+	//     "queue": {
 	//       "description": "Required. The parent queue name. For example: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "taskId": {
+	//       "description": "Optional. Task ID for the task being created. If not provided, a random task ID is assigned to the task.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta2/{+parent}/tasks:buffer",
+	//   "path": "v2beta2/{+queue}/tasks/{taskId}:buffer",
 	//   "request": {
 	//     "$ref": "BufferTaskRequest"
 	//   },

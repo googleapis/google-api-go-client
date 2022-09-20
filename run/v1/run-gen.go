@@ -922,9 +922,7 @@ type Container struct {
 	// https://kubernetes.io/docs/concepts/containers/images#updating-images
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
-	// LivenessProbe: Periodic probe of container liveness. Container will
-	// be restarted if the probe fails. More info:
-	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	// LivenessProbe: Not supported by Cloud Run.
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
 	// Name: Name of the container specified as a DNS_LABEL. Currently

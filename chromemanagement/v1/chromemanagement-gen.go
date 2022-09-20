@@ -424,7 +424,16 @@ func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleChromeManagementV1AudioStatusReport: Audio report.
+// GoogleChromeManagementV1AudioStatusReport: Status data for storage. *
+// This field is telemetry information and this will change over time as
+// the device is utilized. * Data for this field is controlled via
+// policy: ReportDeviceAudioStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceAudioStatus) *
+// Data Collection Frequency: 10 minutes * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1AudioStatusReport struct {
 	// InputDevice: Output only. Active input device's name.
 	InputDevice string `json:"inputDevice,omitempty"`
@@ -471,7 +480,16 @@ func (s *GoogleChromeManagementV1AudioStatusReport) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1BatteryInfo: Battery info
+// GoogleChromeManagementV1BatteryInfo: Information about the battery. *
+// This field provides device information, which is static and will not
+// change over time. * Data for this field is controlled via policy:
+// ReportDevicePowerStatus
+// (https://chromeenterprise.google/policies/#ReportDevicePowerStatus) *
+// Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1BatteryInfo struct {
 	// DesignCapacity: Output only. Design capacity (mAmpere-hours).
 	DesignCapacity int64 `json:"designCapacity,omitempty,string"`
@@ -516,7 +534,15 @@ func (s *GoogleChromeManagementV1BatteryInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChromeManagementV1BatterySampleReport: Sampling data for
-// battery.
+// battery. * This field is telemetry information and this will change
+// over time as the device is utilized. * Data for this field is
+// controlled via policy: ReportDevicePowerStatus
+// (https://chromeenterprise.google/policies/#ReportDevicePowerStatus) *
+// Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1BatterySampleReport struct {
 	// ChargeRate: Output only. Battery charge percentage.
 	ChargeRate int64 `json:"chargeRate,omitempty"`
@@ -571,6 +597,15 @@ func (s *GoogleChromeManagementV1BatterySampleReport) MarshalJSON() ([]byte, err
 }
 
 // GoogleChromeManagementV1BatteryStatusReport: Status data for battery.
+// * This field is telemetry information and this will change over time
+// as the device is utilized. * Data for this field is controlled via
+// policy: ReportDevicePowerStatus
+// (https://chromeenterprise.google/policies/#ReportDevicePowerStatus) *
+// Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1BatteryStatusReport struct {
 	// BatteryHealth: Output only. Battery health.
 	//
@@ -998,6 +1033,53 @@ func (s *GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse) Ma
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse:
+// Response containing a list of devices with a specific type of
+// hardware specification from the requested hardware type.
+type GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse struct {
+	// CpuReports: The DeviceHardwareCountReport for device cpu type (for
+	// example Intel(R) Core(TM) i7-10610U CPU @ 1.80GHz).
+	CpuReports []*GoogleChromeManagementV1DeviceHardwareCountReport `json:"cpuReports,omitempty"`
+
+	// MemoryReports: The DeviceHardwareCountReport for device memory amount
+	// in gigabytes (for example 16).
+	MemoryReports []*GoogleChromeManagementV1DeviceHardwareCountReport `json:"memoryReports,omitempty"`
+
+	// ModelReports: The DeviceHardwareCountReport for device model type
+	// (for example Acer C7 Chromebook).
+	ModelReports []*GoogleChromeManagementV1DeviceHardwareCountReport `json:"modelReports,omitempty"`
+
+	// StorageReports: The DeviceHardwareCountReport for device storage
+	// amount in gigabytes (for example 128).
+	StorageReports []*GoogleChromeManagementV1DeviceHardwareCountReport `json:"storageReports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuReports") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuReports") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1CountChromeVersionsResponse: Response
 // containing requested browser versions details and counts.
 type GoogleChromeManagementV1CountChromeVersionsResponse struct {
@@ -1078,9 +1160,27 @@ func (s *GoogleChromeManagementV1CountInstalledAppsResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1CpuInfo: CPU specs for a CPU.
+// GoogleChromeManagementV1CpuInfo: CPU specifications for the device *
+// This field provides device information, which is static and will not
+// change over time. * Data for this field is controlled via policy:
+// ReportDeviceCpuInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceCpuInfo) *
+// Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1CpuInfo struct {
-	// Architecture: Output only. The CPU architecture.
+	// Architecture: Output only. Architecture type for the CPU. * This
+	// field provides device information, which is static and will not
+	// change over time. * Data for this field is controlled via policy:
+	// ReportDeviceCpuInfo
+	// (https://chromeenterprise.google/policies/#ReportDeviceCpuInfo) *
+	// Data Collection Frequency: Only at Upload * Default Data Reporting
+	// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+	// offline, the collected data is stored locally, and will be reported
+	// when the device is next online: No * Reported for affiliated users
+	// only: N/A
 	//
 	// Possible values:
 	//   "ARCHITECTURE_UNSPECIFIED" - Architecture unknown.
@@ -1125,8 +1225,16 @@ func (s *GoogleChromeManagementV1CpuInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1CpuStatusReport: Contains samples of the cpu
-// status reports.
+// GoogleChromeManagementV1CpuStatusReport: Provides information about
+// the status of the CPU. * This field is telemetry information and this
+// will change over time as the device is utilized. * Data for this
+// field is controlled via policy: ReportDeviceCpuInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceCpuInfo) *
+// Data Collection Frequency: Every 10 minutes * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1CpuStatusReport struct {
 	// CpuTemperatureInfo: Output only. CPU temperature sample info per CPU
 	// core in Celsius
@@ -1168,7 +1276,15 @@ func (s *GoogleChromeManagementV1CpuStatusReport) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleChromeManagementV1CpuTemperatureInfo: CPU temperature of a
-// device. Sampled per CPU core in Celsius
+// device. Sampled per CPU core in Celsius. * This field is telemetry
+// information and this will change over time as the device is utilized.
+// * Data for this field is controlled via policy: ReportDeviceCpuInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceCpuInfo) *
+// Data Collection Frequency: Every 10 minutes * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1CpuTemperatureInfo struct {
 	// Label: Output only. CPU label. Example: Core 0
 	Label string `json:"label,omitempty"`
@@ -1291,6 +1407,39 @@ type GoogleChromeManagementV1DeviceAueCountReport struct {
 
 func (s *GoogleChromeManagementV1DeviceAueCountReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1DeviceAueCountReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1DeviceHardwareCountReport: Report for
+// CountChromeDevicesPerHardwareSpecResponse, contains the count of
+// devices with a unique hardware specification.
+type GoogleChromeManagementV1DeviceHardwareCountReport struct {
+	// Bucket: Public name of the hardware specification.
+	Bucket string `json:"bucket,omitempty"`
+
+	// Count: Count of devices with a unique hardware specification.
+	Count int64 `json:"count,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1DeviceHardwareCountReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1DeviceHardwareCountReport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1487,7 +1636,15 @@ func (s *GoogleChromeManagementV1GraphicsAdapterInfo) MarshalJSON() ([]byte, err
 }
 
 // GoogleChromeManagementV1GraphicsInfo: Information of the graphics
-// subsystem.
+// subsystem. * This field provides device information, which is static
+// and will not change over time. * Data for this field is controlled
+// via policy: ReportDeviceGraphicsStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceGraphicsStatus)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1GraphicsInfo struct {
 	// AdapterInfo: Output only. Information about the graphics adapter
 	// (GPU).
@@ -1517,7 +1674,15 @@ func (s *GoogleChromeManagementV1GraphicsInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChromeManagementV1GraphicsStatusReport: Information of the
-// graphics subsystem.
+// graphics subsystem. * This field is telemetry information and this
+// will change over time as the device is utilized. * Data for this
+// field is controlled via policy: ReportDeviceGraphicsInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceGraphicsInfo)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1GraphicsStatusReport struct {
 	// Displays: Output only. Information about the displays for the device.
 	Displays []*GoogleChromeManagementV1DisplayInfo `json:"displays,omitempty"`
@@ -1716,7 +1881,21 @@ func (s *GoogleChromeManagementV1ListTelemetryDevicesResponse) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1MemoryInfo: Memory information of a device.
+// GoogleChromeManagementV1MemoryInfo: Memory information of a device. *
+// This field has both telemetry and device information: -
+// `totalRamBytes` - Device information - `availableRamBytes` -
+// Telemetry information - `totalMemoryEncryption` - Device information
+// * Data for this field is controlled via policy:
+// ReportDeviceMemoryInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceMemoryInfo) *
+// Data Collection Frequency: - `totalRamBytes` - Only at upload -
+// `availableRamBytes` - Every 10 minutes - `totalMemoryEncryption` - at
+// device startup * Default Data Reporting Frequency: - `totalRamBytes`
+// - 3 hours - `availableRamBytes` - 3 hours - `totalMemoryEncryption` -
+// at device startup - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: only for `totalMemoryEncryption` *
+// Reported for affiliated users only: N/A
 type GoogleChromeManagementV1MemoryInfo struct {
 	// AvailableRamBytes: Output only. Amount of available RAM in bytes.
 	AvailableRamBytes int64 `json:"availableRamBytes,omitempty,string"`
@@ -1753,7 +1932,15 @@ func (s *GoogleChromeManagementV1MemoryInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChromeManagementV1MemoryStatusReport: Contains samples of
-// memory status reports.
+// memory status reports. * This field is telemetry information and this
+// will change over time as the device is utilized. * Data for this
+// field is controlled via policy: ReportDeviceMemoryInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceMemoryInfo) *
+// Data Collection Frequency: Only at upload, SystemRamFreeByes is
+// collected every 10 minutes * Default Data Reporting Frequency: Every
+// 3 hours - Policy Controlled: Yes * Cache: If the device is offline,
+// the collected data is stored locally, and will be reported when the
+// device is next online: No * Reported for affiliated users only: N/A
 type GoogleChromeManagementV1MemoryStatusReport struct {
 	// PageFaults: Output only. Number of page faults during this collection
 	PageFaults int64 `json:"pageFaults,omitempty"`
@@ -1792,7 +1979,16 @@ func (s *GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1NetworkDevice: Network device.
+// GoogleChromeManagementV1NetworkDevice: Details about the network
+// device. * This field provides device information, which is static and
+// will not change over time. * Data for this field is controlled via
+// policy: ReportNetworkDeviceConfiguration
+// (https://chromeenterprise.google/policies/#ReportNetworkDeviceConfiguration)
+// * Data Collection Frequency: At device startup * Default Data
+// Reporting Frequency: At device startup - Policy Controlled: Yes *
+// Cache: If the device is offline, the collected data is stored
+// locally, and will be reported when the device is next online: Yes *
+// Reported for affiliated users only: N/A
 type GoogleChromeManagementV1NetworkDevice struct {
 	// Iccid: Output only. The integrated circuit card ID associated with
 	// the device's sim card.
@@ -1882,7 +2078,16 @@ func (s *GoogleChromeManagementV1NetworkDiagnosticsReport) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1NetworkInfo: Network devices info.
+// GoogleChromeManagementV1NetworkInfo: Network device information. *
+// This field provides device information, which is static and will not
+// change over time. * Data for this field is controlled via policy:
+// ReportNetworkDeviceConfiguration
+// (https://chromeenterprise.google/policies/#ReportNetworkDeviceConfiguration)
+// * Data Collection Frequency: At device startup * Default Data
+// Reporting Frequency: At device startup - Policy Controlled: Yes *
+// Cache: If the device is offline, the collected data is stored
+// locally, and will be reported when the device is next online: Yes *
+// Reported for affiliated users only: N/A
 type GoogleChromeManagementV1NetworkInfo struct {
 	// NetworkDevices: Output only. List of network devices.
 	NetworkDevices []*GoogleChromeManagementV1NetworkDevice `json:"networkDevices,omitempty"`
@@ -1912,7 +2117,15 @@ func (s *GoogleChromeManagementV1NetworkInfo) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleChromeManagementV1NetworkStatusReport: State of
-// visible/configured networks.
+// visible/configured networks. * This field is telemetry information
+// and this will change over time as the device is utilized. * Data for
+// this field is controlled via policy: ReportNetworkStatus
+// (https://chromeenterprise.google/policies/#ReportNetworkStatus) *
+// Data Collection Frequency: 60 minutes * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: Yes * Reported for affiliated users
+// only: Yes
 type GoogleChromeManagementV1NetworkStatusReport struct {
 	// ConnectionState: Output only. Current connection state of the
 	// network.
@@ -2010,7 +2223,16 @@ func (s *GoogleChromeManagementV1NetworkStatusReport) MarshalJSON() ([]byte, err
 }
 
 // GoogleChromeManagementV1OsUpdateStatus: Contains information
-// regarding the current OS update status.
+// regarding the current OS update status. * This field is telemetry
+// information and this will change over time as the device is utilized.
+// * Data for this field is controlled via policy:
+// ReportDeviceOsUpdateStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceOsUpdateStatus)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1OsUpdateStatus struct {
 	// LastRebootTime: Output only. Timestamp of the last reboot.
 	LastRebootTime string `json:"lastRebootTime,omitempty"`
@@ -2066,7 +2288,16 @@ func (s *GoogleChromeManagementV1OsUpdateStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1StorageInfo: Status data for storage.
+// GoogleChromeManagementV1StorageInfo: Status data for storage. * This
+// field is telemetry information and this will change over time as the
+// device is utilized. * Data for this field is controlled via policy:
+// ReportDeviceStorageStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceStorageStatus)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1StorageInfo struct {
 	// AvailableDiskBytes: The available space for user data storage in the
 	// device in bytes.
@@ -2140,6 +2371,15 @@ func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, e
 }
 
 // GoogleChromeManagementV1StorageStatusReport: Status data for storage.
+// * This field is telemetry information and this will change over time
+// as the device is utilized. * Data for this field is controlled via
+// policy: ReportDeviceStorageStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceStorageStatus)
+// * Data Collection Frequency: Only at Upload * Default Data Reporting
+// Frequency: 3 hours - Policy Controlled: Yes * Cache: If the device is
+// offline, the collected data is stored locally, and will be reported
+// when the device is next online: No * Reported for affiliated users
+// only: N/A
 type GoogleChromeManagementV1StorageStatusReport struct {
 	// Disk: Output only. Reports on disk.
 	Disk []*GoogleChromeManagementV1DiskInfo `json:"disk,omitempty"`
@@ -2283,7 +2523,16 @@ func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1ThunderboltInfo: Thunderbolt bus info.
+// GoogleChromeManagementV1ThunderboltInfo: Thunderbolt bus info. * This
+// field provides device information, which is static and will not
+// change over time. * Data for this field is controlled via policy:
+// ReportDeviceSecurityStatus
+// (https://chromeenterprise.google/policies/#ReportDeviceSecurityStatus)
+// * Data Collection Frequency: At device startup * Default Data
+// Reporting Frequency: At device startup - Policy Controlled: No *
+// Cache: If the device is offline, the collected data is stored
+// locally, and will be reported when the device is next online: Yes *
+// Reported for affiliated users only: N/A
 type GoogleChromeManagementV1ThunderboltInfo struct {
 	// SecurityLevel: Security level of the Thunderbolt bus.
 	//
@@ -2330,7 +2579,15 @@ func (s *GoogleChromeManagementV1ThunderboltInfo) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleChromeManagementV1TotalMemoryEncryptionInfo: Memory encryption
-// information of a device.
+// information of a device. * This field provides device information,
+// which is static and will not change over time. * Data for this field
+// is controlled via policy: ReportDeviceMemoryInfo
+// (https://chromeenterprise.google/policies/#ReportDeviceMemoryInfo) *
+// Data Collection Frequency: At device startup * Default Data Reporting
+// Frequency: At device startup - Policy Controlled: Yes * Cache: If the
+// device is offline, the collected data is stored locally, and will be
+// reported when the device is next online: Yes * Reported for
+// affiliated users only: N/A
 type GoogleChromeManagementV1TotalMemoryEncryptionInfo struct {
 	// EncryptionAlgorithm: Memory encryption algorithm.
 	//
@@ -3522,6 +3779,183 @@ func (c *CustomersReportsCountChromeDevicesThatNeedAttentionCall) Do(opts ...goo
 	//   "path": "v1/{+customer}/reports:countChromeDevicesThatNeedAttention",
 	//   "response": {
 	//     "$ref": "GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chromemanagement.customers.reports.countChromeHardwareFleetDevices":
+
+type CustomersReportsCountChromeHardwareFleetDevicesCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountChromeHardwareFleetDevices: Counts of devices with a specific
+// hardware specification from the requested hardware type (for example
+// model name, processor type). Further information can be found here
+// https://support.google.com/chrome/a/answer/10564947
+//
+// - customer: The customer ID or "my_customer".
+func (r *CustomersReportsService) CountChromeHardwareFleetDevices(customer string) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c := &CustomersReportsCountChromeHardwareFleetDevicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": The ID of the
+// organizational unit. If omitted, all data will be returned.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) OrgUnitId(orgUnitId string) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. Mask of
+// the fields that should be populated in the returned report.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) ReadMask(readMask string) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) Fields(s ...googleapi.Field) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) IfNoneMatch(entityTag string) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) Context(ctx context.Context) *CustomersReportsCountChromeHardwareFleetDevicesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countChromeHardwareFleetDevices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countChromeHardwareFleetDevices" call.
+// Exactly one of
+// *GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersReportsCountChromeHardwareFleetDevicesCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Counts of devices with a specific hardware specification from the requested hardware type (for example model name, processor type). Further information can be found here https://support.google.com/chrome/a/answer/10564947",
+	//   "flatPath": "v1/customers/{customersId}/reports:countChromeHardwareFleetDevices",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.reports.countChromeHardwareFleetDevices",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. The customer ID or \"my_customer\".",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "Optional. The ID of the organizational unit. If omitted, all data will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. Mask of the fields that should be populated in the returned report.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/reports:countChromeHardwareFleetDevices",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"

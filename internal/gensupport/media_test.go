@@ -309,8 +309,7 @@ func TestUploadRequestGetBody(t *testing.T) {
 			wantGetBody: true,
 		},
 		{
-			desc: "chunk size < data size: MediaBuffer, >1 chunk, no getBody",
-			// Test that the initial request results in a getBody function that is non-nil.
+			desc: "chunk size < data size: MediaBuffer, >1 chunk, getBody",
 			// Note that ChunkSize = 1 is rounded up to googleapi.MinUploadChunkSize.
 			r:           &nullReader{2 * googleapi.MinUploadChunkSize},
 			chunkSize:   1,

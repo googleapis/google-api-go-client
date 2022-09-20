@@ -313,8 +313,8 @@ func (mi *MediaInfo) UploadRequest(reqHeaders http.Header, body io.Reader) (newB
 	}
 	if mi.buffer != nil && mi.mType != "" && !mi.singleChunk {
 		// This happens when initiating a resumable upload session.
-		// The initial request includes a body but no media. It can be
-		// retried with a getBody function that re-creates the request body.
+		// The initial request contains a JSON body rather than media.
+		// It can be retried with a getBody function that re-creates the request body.
 		fb := readerFunc(body)
 		if fb != nil {
 			getBody = func() (io.ReadCloser, error) {

@@ -1,5 +1,20 @@
 # Changes
 
+## [0.97.0](https://github.com/googleapis/google-api-go-client/compare/v0.96.0...v0.97.0) (2022-09-21)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1693](https://github.com/googleapis/google-api-go-client/issues/1693)) ([a87400b](https://github.com/googleapis/google-api-go-client/commit/a87400be9341608f73e9ae1b5dbbecc7adfbf609))
+* **all:** Auto-regenerate discovery clients ([#1695](https://github.com/googleapis/google-api-go-client/issues/1695)) ([b8f2556](https://github.com/googleapis/google-api-go-client/commit/b8f25561a76841c7549a358925eb7bfc2236465e))
+* **internal/gensupport:** Wrap retry failures with context and prev error ([#1684](https://github.com/googleapis/google-api-go-client/issues/1684)) ([f427ee3](https://github.com/googleapis/google-api-go-client/commit/f427ee3edede981524c2ffb57fd2d8981f8cf8b4)), refs [#1685](https://github.com/googleapis/google-api-go-client/issues/1685)
+
+
+### Bug Fixes
+
+* Build script bash error ([#1697](https://github.com/googleapis/google-api-go-client/issues/1697)) ([6b0515b](https://github.com/googleapis/google-api-go-client/commit/6b0515bf05d8c62007748827eed486c607af483b))
+* **gensupport:** Allow initial request for resumable uploads to retry w/ non-nil getBody ([#1690](https://github.com/googleapis/google-api-go-client/issues/1690)) ([2c3e863](https://github.com/googleapis/google-api-go-client/commit/2c3e8638afc6702dcba732a1aa07ccb33eb9304b))
+
 ## [0.96.0](https://github.com/googleapis/google-api-go-client/compare/v0.95.0...v0.96.0) (2022-09-14)
 
 

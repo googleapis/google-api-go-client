@@ -2181,9 +2181,8 @@ type GoogleCloudDocumentaiV1DocumentEntity struct {
 	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`. If the entity is not present in the document,
-	// this field will be empty.
+	// MentionText: Optional. Text value of the entity e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -2397,10 +2396,13 @@ func (s *GoogleCloudDocumentaiV1DocumentOutputConfig) MarshalJSON() ([]byte, err
 // GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfig: The
 // configuration used when outputting documents.
 type GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfig struct {
+	// FieldMask: Specifies which fields to include in the output documents.
+	FieldMask string `json:"fieldMask,omitempty"`
+
 	// GcsUri: The Cloud Storage uri (a directory) of the output.
 	GcsUri string `json:"gcsUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// ForceSendFields is a list of field names (e.g. "FieldMask") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2408,8 +2410,8 @@ type GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcsUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "FieldMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2447,6 +2449,9 @@ type GoogleCloudDocumentaiV1DocumentPage struct {
 	// remove any skew, rotation, and distortions such that the annotation
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1DocumentPageImage `json:"image,omitempty"`
+
+	// ImageQualityScores: Image Quality Scores.
+	ImageQualityScores *GoogleCloudDocumentaiV1DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
 	Layout *GoogleCloudDocumentaiV1DocumentPageLayout `json:"layout,omitempty"`
@@ -2873,6 +2878,105 @@ func (s *GoogleCloudDocumentaiV1DocumentPageImage) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudDocumentaiV1DocumentPageImage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DocumentPageImageQualityScores: Image Quality
+// Scores for the page image
+type GoogleCloudDocumentaiV1DocumentPageImageQualityScores struct {
+	// DetectedDefects: A list of detected defects.
+	DetectedDefects []*GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
+
+	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// perfect quality.
+	QualityScore float64 `json:"qualityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedDefects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedDefects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScores
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScores
+	var s1 struct {
+		QualityScore gensupport.JSONFloat64 `json:"qualityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.QualityScore = float64(s1.QualityScore)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect:
+// Image Quality Defects
+type GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect struct {
+	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// indicates strong confidence of that the defect exists.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Type: Name of the defect type. Supported values are
+	// "quality/defect_blurry", "quality/defect_noisy",
+	// "quality/defect_dark", "quality/defect_faint",
+	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
+	// "quality/defect_text_cutoff", "quality/defect_glare"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1DocumentPageLayout: Visual element describing
@@ -4011,10 +4115,6 @@ type GoogleCloudDocumentaiV1EntityTypeMetadata struct {
 
 	// Inactive: Whether the entity type should be considered as "inactive".
 	Inactive bool `json:"inactive,omitempty"`
-
-	// PrefixedNamingOnProperties: If set, the properties of this entity
-	// type must be prefixed with the parents.
-	PrefixedNamingOnProperties bool `json:"prefixedNamingOnProperties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewLabelingMetadata") to unconditionally include in API
@@ -5457,9 +5557,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`. If the entity is not present in the document,
-	// this field will be empty.
+	// MentionText: Optional. Text value of the entity e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -5664,6 +5763,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// remove any skew, rotation, and distortions such that the annotation
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta1DocumentPageImage `json:"image,omitempty"`
+
+	// ImageQualityScores: Image Quality Scores.
+	ImageQualityScores *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
 	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
@@ -6091,6 +6193,105 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, e
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores: Image
+// Quality Scores for the page image
+type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
+	// DetectedDefects: A list of detected defects.
+	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
+
+	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// perfect quality.
+	QualityScore float64 `json:"qualityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedDefects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedDefects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores
+	var s1 struct {
+		QualityScore gensupport.JSONFloat64 `json:"qualityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.QualityScore = float64(s1.QualityScore)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefe
+// ct: Image Quality Defects
+type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
+	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// indicates strong confidence of that the defect exists.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Type: Name of the defect type. Supported values are
+	// "quality/defect_blurry", "quality/defect_noisy",
+	// "quality/defect_dark", "quality/defect_faint",
+	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
+	// "quality/defect_text_cutoff", "quality/defect_glare"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageLayout: Visual element
@@ -7459,9 +7660,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`. If the entity is not present in the document,
-	// this field will be empty.
+	// MentionText: Optional. Text value of the entity e.g. `1600
+	// Amphitheatre Pkwy`.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -7721,6 +7921,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// remove any skew, rotation, and distortions such that the annotation
 	// bounding boxes can be upright and axis-aligned.
 	Image *GoogleCloudDocumentaiV1beta2DocumentPageImage `json:"image,omitempty"`
+
+	// ImageQualityScores: Image Quality Scores.
+	ImageQualityScores *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores `json:"imageQualityScores,omitempty"`
 
 	// Layout: Layout for the page.
 	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
@@ -8148,6 +8351,105 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, e
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores: Image
+// Quality Scores for the page image
+type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
+	// DetectedDefects: A list of detected defects.
+	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
+
+	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// perfect quality.
+	QualityScore float64 `json:"qualityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedDefects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedDefects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores
+	var s1 struct {
+		QualityScore gensupport.JSONFloat64 `json:"qualityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.QualityScore = float64(s1.QualityScore)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefe
+// ct: Image Quality Defects
+type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
+	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// indicates strong confidence of that the defect exists.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Type: Name of the defect type. Supported values are
+	// "quality/defect_blurry", "quality/defect_noisy",
+	// "quality/defect_dark", "quality/defect_faint",
+	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
+	// "quality/defect_text_cutoff", "quality/defect_glare"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageLayout: Visual element

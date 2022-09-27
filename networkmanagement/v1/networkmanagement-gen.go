@@ -1885,6 +1885,10 @@ type RouteInfo struct {
 	// DestIpRange: Destination IP range of the route.
 	DestIpRange string `json:"destIpRange,omitempty"`
 
+	// DestPortRanges: Destination port ranges of the route. Policy based
+	// routes only.
+	DestPortRanges []string `json:"destPortRanges,omitempty"`
+
 	// DisplayName: Name of a Compute Engine route.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -1925,6 +1929,9 @@ type RouteInfo struct {
 	// Priority: Priority of the route.
 	Priority int64 `json:"priority,omitempty"`
 
+	// Protocols: Protocols of the route. Policy based routes only.
+	Protocols []string `json:"protocols,omitempty"`
+
 	// RouteType: Type of route.
 	//
 	// Possible values:
@@ -1937,7 +1944,16 @@ type RouteInfo struct {
 	//   "PEERING_SUBNET" - A subnet route received from peering network.
 	//   "PEERING_STATIC" - A static route received from peering network.
 	//   "PEERING_DYNAMIC" - A dynamic route received from peering network.
+	//   "POLICY_BASED_ROUTE" - Policy based route.
 	RouteType string `json:"routeType,omitempty"`
+
+	// SrcIpRange: Source IP address range of the route. Policy based routes
+	// only.
+	SrcIpRange string `json:"srcIpRange,omitempty"`
+
+	// SrcPortRanges: Source port ranges of the route. Policy based routes
+	// only.
+	SrcPortRanges []string `json:"srcPortRanges,omitempty"`
 
 	// Uri: URI of a Compute Engine route. Dynamic route from cloud router
 	// does not have a URI. Advertised route from Google Cloud VPC to

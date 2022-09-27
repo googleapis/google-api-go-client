@@ -1046,6 +1046,7 @@ type AppId struct {
 	//   "CONTACTS_APP"
 	//   "ACTIVITY_FEED_APP"
 	//   "DRIVE_APP"
+	//   "CHAT_IN_MEET_APP"
 	GsuiteAppType string `json:"gsuiteAppType,omitempty"`
 
 	// Id: Numeric identifier of the App. Set to Project number for 1/3P
@@ -1156,8 +1157,17 @@ func (s *AppsDynamiteSharedActionActionParameter) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 6
+// AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 7
 type AppsDynamiteSharedActivityFeedAnnotationData struct {
+	// ActivityFeedMessageCreateTime: Timestamp of when the Activity Feed
+	// message that contains this annotation was created. This is roughly
+	// when the activity happened, such as when a reaction happened, but
+	// will have at least some small delay, since the Activity Feed message
+	// is created asynchronously after. This timestamp should only be used
+	// for display when the activity create time is not available in the
+	// Chat UI, like the time of a reaction.
+	ActivityFeedMessageCreateTime string `json:"activityFeedMessageCreateTime,omitempty"`
+
 	// ActivityFeedMessageId: Unique id of the Activity Feed message used by
 	// clients to implement click-to-source. This is the same messageId as
 	// the top-level id field for the Activity Feed item.
@@ -1173,21 +1183,21 @@ type AppsDynamiteSharedActivityFeedAnnotationData struct {
 	UserInfo *AppsDynamiteSharedActivityFeedAnnotationDataUserInfo `json:"userInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ActivityFeedMessageId") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "ActivityFeedMessageCreateTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ActivityFeedMessageId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ActivityFeedMessageCreateTime") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2437,7 +2447,8 @@ type AppsDynamiteSharedChatItemGroupInfo struct {
 	// users.
 	//   "POST_ROOM" - A post room. Topics in this room are organized in a
 	// post/reply style. See the design doc for more details:
-	// go/PostRoomsInDynamite.
+	// go/PostRoomsInDynamite. Deprecated. Post rooms are no longer
+	// supported.
 	//   "ACTIVITY_FEED" - Represents an Activity Feed space. These groups
 	// are modeled like flat rooms and contain items for users to catch up
 	// on important things. Each user should only have one group of this
@@ -2645,6 +2656,12 @@ type AppsDynamiteSharedContentReportType struct {
 	//   "SPAM" - "Spam"
 	//   "CONFIDENTIAL_INFORMATION" - "Confidential information"
 	//   "SENSITIVE_INFORMATION" - "Sensitive information"
+	//   "FRAUD" - Phishing, impersonation/misrepresentation, or deceiving
+	// other users into sharing information under false pretenses.
+	//   "MALWARE" - Malware, viruses, Trojan horses, corrupted files,
+	// destructive code, etc.
+	//   "ILLEGAL_ACTIVITIES" - Promoting, organizing, or engaging in
+	// illegal activities.
 	//   "OTHER" - "Something else"
 	SystemViolation string `json:"systemViolation,omitempty"`
 
@@ -4057,6 +4074,78 @@ func (s *AppsDynamiteSharedRetentionSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppsDynamiteSharedSegmentedMembershipCount: Contains info on
+// membership count for member types: HUMAN_USER, APP_USER &
+// ROSTER_MEMBER different states: INVITED, JOINED
+type AppsDynamiteSharedSegmentedMembershipCount struct {
+	// Possible values:
+	//   "MEMBER_TYPE_UNSPECIFIED" - default value
+	//   "HUMAN_USER" - member is a human user
+	//   "ROSTER_MEMBER" - member is a roster
+	MemberType string `json:"memberType,omitempty"`
+
+	// MembershipCount: count of members with given type and state
+	MembershipCount int64 `json:"membershipCount,omitempty"`
+
+	// Possible values:
+	//   "MEMBER_UNKNOWN" - Default state, do not use
+	//   "MEMBER_INVITED" - An invitation to the space has been sent
+	//   "MEMBER_JOINED" - User has joined the space
+	//   "MEMBER_NOT_A_MEMBER" - User is not a member
+	//   "MEMBER_FAILED" - This state should never be stored in Spanner. It
+	// is a state for responses to the clients to indicate that membership
+	// mutations have failed and the member is in its previous state.
+	MembershipState string `json:"membershipState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MemberType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MemberType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedSegmentedMembershipCount) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedSegmentedMembershipCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteSharedSegmentedMembershipCounts struct {
+	Value []*AppsDynamiteSharedSegmentedMembershipCount `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteSharedSegmentedMembershipCounts) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteSharedSegmentedMembershipCounts
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AppsDynamiteSharedSelectionInput: A widget that creates a UI item
 // (for example, a drop-down list) with options for users to select.
 type AppsDynamiteSharedSelectionInput struct {
@@ -4543,6 +4632,8 @@ type AppsDynamiteSharedVideoReference struct {
 	//   "SUCCESS"
 	//   "ERROR"
 	//   "NOT_APPLICABLE"
+	//   "THUMBNAIL_SUCCESS"
+	//   "GO_LIVE_SUCCESS"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -5274,6 +5365,17 @@ func (s *BorderStyle) MarshalJSON() ([]byte, error) {
 
 // BotInfo: Bot-specific profile information.
 type BotInfo struct {
+	// Possible values:
+	//   "UNSPECIFIED_STATUS"
+	//   "ALLOWED"
+	//   "ALL_APPS_DISABLED_BY_ADMIN" - For both ALL_APPS_DISABLED_BY_ADMIN
+	// and APP_NOT_ALLOWLISTED_BY_ADMIN, the app should still be visible in
+	// the catalog, but usage of the app will be disabled. Indicates that
+	// all apps have been disabled by the dasher admin.
+	//   "APP_NOT_ALLOWLISTED_BY_ADMIN" - Indicates that the customer is
+	// using allowlisting, but that the bot is not allowlisted.
+	AppAllowlistStatus string `json:"appAllowlistStatus,omitempty"`
+
 	// AppId: Identifier of the application associated with the bot.
 	AppId *AppId `json:"appId,omitempty"`
 
@@ -5306,6 +5408,9 @@ type BotInfo struct {
 	// developer. No one can @mention or interact with the bot.
 	Status string `json:"status,omitempty"`
 
+	// SupportHomeScreen: If the app supports a home screen.
+	SupportHomeScreen bool `json:"supportHomeScreen,omitempty"`
+
 	// SupportUrls: Urls with additional information related to the bot.
 	// This field should always be set even if all the fields within it are
 	// empty, so that it is convenient for clients to work with this field
@@ -5324,31 +5429,21 @@ type BotInfo struct {
 	//   "CAN_ADD_TO_HUMAN_DM"
 	SupportedUses []string `json:"supportedUses,omitempty"`
 
-	// Possible values:
-	//   "UNSPECIFIED_STATUS"
-	//   "ALLOWED"
-	//   "ALL_BOTS_DISABLED_BY_ADMIN" - For both ALL_BOTS_DISABLED_BY_ADMIN
-	// and BOT_NOT_WHITELISTED_BY_ADMIN, the bot should still be visible in
-	// the catalog, but usage of the bot will be disabled. Indicates that
-	// all bots has been disabled by the dasher admin.
-	//   "BOT_NOT_WHITELISTED_BY_ADMIN" - Indicates that the customer is
-	// using whitelisting, but that the bot is not whitelisted.
-	WhitelistStatus string `json:"whitelistStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppId") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AppAllowlistStatus")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppAllowlistStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -11022,7 +11117,7 @@ func (s *GoogleChatV1WidgetMarkupTextParagraph) MarshalJSON() ([]byte, error) {
 
 // GoogleDocsMetadata: The corpus specific metadata for office-type
 // documents, from Google Docs and other sources. This message is passed
-// to the scorer and beyond. Next tag: 7
+// to the scorer and beyond. Next tag: 9
 type GoogleDocsMetadata struct {
 	// AclInfo: Contains number of users and groups which can access the
 	// document.
@@ -11058,6 +11153,12 @@ type GoogleDocsMetadata struct {
 	// LastContentModifiedTimestamp: The last time this document was
 	// modified, in seconds since epoch. Only counts content modifications.
 	LastContentModifiedTimestamp int64 `json:"lastContentModifiedTimestamp,omitempty,string"`
+
+	// NumSubscribers: Contains number of subscribers for the document.
+	NumSubscribers int64 `json:"numSubscribers,omitempty"`
+
+	// NumViewers: Size of untruncated viewers list.
+	NumViewers int64 `json:"numViewers,omitempty"`
 
 	// ResultInfo: Additional per-result information, akin to Gmail's
 	// SingleThreadResponse. Note: GWS no longer seems to use this field,
@@ -15949,7 +16050,9 @@ type PropertyDefinition struct {
 	// IsWildcardSearchable: Indicates that users can perform wildcard
 	// search for this property. Only supported for Text properties.
 	// IsReturnable must be true to set this option. In a given datasource
-	// maximum of 5 properties can be marked as is_wildcard_searchable.
+	// maximum of 5 properties can be marked as is_wildcard_searchable. For
+	// more details, see Define object properties
+	// (https://developers.google.com/cloud-search/docs/guides/schema-guide#properties)
 	IsWildcardSearchable bool `json:"isWildcardSearchable,omitempty"`
 
 	// Name: The name of the property. Item indexing requests sent to the
@@ -16586,8 +16689,14 @@ type QuotedMessageMetadata struct {
 	//
 	// Possible values:
 	//   "MESSAGE_STATE_UNSPECIFIED"
-	//   "MESSAGE_STATE_ACTIVE"
-	//   "MESSAGE_STATE_DELETED"
+	//   "MESSAGE_STATE_ACTIVE" - The original message is present in storage
+	// and not deleted; the message contents can be hydrated.
+	//   "MESSAGE_STATE_DELETED" - The original message has been deleted;
+	// the message contents cannot be hydrated.
+	//   "MESSAGE_STATE_OTR_EDITED" - The OTR original message was edited
+	// and therefore no longer retrievable from storage; the message
+	// contents cannot be hydrated. See go/message-quoting-otr-edits for
+	// more context.
 	MessageState string `json:"messageState,omitempty"`
 
 	// RetentionSettings: Output only. The retention (OTR) settings of the
@@ -17015,8 +17124,8 @@ type RequestOptions struct {
 	// the page. In the event that the user's language preference is known,
 	// set this field to the known user language. When specified, the
 	// documents in search results are biased towards the specified
-	// language. The suggest API does not use this parameter. Instead,
-	// suggest autocompletes only based on characters in the query.
+	// language. From Suggest API perspective, for 3p suggest this is used
+	// as a hint while making predictions to add language boosting.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SearchApplicationId: The ID generated when you create a search
@@ -17519,6 +17628,10 @@ type Roster struct {
 	//   "ROSTER_ACTIVE" - Roster is active
 	//   "ROSTER_DELETED" - Roster deleted
 	RosterState string `json:"rosterState,omitempty"`
+
+	// SegmentedMembershipCounts: Roster membership count. May contain
+	// counts based on member type and membership state.
+	SegmentedMembershipCounts *AppsDynamiteSharedSegmentedMembershipCounts `json:"segmentedMembershipCounts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AvatarUrl") to
 	// unconditionally include in API requests. By default, fields with
@@ -18513,7 +18626,7 @@ type Settings struct {
 	ChatLock bool `json:"chatLock,omitempty"`
 
 	// CohostArtifactSharingEnabled: Whether meeting artifacts will be
-	// shared with co-hosts.
+	// shared with cohosts.
 	CohostArtifactSharingEnabled bool `json:"cohostArtifactSharingEnabled,omitempty"`
 
 	// CseEnabled: Whether Client-side Encryption is enabled for the meeting
@@ -20715,8 +20828,7 @@ type UrlMetadata struct {
 	// Service ItemType) Note that this is not necessarily the mime type of
 	// the http resource. For example a text/html from youtube or vimeo may
 	// actually be classified as a video type. Then we shall mark it as
-	// video/* since we don't know exactly what type of video it is. NEXT
-	// TAG : 16
+	// video/* since we don't know exactly what type of video it is.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// RedirectUrl: The stable redirect URL pointing to frontend server.
@@ -20734,6 +20846,14 @@ type UrlMetadata struct {
 
 	// Url: The original URL.
 	Url *SafeUrlProto `json:"url,omitempty"`
+
+	// UrlSource: NEXT TAG : 17
+	//
+	// Possible values:
+	//   "URL_SOURCE_UNKNOWN"
+	//   "USER_SUPPLIED_URL"
+	//   "SERVER_SUPPLIED_POLICY_VIOLATION"
+	UrlSource string `json:"urlSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
@@ -20953,20 +21073,33 @@ func (s *UserId) MarshalJSON() ([]byte, error) {
 }
 
 // UserInfo: Contains info regarding the updater of an Activity Feed
-// item. Next Id: 7
+// item. Next Id: 8
 type UserInfo struct {
+	// DriveNotificationAvatarUrl: Avatar url of the user who triggered the
+	// Drive Notification email. This field will be populated if we can
+	// extract such information from the Drive Notification email. This
+	// should only be used to fetch user avatars when updater_to_show_email
+	// is not populated. This field is not set for non-Drive Notification
+	// items. This is not the actual sender of the email, as the sender is
+	// always comments-noreply@docs.google.com.
+	DriveNotificationAvatarUrl string `json:"driveNotificationAvatarUrl,omitempty"`
+
 	// UpdaterCountDisplayType: Describes how updater_count_to_show should
 	// be used.
 	//
 	// Possible values:
 	//   "UPDATER_COUNT_DISPLAY_TYPE_UNSPECIFIED"
+	//   "NO_DISPLAY_COUNT" - No additional updaters where involved. Shows
+	// up in clients as "$USERNAME replied".
 	//   "EXACT_COUNT" - A precise updater count is known and the value set
 	// in updater_count_to_show should be used. If set,
 	// updater_count_to_show is set to the total number of updaters minus
-	// the one set in updater_to_show.
+	// the one set in updater_to_show. Shows up in clients as "$USERNAME and
+	// $NUM others replied".
 	//   "NONZERO_COUNT" - A precise updater count could not be calculated,
 	// but there is at least one. Any value set in updater_count_to_show
-	// should NOT be used.
+	// should NOT be used. Shows up in clients as "$USERNAME and others
+	// replied".
 	UpdaterCountDisplayType string `json:"updaterCountDisplayType,omitempty"`
 
 	// UpdaterCountToShow: The number of updaters for clients to show
@@ -20974,7 +21107,11 @@ type UserInfo struct {
 	UpdaterCountToShow int64 `json:"updaterCountToShow,omitempty"`
 
 	// UpdaterToShowEmail: The email of the updater for clients to show used
-	// for Gmail items.
+	// for Gmail items. For Drive Notifications, this is the email of the
+	// user who triggered the Drive Notification email. This field will be
+	// populated if we can extract such information from the Drive
+	// Notification email. This is not the actual sender of the email, as
+	// the sender is always comments-noreply@docs.google.com.
 	UpdaterToShowEmail string `json:"updaterToShowEmail,omitempty"`
 
 	// UpdaterToShowGaiaId: The gaia id of the updater for clients to show
@@ -20983,10 +21120,14 @@ type UserInfo struct {
 	UpdaterToShowGaiaId int64 `json:"updaterToShowGaiaId,omitempty,string"`
 
 	// UpdaterToShowName: The display name of the updater for clients to
-	// show used for Gmail items. This (along with the updater fields above)
-	// will be populated in the thread pipeline (http://shortn/_rPS0GCp94Y)
-	// when converting Activity Feed message attributes into
-	// client-renderable Activity Feed items.
+	// show used for Gmail items. For non-Drive Notification items, this
+	// field will always be populated. If the display name cannot be found
+	// for the user, the fallback string will be the email address. For
+	// Drive Notification items, this is the email of the user who triggered
+	// the Drive notification email. This field will be populated if we can
+	// extract such information from the Drive Notification email. This is
+	// not the actual sender of the email, as the sender is always
+	// comments-noreply@docs.google.com.
 	UpdaterToShowName string `json:"updaterToShowName,omitempty"`
 
 	// UpdaterToShowUserId: The updater for clients to show used for
@@ -20994,7 +21135,7 @@ type UserInfo struct {
 	UpdaterToShowUserId *UserId `json:"updaterToShowUserId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "UpdaterCountDisplayType") to unconditionally include in API
+	// "DriveNotificationAvatarUrl") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -21002,13 +21143,13 @@ type UserInfo struct {
 	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UpdaterCountDisplayType")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "DriveNotificationAvatarUrl") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -25671,8 +25812,8 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // the page. In the event that the user's language preference is known,
 // set this field to the known user language. When specified, the
 // documents in search results are biased towards the specified
-// language. The suggest API does not use this parameter. Instead,
-// suggest autocompletes only based on characters in the query.
+// language. From Suggest API perspective, for 3p suggest this is used
+// as a hint while making predictions to add language boosting.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
 	return c
@@ -25814,7 +25955,7 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 	//       "type": "boolean"
 	//     },
 	//     "requestOptions.languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. The suggest API does not use this parameter. Instead, suggest autocompletes only based on characters in the query.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier. For translations. Set this field using the language set in browser or for the page. In the event that the user's language preference is known, set this field to the known user language. When specified, the documents in search results are biased towards the specified language. From Suggest API perspective, for 3p suggest this is used as a hint while making predictions to add language boosting.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

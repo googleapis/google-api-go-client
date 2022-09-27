@@ -1243,7 +1243,8 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// token.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Hostname: The hostname of the page on which the token was generated.
+	// Hostname: The hostname of the page on which the token was generated
+	// (Web keys only).
 	Hostname string `json:"hostname,omitempty"`
 
 	// InvalidReason: Reason associated with the response when valid =

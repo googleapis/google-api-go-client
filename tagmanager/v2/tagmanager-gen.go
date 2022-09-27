@@ -3877,7 +3877,7 @@ type AccountsUpdateCall struct {
 
 // Update: Updates a GTM Account.
 //
-//   - path: GTM Accounts's API relative path. Example:
+//   - path: GTM Account's API relative path. Example:
 //     accounts/{account_id}.
 func (r *AccountsService) Update(path string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3999,7 +3999,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//       "type": "string"
 	//     },
 	//     "path": {
-	//       "description": "GTM Accounts's API relative path. Example: accounts/{account_id}",
+	//       "description": "GTM Account's API relative path. Example: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -4429,7 +4429,7 @@ type AccountsContainersListCall struct {
 
 // List: Lists all Containers that belongs to a GTM Account.
 //
-//   - parent: GTM Accounts's API relative path. Example:
+//   - parent: GTM Account's API relative path. Example:
 //     accounts/{account_id}.
 func (r *AccountsContainersService) List(parent string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4557,7 +4557,7 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "GTM Accounts's API relative path. Example: accounts/{account_id}.",
+	//       "description": "GTM Account's API relative path. Example: accounts/{account_id}.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -16952,7 +16952,7 @@ type AccountsUserPermissionsListCall struct {
 // List: List all users that have access to the account along with
 // Account and Container user access granted to each of them.
 //
-//   - parent: GTM Accounts's API relative path. Example:
+//   - parent: GTM Account's API relative path. Example:
 //     accounts/{account_id}.
 func (r *AccountsUserPermissionsService) List(parent string) *AccountsUserPermissionsListCall {
 	c := &AccountsUserPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17080,7 +17080,7 @@ func (c *AccountsUserPermissionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "GTM Accounts's API relative path. Example: accounts/{account_id}",
+	//       "description": "GTM Account's API relative path. Example: accounts/{account_id}",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,

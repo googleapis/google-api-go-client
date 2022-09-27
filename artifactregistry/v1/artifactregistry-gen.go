@@ -187,6 +187,7 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
 	rs.DockerImages = NewProjectsLocationsRepositoriesDockerImagesService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
+	rs.KfpArtifacts = NewProjectsLocationsRepositoriesKfpArtifactsService(s)
 	rs.MavenArtifacts = NewProjectsLocationsRepositoriesMavenArtifactsService(s)
 	rs.NpmPackages = NewProjectsLocationsRepositoriesNpmPackagesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
@@ -203,6 +204,8 @@ type ProjectsLocationsRepositoriesService struct {
 	DockerImages *ProjectsLocationsRepositoriesDockerImagesService
 
 	Files *ProjectsLocationsRepositoriesFilesService
+
+	KfpArtifacts *ProjectsLocationsRepositoriesKfpArtifactsService
 
 	MavenArtifacts *ProjectsLocationsRepositoriesMavenArtifactsService
 
@@ -239,6 +242,15 @@ func NewProjectsLocationsRepositoriesFilesService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsRepositoriesFilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesKfpArtifactsService(s *Service) *ProjectsLocationsRepositoriesKfpArtifactsService {
+	rs := &ProjectsLocationsRepositoriesKfpArtifactsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesKfpArtifactsService struct {
 	s *Service
 }
 
@@ -962,6 +974,42 @@ type ImportYumArtifactsResponse struct {
 
 func (s *ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KfpArtifact: A detailed representation of a GooGet artifact.
+type KfpArtifact struct {
+	// Name: Output only. Resource name of the KFP artifact. Since users
+	// don't directly interact with this resource, the name will be derived
+	// from the associated version. For example, when version =
+	// ".../versions/sha256:abcdef...", the name will be
+	// ".../kfpArtifacts/sha256:abcdef...".
+	Name string `json:"name,omitempty"`
+
+	// Version: The version associated with the KFP artifact. Must follow
+	// the Semantic Versioning standard.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KfpArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod KfpArtifact
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2188,6 +2236,74 @@ type UploadAptArtifactResponse struct {
 
 func (s *UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAptArtifactResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadKfpArtifactMediaResponse: The response to upload an artifact.
+type UploadKfpArtifactMediaResponse struct {
+	// Operation: Operation that will be returned to the user.
+	Operation *Operation `json:"operation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadKfpArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadKfpArtifactMediaResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UploadKfpArtifactMetadata: The operation metadata for uploading KFP
+// artifacts.
+type UploadKfpArtifactMetadata struct {
+}
+
+// UploadKfpArtifactRequest: The request to upload an artifact.
+type UploadKfpArtifactRequest struct {
+	// Description: Description of the package version.
+	Description string `json:"description,omitempty"`
+
+	// Tags: Tags to be created with the version.
+	Tags []string `json:"tags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadKfpArtifactRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadKfpArtifactRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5526,6 +5642,232 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "artifactregistry.projects.locations.repositories.kfpArtifacts.upload":
+
+type ProjectsLocationsRepositoriesKfpArtifactsUploadCall struct {
+	s                        *Service
+	parent                   string
+	uploadkfpartifactrequest *UploadKfpArtifactRequest
+	urlParams_               gensupport.URLParams
+	mediaInfo_               *gensupport.MediaInfo
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Upload: Directly uploads a KFP artifact. The returned Operation will
+// complete once the resource is uploaded. Package, Version, and File
+// resources will be created based on the uploaded artifact. Uploaded
+// artifacts that conflict with existing resources will be overwritten.
+//
+//   - parent: The resource name of the repository where the KFP artifact
+//     will be uploaded.
+func (r *ProjectsLocationsRepositoriesKfpArtifactsService) Upload(parent string, uploadkfpartifactrequest *UploadKfpArtifactRequest) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesKfpArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.uploadkfpartifactrequest = uploadkfpartifactrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk
+// size may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
+// upload request will be determined by sniffing the contents of r,
+// unless a MediaOption generated by googleapi.ContentType is
+// supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesKfpArtifactsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadkfpartifactrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/kfpArtifacts:create")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+parent}/kfpArtifacts:create")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.kfpArtifacts.upload" call.
+// Exactly one of *UploadKfpArtifactMediaResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *UploadKfpArtifactMediaResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesKfpArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadKfpArtifactMediaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
+	}
+	ret := &UploadKfpArtifactMediaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Directly uploads a KFP artifact. The returned Operation will complete once the resource is uploaded. Package, Version, and File resources will be created based on the uploaded artifact. Uploaded artifacts that conflict with existing resources will be overwritten.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/kfpArtifacts:create",
+	//   "httpMethod": "POST",
+	//   "id": "artifactregistry.projects.locations.repositories.kfpArtifacts.upload",
+	//   "mediaUpload": {
+	//     "accept": [
+	//       "*/*"
+	//     ],
+	//     "protocols": {
+	//       "simple": {
+	//         "multipart": true,
+	//         "path": "/upload/v1/{+parent}/kfpArtifacts:create"
+	//       }
+	//     }
+	//   },
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The resource name of the repository where the KFP artifact will be uploaded.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/kfpArtifacts:create",
+	//   "request": {
+	//     "$ref": "UploadKfpArtifactRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UploadKfpArtifactMediaResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ],
+	//   "supportsMediaUpload": true
+	// }
+
 }
 
 // method id "artifactregistry.projects.locations.repositories.mavenArtifacts.get":

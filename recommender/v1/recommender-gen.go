@@ -1520,6 +1520,336 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "recommender.billingAccounts.locations.insightTypes.getConfig":
+
+type BillingAccountsLocationsInsightTypesGetConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConfig: Gets the requested InsightTypeConfig. There is only one
+// instance of the config for each InsightType.
+//
+//   - name: Name of the InsightTypeConfig to get. Acceptable formats: *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//     PE_ID]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]/config`.
+func (r *BillingAccountsLocationsInsightTypesService) GetConfig(name string) *BillingAccountsLocationsInsightTypesGetConfigCall {
+	c := &BillingAccountsLocationsInsightTypesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsInsightTypesGetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsInsightTypesGetConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Context(ctx context.Context) *BillingAccountsLocationsInsightTypesGetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.billingAccounts.locations.insightTypes.getConfig" call.
+// Exactly one of *GoogleCloudRecommenderV1InsightTypeConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1InsightTypeConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1InsightTypeConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1InsightTypeConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.billingAccounts.locations.insightTypes.getConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config`",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1InsightTypeConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.billingAccounts.locations.insightTypes.updateConfig":
+
+type BillingAccountsLocationsInsightTypesUpdateConfigCall struct {
+	s                                         *Service
+	name                                      string
+	googlecloudrecommenderv1insighttypeconfig *GoogleCloudRecommenderV1InsightTypeConfig
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// UpdateConfig: Updates an InsightTypeConfig change. This will create a
+// new revision of the config.
+//
+//   - name: Name of insight type config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT
+//     _TYPE_ID]/config.
+func (r *BillingAccountsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1insighttypeconfig *GoogleCloudRecommenderV1InsightTypeConfig) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
+	c := &BillingAccountsLocationsInsightTypesUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1insighttypeconfig = googlecloudrecommenderv1insighttypeconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) UpdateMask(updateMask string) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true,
+// validate the request and preview the change, but do not actually
+// update it.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) ValidateOnly(validateOnly bool) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Context(ctx context.Context) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1insighttypeconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.billingAccounts.locations.insightTypes.updateConfig" call.
+// Exactly one of *GoogleCloudRecommenderV1InsightTypeConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1InsightTypeConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsLocationsInsightTypesUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1InsightTypeConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1InsightTypeConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an InsightTypeConfig change. This will create a new revision of the config.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/locations/{locationsId}/insightTypes/{insightTypesId}/config",
+	//   "httpMethod": "PATCH",
+	//   "id": "recommender.billingAccounts.locations.insightTypes.updateConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, validate the request and preview the change, but do not actually update it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1InsightTypeConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1InsightTypeConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "recommender.billingAccounts.locations.insightTypes.insights.get":
 
 type BillingAccountsLocationsInsightTypesInsightsGetCall struct {
@@ -2038,6 +2368,337 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Do(opts .
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecommenderV1Insight"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.billingAccounts.locations.recommenders.getConfig":
+
+type BillingAccountsLocationsRecommendersGetConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetConfig: Gets the requested Recommender Config. There is only one
+// instance of the config for each Recommender.
+//
+//   - name: Name of the Recommendation Config to get. Acceptable formats:
+//     *
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//     ENDER_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//     R_ID]/config` *
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//     RECOMMENDER_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]/config`.
+func (r *BillingAccountsLocationsRecommendersService) GetConfig(name string) *BillingAccountsLocationsRecommendersGetConfigCall {
+	c := &BillingAccountsLocationsRecommendersGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsRecommendersGetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsRecommendersGetConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) Context(ctx context.Context) *BillingAccountsLocationsRecommendersGetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.billingAccounts.locations.recommenders.getConfig" call.
+// Exactly one of *GoogleCloudRecommenderV1RecommenderConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1RecommenderConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1RecommenderConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1RecommenderConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested Recommender Config. There is only one instance of the config for each Recommender.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+	//   "httpMethod": "GET",
+	//   "id": "recommender.billingAccounts.locations.recommenders.getConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1RecommenderConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recommender.billingAccounts.locations.recommenders.updateConfig":
+
+type BillingAccountsLocationsRecommendersUpdateConfigCall struct {
+	s                                         *Service
+	name                                      string
+	googlecloudrecommenderv1recommenderconfig *GoogleCloudRecommenderV1RecommenderConfig
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// UpdateConfig: Updates a Recommender Config. This will create a new
+// revision of the config.
+//
+//   - name: Name of recommender config. Eg,
+//     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMME
+//     NDER_ID]/config.
+func (r *BillingAccountsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1recommenderconfig *GoogleCloudRecommenderV1RecommenderConfig) *BillingAccountsLocationsRecommendersUpdateConfigCall {
+	c := &BillingAccountsLocationsRecommendersUpdateConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrecommenderv1recommenderconfig = googlecloudrecommenderv1recommenderconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) UpdateMask(updateMask string) *BillingAccountsLocationsRecommendersUpdateConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If true,
+// validate the request and preview the change, but do not actually
+// update it.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) ValidateOnly(validateOnly bool) *BillingAccountsLocationsRecommendersUpdateConfigCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsRecommendersUpdateConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Context(ctx context.Context) *BillingAccountsLocationsRecommendersUpdateConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommenderv1recommenderconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recommender.billingAccounts.locations.recommenders.updateConfig" call.
+// Exactly one of *GoogleCloudRecommenderV1RecommenderConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecommenderV1RecommenderConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsLocationsRecommendersUpdateConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommenderV1RecommenderConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecommenderV1RecommenderConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Recommender Config. This will create a new revision of the config.",
+	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/locations/{locationsId}/recommenders/{recommendersId}/config",
+	//   "httpMethod": "PATCH",
+	//   "id": "recommender.billingAccounts.locations.recommenders.updateConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of recommender config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If true, validate the request and preview the change, but do not actually update it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecommenderV1RecommenderConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecommenderV1RecommenderConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4249,12 +4910,14 @@ type OrganizationsLocationsInsightTypesGetConfigCall struct {
 // instance of the config for each InsightType.
 //
 //   - name: Name of the InsightTypeConfig to get. Acceptable formats: *
-//     `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
 //     PE_ID]/config` *
-//     `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
-//     D]/config` *
-//     `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
-//     GHT_TYPE_ID]/config`.
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]/config`.
 func (r *OrganizationsLocationsInsightTypesService) GetConfig(name string) *OrganizationsLocationsInsightTypesGetConfigCall {
 	c := &OrganizationsLocationsInsightTypesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4371,7 +5034,7 @@ func (c *OrganizationsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`",
+	//       "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
 	//       "required": true,
@@ -5109,7 +5772,9 @@ type OrganizationsLocationsRecommendersGetConfigCall struct {
 //     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
 //     R_ID]/config` *
 //     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//     RECOMMENDER_ID]/config`.
+//     RECOMMENDER_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]/config`.
 func (r *OrganizationsLocationsRecommendersService) GetConfig(name string) *OrganizationsLocationsRecommendersGetConfigCall {
 	c := &OrganizationsLocationsRecommendersGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5226,7 +5891,7 @@ func (c *OrganizationsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
+	//       "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
 	//       "required": true,
@@ -6263,12 +6928,14 @@ type ProjectsLocationsInsightTypesGetConfigCall struct {
 // instance of the config for each InsightType.
 //
 //   - name: Name of the InsightTypeConfig to get. Acceptable formats: *
-//     `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TY
+//     `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//     T_TYPE_ID]/config` *
+//     `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
 //     PE_ID]/config` *
-//     `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_I
-//     D]/config` *
-//     `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSI
-//     GHT_TYPE_ID]/config`.
+//     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//     INSIGHT_TYPE_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//     pes/[INSIGHT_TYPE_ID]/config`.
 func (r *ProjectsLocationsInsightTypesService) GetConfig(name string) *ProjectsLocationsInsightTypesGetConfigCall {
 	c := &ProjectsLocationsInsightTypesGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6385,7 +7052,7 @@ func (c *ProjectsLocationsInsightTypesGetConfigCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`",
+	//       "description": "Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+/config$",
 	//       "required": true,
@@ -7123,7 +7790,9 @@ type ProjectsLocationsRecommendersGetConfigCall struct {
 //     `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
 //     R_ID]/config` *
 //     `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
-//     RECOMMENDER_ID]/config`.
+//     RECOMMENDER_ID]/config` *
+//     `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//     ers/[RECOMMENDER_ID]/config`.
 func (r *ProjectsLocationsRecommendersService) GetConfig(name string) *ProjectsLocationsRecommendersGetConfigCall {
 	c := &ProjectsLocationsRecommendersGetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7240,7 +7909,7 @@ func (c *ProjectsLocationsRecommendersGetConfigCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
+	//       "description": "Required. Name of the Recommendation Config to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+/config$",
 	//       "required": true,

@@ -2276,32 +2276,6 @@ func (s *TableDataSet) MarshalJSON() ([]byte, error) {
 
 // TableDisplayOptions: Table display options that can be reused.
 type TableDisplayOptions struct {
-	// ShownColumns: Optional. Columns to display in the table. Leave empty
-	// to display all available columns. Note: This field is for future
-	// features and is not currently used.
-	ShownColumns []string `json:"shownColumns,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ShownColumns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ShownColumns") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TableDisplayOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod TableDisplayOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Text: A widget that displays textual content.

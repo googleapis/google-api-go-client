@@ -397,6 +397,7 @@ type CustomersService struct {
 
 func NewCustomersChromeService(s *Service) *CustomersChromeService {
 	rs := &CustomersChromeService{s: s}
+	rs.PrintServers = NewCustomersChromePrintServersService(s)
 	rs.Printers = NewCustomersChromePrintersService(s)
 	return rs
 }
@@ -404,7 +405,18 @@ func NewCustomersChromeService(s *Service) *CustomersChromeService {
 type CustomersChromeService struct {
 	s *Service
 
+	PrintServers *CustomersChromePrintServersService
+
 	Printers *CustomersChromePrintersService
+}
+
+func NewCustomersChromePrintServersService(s *Service) *CustomersChromePrintServersService {
+	rs := &CustomersChromePrintServersService{s: s}
+	return rs
+}
+
+type CustomersChromePrintServersService struct {
+	s *Service
 }
 
 func NewCustomersChromePrintersService(s *Service) *CustomersChromePrintersService {
@@ -840,6 +852,72 @@ func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreatePrintServersRequest: Request to add multiple new print
+// servers in a batch.
+type BatchCreatePrintServersRequest struct {
+	// Requests: Required. A list of `PrintServer` resources to be created
+	// (max `50` per batch).
+	Requests []*CreatePrintServerRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintServersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintServersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BatchCreatePrintServersResponse struct {
+	// Failures: A list of create failures. `PrintServer` IDs are not
+	// populated, as print servers were not created.
+	Failures []*PrintServerFailureInfo `json:"failures,omitempty"`
+
+	// PrintServers: A list of successfully created print servers with their
+	// IDs populated.
+	PrintServers []*PrintServer `json:"printServers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Failures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Failures") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintServersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintServersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchCreatePrintersRequest: Request for adding new printers in batch.
 type BatchCreatePrintersRequest struct {
 	// Requests: A list of Printers to be created. Max 50 at a time.
@@ -902,6 +980,73 @@ type BatchCreatePrintersResponse struct {
 
 func (s *BatchCreatePrintersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreatePrintersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePrintServersRequest: Request to delete multiple existing
+// print servers in a batch.
+type BatchDeletePrintServersRequest struct {
+	// PrintServerIds: A list of print server IDs that should be deleted
+	// (max `100` per batch).
+	PrintServerIds []string `json:"printServerIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrintServerIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrintServerIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintServersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintServersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BatchDeletePrintServersResponse struct {
+	// FailedPrintServers: A list of update failures.
+	FailedPrintServers []*PrintServerFailureInfo `json:"failedPrintServers,omitempty"`
+
+	// PrintServerIds: A list of print server IDs that were successfully
+	// deleted.
+	PrintServerIds []string `json:"printServerIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedPrintServers")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedPrintServers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintServersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintServersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2176,6 +2321,44 @@ func (s *ChromeOsMoveDevicesToOu) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreatePrintServerRequest: Request for adding a new print server.
+type CreatePrintServerRequest struct {
+	// Parent: Required. The unique ID
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+	// of the customer's Google Workspace account. Format: `customers/{id}`
+	Parent string `json:"parent,omitempty"`
+
+	// PrintServer: Required. A print server to create. If you want to place
+	// the print server under a specific organizational unit (OU), then
+	// populate the `org_unit_id`. Otherwise the print server is created
+	// under the root OU. The `org_unit_id` can be retrieved using the
+	// Directory API
+	// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-org-units).
+	PrintServer *PrintServer `json:"printServer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreatePrintServerRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreatePrintServerRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreatePrinterRequest: Request for adding a new printer.
 type CreatePrinterRequest struct {
 	// Parent: Required. The name of the customer. Format:
@@ -3162,6 +3345,42 @@ func (s *Groups) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListPrintServersResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` in a request
+	// to retrieve the next page. If this field is omitted, there are no
+	// subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PrintServers: List of print servers.
+	PrintServers []*PrintServer `json:"printServers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrintServersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrintServersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListPrinterModelsResponse: Response for listing allowed printer
 // models.
 type ListPrinterModelsResponse struct {
@@ -3876,6 +4095,190 @@ type OsUpdateStatus struct {
 
 func (s *OsUpdateStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod OsUpdateStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrintServer: Configuration for a print server.
+type PrintServer struct {
+	// CreateTime: Output only. Time when the print server was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Editable. Description of the print server (as shown in
+	// the Admin console).
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Editable. Display name of the print server (as shown in
+	// the Admin console).
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Immutable. ID of the print server. Leave empty when creating.
+	Id string `json:"id,omitempty"`
+
+	// Name: Immutable. Resource name of the print server. Leave empty when
+	// creating. Format:
+	// `customers/{customer.id}/printServers/{print_server.id}`
+	Name string `json:"name,omitempty"`
+
+	// OrgUnitId: ID of the organization unit (OU) that owns this print
+	// server. This value can only be set when the print server is initially
+	// created. If it's not populated, the print server is placed under the
+	// root OU. The `org_unit_id` can be retrieved using the Directory API
+	// (/admin-sdk/directory/reference/rest/v1/orgunits).
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// Uri: Editable. Print server URI.
+	Uri string `json:"uri,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrintServer) MarshalJSON() ([]byte, error) {
+	type NoMethod PrintServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrintServerFailureInfo: Info about failures
+type PrintServerFailureInfo struct {
+	// ErrorCode: Canonical code for why the update failed to apply.
+	//
+	// Possible values:
+	//   "OK" - Not an error; returned on success. HTTP Mapping: 200 OK
+	//   "CANCELLED" - The operation was cancelled, typically by the caller.
+	// HTTP Mapping: 499 Client Closed Request
+	//   "UNKNOWN" - Unknown error. For example, this error may be returned
+	// when a `Status` value received from another address space belongs to
+	// an error space that is not known in this address space. Also errors
+	// raised by APIs that do not return enough error information may be
+	// converted to this error. HTTP Mapping: 500 Internal Server Error
+	//   "INVALID_ARGUMENT" - The client specified an invalid argument. Note
+	// that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT`
+	// indicates arguments that are problematic regardless of the state of
+	// the system (e.g., a malformed file name). HTTP Mapping: 400 Bad
+	// Request
+	//   "DEADLINE_EXCEEDED" - The deadline expired before the operation
+	// could complete. For operations that change the state of the system,
+	// this error may be returned even if the operation has completed
+	// successfully. For example, a successful response from a server could
+	// have been delayed long enough for the deadline to expire. HTTP
+	// Mapping: 504 Gateway Timeout
+	//   "NOT_FOUND" - Some requested entity (e.g., file or directory) was
+	// not found. Note to server developers: if a request is denied for an
+	// entire class of users, such as gradual feature rollout or
+	// undocumented allowlist, `NOT_FOUND` may be used. If a request is
+	// denied for some users within a class of users, such as user-based
+	// access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404
+	// Not Found
+	//   "ALREADY_EXISTS" - The entity that a client attempted to create
+	// (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict
+	//   "PERMISSION_DENIED" - The caller does not have permission to
+	// execute the specified operation. `PERMISSION_DENIED` must not be used
+	// for rejections caused by exhausting some resource (use
+	// `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED`
+	// must not be used if the caller can not be identified (use
+	// `UNAUTHENTICATED` instead for those errors). This error code does not
+	// imply the request is valid or the requested entity exists or
+	// satisfies other pre-conditions. HTTP Mapping: 403 Forbidden
+	//   "UNAUTHENTICATED" - The request does not have valid authentication
+	// credentials for the operation. HTTP Mapping: 401 Unauthorized
+	//   "RESOURCE_EXHAUSTED" - Some resource has been exhausted, perhaps a
+	// per-user quota, or perhaps the entire file system is out of space.
+	// HTTP Mapping: 429 Too Many Requests
+	//   "FAILED_PRECONDITION" - The operation was rejected because the
+	// system is not in a state required for the operation's execution. For
+	// example, the directory to be deleted is non-empty, an rmdir operation
+	// is applied to a non-directory, etc. Service implementors can use the
+	// following guidelines to decide between `FAILED_PRECONDITION`,
+	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
+	// retry just the failing call. (b) Use `ABORTED` if the client should
+	// retry at a higher level. For example, when a client-specified
+	// test-and-set fails, indicating the client should restart a
+	// read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the
+	// client should not retry until the system state has been explicitly
+	// fixed. For example, if an "rmdir" fails because the directory is
+	// non-empty, `FAILED_PRECONDITION` should be returned since the client
+	// should not retry unless the files are deleted from the directory.
+	// HTTP Mapping: 400 Bad Request
+	//   "ABORTED" - The operation was aborted, typically due to a
+	// concurrency issue such as a sequencer check failure or transaction
+	// abort. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 409 Conflict
+	//   "OUT_OF_RANGE" - The operation was attempted past the valid range.
+	// E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`,
+	// this error indicates a problem that may be fixed if the system state
+	// changes. For example, a 32-bit file system will generate
+	// `INVALID_ARGUMENT` if asked to read at an offset that is not in the
+	// range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to
+	// read from an offset past the current file size. There is a fair bit
+	// of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We
+	// recommend using `OUT_OF_RANGE` (the more specific error) when it
+	// applies so that callers who are iterating through a space can easily
+	// look for an `OUT_OF_RANGE` error to detect when they are done. HTTP
+	// Mapping: 400 Bad Request
+	//   "UNIMPLEMENTED" - The operation is not implemented or is not
+	// supported/enabled in this service. HTTP Mapping: 501 Not Implemented
+	//   "INTERNAL" - Internal errors. This means that some invariants
+	// expected by the underlying system have been broken. This error code
+	// is reserved for serious errors. HTTP Mapping: 500 Internal Server
+	// Error
+	//   "UNAVAILABLE" - The service is currently unavailable. This is most
+	// likely a transient condition, which can be corrected by retrying with
+	// a backoff. Note that it is not always safe to retry non-idempotent
+	// operations. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 503 Service Unavailable
+	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping:
+	// 500 Internal Server Error
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// ErrorMessage: Failure reason message.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// PrintServer: Failed print server.
+	PrintServer *PrintServer `json:"printServer,omitempty"`
+
+	// PrintServerId: ID of a failed print server.
+	PrintServerId string `json:"printServerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrintServerFailureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PrintServerFailureInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8301,6 +8704,1125 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.customer"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.batchCreatePrintServers":
+
+type CustomersChromePrintServersBatchCreatePrintServersCall struct {
+	s                              *Service
+	parent                         string
+	batchcreateprintserversrequest *BatchCreatePrintServersRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// BatchCreatePrintServers: Creates multiple print servers.
+//
+//   - parent: The unique ID
+//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     of the customer's Google Workspace account. Format:
+//     `customers/{id}`.
+func (r *CustomersChromePrintServersService) BatchCreatePrintServers(parent string, batchcreateprintserversrequest *BatchCreatePrintServersRequest) *CustomersChromePrintServersBatchCreatePrintServersCall {
+	c := &CustomersChromePrintServersBatchCreatePrintServersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreateprintserversrequest = batchcreateprintserversrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersBatchCreatePrintServersCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersBatchCreatePrintServersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersBatchCreatePrintServersCall) Context(ctx context.Context) *CustomersChromePrintServersBatchCreatePrintServersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersBatchCreatePrintServersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersBatchCreatePrintServersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateprintserversrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printServers:batchCreatePrintServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.batchCreatePrintServers" call.
+// Exactly one of *BatchCreatePrintServersResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchCreatePrintServersResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersBatchCreatePrintServersCall) Do(opts ...googleapi.CallOption) (*BatchCreatePrintServersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchCreatePrintServersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates multiple print servers.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers:batchCreatePrintServers",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printServers.batchCreatePrintServers",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The [unique ID](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers) of the customer's Google Workspace account. Format: `customers/{id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printServers:batchCreatePrintServers",
+	//   "request": {
+	//     "$ref": "BatchCreatePrintServersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreatePrintServersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.batchDeletePrintServers":
+
+type CustomersChromePrintServersBatchDeletePrintServersCall struct {
+	s                              *Service
+	parent                         string
+	batchdeleteprintserversrequest *BatchDeletePrintServersRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// BatchDeletePrintServers: Deletes multiple print servers.
+//
+//   - parent: The unique ID
+//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     of the customer's Google Workspace account. Format:
+//     `customers/{customer.id}`.
+func (r *CustomersChromePrintServersService) BatchDeletePrintServers(parent string, batchdeleteprintserversrequest *BatchDeletePrintServersRequest) *CustomersChromePrintServersBatchDeletePrintServersCall {
+	c := &CustomersChromePrintServersBatchDeletePrintServersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeleteprintserversrequest = batchdeleteprintserversrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersBatchDeletePrintServersCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersBatchDeletePrintServersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersBatchDeletePrintServersCall) Context(ctx context.Context) *CustomersChromePrintServersBatchDeletePrintServersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersBatchDeletePrintServersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersBatchDeletePrintServersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeleteprintserversrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printServers:batchDeletePrintServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.batchDeletePrintServers" call.
+// Exactly one of *BatchDeletePrintServersResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchDeletePrintServersResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersBatchDeletePrintServersCall) Do(opts ...googleapi.CallOption) (*BatchDeletePrintServersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchDeletePrintServersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes multiple print servers.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers:batchDeletePrintServers",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printServers.batchDeletePrintServers",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The [unique ID](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers) of the customer's Google Workspace account. Format: `customers/{customer.id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printServers:batchDeletePrintServers",
+	//   "request": {
+	//     "$ref": "BatchDeletePrintServersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchDeletePrintServersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.create":
+
+type CustomersChromePrintServersCreateCall struct {
+	s           *Service
+	parent      string
+	printserver *PrintServer
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a print server.
+//
+//   - parent: The unique ID
+//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     of the customer's Google Workspace account. Format:
+//     `customers/{id}`.
+func (r *CustomersChromePrintServersService) Create(parent string, printserver *PrintServer) *CustomersChromePrintServersCreateCall {
+	c := &CustomersChromePrintServersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.printserver = printserver
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersCreateCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersCreateCall) Context(ctx context.Context) *CustomersChromePrintServersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printserver)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.create" call.
+// Exactly one of *PrintServer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PrintServer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersCreateCall) Do(opts ...googleapi.CallOption) (*PrintServer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PrintServer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a print server.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printServers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The [unique ID](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers) of the customer's Google Workspace account. Format: `customers/{id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printServers",
+	//   "request": {
+	//     "$ref": "PrintServer"
+	//   },
+	//   "response": {
+	//     "$ref": "PrintServer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.delete":
+
+type CustomersChromePrintServersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a print server.
+//
+//   - name: The name of the print server to be deleted. Format:
+//     `customers/{customer.id}/chrome/printServers/{print_server.id}`.
+func (r *CustomersChromePrintServersService) Delete(name string) *CustomersChromePrintServersDeleteCall {
+	c := &CustomersChromePrintServersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersDeleteCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersDeleteCall) Context(ctx context.Context) *CustomersChromePrintServersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintServersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a print server.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers/{printServersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "admin.customers.chrome.printServers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the print server to be deleted. Format: `customers/{customer.id}/chrome/printServers/{print_server.id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.get":
+
+type CustomersChromePrintServersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a print server's configuration.
+//
+//   - name: The unique ID
+//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     of the customer's Google Workspace account. Format:
+//     `customers/{id}`.
+func (r *CustomersChromePrintServersService) Get(name string) *CustomersChromePrintServersGetCall {
+	c := &CustomersChromePrintServersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersGetCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintServersGetCall) IfNoneMatch(entityTag string) *CustomersChromePrintServersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersGetCall) Context(ctx context.Context) *CustomersChromePrintServersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.get" call.
+// Exactly one of *PrintServer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PrintServer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersGetCall) Do(opts ...googleapi.CallOption) (*PrintServer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PrintServer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a print server's configuration.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers/{printServersId}",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printServers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The [unique ID](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers) of the customer's Google Workspace account. Format: `customers/{id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "PrintServer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers",
+	//     "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "admin.customers.chrome.printServers.list":
+
+type CustomersChromePrintServersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists print server configurations.
+//
+//   - parent: The unique ID
+//     (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers)
+//     of the customer's Google Workspace account. Format:
+//     `customers/{id}`.
+func (r *CustomersChromePrintServersService) List(parent string) *CustomersChromePrintServersListCall {
+	c := &CustomersChromePrintServersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Search query in Common
+// Expression Language syntax (https://github.com/google/cel-spec).
+// Supported filters are `display_name`, `description`, and `uri`.
+// Example: `printServer.displayName=='marketing-queue'`.
+func (c *CustomersChromePrintServersListCall) Filter(filter string) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort order for
+// results. Supported values are `display_name`, `description`, or
+// `create_time`. Default order is ascending, but descending order can
+// be returned by appending "desc" to the `order_by` field. For
+// instance, `orderBy=='description desc'` returns the print servers
+// sorted by description in descending order.
+func (c *CustomersChromePrintServersListCall) OrderBy(orderBy string) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": If `org_unit_id`
+// is present in the request, only print servers owned or inherited by
+// the organizational unit (OU) are returned. If the `PrintServer`
+// resource's `org_unit_id` matches the one in the request, the OU owns
+// the server. If `org_unit_id` is not specified in the request, all
+// print servers are returned or filtered against.
+func (c *CustomersChromePrintServersListCall) OrgUnitId(orgUnitId string) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of objects to return (default `100`, max `100`). The service might
+// return fewer than this value.
+func (c *CustomersChromePrintServersListCall) PageSize(pageSize int64) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A generated token
+// to paginate results (the `next_page_token` from a previous call).
+func (c *CustomersChromePrintServersListCall) PageToken(pageToken string) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersListCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintServersListCall) IfNoneMatch(entityTag string) *CustomersChromePrintServersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersListCall) Context(ctx context.Context) *CustomersChromePrintServersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printServers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.list" call.
+// Exactly one of *ListPrintServersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPrintServersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersListCall) Do(opts ...googleapi.CallOption) (*ListPrintServersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrintServersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists print server configurations.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printServers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Search query in [Common Expression Language syntax](https://github.com/google/cel-spec). Supported filters are `display_name`, `description`, and `uri`. Example: `printServer.displayName=='marketing-queue'`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sort order for results. Supported values are `display_name`, `description`, or `create_time`. Default order is ascending, but descending order can be returned by appending \"desc\" to the `order_by` field. For instance, `orderBy=='description desc'` returns the print servers sorted by description in descending order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "If `org_unit_id` is present in the request, only print servers owned or inherited by the organizational unit (OU) are returned. If the `PrintServer` resource's `org_unit_id` matches the one in the request, the OU owns the server. If `org_unit_id` is not specified in the request, all print servers are returned or filtered against.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of objects to return (default `100`, max `100`). The service might return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A generated token to paginate results (the `next_page_token` from a previous call).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The [unique ID](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers) of the customer's Google Workspace account. Format: `customers/{id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printServers",
+	//   "response": {
+	//     "$ref": "ListPrintServersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers",
+	//     "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersChromePrintServersListCall) Pages(ctx context.Context, f func(*ListPrintServersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admin.customers.chrome.printServers.patch":
+
+type CustomersChromePrintServersPatchCall struct {
+	s           *Service
+	name        string
+	printserver *PrintServer
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates a print server's configuration.
+//
+//   - name: Immutable. Resource name of the print server. Leave empty
+//     when creating. Format:
+//     `customers/{customer.id}/printServers/{print_server.id}`.
+func (r *CustomersChromePrintServersService) Patch(name string, printserver *PrintServer) *CustomersChromePrintServersPatchCall {
+	c := &CustomersChromePrintServersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.printserver = printserver
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update. Some fields are read-only and cannot be updated.
+// Values for unspecified fields are patched.
+func (c *CustomersChromePrintServersPatchCall) UpdateMask(updateMask string) *CustomersChromePrintServersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintServersPatchCall) Fields(s ...googleapi.Field) *CustomersChromePrintServersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintServersPatchCall) Context(ctx context.Context) *CustomersChromePrintServersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintServersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintServersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printserver)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printServers.patch" call.
+// Exactly one of *PrintServer or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PrintServer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersChromePrintServersPatchCall) Do(opts ...googleapi.CallOption) (*PrintServer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PrintServer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a print server's configuration.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printServers/{printServersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "admin.customers.chrome.printServers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Resource name of the print server. Leave empty when creating. Format: `customers/{customer.id}/printServers/{print_server.id}`",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printServers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update. Some fields are read-only and cannot be updated. Values for unspecified fields are patched.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "request": {
+	//     "$ref": "PrintServer"
+	//   },
+	//   "response": {
+	//     "$ref": "PrintServer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.chrome.printers"
 	//   ]
 	// }
 

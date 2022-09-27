@@ -468,6 +468,12 @@ type GoogleCloudRunV2Container struct {
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
+	// LivenessProbe: Not Supported By Cloud Run. Periodic probe of
+	// container liveness. Container will be restarted if the probe fails.
+	// More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	LivenessProbe *GoogleCloudRunV2Probe `json:"livenessProbe,omitempty"`
+
 	// Name: Name of the container specified as a DNS_LABEL.
 	Name string `json:"name,omitempty"`
 
@@ -482,6 +488,13 @@ type GoogleCloudRunV2Container struct {
 	// info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources *GoogleCloudRunV2ResourceRequirements `json:"resources,omitempty"`
+
+	// StartupProbe: Startup probe of application within the container. All
+	// other probes are disabled if a startup probe is provided, until it
+	// succeeds. Container will not be added to service endpoints if the
+	// probe fails. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	StartupProbe *GoogleCloudRunV2Probe `json:"startupProbe,omitempty"`
 
 	// VolumeMounts: Volume to mount into the container's filesystem.
 	VolumeMounts []*GoogleCloudRunV2VolumeMount `json:"volumeMounts,omitempty"`
@@ -888,6 +901,114 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2GRPCAction: GRPCAction describes an action involving
+// a GRPC port.
+type GoogleCloudRunV2GRPCAction struct {
+	// Port: Port number of the gRPC service. Number must be in the range 1
+	// to 65535.
+	Port int64 `json:"port,omitempty"`
+
+	// Service: Service is the name of the service to place in the gRPC
+	// HealthCheckRequest (see
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// this is not specified, the default behavior is defined by gRPC.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2GRPCAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2GRPCAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2HTTPGetAction: HTTPGetAction describes an action
+// based on HTTP Get requests.
+type GoogleCloudRunV2HTTPGetAction struct {
+	// Host: Host name to connect to, defaults to the pod IP. You probably
+	// want to set "Host" in httpHeaders instead.
+	Host string `json:"host,omitempty"`
+
+	// HttpHeaders: Custom headers to set in the request. HTTP allows
+	// repeated headers.
+	HttpHeaders []*GoogleCloudRunV2HTTPHeader `json:"httpHeaders,omitempty"`
+
+	// Path: Path to access on the HTTP server. Defaults to '/'.
+	Path string `json:"path,omitempty"`
+
+	// Scheme: Scheme to use for connecting to the host. Defaults to HTTP.
+	Scheme string `json:"scheme,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Host") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2HTTPGetAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2HTTPGetAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2HTTPHeader: HTTPHeader describes a custom header to
+// be used in HTTP probes
+type GoogleCloudRunV2HTTPHeader struct {
+	// Name: Required. The header field name
+	Name string `json:"name,omitempty"`
+
+	// Value: Required. The header field value
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2HTTPHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2HTTPHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2Job: Job represents the configuration of a single
 // job. A job an immutable resource that references a container image
 // which is run to completion.
@@ -1257,6 +1378,71 @@ type GoogleCloudRunV2ListTasksResponse struct {
 
 func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ListTasksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2Probe: Probe describes a health check to be performed
+// against a container to determine whether it is alive or ready to
+// receive traffic.
+type GoogleCloudRunV2Probe struct {
+	// FailureThreshold: Minimum consecutive failures for the probe to be
+	// considered failed after having succeeded. Defaults to 3. Minimum
+	// value is 1.
+	FailureThreshold int64 `json:"failureThreshold,omitempty"`
+
+	// Grpc: GRPC specifies an action involving a GRPC port. Exactly one of
+	// HTTPGet, TCPSocket, or GRPC must be specified.
+	Grpc *GoogleCloudRunV2GRPCAction `json:"grpc,omitempty"`
+
+	// HttpGet: HTTPGet specifies the http request to perform. Exactly one
+	// of HTTPGet, TCPSocket, or gRPC must be specified.
+	HttpGet *GoogleCloudRunV2HTTPGetAction `json:"httpGet,omitempty"`
+
+	// InitialDelaySeconds: Number of seconds after the container has
+	// started before the probe is initiated. Defaults to 0 seconds. Minimum
+	// value is 0. Maximum value for liveness probe is 3600. Maximum value
+	// for startup probe is 240. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
+
+	// PeriodSeconds: How often (in seconds) to perform the probe. Default
+	// to 10 seconds. Minimum value is 1. Maximum value for liveness probe
+	// is 3600. Maximum value for startup probe is 240. Must be greater or
+	// equal than timeout_seconds.
+	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
+
+	// TcpSocket: TCPSocket specifies an action involving a TCP port.
+	// Exactly one of HTTPGet, TCPSocket, or gRPC must be specified. TCP
+	// hooks not yet supported
+	TcpSocket *GoogleCloudRunV2TCPSocketAction `json:"tcpSocket,omitempty"`
+
+	// TimeoutSeconds: Number of seconds after which the probe times out.
+	// Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must
+	// be smaller than period_seconds. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureThreshold") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Probe) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Probe
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1950,6 +2136,41 @@ type GoogleCloudRunV2Service struct {
 
 func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2Service
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2TCPSocketAction: TCPSocketAction describes an action
+// based on opening a socket
+type GoogleCloudRunV2TCPSocketAction struct {
+	// Host: Host name to connect to, defaults to the pod IP.
+	Host string `json:"host,omitempty"`
+
+	// Port: Number or name of the port to access on the container. Number
+	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. This
+	// field is currently limited to integer types only because of proto's
+	// inability to properly support the IntOrString golang type.
+	Port int64 `json:"port,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Host") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Host") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2TCPSocketAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2TCPSocketAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

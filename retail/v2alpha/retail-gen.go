@@ -3270,6 +3270,39 @@ func (s *GoogleCloudRetailV2alphaLocalInventory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaMerchantCenterFeedFilter: Merchant Center
+// Feed filter criterrion.
+type GoogleCloudRetailV2alphaMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed id.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaMerchantCenterFeedFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaMerchantCenterLink: Represents a link between
 // a Merchant Center account and a branch. Once a link is established,
 // products from the linked merchant center account will be streamed to
@@ -3291,6 +3324,11 @@ type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 	// "Free_listings", "Free_local_listings" NOTE: The string values are
 	// case sensitive.
 	Destinations []string `json:"destinations,omitempty"`
+
+	// Feeds: Criteria for the Merchant Center feeds to be ingested via the
+	// link. All offers will be ingested if the list is empty. Otherwise the
+	// offers will be ingested from selected feeds.
+	Feeds []*GoogleCloudRetailV2alphaMerchantCenterFeedFilter `json:"feeds,omitempty"`
 
 	// LanguageCode: Language of the title/description and other string
 	// attributes. Use language tags defined by BCP 47
@@ -3682,8 +3720,7 @@ func (s *GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate) MarshalJS
 // GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel: An
 // individual panel with a list of ServingConfigs to consider for it.
 type GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel struct {
-	// Candidates: Required. The candidates to consider on the panel. Limit
-	// = 10.
+	// Candidates: Required. The candidates to consider on the panel.
 	Candidates []*GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate `json:"candidates,omitempty"`
 
 	// DefaultCandidate: Required. The default candidate. If the model fails
@@ -3799,16 +3836,16 @@ type GoogleCloudRetailV2alphaPredictRequest struct {
 	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
 	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
 	// * filterOutOfStockItems If your filter blocks all prediction results,
-	// the API will return generic (unfiltered) popular products. If you
-	// only want results strictly matching the filters, set
-	// `strictFiltering` to True in `PredictRequest.params` to receive empty
-	// results instead. Note that the API will never return items with
-	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
-	// If `filterSyntaxV2` is set to true under the `params` field, then
-	// attribute-based expressions are expected instead of the above
-	// described tag-based syntax. Examples: * (colors: ANY("Red", "Blue"))
-	// AND NOT (categories: ANY("Phones")) * (availability: ANY("IN_STOCK"))
-	// AND (colors: ANY("Red") OR categories: ANY("Phones"))
+	// the API will return *no* results. If instead you want empty result
+	// sets to return generic (unfiltered) popular products, set
+	// `strictFiltering` to False in `PredictRequest.params`. Note that the
+	// API will never return items with storageStatus of "EXPIRED" or
+	// "DELETED" regardless of filter choices. If `filterSyntaxV2` is set to
+	// true under the `params` field, then attribute-based expressions are
+	// expected instead of the above described tag-based syntax. Examples: *
+	// (colors: ANY("Red", "Blue")) AND NOT (categories: ANY("Phones")) *
+	// (availability: ANY("IN_STOCK")) AND (colors: ANY("Red") OR
+	// categories: ANY("Phones"))
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -7467,6 +7504,38 @@ func (s *GoogleCloudRetailV2betaBigQueryOutputResult) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with
+// a create operation.
+type GoogleCloudRetailV2betaCreateModelMetadata struct {
+	// Model: The resource name of the model that this create applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCreateModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCreateModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of
 // destination for Export related errors.
 type GoogleCloudRetailV2betaExportErrorsConfig struct {
@@ -7806,6 +7875,201 @@ func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaModel: Metadata that describes the training
+// and serving parameters of a Model. A Model can be associated with a
+// ServingConfig and then queried through the Predict API.
+type GoogleCloudRetailV2betaModel struct {
+	// CreateTime: Output only. Timestamp the Recommendation Model was
+	// created at.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DataState: Output only. The state of data requirements for this
+	// model: `DATA_OK` and `DATA_ERROR`. Recommendation model cannot be
+	// trained if the data is in `DATA_ERROR` state. Recommendation model
+	// can have `DATA_ERROR` state even if serving state is `ACTIVE`: models
+	// were trained successfully before, but cannot be refreshed because
+	// model no longer has sufficient data for training.
+	//
+	// Possible values:
+	//   "DATA_STATE_UNSPECIFIED" - Unspecified default value, should never
+	// be explicitly set.
+	//   "DATA_OK" - The model has sufficient training data.
+	//   "DATA_ERROR" - The model does not have sufficient training data.
+	// Error messages can be queried via Stackdriver.
+	DataState string `json:"dataState,omitempty"`
+
+	// DisplayName: Required. The display name of the model. Should be human
+	// readable, used to display Recommendation Models in the Retail Cloud
+	// Console Dashboard. UTF-8 encoded string with limit of 1024
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FilteringOption: Optional. If `RECOMMENDATIONS_FILTERING_ENABLED`,
+	// recommendation filtering by attributes is enabled for the model.
+	//
+	// Possible values:
+	//   "RECOMMENDATIONS_FILTERING_OPTION_UNSPECIFIED" - Value used when
+	// unset. In this case, server behavior defaults to
+	// RECOMMENDATIONS_FILTERING_DISABLED.
+	//   "RECOMMENDATIONS_FILTERING_DISABLED" - Recommendation filtering is
+	// disabled.
+	//   "RECOMMENDATIONS_FILTERING_ENABLED" - Recommendation filtering is
+	// enabled.
+	FilteringOption string `json:"filteringOption,omitempty"`
+
+	// LastTuneTime: Output only. The timestamp when the latest successful
+	// tune finished.
+	LastTuneTime string `json:"lastTuneTime,omitempty"`
+
+	// Name: Required. The fully qualified resource name of the model.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}` catalog_id has char limit of 50.
+	// recommendation_model_id has char limit of 40.
+	Name string `json:"name,omitempty"`
+
+	// OptimizationObjective: Optional. The optimization objective e.g.
+	// `cvr`. Currently supported values: `ctr`, `cvr`, `revenue-per-order`.
+	// If not specified, we choose default based on model type. Default
+	// depends on type of recommendation: `recommended-for-you` => `ctr`
+	// `others-you-may-like` => `ctr` `frequently-bought-together` =>
+	// `revenue_per_order` This field together with optimization_objective
+	// describe model metadata to use to control model training and serving.
+	// See https://cloud.google.com/retail/docs/models for more details on
+	// what the model metadata control and which combination of parameters
+	// are valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
+
+	// PeriodicTuningState: Optional. The state of periodic tuning. The
+	// period we use is 3 months - to do a one-off tune earlier use the
+	// `TuneModel` method. Default value is `PERIODIC_TUNING_ENABLED`.
+	//
+	// Possible values:
+	//   "PERIODIC_TUNING_STATE_UNSPECIFIED" - Unspecified default value,
+	// should never be explicitly set.
+	//   "PERIODIC_TUNING_DISABLED" - The model has periodic tuning
+	// disabled. Tuning can be reenabled by calling the
+	// `EnableModelPeriodicTuning` method or by calling the `TuneModel`
+	// method.
+	//   "ALL_TUNING_DISABLED" - The model cannot be tuned with periodic
+	// tuning OR the `TuneModel` method. Hide the options in customer UI and
+	// reject any requests through the backend self serve API.
+	//   "PERIODIC_TUNING_ENABLED" - The model has periodic tuning enabled.
+	// Tuning can be disabled by calling the `DisableModelPeriodicTuning`
+	// method.
+	PeriodicTuningState string `json:"periodicTuningState,omitempty"`
+
+	// ServingConfigLists: Output only. The list of valid serving configs
+	// associated with the PageOptimizationConfig.
+	ServingConfigLists []*GoogleCloudRetailV2betaModelServingConfigList `json:"servingConfigLists,omitempty"`
+
+	// ServingState: Output only. The serving state of the model: `ACTIVE`,
+	// `NOT_ACTIVE`.
+	//
+	// Possible values:
+	//   "SERVING_STATE_UNSPECIFIED" - Unspecified serving state.
+	//   "INACTIVE" - The model is not serving.
+	//   "ACTIVE" - The model is serving and can be queried.
+	//   "TUNED" - The model is trained on tuned hyperparameters and can be
+	// queried.
+	ServingState string `json:"servingState,omitempty"`
+
+	// TrainingState: Optional. The training state that the model is in
+	// (e.g. `TRAINING` or `PAUSED`). Since part of the cost of running the
+	// service is frequency of training - this can be used to determine when
+	// to train model in order to control cost. If not specified: the
+	// default value for `CreateModel` method is `TRAINING`. The default
+	// value for `UpdateModel` method is to keep the state the same as
+	// before.
+	//
+	// Possible values:
+	//   "TRAINING_STATE_UNSPECIFIED" - Unspecified training state.
+	//   "PAUSED" - The model training is paused.
+	//   "TRAINING" - The model is training.
+	TrainingState string `json:"trainingState,omitempty"`
+
+	// TuningOperation: Output only. The tune operation associated with the
+	// model. Can be used to determine if there is an ongoing tune for this
+	// recommendation. Empty field implies no tune is goig on.
+	TuningOperation string `json:"tuningOperation,omitempty"`
+
+	// Type: Required. The type of model e.g. `home-page`. Currently
+	// supported values: `recommended-for-you`, `others-you-may-like`,
+	// `frequently-bought-together`, `page-optimization`, `similar-items`,
+	// `buy-it-again`, and `recently-viewed`(readonly value). This field
+	// together with optimization_objective describe model metadata to use
+	// to control model training and serving. See
+	// https://cloud.google.com/retail/docs/models for more details on what
+	// the model metadata control and which combination of parameters are
+	// valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. Timestamp the Recommendation Model was last
+	// updated. E.g. if a Recommendation Model was paused - this would be
+	// the time the pause was initiated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaModel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaModelServingConfigList: Represents an ordered
+// combination of valid serving configs, which can be used for
+// `PAGE_OPTIMIZATION` recommendations.
+type GoogleCloudRetailV2betaModelServingConfigList struct {
+	// ServingConfigIds: Optional. A set of valid serving configs that may
+	// be used for `PAGE_OPTIMIZATION`.
+	ServingConfigIds []string `json:"servingConfigIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServingConfigIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServingConfigIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaModelServingConfigList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaModelServingConfigList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaOutputResult: Output result.
 type GoogleCloudRetailV2betaOutputResult struct {
 	// BigqueryResult: Export result in BigQuery.
@@ -7950,6 +8214,43 @@ type GoogleCloudRetailV2betaSetInventoryMetadata struct {
 // SetInventoryRequest. Currently empty because there is no meaningful
 // response populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2betaSetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2betaTuneModelMetadata: Metadata associated with a
+// tune operation.
+type GoogleCloudRetailV2betaTuneModelMetadata struct {
+	// Model: The resource name of the model that this tune applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaTuneModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaTuneModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaTuneModelResponse: Response associated with a
+// tune operation.
+type GoogleCloudRetailV2betaTuneModelResponse struct {
 }
 
 // GoogleCloudRetailV2betaUserEventImportSummary: A summary of import

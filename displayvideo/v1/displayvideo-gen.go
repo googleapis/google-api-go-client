@@ -1202,36 +1202,6 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
 	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
 	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
-	//   "AGE_RANGE_18_20" - The age range of the audience is 18 to 20, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_21_24" - The age range of the audience is 21 to 24, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_25_29" - The age range of the audience is 25 to 29, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_30_34" - The age range of the audience is 30 to 34, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_35_39" - The age range of the audience is 35 to 39, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_40_44" - The age range of the audience is 40 to 44, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_45_49" - The age range of the audience is 45 to 49, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_50_54" - The age range of the audience is 50 to 54, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_55_59" - The age range of the audience is 55 to 59, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_60_64" - The age range of the audience is 60 to 64, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
 	AgeRange string `json:"ageRange,omitempty"`
 
 	// TargetingOptionId: Required. The targeting_option_id of a
@@ -1278,36 +1248,6 @@ type AgeRangeTargetingOptionDetails struct {
 	//   "AGE_RANGE_55_64" - The age range of the audience is 55 to 64.
 	//   "AGE_RANGE_65_PLUS" - The age range of the audience is 65 and up.
 	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
-	//   "AGE_RANGE_18_20" - The age range of the audience is 18 to 20, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_21_24" - The age range of the audience is 21 to 24, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_25_29" - The age range of the audience is 25 to 29, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_30_34" - The age range of the audience is 30 to 34, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_35_39" - The age range of the audience is 35 to 39, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_40_44" - The age range of the audience is 40 to 44, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_45_49" - The age range of the audience is 45 to 49, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_50_54" - The age range of the audience is 50 to 54, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_55_59" - The age range of the audience is 55 to 59, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
-	//   "AGE_RANGE_60_64" - The age range of the audience is 60 to 64, only
-	// supported for the AdGroup of YouTube Programmatic Reservation line
-	// item.
 	AgeRange string `json:"ageRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
@@ -31744,8 +31684,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -31881,7 +31820,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -32014,8 +31953,7 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -32207,7 +32145,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",

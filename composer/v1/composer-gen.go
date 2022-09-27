@@ -855,6 +855,10 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoadSnapshotResponse: Response to LoadSnapshotRequest.
+type LoadSnapshotResponse struct {
+}
+
 // MaintenanceWindow: The configuration settings for Cloud Composer
 // maintenance window. The following example: ``` {
 // "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z"
@@ -1307,6 +1311,37 @@ type PrivateEnvironmentConfig struct {
 
 func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateEnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SaveSnapshotResponse: Response to SaveSnapshotRequest.
+type SaveSnapshotResponse struct {
+	// SnapshotPath: The fully-resolved Cloud Storage path of the created
+	// snapshot, e.g.:
+	// "gs://my-bucket/snapshots/project_location_environment_timestamp".
+	// This field is populated only if the snapshot creation was successful.
+	SnapshotPath string `json:"snapshotPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SnapshotPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SnapshotPath") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SaveSnapshotResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SaveSnapshotResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

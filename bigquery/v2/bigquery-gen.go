@@ -2011,6 +2011,39 @@ func (s *CsvOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DataMaskingStatistics struct {
+	// DataMaskingApplied: [Output-only] [Preview] Whether any accessed data
+	// was protected by data masking. The actual evaluation is done by
+	// accessStats.masked_field_count > 0. Since this is only used for the
+	// discovery_doc generation purpose, as long as the type (boolean)
+	// matches, client library can leverage this. The actual evaluation of
+	// the variable is done else-where.
+	DataMaskingApplied bool `json:"dataMaskingApplied,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataMaskingApplied")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataMaskingApplied") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataMaskingStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod DataMaskingStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DataSplitResult: Data split result. This contains references to the
 // training and evaluation data tables that were used to train the
 // model.
@@ -4329,6 +4362,12 @@ type JobConfigurationLoad struct {
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
+	// CreateSession: If true, creates a new session, where session id will
+	// be a server generated random id. If false, runs query with an
+	// existing session_id passed in ConnectionProperty, otherwise runs the
+	// load job in non-session mode.
+	CreateSession bool `json:"createSession,omitempty"`
+
 	// DecimalTargetTypes: [Optional] Defines the list of possible SQL data
 	// types to which the source decimal values are converted. This list and
 	// the precision and the scale parameters of the decimal field determine
@@ -4937,6 +4976,10 @@ type JobStatistics struct {
 	// milliseconds since the epoch. This field will be present on all jobs.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
+	// DataMaskingStatistics: [Output-only] Statistics for data masking.
+	// Present only for query and extract jobs.
+	DataMaskingStatistics *DataMaskingStatistics `json:"dataMaskingStatistics,omitempty"`
+
 	// EndTime: [Output-only] End time of this job, in milliseconds since
 	// the epoch. This field will be present whenever a job is in the DONE
 	// state.
@@ -5071,23 +5114,23 @@ func (s *JobStatisticsReservationUsage) MarshalJSON() ([]byte, error) {
 }
 
 type JobStatistics2 struct {
-	// BiEngineStatistics: BI Engine specific Statistics. [Output-only] BI
+	// BiEngineStatistics: BI Engine specific Statistics. [Output only] BI
 	// Engine specific Statistics.
 	BiEngineStatistics *BiEngineStatistics `json:"biEngineStatistics,omitempty"`
 
-	// BillingTier: [Output-only] Billing tier for the job.
+	// BillingTier: [Output only] Billing tier for the job.
 	BillingTier int64 `json:"billingTier,omitempty"`
 
-	// CacheHit: [Output-only] Whether the query result was fetched from the
+	// CacheHit: [Output only] Whether the query result was fetched from the
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// DdlAffectedRowAccessPolicyCount: [Output-only] [Preview] The number
+	// DdlAffectedRowAccessPolicyCount: [Output only] [Preview] The number
 	// of row access policies affected by a DDL statement. Present only for
 	// DROP ALL ROW ACCESS POLICIES queries.
 	DdlAffectedRowAccessPolicyCount int64 `json:"ddlAffectedRowAccessPolicyCount,omitempty,string"`
 
-	// DdlDestinationTable: [Output-only] The DDL destination table. Present
+	// DdlDestinationTable: [Output only] The DDL destination table. Present
 	// only for ALTER TABLE RENAME TO queries. Note that ddl_target_table is
 	// used just for its type information.
 	DdlDestinationTable *TableReference `json:"ddlDestinationTable,omitempty"`
@@ -5103,7 +5146,7 @@ type JobStatistics2 struct {
 	// query deleted the DDL target.
 	DdlOperationPerformed string `json:"ddlOperationPerformed,omitempty"`
 
-	// DdlTargetDataset: [Output-only] The DDL target dataset. Present only
+	// DdlTargetDataset: [Output only] The DDL target dataset. Present only
 	// for CREATE/ALTER/DROP SCHEMA queries.
 	DdlTargetDataset *DatasetReference `json:"ddlTargetDataset,omitempty"`
 
@@ -5111,67 +5154,67 @@ type JobStatistics2 struct {
 	// CREATE/DROP FUNCTION/PROCEDURE queries.
 	DdlTargetRoutine *RoutineReference `json:"ddlTargetRoutine,omitempty"`
 
-	// DdlTargetRowAccessPolicy: [Output-only] [Preview] The DDL target row
+	// DdlTargetRowAccessPolicy: [Output only] [Preview] The DDL target row
 	// access policy. Present only for CREATE/DROP ROW ACCESS POLICY
 	// queries.
 	DdlTargetRowAccessPolicy *RowAccessPolicyReference `json:"ddlTargetRowAccessPolicy,omitempty"`
 
-	// DdlTargetTable: [Output-only] The DDL target table. Present only for
+	// DdlTargetTable: [Output only] The DDL target table. Present only for
 	// CREATE/DROP TABLE/VIEW and DROP ALL ROW ACCESS POLICIES queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
-	// DmlStats: [Output-only] Detailed statistics for DML statements
+	// DmlStats: [Output only] Detailed statistics for DML statements
 	// Present only for DML statements INSERT, UPDATE, DELETE or TRUNCATE.
 	DmlStats *DmlStatistics `json:"dmlStats,omitempty"`
 
-	// EstimatedBytesProcessed: [Output-only] The original estimate of bytes
+	// EstimatedBytesProcessed: [Output only] The original estimate of bytes
 	// processed for the job.
 	EstimatedBytesProcessed int64 `json:"estimatedBytesProcessed,omitempty,string"`
 
-	// MlStatistics: [Output-only] Statistics of a BigQuery ML training job.
+	// MlStatistics: [Output only] Statistics of a BigQuery ML training job.
 	MlStatistics *MlStatistics `json:"mlStatistics,omitempty"`
 
-	// ModelTraining: [Output-only, Beta] Information about create model
+	// ModelTraining: [Output only, Beta] Information about create model
 	// query job progress.
 	ModelTraining *BigQueryModelTraining `json:"modelTraining,omitempty"`
 
-	// ModelTrainingCurrentIteration: [Output-only, Beta] Deprecated; do not
+	// ModelTrainingCurrentIteration: [Output only, Beta] Deprecated; do not
 	// use.
 	ModelTrainingCurrentIteration int64 `json:"modelTrainingCurrentIteration,omitempty"`
 
-	// ModelTrainingExpectedTotalIteration: [Output-only, Beta] Deprecated;
+	// ModelTrainingExpectedTotalIteration: [Output only, Beta] Deprecated;
 	// do not use.
 	ModelTrainingExpectedTotalIteration int64 `json:"modelTrainingExpectedTotalIteration,omitempty,string"`
 
-	// NumDmlAffectedRows: [Output-only] The number of rows affected by a
+	// NumDmlAffectedRows: [Output only] The number of rows affected by a
 	// DML statement. Present only for DML statements INSERT, UPDATE or
 	// DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
 
-	// QueryPlan: [Output-only] Describes execution plan for the query.
+	// QueryPlan: [Output only] Describes execution plan for the query.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
 
-	// ReferencedRoutines: [Output-only] Referenced routines (persistent
+	// ReferencedRoutines: [Output only] Referenced routines (persistent
 	// user-defined functions and stored procedures) for the job.
 	ReferencedRoutines []*RoutineReference `json:"referencedRoutines,omitempty"`
 
-	// ReferencedTables: [Output-only] Referenced tables for the job.
+	// ReferencedTables: [Output only] Referenced tables for the job.
 	// Queries that reference more than 50 tables will not have a complete
 	// list.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 
-	// ReservationUsage: [Output-only] Job resource usage breakdown by
+	// ReservationUsage: [Output only] Job resource usage breakdown by
 	// reservation.
 	ReservationUsage []*JobStatistics2ReservationUsage `json:"reservationUsage,omitempty"`
 
-	// Schema: [Output-only] The schema of the results. Present only for
+	// Schema: [Output only] The schema of the results. Present only for
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SearchStatistics: [Output-only] Search query specific statistics.
+	// SearchStatistics: [Output only] Search query specific statistics.
 	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
 
-	// SparkStatistics: [Output-only] Statistics of a Spark procedure job.
+	// SparkStatistics: [Output only] Statistics of a Spark procedure job.
 	SparkStatistics *SparkStatistics `json:"sparkStatistics,omitempty"`
 
 	// StatementType: The type of query statement, if valid. Possible values
@@ -5196,16 +5239,16 @@ type JobStatistics2 struct {
 	// VIEW query.
 	StatementType string `json:"statementType,omitempty"`
 
-	// Timeline: [Output-only] [Beta] Describes a timeline of job execution.
+	// Timeline: [Output only] [Beta] Describes a timeline of job execution.
 	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
-	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
+	// TotalBytesBilled: [Output only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
-	// TotalBytesProcessed: [Output-only] Total bytes processed for the job.
+	// TotalBytesProcessed: [Output only] Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
-	// TotalBytesProcessedAccuracy: [Output-only] For dry-run jobs,
+	// TotalBytesProcessedAccuracy: [Output only] For dry-run jobs,
 	// totalBytesProcessed is an estimate and this field specifies the
 	// accuracy of the estimate. Possible values can be: UNKNOWN: accuracy
 	// of the estimate is unknown. PRECISE: estimate is precise.
@@ -5213,11 +5256,11 @@ type JobStatistics2 struct {
 	// UPPER_BOUND: estimate is upper bound of what the query would cost.
 	TotalBytesProcessedAccuracy string `json:"totalBytesProcessedAccuracy,omitempty"`
 
-	// TotalPartitionsProcessed: [Output-only] Total number of partitions
+	// TotalPartitionsProcessed: [Output only] Total number of partitions
 	// processed from all partitioned tables referenced in the job.
 	TotalPartitionsProcessed int64 `json:"totalPartitionsProcessed,omitempty,string"`
 
-	// TotalSlotMs: [Output-only] Slot-milliseconds for the job.
+	// TotalSlotMs: [Output only] Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
 	// UndeclaredQueryParameters: Standard SQL only: list of undeclared
@@ -5249,11 +5292,11 @@ func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
 }
 
 type JobStatistics2ReservationUsage struct {
-	// Name: [Output-only] Reservation name or "unreserved" for on-demand
+	// Name: [Output only] Reservation name or "unreserved" for on-demand
 	// resources usage.
 	Name string `json:"name,omitempty"`
 
-	// SlotMs: [Output-only] Slot-milliseconds the job spent in the given
+	// SlotMs: [Output only] Slot-milliseconds the job spent in the given
 	// reservation.
 	SlotMs int64 `json:"slotMs,omitempty,string"`
 
@@ -5770,8 +5813,8 @@ type Model struct {
 	// trial_id.
 	OptimalTrialIds googleapi.Int64s `json:"optimalTrialIds,omitempty"`
 
-	// TrainingRuns: Output only. Information for all training runs in
-	// increasing order of start_time.
+	// TrainingRuns: Information for all training runs in increasing order
+	// of start_time.
 	TrainingRuns []*TrainingRun `json:"trainingRuns,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9276,45 +9319,46 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 // TrainingRun: Information about a single training query run for the
 // model.
 type TrainingRun struct {
-	// ClassLevelGlobalExplanations: Global explanation contains the
-	// explanation of top features on the class level. Applies to
-	// classification models only.
+	// ClassLevelGlobalExplanations: Output only. Global explanation
+	// contains the explanation of top features on the class level. Applies
+	// to classification models only.
 	ClassLevelGlobalExplanations []*GlobalExplanation `json:"classLevelGlobalExplanations,omitempty"`
 
-	// DataSplitResult: Data split result of the training run. Only set when
-	// the input data is actually split.
+	// DataSplitResult: Output only. Data split result of the training run.
+	// Only set when the input data is actually split.
 	DataSplitResult *DataSplitResult `json:"dataSplitResult,omitempty"`
 
-	// EvaluationMetrics: The evaluation metrics over training/eval data
-	// that were computed at the end of training.
+	// EvaluationMetrics: Output only. The evaluation metrics over
+	// training/eval data that were computed at the end of training.
 	EvaluationMetrics *EvaluationMetrics `json:"evaluationMetrics,omitempty"`
 
-	// ModelLevelGlobalExplanation: Global explanation contains the
-	// explanation of top features on the model level. Applies to both
+	// ModelLevelGlobalExplanation: Output only. Global explanation contains
+	// the explanation of top features on the model level. Applies to both
 	// regression and classification models.
 	ModelLevelGlobalExplanation *GlobalExplanation `json:"modelLevelGlobalExplanation,omitempty"`
 
-	// Results: Output of each iteration run, results.size() <=
+	// Results: Output only. Output of each iteration run, results.size() <=
 	// max_iterations.
 	Results []*IterationResult `json:"results,omitempty"`
 
-	// StartTime: The start time of this training run.
+	// StartTime: Output only. The start time of this training run.
 	StartTime string `json:"startTime,omitempty"`
 
-	// TrainingOptions: Options that were used for this training run,
-	// includes user specified and default options that were used.
+	// TrainingOptions: Output only. Options that were used for this
+	// training run, includes user specified and default options that were
+	// used.
 	TrainingOptions *TrainingOptions `json:"trainingOptions,omitempty"`
 
-	// TrainingStartTime: The start time of this training run, in
-	// milliseconds since epoch.
+	// TrainingStartTime: Output only. The start time of this training run,
+	// in milliseconds since epoch.
 	TrainingStartTime int64 `json:"trainingStartTime,omitempty,string"`
 
 	// VertexAiModelId: The model id in Vertex AI Model Registry for this
 	// training run
 	VertexAiModelId string `json:"vertexAiModelId,omitempty"`
 
-	// VertexAiModelVersion: The model version in Vertex AI Model Registry
-	// for this training run
+	// VertexAiModelVersion: Output only. The model version in Vertex AI
+	// Model Registry for this training run
 	VertexAiModelVersion string `json:"vertexAiModelVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

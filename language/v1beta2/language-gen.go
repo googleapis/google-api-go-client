@@ -653,12 +653,20 @@ func (s *ClassificationCategory) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ClassifyTextRequest: The document classification request message.
-type ClassifyTextRequest struct {
-	// Document: Required. Input document.
-	Document *Document `json:"document,omitempty"`
+// ClassificationModelOptions: Model options available for
+// classification requests.
+type ClassificationModelOptions struct {
+	// V1Model: Setting this field will use the V1 model and V1 content
+	// categories version. The V1 model is a legacy model; support for this
+	// will be discontinued in the future.
+	V1Model *V1Model `json:"v1Model,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Document") to
+	// V2Model: Setting this field will use the V2 model with the
+	// appropriate content categories version. The V2 model is a better
+	// performing model.
+	V2Model *V2Model `json:"v2Model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "V1Model") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -666,12 +674,46 @@ type ClassifyTextRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Document") to include in
+	// NullFields is a list of field names (e.g. "V1Model") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClassificationModelOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ClassificationModelOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClassifyTextRequest: The document classification request message.
+type ClassifyTextRequest struct {
+	// ClassificationModelOptions: Model options to use for classification.
+	// Defaults to v1 options if not specified.
+	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`
+
+	// Document: Required. Input document.
+	Document *Document `json:"document,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1061,6 +1103,11 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 // analysis. Setting each one to true will enable that specific analysis
 // for the input. Next ID: 11
 type Features struct {
+	// ClassificationModelOptions: The model options to use for
+	// classification. Defaults to v1 options if not specified. Only used if
+	// `classify_text` is set to true.
+	ClassificationModelOptions *ClassificationModelOptions `json:"classificationModelOptions,omitempty"`
+
 	// ClassifyText: Classify the full document into categories. If this is
 	// true, the API will use the default model which classifies into a
 	// predefined taxonomy
@@ -1080,20 +1127,22 @@ type Features struct {
 	// ExtractSyntax: Extract syntax information.
 	ExtractSyntax bool `json:"extractSyntax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClassifyText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClassifyText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "ClassificationModelOptions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1477,6 +1526,48 @@ type Token struct {
 
 func (s *Token) MarshalJSON() ([]byte, error) {
 	type NoMethod Token
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Model: Options for the V1 model.
+type V1Model struct {
+}
+
+// V2Model: Options for the V2 model.
+type V2Model struct {
+	// ContentCategoriesVersion: The content categories used for
+	// classification.
+	//
+	// Possible values:
+	//   "CONTENT_CATEGORIES_VERSION_UNSPECIFIED" - If
+	// `ContentCategoriesVersion` is not specified, this option will default
+	// to `V1`.
+	//   "V1" - Legacy content categories of our initial launch in 2017.
+	//   "V2" - Updated content categories in 2022.
+	ContentCategoriesVersion string `json:"contentCategoriesVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ContentCategoriesVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentCategoriesVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V2Model) MarshalJSON() ([]byte, error) {
+	type NoMethod V2Model
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

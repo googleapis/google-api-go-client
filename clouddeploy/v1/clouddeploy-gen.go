@@ -193,10 +193,22 @@ type ProjectsLocationsDeliveryPipelinesReleasesService struct {
 
 func NewProjectsLocationsDeliveryPipelinesReleasesRolloutsService(s *Service) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService {
 	rs := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsService{s: s}
+	rs.JobRuns = NewProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService(s)
 	return rs
 }
 
 type ProjectsLocationsDeliveryPipelinesReleasesRolloutsService struct {
+	s *Service
+
+	JobRuns *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService
+}
+
+func NewProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService(s *Service) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService {
+	rs := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService struct {
 	s *Service
 }
 
@@ -512,8 +524,8 @@ type CancelOperationRequest struct {
 // CloudRunLocation: Information specifying where to deploy a Cloud Run
 // Service.
 type CloudRunLocation struct {
-	// Location: Required. The location where the Cloud Run Service should
-	// be located. Format is `projects/{project}/locations/{location}`.
+	// Location: Required. The location for the Cloud Run Service. Format
+	// must be `projects/{project}/locations/{location}`.
 	Location string `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
@@ -710,9 +722,7 @@ func (s *DefaultPool) MarshalJSON() ([]byte, error) {
 // Skaffold configuration can progress.
 type DeliveryPipeline struct {
 	// Annotations: User annotations. These attributes can only be set and
-	// used by the user, and not by Google Cloud Deploy. See
-	// https://google.aip.dev/128#annotations for more details such as
-	// format and size limitations.
+	// used by the user, and not by Google Cloud Deploy.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// Condition: Output only. Information around the state of the Delivery
@@ -832,6 +842,129 @@ func (s *DeliveryPipelineNotificationEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeployJob: A deploy Job.
+type DeployJob struct {
+}
+
+// DeployJobRun: DeployJobRun contains information specific to a deploy
+// `JobRun`.
+type DeployJobRun struct {
+	// Build: Output only. The resource name of the Cloud Build `Build`
+	// object that is used to deploy. Format is
+	// projects/{project}/locations/{location}/builds/{build}.
+	Build string `json:"build,omitempty"`
+
+	// FailureCause: Output only. The reason the deploy failed. This will
+	// always be unspecified while the deploy is in progress or if it
+	// succeeded.
+	//
+	// Possible values:
+	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
+	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
+	// because it is not enabled or because Google Cloud Deploy has
+	// insufficient permissions. See [Required
+	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
+	// ions).
+	//   "EXECUTION_FAILED" - The deploy operation did not complete
+	// successfully; check Cloud Build logs.
+	//   "DEADLINE_EXCEEDED" - The deploy build did not complete within the
+	// alloted time.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// FailureMessage: Output only. Additional information about the deploy
+	// failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
+
+	// Metadata: Output only. Metadata containing information about the
+	// deploy job run.
+	Metadata *DeployJobRunMetadata `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Build") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Build") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeployJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployJobRun
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeployJobRunMetadata: DeployJobRunMetadata surfaces information
+// associated with a `DeployJobRun` to the user.
+type DeployJobRunMetadata struct {
+	// CloudRun: Output only. The name of the Cloud Run Service that is
+	// associated with a `DeployJobRun`.
+	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudRun") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudRun") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeployJobRunMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployJobRunMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeploymentJobs: Deployment job composition.
+type DeploymentJobs struct {
+	// DeployJob: Output only. The deploy Job. This is the first job run in
+	// the phase.
+	DeployJob *Job `json:"deployJob,omitempty"`
+
+	// VerifyJob: Output only. The verify Job. Runs after a deploy if the
+	// deploy succeeds.
+	VerifyJob *Job `json:"verifyJob,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeployJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeployJob") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeploymentJobs) MarshalJSON() ([]byte, error) {
+	type NoMethod DeploymentJobs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -875,6 +1008,7 @@ type ExecutionConfig struct {
 	// value is unused.
 	//   "RENDER" - Use for rendering.
 	//   "DEPLOY" - Use for deploying and deployment hooks.
+	//   "VERIFY" - Use for deployment verification.
 	Usages []string `json:"usages,omitempty"`
 
 	// WorkerPool: Optional. The resource name of the `WorkerPool`, with the
@@ -1006,6 +1140,190 @@ func (s *GkeCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Job: Job represents an operation for a `Rollout`.
+type Job struct {
+	// DeployJob: Output only. A deploy Job.
+	DeployJob *DeployJob `json:"deployJob,omitempty"`
+
+	// Id: Output only. The ID of the Job.
+	Id string `json:"id,omitempty"`
+
+	// JobRun: Output only. The name of the `JobRun` responsible for the
+	// most recent invocation of this Job.
+	JobRun string `json:"jobRun,omitempty"`
+
+	// State: Output only. The current state of the Job.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The Job has an unspecified state.
+	//   "PENDING" - The Job is waiting for an earlier Phase(s) or Job(s) to
+	// complete.
+	//   "DISABLED" - The Job is disabled.
+	//   "IN_PROGRESS" - The Job is in progress.
+	//   "SUCCEEDED" - The Job succeeded.
+	//   "FAILED" - The Job failed.
+	//   "ABORTED" - The Job was aborted.
+	State string `json:"state,omitempty"`
+
+	// VerifyJob: Output only. A verify Job.
+	VerifyJob *VerifyJob `json:"verifyJob,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeployJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeployJob") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Job) MarshalJSON() ([]byte, error) {
+	type NoMethod Job
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JobRun: A `JobRun` resource in the Google Cloud Deploy API. A
+// `JobRun` contains information of a single `Rollout` job evaluation.
+type JobRun struct {
+	// CreateTime: Output only. Time at which the `JobRun` was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeployJobRun: Output only. Information specific to a deploy `JobRun`.
+	DeployJobRun *DeployJobRun `json:"deployJobRun,omitempty"`
+
+	// EndTime: Output only. Time at which the `JobRun` ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Etag: Output only. This checksum is computed by the server based on
+	// the value of other fields, and may be sent on update and delete
+	// requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// JobId: Output only. ID of the `Rollout` job this `JobRun` corresponds
+	// to.
+	JobId string `json:"jobId,omitempty"`
+
+	// Name: Optional. Name of the `JobRun`. Format is
+	// projects/{project}/locations/{location}/
+	// deliveryPipelines/{deliveryPipeline}/releases/{releases}/rollouts/
+	// {rollouts}/jobRuns/{uuid}.
+	Name string `json:"name,omitempty"`
+
+	// PhaseId: Output only. ID of the `Rollout` phase this `JobRun` belongs
+	// in.
+	PhaseId string `json:"phaseId,omitempty"`
+
+	// StartTime: Output only. Time at which the `JobRun` was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The current state of the `JobRun`.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The `JobRun` has an unspecified state.
+	//   "IN_PROGRESS" - The `JobRun` is in progress.
+	//   "SUCCEEDED" - The `JobRun` has succeeded.
+	//   "FAILED" - The `JobRun` has failed.
+	State string `json:"state,omitempty"`
+
+	// Uid: Output only. Unique identifier of the `JobRun`.
+	Uid string `json:"uid,omitempty"`
+
+	// VerifyJobRun: Output only. Information specific to a verify `JobRun`.
+	VerifyJobRun *VerifyJobRun `json:"verifyJobRun,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod JobRun
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JobRunNotificationEvent: Payload proto for
+// "clouddeploy.googleapis.com/jobrun_notification" Platform Log event
+// that describes the failure to send JobRun resource update Pub/Sub
+// notification.
+type JobRunNotificationEvent struct {
+	// JobRun: The name of the `JobRun`.
+	JobRun string `json:"jobRun,omitempty"`
+
+	// Message: Debug message for when a notification fails to send.
+	Message string `json:"message,omitempty"`
+
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// ReleaseUid: Unique identifier of the `Release`.
+	ReleaseUid string `json:"releaseUid,omitempty"`
+
+	// RolloutUid: Unique identifier of the `Rollout`.
+	RolloutUid string `json:"rolloutUid,omitempty"`
+
+	// TargetId: ID of the `Target`.
+	TargetId string `json:"targetId,omitempty"`
+
+	// Type: Type of this notification, e.g. for a Pub/Sub failure.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
+	// notification.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobRun") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobRun") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobRunNotificationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod JobRunNotificationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDeliveryPipelinesResponse: The response object from
 // `ListDeliveryPipelines`.
 type ListDeliveryPipelinesResponse struct {
@@ -1044,6 +1362,47 @@ type ListDeliveryPipelinesResponse struct {
 
 func (s *ListDeliveryPipelinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDeliveryPipelinesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListJobRunsResponse: ListJobRunsResponse is the response object
+// returned by `ListJobRuns`.
+type ListJobRunsResponse struct {
+	// JobRuns: The `JobRun` objects.
+	JobRuns []*JobRun `json:"jobRuns,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "JobRuns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobRuns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListJobRunsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListJobRunsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1293,8 +1652,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metadata: Metadata surfaces information associated with a `Rollout`
-// to the user.
+// Metadata: Metadata includes information associated with a `Rollout`.
 type Metadata struct {
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`.
@@ -1433,6 +1791,51 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Phase: Phase represents a collection of jobs that are logically
+// grouped together for a `Rollout`.
+type Phase struct {
+	// DeploymentJobs: Output only. Deployment job composition.
+	DeploymentJobs *DeploymentJobs `json:"deploymentJobs,omitempty"`
+
+	// Id: Output only. The ID of the Phase.
+	Id string `json:"id,omitempty"`
+
+	// State: Output only. Current state of the Phase.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The Phase has an unspecified state.
+	//   "PENDING" - The Phase is waiting for an earlier Phase(s) to
+	// complete.
+	//   "IN_PROGRESS" - The Phase is in progress.
+	//   "SUCCEEDED" - The Phase has succeeded.
+	//   "FAILED" - The Phase has failed.
+	//   "ABORTED" - The Phase was aborted.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentJobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentJobs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Phase) MarshalJSON() ([]byte, error) {
+	type NoMethod Phase
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1859,6 +2262,45 @@ func (s *ReleaseRenderEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RetryJobRequest: RetryJobRequest is the request object used by
+// `RetryJob`.
+type RetryJobRequest struct {
+	// JobId: Required. The job ID for the Job to retry.
+	JobId string `json:"jobId,omitempty"`
+
+	// PhaseId: Required. The phase ID the Job to retry belongs to.
+	PhaseId string `json:"phaseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RetryJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RetryJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RetryJobResponse: The response object from 'RetryJob'.
+type RetryJobResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Rollout: A `Rollout` resource in the Google Cloud Deploy API. A
 // `Rollout` contains information around a specific deployment to a
 // `Target`.
@@ -1906,6 +2348,8 @@ type Rollout struct {
 	// alloted time.
 	//   "RELEASE_FAILED" - Release is in a failed state.
 	//   "RELEASE_ABANDONED" - Release is abandoned.
+	//   "VERIFICATION_CONFIG_NOT_FOUND" - No skaffold verify configuration
+	// was found.
 	DeployFailureCause string `json:"deployFailureCause,omitempty"`
 
 	// DeployStartTime: Output only. Time at which the `Rollout` started
@@ -1951,6 +2395,10 @@ type Rollout struct {
 	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
 	// releases/{release}/rollouts/a-z{0,62}.
 	Name string `json:"name,omitempty"`
+
+	// Phases: Output only. The phases that represent the workflows of this
+	// `Rollout`.
+	Phases []*Phase `json:"phases,omitempty"`
 
 	// State: Output only. Current state of the `Rollout`.
 	//
@@ -2160,6 +2608,10 @@ type Stage struct {
 	// this stage's `Target`.
 	Profiles []string `json:"profiles,omitempty"`
 
+	// Strategy: Optional. The strategy to use for a `Rollout` to this
+	// stage.
+	Strategy *Strategy `json:"strategy,omitempty"`
+
 	// TargetId: The target_id to which this stage points. This field refers
 	// exclusively to the last segment of a target name. For example, this
 	// field would just be `my-target` (rather than
@@ -2187,6 +2639,34 @@ type Stage struct {
 
 func (s *Stage) MarshalJSON() ([]byte, error) {
 	type NoMethod Stage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Standard: Standard represents the standard deployment strategy.
+type Standard struct {
+	// Verify: Whether to verify a deployment.
+	Verify bool `json:"verify,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Verify") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Verify") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Standard) MarshalJSON() ([]byte, error) {
+	type NoMethod Standard
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2231,6 +2711,35 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Strategy: Strategy contains deployment strategy information.
+type Strategy struct {
+	// Standard: Standard deployment strategy executes a single deploy and
+	// allows verifying the deployment.
+	Standard *Standard `json:"standard,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Standard") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Strategy) MarshalJSON() ([]byte, error) {
+	type NoMethod Strategy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2420,8 +2929,8 @@ type TargetRender struct {
 	// Possible values:
 	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
 	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
-	// because it is not enabled or because Cloud Deploy has insufficient
-	// permissions. See [required
+	// because it is not enabled or because Google Cloud Deploy has
+	// insufficient permissions. See [required
 	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
 	// ions).
 	//   "EXECUTION_FAILED" - The render operation did not complete
@@ -2572,6 +3081,72 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VerifyJob: A verify Job.
+type VerifyJob struct {
+}
+
+// VerifyJobRun: VerifyJobRun contains information specific to a verify
+// `JobRun`.
+type VerifyJobRun struct {
+	// ArtifactUri: Output only. URI of a directory containing the verify
+	// artifacts. This contains the Skaffold event log.
+	ArtifactUri string `json:"artifactUri,omitempty"`
+
+	// Build: Output only. The resource name of the Cloud Build `Build`
+	// object that is used to verify. Format is
+	// projects/{project}/locations/{location}/builds/{build}.
+	Build string `json:"build,omitempty"`
+
+	// EventLogPath: Output only. File path of the Skaffold event log
+	// relative to the artifact URI.
+	EventLogPath string `json:"eventLogPath,omitempty"`
+
+	// FailureCause: Output only. The reason the verify failed. This will
+	// always be unspecified while the verify is in progress or if it
+	// succeeded.
+	//
+	// Possible values:
+	//   "FAILURE_CAUSE_UNSPECIFIED" - No reason for failure is specified.
+	//   "CLOUD_BUILD_UNAVAILABLE" - Cloud Build is not available, either
+	// because it is not enabled or because Google Cloud Deploy has
+	// insufficient permissions. See [required
+	// permission](/deploy/docs/cloud-deploy-service-account#required_permiss
+	// ions).
+	//   "EXECUTION_FAILED" - The verify operation did not complete
+	// successfully; check Cloud Build logs.
+	//   "DEADLINE_EXCEEDED" - The verify build did not complete within the
+	// alloted time.
+	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration
+	// was found.
+	FailureCause string `json:"failureCause,omitempty"`
+
+	// FailureMessage: Output only. Additional information about the verify
+	// failure, if available.
+	FailureMessage string `json:"failureMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArtifactUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArtifactUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VerifyJobRun) MarshalJSON() ([]byte, error) {
+	type NoMethod VerifyJobRun
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5924,6 +6499,520 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Do(opts ...
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) Pages(ctx context.Context, f func(*ListRolloutsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.retryJob":
+
+type ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall struct {
+	s               *Service
+	rollout         string
+	retryjobrequest *RetryJobRequest
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// RetryJob: Retries the specified Job in a Rollout.
+//
+//   - rollout: Name of the Rollout. Format is
+//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
+//     ipeline}/ releases/{release}/rollouts/{rollout}.
+func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) RetryJob(rollout string, retryjobrequest *RetryJobRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall {
+	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.rollout = rollout
+	c.retryjobrequest = retryjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.retryjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+rollout}:retryJob")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"rollout": c.rollout,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.retryJob" call.
+// Exactly one of *RetryJobResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RetryJobResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Do(opts ...googleapi.CallOption) (*RetryJobResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RetryJobResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retries the specified Job in a Rollout.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/releases/{releasesId}/rollouts/{rolloutsId}:retryJob",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.retryJob",
+	//   "parameterOrder": [
+	//     "rollout"
+	//   ],
+	//   "parameters": {
+	//     "rollout": {
+	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+rollout}:retryJob",
+	//   "request": {
+	//     "$ref": "RetryJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RetryJobResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.get":
+
+type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single JobRun.
+//
+//   - name: Name of the `JobRun`. Format must be
+//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
+//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRun
+//     s/{job_run_name}.
+func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
+	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.get" call.
+// Exactly one of *JobRun or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *JobRun.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Do(opts ...googleapi.CallOption) (*JobRun, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &JobRun{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single JobRun.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/releases/{releasesId}/rollouts/{rolloutsId}/jobRuns/{jobRunsId}",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `JobRun`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+/jobRuns/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "JobRun"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.list":
+
+type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists JobRuns in a given project and location.
+//
+//   - parent: The `Rollout` which owns this collection of `JobRun`
+//     objects.
+func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) List(parent string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter results to be
+// returned. See https://google.aip.dev/160 for more details.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Filter(filter string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) OrderBy(orderBy string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of `JobRun` objects to return. The service may return fewer than this
+// value. If unspecified, at most 50 `JobRun` objects will be returned.
+// The maximum value is 1000; values above 1000 will be set to 1000.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) PageSize(pageSize int64) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListJobRuns` call. Provide this to retrieve
+// the subsequent page. When paginating, all other provided parameters
+// match the call that provided the page token.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) PageToken(pageToken string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Context(ctx context.Context) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/jobRuns")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.list" call.
+// Exactly one of *ListJobRunsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListJobRunsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Do(opts ...googleapi.CallOption) (*ListJobRunsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListJobRunsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists JobRuns in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/deliveryPipelines/{deliveryPipelinesId}/releases/{releasesId}/rollouts/{rolloutsId}/jobRuns",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter results to be returned. See https://google.aip.dev/160 for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field to sort by. See https://google.aip.dev/132#ordering for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of `JobRun` objects to return. The service may return fewer than this value. If unspecified, at most 50 `JobRun` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListJobRuns` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The `Rollout` which owns this collection of `JobRun` objects.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/jobRuns",
+	//   "response": {
+	//     "$ref": "ListJobRunsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) Pages(ctx context.Context, f func(*ListJobRunsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

@@ -1068,7 +1068,7 @@ type DiscoveryOccurrence struct {
 	//   "PENDING" - Resource is known but no action has been taken yet.
 	//   "SCANNING" - Resource is being analyzed.
 	//   "FINISHED_SUCCESS" - Analysis has finished successfully.
-	//   "COMPLETE" - Analysis has completed
+	//   "COMPLETE" - Analysis has completed.
 	//   "FINISHED_FAILED" - Analysis has finished unsuccessfully, the
 	// analysis itself is in a bad state.
 	//   "FINISHED_UNSUPPORTED" - The resource is known not to be supported.
@@ -3307,6 +3307,15 @@ type VulnerabilityOccurrence struct {
 	// score is on a scale of 0 - 10 where 0 indicates low severity and 10
 	// indicates high severity.
 	CvssScore float64 `json:"cvssScore,omitempty"`
+
+	// CvssVersion: Output only. CVSS version used to populate cvss_score
+	// and severity.
+	//
+	// Possible values:
+	//   "CVSS_VERSION_UNSPECIFIED"
+	//   "CVSS_VERSION_2"
+	//   "CVSS_VERSION_3"
+	CvssVersion string `json:"cvssVersion,omitempty"`
 
 	// Cvssv3: The cvss v3 score for the vulnerability.
 	Cvssv3 *CVSS `json:"cvssv3,omitempty"`

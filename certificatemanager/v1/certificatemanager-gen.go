@@ -371,7 +371,8 @@ type CertificateMap struct {
 	Description string `json:"description,omitempty"`
 
 	// GclbTargets: Output only. A list of GCLB targets which use this
-	// Certificate Map.
+	// Certificate Map. A Target Proxy is only present on this list if it's
+	// attached to a Forwarding Rule.
 	GclbTargets []*GclbTarget `json:"gclbTargets,omitempty"`
 
 	// Labels: Set of labels associated with a Certificate Map.

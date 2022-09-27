@@ -1739,8 +1739,7 @@ func (s *GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate) MarshalJS
 // GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel: An
 // individual panel with a list of ServingConfigs to consider for it.
 type GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel struct {
-	// Candidates: Required. The candidates to consider on the panel. Limit
-	// = 10.
+	// Candidates: Required. The candidates to consider on the panel.
 	Candidates []*GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate `json:"candidates,omitempty"`
 
 	// DefaultCandidate: Required. The default candidate. If the model fails
@@ -3327,6 +3326,38 @@ func (s *GoogleCloudRetailV2betaControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with
+// a create operation.
+type GoogleCloudRetailV2betaCreateModelMetadata struct {
+	// Model: The resource name of the model that this create applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaCreateModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaCreateModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaCustomAttribute: A custom attribute that is
 // not explicitly modeled in Product.
 type GoogleCloudRetailV2betaCustomAttribute struct {
@@ -4341,6 +4372,39 @@ func (s *GoogleCloudRetailV2betaLocalInventory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaMerchantCenterFeedFilter: Merchant Center Feed
+// filter criterrion.
+type GoogleCloudRetailV2betaMerchantCenterFeedFilter struct {
+	// PrimaryFeedId: Merchant Center primary feed id.
+	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
+
+	// PrimaryFeedName: Merchant Center primary feed name. The name is used
+	// for the display purposes only.
+	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaMerchantCenterFeedFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaMerchantCenterLink: Represents a link between
 // a Merchant Center account and a branch. Once a link is established,
 // products from the linked merchant center account will be streamed to
@@ -4362,6 +4426,11 @@ type GoogleCloudRetailV2betaMerchantCenterLink struct {
 	// "Free_listings", "Free_local_listings" NOTE: The string values are
 	// case sensitive.
 	Destinations []string `json:"destinations,omitempty"`
+
+	// Feeds: Criteria for the Merchant Center feeds to be ingested via the
+	// link. All offers will be ingested if the list is empty. Otherwise the
+	// offers will be ingested from selected feeds.
+	Feeds []*GoogleCloudRetailV2betaMerchantCenterFeedFilter `json:"feeds,omitempty"`
 
 	// LanguageCode: Language of the title/description and other string
 	// attributes. Use language tags defined by BCP 47
@@ -4687,16 +4756,16 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
 	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
 	// * filterOutOfStockItems If your filter blocks all prediction results,
-	// the API will return generic (unfiltered) popular products. If you
-	// only want results strictly matching the filters, set
-	// `strictFiltering` to True in `PredictRequest.params` to receive empty
-	// results instead. Note that the API will never return items with
-	// storageStatus of "EXPIRED" or "DELETED" regardless of filter choices.
-	// If `filterSyntaxV2` is set to true under the `params` field, then
-	// attribute-based expressions are expected instead of the above
-	// described tag-based syntax. Examples: * (colors: ANY("Red", "Blue"))
-	// AND NOT (categories: ANY("Phones")) * (availability: ANY("IN_STOCK"))
-	// AND (colors: ANY("Red") OR categories: ANY("Phones"))
+	// the API will return *no* results. If instead you want empty result
+	// sets to return generic (unfiltered) popular products, set
+	// `strictFiltering` to False in `PredictRequest.params`. Note that the
+	// API will never return items with storageStatus of "EXPIRED" or
+	// "DELETED" regardless of filter choices. If `filterSyntaxV2` is set to
+	// true under the `params` field, then attribute-based expressions are
+	// expected instead of the above described tag-based syntax. Examples: *
+	// (colors: ANY("Red", "Blue")) AND NOT (categories: ANY("Phones")) *
+	// (availability: ANY("IN_STOCK")) AND (colors: ANY("Red") OR
+	// categories: ANY("Phones"))
 	Filter string `json:"filter,omitempty"`
 
 	// Labels: The labels applied to a resource must meet the following
@@ -7703,10 +7772,47 @@ func (s *GoogleCloudRetailV2betaSetInventoryRequest) MarshalJSON() ([]byte, erro
 type GoogleCloudRetailV2betaSetInventoryResponse struct {
 }
 
+// GoogleCloudRetailV2betaTuneModelMetadata: Metadata associated with a
+// tune operation.
+type GoogleCloudRetailV2betaTuneModelMetadata struct {
+	// Model: The resource name of the model that this tune applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaTuneModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaTuneModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaTuneModelRequest: Request to manually start a
 // tuning process now (instead of waiting for the periodically scheduled
 // tuning to happen).
 type GoogleCloudRetailV2betaTuneModelRequest struct {
+}
+
+// GoogleCloudRetailV2betaTuneModelResponse: Response associated with a
+// tune operation.
+type GoogleCloudRetailV2betaTuneModelResponse struct {
 }
 
 // GoogleCloudRetailV2betaUserEvent: UserEvent captures all metadata

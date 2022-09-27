@@ -1035,6 +1035,47 @@ func (s *MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NetworkingConfig: Configuration options for networking connections in
+// the Composer 2 environment.
+type NetworkingConfig struct {
+	// ConnectionType: Optional. Indicates the user requested specifc
+	// connection type between Tenant and Customer projects. You cannot set
+	// networking connection type in public IP environment.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - No specific connection type was
+	// requested, so the environment uses the default value corresponding to
+	// the rest of its configuration.
+	//   "VPC_PEERING" - Requests the use of VPC peerings for connecting the
+	// Customer and Tenant projects.
+	//   "PRIVATE_SERVICE_CONNECT" - Requests the use of Private Service
+	// Connect for connecting the Customer and Tenant projects.
+	ConnectionType string `json:"connectionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
@@ -1379,6 +1420,10 @@ type PrivateEnvironmentConfig struct {
 	// `IPAllocationPolicy.cluster_ipv4_cidr_block` and
 	// `IPAllocationPolicy.service_ipv4_cidr_block`.
 	EnablePrivatelyUsedPublicIps bool `json:"enablePrivatelyUsedPublicIps,omitempty"`
+
+	// NetworkingConfig: Optional. Configuration for the network connections
+	// configuration in the environment.
+	NetworkingConfig *NetworkingConfig `json:"networkingConfig,omitempty"`
 
 	// PrivateClusterConfig: Optional. Configuration for the private GKE
 	// cluster for a Private IP Cloud Composer environment.

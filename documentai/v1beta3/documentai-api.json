@@ -836,7 +836,7 @@
       }
     }
   },
-  "revision": "20220912",
+  "revision": "20220921",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
@@ -2080,7 +2080,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
+          "description": "Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.",
           "type": "string"
         },
         "normalizedValue": {
@@ -2216,6 +2216,10 @@
         "image": {
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageImage",
           "description": "Rendered image for this page. This image is preprocessed to remove any skew, rotation, and distortions such that the annotation bounding boxes can be upright and axis-aligned."
+        },
+        "imageQualityScores": {
+          "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores",
+          "description": "Image Quality Scores."
         },
         "layout": {
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageLayout",
@@ -2486,6 +2490,41 @@
           "description": "Width of the image in pixels.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores": {
+      "description": "Image Quality Scores for the page image",
+      "id": "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores",
+      "properties": {
+        "detectedDefects": {
+          "description": "A list of detected defects.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect"
+          },
+          "type": "array"
+        },
+        "qualityScore": {
+          "description": "The overall quality score. Range [0, 1] where 1 is perfect quality.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect": {
+      "description": "Image Quality Defects",
+      "id": "GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect",
+      "properties": {
+        "confidence": {
+          "description": "Confidence of detected defect. Range [0, 1] where 1 indicates strong confidence of that the defect exists.",
+          "format": "float",
+          "type": "number"
+        },
+        "type": {
+          "description": "Name of the defect type. Supported values are \"quality/defect_blurry\", \"quality/defect_noisy\", \"quality/defect_dark\", \"quality/defect_faint\", \"quality/defect_text_too_small\", \"quality/defect_document_cutoff\", \"quality/defect_text_cutoff\", \"quality/defect_glare\"",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3318,7 +3357,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
+          "description": "Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.",
           "type": "string"
         },
         "normalizedValue": {
@@ -3474,6 +3513,10 @@
         "image": {
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageImage",
           "description": "Rendered image for this page. This image is preprocessed to remove any skew, rotation, and distortions such that the annotation bounding boxes can be upright and axis-aligned."
+        },
+        "imageQualityScores": {
+          "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores",
+          "description": "Image Quality Scores."
         },
         "layout": {
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageLayout",
@@ -3744,6 +3787,41 @@
           "description": "Width of the image in pixels.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores": {
+      "description": "Image Quality Scores for the page image",
+      "id": "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores",
+      "properties": {
+        "detectedDefects": {
+          "description": "A list of detected defects.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect"
+          },
+          "type": "array"
+        },
+        "qualityScore": {
+          "description": "The overall quality score. Range [0, 1] where 1 is perfect quality.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect": {
+      "description": "Image Quality Defects",
+      "id": "GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect",
+      "properties": {
+        "confidence": {
+          "description": "Confidence of detected defect. Range [0, 1] where 1 indicates strong confidence of that the defect exists.",
+          "format": "float",
+          "type": "number"
+        },
+        "type": {
+          "description": "Name of the defect type. Supported values are \"quality/defect_blurry\", \"quality/defect_noisy\", \"quality/defect_dark\", \"quality/defect_faint\", \"quality/defect_text_too_small\", \"quality/defect_document_cutoff\", \"quality/defect_text_cutoff\", \"quality/defect_glare\"",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4827,7 +4905,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
+          "description": "Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.",
           "type": "string"
         },
         "normalizedValue": {
@@ -4939,6 +5017,11 @@
       "description": "The configuration used when outputting documents.",
       "id": "GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig",
       "properties": {
+        "fieldMask": {
+          "description": "Specifies which fields to include in the output documents.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
         "gcsUri": {
           "description": "The Cloud Storage uri (a directory) of the output.",
           "type": "string"
@@ -4985,6 +5068,10 @@
         "image": {
           "$ref": "GoogleCloudDocumentaiV1beta3DocumentPageImage",
           "description": "Rendered image for this page. This image is preprocessed to remove any skew, rotation, and distortions such that the annotation bounding boxes can be upright and axis-aligned."
+        },
+        "imageQualityScores": {
+          "$ref": "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores",
+          "description": "Image Quality Scores."
         },
         "layout": {
           "$ref": "GoogleCloudDocumentaiV1beta3DocumentPageLayout",
@@ -5255,6 +5342,41 @@
           "description": "Width of the image in pixels.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores": {
+      "description": "Image Quality Scores for the page image",
+      "id": "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores",
+      "properties": {
+        "detectedDefects": {
+          "description": "A list of detected defects.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect"
+          },
+          "type": "array"
+        },
+        "qualityScore": {
+          "description": "The overall quality score. Range [0, 1] where 1 is perfect quality.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect": {
+      "description": "Image Quality Defects",
+      "id": "GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect",
+      "properties": {
+        "confidence": {
+          "description": "Confidence of detected defect. Range [0, 1] where 1 indicates strong confidence of that the defect exists.",
+          "format": "float",
+          "type": "number"
+        },
+        "type": {
+          "description": "Name of the defect type. Supported values are \"quality/defect_blurry\", \"quality/defect_noisy\", \"quality/defect_dark\", \"quality/defect_faint\", \"quality/defect_text_too_small\", \"quality/defect_document_cutoff\", \"quality/defect_text_cutoff\", \"quality/defect_glare\"",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5965,10 +6087,6 @@
         },
         "inactive": {
           "description": "Whether the entity type should be considered as \"inactive\".",
-          "type": "boolean"
-        },
-        "prefixedNamingOnProperties": {
-          "description": "If set, the properties of this entity type must be prefixed with the parents.",
           "type": "boolean"
         }
       },

@@ -740,11 +740,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -1263,6 +1264,9 @@ type CryptoHashConfig struct {
 	// specified. Must not be set if `kms_wrapped` is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
+	// KmsWrapped: KMS wrapped key. Must not be set if `crypto_key` is set.
+	KmsWrapped *KmsWrappedCryptoKey `json:"kmsWrapped,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1339,6 +1343,9 @@ type DateShiftConfig struct {
 	// if `kms_wrapped` is set.
 	CryptoKey string `json:"cryptoKey,omitempty"`
 
+	// KmsWrapped: KMS wrapped key. Must not be set if `crypto_key` is set.
+	KmsWrapped *KmsWrappedCryptoKey `json:"kmsWrapped,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1358,6 +1365,42 @@ type DateShiftConfig struct {
 
 func (s *DateShiftConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DateShiftConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeidentifiedStoreDestination: Contains configuration for streaming
+// de-identified FHIR export.
+type DeidentifiedStoreDestination struct {
+	// Config: The configuration to use when de-identifying resources that
+	// are added to this store.
+	Config *DeidentifyConfig `json:"config,omitempty"`
+
+	// Store: The full resource name of a Cloud Healthcare FHIR store, for
+	// example,
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/f
+	// hirStores/{fhir_store_id}`.
+	Store string `json:"store,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeidentifiedStoreDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod DeidentifiedStoreDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1533,6 +1576,10 @@ type DeidentifyFhirStoreRequest struct {
 	// ResourceFilter: A filter specifying the resources to include in the
 	// output. If not specified, all resources are included in the output.
 	ResourceFilter *FhirFilter `json:"resourceFilter,omitempty"`
+
+	// SkipModifiedResources: If true, skips resources that are created or
+	// modified after the de-identify operation is created.
+	SkipModifiedResources bool `json:"skipModifiedResources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
@@ -3680,6 +3727,46 @@ func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KmsWrappedCryptoKey: Include to use an existing data crypto key
+// wrapped by KMS. The wrapped key must be a 128-, 192-, or 256-bit key.
+// The key must grant the Cloud IAM permission
+// `cloudkms.cryptoKeyVersions.useToDecrypt` to the project's Cloud
+// Healthcare Service Agent service account. For more information, see
+// [Creating a wrapped key]
+// (https://cloud.google.com/dlp/docs/create-wrapped-key).
+type KmsWrappedCryptoKey struct {
+	// CryptoKey: Required. The resource name of the KMS CryptoKey to use
+	// for unwrapping. For example,
+	// `projects/{project_id}/locations/{location_id}/keyRings/{keyring}/cryp
+	// toKeys/{key}`.
+	CryptoKey string `json:"cryptoKey,omitempty"`
+
+	// WrappedKey: Required. The wrapped data crypto key.
+	WrappedKey string `json:"wrappedKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CryptoKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KmsWrappedCryptoKey) MarshalJSON() ([]byte, error) {
+	type NoMethod KmsWrappedCryptoKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LinkedEntity: EntityMentions can be linked to multiple entities using
 // a LinkedEntity message lets us add other fields, e.g. confidence.
 type LinkedEntity struct {
@@ -5438,6 +5525,26 @@ type StreamConfig struct {
 	// For more information, see Viewing error logs in Cloud Logging
 	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 	BigqueryDestination *GoogleCloudHealthcareV1FhirBigQueryDestination `json:"bigqueryDestination,omitempty"`
+
+	// DeidentifiedStoreDestination: The destination FHIR store for
+	// de-identified resources. After this field is added, all subsequent
+	// creates/updates/patches to the source store will be de-identified
+	// using the provided configuration and applied to the destination
+	// store. Importing resources to the source store will not trigger the
+	// streaming. If the source store already contains resources when this
+	// option is enabled, those resources will not be copied to the
+	// destination store unless they are subsequently updated. This may
+	// result in invalid references in the destination store. Before adding
+	// this config, you must grant the healthcare.fhirResources.update
+	// permission on the destination store to your project's **Cloud
+	// Healthcare Service Agent** service account
+	// (https://cloud.google.com/healthcare/docs/how-tos/permissions-healthcare-api-gcp-products#the_cloud_healthcare_service_agent).
+	// The destination store must set enable_update_create to true. The
+	// destination store must have disable_referential_integrity set to
+	// true. If a resource cannot be de-identified, errors will be logged to
+	// Cloud Logging (see Viewing error logs in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+	DeidentifiedStoreDestination *DeidentifiedStoreDestination `json:"deidentifiedStoreDestination,omitempty"`
 
 	// ResourceTypes: Supply a FHIR resource type (such as "Patient" or
 	// "Observation"). See

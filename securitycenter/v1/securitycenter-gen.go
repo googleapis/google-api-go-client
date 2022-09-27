@@ -502,6 +502,12 @@ type Access struct {
 	// operating system shells, embedded or stand-alone applications, etc.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
+	// Username: A string representing a username. This is likely not an IAM
+	// principal. For instance, this may be the system user name if the
+	// finding is VM-related, or this may be some type of application login
+	// user name, depending on the type of finding.
+	Username string `json:"username,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1650,7 +1656,7 @@ type Finding struct {
 	// with the finding.
 	Connections []*Connection `json:"connections,omitempty"`
 
-	// Contacts: Output only. Map containing the point of contacts for the
+	// Contacts: Output only. Map containing the points of contact for the
 	// given finding. The key represents the type of contact, while the
 	// value contains a list of all the contacts that pertain. Please refer
 	// to:
@@ -1769,7 +1775,7 @@ type Finding struct {
 
 	// ParentDisplayName: Output only. The human readable display name of
 	// the finding source such as "Event Threat Detection" or "Security
-	// Health Analytics"
+	// Health Analytics".
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Processes: Represents operating system processes associated with the
@@ -2137,6 +2143,16 @@ func (s *GoogleCloudSecuritycenterV1Binding) MarshalJSON() ([]byte, error) {
 // GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to
 // a BulkMute request. Contains the LRO information.
 type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
+}
+
+// GoogleCloudSecuritycenterV1ExposedResource: A resource that is
+// exposed as a result of a finding.
+type GoogleCloudSecuritycenterV1ExposedResource struct {
+}
+
+// GoogleCloudSecuritycenterV1ExposurePath: A path that an attacker
+// could take to reach an exposed resource.
+type GoogleCloudSecuritycenterV1ExposurePath struct {
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third

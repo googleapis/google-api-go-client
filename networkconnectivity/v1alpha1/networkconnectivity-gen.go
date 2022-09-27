@@ -151,12 +151,12 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
-	rs.ConnectionPolicies = NewProjectsLocationsConnectionPoliciesService(s)
 	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.InternalRanges = NewProjectsLocationsInternalRangesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
-	rs.ServiceIdentifiers = NewProjectsLocationsServiceIdentifiersService(s)
-	rs.ServiceInstances = NewProjectsLocationsServiceInstancesService(s)
+	rs.ServiceClasses = NewProjectsLocationsServiceClassesService(s)
+	rs.ServiceConnectionMaps = NewProjectsLocationsServiceConnectionMapsService(s)
+	rs.ServiceConnectionPolicies = NewProjectsLocationsServiceConnectionPoliciesService(s)
 	rs.Spokes = NewProjectsLocationsSpokesService(s)
 	return rs
 }
@@ -164,28 +164,19 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
-	ConnectionPolicies *ProjectsLocationsConnectionPoliciesService
-
 	Global *ProjectsLocationsGlobalService
 
 	InternalRanges *ProjectsLocationsInternalRangesService
 
 	Operations *ProjectsLocationsOperationsService
 
-	ServiceIdentifiers *ProjectsLocationsServiceIdentifiersService
+	ServiceClasses *ProjectsLocationsServiceClassesService
 
-	ServiceInstances *ProjectsLocationsServiceInstancesService
+	ServiceConnectionMaps *ProjectsLocationsServiceConnectionMapsService
+
+	ServiceConnectionPolicies *ProjectsLocationsServiceConnectionPoliciesService
 
 	Spokes *ProjectsLocationsSpokesService
-}
-
-func NewProjectsLocationsConnectionPoliciesService(s *Service) *ProjectsLocationsConnectionPoliciesService {
-	rs := &ProjectsLocationsConnectionPoliciesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsConnectionPoliciesService struct {
-	s *Service
 }
 
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
@@ -227,21 +218,30 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
-func NewProjectsLocationsServiceIdentifiersService(s *Service) *ProjectsLocationsServiceIdentifiersService {
-	rs := &ProjectsLocationsServiceIdentifiersService{s: s}
+func NewProjectsLocationsServiceClassesService(s *Service) *ProjectsLocationsServiceClassesService {
+	rs := &ProjectsLocationsServiceClassesService{s: s}
 	return rs
 }
 
-type ProjectsLocationsServiceIdentifiersService struct {
+type ProjectsLocationsServiceClassesService struct {
 	s *Service
 }
 
-func NewProjectsLocationsServiceInstancesService(s *Service) *ProjectsLocationsServiceInstancesService {
-	rs := &ProjectsLocationsServiceInstancesService{s: s}
+func NewProjectsLocationsServiceConnectionMapsService(s *Service) *ProjectsLocationsServiceConnectionMapsService {
+	rs := &ProjectsLocationsServiceConnectionMapsService{s: s}
 	return rs
 }
 
-type ProjectsLocationsServiceInstancesService struct {
+type ProjectsLocationsServiceConnectionMapsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsServiceConnectionPoliciesService(s *Service) *ProjectsLocationsServiceConnectionPoliciesService {
+	rs := &ProjectsLocationsServiceConnectionPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsServiceConnectionPoliciesService struct {
 	s *Service
 }
 
@@ -1612,478 +1612,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "networkconnectivity.projects.locations.connectionPolicies.getIamPolicy":
-
-type ProjectsLocationsConnectionPoliciesGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsConnectionPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsConnectionPoliciesGetIamPolicyCall {
-	c := &ProjectsLocationsConnectionPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy. Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected. Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset. The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1. To learn
-// which resources support conditions in their IAM policies, see the IAM
-// documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsConnectionPoliciesGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionPoliciesGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionPoliciesGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsConnectionPoliciesGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.connectionPolicies.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsConnectionPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionPolicies/{connectionPoliciesId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "networkconnectivity.projects.locations.connectionPolicies.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionPolicies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "networkconnectivity.projects.locations.connectionPolicies.setIamPolicy":
-
-type ProjectsLocationsConnectionPoliciesSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy. Can return `NOT_FOUND`,
-// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsConnectionPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsConnectionPoliciesSetIamPolicyCall {
-	c := &ProjectsLocationsConnectionPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsConnectionPoliciesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionPoliciesSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsConnectionPoliciesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsConnectionPoliciesSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsConnectionPoliciesSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsConnectionPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.connectionPolicies.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsConnectionPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionPolicies/{connectionPoliciesId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.connectionPolicies.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionPolicies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "networkconnectivity.projects.locations.connectionPolicies.testIamPermissions":
-
-type ProjectsLocationsConnectionPoliciesTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a `NOT_FOUND` error. Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
-func (r *ProjectsLocationsConnectionPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall {
-	c := &ProjectsLocationsConnectionPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkconnectivity.projects.locations.connectionPolicies.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsConnectionPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/connectionPolicies/{connectionPoliciesId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.connectionPolicies.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionPolicies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // method id "networkconnectivity.projects.locations.global.hubs.create":
@@ -4556,9 +4084,9 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "networkconnectivity.projects.locations.serviceIdentifiers.getIamPolicy":
+// method id "networkconnectivity.projects.locations.serviceClasses.getIamPolicy":
 
-type ProjectsLocationsServiceIdentifiersGetIamPolicyCall struct {
+type ProjectsLocationsServiceClassesGetIamPolicyCall struct {
 	s            *Service
 	resource     string
 	urlParams_   gensupport.URLParams
@@ -4575,8 +4103,8 @@ type ProjectsLocationsServiceIdentifiersGetIamPolicyCall struct {
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceIdentifiersService) GetIamPolicy(resource string) *ProjectsLocationsServiceIdentifiersGetIamPolicyCall {
-	c := &ProjectsLocationsServiceIdentifiersGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceClassesService) GetIamPolicy(resource string) *ProjectsLocationsServiceClassesGetIamPolicyCall {
+	c := &ProjectsLocationsServiceClassesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
@@ -4594,7 +4122,7 @@ func (r *ProjectsLocationsServiceIdentifiersService) GetIamPolicy(resource strin
 // which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceIdentifiersGetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceClassesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
 }
@@ -4602,7 +4130,7 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) OptionsRequestedPo
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceIdentifiersGetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceClassesGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4612,7 +4140,7 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Fields(s ...google
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceIdentifiersGetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceClassesGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -4620,21 +4148,21 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) IfNoneMatch(entity
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceIdentifiersGetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceClassesGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4660,14 +4188,14 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceIdentifiers.getIamPolicy" call.
+// Do executes the "networkconnectivity.projects.locations.serviceClasses.getIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4699,9 +4227,9 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceIdentifiers/{serviceIdentifiersId}:getIamPolicy",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceClasses/{serviceClassesId}:getIamPolicy",
 	//   "httpMethod": "GET",
-	//   "id": "networkconnectivity.projects.locations.serviceIdentifiers.getIamPolicy",
+	//   "id": "networkconnectivity.projects.locations.serviceClasses.getIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -4715,7 +4243,7 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Do(opts ...googlea
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceIdentifiers/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceClasses/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4731,9 +4259,9 @@ func (c *ProjectsLocationsServiceIdentifiersGetIamPolicyCall) Do(opts ...googlea
 
 }
 
-// method id "networkconnectivity.projects.locations.serviceIdentifiers.setIamPolicy":
+// method id "networkconnectivity.projects.locations.serviceClasses.setIamPolicy":
 
-type ProjectsLocationsServiceIdentifiersSetIamPolicyCall struct {
+type ProjectsLocationsServiceClassesSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
@@ -4750,8 +4278,8 @@ type ProjectsLocationsServiceIdentifiersSetIamPolicyCall struct {
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceIdentifiersService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceIdentifiersSetIamPolicyCall {
-	c := &ProjectsLocationsServiceIdentifiersSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceClassesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceClassesSetIamPolicyCall {
+	c := &ProjectsLocationsServiceClassesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
@@ -4760,7 +4288,7 @@ func (r *ProjectsLocationsServiceIdentifiersService) SetIamPolicy(resource strin
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceIdentifiersSetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceClassesSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4768,21 +4296,21 @@ func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Fields(s ...google
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceIdentifiersSetIamPolicyCall {
+func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceClassesSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4810,14 +4338,14 @@ func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) doRequest(alt stri
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceIdentifiers.setIamPolicy" call.
+// Do executes the "networkconnectivity.projects.locations.serviceClasses.setIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4849,9 +4377,9 @@ func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Do(opts ...googlea
 	return ret, nil
 	// {
 	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceIdentifiers/{serviceIdentifiersId}:setIamPolicy",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceClasses/{serviceClassesId}:setIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.serviceIdentifiers.setIamPolicy",
+	//   "id": "networkconnectivity.projects.locations.serviceClasses.setIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -4859,7 +4387,7 @@ func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Do(opts ...googlea
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceIdentifiers/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceClasses/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -4878,9 +4406,9 @@ func (c *ProjectsLocationsServiceIdentifiersSetIamPolicyCall) Do(opts ...googlea
 
 }
 
-// method id "networkconnectivity.projects.locations.serviceIdentifiers.testIamPermissions":
+// method id "networkconnectivity.projects.locations.serviceClasses.testIamPermissions":
 
-type ProjectsLocationsServiceIdentifiersTestIamPermissionsCall struct {
+type ProjectsLocationsServiceClassesTestIamPermissionsCall struct {
 	s                         *Service
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
@@ -4900,8 +4428,8 @@ type ProjectsLocationsServiceIdentifiersTestIamPermissionsCall struct {
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceIdentifiersService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall {
-	c := &ProjectsLocationsServiceIdentifiersTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceClassesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceClassesTestIamPermissionsCall {
+	c := &ProjectsLocationsServiceClassesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
@@ -4910,7 +4438,7 @@ func (r *ProjectsLocationsServiceIdentifiersService) TestIamPermissions(resource
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall {
+func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceClassesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4918,21 +4446,21 @@ func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Fields(s ...
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall {
+func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceClassesTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Header() http.Header {
+func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -4960,14 +4488,14 @@ func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) doRequest(al
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceIdentifiers.testIamPermissions" call.
+// Do executes the "networkconnectivity.projects.locations.serviceClasses.testIamPermissions" call.
 // Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *TestIamPermissionsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4999,9 +4527,9 @@ func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Do(opts ...g
 	return ret, nil
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceIdentifiers/{serviceIdentifiersId}:testIamPermissions",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceClasses/{serviceClassesId}:testIamPermissions",
 	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.serviceIdentifiers.testIamPermissions",
+	//   "id": "networkconnectivity.projects.locations.serviceClasses.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5009,7 +4537,7 @@ func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Do(opts ...g
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceIdentifiers/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceClasses/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5028,9 +4556,9 @@ func (c *ProjectsLocationsServiceIdentifiersTestIamPermissionsCall) Do(opts ...g
 
 }
 
-// method id "networkconnectivity.projects.locations.serviceInstances.getIamPolicy":
+// method id "networkconnectivity.projects.locations.serviceConnectionMaps.getIamPolicy":
 
-type ProjectsLocationsServiceInstancesGetIamPolicyCall struct {
+type ProjectsLocationsServiceConnectionMapsGetIamPolicyCall struct {
 	s            *Service
 	resource     string
 	urlParams_   gensupport.URLParams
@@ -5047,8 +4575,8 @@ type ProjectsLocationsServiceInstancesGetIamPolicyCall struct {
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceInstancesService) GetIamPolicy(resource string) *ProjectsLocationsServiceInstancesGetIamPolicyCall {
-	c := &ProjectsLocationsServiceInstancesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceConnectionMapsService) GetIamPolicy(resource string) *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall {
+	c := &ProjectsLocationsServiceConnectionMapsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
@@ -5066,7 +4594,7 @@ func (r *ProjectsLocationsServiceInstancesService) GetIamPolicy(resource string)
 // which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceInstancesGetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
 }
@@ -5074,7 +4602,7 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) OptionsRequestedPoli
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceInstancesGetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5084,7 +4612,7 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Fields(s ...googleap
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceInstancesGetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -5092,21 +4620,21 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) IfNoneMatch(entityTa
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceInstancesGetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5132,14 +4660,14 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) doRequest(alt string
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceInstances.getIamPolicy" call.
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.getIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5171,9 +4699,9 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Do(opts ...googleapi
 	return ret, nil
 	// {
 	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceInstances/{serviceInstancesId}:getIamPolicy",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionMaps/{serviceConnectionMapsId}:getIamPolicy",
 	//   "httpMethod": "GET",
-	//   "id": "networkconnectivity.projects.locations.serviceInstances.getIamPolicy",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionMaps.getIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5187,7 +4715,7 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Do(opts ...googleapi
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceInstances/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionMaps/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5203,9 +4731,9 @@ func (c *ProjectsLocationsServiceInstancesGetIamPolicyCall) Do(opts ...googleapi
 
 }
 
-// method id "networkconnectivity.projects.locations.serviceInstances.setIamPolicy":
+// method id "networkconnectivity.projects.locations.serviceConnectionMaps.setIamPolicy":
 
-type ProjectsLocationsServiceInstancesSetIamPolicyCall struct {
+type ProjectsLocationsServiceConnectionMapsSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
@@ -5222,8 +4750,8 @@ type ProjectsLocationsServiceInstancesSetIamPolicyCall struct {
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceInstancesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceInstancesSetIamPolicyCall {
-	c := &ProjectsLocationsServiceInstancesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceConnectionMapsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall {
+	c := &ProjectsLocationsServiceConnectionMapsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
@@ -5232,7 +4760,7 @@ func (r *ProjectsLocationsServiceInstancesService) SetIamPolicy(resource string,
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceInstancesSetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5240,21 +4768,21 @@ func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Fields(s ...googleap
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceInstancesSetIamPolicyCall {
+func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Header() http.Header {
+func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5282,14 +4810,14 @@ func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) doRequest(alt string
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceInstances.setIamPolicy" call.
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.setIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5321,9 +4849,9 @@ func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Do(opts ...googleapi
 	return ret, nil
 	// {
 	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceInstances/{serviceInstancesId}:setIamPolicy",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionMaps/{serviceConnectionMapsId}:setIamPolicy",
 	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.serviceInstances.setIamPolicy",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionMaps.setIamPolicy",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5331,7 +4859,7 @@ func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Do(opts ...googleapi
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceInstances/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionMaps/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5350,9 +4878,9 @@ func (c *ProjectsLocationsServiceInstancesSetIamPolicyCall) Do(opts ...googleapi
 
 }
 
-// method id "networkconnectivity.projects.locations.serviceInstances.testIamPermissions":
+// method id "networkconnectivity.projects.locations.serviceConnectionMaps.testIamPermissions":
 
-type ProjectsLocationsServiceInstancesTestIamPermissionsCall struct {
+type ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall struct {
 	s                         *Service
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
@@ -5372,8 +4900,8 @@ type ProjectsLocationsServiceInstancesTestIamPermissionsCall struct {
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
-func (r *ProjectsLocationsServiceInstancesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceInstancesTestIamPermissionsCall {
-	c := &ProjectsLocationsServiceInstancesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsServiceConnectionMapsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall {
+	c := &ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
@@ -5382,7 +4910,7 @@ func (r *ProjectsLocationsServiceInstancesService) TestIamPermissions(resource s
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceInstancesTestIamPermissionsCall {
+func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -5390,21 +4918,21 @@ func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Fields(s ...go
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceInstancesTestIamPermissionsCall {
+func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Header() http.Header {
+func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -5432,14 +4960,14 @@ func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) doRequest(alt 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "networkconnectivity.projects.locations.serviceInstances.testIamPermissions" call.
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.testIamPermissions" call.
 // Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *TestIamPermissionsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5471,9 +4999,9 @@ func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Do(opts ...goo
 	return ret, nil
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceInstances/{serviceInstancesId}:testIamPermissions",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionMaps/{serviceConnectionMapsId}:testIamPermissions",
 	//   "httpMethod": "POST",
-	//   "id": "networkconnectivity.projects.locations.serviceInstances.testIamPermissions",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionMaps.testIamPermissions",
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -5481,7 +5009,479 @@ func (c *ProjectsLocationsServiceInstancesTestIamPermissionsCall) Do(opts ...goo
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceInstances/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionMaps/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.serviceConnectionPolicies.getIamPolicy":
+
+type ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsServiceConnectionPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall {
+	c := &ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionPolicies/{serviceConnectionPoliciesId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionPolicies.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.serviceConnectionPolicies.setIamPolicy":
+
+type ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsServiceConnectionPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall {
+	c := &ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionPolicies/{serviceConnectionPoliciesId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionPolicies.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionPolicies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "networkconnectivity.projects.locations.serviceConnectionPolicies.testIamPermissions":
+
+type ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsServiceConnectionPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall {
+	c := &ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/serviceConnectionPolicies/{serviceConnectionPoliciesId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "networkconnectivity.projects.locations.serviceConnectionPolicies.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceConnectionPolicies/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

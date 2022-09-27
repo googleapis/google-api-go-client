@@ -4459,6 +4459,10 @@ type PipelineDescription struct {
 	// pipeline and collections between them.
 	OriginalPipelineTransform []*TransformSummary `json:"originalPipelineTransform,omitempty"`
 
+	// StepNamesHash: A hash value of the submitted pipeline portable graph
+	// step names if exists.
+	StepNamesHash string `json:"stepNamesHash,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DisplayData") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -8557,6 +8561,12 @@ func (c *ProjectsJobsAggregatedCall) Location(location string) *ProjectsJobsAggr
 	return c
 }
 
+// Name sets the optional parameter "name": The job name. Optional.
+func (c *ProjectsJobsAggregatedCall) Name(name string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": If there are many
 // jobs, limit response to at most this many. The actual number of jobs
 // returned will be the lesser of max_responses and an unspecified
@@ -8724,6 +8734,11 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//     },
 	//     "location": {
 	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Optional. The job name. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9489,6 +9504,12 @@ func (c *ProjectsJobsListCall) Location(location string) *ProjectsJobsListCall {
 	return c
 }
 
+// Name sets the optional parameter "name": The job name. Optional.
+func (c *ProjectsJobsListCall) Name(name string) *ProjectsJobsListCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": If there are many
 // jobs, limit response to at most this many. The actual number of jobs
 // returned will be the lesser of max_responses and an unspecified
@@ -9656,6 +9677,11 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//     },
 	//     "location": {
 	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Optional. The job name. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12227,6 +12253,12 @@ func (c *ProjectsLocationsJobsListCall) Filter(filter string) *ProjectsLocations
 	return c
 }
 
+// Name sets the optional parameter "name": The job name. Optional.
+func (c *ProjectsLocationsJobsListCall) Name(name string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": If there are many
 // jobs, limit response to at most this many. The actual number of jobs
 // returned will be the lesser of max_responses and an unspecified
@@ -12398,6 +12430,11 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//       "description": "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Optional. The job name. Optional.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {

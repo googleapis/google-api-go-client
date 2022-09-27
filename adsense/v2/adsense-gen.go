@@ -678,6 +678,10 @@ func (s *ContentAdsSettings) MarshalJSON() ([]byte, error) {
 
 // CustomChannel: Representation of a custom channel.
 type CustomChannel struct {
+	// Active: Whether the custom channel is active and collecting data. See
+	// https://support.google.com/adsense/answer/10077192.
+	Active bool `json:"active,omitempty"`
+
 	// DisplayName: Required. Display name of the custom channel.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -693,7 +697,7 @@ type CustomChannel struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Active") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -701,10 +705,10 @@ type CustomChannel struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -761,6 +765,17 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Header: The header information of the columns requested in the
@@ -2796,6 +2811,156 @@ func (c *AccountsAdclientsListCall) Pages(ctx context.Context, f func(*ListAdCli
 	}
 }
 
+// method id "adsense.accounts.adclients.adunits.create":
+
+type AccountsAdclientsAdunitsCreateCall struct {
+	s          *Service
+	parent     string
+	adunit     *AdUnit
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates an ad unit. This method can only be used by projects
+// enabled for the AdSense for Platforms
+// (https://developers.google.com/adsense/platforms/) product. Note that
+// ad units can only be created for ad clients with an "AFC" product
+// code. For more info see the AdClient resource
+// (https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients).
+// For now, this method can only be used to create `DISPLAY` ad units.
+// See: https://support.google.com/adsense/answer/9183566
+//
+//   - parent: Ad client to create an ad unit under. Format:
+//     accounts/{account}/adclients/{adclient}.
+func (r *AccountsAdclientsAdunitsService) Create(parent string, adunit *AdUnit) *AccountsAdclientsAdunitsCreateCall {
+	c := &AccountsAdclientsAdunitsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.adunit = adunit
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsAdunitsCreateCall) Fields(s ...googleapi.Field) *AccountsAdclientsAdunitsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsAdunitsCreateCall) Context(ctx context.Context) *AccountsAdclientsAdunitsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsAdunitsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsAdunitsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/adunits")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.adunits.create" call.
+// Exactly one of *AdUnit or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *AdUnit.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsAdclientsAdunitsCreateCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdUnit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits",
+	//   "httpMethod": "POST",
+	//   "id": "adsense.accounts.adclients.adunits.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Ad client to create an ad unit under. Format: accounts/{account}/adclients/{adclient}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/adunits",
+	//   "request": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.accounts.adclients.adunits.get":
 
 type AccountsAdclientsAdunitsGetCall struct {
@@ -3494,6 +3659,447 @@ func (c *AccountsAdclientsAdunitsListLinkedCustomChannelsCall) Pages(ctx context
 	}
 }
 
+// method id "adsense.accounts.adclients.adunits.patch":
+
+type AccountsAdclientsAdunitsPatchCall struct {
+	s          *Service
+	name       string
+	adunit     *AdUnit
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an ad unit. This method can only be used by projects
+// enabled for the AdSense for Platforms
+// (https://developers.google.com/adsense/platforms/) product. For now,
+// this method can only be used to update `DISPLAY` ad units. See:
+// https://support.google.com/adsense/answer/9183566
+//
+//   - name: Output only. Resource name of the ad unit. Format:
+//     accounts/{account}/adclients/{adclient}/adunits/{adunit}.
+func (r *AccountsAdclientsAdunitsService) Patch(name string, adunit *AdUnit) *AccountsAdclientsAdunitsPatchCall {
+	c := &AccountsAdclientsAdunitsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.adunit = adunit
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update. If empty, a full update is performed.
+func (c *AccountsAdclientsAdunitsPatchCall) UpdateMask(updateMask string) *AccountsAdclientsAdunitsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsAdunitsPatchCall) Fields(s ...googleapi.Field) *AccountsAdclientsAdunitsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsAdunitsPatchCall) Context(ctx context.Context) *AccountsAdclientsAdunitsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsAdunitsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsAdunitsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.adunits.patch" call.
+// Exactly one of *AdUnit or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *AdUnit.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsAdclientsAdunitsPatchCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdUnit{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. For now, this method can only be used to update `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "adsense.accounts.adclients.adunits.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the ad unit. Format: accounts/{account}/adclients/{adclient}/adunits/{adunit}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/adunits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update. If empty, a full update is performed.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "response": {
+	//     "$ref": "AdUnit"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.adclients.customchannels.create":
+
+type AccountsAdclientsCustomchannelsCreateCall struct {
+	s             *Service
+	parent        string
+	customchannel *CustomChannel
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a custom channel. This method can only be used by
+// projects enabled for the AdSense for Platforms
+// (https://developers.google.com/adsense/platforms/) product.
+//
+//   - parent: The ad client to create a custom channel under. Format:
+//     accounts/{account}/adclients/{adclient}.
+func (r *AccountsAdclientsCustomchannelsService) Create(parent string, customchannel *CustomChannel) *AccountsAdclientsCustomchannelsCreateCall {
+	c := &AccountsAdclientsCustomchannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customchannel = customchannel
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsCustomchannelsCreateCall) Fields(s ...googleapi.Field) *AccountsAdclientsCustomchannelsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsCustomchannelsCreateCall) Context(ctx context.Context) *AccountsAdclientsCustomchannelsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsCustomchannelsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsCustomchannelsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/customchannels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.customchannels.create" call.
+// Exactly one of *CustomChannel or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomChannel.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAdclientsCustomchannelsCreateCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels",
+	//   "httpMethod": "POST",
+	//   "id": "adsense.accounts.adclients.customchannels.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The ad client to create a custom channel under. Format: accounts/{account}/adclients/{adclient}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/customchannels",
+	//   "request": {
+	//     "$ref": "CustomChannel"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.adclients.customchannels.delete":
+
+type AccountsAdclientsCustomchannelsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a custom channel. This method can only be used by
+// projects enabled for the AdSense for Platforms
+// (https://developers.google.com/adsense/platforms/) product.
+//
+//   - name: Name of the custom channel to delete. Format:
+//     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
+//     l}.
+func (r *AccountsAdclientsCustomchannelsService) Delete(name string) *AccountsAdclientsCustomchannelsDeleteCall {
+	c := &AccountsAdclientsCustomchannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsCustomchannelsDeleteCall) Fields(s ...googleapi.Field) *AccountsAdclientsCustomchannelsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsCustomchannelsDeleteCall) Context(ctx context.Context) *AccountsAdclientsCustomchannelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsCustomchannelsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsCustomchannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.customchannels.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsAdclientsCustomchannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "adsense.accounts.adclients.customchannels.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the custom channel to delete. Format: accounts/{account}/adclients/{adclient}/customchannels/{customchannel}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/customchannels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense"
+	//   ]
+	// }
+
+}
+
 // method id "adsense.accounts.adclients.customchannels.get":
 
 type AccountsAdclientsCustomchannelsGetCall struct {
@@ -4042,6 +4648,165 @@ func (c *AccountsAdclientsCustomchannelsListLinkedAdUnitsCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "adsense.accounts.adclients.customchannels.patch":
+
+type AccountsAdclientsCustomchannelsPatchCall struct {
+	s             *Service
+	name          string
+	customchannel *CustomChannel
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates a custom channel. This method can only be used by
+// projects enabled for the AdSense for Platforms
+// (https://developers.google.com/adsense/platforms/) product.
+//
+//   - name: Output only. Resource name of the custom channel. Format:
+//     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
+//     l}.
+func (r *AccountsAdclientsCustomchannelsService) Patch(name string, customchannel *CustomChannel) *AccountsAdclientsCustomchannelsPatchCall {
+	c := &AccountsAdclientsCustomchannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customchannel = customchannel
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update. If empty, a full update is performed.
+func (c *AccountsAdclientsCustomchannelsPatchCall) UpdateMask(updateMask string) *AccountsAdclientsCustomchannelsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdclientsCustomchannelsPatchCall) Fields(s ...googleapi.Field) *AccountsAdclientsCustomchannelsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdclientsCustomchannelsPatchCall) Context(ctx context.Context) *AccountsAdclientsCustomchannelsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdclientsCustomchannelsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdclientsCustomchannelsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customchannel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.adclients.customchannels.patch" call.
+// Exactly one of *CustomChannel or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomChannel.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAdclientsCustomchannelsPatchCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomChannel{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "adsense.accounts.adclients.customchannels.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of the custom channel. Format: accounts/{account}/adclients/{adclient}/customchannels/{customchannel}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/adclients/[^/]+/customchannels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to update. If empty, a full update is performed.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "CustomChannel"
+	//   },
+	//   "response": {
+	//     "$ref": "CustomChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense"
+	//   ]
+	// }
+
 }
 
 // method id "adsense.accounts.adclients.urlchannels.get":

@@ -738,8 +738,8 @@ type Peer struct {
 
 	// Principal: The identity of this peer. Similar to
 	// `Request.auth.principal`, but relative to the peer instead of the
-	// request. For example, the idenity associated with a load balancer
-	// that forwared the request.
+	// request. For example, the identity associated with a load balancer
+	// that forwarded the request.
 	Principal string `json:"principal,omitempty"`
 
 	// RegionCode: The CLDR country/region code associated with the above IP

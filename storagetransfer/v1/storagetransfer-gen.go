@@ -596,7 +596,7 @@ type ErrorSummary struct {
 	// ErrorCode: Required.
 	//
 	// Possible values:
-	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "OK" - Not an error; returned on success. HTTP Mapping: 200 OK
 	//   "CANCELLED" - The operation was cancelled, typically by the caller.
 	// HTTP Mapping: 499 Client Closed Request
 	//   "UNKNOWN" - Unknown error. For example, this error may be returned
@@ -3940,10 +3940,10 @@ type TransferJobsRunCall struct {
 	header_               http.Header
 }
 
-// Run: Attempts to start a new TransferOperation for the current
-// TransferJob. A TransferJob has a maximum of one active
-// TransferOperation. If this method is called while a TransferOperation
-// is active, an error will be returned.
+// Run: Starts a new operation for the specified transfer job. A
+// `TransferJob` has a maximum of one active `TransferOperation`. If
+// this method is called while a `TransferOperation` is active, an error
+// is returned.
 //
 // - jobName: The name of the transfer job.
 func (r *TransferJobsService) Run(jobName string, runtransferjobrequest *RunTransferJobRequest) *TransferJobsRunCall {
@@ -4044,7 +4044,7 @@ func (c *TransferJobsRunCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Attempts to start a new TransferOperation for the current TransferJob. A TransferJob has a maximum of one active TransferOperation. If this method is called while a TransferOperation is active, an error will be returned.",
+	//   "description": "Starts a new operation for the specified transfer job. A `TransferJob` has a maximum of one active `TransferOperation`. If this method is called while a `TransferOperation` is active, an error is returned.",
 	//   "flatPath": "v1/transferJobs/{transferJobsId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "storagetransfer.transferJobs.run",

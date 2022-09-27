@@ -298,6 +298,73 @@ type ProjectsTenantsOauthIdpConfigsService struct {
 	s *Service
 }
 
+// GoogleCloudIdentitytoolkitAdminV2AllowByDefault: Defines a policy of
+// allowing every region by default and adding disallowed regions to a
+// disallow list.
+type GoogleCloudIdentitytoolkitAdminV2AllowByDefault struct {
+	// DisallowedRegions: Two letter unicode region codes to disallow as
+	// defined by https://cldr.unicode.org/ The full list of these region
+	// codes is here:
+	// https://github.com/unicode-cldr/cldr-localenames-full/blob/master/main/en/territories.json
+	DisallowedRegions []string `json:"disallowedRegions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisallowedRegions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisallowedRegions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2AllowByDefault) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2AllowByDefault
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2AllowlistOnly: Defines a policy of
+// only allowing regions by explicitly adding them to an allowlist.
+type GoogleCloudIdentitytoolkitAdminV2AllowlistOnly struct {
+	// AllowedRegions: Two letter unicode region codes to allow as defined
+	// by https://cldr.unicode.org/ The full list of these region codes is
+	// here:
+	// https://github.com/unicode-cldr/cldr-localenames-full/blob/master/main/en/territories.json
+	AllowedRegions []string `json:"allowedRegions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedRegions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedRegions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2AllowlistOnly) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2AllowlistOnly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2Anonymous: Configuration options
 // related to authenticating an anonymous user.
 type GoogleCloudIdentitytoolkitAdminV2Anonymous struct {
@@ -575,6 +642,10 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 
 	// SignIn: Configuration related to local sign in methods.
 	SignIn *GoogleCloudIdentitytoolkitAdminV2SignInConfig `json:"signIn,omitempty"`
+
+	// SmsRegionConfig: Configures which regions are enabled for SMS
+	// verification code sending.
+	SmsRegionConfig *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig `json:"smsRegionConfig,omitempty"`
 
 	// Subtype: Output only. The subtype of this config.
 	//
@@ -1815,6 +1886,43 @@ func (s *GoogleCloudIdentitytoolkitAdminV2SignInConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig: Configures the
+// regions where users are allowed to send verification SMS for the
+// project or tenant. This is based on the calling code of the
+// destination phone number.
+type GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig struct {
+	// AllowByDefault: A policy of allowing SMS to every region by default
+	// and adding disallowed regions to a disallow list.
+	AllowByDefault *GoogleCloudIdentitytoolkitAdminV2AllowByDefault `json:"allowByDefault,omitempty"`
+
+	// AllowlistOnly: A policy of only allowing regions by explicitly adding
+	// them to an allowlist.
+	AllowlistOnly *GoogleCloudIdentitytoolkitAdminV2AllowlistOnly `json:"allowlistOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowByDefault") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowByDefault") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudIdentitytoolkitAdminV2SmsTemplate: The template to use
 // when sending an SMS.
 type GoogleCloudIdentitytoolkitAdminV2SmsTemplate struct {
@@ -2053,6 +2161,10 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 	// Name: Output only. Resource name of a tenant. For example:
 	// "projects/{project-id}/tenants/{tenant-id}"
 	Name string `json:"name,omitempty"`
+
+	// SmsRegionConfig: Configures which regions are enabled for SMS
+	// verification code sending.
+	SmsRegionConfig *GoogleCloudIdentitytoolkitAdminV2SmsRegionConfig `json:"smsRegionConfig,omitempty"`
 
 	// TestPhoneNumbers: A map of pairs that can be used for MFA. The phone
 	// number should be in E.164 format

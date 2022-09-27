@@ -2195,8 +2195,10 @@ type ReconciliationOperationMetadata struct {
 	// DeleteResource: DEPRECATED. Use exclusive_action instead.
 	DeleteResource bool `json:"deleteResource,omitempty"`
 
+	// ExclusiveAction: Excluisive action returned by the CLH.
+	//
 	// Possible values:
-	//   "UNKNOWN_REPAIR_ACTION"
+	//   "UNKNOWN_REPAIR_ACTION" - Unknown repair action.
 	//   "DELETE" - The resource has to be deleted. When using this bit, the
 	// CLH should fail the operation. DEPRECATED. Instead use
 	// DELETE_RESOURCE OperationSignal in SideChannel. For more information

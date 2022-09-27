@@ -3288,6 +3288,9 @@ type GoogleCloudDataplexV1Task struct {
 	// tasks/{task_id}.
 	Name string `json:"name,omitempty"`
 
+	// Notebook: Config related to running scheduled Notebooks.
+	Notebook *GoogleCloudDataplexV1TaskNotebookTaskConfig `json:"notebook,omitempty"`
+
 	// Spark: Config related to running custom Spark tasks.
 	Spark *GoogleCloudDataplexV1TaskSparkTaskConfig `json:"spark,omitempty"`
 
@@ -3583,6 +3586,50 @@ type GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork struct {
 
 func (s *GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1TaskNotebookTaskConfig: Config for running
+// scheduled notebooks.
+type GoogleCloudDataplexV1TaskNotebookTaskConfig struct {
+	// ArchiveUris: Optional. GCS URIs of archives to be extracted into the
+	// working directory of each executor. Supported file types: .jar, .tar,
+	// .tar.gz, .tgz, and .zip.
+	ArchiveUris []string `json:"archiveUris,omitempty"`
+
+	// FileUris: Optional. GCS URIs of files to be placed in the working
+	// directory of each executor.
+	FileUris []string `json:"fileUris,omitempty"`
+
+	// InfrastructureSpec: Optional. Infrastructure specification for the
+	// execution.
+	InfrastructureSpec *GoogleCloudDataplexV1TaskInfrastructureSpec `json:"infrastructureSpec,omitempty"`
+
+	// Notebook: Required. Path to input notebook. This can be the GCS URI
+	// of the notebook file or the path to a Notebook Content. The execution
+	// args are accessible as environment variables (TASK_key=value).
+	Notebook string `json:"notebook,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveUris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1TaskNotebookTaskConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1TaskNotebookTaskConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4186,11 +4233,12 @@ type GoogleIamV1Binding struct {
 	// special identifier that represents anyone who is on the internet;
 	// with or without a Google account. allAuthenticatedUsers: A special
 	// identifier that represents anyone who is authenticated with a Google
-	// account or a service account. user:{emailid}: An email address that
-	// represents a specific Google account. For example, alice@example.com
-	// . serviceAccount:{emailid}: An email address that represents a Google
-	// service account. For example,
-	// my-other-app@appspot.gserviceaccount.com.
+	// account or a service account. Does not include identities that come
+	// from external identity providers (IdPs) through identity federation.
+	// user:{emailid}: An email address that represents a specific Google
+	// account. For example, alice@example.com . serviceAccount:{emailid}:
+	// An email address that represents a Google service account. For
+	// example, my-other-app@appspot.gserviceaccount.com.
 	// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]:
 	// An identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).

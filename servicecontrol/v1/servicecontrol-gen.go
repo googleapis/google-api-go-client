@@ -712,6 +712,13 @@ type CheckError struct {
 	// should be ignored and should not be used to reject client requests.
 	//   "LOCATION_POLICY_BACKEND_UNAVAILABLE" - Backend server for
 	// evaluating location policy is unavailable.
+	//   "INJECTED_ERROR" - Part of the project of fault injection:
+	// go/chemist-slo-validation. To distinguish between artificially
+	// injected errors and organic ones, this value will be exported for the
+	// per_service_check_error_count streamz.
+	// http://google3/apiserving/servicecontrol/server/controller_service.cc;l=196
+	// Rpcinjectz2 works by injecting errors early in the rpc life cycle,
+	// before any of the chemist business logic runs.
 	Code string `json:"code,omitempty"`
 
 	// Detail: Free-form text providing details on the error cause of the
@@ -1875,8 +1882,8 @@ type Peer struct {
 
 	// Principal: The identity of this peer. Similar to
 	// `Request.auth.principal`, but relative to the peer instead of the
-	// request. For example, the idenity associated with a load balancer
-	// that forwared the request.
+	// request. For example, the identity associated with a load balancer
+	// that forwarded the request.
 	Principal string `json:"principal,omitempty"`
 
 	// RegionCode: The CLDR country/region code associated with the above IP

@@ -4870,7 +4870,9 @@ type Policy struct {
 	// InstallUnknownSourcesAllowed: This field has no effect.
 	InstallUnknownSourcesAllowed bool `json:"installUnknownSourcesAllowed,omitempty"`
 
-	// KeyguardDisabled: Whether the keyguard is disabled.
+	// KeyguardDisabled: If true, this disables the Lock Screen
+	// (https://source.android.com/docs/core/display/multi_display/lock-screen)
+	// for primary and/or secondary displays.
 	KeyguardDisabled bool `json:"keyguardDisabled,omitempty"`
 
 	// KeyguardDisabledFeatures: Disabled keyguard customizations, such as
@@ -5122,6 +5124,8 @@ type Policy struct {
 	SetupActions []*SetupAction `json:"setupActions,omitempty"`
 
 	// ShareLocationDisabled: Whether location sharing is disabled.
+	// share_location_disabled is supported for both fully managed devices
+	// and personally owned work profiles.
 	ShareLocationDisabled bool `json:"shareLocationDisabled,omitempty"`
 
 	// ShortSupportMessage: A message displayed to the user in the settings
@@ -5199,9 +5203,9 @@ type Policy struct {
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
 	// WifiConfigDisabled: Whether configuring Wi-Fi access points is
-	// disabled.Note: If a network connection can't be made at boot time and
-	// configuring Wi-Fi is disabled then network escape hatch will be shown
-	// in order to refresh the device policy (see
+	// disabled. Note: If a network connection can't be made at boot time
+	// and configuring Wi-Fi is disabled then network escape hatch will be
+	// shown in order to refresh the device policy (see
 	// networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 

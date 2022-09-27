@@ -388,6 +388,7 @@ type BackendMetastore struct {
 	//
 	// Possible values:
 	//   "METASTORE_TYPE_UNSPECIFIED" - The metastore type is not set.
+	//   "BIGQUERY" - The backend metastore is BigQuery.
 	//   "DATAPROC_METASTORE" - The backend metastore is Dataproc Metastore.
 	MetastoreType string `json:"metastoreType,omitempty"`
 

@@ -6839,7 +6839,7 @@ type Dimension struct {
 	// dfareporting#dimension.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The dimension name, e.g. dfa:advertiser
+	// Name: The dimension name, e.g. advertiser
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -7391,6 +7391,9 @@ type EventFilter struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#eventFilter.
 	Kind string `json:"kind,omitempty"`
+
+	// UvarFilter: Filter on a custom variable.
+	UvarFilter *UvarFilter `json:"uvarFilter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
 	// unconditionally include in API requests. By default, fields with
@@ -15192,6 +15195,52 @@ type UserRolesListResponse struct {
 
 func (s *UserRolesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UserRolesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UvarFilter: Defines the filtering on a single uvar.
+type UvarFilter struct {
+	// Complement: Return rows which don't match this filter.
+	Complement bool `json:"complement,omitempty"`
+
+	// Index: Custom variable index the filter is applied to.
+	Index int64 `json:"index,omitempty,string"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#uvarFilter.
+	Kind string `json:"kind,omitempty"`
+
+	// Match: Indicates how the filter should be matched to the values.
+	//
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "EXACT"
+	//   "CONTAINS"
+	Match string `json:"match,omitempty"`
+
+	// Values: Values to filter on.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Complement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Complement") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UvarFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod UvarFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -47614,7 +47663,7 @@ type ReportsPatchCall struct {
 // Patch: Updates an existing report. This method supports patch
 // semantics.
 //
-// - profileId: The DFA user profile ID.
+// - profileId: The Campaign Manager 360 user profile ID.
 // - reportId: The ID of the report.
 func (r *ReportsService) Patch(profileId int64, reportId int64, report *Report) *ReportsPatchCall {
 	c := &ReportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -47726,7 +47775,7 @@ func (c *ReportsPatchCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	//   ],
 	//   "parameters": {
 	//     "profileId": {
-	//       "description": "The DFA user profile ID.",
+	//       "description": "The Campaign Manager 360 user profile ID.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -48451,8 +48500,8 @@ func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall
 //
 // Possible values:
 //
-//	"ASCENDING"
-//	"DESCENDING" (default)
+//	"ASCENDING" - Ascending order.
+//	"DESCENDING" (default) - Descending order.
 func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
 	return c
@@ -48617,8 +48666,8 @@ func (c *ReportsFilesListCall) Do(opts ...googleapi.CallOption) (*FileList, erro
 	//         "DESCENDING"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
-	//         ""
+	//         "Ascending order.",
+	//         "Descending order."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

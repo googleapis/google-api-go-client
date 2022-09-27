@@ -156,6 +156,7 @@ func (s *Service) userAgent() string {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.InstanceConfigOperations = NewProjectsInstanceConfigOperationsService(s)
 	rs.InstanceConfigs = NewProjectsInstanceConfigsService(s)
 	rs.Instances = NewProjectsInstancesService(s)
 	return rs
@@ -164,9 +165,20 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	InstanceConfigOperations *ProjectsInstanceConfigOperationsService
+
 	InstanceConfigs *ProjectsInstanceConfigsService
 
 	Instances *ProjectsInstancesService
+}
+
+func NewProjectsInstanceConfigOperationsService(s *Service) *ProjectsInstanceConfigOperationsService {
+	rs := &ProjectsInstanceConfigOperationsService{s: s}
+	return rs
+}
+
+type ProjectsInstanceConfigOperationsService struct {
+	s *Service
 }
 
 func NewProjectsInstanceConfigsService(s *Service) *ProjectsInstanceConfigsService {
@@ -589,11 +601,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -1150,6 +1163,86 @@ type CreateDatabaseRequest struct {
 
 func (s *CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDatabaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateInstanceConfigMetadata: Metadata type for the operation
+// returned by CreateInstanceConfig.
+type CreateInstanceConfigMetadata struct {
+	// CancelTime: The time at which this operation was cancelled.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// InstanceConfig: The target instance config end state.
+	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
+
+	// Progress: The progress of the CreateInstanceConfig operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInstanceConfigMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateInstanceConfigRequest: The request for
+// CreateInstanceConfigRequest.
+type CreateInstanceConfigRequest struct {
+	// InstanceConfig: Required. The InstanceConfig proto of the
+	// configuration to create. instance_config.name must be
+	// `/instanceConfigs/`. instance_config.base_config must be a Google
+	// managed configuration name, e.g. /instanceConfigs/us-east1,
+	// /instanceConfigs/nam3.
+	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
+
+	// InstanceConfigId: Required. The ID of the instance config to create.
+	// Valid identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and
+	// must be between 2 and 64 characters in length. The `custom-` prefix
+	// is required to avoid name conflicts with Google managed
+	// configurations.
+	InstanceConfigId string `json:"instanceConfigId,omitempty"`
+
+	// ValidateOnly: An option to validate, but not actually execute, a
+	// request, and provide the same response.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInstanceConfigRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2253,9 +2346,38 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 // instance. Configurations define the geographic placement of nodes and
 // their replication.
 type InstanceConfig struct {
+	// BaseConfig: Base configuration name, e.g.
+	// projects//instanceConfigs/nam3, based on which this configuration is
+	// created. Only set for user managed configurations. `base_config` must
+	// refer to a configuration of type GOOGLE_MANAGED in the same project
+	// as this configuration.
+	BaseConfig string `json:"baseConfig,omitempty"`
+
+	// ConfigType: Output only. Whether this instance config is a Google or
+	// User Managed Configuration.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified.
+	//   "GOOGLE_MANAGED" - Google managed configuration.
+	//   "USER_MANAGED" - User managed configuration.
+	ConfigType string `json:"configType,omitempty"`
+
 	// DisplayName: The name of this instance configuration as it appears in
 	// UIs.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: etag is used for optimistic concurrency control as a way to
+	// help prevent simultaneous updates of a instance config from
+	// overwriting each other. It is strongly suggested that systems make
+	// use of the etag in the read-modify-write cycle to perform instance
+	// config updates in order to avoid race conditions: An etag is returned
+	// in the response which contains instance configs, and systems are
+	// expected to put that etag in the request to update instance config to
+	// ensure that their change will be applied to the same version of the
+	// instance config. If no etag is provided in the call to update
+	// instance config, then the existing instance config is overwritten
+	// blindly.
+	Etag string `json:"etag,omitempty"`
 
 	// FreeInstanceAvailability: Output only. Describes whether free
 	// instances are available to be created in this instance config.
@@ -2273,6 +2395,26 @@ type InstanceConfig struct {
 	// its limit of free instances.
 	FreeInstanceAvailability string `json:"freeInstanceAvailability,omitempty"`
 
+	// Labels: Cloud Labels are a flexible and lightweight mechanism for
+	// organizing cloud resources into groups that reflect a customer's
+	// organizational needs and deployment strategies. Cloud Labels can be
+	// used to filter collections of resources. They can be used to control
+	// how resource metrics are aggregated. And they can be used as
+	// arguments to policy management rules (e.g. route, firewall, load
+	// balancing, etc.). * Label keys must be between 1 and 63 characters
+	// long and must conform to the following regular expression:
+	// `a-z{0,62}`. * Label values must be between 0 and 63 characters long
+	// and must conform to the regular expression `[a-z0-9_-]{0,63}`. * No
+	// more than 64 labels can be associated with a given resource. See
+	// https://goo.gl/xmQnxf for more information on and examples of labels.
+	// If you plan to use labels in your own code, please note that
+	// additional characters may be allowed in the future. Therefore, you
+	// are advised to use an internal label representation, such as JSON,
+	// which doesn't rely upon specific characters being disallowed. For
+	// example, representing labels as the string: name + "_" + value would
+	// prove problematic if we were to allow "_" in a future release.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// LeaderOptions: Allowed values of the "default_leader" schema option
 	// for databases in instances that use this instance configuration.
 	LeaderOptions []string `json:"leaderOptions,omitempty"`
@@ -2281,15 +2423,34 @@ type InstanceConfig struct {
 	// of the form `projects//instanceConfigs/a-z*`.
 	Name string `json:"name,omitempty"`
 
+	// OptionalReplicas: Output only. The available optional replicas to
+	// choose from for user managed configurations. Populated for Google
+	// managed configurations.
+	OptionalReplicas []*ReplicaInfo `json:"optionalReplicas,omitempty"`
+
+	// Reconciling: Output only. If true, the instance config is being
+	// created or updated. If false, there are no ongoing operations for the
+	// instance config.
+	Reconciling bool `json:"reconciling,omitempty"`
+
 	// Replicas: The geographic placement of nodes in this instance
 	// configuration and their replication properties.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
+
+	// State: Output only. The current instance config state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The instance config is still being created.
+	//   "READY" - The instance config is fully created and ready to be used
+	// to create instances.
+	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "BaseConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2297,10 +2458,10 @@ type InstanceConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BaseConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2729,6 +2890,47 @@ type ListDatabasesResponse struct {
 
 func (s *ListDatabasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabasesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListInstanceConfigOperationsResponse: The response for
+// ListInstanceConfigOperations.
+type ListInstanceConfigOperationsResponse struct {
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListInstanceConfigOperations call to fetch more of the matching
+	// metadata.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: The list of matching instance config long-running
+	// operations. Each operation's name will be prefixed by the instance
+	// config's name. The operation's metadata field type
+	// `metadata.type_url` describes the type of the metadata.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInstanceConfigOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInstanceConfigOperationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4092,6 +4294,40 @@ func (s *ReadRequest) MarshalJSON() ([]byte, error) {
 // ReadWrite: Message type to initiate a read-write transaction.
 // Currently this transaction type has no options.
 type ReadWrite struct {
+	// ReadLockMode: Read lock mode for the transaction.
+	//
+	// Possible values:
+	//   "READ_LOCK_MODE_UNSPECIFIED" - Default value. If the value is not
+	// specified, the pessimistic read lock is used.
+	//   "PESSIMISTIC" - Pessimistic lock mode. Read locks are acquired
+	// immediately on read.
+	//   "OPTIMISTIC" - Optimistic lock mode. Locks for reads within the
+	// transaction are not acquired on read. Instead the locks are acquired
+	// on a commit to validate that read/queried data has not changed since
+	// the transaction started.
+	ReadLockMode string `json:"readLockMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReadLockMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReadLockMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReadWrite) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadWrite
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ReplicaInfo struct {
@@ -5357,6 +5593,11 @@ type Type struct {
 	// NUMERIC values. Currently this annotation is always needed for
 	// NUMERIC when a client interacts with PostgreSQL-enabled Spanner
 	// databases.
+	//   "PG_JSONB" - PostgreSQL compatible JSONB type. This annotation
+	// needs to be applied to Type instances having JSON type code to
+	// specify that values of this type should be treated as PostgreSQL
+	// JSONB values. Currently this annotation is always needed for JSON
+	// when a client interacts with PostgreSQL-enabled Spanner databases.
 	TypeAnnotation string `json:"typeAnnotation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
@@ -5486,6 +5727,85 @@ type UpdateDatabaseDdlRequest struct {
 
 func (s *UpdateDatabaseDdlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseDdlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInstanceConfigMetadata: Metadata type for the operation
+// returned by UpdateInstanceConfig.
+type UpdateInstanceConfigMetadata struct {
+	// CancelTime: The time at which this operation was cancelled.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// InstanceConfig: The desired instance config after updating.
+	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
+
+	// Progress: The progress of the UpdateInstanceConfig operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstanceConfigMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInstanceConfigRequest: The request for
+// UpdateInstanceConfigRequest.
+type UpdateInstanceConfigRequest struct {
+	// InstanceConfig: Required. The user instance config to update, which
+	// must always include the instance config name. Otherwise, only fields
+	// mentioned in update_mask need be included. To prevent conflicts of
+	// concurrent updates, etag can be used.
+	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
+
+	// UpdateMask: Required. A mask specifying which fields in
+	// InstanceConfig should be updated. The field mask must always be
+	// specified; this prevents any future fields in InstanceConfig from
+	// being erased accidentally by clients that do not know about them.
+	// Only display_name and labels can be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ValidateOnly: An option to validate, but not actually execute, a
+	// request, and provide the same response.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstanceConfigRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5674,6 +5994,581 @@ func (s *Write) MarshalJSON() ([]byte, error) {
 	type NoMethod Write
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "spanner.projects.instanceConfigOperations.list":
+
+type ProjectsInstanceConfigOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the user-managed instance config long-running operations
+// in the given project. An instance config operation has a name of the
+// form `projects//instanceConfigs//operations/`. The long-running
+// operation metadata field type `metadata.type_url` describes the type
+// of the metadata. Operations returned include those that have
+// completed/failed/canceled within the last 7 days, and pending
+// operations. Operations returned are ordered by
+// `operation.metadata.value.start_time` in descending order starting
+// from the most recently started operation.
+//
+//   - parent: The project of the instance config operations. Values are
+//     of the form `projects/`.
+func (r *ProjectsInstanceConfigOperationsService) List(parent string) *ProjectsInstanceConfigOperationsListCall {
+	c := &ProjectsInstanceConfigOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of returned operations. A filter expression consists
+// of a field name, a comparison operator, and a value for filtering.
+// The value must be a string, a number, or a boolean. The comparison
+// operator must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// Colon `:` is the contains operator. Filter rules are not case
+// sensitive. The following fields in the Operation are eligible for
+// filtering: * `name` - The name of the long-running operation * `done`
+// - False if the operation is in progress, else true. *
+// `metadata.@type` - the type of metadata. For example, the type string
+// for CreateInstanceConfigMetadata is
+// `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstanceCo
+// nfigMetadata`. * `metadata.` - any field in metadata.value.
+// `metadata.@type` must be specified first, if filtering on metadata
+// fields. * `error` - Error associated with the long-running operation.
+// * `response.@type` - the type of response. * `response.` - any field
+// in response.value. You can combine multiple expressions by enclosing
+// each expression in parentheses. By default, expressions are combined
+// with AND logic. However, you can specify AND, OR, and NOT logic
+// explicitly. Here are a few examples: * `done:true` - The operation is
+// complete. * `(metadata.@type=` \
+// `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstanceCo
+// nfigMetadata) AND` \ `(metadata.instance_config.name:custom-config)
+// AND` \ `(metadata.progress.start_time < \"2021-03-28T14:50:00Z\")
+// AND` \ `(error:*)` - Return operations where: * The operation's
+// metadata type is CreateInstanceConfigMetadata. * The instance config
+// name contains "custom-config". * The operation started before
+// 2021-03-28T14:50:00Z. * The operation resulted in an error.
+func (c *ProjectsInstanceConfigOperationsListCall) Filter(filter string) *ProjectsInstanceConfigOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of operations
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
+func (c *ProjectsInstanceConfigOperationsListCall) PageSize(pageSize int64) *ProjectsInstanceConfigOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListInstanceConfigOperationsResponse to the same `parent` and with
+// the same `filter`.
+func (c *ProjectsInstanceConfigOperationsListCall) PageToken(pageToken string) *ProjectsInstanceConfigOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstanceConfigOperationsListCall) Fields(s ...googleapi.Field) *ProjectsInstanceConfigOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstanceConfigOperationsListCall) IfNoneMatch(entityTag string) *ProjectsInstanceConfigOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstanceConfigOperationsListCall) Context(ctx context.Context) *ProjectsInstanceConfigOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstanceConfigOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstanceConfigOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instanceConfigOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instanceConfigOperations.list" call.
+// Exactly one of *ListInstanceConfigOperationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListInstanceConfigOperationsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsInstanceConfigOperationsListCall) Do(opts ...googleapi.CallOption) (*ListInstanceConfigOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInstanceConfigOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the user-managed instance config long-running operations in the given project. An instance config operation has a name of the form `projects//instanceConfigs//operations/`. The long-running operation metadata field type `metadata.type_url` describes the type of the metadata. Operations returned include those that have completed/failed/canceled within the last 7 days, and pending operations. Operations returned are ordered by `operation.metadata.value.start_time` in descending order starting from the most recently started operation.",
+	//   "flatPath": "v1/projects/{projectsId}/instanceConfigOperations",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instanceConfigOperations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that filters the list of returned operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the Operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateInstanceConfigMetadata is `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstanceConfigMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first, if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic. However, you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=` \\ `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstanceConfigMetadata) AND` \\ `(metadata.instance_config.name:custom-config) AND` \\ `(metadata.progress.start_time \u003c \\\"2021-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Return operations where: * The operation's metadata type is CreateInstanceConfigMetadata. * The instance config name contains \"custom-config\". * The operation started before 2021-03-28T14:50:00Z. * The operation resulted in an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of operations to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListInstanceConfigOperationsResponse to the same `parent` and with the same `filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project of the instance config operations. Values are of the form `projects/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instanceConfigOperations",
+	//   "response": {
+	//     "$ref": "ListInstanceConfigOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstanceConfigOperationsListCall) Pages(ctx context.Context, f func(*ListInstanceConfigOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.projects.instanceConfigs.create":
+
+type ProjectsInstanceConfigsCreateCall struct {
+	s                           *Service
+	parent                      string
+	createinstanceconfigrequest *CreateInstanceConfigRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates an instance config and begins preparing it to be
+// used. The returned long-running operation can be used to track the
+// progress of preparing the new instance config. The instance config
+// name is assigned by the caller. If the named instance config already
+// exists, `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately
+// after the request returns: * The instance config is readable via the
+// API, with all requested attributes. The instance config's reconciling
+// field is set to true. Its state is `CREATING`. While the operation is
+// pending: * Cancelling the operation renders the instance config
+// immediately unreadable via the API. * Except for deleting the
+// creating resource, all other attempts to modify the instance config
+// are rejected. Upon completion of the returned operation: * Instances
+// can be created using the instance configuration. * The instance
+// config's reconciling field becomes false. Its state becomes `READY`.
+// The returned long-running operation will have a name of the format
+// `/operations/` and can be used to track creation of the instance
+// config. The metadata field type is CreateInstanceConfigMetadata. The
+// response field type is InstanceConfig, if successful. Authorization
+// requires `spanner.instanceConfigs.create` permission on the resource
+// parent.
+//
+//   - parent: The name of the project in which to create the instance
+//     config. Values are of the form `projects/`.
+func (r *ProjectsInstanceConfigsService) Create(parent string, createinstanceconfigrequest *CreateInstanceConfigRequest) *ProjectsInstanceConfigsCreateCall {
+	c := &ProjectsInstanceConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createinstanceconfigrequest = createinstanceconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstanceConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstanceConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstanceConfigsCreateCall) Context(ctx context.Context) *ProjectsInstanceConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstanceConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstanceConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createinstanceconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instanceConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instanceConfigs.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstanceConfigsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an instance config and begins preparing it to be used. The returned long-running operation can be used to track the progress of preparing the new instance config. The instance config name is assigned by the caller. If the named instance config already exists, `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after the request returns: * The instance config is readable via the API, with all requested attributes. The instance config's reconciling field is set to true. Its state is `CREATING`. While the operation is pending: * Cancelling the operation renders the instance config immediately unreadable via the API. * Except for deleting the creating resource, all other attempts to modify the instance config are rejected. Upon completion of the returned operation: * Instances can be created using the instance configuration. * The instance config's reconciling field becomes false. Its state becomes `READY`. The returned long-running operation will have a name of the format `/operations/` and can be used to track creation of the instance config. The metadata field type is CreateInstanceConfigMetadata. The response field type is InstanceConfig, if successful. Authorization requires `spanner.instanceConfigs.create` permission on the resource parent.",
+	//   "flatPath": "v1/projects/{projectsId}/instanceConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instanceConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project in which to create the instance config. Values are of the form `projects/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instanceConfigs",
+	//   "request": {
+	//     "$ref": "CreateInstanceConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instanceConfigs.delete":
+
+type ProjectsInstanceConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the instance config. Deletion is only allowed when no
+// instances are using the configuration. If any instances are using the
+// config, returns `FAILED_PRECONDITION`. Only user managed
+// configurations can be deleted. Authorization requires
+// `spanner.instanceConfigs.delete` permission on the resource name.
+//
+//   - name: The name of the instance configuration to be deleted. Values
+//     are of the form `projects//instanceConfigs/`.
+func (r *ProjectsInstanceConfigsService) Delete(name string) *ProjectsInstanceConfigsDeleteCall {
+	c := &ProjectsInstanceConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": Used for optimistic
+// concurrency control as a way to help prevent simultaneous deletes of
+// an instance config from overwriting each other. If not empty, the API
+// only deletes the instance config when the etag provided matches the
+// current status of the requested instance config. Otherwise, deletes
+// the instance config without checking the current status of the
+// requested instance config.
+func (c *ProjectsInstanceConfigsDeleteCall) Etag(etag string) *ProjectsInstanceConfigsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": An option to
+// validate, but not actually execute, a request, and provide the same
+// response.
+func (c *ProjectsInstanceConfigsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsInstanceConfigsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstanceConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstanceConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstanceConfigsDeleteCall) Context(ctx context.Context) *ProjectsInstanceConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstanceConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstanceConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instanceConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstanceConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the instance config. Deletion is only allowed when no instances are using the configuration. If any instances are using the config, returns `FAILED_PRECONDITION`. Only user managed configurations can be deleted. Authorization requires `spanner.instanceConfigs.delete` permission on the resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/instanceConfigs/{instanceConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "spanner.projects.instanceConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "Used for optimistic concurrency control as a way to help prevent simultaneous deletes of an instance config from overwriting each other. If not empty, the API only deletes the instance config when the etag provided matches the current status of the requested instance config. Otherwise, deletes the instance config without checking the current status of the requested instance config.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the instance configuration to be deleted. Values are of the form `projects//instanceConfigs/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instanceConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "An option to validate, but not actually execute, a request, and provide the same response.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instanceConfigs.get":
@@ -6020,6 +6915,169 @@ func (c *ProjectsInstanceConfigsListCall) Pages(ctx context.Context, f func(*Lis
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "spanner.projects.instanceConfigs.patch":
+
+type ProjectsInstanceConfigsPatchCall struct {
+	s                           *Service
+	nameid                      string
+	updateinstanceconfigrequest *UpdateInstanceConfigRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Patch: Updates an instance config. The returned long-running
+// operation can be used to track the progress of updating the instance.
+// If the named instance config does not exist, returns `NOT_FOUND`.
+// Only user managed configurations can be updated. Immediately after
+// the request returns: * The instance config's reconciling field is set
+// to true. While the operation is pending: * Cancelling the operation
+// sets its metadata's cancel_time. The operation is guaranteed to
+// succeed at undoing all changes, after which point it terminates with
+// a `CANCELLED` status. * All other attempts to modify the instance
+// config are rejected. * Reading the instance config via the API
+// continues to give the pre-request values. Upon completion of the
+// returned operation: * Creating instances using the instance
+// configuration uses the new values. * The instance config's new values
+// are readable via the API. * The instance config's reconciling field
+// becomes false. The returned long-running operation will have a name
+// of the format `/operations/` and can be used to track the instance
+// config modification. The metadata field type is
+// UpdateInstanceConfigMetadata. The response field type is
+// InstanceConfig, if successful. Authorization requires
+// `spanner.instanceConfigs.update` permission on the resource name.
+//
+//   - name: A unique identifier for the instance configuration. Values
+//     are of the form `projects//instanceConfigs/a-z*`.
+func (r *ProjectsInstanceConfigsService) Patch(nameid string, updateinstanceconfigrequest *UpdateInstanceConfigRequest) *ProjectsInstanceConfigsPatchCall {
+	c := &ProjectsInstanceConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.updateinstanceconfigrequest = updateinstanceconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstanceConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsInstanceConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstanceConfigsPatchCall) Context(ctx context.Context) *ProjectsInstanceConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstanceConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstanceConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateinstanceconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instanceConfigs.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstanceConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an instance config. The returned long-running operation can be used to track the progress of updating the instance. If the named instance config does not exist, returns `NOT_FOUND`. Only user managed configurations can be updated. Immediately after the request returns: * The instance config's reconciling field is set to true. While the operation is pending: * Cancelling the operation sets its metadata's cancel_time. The operation is guaranteed to succeed at undoing all changes, after which point it terminates with a `CANCELLED` status. * All other attempts to modify the instance config are rejected. * Reading the instance config via the API continues to give the pre-request values. Upon completion of the returned operation: * Creating instances using the instance configuration uses the new values. * The instance config's new values are readable via the API. * The instance config's reconciling field becomes false. The returned long-running operation will have a name of the format `/operations/` and can be used to track the instance config modification. The metadata field type is UpdateInstanceConfigMetadata. The response field type is InstanceConfig, if successful. Authorization requires `spanner.instanceConfigs.update` permission on the resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/instanceConfigs/{instanceConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "spanner.projects.instanceConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "A unique identifier for the instance configuration. Values are of the form `projects//instanceConfigs/a-z*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instanceConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UpdateInstanceConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instanceConfigs.operations.cancel":
@@ -8033,24 +9091,7 @@ func (r *ProjectsInstancesBackupOperationsService) List(parent string) *Projects
 // `(error:*)` - Returns operations where: * The operation's metadata
 // type is CreateBackupMetadata. * The backup name contains the string
 // "howl". * The operation started before 2018-03-28T14:50:00Z. * The
-// operation resulted in an error. *
-// `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.
-// CopyBackupMetadata) AND` \ `(metadata.source_backup:test) AND` \
-// `(metadata.progress.start_time < \"2022-01-18T14:50:00Z\") AND` \
-// `(error:*)` - Returns operations where: * The operation's metadata
-// type is CopyBackupMetadata. * The source backup name contains the
-// string "test". * The operation started before 2022-01-18T14:50:00Z. *
-// The operation resulted in an error. *
-// `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1
-// .CreateBackupMetadata) AND` \ `(metadata.database:test_db)) OR` \
-// `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1
-// .CopyBackupMetadata) AND` \ `(metadata.source_backup:test_bkp)) AND`
-// \ `(error:*)` - Returns operations where: * The operation's metadata
-// matches either of criteria: * The operation's metadata type is
-// CreateBackupMetadata AND the source database name of the backup
-// contains the string "test_db" * The operation's metadata type is
-// CopyBackupMetadata AND the source backup name contains the string
-// "test_bkp" * The operation resulted in an error.
+// operation resulted in an error.
 func (c *ProjectsInstancesBackupOperationsListCall) Filter(filter string) *ProjectsInstancesBackupOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8181,7 +9222,7 @@ func (c *ProjectsInstancesBackupOperationsListCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression that filters the list of returned backup operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `metadata.database:prod` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The source database name of backup contains the string \"prod\". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.name:howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The backup name contains the string \"howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CopyBackupMetadata) AND` \\ `(metadata.source_backup:test) AND` \\ `(metadata.progress.start_time \u003c \\\"2022-01-18T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CopyBackupMetadata. * The source backup name contains the string \"test\". * The operation started before 2022-01-18T14:50:00Z. * The operation resulted in an error. * `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.database:test_db)) OR` \\ `((metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CopyBackupMetadata) AND` \\ `(metadata.source_backup:test_bkp)) AND` \\ `(error:*)` - Returns operations where: * The operation's metadata matches either of criteria: * The operation's metadata type is CreateBackupMetadata AND the source database name of the backup contains the string \"test_db\" * The operation's metadata type is CopyBackupMetadata AND the source backup name contains the string \"test_bkp\" * The operation resulted in an error.",
+	//       "description": "An expression that filters the list of returned backup operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic, but you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `metadata.database:prod` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The source database name of backup contains the string \"prod\". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \\ `(metadata.name:howl) AND` \\ `(metadata.progress.start_time \u003c \\\"2018-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Returns operations where: * The operation's metadata type is CreateBackupMetadata. * The backup name contains the string \"howl\". * The operation started before 2018-03-28T14:50:00Z. * The operation resulted in an error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -237,6 +237,8 @@ type AbortInfo struct {
 	//   "MISMATCHED_DESTINATION_NETWORK" - Aborted because the destination
 	// network does not match the destination endpoint.
 	//   "UNSUPPORTED" - Aborted because the test scenario is not supported.
+	//   "MISMATCHED_IP_VERSION" - Aborted because the source and
+	// destination resources have no common IP version.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -385,11 +387,12 @@ type Binding struct {
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. *
-	// `user:{emailid}`: An email address that represents a specific Google
-	// account. For example, `alice@example.com` . *
-	// `serviceAccount:{emailid}`: An email address that represents a Google
-	// service account. For example,
+	// who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers
+	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// address that represents a specific Google account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
+	// that represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
 	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
 	//  An identifier for a Kubernetes service account
@@ -450,9 +453,9 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// CloudFunctionEndpoint: Wrapper for cloud function attributes.
+// CloudFunctionEndpoint: Wrapper for Cloud Function attributes.
 type CloudFunctionEndpoint struct {
-	// Uri: A Cloud function (https://cloud.google.com/functions) name.
+	// Uri: A Cloud Function (https://cloud.google.com/functions) name.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
@@ -479,19 +482,19 @@ func (s *CloudFunctionEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 // CloudFunctionInfo: For display only. Metadata associated with a Cloud
-// function.
+// Function.
 type CloudFunctionInfo struct {
-	// DisplayName: Name of a Cloud function.
+	// DisplayName: Name of a Cloud Function.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Location: Location in which the Cloud function is deployed.
+	// Location: Location in which the Cloud Function is deployed.
 	Location string `json:"location,omitempty"`
 
-	// Uri: URI of a Cloud function.
+	// Uri: URI of a Cloud Function.
 	Uri string `json:"uri,omitempty"`
 
 	// VersionId: Latest successfully deployed version id of the Cloud
-	// function.
+	// Function.
 	VersionId int64 `json:"versionId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -760,6 +763,10 @@ type DropInfo struct {
 	// wall_rules).
 	//   "INSTANCE_NOT_RUNNING" - Packet is sent from or to a Compute Engine
 	// instance that is not in a running state.
+	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster
+	// that is not in running state.
+	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud
+	// SQL instance that is not in running state.
 	//   "TRAFFIC_TYPE_BLOCKED" - The type of traffic is blocked and the
 	// user cannot configure a firewall rule to enable it. See [Always
 	// blocked
@@ -783,8 +790,24 @@ type DropInfo struct {
 	// Managed Services Network.
 	//   "CLOUD_SQL_INSTANCE_NO_IP_ADDRESS" - Packet was dropped because the
 	// Cloud SQL instance has neither a private nor a public IP address.
+	//   "GKE_CONTROL_PLANE_REGION_MISMATCH" - Packet was dropped because a
+	// GKE cluster private endpoint is unreachable from a region different
+	// from the cluster's region.
+	//   "PUBLIC_GKE_CONTROL_PLANE_TO_PRIVATE_DESTINATION" - Packet sent
+	// from a public GKE cluster control plane to a private IP address.
+	//   "GKE_CONTROL_PLANE_NO_ROUTE" - Packet was dropped because there is
+	// no route from a GKE cluster control plane to a destination network.
+	//   "CLOUD_SQL_INSTANCE_NOT_CONFIGURED_FOR_EXTERNAL_TRAFFIC" - Packet
+	// sent from a Cloud SQL instance to an external IP address is not
+	// allowed. The Cloud SQL instance is not configured to send packets to
+	// external IP addresses.
+	//   "PUBLIC_CLOUD_SQL_INSTANCE_TO_PRIVATE_DESTINATION" - Packet sent
+	// from a Cloud SQL instance with only a public IP address to a private
+	// IP address.
+	//   "CLOUD_SQL_INSTANCE_NO_ROUTE" - Packet was dropped because there is
+	// no route from a Cloud SQL instance to a destination network.
 	//   "CLOUD_FUNCTION_NOT_ACTIVE" - Packet could be dropped because the
-	// Cloud function is not in an active status.
+	// Cloud Function is not in an active status.
 	//   "VPC_CONNECTOR_NOT_SET" - Packet could be dropped because no VPC
 	// connector is set.
 	//   "VPC_CONNECTOR_NOT_RUNNING" - Packet could be dropped because the
@@ -794,10 +817,6 @@ type DropInfo struct {
 	// global access.
 	//   "PSC_CONNECTION_NOT_ACCEPTED" - Privte Service Connect (PSC)
 	// connection is not in accepted state.
-	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster
-	// that is not in running state.
-	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud
-	// SQL instance that is not in running state.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -869,7 +888,7 @@ type Empty struct {
 
 // Endpoint: Source or destination of the Connectivity Test.
 type Endpoint struct {
-	// CloudFunction: A Cloud function (https://cloud.google.com/functions).
+	// CloudFunction: A Cloud Function (https://cloud.google.com/functions).
 	CloudFunction *CloudFunctionEndpoint `json:"cloudFunction,omitempty"`
 
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance
@@ -1094,7 +1113,9 @@ type FirewallInfo struct {
 	// rules](https://cloud.google.com/functions/docs/networking/connecting-v
 	// pc#restrict-access).
 	//   "NETWORK_FIREWALL_POLICY_RULE" - Global network firewall policy
-	// rule.
+	// rule. For details, see [Network firewall
+	// policies](https://cloud.google.com/vpc/docs/network-firewall-policies)
+	// .
 	FirewallRuleType string `json:"firewallRuleType,omitempty"`
 
 	// NetworkUri: The URI of the VPC network that the firewall rule is
@@ -1568,6 +1589,7 @@ type LoadBalancerInfo struct {
 	//   "BACKEND_TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "BACKEND_SERVICE" - Backend Service as the load balancer's backend.
 	//   "TARGET_POOL" - Target Pool as the load balancer's backend.
+	//   "TARGET_INSTANCE" - Target Instance as the load balancer's backend.
 	BackendType string `json:"backendType,omitempty"`
 
 	// BackendUri: Backend configuration URI.
@@ -2244,7 +2266,7 @@ type Step struct {
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`
 
-	// CloudFunction: Display information of a Cloud function.
+	// CloudFunction: Display information of a Cloud Function.
 	CloudFunction *CloudFunctionInfo `json:"cloudFunction,omitempty"`
 
 	// CloudSqlInstance: Display information of a Cloud SQL instance.
@@ -2316,7 +2338,7 @@ type Step struct {
 	// from a Cloud SQL instance. A CloudSQLInstanceInfo is populated with
 	// starting instance information.
 	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating
-	// from a Cloud function. A CloudFunctionInfo is populated with starting
+	// from a Cloud Function. A CloudFunctionInfo is populated with starting
 	// function information.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.

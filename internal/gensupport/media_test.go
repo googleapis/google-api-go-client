@@ -309,12 +309,11 @@ func TestUploadRequestGetBody(t *testing.T) {
 			wantGetBody: true,
 		},
 		{
-			desc: "chunk size < data size: MediaBuffer, >1 chunk, no getBody",
-			// No getBody here, because the initial request contains no media data
+			desc: "chunk size < data size: MediaBuffer, >1 chunk, getBody",
 			// Note that ChunkSize = 1 is rounded up to googleapi.MinUploadChunkSize.
 			r:           &nullReader{2 * googleapi.MinUploadChunkSize},
 			chunkSize:   1,
-			wantGetBody: false,
+			wantGetBody: true,
 		},
 	} {
 		cryptorand.Reader = mathrand.New(mathrand.NewSource(int64(i)))

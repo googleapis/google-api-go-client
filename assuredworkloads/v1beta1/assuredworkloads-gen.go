@@ -541,7 +541,6 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - Violation currently active.
 	//   "RESOLVED" - Violation is resolved.
 	//   "UNRESOLVED" - Violation is Unresolved
 	//   "EXCEPTION" - Violation is Exception
@@ -776,6 +775,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the
@@ -845,6 +845,13 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// organizations/{organization}/locations/{location}/workloads/{workload}
 	//  Read-only.
 	Name string `json:"name,omitempty"`
+
+	// Partner: Optional. Compliance Regime associated with this workload.
+	//
+	// Possible values:
+	//   "PARTNER_UNSPECIFIED" - Unknown compliance regime.
+	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime
+	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
 	// resources managed by this Assured Workload. May be either empty or a

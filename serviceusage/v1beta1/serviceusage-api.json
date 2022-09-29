@@ -2473,7 +2473,7 @@
           "type": "array"
         },
         "name": {
-          "description": "The name of the log. It must be less than 512 characters long and can include the following characters: upper- and lower-case alphanumeric characters [A-Za-z0-9], and punctuation characters including slash, underscore, hyphen, period [/_-.].",
+          "description": "The name of the log. It must be less than 512 characters long and can include the following characters: upper- and lower-case alphanumeric characters [A-Za-z0-9], and punctuation characters including slash, underscore, hyphen, period [/_\\-.].",
           "type": "string"
         }
       },

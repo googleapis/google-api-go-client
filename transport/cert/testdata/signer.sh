@@ -4,4 +4,4 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-go run ../internal/ecp/test_signer.go testdata/testcert.pem
+go run ../internal/ecp/test_signer.go testdata/rsa2048bit.pem

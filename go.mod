@@ -12,7 +12,7 @@ require (
 	golang.org/x/net v0.0.0-20221012135044-0b7e1fb9d458
 	golang.org/x/oauth2 v0.0.0-20221006150949-b44042a4b9c1
 	golang.org/x/sync v0.0.0-20220929204114-8fcdb60fdcc0
-	golang.org/x/sys v0.0.0-20221010170243-090e33056c14
+	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2
 	google.golang.org/appengine v1.6.7
 	google.golang.org/genproto v0.0.0-20221010155953-15ba04fc1c0e

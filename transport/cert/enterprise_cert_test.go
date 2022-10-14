@@ -20,7 +20,7 @@ func TestEnterpriseCertificateProxySource_ConfigMissing(t *testing.T) {
 
 // This test launches a mock signer binary "test_signer.go" that uses a valid pem file.
 func TestEnterpriseCertificateProxySource_GetClientCertificateSuccess(t *testing.T) {
-	source, err := NewEnterpriseCertificateProxySource("testdata/enterprise_certificate_config.json")
+	source, err := NewEnterpriseCertificateProxySource("testdata/certificate_config.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func TestEnterpriseCertificateProxySource_GetClientCertificateSuccess(t *testing
 
 // This test launches a mock signer binary "test_signer.go" that uses an invalid pem file.
 func TestEnterpriseCertificateProxySource_InitializationFailure(t *testing.T) {
-	_, err := NewEnterpriseCertificateProxySource("testdata/enterprise_certificate_config_invalid_pem.json")
+	_, err := NewEnterpriseCertificateProxySource("testdata/certificate_config_invalid_pem.json")
 	if err == nil {
 		t.Error("NewEnterpriseCertificateProxySource: got nil, want non-nil err")
 	}

@@ -730,6 +730,10 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	// published state in the Chrome Web Store.
 	IsCwsHosted bool `json:"isCwsHosted,omitempty"`
 
+	// IsExtensionPolicySupported: Output only. Whether an app supports
+	// policy for extensions.
+	IsExtensionPolicySupported bool `json:"isExtensionPolicySupported,omitempty"`
+
 	// IsKioskOnly: Output only. Whether the app is only for Kiosk mode on
 	// ChromeOS devices
 	IsKioskOnly bool `json:"isKioskOnly,omitempty"`

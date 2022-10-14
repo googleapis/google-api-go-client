@@ -631,7 +631,7 @@
       }
     }
   },
-  "revision": "20220914",
+  "revision": "20220926",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -1050,6 +1050,11 @@
         },
         "isCwsHosted": {
           "description": "Output only. Whether the app or extension is in a published state in the Chrome Web Store.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "isExtensionPolicySupported": {
+          "description": "Output only. Whether an app supports policy for extensions.",
           "readOnly": true,
           "type": "boolean"
         },

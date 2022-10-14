@@ -473,13 +473,23 @@ type GoogleCloudRecommenderV1Impact struct {
 	// performance.
 	//   "MANAGEABILITY" - Indicates a potential increase or decrease in
 	// manageability.
+	//   "SUSTAINABILITY" - Indicates a potential increase or decrease in
+	// sustainability.
+	//   "RELIABILITY" - Indicates a potential increase or decrease in
+	// reliability.
 	Category string `json:"category,omitempty"`
 
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1CostProjection `json:"costProjection,omitempty"`
 
+	// ReliabilityProjection: Use with CategoryType.RELAIBILITY
+	ReliabilityProjection *GoogleCloudRecommenderV1ReliabilityProjection `json:"reliabilityProjection,omitempty"`
+
 	// SecurityProjection: Use with CategoryType.SECURITY
 	SecurityProjection *GoogleCloudRecommenderV1SecurityProjection `json:"securityProjection,omitempty"`
+
+	// SustainabilityProjection: Use with CategoryType.SUSTAINABILITY
+	SustainabilityProjection *GoogleCloudRecommenderV1SustainabilityProjection `json:"sustainabilityProjection,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
@@ -519,6 +529,8 @@ type GoogleCloudRecommenderV1Insight struct {
 	//   "SECURITY" - The insight is related to security.
 	//   "PERFORMANCE" - The insight is related to performance.
 	//   "MANAGEABILITY" - This insight is related to manageability.
+	//   "SUSTAINABILITY" - The insight is related to sustainability.
+	//   "RELIABILITY" - This insight is related to reliability.
 	Category string `json:"category,omitempty"`
 
 	// Content: A struct of custom fields to explain the insight. Example:
@@ -1416,6 +1428,46 @@ func (s *GoogleCloudRecommenderV1RecommenderGenerationConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1ReliabilityProjection: Contains information
+// on the impact of a reliability recommendation.
+type GoogleCloudRecommenderV1ReliabilityProjection struct {
+	// Details: Per-recommender projection.
+	Details googleapi.RawMessage `json:"details,omitempty"`
+
+	// Risks: Reliability risks mitigated by this recommendation.
+	//
+	// Possible values:
+	//   "RISK_TYPE_UNSPECIFIED" - Default unspecified risk. Don't use
+	// directly.
+	//   "SERVICE_DISRUPTION" - Potential service downtime.
+	//   "DATA_LOSS" - Potential data loss.
+	//   "ACCESS_DENY" - Potential access denial. The service is still up
+	// but some or all clients can't access it.
+	Risks []string `json:"risks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1ReliabilityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1ReliabilityProjection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1SecurityProjection: Contains various ways of
 // describing the impact on Security.
 type GoogleCloudRecommenderV1SecurityProjection struct {
@@ -1444,6 +1496,53 @@ func (s *GoogleCloudRecommenderV1SecurityProjection) MarshalJSON() ([]byte, erro
 	type NoMethod GoogleCloudRecommenderV1SecurityProjection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1SustainabilityProjection: Contains metadata
+// about how much sustainability a recommendation can save or incur.
+type GoogleCloudRecommenderV1SustainabilityProjection struct {
+	// Duration: Duration for which this sustainability applies.
+	Duration string `json:"duration,omitempty"`
+
+	// KgCO2e: Carbon Footprint generated in kg of CO2 equivalent. Chose
+	// kg_c_o2e so that the name renders correctly in camelCase (kgCO2e).
+	KgCO2e float64 `json:"kgCO2e,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1SustainabilityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1SustainabilityProjection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRecommenderV1SustainabilityProjection) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRecommenderV1SustainabilityProjection
+	var s1 struct {
+		KgCO2e gensupport.JSONFloat64 `json:"kgCO2e"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.KgCO2e = float64(s1.KgCO2e)
+	return nil
 }
 
 // GoogleCloudRecommenderV1ValueMatcher: Contains various matching

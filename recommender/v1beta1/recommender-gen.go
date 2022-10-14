@@ -475,10 +475,15 @@ type GoogleCloudRecommenderV1beta1Impact struct {
 	// manageability.
 	//   "SUSTAINABILITY" - Indicates a potential increase or decrease in
 	// sustainability.
+	//   "RELIABILITY" - Indicates a potential increase or decrease in
+	// reliability.
 	Category string `json:"category,omitempty"`
 
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1beta1CostProjection `json:"costProjection,omitempty"`
+
+	// ReliabilityProjection: Use with CategoryType.RELIABILITY
+	ReliabilityProjection *GoogleCloudRecommenderV1beta1ReliabilityProjection `json:"reliabilityProjection,omitempty"`
 
 	// SecurityProjection: Use with CategoryType.SECURITY
 	SecurityProjection *GoogleCloudRecommenderV1beta1SecurityProjection `json:"securityProjection,omitempty"`
@@ -525,6 +530,7 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 	//   "PERFORMANCE" - The insight is related to performance.
 	//   "MANAGEABILITY" - This insight is related to manageability.
 	//   "SUSTAINABILITY" - The insight is related to sustainability.
+	//   "RELIABILITY" - The insight is related to reliability.
 	Category string `json:"category,omitempty"`
 
 	// Content: A struct of custom fields to explain the insight. Example:
@@ -1419,6 +1425,46 @@ type GoogleCloudRecommenderV1beta1RecommenderGenerationConfig struct {
 
 func (s *GoogleCloudRecommenderV1beta1RecommenderGenerationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommenderV1beta1RecommenderGenerationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecommenderV1beta1ReliabilityProjection: Contains
+// information on the impact of a reliability recommendation.
+type GoogleCloudRecommenderV1beta1ReliabilityProjection struct {
+	// Details: Per-recommender projection.
+	Details googleapi.RawMessage `json:"details,omitempty"`
+
+	// Risks: Reliability risks mitigated by this recommendation.
+	//
+	// Possible values:
+	//   "RISK_TYPE_UNSPECIFIED" - Default unspecified risk. Don't use
+	// directly.
+	//   "SERVICE_DISRUPTION" - Potential service downtime.
+	//   "DATA_LOSS" - Potential data loss.
+	//   "ACCESS_DENY" - Potential access denial. The service is still up
+	// but some or all clients can't access it.
+	Risks []string `json:"risks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1ReliabilityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1ReliabilityProjection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

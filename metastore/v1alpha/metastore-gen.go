@@ -564,18 +564,18 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // Consumer: Contains information of the customer's network
-// configurations.
+// configurations.Next available ID: 4
 type Consumer struct {
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
 	EndpointUri string `json:"endpointUri,omitempty"`
 
-	// Subnetwork: The subnetwork of the customer project from which an IP
-	// address is reserved and used as the Dataproc Metastore service's
-	// endpoint. It is accessible to hosts in the subnet and to all hosts in
-	// a subnet in the same region and same network. There must be at least
-	// one IP address available in the subnet's primary range. The subnet is
-	// specified in the following
+	// Subnetwork: Immutable. The subnetwork of the customer project from
+	// which an IP address is reserved and used as the Dataproc Metastore
+	// service's endpoint. It is accessible to hosts in the subnet and to
+	// all hosts in a subnet in the same region and same network. There must
+	// be at least one IP address available in the subnet's primary range.
+	// The subnet is specified in the following
 	// form:`projects/{project_number}/regions/{region_id}/subnetworks/{subne
 	// twork_id}
 	Subnetwork string `json:"subnetwork,omitempty"`
@@ -1677,7 +1677,7 @@ func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore
-// service.
+// service.Next available ID: 3
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.
@@ -2169,8 +2169,8 @@ type Service struct {
 	// form:projects/{project_number}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
 
-	// NetworkConfig: Immutable. The configuration specifying the network
-	// settings for the Dataproc Metastore service.
+	// NetworkConfig: The configuration specifying the network settings for
+	// the Dataproc Metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
 
 	// Port: The TCP port at which the metastore service is reached.

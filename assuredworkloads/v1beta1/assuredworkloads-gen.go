@@ -285,13 +285,6 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	// violation acknowledgement
 	Comment string `json:"comment,omitempty"`
 
-	// NonCompliantOrgPolicy: Optional. Name of the OrgPolicy which was
-	// modified with non-compliant change and resulted in this violation.
-	// Format: projects/{project_number}/policies/{constraint_name}
-	// folders/{folder_id}/policies/{constraint_name}
-	// organizations/{organization_id}/policies/{constraint_name}
-	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Comment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -511,6 +504,11 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Description: Output only. Description for the Violation. e.g.
 	// OrgPolicy gcp.resourceLocations has non compliant value.
 	Description string `json:"description,omitempty"`
+
+	// ExceptionAuditLogLink: Output only. Immutable. Audit Log link to find
+	// business justification provided for violation exception. Format:
+	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}
+	ExceptionAuditLogLink string `json:"exceptionAuditLogLink,omitempty"`
 
 	// Name: Output only. Immutable. Name of the Violation. Format:
 	// organizations/{organization}/locations/{location}/workloads/{workload_

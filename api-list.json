@@ -1821,6 +1821,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "contentwarehouse:v1",
+      "name": "contentwarehouse",
+      "version": "v1",
+      "title": "contentwarehouse API",
+      "description": "",
+      "discoveryRestUrl": "https://contentwarehouse.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/document-warehouse",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "customsearch:v1",
       "name": "customsearch",
       "version": "v1",
@@ -5577,7 +5592,7 @@
       "id": "versionhistory:v1",
       "name": "versionhistory",
       "version": "v1",
-      "title": "Version History API",
+      "title": "versionhistory.googleapis.com API",
       "description": "Version History API - Prod",
       "discoveryRestUrl": "https://versionhistory.googleapis.com/$discovery/rest?version=v1",
       "icons": {
@@ -5712,7 +5727,7 @@
       "id": "vmmigration:v1alpha1",
       "name": "vmmigration",
       "version": "v1alpha1",
-      "title": "VM Migration API",
+      "title": "Migrate to Virtual Machines API",
       "description": "Use the Migrate to Virtual Machines API to programmatically migrate workloads.",
       "discoveryRestUrl": "https://vmmigration.googleapis.com/$discovery/rest?version=v1alpha1",
       "icons": {
@@ -5727,7 +5742,7 @@
       "id": "vmmigration:v1",
       "name": "vmmigration",
       "version": "v1",
-      "title": "VM Migration API",
+      "title": "Migrate to Virtual Machines API",
       "description": "Use the Migrate to Virtual Machines API to programmatically migrate workloads.",
       "discoveryRestUrl": "https://vmmigration.googleapis.com/$discovery/rest?version=v1",
       "icons": {

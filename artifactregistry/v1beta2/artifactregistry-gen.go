@@ -1810,8 +1810,8 @@ type Version struct {
 
 	// Metadata: Output only. Repository-specific Metadata stored against
 	// this version. The fields returned are defined by the underlying
-	// repository-specific resource. Currently, the only resource in use is
-	// DockerImage
+	// repository-specific resource. Currently, the resources could be:
+	// DockerImage MavenArtifact
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The name of the version, for example:

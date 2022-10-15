@@ -2762,6 +2762,8 @@ type TestMatrix struct {
 	// permission to access the APK file.
 	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
 	// unsupported
+	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
+	// executions.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// OutcomeSummary: Output Only. The overall outcome of the test. Only

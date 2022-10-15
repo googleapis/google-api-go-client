@@ -1326,9 +1326,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	Schema *GoogleCloudDatacatalogV1Schema `json:"schema,omitempty"`
 
 	// SourceSystemTimestamps: Timestamps from the underlying resource, not
-	// from the Data Catalog entry. Output only when the entry has a type
-	// listed in the `EntryType` enum. For entries with
-	// `user_specified_type`, this field is optional and defaults to an
+	// from the Data Catalog entry. Output only when the entry has a system
+	// listed in the `IntegratedSystem` enum. For entries with
+	// `user_specified_system`, this field is optional and defaults to an
 	// empty timestamp.
 	SourceSystemTimestamps *GoogleCloudDatacatalogV1SystemTimestamps `json:"sourceSystemTimestamps,omitempty"`
 

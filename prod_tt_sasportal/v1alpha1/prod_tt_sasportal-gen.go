@@ -23,10 +23,6 @@
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
-//
-//	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithScopes(prod_tt_sasportal.UserinfoEmailScope))
-//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //	prod_tt_sasportalService, err := prod_tt_sasportal.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -86,16 +82,12 @@ const mtlsBasePath = "https://prod-tt-sasportal.mtls.googleapis.com/"
 const (
 	// Read, create, update, and delete your SAS Portal data.
 	SasportalScope = "https://www.googleapis.com/auth/sasportal"
-
-	// See your primary Google Account email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/sasportal",
-		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -2071,8 +2063,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*SasPortalCustomer,
 	//     "$ref": "SasPortalCustomer"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -2228,8 +2219,7 @@ func (c *CustomersListCall) Do(opts ...googleapi.CallOption) (*SasPortalListCust
 	//     "$ref": "SasPortalListCustomersResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -2405,8 +2395,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalCustome
 	//     "$ref": "SasPortalCustomer"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -2549,8 +2538,7 @@ func (c *CustomersDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*SasP
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -2682,8 +2670,7 @@ func (c *CustomersDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*SasP
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -2829,8 +2816,7 @@ func (c *CustomersDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3017,8 +3003,7 @@ func (c *CustomersDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "$ref": "SasPortalListDeploymentsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3181,8 +3166,7 @@ func (c *CustomersDeploymentsMoveCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3337,8 +3321,7 @@ func (c *CustomersDeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3480,8 +3463,7 @@ func (c *CustomersDeploymentsDevicesCreateCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3623,8 +3605,7 @@ func (c *CustomersDeploymentsDevicesCreateSignedCall) Do(opts ...googleapi.CallO
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3811,8 +3792,7 @@ func (c *CustomersDeploymentsDevicesListCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -3975,8 +3955,7 @@ func (c *CustomersDevicesCreateCall) Do(opts ...googleapi.CallOption) (*SasPorta
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4118,8 +4097,7 @@ func (c *CustomersDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*Sa
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4251,8 +4229,7 @@ func (c *CustomersDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*SasPorta
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4398,8 +4375,7 @@ func (c *CustomersDevicesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalDe
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4586,8 +4562,7 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4750,8 +4725,7 @@ func (c *CustomersDevicesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalO
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -4906,8 +4880,7 @@ func (c *CustomersDevicesPatchCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5049,8 +5022,7 @@ func (c *CustomersDevicesSignDeviceCall) Do(opts ...googleapi.CallOption) (*SasP
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5192,8 +5164,7 @@ func (c *CustomersDevicesUpdateSignedCall) Do(opts ...googleapi.CallOption) (*Sa
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5335,8 +5306,7 @@ func (c *CustomersNodesCreateCall) Do(opts ...googleapi.CallOption) (*SasPortalN
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5468,8 +5438,7 @@ func (c *CustomersNodesDeleteCall) Do(opts ...googleapi.CallOption) (*SasPortalE
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5615,8 +5584,7 @@ func (c *CustomersNodesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalNode
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5802,8 +5770,7 @@ func (c *CustomersNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLis
 	//     "$ref": "SasPortalListNodesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -5966,8 +5933,7 @@ func (c *CustomersNodesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalOpe
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6122,8 +6088,7 @@ func (c *CustomersNodesPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalNo
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6266,8 +6231,7 @@ func (c *CustomersNodesDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6454,8 +6418,7 @@ func (c *CustomersNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*S
 	//     "$ref": "SasPortalListDeploymentsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6618,8 +6581,7 @@ func (c *CustomersNodesDevicesCreateCall) Do(opts ...googleapi.CallOption) (*Sas
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6761,8 +6723,7 @@ func (c *CustomersNodesDevicesCreateSignedCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -6949,8 +6910,7 @@ func (c *CustomersNodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7113,8 +7073,7 @@ func (c *CustomersNodesNodesCreateCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7300,8 +7259,7 @@ func (c *CustomersNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "$ref": "SasPortalListNodesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7468,8 +7426,7 @@ func (c *DeploymentsGetCall) Do(opts ...googleapi.CallOption) (*SasPortalDeploym
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7601,8 +7558,7 @@ func (c *DeploymentsDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7748,8 +7704,7 @@ func (c *DeploymentsDevicesGetCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -7891,8 +7846,7 @@ func (c *DeploymentsDevicesMoveCall) Do(opts ...googleapi.CallOption) (*SasPorta
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8047,8 +8001,7 @@ func (c *DeploymentsDevicesPatchCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8190,8 +8143,7 @@ func (c *DeploymentsDevicesSignDeviceCall) Do(opts ...googleapi.CallOption) (*Sa
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8333,8 +8285,7 @@ func (c *DeploymentsDevicesUpdateSignedCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8460,8 +8411,7 @@ func (c *InstallerGenerateSecretCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "$ref": "SasPortalGenerateSecretResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8588,8 +8538,7 @@ func (c *InstallerValidateCall) Do(opts ...googleapi.CallOption) (*SasPortalVali
 	//     "$ref": "SasPortalValidateInstallerResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8735,8 +8684,7 @@ func (c *NodesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalNode, error) 
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -8868,8 +8816,7 @@ func (c *NodesDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*SasPorta
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9015,8 +8962,7 @@ func (c *NodesDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*SasPortalDe
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9203,8 +9149,7 @@ func (c *NodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//     "$ref": "SasPortalListDeploymentsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9367,8 +9312,7 @@ func (c *NodesDeploymentsMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalO
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9523,8 +9467,7 @@ func (c *NodesDeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9666,8 +9609,7 @@ func (c *NodesDeploymentsDevicesCreateCall) Do(opts ...googleapi.CallOption) (*S
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9809,8 +9751,7 @@ func (c *NodesDeploymentsDevicesCreateSignedCall) Do(opts ...googleapi.CallOptio
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -9997,8 +9938,7 @@ func (c *NodesDeploymentsDevicesListCall) Do(opts ...googleapi.CallOption) (*Sas
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10161,8 +10101,7 @@ func (c *NodesDevicesCreateCall) Do(opts ...googleapi.CallOption) (*SasPortalDev
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10304,8 +10243,7 @@ func (c *NodesDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10437,8 +10375,7 @@ func (c *NodesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*SasPortalEmp
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10584,8 +10521,7 @@ func (c *NodesDevicesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalDevice
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10772,8 +10708,7 @@ func (c *NodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListD
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -10936,8 +10871,7 @@ func (c *NodesDevicesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalOpera
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11092,8 +11026,7 @@ func (c *NodesDevicesPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalDevi
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11235,8 +11168,7 @@ func (c *NodesDevicesSignDeviceCall) Do(opts ...googleapi.CallOption) (*SasPorta
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11378,8 +11310,7 @@ func (c *NodesDevicesUpdateSignedCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11521,8 +11452,7 @@ func (c *NodesNodesCreateCall) Do(opts ...googleapi.CallOption) (*SasPortalNode,
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11654,8 +11584,7 @@ func (c *NodesNodesDeleteCall) Do(opts ...googleapi.CallOption) (*SasPortalEmpty
 	//     "$ref": "SasPortalEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11801,8 +11730,7 @@ func (c *NodesNodesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalNode, er
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -11988,8 +11916,7 @@ func (c *NodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListNod
 	//     "$ref": "SasPortalListNodesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12152,8 +12079,7 @@ func (c *NodesNodesMoveCall) Do(opts ...googleapi.CallOption) (*SasPortalOperati
 	//     "$ref": "SasPortalOperation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12308,8 +12234,7 @@ func (c *NodesNodesPatchCall) Do(opts ...googleapi.CallOption) (*SasPortalNode, 
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12452,8 +12377,7 @@ func (c *NodesNodesDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Sas
 	//     "$ref": "SasPortalDeployment"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12640,8 +12564,7 @@ func (c *NodesNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//     "$ref": "SasPortalListDeploymentsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12804,8 +12727,7 @@ func (c *NodesNodesDevicesCreateCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -12947,8 +12869,7 @@ func (c *NodesNodesDevicesCreateSignedCall) Do(opts ...googleapi.CallOption) (*S
 	//     "$ref": "SasPortalDevice"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13135,8 +13056,7 @@ func (c *NodesNodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//     "$ref": "SasPortalListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13299,8 +13219,7 @@ func (c *NodesNodesNodesCreateCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//     "$ref": "SasPortalNode"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13486,8 +13405,7 @@ func (c *NodesNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLi
 	//     "$ref": "SasPortalListNodesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13634,8 +13552,7 @@ func (c *PoliciesGetCall) Do(opts ...googleapi.CallOption) (*SasPortalPolicy, er
 	//     "$ref": "SasPortalPolicy"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13761,8 +13678,7 @@ func (c *PoliciesSetCall) Do(opts ...googleapi.CallOption) (*SasPortalPolicy, er
 	//     "$ref": "SasPortalPolicy"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 
@@ -13888,8 +13804,7 @@ func (c *PoliciesTestCall) Do(opts ...googleapi.CallOption) (*SasPortalTestPermi
 	//     "$ref": "SasPortalTestPermissionsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sasportal",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/sasportal"
 	//   ]
 	// }
 

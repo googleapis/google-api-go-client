@@ -5821,12 +5821,6 @@ type CallSettings struct {
 	// off.
 	PresentLock bool `json:"presentLock,omitempty"`
 
-	// ProjectDinoEnabled: Indicates whether project Dino is currently on or
-	// off. WARNING: This is currently an experimental field. It should not
-	// be used without getting an explicit review and approval from the Meet
-	// team.
-	ProjectDinoEnabled bool `json:"projectDinoEnabled,omitempty"`
-
 	// ReactionsLock: Indicates whether the reactions lock is currently on
 	// or off.
 	ReactionsLock bool `json:"reactionsLock,omitempty"`
@@ -14380,8 +14374,7 @@ type Message struct {
 	//   "QUOTED_BY_STATE_UNSPECIFIED" - Unspecified state for
 	// QuotedByState.
 	//   "QUOTED_BY_STATE_HAS_BEEN_QUOTED" - State to indicate that this
-	// message is quoted by another message (excluding soft-deleted message
-	// and purged ones).
+	// message is quoted by another message (excluding purged message).
 	//   "QUOTED_BY_STATE_HAS_NOT_BEEN_QUOTED" - State to indicate that this
 	// message are not quoted by another message.
 	QuotedByState string `json:"quotedByState,omitempty"`
@@ -16666,10 +16659,19 @@ type QuotedMessageMetadata struct {
 	//   "BOT_ATTACHMENT_STATE_NO_BOT_ATTACHMENT"
 	BotAttachmentState string `json:"botAttachmentState,omitempty"`
 
+	// CreateTimeMicros: Output only. Time when the quoted message was
+	// posted in microseconds.
+	CreateTimeMicros int64 `json:"createTimeMicros,omitempty,string"`
+
 	// CreatorId: Output only. ID of the User who posted the quoted message.
 	// This includes information to identify if the quoted message was
 	// posted by an App on behalf of a user.
 	CreatorId *UserId `json:"creatorId,omitempty"`
+
+	// LastEditTimeMicros: Output only. Time when the quoted message was
+	// last edited by a user at the time when quoting action happens. Time
+	// is in microseconds.
+	LastEditTimeMicros int64 `json:"lastEditTimeMicros,omitempty,string"`
 
 	// LastUpdateTimeWhenQuotedMicros: The `last_update_time` of the
 	// original message when the client initiated the quote creation. This
@@ -16707,8 +16709,13 @@ type QuotedMessageMetadata struct {
 	// message.
 	TextBody string `json:"textBody,omitempty"`
 
+	// UpdaterId: Output only. ID of the User who last updated
+	// (created/edited/deleted) the quoted message at the time when quoting
+	// action happens. This includes information to identify if the quoted
+	// message was posted by an App on behalf of a user.
+	UpdaterId *UserId `json:"updaterId,omitempty"`
+
 	// UploadMetadata: Output only. Upload metadata of the quoted message.
-	// NEXT TAG: 11
 	UploadMetadata []*UploadMetadata `json:"uploadMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
@@ -20593,6 +20600,15 @@ type UpdateDataSourceRequest struct {
 
 	Source *DataSource `json:"source,omitempty"`
 
+	// UpdateMask: Update mask to control which fields to update. If
+	// update_mask is non-empty then only the fields specified in the
+	// update_mask are updated. If you specify a field in the update_mask,
+	// but don't specify its value in the source that field will be cleared.
+	// If the update_mask is not present or empty or has the value * then
+	// all fields will be updated. Some example field paths: name,
+	// display_name
+	UpdateMask string `json:"updateMask,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -21080,8 +21096,7 @@ type UserInfo struct {
 	// extract such information from the Drive Notification email. This
 	// should only be used to fetch user avatars when updater_to_show_email
 	// is not populated. This field is not set for non-Drive Notification
-	// items. This is not the actual sender of the email, as the sender is
-	// always comments-noreply@docs.google.com.
+	// items.
 	DriveNotificationAvatarUrl string `json:"driveNotificationAvatarUrl,omitempty"`
 
 	// UpdaterCountDisplayType: Describes how updater_count_to_show should
@@ -21123,9 +21138,11 @@ type UserInfo struct {
 	// show used for Gmail items. For non-Drive Notification items, this
 	// field will always be populated. If the display name cannot be found
 	// for the user, the fallback string will be the email address. For
-	// Drive Notification items, this is the email of the user who triggered
+	// Drive Notification items, this is the name of the user who triggered
 	// the Drive notification email. This field will be populated if we can
-	// extract such information from the Drive Notification email. This is
+	// extract such information from the Drive Notification email. If the
+	// name cannot be extracted, then the email will be the fallback string,
+	// which is used as the display name text in the UI when needed. This is
 	// not the actual sender of the email, as the sender is always
 	// comments-noreply@docs.google.com.
 	UpdaterToShowName string `json:"updaterToShowName,omitempty"`
@@ -26945,6 +26962,18 @@ func (c *SettingsDatasourcesPatchCall) DebugOptionsEnableDebugging(debugOptionsE
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask to
+// control which fields to update. If update_mask is non-empty then only
+// the fields specified in the update_mask are updated. If you specify a
+// field in the update_mask, but don't specify its value in the source
+// that field will be cleared. If the update_mask is not present or
+// empty or has the value * then all fields will be updated. Some
+// example field paths: name, display_name
+func (c *SettingsDatasourcesPatchCall) UpdateMask(updateMask string) *SettingsDatasourcesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27054,6 +27083,12 @@ func (c *SettingsDatasourcesPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the source that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: name, display_name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -27876,6 +27911,19 @@ func (r *SettingsSearchapplicationsService) Patch(name string, searchapplication
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask to
+// control which fields to update. If update_mask is non-empty then only
+// the fields specified in the update_mask are updated. If you specify a
+// field in the update_mask, but don't specify its value in the
+// search_application then that field will be cleared. If the
+// update_mask is not present or empty or has the value * then all
+// fields will be updated. Some example field paths:
+// search_application.name, search_application.display_name
+func (c *SettingsSearchapplicationsPatchCall) UpdateMask(updateMask string) *SettingsSearchapplicationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -27980,6 +28028,12 @@ func (c *SettingsSearchapplicationsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the search_application then that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: search_application.name, search_application.display_name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -28169,6 +28223,19 @@ func (r *SettingsSearchapplicationsService) Update(name string, searchapplicatio
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Update mask to
+// control which fields to update. If update_mask is non-empty then only
+// the fields specified in the update_mask are updated. If you specify a
+// field in the update_mask, but don't specify its value in the
+// search_application then that field will be cleared. If the
+// update_mask is not present or empty or has the value * then all
+// fields will be updated. Some example field paths:
+// search_application.name, search_application.display_name
+func (c *SettingsSearchapplicationsUpdateCall) UpdateMask(updateMask string) *SettingsSearchapplicationsUpdateCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -28273,6 +28340,12 @@ func (c *SettingsSearchapplicationsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "location": "path",
 	//       "pattern": "^searchapplications/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the search_application then that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: search_application.name, search_application.display_name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

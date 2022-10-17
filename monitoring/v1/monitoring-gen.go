@@ -2537,6 +2537,9 @@ func (s *TimeSeriesFilterRatio) MarshalJSON() ([]byte, error) {
 // methods for querying time series data from the Stackdriver metrics
 // API.
 type TimeSeriesQuery struct {
+	// PrometheusQuery: A query used to fetch time series with PromQL.
+	PrometheusQuery string `json:"prometheusQuery,omitempty"`
+
 	// TimeSeriesFilter: Filter parameters to fetch time series.
 	TimeSeriesFilter *TimeSeriesFilter `json:"timeSeriesFilter,omitempty"`
 
@@ -2554,7 +2557,7 @@ type TimeSeriesQuery struct {
 	// field in MetricDescriptor.
 	UnitOverride string `json:"unitOverride,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TimeSeriesFilter") to
+	// ForceSendFields is a list of field names (e.g. "PrometheusQuery") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2562,7 +2565,7 @@ type TimeSeriesQuery struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TimeSeriesFilter") to
+	// NullFields is a list of field names (e.g. "PrometheusQuery") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

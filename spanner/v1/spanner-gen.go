@@ -1177,7 +1177,7 @@ type CreateInstanceConfigMetadata struct {
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 
 	// Progress: The progress of the CreateInstanceConfig operation.
-	Progress *OperationProgress `json:"progress,omitempty"`
+	Progress *InstanceOperationProgress `json:"progress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2469,6 +2469,43 @@ type InstanceConfig struct {
 
 func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceOperationProgress: Encapsulates progress related information
+// for a Cloud Spanner long running instance operations.
+type InstanceOperationProgress struct {
+	// EndTime: If set, the time at which this operation failed or was
+	// completed successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// ProgressPercent: Percent completion of the operation. Values are
+	// between 0 and 100 inclusive.
+	ProgressPercent int64 `json:"progressPercent,omitempty"`
+
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceOperationProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceOperationProgress
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4698,6 +4735,16 @@ type ResultSetMetadata struct {
 	// here.
 	Transaction *Transaction `json:"transaction,omitempty"`
 
+	// UndeclaredParameters: A SQL query can be parameterized. In PLAN mode,
+	// these parameters can be undeclared. This indicates the field names
+	// and types for those undeclared parameters in the SQL query. For
+	// example, a SQL query like "SELECT * FROM Users where UserId =
+	// @userId and UserName = @userName " could return a
+	// `undeclared_parameters` value like: "fields": [ { "name": "UserId",
+	// "type": { "code": "INT64" } }, { "name": "UserName", "type": {
+	// "code": "STRING" } }, ]
+	UndeclaredParameters *StructType `json:"undeclaredParameters,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "RowType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5741,7 +5788,7 @@ type UpdateInstanceConfigMetadata struct {
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 
 	// Progress: The progress of the UpdateInstanceConfig operation.
-	Progress *OperationProgress `json:"progress,omitempty"`
+	Progress *InstanceOperationProgress `json:"progress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CancelTime") to
 	// unconditionally include in API requests. By default, fields with

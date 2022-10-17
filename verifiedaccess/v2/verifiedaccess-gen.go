@@ -145,7 +145,7 @@ type ChallengeService struct {
 	s *Service
 }
 
-// Challenge: Result message for VerifiedAccess.CreateChallenge.
+// Challenge: Result message for VerifiedAccess.GenerateChallenge.
 type Challenge struct {
 	// AlternativeChallenge: Challenge generated with the old signing key,
 	// the bytes representation of SignedData (this will only be present
@@ -234,6 +234,11 @@ func (s *VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 // VerifyChallengeResponseResult: Result message for
 // VerifiedAccess.VerifyChallengeResponse.
 type VerifyChallengeResponseResult struct {
+	// CustomerId: Unique customer id that this device belongs to, as
+	// defined by the Google Admin SDK at
+	// https://developers.google.com/admin-sdk/directory/v1/guides/manage-customers
+	CustomerId string `json:"customerId,omitempty"`
+
 	// DevicePermanentId: Device permanent id is returned in this field (for
 	// the machine response only).
 	DevicePermanentId string `json:"devicePermanentId,omitempty"`
@@ -247,8 +252,8 @@ type VerifyChallengeResponseResult struct {
 	//   "KEY_TRUST_LEVEL_UNSPECIFIED" - UNSPECIFIED.
 	//   "CHROME_OS_VERIFIED_MODE" - ChromeOS device in verified mode.
 	//   "CHROME_OS_DEVELOPER_MODE" - ChromeOS device in developer mode.
-	//   "CHROME_BROWSER_TPM_KEY" - Chrome Browser with the key stored in
-	// TPM.
+	//   "CHROME_BROWSER_HW_KEY" - Chrome Browser with the key stored in the
+	// device hardware.
 	//   "CHROME_BROWSER_OS_KEY" - Chrome Browser with the key stored at OS
 	// level.
 	KeyTrustLevel string `json:"keyTrustLevel,omitempty"`
@@ -260,25 +265,28 @@ type VerifyChallengeResponseResult struct {
 	// and machine responses)
 	SignedPublicKeyAndChallenge string `json:"signedPublicKeyAndChallenge,omitempty"`
 
+	// VirtualDeviceId: Virtual device id of the device. The definition of
+	// virtual device id is platform-specific.
+	VirtualDeviceId string `json:"virtualDeviceId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DevicePermanentId")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CustomerId") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DevicePermanentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomerId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

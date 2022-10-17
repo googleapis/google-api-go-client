@@ -14246,10 +14246,10 @@ func (c *SpreadsheetsValuesGetCall) DateTimeRenderOption(dateTimeRenderOption st
 
 // MajorDimension sets the optional parameter "majorDimension": The
 // major dimension that results should use. For example, if the
-// spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting
-// `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas
-// requesting `range=A1:B2,majorDimension=COLUMNS` returns
-// `[[1,3],[2,4]]`.
+// spreadsheet data in Sheet1 is: `A1=1,B1=2,A2=3,B2=4`, then requesting
+// `range=Sheet1!A1:B2?majorDimension=ROWS` returns `[[1,2],[3,4]]`,
+// whereas requesting `range=Sheet1!A1:B2?majorDimension=COLUMNS`
+// returns `[[1,3],[2,4]]`.
 //
 // Possible values:
 //
@@ -14411,7 +14411,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "majorDimension": {
-	//       "description": "The major dimension that results should use. For example, if the spreadsheet data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
+	//       "description": "The major dimension that results should use. For example, if the spreadsheet data in Sheet1 is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=Sheet1!A1:B2?majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=Sheet1!A1:B2?majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.",
 	//       "enum": [
 	//         "DIMENSION_UNSPECIFIED",
 	//         "ROWS",

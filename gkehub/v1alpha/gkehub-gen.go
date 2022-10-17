@@ -4189,14 +4189,13 @@ type PolicyControllerMembershipState struct {
 	// automatically when the PCH determines that a PC installed on the
 	// cluster is non-operative or that the cluster does not meet
 	// requirements set for the PCH to administer the cluster but has
-	// nevertheless been given an instruction to do so (such as
-	// ‘install').
+	// nevertheless been given an instruction to do so (such as 'install').
 	//   "HUB_ERROR" - In this state, the PC may still be operational, and
 	// only the PCH is unable to act. The hub should not issue instructions
 	// to change the PC state, or otherwise interfere with the on-cluster
 	// resources. Entering a HUB_ERROR state happens automatically when the
 	// PCH determines the hub is in an unhealthy state and it wishes to
-	// ‘take hands off' to avoid corrupting the PC or other data.
+	// 'take hands off' to avoid corrupting the PC or other data.
 	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended.
 	// This means that the policies are not enforced, but violations are
 	// still recorded (through audit).
@@ -4298,14 +4297,13 @@ type PolicyControllerOnClusterState struct {
 	// automatically when the PCH determines that a PC installed on the
 	// cluster is non-operative or that the cluster does not meet
 	// requirements set for the PCH to administer the cluster but has
-	// nevertheless been given an instruction to do so (such as
-	// ‘install').
+	// nevertheless been given an instruction to do so (such as 'install').
 	//   "HUB_ERROR" - In this state, the PC may still be operational, and
 	// only the PCH is unable to act. The hub should not issue instructions
 	// to change the PC state, or otherwise interfere with the on-cluster
 	// resources. Entering a HUB_ERROR state happens automatically when the
 	// PCH determines the hub is in an unhealthy state and it wishes to
-	// ‘take hands off' to avoid corrupting the PC or other data.
+	// 'take hands off' to avoid corrupting the PC or other data.
 	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended.
 	// This means that the policies are not enforced, but violations are
 	// still recorded (through audit).

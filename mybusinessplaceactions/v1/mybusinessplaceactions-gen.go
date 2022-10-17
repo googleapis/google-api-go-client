@@ -289,6 +289,8 @@ type PlaceActionLink struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ProviderType: Output only. Specifies the provider type.
@@ -357,6 +359,8 @@ type PlaceActionTypeMetadata struct {
 	// and/or takeout.
 	//   "FOOD_DELIVERY" - The action type is ordering food for delivery.
 	//   "FOOD_TAKEOUT" - The action type is ordering food for takeout.
+	//   "SHOP_ONLINE" - The action type is shopping, that can be delivery
+	// and/or pickup.
 	PlaceActionType string `json:"placeActionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to

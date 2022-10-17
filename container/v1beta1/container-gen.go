@@ -5250,6 +5250,18 @@ type ProtectConfig struct {
 	// a cluster's workload configurations.
 	WorkloadConfig *WorkloadConfig `json:"workloadConfig,omitempty"`
 
+	// WorkloadVulnerabilityMode: Sets which mode to use for Protect
+	// workload vulnerability scanning feature.
+	//
+	// Possible values:
+	//   "WORKLOAD_VULNERABILITY_MODE_UNSPECIFIED" - Default value not
+	// specified.
+	//   "DISABLED" - Disables Workload Vulnerability Scanning feature on
+	// the cluster.
+	//   "BASIC" - Applies basic vulnerability scanning settings for cluster
+	// workloads.
+	WorkloadVulnerabilityMode string `json:"workloadVulnerabilityMode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "WorkloadConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -6711,7 +6723,7 @@ type StatusCondition struct {
 	// CanonicalCode: Canonical code of the condition.
 	//
 	// Possible values:
-	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "OK" - Not an error; returned on success. HTTP Mapping: 200 OK
 	//   "CANCELLED" - The operation was cancelled, typically by the caller.
 	// HTTP Mapping: 499 Client Closed Request
 	//   "UNKNOWN" - Unknown error. For example, this error may be returned

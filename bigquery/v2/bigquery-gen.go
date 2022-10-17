@@ -5263,6 +5263,11 @@ type JobStatistics2 struct {
 	// TotalSlotMs: [Output only] Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
+	// TransferredBytes: [Output-only] Total bytes transferred for
+	// cross-cloud queries such as Cross Cloud Transfer and CREATE TABLE AS
+	// SELECT (CTAS).
+	TransferredBytes int64 `json:"transferredBytes,omitempty,string"`
+
 	// UndeclaredQueryParameters: Standard SQL only: list of undeclared
 	// query parameters detected during a dry run validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
@@ -9353,12 +9358,15 @@ type TrainingRun struct {
 	// in milliseconds since epoch.
 	TrainingStartTime int64 `json:"trainingStartTime,omitempty,string"`
 
-	// VertexAiModelId: The model id in Vertex AI Model Registry for this
-	// training run
+	// VertexAiModelId: The model id in the Vertex AI Model Registry
+	// (https://cloud.google.com/vertex-ai/docs/model-registry/introduction)
+	// for this training run.
 	VertexAiModelId string `json:"vertexAiModelId,omitempty"`
 
-	// VertexAiModelVersion: Output only. The model version in Vertex AI
-	// Model Registry for this training run
+	// VertexAiModelVersion: Output only. The model version in the Vertex AI
+	// Model Registry
+	// (https://cloud.google.com/vertex-ai/docs/model-registry/introduction)
+	// for this training run.
 	VertexAiModelVersion string `json:"vertexAiModelVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

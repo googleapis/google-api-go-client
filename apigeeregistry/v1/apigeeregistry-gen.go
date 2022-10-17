@@ -342,11 +342,13 @@ type Api struct {
 	Name string `json:"name,omitempty"`
 
 	// RecommendedDeployment: The recommended deployment of the API. Format:
-	// `apis/{api}/deployments/{deployment}`
+	// `projects/{project}/locations/{location}/apis/{api}/deployments/{deplo
+	// yment}`
 	RecommendedDeployment string `json:"recommendedDeployment,omitempty"`
 
 	// RecommendedVersion: The recommended version of the API. Format:
-	// `apis/{api}/versions/{version}`
+	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}
+	// `
 	RecommendedVersion string `json:"recommendedVersion,omitempty"`
 
 	// UpdateTime: Output only. Last update timestamp.

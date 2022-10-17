@@ -876,6 +876,44 @@ func (s *BasicAuthentication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BasicService: A well-known service type, defined by its service type
+// and service labels. Documentation and examples here
+// (https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+type BasicService struct {
+	// ServiceLabels: Labels that specify the resource that emits the
+	// monitoring data which is used for SLO reporting of this Service.
+	// Documentation and valid values for given service types here
+	// (https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+	ServiceLabels map[string]string `json:"serviceLabels,omitempty"`
+
+	// ServiceType: The type of service that this basic service defines,
+	// e.g. APP_ENGINE service type. Documentation and valid values here
+	// (https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+	ServiceType string `json:"serviceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServiceLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServiceLabels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BasicService) MarshalJSON() ([]byte, error) {
+	type NoMethod BasicService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BasicSli: An SLI measuring performance on a well-known service type.
 // Performance will be computed on the basis of pre-defined metrics. The
 // type of the service_resource determines the metrics to use and the
@@ -1564,8 +1602,9 @@ func (s *CreateTimeSeriesSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Custom: Custom view of service telemetry. Currently a place-holder
-// pending final design.
+// Custom: Use a custom service to designate a service that you want to
+// monitor when none of the other service types (like App Engine, Cloud
+// Run, or a GKE type) matches your intended service.
 type Custom struct {
 }
 
@@ -5037,6 +5076,12 @@ type MService struct {
 	// AppEngine: Type used for App Engine services.
 	AppEngine *AppEngine `json:"appEngine,omitempty"`
 
+	// BasicService: Message that contains the service type and service
+	// labels of this service if it is a basic service. Documentation and
+	// examples here
+	// (https://cloud.google.com/stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+	BasicService *BasicService `json:"basicService,omitempty"`
+
 	// CloudEndpoints: Type used for Cloud Endpoints services.
 	CloudEndpoints *CloudEndpoints `json:"cloudEndpoints,omitempty"`
 
@@ -8414,7 +8459,10 @@ type ProjectsAlertPoliciesCreateCall struct {
 	header_     http.Header
 }
 
-// Create: Creates a new alerting policy.
+// Create: Creates a new alerting policy.Design your application to
+// single-thread API calls that modify the state of alerting policies in
+// a single project. This includes calls to CreateAlertPolicy,
+// DeleteAlertPolicy and UpdateAlertPolicy.
 //
 //   - name: The project
 //     (https://cloud.google.com/monitoring/api/v3#project_name) in which
@@ -8525,7 +8573,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new alerting policy.",
+	//   "description": "Creates a new alerting policy.Design your application to single-thread API calls that modify the state of alerting policies in a single project. This includes calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.",
 	//   "flatPath": "v3/projects/{projectsId}/alertPolicies",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.alertPolicies.create",
@@ -8566,7 +8614,10 @@ type ProjectsAlertPoliciesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an alerting policy.
+// Delete: Deletes an alerting policy.Design your application to
+// single-thread API calls that modify the state of alerting policies in
+// a single project. This includes calls to CreateAlertPolicy,
+// DeleteAlertPolicy and UpdateAlertPolicy.
 //
 //   - name: The alerting policy to delete. The format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For
@@ -8663,7 +8714,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an alerting policy.",
+	//   "description": "Deletes an alerting policy.Design your application to single-thread API calls that modify the state of alerting policies in a single project. This includes calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.",
 	//   "flatPath": "v3/projects/{projectsId}/alertPolicies/{alertPoliciesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.alertPolicies.delete",
@@ -9086,7 +9137,10 @@ type ProjectsAlertPoliciesPatchCall struct {
 // Patch: Updates an alerting policy. You can either replace the entire
 // policy with a new one or replace only certain fields in the current
 // alerting policy by specifying the fields to be updated via
-// updateMask. Returns the updated alerting policy.
+// updateMask. Returns the updated alerting policy.Design your
+// application to single-thread API calls that modify the state of
+// alerting policies in a single project. This includes calls to
+// CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
 //
 //   - name: Required if the policy exists. The resource name for this
 //     policy. The format is:
@@ -9216,7 +9270,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Aler
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an alerting policy. You can either replace the entire policy with a new one or replace only certain fields in the current alerting policy by specifying the fields to be updated via updateMask. Returns the updated alerting policy.",
+	//   "description": "Updates an alerting policy. You can either replace the entire policy with a new one or replace only certain fields in the current alerting policy by specifying the fields to be updated via updateMask. Returns the updated alerting policy.Design your application to single-thread API calls that modify the state of alerting policies in a single project. This includes calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.",
 	//   "flatPath": "v3/projects/{projectsId}/alertPolicies/{alertPoliciesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "monitoring.projects.alertPolicies.patch",
@@ -11906,7 +11960,10 @@ type ProjectsNotificationChannelsCreateCall struct {
 
 // Create: Creates a new notification channel, representing a single
 // notification endpoint such as an email address, SMS number, or
-// PagerDuty service.
+// PagerDuty service.Design your application to single-thread API calls
+// that modify the state of notification channels in a single project.
+// This includes calls to CreateNotificationChannel,
+// DeleteNotificationChannel and UpdateNotificationChannel.
 //
 //   - name: The project
 //     (https://cloud.google.com/monitoring/api/v3#project_name) on which
@@ -12014,7 +12071,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new notification channel, representing a single notification endpoint such as an email address, SMS number, or PagerDuty service.",
+	//   "description": "Creates a new notification channel, representing a single notification endpoint such as an email address, SMS number, or PagerDuty service.Design your application to single-thread API calls that modify the state of notification channels in a single project. This includes calls to CreateNotificationChannel, DeleteNotificationChannel and UpdateNotificationChannel.",
 	//   "flatPath": "v3/projects/{projectsId}/notificationChannels",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.notificationChannels.create",
@@ -12055,7 +12112,11 @@ type ProjectsNotificationChannelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a notification channel.
+// Delete: Deletes a notification channel.Design your application to
+// single-thread API calls that modify the state of notification
+// channels in a single project. This includes calls to
+// CreateNotificationChannel, DeleteNotificationChannel and
+// UpdateNotificationChannel.
 //
 //   - name: The channel for which to execute the request. The format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
@@ -12161,7 +12222,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a notification channel.",
+	//   "description": "Deletes a notification channel.Design your application to single-thread API calls that modify the state of notification channels in a single project. This includes calls to CreateNotificationChannel, DeleteNotificationChannel and UpdateNotificationChannel.",
 	//   "flatPath": "v3/projects/{projectsId}/notificationChannels/{notificationChannelsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "monitoring.projects.notificationChannels.delete",
@@ -12762,7 +12823,10 @@ type ProjectsNotificationChannelsPatchCall struct {
 }
 
 // Patch: Updates a notification channel. Fields not specified in the
-// field mask remain unchanged.
+// field mask remain unchanged.Design your application to single-thread
+// API calls that modify the state of notification channels in a single
+// project. This includes calls to CreateNotificationChannel,
+// DeleteNotificationChannel and UpdateNotificationChannel.
 //
 //   - name: The full REST resource name for this channel. The format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
@@ -12873,7 +12937,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a notification channel. Fields not specified in the field mask remain unchanged.",
+	//   "description": "Updates a notification channel. Fields not specified in the field mask remain unchanged.Design your application to single-thread API calls that modify the state of notification channels in a single project. This includes calls to CreateNotificationChannel, DeleteNotificationChannel and UpdateNotificationChannel.",
 	//   "flatPath": "v3/projects/{projectsId}/notificationChannels/{notificationChannelsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "monitoring.projects.notificationChannels.patch",

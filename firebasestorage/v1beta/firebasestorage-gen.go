@@ -174,21 +174,14 @@ type AddFirebaseRequest struct {
 // Bucket: A storage bucket and its relation to a parent Firebase
 // project.
 type Bucket struct {
-	// Location: Output only. Location of the storage bucket.
-	Location string `json:"location,omitempty"`
-
 	// Name: Resource name of the bucket.
 	Name string `json:"name,omitempty"`
-
-	// Reconciling: Output only. Represents whether a bucket is being moved
-	// to a new location, in which case reconciling is set to true.
-	Reconciling bool `json:"reconciling,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -196,8 +189,8 @@ type Bucket struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

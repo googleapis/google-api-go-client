@@ -145,9 +145,62 @@ type V1Service struct {
 	s *Service
 }
 
+// AccountActivity: Contains a signal helping apps differentiating
+// between likely genuine users and likely non-genuine traffic (such as
+// accounts being used for fraud, accounts used by automated traffic, or
+// accounts used in device farms) based on the presence and volume of
+// Play store activity.
+type AccountActivity struct {
+	// ActivityLevel: Required. Indicates the activity level of the account.
+	//
+	// Possible values:
+	//   "ACTIVITY_LEVEL_UNSPECIFIED" - Activity level has not been set.
+	//   "UNEVALUATED" - Account activity level is not evaluated because one
+	// of the prerequisite conditions is not met (e.g., device is not
+	// trusted, the user does not have Play app license)
+	//   "UNUSUAL" - Google Play store activity is unusual for at least one
+	// of the user accounts on the device. Google Play recommends checking
+	// that this is a real user.
+	//   "UNKNOWN" - Google Play does not have sufficient activity for the
+	// user account on the device. The account may be new, or it may lack
+	// activity on Google Play.
+	//   "TYPICAL_BASIC" - Google Play store activity is typical for the
+	// user account or accounts on the device.
+	//   "TYPICAL_STRONG" - Google Play store activity is typical for the
+	// user account or accounts on the device, with harder to replicate
+	// signals.
+	ActivityLevel string `json:"activityLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivityLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivityLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccountDetails: Contains the account information such as the
 // licensing status for the user in the scope.
 type AccountDetails struct {
+	// AccountActivity: Details about the account activity for the user in
+	// the scope.
+	AccountActivity *AccountActivity `json:"accountActivity,omitempty"`
+
 	// AccountRiskVerdict: Details about the account risk for the user in
 	// the scope. This feature is available only to selected developers.
 	AccountRiskVerdict *AccountRiskVerdict `json:"accountRiskVerdict,omitempty"`
@@ -167,15 +220,15 @@ type AccountDetails struct {
 	// meet the minimum bar or the application was not a known Play version.
 	AppLicensingVerdict string `json:"appLicensingVerdict,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AccountRiskVerdict")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AccountActivity") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AccountRiskVerdict") to
+	// NullFields is a list of field names (e.g. "AccountActivity") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

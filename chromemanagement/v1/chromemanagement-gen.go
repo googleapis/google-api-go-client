@@ -659,6 +659,66 @@ func (s *GoogleChromeManagementV1BatteryStatusReport) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1BootPerformanceReport: Boot performance
+// report of a device. * This field is telemetry information and this
+// will change over time as the device is utilized. * Data for this
+// field is controlled via policy: ReportDeviceBootMode
+// (https://chromeenterprise.google/policies/#ReportDeviceBootMode) *
+// Data Collection Frequency: On every boot up event * Default Data
+// Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache: If the
+// device is offline, the collected data is stored locally, and will be
+// reported when the device is next online: Yes * Reported for
+// affiliated users only: N/A
+type GoogleChromeManagementV1BootPerformanceReport struct {
+	// BootUpDuration: Total time to boot up.
+	BootUpDuration string `json:"bootUpDuration,omitempty"`
+
+	// BootUpTime: The timestamp when power came on.
+	BootUpTime string `json:"bootUpTime,omitempty"`
+
+	// ReportTime: Timestamp when the report was collected.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ShutdownDuration: Total time since shutdown start to power off.
+	ShutdownDuration string `json:"shutdownDuration,omitempty"`
+
+	// ShutdownReason: The shutdown reason.
+	//
+	// Possible values:
+	//   "SHUTDOWN_REASON_UNSPECIFIED" - Shutdown reason is not specified.
+	//   "USER_REQUEST" - User initiated.
+	//   "SYSTEM_UPDATE" - System update initiated.
+	//   "LOW_BATTERY" - Shutdown due to low battery.
+	//   "OTHER" - Shutdown due to other reasons.
+	ShutdownReason string `json:"shutdownReason,omitempty"`
+
+	// ShutdownTime: The timestamp when shutdown.
+	ShutdownTime string `json:"shutdownTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BootUpDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BootUpDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1BootPerformanceReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1BootPerformanceReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1BrowserVersion: Describes a browser version
 // and its install count.
 type GoogleChromeManagementV1BrowserVersion struct {
@@ -2429,6 +2489,10 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// BatteryStatusReport: Output only. Battery reports collected
 	// periodically.
 	BatteryStatusReport []*GoogleChromeManagementV1BatteryStatusReport `json:"batteryStatusReport,omitempty"`
+
+	// BootPerformanceReport: Output only. Boot performance reports of the
+	// device.
+	BootPerformanceReport []*GoogleChromeManagementV1BootPerformanceReport `json:"bootPerformanceReport,omitempty"`
 
 	// CpuInfo: Output only. Information regarding CPU specs for the device.
 	CpuInfo []*GoogleChromeManagementV1CpuInfo `json:"cpuInfo,omitempty"`

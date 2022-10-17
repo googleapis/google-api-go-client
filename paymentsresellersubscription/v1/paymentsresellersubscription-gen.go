@@ -206,10 +206,10 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte,
 }
 
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
-	// CancelImmediately: Optional. If true, the subscription will be
-	// cancelled immediately. Otherwise, the subscription will be cancelled
-	// at renewal_time, and therefore no prorated refund will be issued for
-	// the rest of the cycle.
+	// CancelImmediately: Optional. If true, Google will cancel the
+	// subscription immediately, and issue a prorated refund for the
+	// remainder of the billing cycle. Otherwise, Google defers the
+	// cancelation at renewal_time, and therefore, will not issue a refund.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
 
 	// CancellationReason: Specifies the reason for the cancellation.
@@ -870,6 +870,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetail
 	// introductory offer in billing cycles.
 	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
 
+	// RegionCode: Output only. 2-letter ISO region code where the product
+	// is available in. Ex. "US".
+	RegionCode string `json:"regionCode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DiscountAmount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1033,6 +1037,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// the partner after the end of current cycle.
 	//   "STATE_CANCEL_AT_END_OF_CYCLE" - The subscription is waiting to be
 	// cancelled by the next recurrence cycle.
+	//   "STATE_SUSPENDED" - The subscription is suspended.
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. System generated timestamp when the

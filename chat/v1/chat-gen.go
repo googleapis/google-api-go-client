@@ -78,8 +78,19 @@ const apiVersion = "v1"
 const basePath = "https://chat.googleapis.com/"
 const mtlsBasePath = "https://chat.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View, add, and remove members from conversations in Google Chat
+	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.memberships",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -663,7 +674,8 @@ func (s *Card) MarshalJSON() ([]byte, error) {
 
 // CardAction: A card action is the action associated with the card. For
 // an invoice card, a typical action would be: delete invoice, email
-// invoice or open the invoice in browser.
+// invoice or open the invoice in browser. Not supported by Google Chat
+// apps.
 type CardAction struct {
 	// ActionLabel: The label used to be displayed in the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -1529,37 +1541,45 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Card: A card is a UI element that can contain UI
-// widgets such as text and images. For more information, see Cards .
-// For example, the following JSON creates a card that has a header with
-// the name, position, icons, and link for a contact, followed by a
-// section with contact information like email and phone number. ``` {
-// "header": { "title": "Sasha", "subtitle": "Software Engineer",
-// "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/sasha.png", "imageAltText": "Avatar for Sasha"
-// }, "sections" : [ { "header": "Contact Info", "widgets": [ {
-// "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "sasha@example.com" } }, { "decoratedText": { "icon": { "knownIcon":
-// "PERSON" }, "content": "Online" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" } }, {
-// "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
-// "openLink": { "url": "https://example.com/share" } } }, {
-// "textButton": { "text": "Edit", }, "onClick": { "action": {
-// "function": "goToView", "parameters": [ { "key": "viewType", "value":
-// "EDIT" } ], "loadIndicator": "LoadIndicator.SPINNER" } } } ] } ],
-// "collapsible": true, "uncollapsibleWidgetsCount": 3 } ],
-// "cardActions": [ { "actionLabel": "Send Feedback", "onClick": {
-// "openLink": { "url": "https://example.com/feedback" } } } ], "name":
-// "contact-card-K3wB6arF2H9L" } ```
+// GoogleAppsCardV1Card: Cards support a defined layout, interactive UI
+// elements like buttons, and rich media like images. Use cards to
+// present detailed information, gather information from users, and
+// guide users to take a next step. In Google Chat, cards appear in
+// several places: - As stand-alone messages. - Accompanying a text
+// message, just beneath the text message. - As a dialog
+// (https://developers.google.com/chat/how-tos/dialogs). The following
+// example JSON creates a "contact card" that features: - A header with
+// the contact's name, job title, avatar picture. - A section with the
+// contact information, including formatted text. - Buttons that users
+// can click to share the contact or see more or less info. !Example
+// contact card (/chat/images/card_api_reference.png) ``` { "cardsV2": [
+// { "cardId": "unique-card-id", "card": { "header": { "title": "Sasha",
+// "subtitle": "Software Engineer", "imageUrl":
+// "https://developers.google.com/chat/images/quickstart-app-avatar.png",
+//
+//	"imageType": "CIRCLE", "imageAltText": "Avatar for Sasha", },
+//
+// "sections": [ { "header": "Contact Info", "collapsible": true,
+// "uncollapsibleWidgetsCount": 1, "widgets": [ { "decoratedText": {
+// "startIcon": { "knownIcon": "EMAIL", }, "text": "sasha@example.com",
+// } }, { "decoratedText": { "startIcon": { "knownIcon": "PERSON", },
+// "text": "Online", }, }, { "decoratedText": { "startIcon": {
+// "knownIcon": "PHONE", }, "text": "+1 (555) 555-1234", } }, {
+// "buttonList": { "buttons": [ { "text": "Share", "onClick": {
+// "openLink": { "url": "https://example.com/share", } } }, { "text":
+// "Edit", "onClick": { "action": { "function": "goToView",
+// "parameters": [ { "key": "viewType", "value": "EDIT", } ], } } }, ],
+// } }, ], }, ], }, } ], } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's
-	// generated toolbar menu. For example, the following JSON constructs a
-	// card action menu with Settings and Send Feedback options: ```
-	// "card_actions": [ { "actionLabel": "Settings", "onClick": { "action":
-	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
-	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
-	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
-	// "url": "https://example.com/feedback" } } } ] ```
+	// generated toolbar menu. Not supported by Google Chat apps. For
+	// example, the following JSON constructs a card action menu with
+	// Settings and Send Feedback options: ``` "card_actions": [ {
+	// "actionLabel": "Settings", "onClick": { "action": { "functionName":
+	// "goToView", "parameters": [ { "key": "viewType", "value": "SETTING" }
+	// ], "loadIndicator": "LoadIndicator.SPINNER" } } }, { "actionLabel":
+	// "Send Feedback", "onClick": { "openLink": { "url":
+	// "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
 	// DisplayStyle: The `peekCardHeader` display style for. Not supported
@@ -1620,7 +1640,7 @@ func (s *GoogleAppsCardV1Card) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardAction: A card action is the action associated
 // with the card. For example, an invoice card might include actions
 // such as delete invoice, email invoice, or open the invoice in a
-// browser.
+// browser. Not supported by Google Chat apps.
 type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -3140,10 +3160,10 @@ type Message struct {
 	// Attachment: User uploaded attachment.
 	Attachment []*Attachment `json:"attachment,omitempty"`
 
-	// Cards: Rich, formatted and interactive cards that can be used to
-	// display UI elements such as: formatted texts, buttons, clickable
-	// images. Cards are normally displayed below the plain-text body of the
-	// message.
+	// Cards: Deprecated: Use `cards_v2` instead. Rich, formatted and
+	// interactive cards that can be used to display UI elements such as:
+	// formatted texts, buttons, clickable images. Cards are normally
+	// displayed below the plain-text body of the message.
 	Cards []*Card `json:"cards,omitempty"`
 
 	// CardsV2: Richly formatted and interactive cards that display UI
@@ -3154,8 +3174,17 @@ type Message struct {
 	// (https://developers.google.com/chat/how-tos/dialogs). The `cardId` is
 	// a unique identifier among cards in the same message and for
 	// identifying user input values. Currently supported widgets include: -
-	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList`
+	// `TextParagraph` - `DecoratedText` - `Image` - `ButtonList` -
+	// `Divider`
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
+
+	// ClientAssignedMessageId: A custom name for a Chat message assigned at
+	// creation. Must start with `client-` and contain only lowercase
+	// letters, numbers, and hyphens up to 63 characters in length. Specify
+	// this field to get, update, or delete the message with the specified
+	// value. For example usage, see Name a created message
+	// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+	ClientAssignedMessageId string `json:"clientAssignedMessageId,omitempty"`
 
 	// CreateTime: Output only. The time at which the message was created in
 	// Google Chat server.
@@ -3723,11 +3752,9 @@ type User struct {
 	// profile is not visible.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 
-	// Name: Resource name for a Google Chat user. Represents a person
-	// (https://developers.google.com/people/api/rest/v1/people#Person) in
-	// the People API or a user
-	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/users)
-	// in the Admin SDK Directory API. Formatted as: `users/{user}`
+	// Name: Resource name for a Google Chat user. For human users,
+	// represents a person in the People API or a user in the Admin SDK
+	// Directory API. Format: `users/{user}`
 	Name string `json:"name,omitempty"`
 
 	// Type: User type.
@@ -3859,6 +3886,18 @@ func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall 
 	return c
 }
 
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *DmsMessagesCall) MessageId(messageId string) *DmsMessagesCall {
+	c.urlParams_.Set("messageId", messageId)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -3977,6 +4016,11 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4026,6 +4070,18 @@ func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall 
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *DmsWebhooksCall) MessageId(messageId string) *DmsWebhooksCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -4147,6 +4203,11 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4196,6 +4257,18 @@ func (r *DmsConversationsService) Messages(parent string, message *Message) *Dms
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *DmsConversationsMessagesCall) MessageId(messageId string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -4317,6 +4390,11 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4531,6 +4609,18 @@ func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesC
 	return c
 }
 
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *RoomsMessagesCall) MessageId(messageId string) *RoomsMessagesCall {
+	c.urlParams_.Set("messageId", messageId)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -4649,6 +4739,11 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4698,6 +4793,18 @@ func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksC
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *RoomsWebhooksCall) MessageId(messageId string) *RoomsWebhooksCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -4819,6 +4926,11 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4868,6 +4980,18 @@ func (r *RoomsConversationsService) Messages(parent string, message *Message) *R
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *RoomsConversationsMessagesCall) MessageId(messageId string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -4989,6 +5113,11 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -5292,7 +5421,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists spaces the caller is a member of. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Lists spaces the caller is a member of. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). ",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.list",
@@ -5359,6 +5488,18 @@ func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhook
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *SpacesWebhooksCall) MessageId(messageId string) *SpacesWebhooksCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -5480,6 +5621,11 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -5665,8 +5811,8 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists human memberships in a space. Requires service account
-// authentication
+// List: Lists human memberships in a space for joined members. Requires
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 //   - parent: The resource name of the space for which to fetch a
@@ -5791,7 +5937,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists human memberships in a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Lists human memberships in a space for joined members. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -5821,7 +5967,10 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//   "path": "v1/{+parent}/members",
 	//   "response": {
 	//     "$ref": "ListMembershipsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.memberships"
+	//   ]
 	// }
 
 }
@@ -5867,6 +6016,18 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// MessageId sets the optional parameter "messageId": A custom name for
+// a Chat message assigned at creation. Must start with `client-` and
+// contain only lowercase letters, numbers, and hyphens up to 63
+// characters in length. Specify this field to get, update, or delete
+// the message with the specified value. For example usage, see Name a
+// created message
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
+func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("messageId", messageId)
 	return c
 }
 
@@ -5988,6 +6149,11 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "messageId": {
+	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -6163,9 +6329,13 @@ type SpacesMessagesGetCall struct {
 // Get: Returns a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
-//   - name: Resource name of the message to be retrieved, in the form
-//     "spaces/*/messages/*". Example:
-//     spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
+//   - name: Resource name of the message to retrieve. Format:
+//     spaces/{space}/messages/{message} If the message begins with
+//     `client-`, then it has a custom name assigned by a Chat app that
+//     created it with the Chat REST API. That Chat app (but not others)
+//     can pass the custom name to get, update, or delete the message. To
+//     learn more, see [create and name a message]
+//     (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6280,7 +6450,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
+	//       "description": "Required. Resource name of the message to retrieve. Format: spaces/{space}/messages/{message} If the message begins with `client-`, then it has a custom name assigned by a Chat app that created it with the Chat REST API. That Chat app (but not others) can pass the custom name to get, update, or delete the message. To learn more, see [create and name a message] (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -6315,6 +6485,17 @@ func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMes
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.message = message
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If `true`
+// and the message is not found, a new message is created and
+// `updateMask` is ignored. The specified message ID must be
+// client-assigned
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message)
+// or the request fails.
+func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessagesUpdateCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
@@ -6427,6 +6608,11 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If `true` and the message is not found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message) or the request fails.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
 	//       "location": "path",

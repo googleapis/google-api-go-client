@@ -508,12 +508,40 @@ type GoogleCloudRetailLoggingImportErrorContext struct {
 	// batch operation error.
 	GcsPath string `json:"gcsPath,omitempty"`
 
+	// InventoryActivity: The detailed content which caused the error on
+	// importing an inventory activity.
+	// http://cs/google3/google/cloud/retail/v2main/inventory_activity.proto
+	InventoryActivity string `json:"inventoryActivity,omitempty"`
+
 	// LineNumber: Line number of the content in file. Should be empty for
 	// permission or batch operation error.
 	LineNumber string `json:"lineNumber,omitempty"`
 
 	// OperationName: The operation resource name of the LRO.
 	OperationName string `json:"operationName,omitempty"`
+
+	// Order: The detailed content which caused the error on importing an
+	// order. http://cs/google3/google/cloud/retail/v2main/order.proto
+	Order string `json:"order,omitempty"`
+
+	// Place: The detailed content which caused the error on importing a
+	// place. http://cs/google3/google/cloud/retail/v2main/place.proto
+	Place string `json:"place,omitempty"`
+
+	// PlaceAsset: The detailed content which caused the error on importing
+	// a place asset.
+	// http://cs/google3/google/cloud/retail/v2main/place_asset.proto
+	PlaceAsset string `json:"placeAsset,omitempty"`
+
+	// PlaceProductPrice: The detailed content which caused the error on
+	// importing a place product price.
+	// http://cs/google3/google/cloud/retail/v2main/place_product_price.proto
+	PlaceProductPrice string `json:"placeProductPrice,omitempty"`
+
+	// PlaceProductSettings: The detailed content which caused the error on
+	// importing a place product settings.
+	// http://cs/google3/google/cloud/retail/v2main/place_product_settings.proto
+	PlaceProductSettings string `json:"placeProductSettings,omitempty"`
 
 	// Product: The detailed content which caused the error on importing a
 	// product.
@@ -1026,10 +1054,10 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// values are available for dynamic facet. Could only be
 	// DYNAMIC_FACETABLE_DISABLED if CatalogAttribute.indexable_option is
 	// INDEXABLE_DISABLED. Otherwise, an INVALID_ARGUMENT error is returned.
+	// Must be specified, otherwise throws INVALID_FORMAT error.
 	//
 	// Possible values:
 	//   "DYNAMIC_FACETABLE_OPTION_UNSPECIFIED" - Value used when unset.
-	// Defaults to DYNAMIC_FACETABLE_ENABLED.
 	//   "DYNAMIC_FACETABLE_ENABLED" - Dynamic facetable option enabled for
 	// an attribute.
 	//   "DYNAMIC_FACETABLE_DISABLED" - Dynamic facetable option disabled
@@ -1054,11 +1082,11 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// IndexableOption: When AttributesConfig.attribute_config_level is
 	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values
 	// are indexed so that it can be filtered, faceted, or boosted in
-	// SearchService.Search.
+	// SearchService.Search. Must be specified, otherwise throws
+	// INVALID_FORMAT error.
 	//
 	// Possible values:
-	//   "INDEXABLE_OPTION_UNSPECIFIED" - Value used when unset. Defaults to
-	// INDEXABLE_ENABLED.
+	//   "INDEXABLE_OPTION_UNSPECIFIED" - Value used when unset.
 	//   "INDEXABLE_ENABLED" - Indexable option enabled for an attribute.
 	//   "INDEXABLE_DISABLED" - Indexable option disabled for an attribute.
 	IndexableOption string `json:"indexableOption,omitempty"`
@@ -1076,11 +1104,11 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// values are searchable by text queries in SearchService.Search. If
 	// SEARCHABLE_ENABLED but attribute type is numerical, attribute values
 	// will not be searchable by text queries in SearchService.Search, as
-	// there are no text values associated to numerical attributes.
+	// there are no text values associated to numerical attributes. Must be
+	// specified, otherwise throws INVALID_FORMAT error.
 	//
 	// Possible values:
-	//   "SEARCHABLE_OPTION_UNSPECIFIED" - Value used when unset. Defaults
-	// to SEARCHABLE_DISABLED.
+	//   "SEARCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
 	//   "SEARCHABLE_ENABLED" - Searchable option enabled for an attribute.
 	//   "SEARCHABLE_DISABLED" - Searchable option disabled for an
 	// attribute.

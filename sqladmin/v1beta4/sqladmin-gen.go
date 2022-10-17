@@ -690,12 +690,12 @@ func (s *BinLogCoordinates) MarshalJSON() ([]byte, error) {
 // CloneContext: Database instance clone context.
 type CloneContext struct {
 	// AllocatedIpRange: The name of the allocated ip range for the private
-	// ip CloudSQL instance. For example: "google-managed-services-default".
-	// If set, the cloned instance ip will be created in the allocated
-	// range. The range name must comply with RFC 1035
-	// (https://tools.ietf.org/html/rfc1035). Specifically, the name must be
-	// 1-63 characters long and match the regular expression a-z
-	// ([-a-z0-9]*[a-z0-9])?. Reserved for future use.
+	// ip Cloud SQL instance. For example:
+	// "google-managed-services-default". If set, the cloned instance ip
+	// will be created in the allocated range. The range name must comply
+	// with RFC 1035 (https://tools.ietf.org/html/rfc1035). Specifically,
+	// the name must be 1-63 characters long and match the regular
+	// expression a-z ([-a-z0-9]*[a-z0-9])?. Reserved for future use.
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 
 	// BinLogCoordinates: Binary log coordinates, if specified, identify the
@@ -779,8 +779,6 @@ type ConnectSettings struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server
@@ -788,8 +786,12 @@ type ConnectSettings struct {
 	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
 	// Express.
 	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
 	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -803,8 +805,6 @@ type ConnectSettings struct {
 	// minor version is 29.
 	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the
 	// minor version is 30.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -1002,8 +1002,6 @@ type DatabaseInstance struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server
@@ -1011,8 +1009,12 @@ type DatabaseInstance struct {
 	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
 	// Express.
 	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
 	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -1026,8 +1028,6 @@ type DatabaseInstance struct {
 	// minor version is 29.
 	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the
 	// minor version is 30.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -1779,8 +1779,6 @@ type Flag struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
 	// Standard.
 	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server
@@ -1788,8 +1786,12 @@ type Flag struct {
 	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
 	// Express.
 	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
 	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
 	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the
 	// minor version is 18.
@@ -1803,8 +1805,6 @@ type Flag struct {
 	// minor version is 29.
 	//   "MYSQL_8_0_30" - The database major version is MySQL 8.0 and the
 	// minor version is 30.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -2568,11 +2568,11 @@ func (s *InstancesTruncateLogRequest) MarshalJSON() ([]byte, error) {
 // IpConfiguration: IP Management configuration.
 type IpConfiguration struct {
 	// AllocatedIpRange: The name of the allocated ip range for the private
-	// ip CloudSQL instance. For example: "google-managed-services-default".
-	// If set, the instance ip will be created in the allocated range. The
-	// range name must comply with RFC 1035
-	// (https://tools.ietf.org/html/rfc1035). Specifically, the name must be
-	// 1-63 characters long and match the regular expression
+	// ip Cloud SQL instance. For example:
+	// "google-managed-services-default". If set, the instance ip will be
+	// created in the allocated range. The range name must comply with RFC
+	// 1035 (https://tools.ietf.org/html/rfc1035). Specifically, the name
+	// must be 1-63 characters long and match the regular expression
 	// `[a-z]([-a-z0-9]*[a-z0-9])?.`
 	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
 

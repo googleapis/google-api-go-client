@@ -6364,8 +6364,10 @@ func (r *BillingAccountsLocationsBucketsViewsService) Create(parent string, logv
 	return c
 }
 
-// ViewId sets the optional parameter "viewId": Required. The id to use
-// for this view.
+// ViewId sets the optional parameter "viewId": Required. A
+// client-assigned identifier such as "my-view". Identifiers are limited
+// to 100 characters and can include only letters, digits, underscores,
+// hyphens, and periods.
 func (c *BillingAccountsLocationsBucketsViewsCreateCall) ViewId(viewId string) *BillingAccountsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -6478,7 +6480,7 @@ func (c *BillingAccountsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "viewId": {
-	//       "description": "Required. The id to use for this view.",
+	//       "description": "Required. A client-assigned identifier such as \"my-view\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13375,8 +13377,10 @@ func (r *FoldersLocationsBucketsViewsService) Create(parent string, logview *Log
 	return c
 }
 
-// ViewId sets the optional parameter "viewId": Required. The id to use
-// for this view.
+// ViewId sets the optional parameter "viewId": Required. A
+// client-assigned identifier such as "my-view". Identifiers are limited
+// to 100 characters and can include only letters, digits, underscores,
+// hyphens, and periods.
 func (c *FoldersLocationsBucketsViewsCreateCall) ViewId(viewId string) *FoldersLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -13489,7 +13493,7 @@ func (c *FoldersLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "viewId": {
-	//       "description": "Required. The id to use for this view.",
+	//       "description": "Required. A client-assigned identifier such as \"my-view\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17720,8 +17724,10 @@ func (r *LocationsBucketsViewsService) Create(parent string, logview *LogView) *
 	return c
 }
 
-// ViewId sets the optional parameter "viewId": Required. The id to use
-// for this view.
+// ViewId sets the optional parameter "viewId": Required. A
+// client-assigned identifier such as "my-view". Identifiers are limited
+// to 100 characters and can include only letters, digits, underscores,
+// hyphens, and periods.
 func (c *LocationsBucketsViewsCreateCall) ViewId(viewId string) *LocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -17834,7 +17840,7 @@ func (c *LocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*Log
 	//       "type": "string"
 	//     },
 	//     "viewId": {
-	//       "description": "Required. The id to use for this view.",
+	//       "description": "Required. A client-assigned identifier such as \"my-view\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -22465,8 +22471,10 @@ func (r *OrganizationsLocationsBucketsViewsService) Create(parent string, logvie
 	return c
 }
 
-// ViewId sets the optional parameter "viewId": Required. The id to use
-// for this view.
+// ViewId sets the optional parameter "viewId": Required. A
+// client-assigned identifier such as "my-view". Identifiers are limited
+// to 100 characters and can include only letters, digits, underscores,
+// hyphens, and periods.
 func (c *OrganizationsLocationsBucketsViewsCreateCall) ViewId(viewId string) *OrganizationsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -22579,7 +22587,7 @@ func (c *OrganizationsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "viewId": {
-	//       "description": "Required. The id to use for this view.",
+	//       "description": "Required. A client-assigned identifier such as \"my-view\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -27951,8 +27959,10 @@ func (r *ProjectsLocationsBucketsViewsService) Create(parent string, logview *Lo
 	return c
 }
 
-// ViewId sets the optional parameter "viewId": Required. The id to use
-// for this view.
+// ViewId sets the optional parameter "viewId": Required. A
+// client-assigned identifier such as "my-view". Identifiers are limited
+// to 100 characters and can include only letters, digits, underscores,
+// hyphens, and periods.
 func (c *ProjectsLocationsBucketsViewsCreateCall) ViewId(viewId string) *ProjectsLocationsBucketsViewsCreateCall {
 	c.urlParams_.Set("viewId", viewId)
 	return c
@@ -28065,7 +28075,7 @@ func (c *ProjectsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "viewId": {
-	//       "description": "Required. The id to use for this view.",
+	//       "description": "Required. A client-assigned identifier such as \"my-view\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

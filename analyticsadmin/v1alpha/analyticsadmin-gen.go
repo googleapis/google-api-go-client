@@ -199,6 +199,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.DisplayVideo360AdvertiserLinks = NewPropertiesDisplayVideo360AdvertiserLinksService(s)
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
 	rs.GoogleAdsLinks = NewPropertiesGoogleAdsLinksService(s)
+	rs.SearchAds360Links = NewPropertiesSearchAds360LinksService(s)
 	rs.UserLinks = NewPropertiesUserLinksService(s)
 	return rs
 }
@@ -223,6 +224,8 @@ type PropertiesService struct {
 	FirebaseLinks *PropertiesFirebaseLinksService
 
 	GoogleAdsLinks *PropertiesGoogleAdsLinksService
+
+	SearchAds360Links *PropertiesSearchAds360LinksService
 
 	UserLinks *PropertiesUserLinksService
 }
@@ -317,6 +320,15 @@ func NewPropertiesGoogleAdsLinksService(s *Service) *PropertiesGoogleAdsLinksSer
 }
 
 type PropertiesGoogleAdsLinksService struct {
+	s *Service
+}
+
+func NewPropertiesSearchAds360LinksService(s *Service) *PropertiesSearchAds360LinksService {
+	rs := &PropertiesSearchAds360LinksService{s: s}
+	return rs
+}
+
+type PropertiesSearchAds360LinksService struct {
 	s *Service
 }
 
@@ -2455,6 +2467,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// DisplayVideo360AdvertiserLinkProposal resource in change history.
 	DisplayVideo360AdvertiserLinkProposal *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal `json:"displayVideo360AdvertiserLinkProposal,omitempty"`
 
+	// ExpandedDataSet: A snapshot of an ExpandedDataSet resource in change
+	// history.
+	ExpandedDataSet *GoogleAnalyticsAdminV1alphaExpandedDataSet `json:"expandedDataSet,omitempty"`
+
 	// FirebaseLink: A snapshot of a FirebaseLink resource in change
 	// history.
 	FirebaseLink *GoogleAnalyticsAdminV1alphaFirebaseLink `json:"firebaseLink,omitempty"`
@@ -2473,6 +2489,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 
 	// Property: A snapshot of a Property resource in change history.
 	Property *GoogleAnalyticsAdminV1alphaProperty `json:"property,omitempty"`
+
+	// SearchAds360Link: A snapshot of a SearchAds360Link resource in change
+	// history.
+	SearchAds360Link *GoogleAnalyticsAdminV1alphaSearchAds360Link `json:"searchAds360Link,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
@@ -3275,6 +3295,254 @@ func (s *GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaExpandedDataSet: A resource message
+// representing a GA4 ExpandedDataSet.
+type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
+	// DataCollectionStartTime: Output only. Time when expanded data set
+	// began (or will begin) collecing data.
+	DataCollectionStartTime string `json:"dataCollectionStartTime,omitempty"`
+
+	// Description: Optional. The description of the ExpandedDataSet. Max 50
+	// chars.
+	Description string `json:"description,omitempty"`
+
+	// DimensionFilterExpression: Immutable. A logical expression of
+	// ExpandedDataSet filters applied to dimension included in the
+	// ExpandedDataSet. This filter is used to reduce the number of rows and
+	// thus the change of encountering `other row`.
+	DimensionFilterExpression *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression `json:"dimensionFilterExpression,omitempty"`
+
+	// DimensionNames: Immutable. The list of dimensions included in the
+	// ExpandedDataSet. See the API Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
+	// for the list of dimension names.
+	DimensionNames []string `json:"dimensionNames,omitempty"`
+
+	// DisplayName: Required. The display name of the ExpandedDataSet. Max
+	// 200 chars.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MetricNames: Immutable. The list of metrics included in the
+	// ExpandedDataSet. See the API Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
+	// for the list of dimension names.
+	MetricNames []string `json:"metricNames,omitempty"`
+
+	// Name: Output only. The resource name for this ExpandedDataSet
+	// resource. Format:
+	// properties/{property_id}/expandedDataSets/{expanded_data_set}
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DataCollectionStartTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataCollectionStartTime")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaExpandedDataSetFilter: A specific filter
+// for a single dimension
+type GoogleAnalyticsAdminV1alphaExpandedDataSetFilter struct {
+	// FieldName: Required. The dimension name to filter.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// InListFilter: A filter for a string dimension that matches a
+	// particular list of options.
+	InListFilter *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter `json:"inListFilter,omitempty"`
+
+	// StringFilter: A filter for a string-type dimension that matches a
+	// particular pattern.
+	StringFilter *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter `json:"stringFilter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression: A logical
+// expression of EnhancedDataSet dimension filters.
+type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression struct {
+	// AndGroup: A list of expressions to be AND’ed together. It must
+	// contain a ExpandedDataSetFilterExpression with either not_expression
+	// or dimension_filter. This must be set for the top level
+	// ExpandedDataSetFilterExpression.
+	AndGroup *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList `json:"andGroup,omitempty"`
+
+	// Filter: A filter on a single dimension. This cannot be set on the top
+	// level ExpandedDataSetFilterExpression.
+	Filter *GoogleAnalyticsAdminV1alphaExpandedDataSetFilter `json:"filter,omitempty"`
+
+	// NotExpression: A filter expression to be NOT'ed (i.e., inverted,
+	// complemented). It must include a dimension_filter. This cannot be set
+	// on the top level ExpandedDataSetFilterExpression.
+	NotExpression *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression `json:"notExpression,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList: A
+// list of ExpandedDataSet filter expressions.
+type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList struct {
+	// FilterExpressions: A list of ExpandedDataSet filter expressions.
+	FilterExpressions []*GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression `json:"filterExpressions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterExpressions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FilterExpressions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter: A
+// filter for a string dimension that matches a particular list of
+// options.
+type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter struct {
+	// CaseSensitive: Optional. If true, the match is case-sensitive. If
+	// false, the match is case-insensitive. Must be true.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// Values: Required. The list of possible string values to match
+	// against. Must be non-empty.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter: A
+// filter for a string-type dimension that matches a particular pattern.
+type GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter struct {
+	// CaseSensitive: Optional. If true, the match is case-sensitive. If
+	// false, the match is case-insensitive. Must be true when match_type is
+	// EXACT. Must be false when match_type is CONTAINS.
+	CaseSensitive bool `json:"caseSensitive,omitempty"`
+
+	// MatchType: Required. The match type for the string filter.
+	//
+	// Possible values:
+	//   "MATCH_TYPE_UNSPECIFIED" - Unspecified
+	//   "EXACT" - Exact match of the string value.
+	//   "CONTAINS" - Contains the string value.
+	MatchType string `json:"matchType,omitempty"`
+
+	// Value: Required. The string value to be matched against.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseSensitive") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseSensitive") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaFirebaseLink: A link between a GA4
 // property and a Firebase project.
 type GoogleAnalyticsAdminV1alphaFirebaseLink struct {
@@ -4062,6 +4330,44 @@ func (s *GoogleAnalyticsAdminV1alphaListPropertiesResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse: Response
+// message for ListSearchAds360Links RPC.
+type GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SearchAds360Links: List of SearchAds360Links.
+	SearchAds360Links []*GoogleAnalyticsAdminV1alphaSearchAds360Link `json:"searchAds360Links,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaListUserLinksResponse: Response message
 // for ListUserLinks RPC.
 type GoogleAnalyticsAdminV1alphaListUserLinksResponse struct {
@@ -4592,6 +4898,75 @@ func (s *GoogleAnalyticsAdminV1alphaRunAccessReportResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaSearchAds360Link: A link between a GA4
+// property and a Search Ads 360 entity.
+type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
+	// AdsPersonalizationEnabled: Enables personalized advertising features
+	// with this integration. If this field is not set on create, it will be
+	// defaulted to true.
+	AdsPersonalizationEnabled bool `json:"adsPersonalizationEnabled,omitempty"`
+
+	// AdvertiserDisplayName: Output only. The display name of the Search
+	// Ads 360 Advertiser. Allows users to easily identify the linked
+	// resource.
+	AdvertiserDisplayName string `json:"advertiserDisplayName,omitempty"`
+
+	// AdvertiserId: Immutable. This field represents the Advertiser ID of
+	// the Search Ads 360 Advertiser. that has been linked.
+	AdvertiserId string `json:"advertiserId,omitempty"`
+
+	// CampaignDataSharingEnabled: Immutable. Enables the import of campaign
+	// data from Search Ads 360 into the GA4 property. After link creation,
+	// this can only be updated from the Search Ads 360 product. If this
+	// field is not set on create, it will be defaulted to true.
+	CampaignDataSharingEnabled bool `json:"campaignDataSharingEnabled,omitempty"`
+
+	// CostDataSharingEnabled: Immutable. Enables the import of cost data
+	// from Search Ads 360 to the GA4 property. This can only be enabled if
+	// campaign_data_sharing_enabled is enabled. After link creation, this
+	// can only be updated from the Search Ads 360 product. If this field is
+	// not set on create, it will be defaulted to true.
+	CostDataSharingEnabled bool `json:"costDataSharingEnabled,omitempty"`
+
+	// Name: Output only. The resource name for this SearchAds360Link
+	// resource. Format: properties/{propertyId}/searchAds360Links/{linkId}
+	// Note: linkId is not the Search Ads 360 advertiser ID
+	Name string `json:"name,omitempty"`
+
+	// SiteStatsSharingEnabled: Enables export of site stats with this
+	// integration. If this field is not set on create, it will be defaulted
+	// to true.
+	SiteStatsSharingEnabled bool `json:"siteStatsSharingEnabled,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdsPersonalizationEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AdsPersonalizationEnabled") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaSearchAds360Link) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaSearchAds360Link
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest: Request
 // message for SearchChangeHistoryEvents RPC.
 type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
@@ -4658,6 +5033,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "SEARCH_ADS_360_LINK" - SearchAds360Link resource
 	//   "DATA_STREAM" - DataStream resource
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
+	//   "EXPANDED_DATA_SET" - ExpandedDataSet resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -17308,6 +17684,796 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1alphaGoogleAdsLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.searchAds360Links.create":
+
+type PropertiesSearchAds360LinksCreateCall struct {
+	s                                           *Service
+	parent                                      string
+	googleanalyticsadminv1alphasearchads360link *GoogleAnalyticsAdminV1alphaSearchAds360Link
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Create: Creates a SearchAds360Link.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesSearchAds360LinksService) Create(parent string, googleanalyticsadminv1alphasearchads360link *GoogleAnalyticsAdminV1alphaSearchAds360Link) *PropertiesSearchAds360LinksCreateCall {
+	c := &PropertiesSearchAds360LinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1alphasearchads360link = googleanalyticsadminv1alphasearchads360link
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSearchAds360LinksCreateCall) Fields(s ...googleapi.Field) *PropertiesSearchAds360LinksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSearchAds360LinksCreateCall) Context(ctx context.Context) *PropertiesSearchAds360LinksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSearchAds360LinksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSearchAds360LinksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphasearchads360link)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/searchAds360Links")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.searchAds360Links.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSearchAds360Link or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSearchAds360Link.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSearchAds360LinksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSearchAds360Link, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSearchAds360Link{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a SearchAds360Link.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/searchAds360Links",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.searchAds360Links.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/searchAds360Links",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.searchAds360Links.delete":
+
+type PropertiesSearchAds360LinksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a SearchAds360Link on a property.
+//
+//   - name: The name of the SearchAds360Link to delete. Example format:
+//     properties/1234/SearchAds360Links/5678.
+func (r *PropertiesSearchAds360LinksService) Delete(name string) *PropertiesSearchAds360LinksDeleteCall {
+	c := &PropertiesSearchAds360LinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSearchAds360LinksDeleteCall) Fields(s ...googleapi.Field) *PropertiesSearchAds360LinksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSearchAds360LinksDeleteCall) Context(ctx context.Context) *PropertiesSearchAds360LinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSearchAds360LinksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSearchAds360LinksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.searchAds360Links.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesSearchAds360LinksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a SearchAds360Link on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/searchAds360Links/{searchAds360LinksId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.searchAds360Links.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SearchAds360Link to delete. Example format: properties/1234/SearchAds360Links/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/searchAds360Links/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.searchAds360Links.get":
+
+type PropertiesSearchAds360LinksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Look up a single SearchAds360Link
+//
+//   - name: The name of the SearchAds360Link to get. Example format:
+//     properties/1234/SearchAds360Link/5678.
+func (r *PropertiesSearchAds360LinksService) Get(name string) *PropertiesSearchAds360LinksGetCall {
+	c := &PropertiesSearchAds360LinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSearchAds360LinksGetCall) Fields(s ...googleapi.Field) *PropertiesSearchAds360LinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesSearchAds360LinksGetCall) IfNoneMatch(entityTag string) *PropertiesSearchAds360LinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSearchAds360LinksGetCall) Context(ctx context.Context) *PropertiesSearchAds360LinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSearchAds360LinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSearchAds360LinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.searchAds360Links.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSearchAds360Link or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSearchAds360Link.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSearchAds360LinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSearchAds360Link, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSearchAds360Link{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Look up a single SearchAds360Link",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/searchAds360Links/{searchAds360LinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.searchAds360Links.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SearchAds360Link to get. Example format: properties/1234/SearchAds360Link/5678",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/searchAds360Links/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.searchAds360Links.list":
+
+type PropertiesSearchAds360LinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all SearchAds360Links on a property.
+//
+// - parent: Example format: properties/1234.
+func (r *PropertiesSearchAds360LinksService) List(parent string) *PropertiesSearchAds360LinksListCall {
+	c := &PropertiesSearchAds360LinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200 (higher values will be coerced to
+// the maximum).
+func (c *PropertiesSearchAds360LinksListCall) PageSize(pageSize int64) *PropertiesSearchAds360LinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSearchAds360Links` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListSearchAds360Links` must match the call
+// that provided the page token.
+func (c *PropertiesSearchAds360LinksListCall) PageToken(pageToken string) *PropertiesSearchAds360LinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSearchAds360LinksListCall) Fields(s ...googleapi.Field) *PropertiesSearchAds360LinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesSearchAds360LinksListCall) IfNoneMatch(entityTag string) *PropertiesSearchAds360LinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSearchAds360LinksListCall) Context(ctx context.Context) *PropertiesSearchAds360LinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSearchAds360LinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSearchAds360LinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/searchAds360Links")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.searchAds360Links.list" call.
+// Exactly one of
+// *GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSearchAds360LinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all SearchAds360Links on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/searchAds360Links",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.searchAds360Links.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200 (higher values will be coerced to the maximum).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListSearchAds360Links` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSearchAds360Links` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Example format: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/searchAds360Links",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesSearchAds360LinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.searchAds360Links.patch":
+
+type PropertiesSearchAds360LinksPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googleanalyticsadminv1alphasearchads360link *GoogleAnalyticsAdminV1alphaSearchAds360Link
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Updates a SearchAds360Link on a property.
+//
+//   - name: Output only. The resource name for this SearchAds360Link
+//     resource. Format:
+//     properties/{propertyId}/searchAds360Links/{linkId} Note: linkId is
+//     not the Search Ads 360 advertiser ID.
+func (r *PropertiesSearchAds360LinksService) Patch(name string, googleanalyticsadminv1alphasearchads360link *GoogleAnalyticsAdminV1alphaSearchAds360Link) *PropertiesSearchAds360LinksPatchCall {
+	c := &PropertiesSearchAds360LinksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1alphasearchads360link = googleanalyticsadminv1alphasearchads360link
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesSearchAds360LinksPatchCall) UpdateMask(updateMask string) *PropertiesSearchAds360LinksPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesSearchAds360LinksPatchCall) Fields(s ...googleapi.Field) *PropertiesSearchAds360LinksPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesSearchAds360LinksPatchCall) Context(ctx context.Context) *PropertiesSearchAds360LinksPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesSearchAds360LinksPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesSearchAds360LinksPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1alphasearchads360link)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.searchAds360Links.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaSearchAds360Link or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1alphaSearchAds360Link.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesSearchAds360LinksPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaSearchAds360Link, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAnalyticsAdminV1alphaSearchAds360Link{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a SearchAds360Link on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/searchAds360Links/{searchAds360LinksId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.searchAds360Links.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for this SearchAds360Link resource. Format: properties/{propertyId}/searchAds360Links/{linkId} Note: linkId is not the Search Ads 360 advertiser ID",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/searchAds360Links/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaSearchAds360Link"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

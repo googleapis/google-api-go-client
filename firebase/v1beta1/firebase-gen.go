@@ -828,16 +828,16 @@ type FirebaseProject struct {
 	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: Output only. A user-assigned unique identifier for the
-	// Project. This identifier may appear in URLs or names for some
+	// ProjectId: Output only. Immutable. A user-assigned unique identifier
+	// for the Project. This identifier may appear in URLs or names for some
 	// Firebase resources associated with the Project, but it should
 	// generally be treated as a convenience alias to reference the Project.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ProjectNumber: Output only. The globally unique, Google-assigned
-	// canonical identifier for the Project. Use this identifier when
-	// configuring integrations and/or making API calls to Firebase or
-	// third-party services.
+	// ProjectNumber: Output only. Immutable. The globally unique,
+	// Google-assigned canonical identifier for the Project. Use this
+	// identifier when configuring integrations and/or making API calls to
+	// Firebase or third-party services.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// Resources: Output only. The default Firebase resources associated
@@ -1503,6 +1503,13 @@ type RemoveAndroidAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
+	// Immediate: Determines whether to _immediately_ delete the App. If set
+	// to true, the App is immediately deleted from the Project and cannot
+	// be restored to the Project. If not set, defaults to false, which
+	// means that the App may be restored to the Project within 30 days
+	// using UndeleteAndroidApp.
+	Immediate bool `json:"immediate,omitempty"`
+
 	// ValidateOnly: If set to true, the request is only validated. The App
 	// will _not_ be removed.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
@@ -1539,6 +1546,13 @@ type RemoveIosAppRequest struct {
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
+	// Immediate: Determines whether to _immediately_ delete the App. If set
+	// to true, the App is immediately deleted from the Project and cannot
+	// be restored to the Project. If not set, defaults to false, which
+	// means that the App may be restored to the Project within 30 days
+	// using UndeleteIosApp
+	Immediate bool `json:"immediate,omitempty"`
+
 	// ValidateOnly: If set to true, the request is only validated. The App
 	// will _not_ be removed.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
@@ -1574,6 +1588,13 @@ type RemoveWebAppRequest struct {
 	// Etag: Checksum provided in the WebApp entity, which if provided
 	// ensures the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+
+	// Immediate: Determines whether to _immediately_ delete the App. If set
+	// to true, the App is immediately deleted from the Project and cannot
+	// be restored to the Project. If not set, defaults to false, which
+	// means that the App may be restored to the Project within 30 days
+	// using UndeleteWebApp
+	Immediate bool `json:"immediate,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
 	// will _not_ be removed.

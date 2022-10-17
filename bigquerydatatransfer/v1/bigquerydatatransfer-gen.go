@@ -3120,10 +3120,8 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to create the transfer
@@ -3151,13 +3149,12 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) ServiceAccountName(serviceA
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to create the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3263,7 +3260,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3280,7 +3277,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3835,10 +3832,8 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to update the transfer
@@ -3873,13 +3868,12 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to update the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -3985,7 +3979,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4008,7 +4002,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5151,10 +5145,8 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to create the transfer
@@ -5182,13 +5174,12 @@ func (c *ProjectsTransferConfigsCreateCall) ServiceAccountName(serviceAccountNam
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to create the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to create the transfer
+// config.
 func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -5294,7 +5285,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5311,7 +5302,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to create the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5866,10 +5857,8 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 // is 'youtube_channel' and new credentials are needed, as indicated by
 // `CheckValidCreds`. In order to obtain authorization_code, make a
 // request to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_co
-// de * The client_id is the OAuth client_id of the a data source as
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=authorization_code&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
 // returned by ListDataSources method. * data_source_scopes are the
 // scopes returned by ListDataSources method. Note that this should not
 // be set when `service_account_name` is used to update the transfer
@@ -5904,13 +5893,12 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 // is not 'youtube_channel' and new credentials are needed, as indicated
 // by `CheckValidCreds`. In order to obtain version info, make a request
 // to the following URL:
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?
-// client_id=client_id&scope=data_source_scopes
-// &redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info *
-// The client_id is the OAuth client_id of the a data source as returned
-// by ListDataSources method. * data_source_scopes are the scopes
-// returned by ListDataSources method. Note that this should not be set
-// when `service_account_name` is used to update the transfer config.
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=version_info&client_id=client_id&scope=data_source_scopes
+// * The client_id is the OAuth client_id of the a data source as
+// returned by ListDataSources method. * data_source_scopes are the
+// scopes returned by ListDataSources method. Note that this should not
+// be set when `service_account_name` is used to update the transfer
+// config.
 func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("versionInfo", versionInfo)
 	return c
@@ -6016,7 +6004,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//   ],
 	//   "parameters": {
 	//     "authorizationCode": {
-	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional OAuth2 authorization code to use with this transfer configuration. This is required only if `transferConfig.dataSourceId` is 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain authorization_code, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=authorization_code\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6039,7 +6027,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "versionInfo": {
-	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth? client_id=client_id\u0026scope=data_source_scopes \u0026redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
+	//       "description": "Optional version info. This is required only if `transferConfig.dataSourceId` is not 'youtube_channel' and new credentials are needed, as indicated by `CheckValidCreds`. In order to obtain version info, make a request to the following URL: https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?redirect_uri=urn:ietf:wg:oauth:2.0:oob\u0026response_type=version_info\u0026client_id=client_id\u0026scope=data_source_scopes * The client_id is the OAuth client_id of the a data source as returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. Note that this should not be set when `service_account_name` is used to update the transfer config.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

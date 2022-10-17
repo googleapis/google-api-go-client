@@ -468,9 +468,8 @@ type GoogleCloudRunV2Container struct {
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
-	// LivenessProbe: Not Supported By Cloud Run. Periodic probe of
-	// container liveness. Container will be restarted if the probe fails.
-	// More info:
+	// LivenessProbe: Periodic probe of container liveness. Container will
+	// be restarted if the probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	LivenessProbe *GoogleCloudRunV2Probe `json:"livenessProbe,omitempty"`
 

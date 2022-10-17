@@ -26915,9 +26915,10 @@ func (r *OrganizationsEndpointAttachmentsService) Create(parent string, googlecl
 }
 
 // EndpointAttachmentId sets the optional parameter
-// "endpointAttachmentId": ID to use for the endpoint attachment. The ID
-// can contain lowercase letters and numbers, must start with a letter,
-// and must be 1-20 characters in length.
+// "endpointAttachmentId": ID to use for the endpoint attachment. ID
+// must start with a lowercase letter followed by up to 31 lowercase
+// letters, numbers, or hyphens, and cannot end with a hyphen. The
+// minimum length is 2.
 func (c *OrganizationsEndpointAttachmentsCreateCall) EndpointAttachmentId(endpointAttachmentId string) *OrganizationsEndpointAttachmentsCreateCall {
 	c.urlParams_.Set("endpointAttachmentId", endpointAttachmentId)
 	return c
@@ -27023,7 +27024,7 @@ func (c *OrganizationsEndpointAttachmentsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "endpointAttachmentId": {
-	//       "description": "ID to use for the endpoint attachment. The ID can contain lowercase letters and numbers, must start with a letter, and must be 1-20 characters in length.",
+	//       "description": "ID to use for the endpoint attachment. ID must start with a lowercase letter followed by up to 31 lowercase letters, numbers, or hyphens, and cannot end with a hyphen. The minimum length is 2.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -17,6 +17,7 @@ import (
 	"sync"
 	"time"
 
+	gax "github.com/googleapis/gax-go/v2"
 	"google.golang.org/api/googleapi"
 )
 
@@ -81,6 +82,9 @@ func (cs *contentSniffer) ContentType() (string, bool) {
 // instead of sniffing the content.
 // After calling DetectContentType the caller must not perform further reads on
 // media, but rather read from the Reader that is returned.
+//
+// Deprecated: Use [gax.DetermineContentType](https://pkg.go.dev/github.com/googleapis/gax-go/v2#DetermineContentType)
+// instead.
 func DetermineContentType(media io.Reader, ctype string) (io.Reader, string) {
 	// Note: callers could avoid calling DetectContentType if ctype != "",
 	// but doing the check inside this function reduces the amount of
@@ -234,7 +238,10 @@ func NewInfoFromMedia(r io.Reader, options []googleapi.MediaOption) *MediaInfo {
 	mi := &MediaInfo{}
 	opts := googleapi.ProcessMediaOptions(options)
 	if !opts.ForceEmptyContentType {
-		r, mi.mType = DetermineContentType(r, opts.ContentType)
+		mi.mType = opts.ContentType
+		if mi.mType == "" {
+			r, mi.mType = gax.DetermineContentType(r)
+		}
 	}
 	mi.chunkRetryDeadline = opts.ChunkRetryDeadline
 	mi.media, mi.buffer, mi.singleChunk = PrepareUpload(r, opts.ChunkSize)
@@ -245,7 +252,11 @@ func NewInfoFromMedia(r io.Reader, options []googleapi.MediaOption) *MediaInfo {
 // call. It returns a MediaInfo using the given reader, size and media type.
 func NewInfoFromResumableMedia(r io.ReaderAt, size int64, mediaType string) *MediaInfo {
 	rdr := ReaderAtToReader(r, size)
-	rdr, mType := DetermineContentType(rdr, mediaType)
+	mType := mediaType
+	if mType == "" {
+		rdr, mType = gax.DetermineContentType(rdr)
+	}
+
 	return &MediaInfo{
 		size:        size,
 		mType:       mType,

@@ -2940,8 +2940,8 @@ type ListMembershipsResponse struct {
 	// Memberships: List of memberships in the requested (or first) page.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
-	// NextPageToken: Continuation token to retrieve the next page of
-	// results. It will be empty for the last page of results.
+	// NextPageToken: A token that can be sent as `pageToken` to retrieve
+	// the next page of results. If empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2972,9 +2972,8 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListSpacesResponse struct {
-	// NextPageToken: Continuation token to retrieve the next page of
-	// results. It will be empty for the last page of results. Tokens expire
-	// in an hour. An error is thrown if an expired token is passed.
+	// NextPageToken: A token that can be sent as `pageToken` to retrieve
+	// the next page of results. If empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Spaces: List of spaces in the requested (or first) page.
@@ -5310,16 +5309,20 @@ func (r *SpacesService) List() *SpacesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The value is capped at 1000. Server may return fewer results than
-// requested. If unspecified, server will default to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of spaces to return. The service may return fewer than this value. If
+// unspecified, at most 100 spaces are returned. The maximum value is
+// 1000; values above 1000 are coerced to 1000. Negative values return
+// an INVALID_ARGUMENT error.
 func (c *SpacesListCall) PageSize(pageSize int64) *SpacesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous list spaces call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// must match the call that provided the page token.
 func (c *SpacesListCall) PageToken(pageToken string) *SpacesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5428,13 +5431,13 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
+	//       "description": "Optional. The maximum number of spaces to return. The service may return fewer than this value. If unspecified, at most 100 spaces are returned. The maximum value is 1000; values above 1000 are coerced to 1000. Negative values return an INVALID_ARGUMENT error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return.",
+	//       "description": "Optional. A page token, received from a previous list spaces call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5795,7 +5798,10 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Membership"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.memberships"
+	//   ]
 	// }
 
 }
@@ -5823,16 +5829,20 @@ func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The value is capped at 1000. Server may return fewer results than
-// requested. If unspecified, server will default to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of memberships to return. The service may return fewer than this
+// value. If unspecified, at most 100 memberships are returned. The
+// maximum value is 1000; values above 1000 are coerced to 1000.
+// Negative values return an INVALID_ARGUMENT error.
 func (c *SpacesMembersListCall) PageSize(pageSize int64) *SpacesMembersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous list memberships call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided must match the call that provided the page token.
 func (c *SpacesMembersListCall) PageToken(pageToken string) *SpacesMembersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5946,13 +5956,13 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. The value is capped at 1000. Server may return fewer results than requested. If unspecified, server will default to 100.",
+	//       "description": "The maximum number of memberships to return. The service may return fewer than this value. If unspecified, at most 100 memberships are returned. The maximum value is 1000; values above 1000 are coerced to 1000. Negative values return an INVALID_ARGUMENT error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.",
+	//       "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

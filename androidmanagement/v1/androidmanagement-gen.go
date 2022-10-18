@@ -4605,7 +4605,8 @@ type PersonalUsagePolicies struct {
 	// managed by the user.
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
 
-	// CameraDisabled: Whether camera is disabled.
+	// CameraDisabled: If true, the camera is disabled on the personal
+	// profile.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off.
@@ -4632,7 +4633,8 @@ type PersonalUsagePolicies struct {
 	// be installed in the personal profile.
 	PersonalPlayStoreMode string `json:"personalPlayStoreMode,omitempty"`
 
-	// ScreenCaptureDisabled: Whether screen capture is disabled.
+	// ScreenCaptureDisabled: If true, screen capture is disabled for all
+	// users.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7620,7 +7622,9 @@ type EnterprisesDevicesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a device. This operation wipes the device.
+// Delete: Deletes a device. This operation wipes the device. Deleted
+// devices do not show up in enterprises.devices.list calls and a 404 is
+// returned from enterprises.devices.get.
 //
 //   - name: The name of the device in the form
 //     enterprises/{enterpriseId}/devices/{deviceId}.
@@ -7743,7 +7747,7 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a device. This operation wipes the device.",
+	//   "description": "Deletes a device. This operation wipes the device. Deleted devices do not show up in enterprises.devices.list calls and a 404 is returned from enterprises.devices.get.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidmanagement.enterprises.devices.delete",
@@ -7802,7 +7806,7 @@ type EnterprisesDevicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a device.
+// Get: Gets a device. Deleted devices will respond with a 404 error.
 //
 //   - name: The name of the device in the form
 //     enterprises/{enterpriseId}/devices/{deviceId}.
@@ -7911,7 +7915,7 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a device.",
+	//   "description": "Gets a device. Deleted devices will respond with a 404 error.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.get",
@@ -8094,7 +8098,8 @@ type EnterprisesDevicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists devices for a given enterprise.
+// List: Lists devices for a given enterprise. Deleted devices are not
+// returned in the response.
 //
 //   - parent: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -8217,7 +8222,7 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists devices for a given enterprise.",
+	//   "description": "Lists devices for a given enterprise. Deleted devices are not returned in the response.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/devices",
 	//   "httpMethod": "GET",
 	//   "id": "androidmanagement.enterprises.devices.list",

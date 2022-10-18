@@ -489,8 +489,8 @@ type GoogleCloudWebriskV1SearchHashesResponseThreatHash struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
-	// Engineering list targeting any platform.
+	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+	// coverage social engineering URIs targeting any platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
@@ -517,7 +517,7 @@ func (s *GoogleCloudWebriskV1SearchHashesResponseThreatHash) MarshalJSON() ([]by
 }
 
 type GoogleCloudWebriskV1SearchUrisResponse struct {
-	// Threat: The threat list matches. This may be empty if the URI is on
+	// Threat: The threat list matches. This might be empty if the URI is on
 	// no list.
 	Threat *GoogleCloudWebriskV1SearchUrisResponseThreatUri `json:"threat,omitempty"`
 
@@ -563,8 +563,8 @@ type GoogleCloudWebriskV1SearchUrisResponseThreatUri struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
-	// Engineering list targeting any platform.
+	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+	// coverage social engineering URIs targeting any platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
@@ -594,8 +594,8 @@ func (s *GoogleCloudWebriskV1SearchUrisResponseThreatUri) MarshalJSON() ([]byte,
 // malicious content.
 type GoogleCloudWebriskV1Submission struct {
 	// ThreatTypes: ThreatTypes found to be associated with the submitted
-	// URI after reviewing it. This may be empty if the URI was not added to
-	// any list.
+	// URI after reviewing it. This might be empty if the URI was not added
+	// to any list.
 	//
 	// Possible values:
 	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
@@ -603,8 +603,8 @@ type GoogleCloudWebriskV1Submission struct {
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
-	// Engineering list targeting any platform.
+	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+	// coverage social engineering URIs targeting any platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// Uri: Required. The URI that is being reported for malicious content
@@ -837,11 +837,11 @@ type GoogleLongrunningOperation struct {
 	// cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// Metadata: This field will contain a `SubmitUriMetadata` object.
+	// Metadata: Contains a `SubmitUriMetadata` object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
-	// Name: This will match the pattern
-	// `/v1/{project-name}/operations/{operation-id}`.
+	// Name: Matches the `/v1/{project-name}/operations/{operation-id}`
+	// pattern.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success. If
@@ -978,9 +978,9 @@ func (c *HashesSearchCall) HashPrefix(hashPrefix string) *HashesSearchCall {
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
 //
-// Engineering list targeting any platform.
+// coverage social engineering URIs targeting any platform.
 func (c *HashesSearchCall) ThreatTypes(threatTypes ...string) *HashesSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
@@ -1110,7 +1110,7 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebrisk
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
 	//         "Unwanted software targeting any platform.",
-	//         "Extended Coverage Social Engineering list targeting any platform."
+	//         "A list of extended coverage social engineering URIs targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2140,9 +2140,9 @@ func (c *ThreatListsComputeDiffCall) ConstraintsSupportedCompressions(constraint
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
 //
-// Engineering list targeting any platform.
+// coverage social engineering URIs targeting any platform.
 func (c *ThreatListsComputeDiffCall) ThreatType(threatType string) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("threatType", threatType)
 	return c
@@ -2305,7 +2305,7 @@ func (c *ThreatListsComputeDiffCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
 	//         "Unwanted software targeting any platform.",
-	//         "Extended Coverage Social Engineering list targeting any platform."
+	//         "A list of extended coverage social engineering URIs targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -2360,9 +2360,9 @@ func (r *UrisService) Search() *UrisSearchCall {
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - Extended Coverage Social
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
 //
-// Engineering list targeting any platform.
+// coverage social engineering URIs targeting any platform.
 func (c *UrisSearchCall) ThreatTypes(threatTypes ...string) *UrisSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
@@ -2492,7 +2492,7 @@ func (c *UrisSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1
 	//         "Malware targeting any platform.",
 	//         "Social engineering targeting any platform.",
 	//         "Unwanted software targeting any platform.",
-	//         "Extended Coverage Social Engineering list targeting any platform."
+	//         "A list of extended coverage social engineering URIs targeting any platform."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

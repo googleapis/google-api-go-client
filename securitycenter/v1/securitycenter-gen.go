@@ -149,6 +149,7 @@ func NewFoldersService(s *Service) *FoldersService {
 	rs.BigQueryExports = NewFoldersBigQueryExportsService(s)
 	rs.Findings = NewFoldersFindingsService(s)
 	rs.MuteConfigs = NewFoldersMuteConfigsService(s)
+	rs.NotificationConfigs = NewFoldersNotificationConfigsService(s)
 	rs.Sources = NewFoldersSourcesService(s)
 	return rs
 }
@@ -163,6 +164,8 @@ type FoldersService struct {
 	Findings *FoldersFindingsService
 
 	MuteConfigs *FoldersMuteConfigsService
+
+	NotificationConfigs *FoldersNotificationConfigsService
 
 	Sources *FoldersSourcesService
 }
@@ -200,6 +203,15 @@ func NewFoldersMuteConfigsService(s *Service) *FoldersMuteConfigsService {
 }
 
 type FoldersMuteConfigsService struct {
+	s *Service
+}
+
+func NewFoldersNotificationConfigsService(s *Service) *FoldersNotificationConfigsService {
+	rs := &FoldersNotificationConfigsService{s: s}
+	return rs
+}
+
+type FoldersNotificationConfigsService struct {
 	s *Service
 }
 
@@ -359,6 +371,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.BigQueryExports = NewProjectsBigQueryExportsService(s)
 	rs.Findings = NewProjectsFindingsService(s)
 	rs.MuteConfigs = NewProjectsMuteConfigsService(s)
+	rs.NotificationConfigs = NewProjectsNotificationConfigsService(s)
 	rs.Sources = NewProjectsSourcesService(s)
 	return rs
 }
@@ -373,6 +386,8 @@ type ProjectsService struct {
 	Findings *ProjectsFindingsService
 
 	MuteConfigs *ProjectsMuteConfigsService
+
+	NotificationConfigs *ProjectsNotificationConfigsService
 
 	Sources *ProjectsSourcesService
 }
@@ -410,6 +425,15 @@ func NewProjectsMuteConfigsService(s *Service) *ProjectsMuteConfigsService {
 }
 
 type ProjectsMuteConfigsService struct {
+	s *Service
+}
+
+func NewProjectsNotificationConfigsService(s *Service) *ProjectsNotificationConfigsService {
+	rs := &ProjectsNotificationConfigsService{s: s}
+	return rs
+}
+
+type ProjectsNotificationConfigsService struct {
 	s *Service
 }
 
@@ -502,11 +526,11 @@ type Access struct {
 	// operating system shells, embedded or stand-alone applications, etc.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// Username: A string representing a username. This is likely not an IAM
+	// UserName: A string representing a username. This is likely not an IAM
 	// principal. For instance, this may be the system user name if the
 	// finding is VM-related, or this may be some type of application login
 	// user name, depending on the type of finding.
-	Username string `json:"username,omitempty"`
+	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with
@@ -694,6 +718,42 @@ type AssetDiscoveryConfig struct {
 
 func (s *AssetDiscoveryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetDiscoveryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssociatedFinding: A finding that is associated with this node in the
+// exposure path.
+type AssociatedFinding struct {
+	// CanonicalFindingName: Canonical name of the associated findings.
+	// Example: organizations/123/sources/456/findings/789
+	CanonicalFindingName string `json:"canonicalFindingName,omitempty"`
+
+	// FindingCategory: The additional taxonomy group within findings from a
+	// given source.
+	FindingCategory string `json:"findingCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CanonicalFindingName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalFindingName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssociatedFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod AssociatedFinding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1396,6 +1456,38 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	}
 	s.PercentPagesMatched = float64(s1.PercentPagesMatched)
 	return nil
+}
+
+// Edge: Represents a connection between a source node and a destination
+// node in this exposure path.
+type Edge struct {
+	// Destination: This is the resource name of the destination node.
+	Destination string `json:"destination,omitempty"`
+
+	// Source: This is the resource name of the source node.
+	Source string `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Edge) MarshalJSON() ([]byte, error) {
+	type NoMethod Edge
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2148,11 +2240,94 @@ type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 // GoogleCloudSecuritycenterV1ExposedResource: A resource that is
 // exposed as a result of a finding.
 type GoogleCloudSecuritycenterV1ExposedResource struct {
+	// DisplayName: Human readable name of the resource that is exposed.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Methods: The ways in which this resource is exposed. Examples: Read,
+	// Write
+	Methods []string `json:"methods,omitempty"`
+
+	// Name: Exposed Resource Name e.g.:
+	// `organizations/123/attackExposureResults/456/exposedResources/789`
+	Name string `json:"name,omitempty"`
+
+	// Resource: The name of the resource that is exposed. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The resource type of the exposed resource. See:
+	// https://cloud.google.com/asset-inventory/docs/supported-asset-types
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceValue: How valuable this resource is.
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - The resource value isn't specified.
+	//   "RESOURCE_VALUE_LOW" - This is a low value resource.
+	//   "RESOURCE_VALUE_MEDIUM" - This is a medium value resource.
+	//   "RESOURCE_VALUE_HIGH" - This is a high value resource.
+	ResourceValue string `json:"resourceValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExposedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExposedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExposurePath: A path that an attacker
 // could take to reach an exposed resource.
 type GoogleCloudSecuritycenterV1ExposurePath struct {
+	// Edges: A list of the edges between nodes in this exposure path.
+	Edges []*Edge `json:"edges,omitempty"`
+
+	// ExposedResource: The leaf node of this exposure path.
+	ExposedResource *GoogleCloudSecuritycenterV1ExposedResource `json:"exposedResource,omitempty"`
+
+	// Name: Exposure Path Name e.g.:
+	// `organizations/123/attackExposureResults/456/exposurePaths/789`
+	Name string `json:"name,omitempty"`
+
+	// PathNodes: A list of nodes that exist in this exposure path.
+	PathNodes []*PathNode `json:"pathNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Edges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Edges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExposurePath) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExposurePath
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
@@ -4144,6 +4319,49 @@ type OrganizationSettings struct {
 
 func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod OrganizationSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathNode: Represents one point that an attacker passes through in
+// this exposure path.
+type PathNode struct {
+	// AssociatedFindings: The findings associated with this node in the
+	// exposure path.
+	AssociatedFindings []*AssociatedFinding `json:"associatedFindings,omitempty"`
+
+	// DisplayName: Human readable name of this resource.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Resource: The name of the resource at this point in the exposure
+	// path. The format of the name is:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The resource type of this resource. See:
+	// https://cloud.google.com/asset-inventory/docs/supported-asset-types
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssociatedFindings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssociatedFindings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathNode) MarshalJSON() ([]byte, error) {
+	type NoMethod PathNode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7537,6 +7755,802 @@ func (c *FoldersMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.create":
+
+type FoldersNotificationConfigsCreateCall struct {
+	s                  *Service
+	parent             string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a notification config.
+//
+//   - parent: Resource name of the new notification config's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *FoldersNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsCreateCall {
+	c := &FoldersNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// ConfigId sets the optional parameter "configId": Required. Unique
+// identifier provided by the client within the parent scope. It must be
+// between 1 and 128 characters, and contains alphanumeric characters,
+// underscores or hyphens only.
+func (c *FoldersNotificationConfigsCreateCall) ConfigId(configId string) *FoldersNotificationConfigsCreateCall {
+	c.urlParams_.Set("configId", configId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsCreateCall) Context(ctx context.Context) *FoldersNotificationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.create" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.notificationConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "configId": {
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.delete":
+
+type FoldersNotificationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a notification config.
+//
+//   - name: Name of the notification config to delete. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+func (r *FoldersNotificationConfigsService) Delete(name string) *FoldersNotificationConfigsDeleteCall {
+	c := &FoldersNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsDeleteCall) Context(ctx context.Context) *FoldersNotificationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.folders.notificationConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.get":
+
+type FoldersNotificationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notification config.
+//
+//   - name: Name of the notification config to get. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+func (r *FoldersNotificationConfigsService) Get(name string) *FoldersNotificationConfigsGetCall {
+	c := &FoldersNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsGetCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersNotificationConfigsGetCall) IfNoneMatch(entityTag string) *FoldersNotificationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsGetCall) Context(ctx context.Context) *FoldersNotificationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.get" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a notification config.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.notificationConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.notificationConfigs.list":
+
+type FoldersNotificationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists notification configs.
+//
+//   - parent: Name of the organization to list notification configs. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *FoldersNotificationConfigsService) List(parent string) *FoldersNotificationConfigsListCall {
+	c := &FoldersNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersNotificationConfigsListCall) PageSize(pageSize int64) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListNotificationConfigsResponse`; indicates that this is
+// a continuation of a prior `ListNotificationConfigs` call, and that
+// the system should return the next page of data.
+func (c *FoldersNotificationConfigsListCall) PageToken(pageToken string) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsListCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersNotificationConfigsListCall) IfNoneMatch(entityTag string) *FoldersNotificationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsListCall) Context(ctx context.Context) *FoldersNotificationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.list" call.
+// Exactly one of *ListNotificationConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNotificationConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListNotificationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListNotificationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists notification configs.",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.notificationConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates that this is a continuation of a prior `ListNotificationConfigs` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "response": {
+	//     "$ref": "ListNotificationConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersNotificationConfigsListCall) Pages(ctx context.Context, f func(*ListNotificationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.notificationConfigs.patch":
+
+type FoldersNotificationConfigsPatchCall struct {
+	s                  *Service
+	name               string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch:  Updates a notification config. The following update fields
+// are allowed: description, pubsub_topic, streaming_config.filter
+//
+//   - name: The relative resource name of this notification config. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/notificationConfigs/notify_public_b
+//     ucket".
+func (r *FoldersNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsPatchCall {
+	c := &FoldersNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the notification config. If empty all mutable
+// fields will be updated.
+func (c *FoldersNotificationConfigsPatchCall) UpdateMask(updateMask string) *FoldersNotificationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersNotificationConfigsPatchCall) Fields(s ...googleapi.Field) *FoldersNotificationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersNotificationConfigsPatchCall) Context(ctx context.Context) *FoldersNotificationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersNotificationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.notificationConfigs.patch" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "flatPath": "v1/folders/{foldersId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.notificationConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the notification config. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11946,8 +12960,8 @@ type OrganizationsNotificationConfigsCreateCall struct {
 // Create: Creates a notification config.
 //
 //   - parent: Resource name of the new notification config's parent. Its
-//     format is "organizations/[organization_id]" or
-//     "projects/[project_id]".
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12069,7 +13083,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\" or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -12384,8 +13398,8 @@ type OrganizationsNotificationConfigsListCall struct {
 // List: Lists notification configs.
 //
 //   - parent: Name of the organization to list notification configs. Its
-//     format is "organizations/[organization_id]" or
-//     "projects/[project_id]".
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12528,7 +13542,7 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\" or \"projects/[project_id]\".",
+	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -18334,6 +19348,802 @@ func (c *ProjectsMuteConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.create":
+
+type ProjectsNotificationConfigsCreateCall struct {
+	s                  *Service
+	parent             string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a notification config.
+//
+//   - parent: Resource name of the new notification config's parent. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *ProjectsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsCreateCall {
+	c := &ProjectsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// ConfigId sets the optional parameter "configId": Required. Unique
+// identifier provided by the client within the parent scope. It must be
+// between 1 and 128 characters, and contains alphanumeric characters,
+// underscores or hyphens only.
+func (c *ProjectsNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsNotificationConfigsCreateCall {
+	c.urlParams_.Set("configId", configId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsCreateCall) Context(ctx context.Context) *ProjectsNotificationConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.create" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.notificationConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "configId": {
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the new notification config's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.delete":
+
+type ProjectsNotificationConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a notification config.
+//
+//   - name: Name of the notification config to delete. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+func (r *ProjectsNotificationConfigsService) Delete(name string) *ProjectsNotificationConfigsDeleteCall {
+	c := &ProjectsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsDeleteCall) Context(ctx context.Context) *ProjectsNotificationConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "securitycenter.projects.notificationConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.get":
+
+type ProjectsNotificationConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a notification config.
+//
+//   - name: Name of the notification config to get. Its format is
+//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+func (r *ProjectsNotificationConfigsService) Get(name string) *ProjectsNotificationConfigsGetCall {
+	c := &ProjectsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsNotificationConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsNotificationConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsGetCall) Context(ctx context.Context) *ProjectsNotificationConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.get" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a notification config.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.notificationConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.notificationConfigs.list":
+
+type ProjectsNotificationConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists notification configs.
+//
+//   - parent: Name of the organization to list notification configs. Its
+//     format is "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
+func (r *ProjectsNotificationConfigsService) List(parent string) *ProjectsNotificationConfigsListCall {
+	c := &ProjectsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsNotificationConfigsListCall) PageSize(pageSize int64) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListNotificationConfigsResponse`; indicates that this is
+// a continuation of a prior `ListNotificationConfigs` call, and that
+// the system should return the next page of data.
+func (c *ProjectsNotificationConfigsListCall) PageToken(pageToken string) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsListCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsNotificationConfigsListCall) IfNoneMatch(entityTag string) *ProjectsNotificationConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsListCall) Context(ctx context.Context) *ProjectsNotificationConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/notificationConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.list" call.
+// Exactly one of *ListNotificationConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNotificationConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*ListNotificationConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListNotificationConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists notification configs.",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.notificationConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListNotificationConfigsResponse`; indicates that this is a continuation of a prior `ListNotificationConfigs` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/notificationConfigs",
+	//   "response": {
+	//     "$ref": "ListNotificationConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsNotificationConfigsListCall) Pages(ctx context.Context, f func(*ListNotificationConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.notificationConfigs.patch":
+
+type ProjectsNotificationConfigsPatchCall struct {
+	s                  *Service
+	name               string
+	notificationconfig *NotificationConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch:  Updates a notification config. The following update fields
+// are allowed: description, pubsub_topic, streaming_config.filter
+//
+//   - name: The relative resource name of this notification config. See:
+//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//     Example:
+//     "organizations/{organization_id}/notificationConfigs/notify_public_b
+//     ucket".
+func (r *ProjectsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsPatchCall {
+	c := &ProjectsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.notificationconfig = notificationconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the notification config. If empty all mutable
+// fields will be updated.
+func (c *ProjectsNotificationConfigsPatchCall) UpdateMask(updateMask string) *ProjectsNotificationConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsNotificationConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsNotificationConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsNotificationConfigsPatchCall) Context(ctx context.Context) *ProjectsNotificationConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsNotificationConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.notificationConfigs.patch" call.
+// Exactly one of *NotificationConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *NotificationConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (*NotificationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &NotificationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Updates a notification config. The following update fields are allowed: description, pubsub_topic, streaming_config.filter",
+	//   "flatPath": "v1/projects/{projectsId}/notificationConfigs/{notificationConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.notificationConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the notification config. If empty all mutable fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "NotificationConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "NotificationConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

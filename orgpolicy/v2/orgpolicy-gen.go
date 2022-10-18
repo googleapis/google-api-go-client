@@ -427,14 +427,16 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 
 	// Condition: Org policy condition/expression. For example:
 	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
-	// `resource.management.auto_upgrade == true`
+	// `resource.management.auto_upgrade == true` The max length of the
+	// condition is 1000 characters.
 	Condition string `json:"condition,omitempty"`
 
 	// Description: Detailed information about this custom policy
-	// constraint.
+	// constraint. The max length of the description is 2000 characters.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: One line display name for the UI.
+	// DisplayName: One line display name for the UI. The max length of the
+	// display_name is 200 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MethodTypes: All the operations being applied for this constraint.
@@ -444,14 +446,18 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource.
+	//   "DELETE" - Constraint applied when deleting the resource. Not
+	// supported yet.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 
 	// Name: Immutable. Name of the constraint. This is unique within the
 	// organization. Format of the name should be *
 	// `organizations/{organization_id}/customConstraints/{custom_constraint_
 	// id}` Example :
-	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
+	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms" The
+	// max length is 100 characters and the min length is 1. Note that the
+	// prefix "organizations/{organization_id}/customConstraints/" is not
+	// counted.
 	Name string `json:"name,omitempty"`
 
 	// ResourceTypes: Immutable. The Resource Instance type on which this
@@ -2884,7 +2890,10 @@ type OrganizationsCustomConstraintsPatchCall struct {
 //     organization. Format of the name should be *
 //     `organizations/{organization_id}/customConstraints/{custom_constrain
 //     t_id}` Example :
-//     "organizations/123/customConstraints/custom.createOnlyE2TypeVms".
+//     "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
+//     The max length is 100 characters and the min length is 1. Note that
+//     the prefix "organizations/{organization_id}/customConstraints/" is
+//     not counted.
 func (r *OrganizationsCustomConstraintsService) Patch(name string, googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint) *OrganizationsCustomConstraintsPatchCall {
 	c := &OrganizationsCustomConstraintsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2993,7 +3002,7 @@ func (c *OrganizationsCustomConstraintsPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example : \"organizations/123/customConstraints/custom.createOnlyE2TypeVms\"",
+	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example : \"organizations/123/customConstraints/custom.createOnlyE2TypeVms\" The max length is 100 characters and the min length is 1. Note that the prefix \"organizations/{organization_id}/customConstraints/\" is not counted.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
 	//       "required": true,

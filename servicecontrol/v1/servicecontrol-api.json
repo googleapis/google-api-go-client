@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20220915",
+  "revision": "20220923",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1690,6 +1690,10 @@
       "description": "Describes a resource associated with this operation.",
       "id": "ResourceInfo",
       "properties": {
+        "permission": {
+          "description": "The resource permission required for this request.",
+          "type": "string"
+        },
         "resourceContainer": {
           "description": "The identifier of the parent of this resource instance. Must be in one of the following formats: - `projects/` - `folders/` - `organizations/`",
           "type": "string"

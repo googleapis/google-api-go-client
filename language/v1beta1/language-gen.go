@@ -640,9 +640,7 @@ func (s *DependencyEdge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Document:
-// ################################################################ #
-// Represents the input to API methods.
+// Document: Represents the input to API methods.
 type Document struct {
 	// Content: The content of the input in string format. Cloud audit
 	// logging exempt since it is based on user data.

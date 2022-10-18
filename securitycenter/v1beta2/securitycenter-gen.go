@@ -478,11 +478,11 @@ type Access struct {
 	// operating system shells, embedded or stand-alone applications, etc.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// Username: A string representing a username. This is likely not an IAM
+	// UserName: A string representing a username. This is likely not an IAM
 	// principal. For instance, this may be the system user name if the
 	// finding is VM-related, or this may be some type of application login
 	// user name, depending on the type of finding.
-	Username string `json:"username,omitempty"`
+	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with
@@ -555,6 +555,42 @@ type AccessReview struct {
 
 func (s *AccessReview) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessReview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AssociatedFinding: A finding that is associated with this node in the
+// exposure path.
+type AssociatedFinding struct {
+	// CanonicalFindingName: Canonical name of the associated findings.
+	// Example: organizations/123/sources/456/findings/789
+	CanonicalFindingName string `json:"canonicalFindingName,omitempty"`
+
+	// FindingCategory: The additional taxonomy group within findings from a
+	// given source.
+	FindingCategory string `json:"findingCategory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CanonicalFindingName") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalFindingName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssociatedFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod AssociatedFinding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1185,6 +1221,38 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	}
 	s.PercentPagesMatched = float64(s1.PercentPagesMatched)
 	return nil
+}
+
+// Edge: Represents a connection between a source node and a destination
+// node in this exposure path.
+type Edge struct {
+	// Destination: This is the resource name of the destination node.
+	Destination string `json:"destination,omitempty"`
+
+	// Source: This is the resource name of the source node.
+	Source string `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Edge) MarshalJSON() ([]byte, error) {
+	type NoMethod Edge
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EnvironmentVariable: EnvironmentVariable is a name-value pair to
@@ -1844,11 +1912,94 @@ type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 // GoogleCloudSecuritycenterV1ExposedResource: A resource that is
 // exposed as a result of a finding.
 type GoogleCloudSecuritycenterV1ExposedResource struct {
+	// DisplayName: Human readable name of the resource that is exposed.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Methods: The ways in which this resource is exposed. Examples: Read,
+	// Write
+	Methods []string `json:"methods,omitempty"`
+
+	// Name: Exposed Resource Name e.g.:
+	// `organizations/123/attackExposureResults/456/exposedResources/789`
+	Name string `json:"name,omitempty"`
+
+	// Resource: The name of the resource that is exposed. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The resource type of the exposed resource. See:
+	// https://cloud.google.com/asset-inventory/docs/supported-asset-types
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceValue: How valuable this resource is.
+	//
+	// Possible values:
+	//   "RESOURCE_VALUE_UNSPECIFIED" - The resource value isn't specified.
+	//   "RESOURCE_VALUE_LOW" - This is a low value resource.
+	//   "RESOURCE_VALUE_MEDIUM" - This is a medium value resource.
+	//   "RESOURCE_VALUE_HIGH" - This is a high value resource.
+	ResourceValue string `json:"resourceValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExposedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExposedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExposurePath: A path that an attacker
 // could take to reach an exposed resource.
 type GoogleCloudSecuritycenterV1ExposurePath struct {
+	// Edges: A list of the edges between nodes in this exposure path.
+	Edges []*Edge `json:"edges,omitempty"`
+
+	// ExposedResource: The leaf node of this exposure path.
+	ExposedResource *GoogleCloudSecuritycenterV1ExposedResource `json:"exposedResource,omitempty"`
+
+	// Name: Exposure Path Name e.g.:
+	// `organizations/123/attackExposureResults/456/exposurePaths/789`
+	Name string `json:"name,omitempty"`
+
+	// PathNodes: A list of nodes that exist in this exposure path.
+	PathNodes []*PathNode `json:"pathNodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Edges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Edges") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExposurePath) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExposurePath
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
@@ -2984,6 +3135,49 @@ type OnboardingState struct {
 
 func (s *OnboardingState) MarshalJSON() ([]byte, error) {
 	type NoMethod OnboardingState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathNode: Represents one point that an attacker passes through in
+// this exposure path.
+type PathNode struct {
+	// AssociatedFindings: The findings associated with this node in the
+	// exposure path.
+	AssociatedFindings []*AssociatedFinding `json:"associatedFindings,omitempty"`
+
+	// DisplayName: Human readable name of this resource.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Resource: The name of the resource at this point in the exposure
+	// path. The format of the name is:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	Resource string `json:"resource,omitempty"`
+
+	// ResourceType: The resource type of this resource. See:
+	// https://cloud.google.com/asset-inventory/docs/supported-asset-types
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssociatedFindings")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssociatedFindings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathNode) MarshalJSON() ([]byte, error) {
+	type NoMethod PathNode
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -879,9 +879,7 @@ func (s *DependencyEdge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Document:
-// ################################################################ #
-// Represents the input to API methods.
+// Document: Represents the input to API methods.
 type Document struct {
 	// BoilerplateHandling: Indicates how detected boilerplate(e.g.
 	// advertisements, copyright declarations, banners) should be handled

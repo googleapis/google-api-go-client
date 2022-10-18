@@ -1,5 +1,19 @@
 # Changes
 
+## [0.100.0](https://github.com/googleapis/google-api-go-client/compare/v0.99.0...v0.100.0) (2022-10-18)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1712](https://github.com/googleapis/google-api-go-client/issues/1712)) ([f9e15f2](https://github.com/googleapis/google-api-go-client/commit/f9e15f2159928974af1a2ec539e20f17f94aab4d))
+* **all:** Auto-regenerate discovery clients ([#1717](https://github.com/googleapis/google-api-go-client/issues/1717)) ([f990a2a](https://github.com/googleapis/google-api-go-client/commit/f990a2af6cd6210c8764bbe273a575886ea97038))
+* **internal/gensupport:** Remove DetermineContentType, use gax-go copy ([#1716](https://github.com/googleapis/google-api-go-client/issues/1716)) ([37f90e9](https://github.com/googleapis/google-api-go-client/commit/37f90e974e83f06962ac923c502cd1b405c7f0fb))
+
+
+### Bug Fixes
+
+* **idtoken:** Allow missing age in http response header ([#1715](https://github.com/googleapis/google-api-go-client/issues/1715)) ([b235b1f](https://github.com/googleapis/google-api-go-client/commit/b235b1f8c718be6b8f361074d371768617a3da3a))
+
 ## [0.99.0](https://github.com/googleapis/google-api-go-client/compare/v0.98.0...v0.99.0) (2022-10-14)
 
 

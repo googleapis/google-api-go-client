@@ -1726,7 +1726,8 @@ func (s *OSPolicy) MarshalJSON() ([]byte, error) {
 // desired state configuration for a Compute Engine VM instance through
 // a set of configuration resources that provide capabilities such as
 // installing or removing software packages, or executing a script. For
-// more information, see OS policy and OS policy assignment
+// more information about the OS policy resource definitions and
+// examples, see OS policy and OS policy assignment
 // (https://cloud.google.com/compute/docs/os-configuration-management/working-with-os-policies).
 type OSPolicyAssignment struct {
 	// Baseline: Output only. Indicates that this revision has been
@@ -5767,7 +5768,8 @@ type ProjectsLocationsOsPolicyAssignmentsCreateCall struct {
 // (https://cloud.google.com/compute/docs/osconfig/rest/v1/projects.locations.osPolicyAssignments.operations/cancel).
 //
 //   - parent: The parent resource name in the form:
-//     projects/{project}/locations/{location}.
+//     projects/{project}/locations/{location}. Note: Specify the zone of
+//     your VMs as the location.
 func (r *ProjectsLocationsOsPolicyAssignmentsService) Create(parent string, ospolicyassignment *OSPolicyAssignment) *ProjectsLocationsOsPolicyAssignmentsCreateCall {
 	c := &ProjectsLocationsOsPolicyAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5891,7 +5893,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name in the form: projects/{project}/locations/{location}",
+	//       "description": "Required. The parent resource name in the form: projects/{project}/locations/{location}. Note: Specify the zone of your VMs as the location.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

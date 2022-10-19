@@ -6,7 +6,7 @@
 
 // Package assuredworkloads provides access to the Assured Workloads API.
 //
-// For product documentation, see: https://cloud.google.com
+// For product documentation, see: https://cloud.google.com/learnmoreurl
 //
 // # Creating a client
 //
@@ -201,6 +201,14 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
 	// violation acknowledgement
 	Comment string `json:"comment,omitempty"`
 
+	// NonCompliantOrgPolicy: Optional. This field is deprecated and will be
+	// removed in future version of the API. Name of the OrgPolicy which was
+	// modified with non-compliant change and resulted in this violation.
+	// Format: projects/{project_number}/policies/{constraint_name}
+	// folders/{folder_id}/policies/{constraint_name}
+	// organizations/{organization_id}/policies/{constraint_name}
+	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Comment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -255,7 +263,10 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls Available for public preview
+	// consumption. Don't create production workloads.
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -675,8 +686,8 @@ func (s *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud) Ma
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1Workload: An Workload object for
-// managing highly regulated workloads of cloud customers.
+// GoogleCloudAssuredworkloadsV1Workload: A Workload object for managing
+// highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1Workload struct {
 	// BillingAccount: Optional. The billing account used for the resources
 	// which are direct children of workload. This billing account is
@@ -707,7 +718,10 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
-	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls Available for public preview
+	// consumption. Don't create production workloads.
+	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CompliantButDisallowedServices: Output only. Urls for services which
@@ -765,8 +779,8 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// Partner: Optional. Compliance Regime associated with this workload.
 	//
 	// Possible values:
-	//   "PARTNER_UNSPECIFIED" - Unknown compliance regime.
-	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime
+	//   "PARTNER_UNSPECIFIED" - Unknown partner regime/controls.
+	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime/controls.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the
@@ -823,7 +837,9 @@ func (s *GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadKMSSettings: Settings specific
-// to the Key Management Service.
+// to the Key Management Service. This message is deprecated. In order
+// to create a Keyring, callers should specify, ENCRYPTION_KEYS_PROJECT
+// or KEYRING in ResourceSettings.resource_type field.
 type GoogleCloudAssuredworkloadsV1WorkloadKMSSettings struct {
 	// NextRotationTime: Required. Input only. Immutable. The time at which
 	// the Key Management Service will automatically create a new version of
@@ -918,8 +934,8 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceType: Indicates the type of resource. This field should be
-	// specified to correspond the id to the right project type
-	// (CONSUMER_PROJECT or ENCRYPTION_KEYS_PROJECT)
+	// specified to correspond the id to the right resource type
+	// (CONSUMER_FOLDER or ENCRYPTION_KEYS_PROJECT)
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
@@ -1841,7 +1857,7 @@ type OrganizationsLocationsWorkloadsGetCall struct {
 // Get: Gets Assured Workload associated with a CRM Node
 //
 //   - name: The resource name of the Workload to fetch. This is the
-//     workloads's relative path in the API, formatted as
+//     workload's relative path in the API, formatted as
 //     "organizations/{organization_id}/locations/{location_id}/workloads/{
 //     workload_id}". For example,
 //     "organizations/123/locations/us-east1/workloads/assured-workload-1".
@@ -1960,7 +1976,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Workload to fetch. This is the workloads's relative path in the API, formatted as \"organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}\". For example, \"organizations/123/locations/us-east1/workloads/assured-workload-1\".",
+	//       "description": "Required. The resource name of the Workload to fetch. This is the workload's relative path in the API, formatted as \"organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}\". For example, \"organizations/123/locations/us-east1/workloads/assured-workload-1\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
 	//       "required": true,

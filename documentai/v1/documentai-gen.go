@@ -2397,6 +2397,8 @@ func (s *GoogleCloudDocumentaiV1DocumentOutputConfig) MarshalJSON() ([]byte, err
 // configuration used when outputting documents.
 type GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfig struct {
 	// FieldMask: Specifies which fields to include in the output documents.
+	// Only supports top level document and pages field so it must be in the
+	// form of `{document_field_name}` or `pages.{page_field_name}`.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// GcsUri: The Cloud Storage uri (a directory) of the output.
@@ -3208,6 +3210,9 @@ type GoogleCloudDocumentaiV1DocumentPageTable struct {
 
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1DocumentPageLayout `json:"layout,omitempty"`
+
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1DocumentProvenance `json:"provenance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
@@ -4560,7 +4565,9 @@ func (s *GoogleCloudDocumentaiV1NormalizedVertex) UnmarshalJSON(data []byte) err
 // process document method.
 type GoogleCloudDocumentaiV1ProcessRequest struct {
 	// FieldMask: Specifies which fields to include in ProcessResponse's
-	// document.
+	// document. Only supports top level document and pages field so it must
+	// be in the form of `{document_field_name}` or
+	// `pages.{page_field_name}`.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// InlineDocument: An inline document proto.
@@ -6523,6 +6530,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTable struct {
 
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
+
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
@@ -8681,6 +8691,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTable struct {
 
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with

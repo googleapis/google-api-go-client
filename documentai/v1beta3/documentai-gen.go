@@ -3342,6 +3342,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTable struct {
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
 
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5500,6 +5503,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTable struct {
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
 
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -7274,6 +7280,8 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfig) MarshalJSON() ([]byte
 // configuration used when outputting documents.
 type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig struct {
 	// FieldMask: Specifies which fields to include in the output documents.
+	// Only supports top level document and pages field so it must be in the
+	// form of `{document_field_name}` or `pages.{page_field_name}`.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// GcsUri: The Cloud Storage uri (a directory) of the output.
@@ -8086,6 +8094,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTable struct {
 
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta3DocumentPageLayout `json:"layout,omitempty"`
+
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta3DocumentProvenance `json:"provenance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
@@ -9443,7 +9454,9 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
 	// FieldMask: Specifies which fields to include in ProcessResponse's
-	// document.
+	// document. Only supports top level document and pages field so it must
+	// be in the form of `{document_field_name}` or
+	// `pages.{page_field_name}`.
 	FieldMask string `json:"fieldMask,omitempty"`
 
 	// InlineDocument: An inline document proto.

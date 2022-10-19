@@ -6,7 +6,7 @@
 
 // Package assuredworkloads provides access to the Assured Workloads API.
 //
-// For product documentation, see: https://cloud.google.com
+// For product documentation, see: https://cloud.google.com/learnmoreurl
 //
 // # Creating a client
 //
@@ -284,6 +284,14 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	// Comment: Required. Business justification explaining the need for
 	// violation acknowledgement
 	Comment string `json:"comment,omitempty"`
+
+	// NonCompliantOrgPolicy: Optional. This field is deprecated and will be
+	// removed in future version of the API. Name of the OrgPolicy which was
+	// modified with non-compliant change and resulted in this violation.
+	// Format: projects/{project_number}/policies/{constraint_name}
+	// folders/{folder_id}/policies/{constraint_name}
+	// organizations/{organization_id}/policies/{constraint_name}
+	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Comment") to
 	// unconditionally include in API requests. By default, fields with
@@ -737,7 +745,7 @@ func (s *GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGclou
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1beta1Workload: An Workload object for
+// GoogleCloudAssuredworkloadsV1beta1Workload: A Workload object for
 // managing highly regulated workloads of cloud customers.
 type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// BillingAccount: Optional. The billing account used for the resources
@@ -773,6 +781,9 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
+	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia
+	// Regions and Support controls Available for public preview
+	// consumption. Don't create production workloads.
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
@@ -847,8 +858,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Partner: Optional. Compliance Regime associated with this workload.
 	//
 	// Possible values:
-	//   "PARTNER_UNSPECIFIED" - Unknown compliance regime.
-	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime
+	//   "PARTNER_UNSPECIFIED" - Unknown partner regime/controls.
+	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime/controls.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the

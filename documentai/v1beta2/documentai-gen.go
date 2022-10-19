@@ -3330,6 +3330,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTable struct {
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"layout,omitempty"`
 
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5551,6 +5554,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTable struct {
 
 	// Layout: Layout for Table.
 	Layout *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"layout,omitempty"`
+
+	// Provenance: The history of this table.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with

@@ -900,49 +900,9 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2GRPCAction: GRPCAction describes an action involving
-// a GRPC port.
-type GoogleCloudRunV2GRPCAction struct {
-	// Port: Port number of the gRPC service. Number must be in the range 1
-	// to 65535.
-	Port int64 `json:"port,omitempty"`
-
-	// Service: Service is the name of the service to place in the gRPC
-	// HealthCheckRequest (see
-	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
-	// this is not specified, the default behavior is defined by gRPC.
-	Service string `json:"service,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Port") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Port") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRunV2GRPCAction) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunV2GRPCAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudRunV2HTTPGetAction: HTTPGetAction describes an action
 // based on HTTP Get requests.
 type GoogleCloudRunV2HTTPGetAction struct {
-	// Host: Host name to connect to, defaults to the pod IP. You probably
-	// want to set "Host" in httpHeaders instead.
-	Host string `json:"host,omitempty"`
-
 	// HttpHeaders: Custom headers to set in the request. HTTP allows
 	// repeated headers.
 	HttpHeaders []*GoogleCloudRunV2HTTPHeader `json:"httpHeaders,omitempty"`
@@ -950,10 +910,7 @@ type GoogleCloudRunV2HTTPGetAction struct {
 	// Path: Path to access on the HTTP server. Defaults to '/'.
 	Path string `json:"path,omitempty"`
 
-	// Scheme: Scheme to use for connecting to the host. Defaults to HTTP.
-	Scheme string `json:"scheme,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
+	// ForceSendFields is a list of field names (e.g. "HttpHeaders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -961,10 +918,10 @@ type GoogleCloudRunV2HTTPGetAction struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "HttpHeaders") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -982,7 +939,7 @@ type GoogleCloudRunV2HTTPHeader struct {
 	// Name: Required. The header field name
 	Name string `json:"name,omitempty"`
 
-	// Value: Required. The header field value
+	// Value: The header field value
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1390,12 +1347,8 @@ type GoogleCloudRunV2Probe struct {
 	// value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
-	// Grpc: GRPC specifies an action involving a GRPC port. Exactly one of
-	// HTTPGet, TCPSocket, or GRPC must be specified.
-	Grpc *GoogleCloudRunV2GRPCAction `json:"grpc,omitempty"`
-
 	// HttpGet: HTTPGet specifies the http request to perform. Exactly one
-	// of HTTPGet, TCPSocket, or gRPC must be specified.
+	// of HTTPGet or TCPSocket must be specified.
 	HttpGet *GoogleCloudRunV2HTTPGetAction `json:"httpGet,omitempty"`
 
 	// InitialDelaySeconds: Number of seconds after the container has
@@ -1412,8 +1365,7 @@ type GoogleCloudRunV2Probe struct {
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// TcpSocket: TCPSocket specifies an action involving a TCP port.
-	// Exactly one of HTTPGet, TCPSocket, or gRPC must be specified. TCP
-	// hooks not yet supported
+	// Exactly one of HTTPGet or TCPSocket must be specified.
 	TcpSocket *GoogleCloudRunV2TCPSocketAction `json:"tcpSocket,omitempty"`
 
 	// TimeoutSeconds: Number of seconds after which the probe times out.
@@ -2142,16 +2094,11 @@ func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2TCPSocketAction: TCPSocketAction describes an action
 // based on opening a socket
 type GoogleCloudRunV2TCPSocketAction struct {
-	// Host: Host name to connect to, defaults to the pod IP.
-	Host string `json:"host,omitempty"`
-
-	// Port: Number or name of the port to access on the container. Number
-	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. This
-	// field is currently limited to integer types only because of proto's
-	// inability to properly support the IntOrString golang type.
+	// Port: Port number to access on the container. Must be in the range 1
+	// to 65535. If not specified, defaults to 8080.
 	Port int64 `json:"port,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Host") to
+	// ForceSendFields is a list of field names (e.g. "Port") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2159,7 +2106,7 @@ type GoogleCloudRunV2TCPSocketAction struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Host") to include in API
+	// NullFields is a list of field names (e.g. "Port") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3372,7 +3319,7 @@ type ProjectsLocationsJobsCreateCall struct {
 // Create: Create a Job.
 //
 //   - parent: The location and project in which this Job should be
-//     created. Format: projects/{projectnumber}/locations/{location}.
+//     created. Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsJobsService) Create(parent string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3501,7 +3448,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project in which this Job should be created. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project in which this Job should be created. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3540,7 +3487,7 @@ type ProjectsLocationsJobsDeleteCall struct {
 // Delete: Deletes a Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3678,7 +3625,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -3715,7 +3662,7 @@ type ProjectsLocationsJobsGetCall struct {
 // Get: Gets information about a Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3830,7 +3777,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -4037,7 +3984,7 @@ type ProjectsLocationsJobsListCall struct {
 // List: List Jobs.
 //
 //   - parent: The location and project to list resources on. Format:
-//     projects/{projectnumber}/locations/{location}.
+//     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4185,7 +4132,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4413,7 +4360,7 @@ type ProjectsLocationsJobsRunCall struct {
 // Run: Triggers creation of a new Execution of this Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{projectnumber}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}.
 func (r *ProjectsLocationsJobsService) Run(name string, googlecloudrunv2runjobrequest *GoogleCloudRunV2RunJobRequest) *ProjectsLocationsJobsRunCall {
 	c := &ProjectsLocationsJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4521,7 +4468,7 @@ func (c *ProjectsLocationsJobsRunCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{projectnumber}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -6228,9 +6175,8 @@ type ProjectsLocationsServicesCreateCall struct {
 // Create: Creates a new Service in a given project and location.
 //
 //   - parent: The location and project in which this service should be
-//     created. Format: projects/{projectnumber}/locations/{location} Only
-//     lowercase, digits, and hyphens; must begin with letter, and may not
-//     end with hyphen; must contain fewer than 50 characters.
+//     created. Format: projects/{project}/locations/{location} Only
+//     lowercase characters, digits, and hyphens.
 func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6239,8 +6185,9 @@ func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv
 }
 
 // ServiceId sets the optional parameter "serviceId": Required. The
-// unique identifier for the Service. The name of the service becomes
-// {parent}/services/{service_id}.
+// unique identifier for the Service. It must begin with letter, and may
+// not end with hyphen; must contain fewer than 50 characters. The name
+// of the service becomes {parent}/services/{service_id}.
 func (c *ProjectsLocationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -6354,14 +6301,14 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The location and project in which this service should be created. Format: projects/{projectnumber}/locations/{location} Only lowercase, digits, and hyphens; must begin with letter, and may not end with hyphen; must contain fewer than 50 characters.",
+	//       "description": "Required. The location and project in which this service should be created. Format: projects/{project}/locations/{location} Only lowercase characters, digits, and hyphens.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceId": {
-	//       "description": "Required. The unique identifier for the Service. The name of the service becomes {parent}/services/{service_id}.",
+	//       "description": "Required. The unique identifier for the Service. It must begin with letter, and may not end with hyphen; must contain fewer than 50 characters. The name of the service becomes {parent}/services/{service_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6399,7 +6346,7 @@ type ProjectsLocationsServicesDeleteCall struct {
 // serving traffic and will delete all revisions.
 //
 //   - name: The full name of the Service. Format:
-//     projects/{projectnumber}/locations/{location}/services/{service}.
+//     projects/{project}/locations/{location}/services/{service}.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6522,7 +6469,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The full name of the Service. Format: projects/{projectnumber}/locations/{location}/services/{service}",
+	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6559,7 +6506,7 @@ type ProjectsLocationsServicesGetCall struct {
 // Get: Gets information about a Service.
 //
 //   - name: The full name of the Service. Format:
-//     projects/{projectnumber}/locations/{location}/services/{service}.
+//     projects/{project}/locations/{location}/services/{service}.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6674,7 +6621,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Service. Format: projects/{projectnumber}/locations/{location}/services/{service}",
+	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6882,7 +6829,7 @@ type ProjectsLocationsServicesListCall struct {
 //
 //   - parent: The location and project to list resources on. Location
 //     must be a valid GCP region, and may not be the "-" wildcard.
-//     Format: projects/{projectnumber}/locations/{location}.
+//     Format: projects/{project}/locations/{location}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7031,7 +6978,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and may not be the \"-\" wildcard. Format: projects/{projectnumber}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and may not be the \"-\" wildcard. Format: projects/{project}/locations/{location}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

@@ -2077,9 +2077,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // TagBinding: A TagBinding represents a connection between a TagValue
-// and a cloud resource (currently project, folder, or organization).
-// Once a TagBinding is created, the TagValue is applied to all the
-// descendants of the cloud resource.
+// and a cloud resource Once a TagBinding is created, the TagValue is
+// applied to all the descendants of the Google Cloud resource.
 type TagBinding struct {
 	// Name: Output only. The name of the TagBinding. This is a String of
 	// the form: `tagBindings/{full-resource-name}/{tag-value-name}` (e.g.
@@ -2212,8 +2211,13 @@ type TagKey struct {
 	//   "GCE_FIREWALL" - Purpose for Compute Engine firewalls. A
 	// corresponding purpose_data should be set for the network the tag is
 	// intended for. The key should be 'network' and the value should be in
-	// the format of the network url id string:
-	// https://compute.googleapis.com/v1/projects/{project_number}/global/networks/{network_id}
+	// either of these two formats:
+	// -https://www.googleapis.com/compute/{compute_version}/projects/{projec
+	// t_id}/global/networks/{network_id} -{project_id}/{network_name}
+	// Examples:
+	// -https://www.googleapis.com/compute/staging_v1/projects/fail-closed-lo
+	// ad-testing/global/networks/6992953698831725600
+	// -fail-closed-load-testing/load-testing-network
 	Purpose string `json:"purpose,omitempty"`
 
 	// PurposeData: Optional. Purpose data corresponds to the policy system
@@ -2446,8 +2450,8 @@ type EffectiveTagsListCall struct {
 	header_      http.Header
 }
 
-// List: Return a list of effective tags for the given cloud resource,
-// as specified in `parent`.
+// List: Return a list of effective tags for the given Google Cloud
+// resource, as specified in `parent`.
 func (r *EffectiveTagsService) List() *EffectiveTagsListCall {
 	c := &EffectiveTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2574,7 +2578,7 @@ func (c *EffectiveTagsListCall) Do(opts ...googleapi.CallOption) (*ListEffective
 	}
 	return ret, nil
 	// {
-	//   "description": "Return a list of effective tags for the given cloud resource, as specified in `parent`.",
+	//   "description": "Return a list of effective tags for the given Google Cloud resource, as specified in `parent`.",
 	//   "flatPath": "v3/effectiveTags",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.effectiveTags.list",
@@ -7785,8 +7789,8 @@ type TagBindingsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a TagBinding between a TagValue and a cloud resource
-// (currently project, folder, or organization).
+// Create: Creates a TagBinding between a TagValue and a Google Cloud
+// resource.
 func (r *TagBindingsService) Create(tagbinding *TagBinding) *TagBindingsCreateCall {
 	c := &TagBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tagbinding = tagbinding
@@ -7889,7 +7893,7 @@ func (c *TagBindingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a TagBinding between a TagValue and a cloud resource (currently project, folder, or organization).",
+	//   "description": "Creates a TagBinding between a TagValue and a Google Cloud resource.",
 	//   "flatPath": "v3/tagBindings",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.tagBindings.create",
@@ -8060,7 +8064,7 @@ type TagBindingsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the TagBindings for the given cloud resource, as
+// List: Lists the TagBindings for the given Google Cloud resource, as
 // specified with `parent`. NOTE: The `parent` field is expected to be a
 // full resource name:
 // https://cloud.google.com/apis/design/resource_names#full_resource_name
@@ -8191,7 +8195,7 @@ func (c *TagBindingsListCall) Do(opts ...googleapi.CallOption) (*ListTagBindings
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the TagBindings for the given cloud resource, as specified with `parent`. NOTE: The `parent` field is expected to be a full resource name: https://cloud.google.com/apis/design/resource_names#full_resource_name",
+	//   "description": "Lists the TagBindings for the given Google Cloud resource, as specified with `parent`. NOTE: The `parent` field is expected to be a full resource name: https://cloud.google.com/apis/design/resource_names#full_resource_name",
 	//   "flatPath": "v3/tagBindings",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.tagBindings.list",

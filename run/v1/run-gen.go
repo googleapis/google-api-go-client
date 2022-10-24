@@ -1827,7 +1827,7 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 // HTTPHeader: HTTPHeader describes a custom header to be used in HTTP
 // probes
 type HTTPHeader struct {
-	// Name: The header field name
+	// Name: Required. The header field name
 	Name string `json:"name,omitempty"`
 
 	// Value: The header field value
@@ -4301,7 +4301,8 @@ type TrafficTarget struct {
 	// that the latest ready Revision of the Configuration should be used
 	// for this traffic target. When provided LatestRevision must be true if
 	// RevisionName is empty; it must be false when RevisionName is
-	// non-empty.
+	// non-empty in spec. When shown in status, this indicates that the
+	// RevisionName was resolved from a spec's ConfigurationName.
 	LatestRevision bool `json:"latestRevision,omitempty"`
 
 	// Percent: Percent specifies percent of the traffic to this Revision or

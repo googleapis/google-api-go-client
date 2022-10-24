@@ -630,11 +630,13 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // Reservation: A reservation is a mechanism used to guarantee slots to
 // users.
 type Reservation struct {
-	// Concurrency: Maximum number of queries that are allowed to run
-	// concurrently in this reservation. This is a soft limit due to
-	// asynchronous nature of the system and various optimizations for small
-	// queries. Default value is 0 which means that concurrency will be
-	// automatically set based on the reservation size.
+	// Concurrency: Job concurrency target which sets a soft upper bound on
+	// the number of jobs that can run concurrently in this reservation.
+	// This is a soft target due to asynchronous nature of the system and
+	// various optimizations for small queries. Default value is 0 which
+	// means that concurrency target will be automatically computed by the
+	// system. NOTE: this field is exposed as `target_job_concurrency` in
+	// the Information Schema, DDL and BQ CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 
 	// CreationTime: Output only. Creation time of the reservation.

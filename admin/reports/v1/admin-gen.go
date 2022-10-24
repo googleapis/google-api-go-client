@@ -1000,39 +1000,37 @@ func (c *ActivitiesListCall) EventName(eventName string) *ActivitiesListCall {
 }
 
 // Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list. The list is composed of event
-// parameters that are manipulated by relational operators. Event
-// parameters are in the form `parameter1 name[parameter1
-// value],parameter2 name[parameter2 value],...` These event parameters
-// are associated with a specific `eventName`. An empty report is
-// returned if the filtered request's parameter does not belong to the
-// `eventName`. For more information about `eventName` parameters, see
-// the list of event names for various applications above in
-// `applicationName`. In the following Admin Activity example, the <>
-// operator is URL-encoded in the request's query string (%3C%3E):
-// GET...&eventName=CHANGE_CALENDAR_SETTING
-// &filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive
-// example, the list can be a view or edit event's `doc_id` parameter
-// with a value that is manipulated by an 'equal to' (==) or 'not equal
-// to' (<>) relational operator. In the first example, the report
-// returns each edited document's `doc_id`. In the second example, the
-// report returns each viewed document's `doc_id` that equals the value
-// 12345 and does not return any viewed document's which have a `doc_id`
-// value of 98765. The <> operator is URL-encoded in the request's query
-// string (%3C%3E): GET...&eventName=edit&filters=doc_id
-// GET...&eventName=view&filters=doc_id==12345,doc_id%3C%3E98765 The
-// relational operators include: - `==` - 'equal to'. - `<>` - 'not
-// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
-// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
-// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
-// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
-// *Note:* The API doesn't accept multiple values of a parameter. If a
-// particular parameter is supplied more than once in the API request,
-// the API only accepts the last value of that request parameter. In
-// addition, if an invalid request parameter is supplied in the API
-// request, the API ignores that request parameter and returns the
-// response corresponding to the remaining valid request parameters. If
-// no parameters are requested, all parameters are returned.
+// string is a comma-separated list composed of event parameters
+// manipulated by relational operators. Event parameters are in the form
+// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
+// name}{relational operator}{parameter2 value},...` These event
+// parameters are associated with a specific `eventName`. An empty
+// report is returned if the request's parameter doesn't belong to the
+// `eventName`. For more information about the available `eventName`
+// fields for each application and their associated parameters, go to
+// the ApplicationName (#applicationname) table, then click through to
+// the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list
+// consists of all `edit` events where the `doc_id` parameter value
+// matches the conditions defined by the relational operator. In the
+// first example, the request returns all edited documents with a
+// `doc_id` value equal to `12345`. In the second example, the report
+// returns any edited documents where the `doc_id` value is not equal to
+// `98765`. The `<>` operator is URL-encoded in the request's query
+// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
+// supports these relational operators: * `==`—'equal to'. *
+// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
+// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
+// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
+// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
+// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
+// of the same parameter. If a parameter is supplied more than once in
+// the API request, the API only accepts the last value of that
+// parameter. In addition, if an invalid parameter is supplied in the
+// API request, the API ignores that parameter and returns the response
+// corresponding to the remaining valid parameters. If no parameters are
+// requested, all parameters are returned.
 func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 	c.urlParams_.Set("filters", filters)
 	return c
@@ -1274,7 +1272,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list. The list is composed of event parameters that are manipulated by relational operators. Event parameters are in the form `parameter1 name[parameter1 value],parameter2 name[parameter2 value],...` These event parameters are associated with a specific `eventName`. An empty report is returned if the filtered request's parameter does not belong to the `eventName`. For more information about `eventName` parameters, see the list of event names for various applications above in `applicationName`. In the following Admin Activity example, the \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=CHANGE_CALENDAR_SETTING \u0026filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive example, the list can be a view or edit event's `doc_id` parameter with a value that is manipulated by an 'equal to' (==) or 'not equal to' (\u003c\u003e) relational operator. In the first example, the report returns each edited document's `doc_id`. In the second example, the report returns each viewed document's `doc_id` that equals the value 12345 and does not return any viewed document's which have a `doc_id` value of 98765. The \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=edit\u0026filters=doc_id GET...\u0026eventName=view\u0026filters=doc_id==12345,doc_id%3C%3E98765 The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. If no parameters are requested, all parameters are returned. ",
+	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
 	//       "location": "query",
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
 	//       "type": "string"
@@ -1439,39 +1437,37 @@ func (c *ActivitiesWatchCall) EventName(eventName string) *ActivitiesWatchCall {
 }
 
 // Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list. The list is composed of event
-// parameters that are manipulated by relational operators. Event
-// parameters are in the form `parameter1 name[parameter1
-// value],parameter2 name[parameter2 value],...` These event parameters
-// are associated with a specific `eventName`. An empty report is
-// returned if the filtered request's parameter does not belong to the
-// `eventName`. For more information about `eventName` parameters, see
-// the list of event names for various applications above in
-// `applicationName`. In the following Admin Activity example, the <>
-// operator is URL-encoded in the request's query string (%3C%3E):
-// GET...&eventName=CHANGE_CALENDAR_SETTING
-// &filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive
-// example, the list can be a view or edit event's `doc_id` parameter
-// with a value that is manipulated by an 'equal to' (==) or 'not equal
-// to' (<>) relational operator. In the first example, the report
-// returns each edited document's `doc_id`. In the second example, the
-// report returns each viewed document's `doc_id` that equals the value
-// 12345 and does not return any viewed document's which have a `doc_id`
-// value of 98765. The <> operator is URL-encoded in the request's query
-// string (%3C%3E): GET...&eventName=edit&filters=doc_id
-// GET...&eventName=view&filters=doc_id==12345,doc_id%3C%3E98765 The
-// relational operators include: - `==` - 'equal to'. - `<>` - 'not
-// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
-// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
-// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
-// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
-// *Note:* The API doesn't accept multiple values of a parameter. If a
-// particular parameter is supplied more than once in the API request,
-// the API only accepts the last value of that request parameter. In
-// addition, if an invalid request parameter is supplied in the API
-// request, the API ignores that request parameter and returns the
-// response corresponding to the remaining valid request parameters. If
-// no parameters are requested, all parameters are returned.
+// string is a comma-separated list composed of event parameters
+// manipulated by relational operators. Event parameters are in the form
+// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
+// name}{relational operator}{parameter2 value},...` These event
+// parameters are associated with a specific `eventName`. An empty
+// report is returned if the request's parameter doesn't belong to the
+// `eventName`. For more information about the available `eventName`
+// fields for each application and their associated parameters, go to
+// the ApplicationName (#applicationname) table, then click through to
+// the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list
+// consists of all `edit` events where the `doc_id` parameter value
+// matches the conditions defined by the relational operator. In the
+// first example, the request returns all edited documents with a
+// `doc_id` value equal to `12345`. In the second example, the report
+// returns any edited documents where the `doc_id` value is not equal to
+// `98765`. The `<>` operator is URL-encoded in the request's query
+// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
+// supports these relational operators: * `==`—'equal to'. *
+// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
+// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
+// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
+// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
+// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
+// of the same parameter. If a parameter is supplied more than once in
+// the API request, the API only accepts the last value of that
+// parameter. In addition, if an invalid parameter is supplied in the
+// API request, the API ignores that parameter and returns the response
+// corresponding to the remaining valid parameters. If no parameters are
+// requested, all parameters are returned.
 func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 	c.urlParams_.Set("filters", filters)
 	return c
@@ -1705,7 +1701,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list. The list is composed of event parameters that are manipulated by relational operators. Event parameters are in the form `parameter1 name[parameter1 value],parameter2 name[parameter2 value],...` These event parameters are associated with a specific `eventName`. An empty report is returned if the filtered request's parameter does not belong to the `eventName`. For more information about `eventName` parameters, see the list of event names for various applications above in `applicationName`. In the following Admin Activity example, the \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=CHANGE_CALENDAR_SETTING \u0026filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive example, the list can be a view or edit event's `doc_id` parameter with a value that is manipulated by an 'equal to' (==) or 'not equal to' (\u003c\u003e) relational operator. In the first example, the report returns each edited document's `doc_id`. In the second example, the report returns each viewed document's `doc_id` that equals the value 12345 and does not return any viewed document's which have a `doc_id` value of 98765. The \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=edit\u0026filters=doc_id GET...\u0026eventName=view\u0026filters=doc_id==12345,doc_id%3C%3E98765 The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. If no parameters are requested, all parameters are returned. ",
+	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
 	//       "location": "query",
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
 	//       "type": "string"

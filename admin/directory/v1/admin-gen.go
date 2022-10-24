@@ -1526,7 +1526,7 @@ func (s *Channel) MarshalJSON() ([]byte, error) {
 // common API tasks, see the Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-chrome-devices).
 type ChromeOsDevice struct {
-	// ActiveTimeRanges: List of active time ranges (Read-only).
+	// ActiveTimeRanges: A list of active time ranges (Read-only).
 	ActiveTimeRanges []*ChromeOsDeviceActiveTimeRanges `json:"activeTimeRanges,omitempty"`
 
 	// AnnotatedAssetId: The asset identifier as noted by an administrator
@@ -1561,7 +1561,7 @@ type ChromeOsDevice struct {
 	// (Read-only)
 	CpuStatusReports []*ChromeOsDeviceCpuStatusReports `json:"cpuStatusReports,omitempty"`
 
-	// DeviceFiles: List of device files to download (Read-only)
+	// DeviceFiles: A list of device files to download (Read-only)
 	DeviceFiles []*ChromeOsDeviceDeviceFiles `json:"deviceFiles,omitempty"`
 
 	// DeviceId: The unique ID of the Chrome device.
@@ -1681,12 +1681,12 @@ type ChromeOsDevice struct {
 	// PlatformVersion: The Chrome device's platform version.
 	PlatformVersion string `json:"platformVersion,omitempty"`
 
-	// RecentUsers: List of recent device users, in descending order, by
+	// RecentUsers: A list of recent device users, in descending order, by
 	// last login time.
 	RecentUsers []*ChromeOsDeviceRecentUsers `json:"recentUsers,omitempty"`
 
-	// ScreenshotFiles: List of screenshot files to download. Type is always
-	// "SCREENSHOT_FILE". (Read-only)
+	// ScreenshotFiles: A list of screenshot files to download. Type is
+	// always "SCREENSHOT_FILE". (Read-only)
 	ScreenshotFiles []*ChromeOsDeviceScreenshotFiles `json:"screenshotFiles,omitempty"`
 
 	// SerialNumber: The Chrome device serial number entered when the device
@@ -1883,7 +1883,7 @@ func (s *ChromeOsDeviceCpuInfoLogicalCpusCStates) MarshalJSON() ([]byte, error) 
 }
 
 type ChromeOsDeviceCpuStatusReports struct {
-	// CpuTemperatureInfo: List of CPU temperature samples.
+	// CpuTemperatureInfo: A list of CPU temperature samples.
 	CpuTemperatureInfo []*ChromeOsDeviceCpuStatusReportsCpuTemperatureInfo `json:"cpuTemperatureInfo,omitempty"`
 
 	CpuUtilizationPercentageInfo []int64 `json:"cpuUtilizationPercentageInfo,omitempty"`
@@ -2072,8 +2072,8 @@ func (s *ChromeOsDeviceLastKnownNetwork) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ChromeOsDeviceRecentUsers: List of recent device users, in descending
-// order, by last login time.
+// ChromeOsDeviceRecentUsers: A list of recent device users, in
+// descending order, by last login time.
 type ChromeOsDeviceRecentUsers struct {
 	// Email: The user's email address. This is only present if the user
 	// type is `USER_TYPE_MANAGED`.
@@ -2216,8 +2216,8 @@ func (s *ChromeOsDeviceTpmVersionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ChromeOsDeviceAction: The data regarding an action to update the
-// status of a Chrome OS device.
+// ChromeOsDeviceAction: Data about an update to the status of a Chrome
+// OS device.
 type ChromeOsDeviceAction struct {
 	// Action: Action to be taken on the Chrome OS device.
 	Action string `json:"action,omitempty"`
@@ -2252,7 +2252,7 @@ func (s *ChromeOsDeviceAction) MarshalJSON() ([]byte, error) {
 }
 
 type ChromeOsDevices struct {
-	// Chromeosdevices: List of Chrome OS Device objects.
+	// Chromeosdevices: A list of Chrome OS Device objects.
 	Chromeosdevices []*ChromeOsDevice `json:"chromeosdevices,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -2781,7 +2781,7 @@ func (s *DomainAlias) MarshalJSON() ([]byte, error) {
 }
 
 type DomainAliases struct {
-	// DomainAliases: List of domain alias objects.
+	// DomainAliases: A list of domain alias objects.
 	DomainAliases []*DomainAlias `json:"domainAliases,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -2822,7 +2822,7 @@ type Domains struct {
 	// (https://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DomainAliases: List of domain alias objects. (Read-only)
+	// DomainAliases: A list of domain alias objects. (Read-only)
 	DomainAliases []*DomainAlias `json:"domainAliases,omitempty"`
 
 	// DomainName: The domain name of the customer.
@@ -2868,7 +2868,7 @@ func (s *Domains) MarshalJSON() ([]byte, error) {
 }
 
 type Domains2 struct {
-	// Domains: List of domain objects.
+	// Domains: A list of domain objects.
 	Domains []*Domains `json:"domains,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -3187,7 +3187,7 @@ type Group struct {
 	// an administrator rather than a user.
 	AdminCreated bool `json:"adminCreated,omitempty"`
 
-	// Aliases: Read-only. A list of a group's alias email addresses. To
+	// Aliases: Read-only. The list of a group's alias email addresses. To
 	// add, update, or remove a group's aliases, use the `groups.aliases`
 	// methods. If edited in a group's POST or PUT request, the edit is
 	// ignored.
@@ -3228,7 +3228,7 @@ type Group struct {
 	// Name: The group's display name.
 	Name string `json:"name,omitempty"`
 
-	// NonEditableAliases: Read-only. A list of the group's non-editable
+	// NonEditableAliases: Read-only. The list of the group's non-editable
 	// alias email addresses that are outside of the account's primary
 	// domain or subdomains. These are functioning email addresses used by
 	// the group. This is a read-only property returned in the API's
@@ -3309,7 +3309,7 @@ type Groups struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Groups: List of group objects.
+	// Groups: A list of group objects.
 	Groups []*Group `json:"groups,omitempty"`
 
 	// Kind: Kind of resource this is.
@@ -3536,7 +3536,7 @@ type Members struct {
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Members: List of member objects.
+	// Members: A list of member objects.
 	Members []*Member `json:"members,omitempty"`
 
 	// NextPageToken: Token used to access next page of this result.
@@ -3652,8 +3652,8 @@ type MobileDevice struct {
 	// DevicePasswordStatus: DevicePasswordStatus (Read-only)
 	DevicePasswordStatus string `json:"devicePasswordStatus,omitempty"`
 
-	// Email: List of owner's email addresses. If your application needs the
-	// current list of user emails, use the get
+	// Email: The list of the owner's email addresses. If your application
+	// needs the current list of user emails, use the get
 	// (/admin-sdk/directory/v1/reference/mobiledevices/get.html) method.
 	// For additional information, see the retrieve a user
 	// (/admin-sdk/directory/v1/guides/manage-users#get_user) method.
@@ -3712,8 +3712,8 @@ type MobileDevice struct {
 	// vice).
 	Model string `json:"model,omitempty"`
 
-	// Name: List of the owner's user names. If your application needs the
-	// current list of device owner names, use the get
+	// Name: The list of the owner's user names. If your application needs
+	// the current list of device owner names, use the get
 	// (/admin-sdk/directory/v1/reference/mobiledevices/get.html) method.
 	// For more information about retrieving mobile device user information,
 	// see the Developer's Guide
@@ -3732,7 +3732,7 @@ type MobileDevice struct {
 	// vice).
 	Os string `json:"os,omitempty"`
 
-	// OtherAccountsInfo: List of accounts added on device (Read-only)
+	// OtherAccountsInfo: The list of accounts added on device (Read-only)
 	OtherAccountsInfo []string `json:"otherAccountsInfo,omitempty"`
 
 	// Privilege: DMAgentPermission (Read-only)
@@ -3882,7 +3882,7 @@ type MobileDevices struct {
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Mobiledevices: List of Mobile Device objects.
+	// Mobiledevices: A list of Mobile Device objects.
 	Mobiledevices []*MobileDevice `json:"mobiledevices,omitempty"`
 
 	// NextPageToken: Token used to access next page of this result.
@@ -4011,7 +4011,7 @@ type OrgUnits struct {
 	// is `admin#directory#orgUnits`.
 	Kind string `json:"kind,omitempty"`
 
-	// OrganizationUnits: List of organizational unit objects.
+	// OrganizationUnits: A list of organizational unit objects.
 	OrganizationUnits []*OrgUnit `json:"organizationUnits,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4056,7 +4056,7 @@ type OsUpdateStatus struct {
 	//   "updateStateDownloadInProgress" - The pending update is being
 	// downloaded.
 	//   "updateStateNeedReboot" - The device is ready to install the
-	// update, but it just needs to reboot.
+	// update, but must reboot.
 	State string `json:"state,omitempty"`
 
 	// TargetKioskAppVersion: New required platform version from the pending
@@ -4881,7 +4881,7 @@ type Schemas struct {
 	// Kind: Kind of resource this is.
 	Kind string `json:"kind,omitempty"`
 
-	// Schemas: List of UserSchema objects.
+	// Schemas: A list of UserSchema objects.
 	Schemas []*Schema `json:"schemas,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5016,7 +5016,7 @@ func (s *Tokens) MarshalJSON() ([]byte, error) {
 // and the User Aliases Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-user-aliases.html).
 type User struct {
-	// Addresses: A list of the user's addresses. The maximum allowed data
+	// Addresses: The list of the user's addresses. The maximum allowed data
 	// size for this field is 10Kb.
 	Addresses interface{} `json:"addresses,omitempty"`
 
@@ -5025,7 +5025,7 @@ type User struct {
 	// agreement.
 	AgreedToTerms bool `json:"agreedToTerms,omitempty"`
 
-	// Aliases: Output only. A list of the user's alias email addresses.
+	// Aliases: Output only. The list of the user's alias email addresses.
 	Aliases []string `json:"aliases,omitempty"`
 
 	// Archived: Indicates if user is archived.
@@ -5056,15 +5056,16 @@ type User struct {
 
 	DeletionTime string `json:"deletionTime,omitempty"`
 
-	// Emails: A list of the user's email addresses. The maximum allowed
+	// Emails: The list of the user's email addresses. The maximum allowed
 	// data size for this field is 10Kb.
 	Emails interface{} `json:"emails,omitempty"`
 
 	// Etag: Output only. ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ExternalIds: A list of external IDs for the user, such as an employee
-	// or network ID. The maximum allowed data size for this field is 2Kb.
+	// ExternalIds: The list of external IDs for the user, such as an
+	// employee or network ID. The maximum allowed data size for this field
+	// is 2Kb.
 	ExternalIds interface{} `json:"externalIds,omitempty"`
 
 	// Gender: The user's gender. The maximum allowed data size for this
@@ -5085,10 +5086,10 @@ type User struct {
 	// request URI's `userKey`.
 	Id string `json:"id,omitempty"`
 
-	// Ims: The user's Instant Messenger (IM) accounts. A user account can
-	// have multiple ims properties. But, only one of these ims properties
-	// can be the primary IM contact. The maximum allowed data size for this
-	// field is 2Kb.
+	// Ims: The list of the user's Instant Messenger (IM) accounts. A user
+	// account can have multiple ims properties. But, only one of these ims
+	// properties can be the primary IM contact. The maximum allowed data
+	// size for this field is 2Kb.
 	Ims interface{} `json:"ims,omitempty"`
 
 	// IncludeInGlobalAddressList: Indicates if the user's profile is
@@ -5135,8 +5136,8 @@ type User struct {
 	// assigned a Gmail license.
 	IsMailboxSetup bool `json:"isMailboxSetup,omitempty"`
 
-	// Keywords: The user's keywords. The maximum allowed data size for this
-	// field is 1Kb.
+	// Keywords: The list of the user's keywords. The maximum allowed data
+	// size for this field is 1Kb.
 	Keywords interface{} `json:"keywords,omitempty"`
 
 	// Kind: Output only. The type of the API resource. For Users resources,
@@ -5165,7 +5166,7 @@ type User struct {
 	// size for this field is 1Kb.
 	Name *UserName `json:"name,omitempty"`
 
-	// NonEditableAliases: Output only. List of the user's non-editable
+	// NonEditableAliases: Output only. The list of the user's non-editable
 	// alias email addresses. These are typically outside the account's
 	// primary domain or sub-domain.
 	NonEditableAliases []string `json:"nonEditableAliases,omitempty"`
@@ -5178,18 +5179,18 @@ type User struct {
 	// represented as a forward slash (`/`).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 
-	// Organizations: A list of organizations the user belongs to. The
+	// Organizations: The list of organizations the user belongs to. The
 	// maximum allowed data size for this field is 10Kb.
 	Organizations interface{} `json:"organizations,omitempty"`
 
 	// Password: User's password
 	Password string `json:"password,omitempty"`
 
-	// Phones: A list of the user's phone numbers. The maximum allowed data
-	// size for this field is 1Kb.
+	// Phones: The list of the user's phone numbers. The maximum allowed
+	// data size for this field is 1Kb.
 	Phones interface{} `json:"phones,omitempty"`
 
-	// PosixAccounts: A list of POSIX
+	// PosixAccounts: The list of POSIX
 	// (https://www.opengroup.org/austin/papers/posix_faq.html) account
 	// information for the user.
 	PosixAccounts interface{} `json:"posixAccounts,omitempty"`
@@ -5207,7 +5208,7 @@ type User struct {
 	// *+16506661212*.
 	RecoveryPhone string `json:"recoveryPhone,omitempty"`
 
-	// Relations: A list of the user's relationships to other users. The
+	// Relations: The list of the user's relationships to other users. The
 	// maximum allowed data size for this field is 2Kb.
 	Relations interface{} `json:"relations,omitempty"`
 
@@ -5734,6 +5735,9 @@ func (s *UserMakeAdmin) MarshalJSON() ([]byte, error) {
 }
 
 type UserName struct {
+	// DisplayName: The user's display name. Limit: 256 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// FamilyName: The user's last name. Required when creating a user
 	// account.
 	FamilyName string `json:"familyName,omitempty"`
@@ -5746,7 +5750,7 @@ type UserName struct {
 	// account.
 	GivenName string `json:"givenName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5754,10 +5758,10 @@ type UserName struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FamilyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -6148,7 +6152,7 @@ type Users struct {
 	// of Push Response)
 	TriggerEvent string `json:"trigger_event,omitempty"`
 
-	// Users: List of user objects.
+	// Users: A list of user objects.
 	Users []*User `json:"users,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6219,7 +6223,7 @@ func (s *VerificationCode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VerificationCodes: JSON response template for List verification codes
+// VerificationCodes: JSON response template for list verification codes
 // operation in Directory API.
 type VerificationCodes struct {
 	// Etag: ETag of the resource.
@@ -7142,7 +7146,7 @@ func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCal
 
 // IncludeChildOrgunits sets the optional parameter
 // "includeChildOrgunits": Return devices from all child orgunits, as
-// well as the specified org unit. If this is set to true 'orgUnitPath'
+// well as the specified org unit. If this is set to true, 'orgUnitPath'
 // must be provided.
 func (c *ChromeosdevicesListCall) IncludeChildOrgunits(includeChildOrgunits bool) *ChromeosdevicesListCall {
 	c.urlParams_.Set("includeChildOrgunits", fmt.Sprint(includeChildOrgunits))
@@ -7350,7 +7354,7 @@ func (c *ChromeosdevicesListCall) Do(opts ...googleapi.CallOption) (*ChromeOsDev
 	//       "type": "string"
 	//     },
 	//     "includeChildOrgunits": {
-	//       "description": "Return devices from all child orgunits, as well as the specified org unit. If this is set to true 'orgUnitPath' must be provided.",
+	//       "description": "Return devices from all child orgunits, as well as the specified org unit. If this is set to true, 'orgUnitPath' must be provided.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

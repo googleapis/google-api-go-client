@@ -508,9 +508,9 @@ func (s *GoogleCloudRetailLoggingHttpRequestContext) MarshalJSON() ([]byte, erro
 }
 
 // GoogleCloudRetailLoggingImportErrorContext: The error payload that is
-// populated on LRO import APIs. Including:
-// "google.cloud.retail.v2.ProductService.ImportProducts"
-// "google.cloud.retail.v2.EventService.ImportUserEvents"
+// populated on LRO import APIs, including
+// "google.cloud.retail.v2.ProductService.ImportProducts" and
+// "google.cloud.retail.v2.EventService.ImportUserEvents".
 type GoogleCloudRetailLoggingImportErrorContext struct {
 	// CatalogItem: The detailed content which caused the error on importing
 	// a catalog item.
@@ -520,40 +520,12 @@ type GoogleCloudRetailLoggingImportErrorContext struct {
 	// batch operation error.
 	GcsPath string `json:"gcsPath,omitempty"`
 
-	// InventoryActivity: The detailed content which caused the error on
-	// importing an inventory activity.
-	// http://cs/google3/google/cloud/retail/v2main/inventory_activity.proto
-	InventoryActivity string `json:"inventoryActivity,omitempty"`
-
 	// LineNumber: Line number of the content in file. Should be empty for
 	// permission or batch operation error.
 	LineNumber string `json:"lineNumber,omitempty"`
 
 	// OperationName: The operation resource name of the LRO.
 	OperationName string `json:"operationName,omitempty"`
-
-	// Order: The detailed content which caused the error on importing an
-	// order. http://cs/google3/google/cloud/retail/v2main/order.proto
-	Order string `json:"order,omitempty"`
-
-	// Place: The detailed content which caused the error on importing a
-	// place. http://cs/google3/google/cloud/retail/v2main/place.proto
-	Place string `json:"place,omitempty"`
-
-	// PlaceAsset: The detailed content which caused the error on importing
-	// a place asset.
-	// http://cs/google3/google/cloud/retail/v2main/place_asset.proto
-	PlaceAsset string `json:"placeAsset,omitempty"`
-
-	// PlaceProductPrice: The detailed content which caused the error on
-	// importing a place product price.
-	// http://cs/google3/google/cloud/retail/v2main/place_product_price.proto
-	PlaceProductPrice string `json:"placeProductPrice,omitempty"`
-
-	// PlaceProductSettings: The detailed content which caused the error on
-	// importing a place product settings.
-	// http://cs/google3/google/cloud/retail/v2main/place_product_settings.proto
-	PlaceProductSettings string `json:"placeProductSettings,omitempty"`
 
 	// Product: The detailed content which caused the error on importing a
 	// product.
@@ -1258,6 +1230,34 @@ func (s *GoogleCloudRetailV2alphaExportUserEventsResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaGcsOutputResult: A Gcs output result.
+type GoogleCloudRetailV2alphaGcsOutputResult struct {
+	// OutputUri: The uri of Gcs output
+	OutputUri string `json:"outputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaGcsOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaGcsOutputResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaImportCompletionDataResponse: Response of the
 // ImportCompletionDataRequest. If the long running operation is done,
 // this message is returned by the
@@ -1832,10 +1832,15 @@ func (s *GoogleCloudRetailV2alphaModelServingConfigList) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2alphaOutputResult: Output result.
+// GoogleCloudRetailV2alphaOutputResult: Output result that stores the
+// information about where the exported data is stored.
 type GoogleCloudRetailV2alphaOutputResult struct {
-	// BigqueryResult: Export result in BigQuery.
+	// BigqueryResult: The BigQuery location where the result is stored.
 	BigqueryResult []*GoogleCloudRetailV2alphaBigQueryOutputResult `json:"bigqueryResult,omitempty"`
+
+	// GcsResult: The Google Cloud Storage location where the result is
+	// stored.
+	GcsResult []*GoogleCloudRetailV2alphaGcsOutputResult `json:"gcsResult,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigqueryResult") to
 	// unconditionally include in API requests. By default, fields with
@@ -3638,6 +3643,34 @@ func (s *GoogleCloudRetailV2betaFulfillmentInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaGcsOutputResult: A Gcs output result.
+type GoogleCloudRetailV2betaGcsOutputResult struct {
+	// OutputUri: The uri of Gcs output
+	OutputUri string `json:"outputUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2betaGcsOutputResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaGcsOutputResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaGcsSource: Google Cloud Storage location for
 // input content.
 type GoogleCloudRetailV2betaGcsSource struct {
@@ -4733,10 +4766,15 @@ func (s *GoogleCloudRetailV2betaModelServingConfigList) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2betaOutputResult: Output result.
+// GoogleCloudRetailV2betaOutputResult: Output result that stores the
+// information about where the exported data is stored.
 type GoogleCloudRetailV2betaOutputResult struct {
-	// BigqueryResult: Export result in BigQuery.
+	// BigqueryResult: The BigQuery location where the result is stored.
 	BigqueryResult []*GoogleCloudRetailV2betaBigQueryOutputResult `json:"bigqueryResult,omitempty"`
+
+	// GcsResult: The Google Cloud Storage location where the result is
+	// stored.
+	GcsResult []*GoogleCloudRetailV2betaGcsOutputResult `json:"gcsResult,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigqueryResult") to
 	// unconditionally include in API requests. By default, fields with
@@ -8451,11 +8489,12 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Dataset(dataset string) *Pr
 }
 
 // DeviceType sets the optional parameter "deviceType": The device type
-// context for completion suggestions. It is useful to apply different
-// suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If
-// it is empty, the suggestions are across all device types. Supported
-// formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A
-// customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.
+// context for completion suggestions. We recommend that you leave this
+// field empty. It can apply different suggestions on different device
+// types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are
+// across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` *
+// `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g.
+// `OTHER_IPHONE`.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("deviceType", deviceType)
 	return c
@@ -8628,7 +8667,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "deviceType": {
-	//       "description": "The device type context for completion suggestions. It is useful to apply different suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.",
+	//       "description": "The device type context for completion suggestions. We recommend that you leave this field empty. It can apply different suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16735,6 +16774,24 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Ets(ets int64) *Project
 	return c
 }
 
+// PrebuiltRule sets the optional parameter "prebuiltRule": The prebuilt
+// rule name that can convert a specific type of raw_json. For example:
+// "default_schema/v1.0"
+func (c *ProjectsLocationsCatalogsUserEventsCollectCall) PrebuiltRule(prebuiltRule string) *ProjectsLocationsCatalogsUserEventsCollectCall {
+	c.urlParams_.Set("prebuiltRule", prebuiltRule)
+	return c
+}
+
+// RawJson sets the optional parameter "rawJson": An arbitrary
+// serialized JSON string that contains necessary information that can
+// comprise a user event. When this field is specified, the user_event
+// field will be ignored. Note: line-delimited JSON is not supported, a
+// single JSON only.
+func (c *ProjectsLocationsCatalogsUserEventsCollectCall) RawJson(rawJson string) *ProjectsLocationsCatalogsUserEventsCollectCall {
+	c.urlParams_.Set("rawJson", rawJson)
+	return c
+}
+
 // Uri sets the optional parameter "uri": The URL including
 // cgi-parameters but excluding the hash fragment with a length limit of
 // 5,000 characters. This is often more useful than the referer URL,
@@ -16869,6 +16926,16 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Do(opts ...googleapi.Ca
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "prebuiltRule": {
+	//       "description": "The prebuilt rule name that can convert a specific type of raw_json. For example: \"default_schema/v1.0\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rawJson": {
+	//       "description": "An arbitrary serialized JSON string that contains necessary information that can comprise a user event. When this field is specified, the user_event field will be ignored. Note: line-delimited JSON is not supported, a single JSON only.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "uri": {

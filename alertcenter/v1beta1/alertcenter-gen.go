@@ -181,6 +181,11 @@ type AbuseDetected struct {
 	// Customer abuse detected.
 	AlertDescriptor string `json:"alertDescriptor,omitempty"`
 
+	// NextSteps: Customizable text to display in the next steps section of
+	// the alert. Will be parsed as HTML to allow new paragraphs and
+	// hyperlinks.
+	NextSteps string `json:"nextSteps,omitempty"`
+
 	// Product: Product that the abuse is originating from.
 	Product string `json:"product,omitempty"`
 

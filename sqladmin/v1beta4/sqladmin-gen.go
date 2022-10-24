@@ -1534,6 +1534,8 @@ func (s *DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
 
 // ExportContext: Database instance export context.
 type ExportContext struct {
+	BakExportOptions *ExportContextBakExportOptions `json:"bakExportOptions,omitempty"`
+
 	// CsvExportOptions: Options for exporting data as CSV. `MySQL` and
 	// `PostgreSQL` instances only.
 	CsvExportOptions *ExportContextCsvExportOptions `json:"csvExportOptions,omitempty"`
@@ -1575,7 +1577,7 @@ type ExportContext struct {
 	// contents are compressed.
 	Uri string `json:"uri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CsvExportOptions") to
+	// ForceSendFields is a list of field names (e.g. "BakExportOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1583,7 +1585,7 @@ type ExportContext struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CsvExportOptions") to
+	// NullFields is a list of field names (e.g. "BakExportOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1595,6 +1597,34 @@ type ExportContext struct {
 
 func (s *ExportContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ExportContextBakExportOptions struct {
+	StripeCount int64 `json:"stripeCount,omitempty"`
+
+	Striped bool `json:"striped,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StripeCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StripeCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportContextBakExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportContextBakExportOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2051,6 +2081,8 @@ func (s *ImportContext) MarshalJSON() ([]byte, error) {
 // Server .BAK files
 type ImportContextBakImportOptions struct {
 	EncryptionOptions *ImportContextBakImportOptionsEncryptionOptions `json:"encryptionOptions,omitempty"`
+
+	Striped bool `json:"striped,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncryptionOptions")
 	// to unconditionally include in API requests. By default, fields with
@@ -2580,6 +2612,10 @@ type IpConfiguration struct {
 	// connect to the instance using the IP. In 'CIDR' notation, also known
 	// as 'slash' notation (for example: `157.197.200.0/24`).
 	AuthorizedNetworks []*AclEntry `json:"authorizedNetworks,omitempty"`
+
+	// EnablePrivatePathForGoogleCloudServices: Controls connectivity to
+	// private IP instances from Google services, such as BigQuery.
+	EnablePrivatePathForGoogleCloudServices bool `json:"enablePrivatePathForGoogleCloudServices,omitempty"`
 
 	// Ipv4Enabled: Whether the instance is assigned a public IP address or
 	// not.
@@ -11987,14 +12023,20 @@ type UsersGetCall struct {
 //
 //   - instance: Database instance ID. This does not include the project
 //     ID.
-//   - name: User of the instance. If the database user has a host, this
-//     is specified as {username}@{host} else as {username}.
+//   - name: User of the instance.
 //   - project: Project ID of the project that contains the instance.
 func (r *UsersService) Get(project string, instance string, name string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
 	c.name = name
+	return c
+}
+
+// Host sets the optional parameter "host": Host of a user of the
+// instance.
+func (c *UsersGetCall) Host(host string) *UsersGetCall {
+	c.urlParams_.Set("host", host)
 	return c
 }
 
@@ -12109,6 +12151,11 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "host": {
+	//       "description": "Host of a user of the instance.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "instance": {
 	//       "description": "Database instance ID. This does not include the project ID.",
 	//       "location": "path",
@@ -12116,7 +12163,7 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "User of the instance. If the database user has a host, this is specified as {username}@{host} else as {username}.",
+	//       "description": "User of the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

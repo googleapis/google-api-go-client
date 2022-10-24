@@ -3214,7 +3214,10 @@ type Message struct {
 	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 
-	// Space: The space the message belongs to.
+	// Space: The space the message belongs to. When accessed with user
+	// authentication
+	// (https://developers.google.com/chat/api/guides/auth/users), only the
+	// name of the Space is populated.
 	Space *Space `json:"space,omitempty"`
 
 	// Text: Plain-text body of the message. The first link to an image,
@@ -6205,6 +6208,10 @@ type SpacesMessagesDeleteCall struct {
 
 // Delete: Deletes a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Developer Preview (https://developers.google.com/workspace/preview):
+// Deletes a message. Requires user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) and the
+// `chat.messages` authorization scope.
 //
 //   - name: Resource name of the message to be deleted, in the form
 //     "spaces/*/messages/*" Example:
@@ -6301,7 +6308,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Deletes a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Deletes a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -6338,6 +6345,10 @@ type SpacesMessagesGetCall struct {
 
 // Get: Returns a message. Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Developer Preview (https://developers.google.com/workspace/preview):
+// Returns a message. Requires user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) and the
+// `chat.messages` or `chat.messages.readonly` authorization scope.
 //
 //   - name: Resource name of the message to retrieve. Format:
 //     spaces/{space}/messages/{message} If the message begins with
@@ -6451,7 +6462,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Returns a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",

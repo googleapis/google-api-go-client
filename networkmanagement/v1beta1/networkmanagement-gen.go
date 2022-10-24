@@ -239,6 +239,10 @@ type AbortInfo struct {
 	//   "UNSUPPORTED" - Aborted because the test scenario is not supported.
 	//   "MISMATCHED_IP_VERSION" - Aborted because the source and
 	// destination resources have no common IP version.
+	//   "GKE_KONNECTIVITY_PROXY_UNSUPPORTED" - Aborted because the
+	// connection between the control plane and the node of the source
+	// cluster is initiated by the node and managed by the Konnectivity
+	// proxy.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -2153,7 +2157,7 @@ type RouteInfo struct {
 	//   "PEERING_SUBNET" - A subnet route received from peering network.
 	//   "PEERING_STATIC" - A static route received from peering network.
 	//   "PEERING_DYNAMIC" - A dynamic route received from peering network.
-	//   "POLICY_BASED_ROUTE" - Policy based route.
+	//   "POLICY_BASED" - Policy based route.
 	RouteType string `json:"routeType,omitempty"`
 
 	// SrcIpRange: Source IP address range of the route. Policy based routes

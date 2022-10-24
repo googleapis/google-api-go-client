@@ -833,6 +833,149 @@ func (s *BuildSignature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BuildStep: A step in the build pipeline. Next ID: 20
+type BuildStep struct {
+	// AllowExitCodes: Allow this build step to fail without failing the
+	// entire build if and only if the exit code is one of the specified
+	// codes. If allow_failure is also specified, this field will take
+	// precedence.
+	AllowExitCodes []int64 `json:"allowExitCodes,omitempty"`
+
+	// AllowFailure: Allow this build step to fail without failing the
+	// entire build. If false, the entire build will fail if this step
+	// fails. Otherwise, the build will succeed, but this step will still
+	// have a failure status. Error information will be reported in the
+	// failure_detail field.
+	AllowFailure bool `json:"allowFailure,omitempty"`
+
+	// Args: A list of arguments that will be presented to the step when it
+	// is started. If the image used to run the step's container has an
+	// entrypoint, the `args` are used as arguments to that entrypoint. If
+	// the image does not define an entrypoint, the first element in args is
+	// used as the entrypoint, and the remainder will be used as arguments.
+	Args []string `json:"args,omitempty"`
+
+	// Dir: Working directory to use when running this step's container. If
+	// this value is a relative path, it is relative to the build's working
+	// directory. If this value is absolute, it may be outside the build's
+	// working directory, in which case the contents of the path may not be
+	// persisted across build step executions, unless a `volume` for that
+	// path is specified. If the build specifies a `RepoSource` with `dir`
+	// and a step with a `dir`, which specifies an absolute path, the
+	// `RepoSource` `dir` is ignored for the step's execution.
+	Dir string `json:"dir,omitempty"`
+
+	// Entrypoint: Entrypoint to be used instead of the build step image's
+	// default entrypoint. If unset, the image's default entrypoint is used.
+	Entrypoint string `json:"entrypoint,omitempty"`
+
+	// Env: A list of environment variable definitions to be used when
+	// running a step. The elements are of the form "KEY=VALUE" for the
+	// environment variable "KEY" being given the value "VALUE".
+	Env []string `json:"env,omitempty"`
+
+	// ExitCode: Output only. Return code from running the step.
+	ExitCode int64 `json:"exitCode,omitempty"`
+
+	// Id: Unique identifier for this build step, used in `wait_for` to
+	// reference this build step as a dependency.
+	Id string `json:"id,omitempty"`
+
+	// Name: Required. The name of the container image that will run this
+	// particular build step. If the image is available in the host's Docker
+	// daemon's cache, it will be run directly. If not, the host will
+	// attempt to pull the image first, using the builder service account's
+	// credentials if necessary. The Docker daemon's cache will already have
+	// the latest versions of all of the officially supported build steps
+	// (https://github.com/GoogleCloudPlatform/cloud-builders
+	// (https://github.com/GoogleCloudPlatform/cloud-builders)). The Docker
+	// daemon will also have cached many of the layers for some popular
+	// images, like "ubuntu", "debian", but they will be refreshed at the
+	// time you attempt to use them. If you built an image in a previous
+	// build step, it will be stored in the host's Docker daemon's cache and
+	// is available to use as the name for a later build step.
+	Name string `json:"name,omitempty"`
+
+	// PullTiming: Output only. Stores timing information for pulling this
+	// build step's builder image only.
+	PullTiming *TimeSpan `json:"pullTiming,omitempty"`
+
+	// Script: A shell script to be executed in the step. When script is
+	// provided, the user cannot specify the entrypoint or args.
+	Script string `json:"script,omitempty"`
+
+	// SecretEnv: A list of environment variables which are encrypted using
+	// a Cloud Key Management Service crypto key. These values must be
+	// specified in the build's `Secret`.
+	SecretEnv []string `json:"secretEnv,omitempty"`
+
+	// Status: Output only. Status of the build step. At this time, build
+	// step status is only updated on build completion; step status is not
+	// updated in real-time as the build progresses.
+	//
+	// Possible values:
+	//   "STATUS_UNKNOWN" - Status of the build is unknown.
+	//   "PENDING" - Build has been created and is pending execution and
+	// queuing. It has not been queued.
+	//   "QUEUING" - Build has been received and is being queued.
+	//   "QUEUED" - Build or step is queued; work has not yet begun.
+	//   "WORKING" - Build or step is being executed.
+	//   "SUCCESS" - Build or step finished successfully.
+	//   "FAILURE" - Build or step failed to complete successfully.
+	//   "INTERNAL_ERROR" - Build or step failed due to an internal cause.
+	//   "TIMEOUT" - Build or step took longer than was allowed.
+	//   "CANCELLED" - Build or step was canceled by a user.
+	//   "EXPIRED" - Build was enqueued for longer than the value of
+	// `queue_ttl`.
+	Status string `json:"status,omitempty"`
+
+	// Timeout: Time limit for executing this build step. If not defined,
+	// the step has no time limit and will be allowed to continue to run
+	// until either it completes or the build itself times out.
+	Timeout string `json:"timeout,omitempty"`
+
+	// Timing: Output only. Stores timing information for executing this
+	// build step.
+	Timing *TimeSpan `json:"timing,omitempty"`
+
+	// Volumes: List of volumes to mount into the build step. Each volume is
+	// created as an empty volume prior to execution of the build step. Upon
+	// completion of the build, volumes and their contents are discarded.
+	// Using a named volume in only one step is not valid as it is
+	// indicative of a build request with an incorrect configuration.
+	Volumes []*Volume `json:"volumes,omitempty"`
+
+	// WaitFor: The ID(s) of the step(s) that this build step depends on.
+	// This build step will not start until all the build steps in
+	// `wait_for` have completed successfully. If `wait_for` is empty, this
+	// build step will start when all previous build steps in the
+	// `Build.Steps` list have completed successfully.
+	WaitFor []string `json:"waitFor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowExitCodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowExitCodes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuildStep) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ByProducts: Defines an object for the byproducts field in in-toto
 // links. The suggested fields are "stderr", "stdout", and
 // "return-value".
@@ -6371,6 +6514,37 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeSpan: Start and end times for a build execution phase. Next ID: 3
+type TimeSpan struct {
+	// EndTime: End of time span.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Start of time span.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeSpan
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Version: Version contains structured information about the version of
 // a package.
 type Version struct {
@@ -6422,6 +6596,43 @@ type Version struct {
 
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Volume: Volume describes a Docker container volume which is mounted
+// into build steps in order to persist files across build step
+// execution. Next ID: 3
+type Volume struct {
+	// Name: Name of the volume to mount. Volume names must be unique per
+	// build step and must be valid names for Docker volumes. Each named
+	// volume must be used by at least two build steps.
+	Name string `json:"name,omitempty"`
+
+	// Path: Path at which to mount the volume. Paths must be absolute and
+	// cannot conflict with other volume paths on the same build step or
+	// with certain reserved volume paths.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Volume) MarshalJSON() ([]byte, error) {
+	type NoMethod Volume
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

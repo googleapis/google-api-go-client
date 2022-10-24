@@ -324,6 +324,10 @@ type Endpoint struct {
 	// 65535]`.
 	Port int64 `json:"port,omitempty"`
 
+	// Uid: Output only. The globally unique identifier of the endpoint in
+	// the UUID4 format.
+	Uid string `json:"uid,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -692,6 +696,10 @@ type Namespace struct {
 	// `projects/*/locations/*/namespaces/*`.
 	Name string `json:"name,omitempty"`
 
+	// Uid: Output only. The globally unique identifier of the namespace in
+	// the UUID4 format.
+	Uid string `json:"uid,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -947,6 +955,10 @@ type Service struct {
 	// Name: Immutable. The resource name for the service in the format
 	// `projects/*/locations/*/namespaces/*/services/*`.
 	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. The globally unique identifier of the service in
+	// the UUID4 format.
+	Uid string `json:"uid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

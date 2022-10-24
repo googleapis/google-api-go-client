@@ -760,9 +760,10 @@ type Build struct {
 
 	// Timing: Output only. Stores timing information for phases of the
 	// build. Valid keys are: * BUILD: time to execute all build steps. *
-	// PUSH: time to push all specified images. * FETCHSOURCE: time to fetch
-	// source. * SETUPBUILD: time to set up build. If the build does not
-	// specify source or images, these keys will not be included.
+	// PUSH: time to push all artifacts including docker images and non
+	// docker artifacts. * FETCHSOURCE: time to fetch source. * SETUPBUILD:
+	// time to set up build. If the build does not specify source or images,
+	// these keys will not be included.
 	Timing map[string]TimeSpan `json:"timing,omitempty"`
 
 	// Warnings: Output only. Non-fatal problems encountered during the
@@ -2413,11 +2414,13 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 
 // Results: Artifacts created by the build pipeline.
 type Results struct {
-	// ArtifactManifest: Path to the artifact manifest. Only populated when
-	// artifacts are uploaded.
+	// ArtifactManifest: Path to the artifact manifest for non-container
+	// artifacts uploaded to Cloud Storage. Only populated when artifacts
+	// are uploaded to Cloud Storage.
 	ArtifactManifest string `json:"artifactManifest,omitempty"`
 
-	// ArtifactTiming: Time to push all non-container artifacts.
+	// ArtifactTiming: Time to push all non-container artifacts to Cloud
+	// Storage.
 	ArtifactTiming *TimeSpan `json:"artifactTiming,omitempty"`
 
 	// BuildStepImages: List of build step digests, in the order
@@ -2438,8 +2441,8 @@ type Results struct {
 	// end of the build.
 	MavenArtifacts []*UploadedMavenArtifact `json:"mavenArtifacts,omitempty"`
 
-	// NumArtifacts: Number of artifacts uploaded. Only populated when
-	// artifacts are uploaded.
+	// NumArtifacts: Number of non-container artifacts uploaded to Cloud
+	// Storage. Only populated when artifacts are uploaded to Cloud Storage.
 	NumArtifacts int64 `json:"numArtifacts,omitempty,string"`
 
 	// PythonPackages: Python artifacts uploaded to Artifact Registry at the

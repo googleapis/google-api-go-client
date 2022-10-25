@@ -564,7 +564,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // Consumer: Contains information of the customer's network
-// configurations.Next available ID: 4
+// configurations.
 type Consumer struct {
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
@@ -1677,7 +1677,7 @@ func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore
-// service.Next available ID: 3
+// service.
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.
@@ -2216,6 +2216,10 @@ type Service struct {
 	// state of the metastore service, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
 
+	// TelemetryConfig: The configuration specifying telemetry settings for
+	// the Dataproc Metastore service. If unspecified defaults to JSON.
+	TelemetryConfig *TelemetryConfig `json:"telemetryConfig,omitempty"`
+
 	// Tier: The tier of the service.
 	//
 	// Possible values:
@@ -2340,6 +2344,38 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TelemetryConfig: Telemetry Configuration for the Dataproc Metastore
+// service.
+type TelemetryConfig struct {
+	// Possible values:
+	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
+	//   "LEGACY" - Logging output uses the legacy textPayload format.
+	//   "JSON" - Logging output uses the jsonPayload format.
+	LogFormat string `json:"logFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LogFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LogFormat") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TelemetryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TelemetryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

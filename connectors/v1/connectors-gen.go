@@ -777,13 +777,36 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConnectionSchemaMetadata: Metadata of connection schema.
+// ConnectionSchemaMetadata: ConnectionSchemaMetadata is the singleton
+// resource of each connection. It includes the entity and action names
+// of runtime resources exposed by a connection backend.
 type ConnectionSchemaMetadata struct {
 	// Actions: Output only. List of actions.
 	Actions []string `json:"actions,omitempty"`
 
 	// Entities: Output only. List of entity names.
 	Entities []string `json:"entities,omitempty"`
+
+	// Name: Output only. Resource name. Format:
+	// projects/{project}/locations/{location}/connections/{connection}/conne
+	// ctionSchemaMetadata
+	Name string `json:"name,omitempty"`
+
+	// RefreshTime: Output only. Timestamp when the connection runtime
+	// schema refresh was triggered.
+	RefreshTime string `json:"refreshTime,omitempty"`
+
+	// State: Output only. The current state of runtime schema.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default state.
+	//   "REFRESHING" - Schema refresh is in progress.
+	//   "UPDATED" - Schema has been updated.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the connection runtime schema
+	// was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2732,10 +2755,6 @@ type SshPublicKey struct {
 	// CertType: Format of SSH Client cert.
 	CertType string `json:"certType,omitempty"`
 
-	// Password: This is an optional field used in case client has enabled
-	// multi-factor authentication
-	Password *Secret `json:"password,omitempty"`
-
 	// SshClientCert: SSH Client Cert. It should contain both public and
 	// private key.
 	SshClientCert *Secret `json:"sshClientCert,omitempty"`
@@ -4509,12 +4528,12 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field
-// mask is used to specify the fields to be overwritten in the
-// Connection resource by the update. The fields specified in the
-// update_mask are relative to the resource, not the full request. A
-// field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. You
+// can modify only the fields listed below. To lock/unlock a connection:
+// * `lock_config` To suspend/resume a connection: * `suspended` To
+// update the connection details: * `description` * `labels` *
+// `connector_version` * `config_variables` * `auth_config` *
+// `destination_configs` * `node_config`
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4627,7 +4646,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connection resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. You can modify only the fields listed below. To lock/unlock a connection: * `lock_config` To suspend/resume a connection: * `suspended` To update the connection details: * `description` * `labels` * `connector_version` * `config_variables` * `auth_config` * `destination_configs` * `node_config`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

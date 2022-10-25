@@ -463,6 +463,40 @@ func (s *GoogleChromePolicyVersionsV1BatchModifyOrgUnitPoliciesRequest) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1CertificateReference: Error information
+// for removing of a specific certificate on a specific target. A
+// reference to a certificate.
+type GoogleChromePolicyVersionsV1CertificateReference struct {
+	// Network: Output only. The name of the referencing network.
+	Network string `json:"network,omitempty"`
+
+	// OrgUnitId: Output only. The obfuscated id of the org unit the
+	// referencing network is in.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1CertificateReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1CertificateReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyVersionsV1DefineCertificateRequest: Request object
 // for creating a certificate.
 type GoogleChromePolicyVersionsV1DefineCertificateRequest struct {
@@ -1324,6 +1358,42 @@ type GoogleChromePolicyVersionsV1PolicyValue struct {
 
 func (s *GoogleChromePolicyVersionsV1PolicyValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromePolicyVersionsV1PolicyValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails: Details of
+// the errors encountered during a remove certificate request. This
+// message will be returned as part of the details of a
+// google.rpc.Status returned to the user when there is an error in
+// their request.
+type GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails struct {
+	// CertificateReferences: Output only. If the certificate was not
+	// removed, a list of references to the certificate that prevented it
+	// from being removed. Only unreferenced certificates can be removed.
+	CertificateReferences []*GoogleChromePolicyVersionsV1CertificateReference `json:"certificateReferences,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateReferences") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateReferences") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1RemoveCertificateErrorDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

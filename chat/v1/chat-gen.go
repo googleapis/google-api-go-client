@@ -3224,8 +3224,17 @@ type Message struct {
 	// video, web page, or other preview-able item generates a preview chip.
 	Text string `json:"text,omitempty"`
 
-	// Thread: The thread the message belongs to.
+	// Thread: The thread the message belongs to. For example usage, see
+	// Start or reply to a message thread
+	// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 	Thread *Thread `json:"thread,omitempty"`
+
+	// ThreadReply: Output only. When `true`, the message is a response in a
+	// reply thread. When `false`, the message is visible in the space's
+	// top-level conversation as either the first message of a thread or a
+	// message with no threaded replies. If the space doesn't support reply
+	// in threads, this field is always `false`.
+	ThreadReply bool `json:"threadReply,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3441,7 +3450,22 @@ type Space struct {
 	// rules.
 	SpaceDetails *SpaceDetails `json:"spaceDetails,omitempty"`
 
-	// Threaded: Output only. Whether messages are threaded in this space.
+	// SpaceThreadingState: Output only. The threading state in the Chat
+	// space.
+	//
+	// Possible values:
+	//   "SPACE_THREADING_STATE_UNSPECIFIED" - Reserved.
+	//   "THREADED_MESSAGES" - Named spaces that support message threads.
+	// When users respond to a message, they can reply in-thread, which
+	// keeps their response in the context of the original message.
+	//   "GROUPED_MESSAGES" - Named spaces where the conversation is
+	// organized by topic. Topics and their replies are grouped together.
+	//   "UNTHREADED_MESSAGES" - Direct messages (DMs) between two people
+	// and group conversations between 3 or more people.
+	SpaceThreadingState string `json:"spaceThreadingState,omitempty"`
+
+	// Threaded: Output only. Deprecated: Use `spaceThreadingState` instead.
+	// Whether messages are threaded in this space.
 	Threaded bool `json:"threaded,omitempty"`
 
 	// Type: Output only. Deprecated: Use `singleUserBotDm` or `spaceType`
@@ -3649,9 +3673,17 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 
 // Thread: A thread in Google Chat.
 type Thread struct {
-	// Name: Resource name, in the form "spaces/*/threads/*". Example:
-	// spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT
+	// Name: Resource name of the thread. Example:
+	// spaces/{space}/threads/{thread}
 	Name string `json:"name,omitempty"`
+
+	// ThreadKey: Optional. Opaque thread identifier. To start or add to a
+	// thread, create a message and specify a `threadKey` or the
+	// thread.name. For example usage, see Start or reply to a message
+	// thread
+	// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
+	// For other requests, this is an output only field.
+	ThreadKey string `json:"threadKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -3900,6 +3932,27 @@ func (c *DmsMessagesCall) MessageId(messageId string) *DmsMessagesCall {
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *DmsMessagesCall) MessageReplyOption(messageReplyOption string) *DmsMessagesCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -3908,12 +3961,12 @@ func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *DmsMessagesCall) ThreadKey(threadKey string) *DmsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4023,6 +4076,21 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4036,7 +4104,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4087,6 +4155,27 @@ func (c *DmsWebhooksCall) MessageId(messageId string) *DmsWebhooksCall {
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *DmsWebhooksCall) MessageReplyOption(messageReplyOption string) *DmsWebhooksCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -4095,12 +4184,12 @@ func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *DmsWebhooksCall) ThreadKey(threadKey string) *DmsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4210,6 +4299,21 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4223,7 +4327,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4274,6 +4378,27 @@ func (c *DmsConversationsMessagesCall) MessageId(messageId string) *DmsConversat
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *DmsConversationsMessagesCall) MessageReplyOption(messageReplyOption string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -4282,12 +4407,12 @@ func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversat
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *DmsConversationsMessagesCall) ThreadKey(threadKey string) *DmsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4397,6 +4522,21 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4410,7 +4550,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4623,6 +4763,27 @@ func (c *RoomsMessagesCall) MessageId(messageId string) *RoomsMessagesCall {
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *RoomsMessagesCall) MessageReplyOption(messageReplyOption string) *RoomsMessagesCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -4631,12 +4792,12 @@ func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *RoomsMessagesCall) ThreadKey(threadKey string) *RoomsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4746,6 +4907,21 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4759,7 +4935,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4810,6 +4986,27 @@ func (c *RoomsWebhooksCall) MessageId(messageId string) *RoomsWebhooksCall {
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *RoomsWebhooksCall) MessageReplyOption(messageReplyOption string) *RoomsWebhooksCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -4818,12 +5015,12 @@ func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *RoomsWebhooksCall) ThreadKey(threadKey string) *RoomsWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -4933,6 +5130,21 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -4946,7 +5158,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4997,6 +5209,27 @@ func (c *RoomsConversationsMessagesCall) MessageId(messageId string) *RoomsConve
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *RoomsConversationsMessagesCall) MessageReplyOption(messageReplyOption string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -5005,12 +5238,12 @@ func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConve
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *RoomsConversationsMessagesCall) ThreadKey(threadKey string) *RoomsConversationsMessagesCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5120,6 +5353,21 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -5133,7 +5381,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5509,6 +5757,27 @@ func (c *SpacesWebhooksCall) MessageId(messageId string) *SpacesWebhooksCall {
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *SpacesWebhooksCall) MessageReplyOption(messageReplyOption string) *SpacesWebhooksCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -5517,12 +5786,12 @@ func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *SpacesWebhooksCall) ThreadKey(threadKey string) *SpacesWebhooksCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -5632,6 +5901,21 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
@@ -5645,7 +5929,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6020,8 +6304,10 @@ type SpacesMessagesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a message. Requires service account authentication
-// (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Create: Developer Preview
+// (https://developers.google.com/workspace/preview): Creates a message.
+// Requires authentication
+// (https://developers.google.com/chat/api/guides/auth).
 //
 //   - parent: Space resource name, in the form "spaces/*". Example:
 //     spaces/AAAAAAAAAAA.
@@ -6044,6 +6330,27 @@ func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCr
 	return c
 }
 
+// MessageReplyOption sets the optional parameter "messageReplyOption":
+// Specifies whether a message starts a thread or replies to one. Only
+// supported in named spaces.
+//
+// Possible values:
+//
+//	"MESSAGE_REPLY_OPTION_UNSPECIFIED" - Default. Starts a thread.
+//	"REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD" - Creates the message as a
+//
+// reply to the thread specified by thread ID or thread_key. If it
+// fails, the message starts a new thread instead.
+//
+//	"REPLY_MESSAGE_OR_FAIL" - Creates the message as a reply to the
+//
+// thread specified by thread ID or thread_key. If it fails, a NOT_FOUND
+// error is returned instead.
+func (c *SpacesMessagesCreateCall) MessageReplyOption(messageReplyOption string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("messageReplyOption", messageReplyOption)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": A unique request
 // ID for this message. Specifying an existing request ID returns the
 // message created with that ID instead of creating a new message.
@@ -6052,12 +6359,12 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 	return c
 }
 
-// ThreadKey sets the optional parameter "threadKey": Opaque thread
-// identifier. To start or add to a thread, create a message and specify
-// a `threadKey` instead of thread.name. (Setting thread.name has no
-// effect.) The first message with a given `threadKey` starts a new
-// thread. Subsequent messages with the same `threadKey` post into the
-// same thread.
+// ThreadKey sets the optional parameter "threadKey": Deprecated: Use
+// thread_key instead. Opaque thread identifier. To start or add to a
+// thread, create a message and specify a `threadKey` or the
+// thread.name. For example usage, see Start or reply to a message
+// thread
+// (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
 func (c *SpacesMessagesCreateCall) ThreadKey(threadKey string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("threadKey", threadKey)
 	return c
@@ -6154,7 +6461,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Creates a message. Requires [authentication](https://developers.google.com/chat/api/guides/auth).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",
@@ -6164,6 +6471,21 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   "parameters": {
 	//     "messageId": {
 	//       "description": "Optional. A custom name for a Chat message assigned at creation. Must start with `client-` and contain only lowercase letters, numbers, and hyphens up to 63 characters in length. Specify this field to get, update, or delete the message with the specified value. For example usage, see [Name a created message](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "messageReplyOption": {
+	//       "description": "Optional. Specifies whether a message starts a thread or replies to one. Only supported in named spaces.",
+	//       "enum": [
+	//         "MESSAGE_REPLY_OPTION_UNSPECIFIED",
+	//         "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD",
+	//         "REPLY_MESSAGE_OR_FAIL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default. Starts a thread.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, the message starts a new thread instead.",
+	//         "Creates the message as a reply to the thread specified by thread ID or thread_key. If it fails, a NOT_FOUND error is returned instead."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6180,7 +6502,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` instead of thread.name. (Setting thread.name has no effect.) The first message with a given `threadKey` starts a new thread. Subsequent messages with the same `threadKey` post into the same thread.",
+	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6349,6 +6671,8 @@ type SpacesMessagesGetCall struct {
 // Returns a message. Requires user authentication
 // (https://developers.google.com/chat/api/guides/auth/users) and the
 // `chat.messages` or `chat.messages.readonly` authorization scope.
+// Messages from a blocked member or messages from a blocked space can
+// also be fetched.
 //
 //   - name: Resource name of the message to retrieve. Format:
 //     spaces/{space}/messages/{message} If the message begins with
@@ -6462,7 +6786,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Returns a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope.",
+	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Returns a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope. Messages from a blocked member or messages from a blocked space can also be fetched.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",

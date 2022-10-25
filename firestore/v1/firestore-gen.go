@@ -1507,6 +1507,13 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	// collections.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
+	// NamespaceIds: An empty list represents all namespaces. This is the
+	// preferred usage for databases that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the database has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+
 	// OutputUriPrefix: The output URI. Currently only supports Google Cloud
 	// Storage URIs of the form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where
 	// `BUCKET_NAME` is the name of the Google Cloud Storage bucket and
@@ -1782,6 +1789,13 @@ type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
 	// has completed successfully. See:
 	// google.firestore.admin.v1.ExportDocumentsResponse.output_uri_prefix.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// NamespaceIds: An empty list represents all namespaces. This is the
+	// preferred usage for databases that don't use namespaces. An empty
+	// string element represents the default namespace. This should be used
+	// if the database has data in non-default namespaces, but doesn't want
+	// to include them. Each namespace in this list must be unique.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with

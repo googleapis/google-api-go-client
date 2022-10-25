@@ -499,7 +499,7 @@ type CloudSqlSettings struct {
 	// "name": "wrench", "mass": "18kg", "count": "3" }`.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
-	// Zone: The Google Cloud Platform zone where your Cloud SQL datdabse
+	// Zone: The Google Cloud Platform zone where your Cloud SQL database
 	// instance is located.
 	Zone string `json:"zone,omitempty"`
 

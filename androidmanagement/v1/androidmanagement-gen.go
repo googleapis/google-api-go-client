@@ -5247,8 +5247,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // device or work profile is not compliant with the policy specified in
 // settingName.
 type PolicyEnforcementRule struct {
-	// BlockAction: An action to block access to apps and data on a fully
-	// managed device or in a work profile. This action also triggers a
+	// BlockAction: An action to block access to apps and data on a company
+	// owned device or in a work profile. This action also triggers a
 	// user-facing notification with information (where possible) on how to
 	// correct the compliance issue. Note: wipeAction must also be
 	// specified.
@@ -5258,7 +5258,7 @@ type PolicyEnforcementRule struct {
 	// applications or passwordPolicies.
 	SettingName string `json:"settingName,omitempty"`
 
-	// WipeAction: An action to reset a fully managed device or delete a
+	// WipeAction: An action to reset a company owned device or delete a
 	// work profile. Note: blockAction must also be specified.
 	WipeAction *WipeAction `json:"wipeAction,omitempty"`
 
@@ -6568,7 +6568,7 @@ func (s *WebToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WipeAction: An action to reset a fully managed device or delete a
+// WipeAction: An action to reset a company owned device or delete a
 // work profile. Note: blockAction must also be specified.
 type WipeAction struct {
 	// PreserveFrp: Whether the factory-reset protection data is preserved

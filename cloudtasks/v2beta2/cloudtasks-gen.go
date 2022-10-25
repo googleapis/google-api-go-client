@@ -1216,7 +1216,7 @@ type HttpTarget struct {
 	// to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
-	// UriOverride: Uri override. When specified modifies the execution Uri
+	// UriOverride: Uri override. When specified, modifies the execution Uri
 	// for all the tasks in the queue.
 	UriOverride *UriOverride `json:"uriOverride,omitempty"`
 
@@ -2575,6 +2575,19 @@ type UriOverride struct {
 	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca
 	// will change to https://www.google.ca.
 	Scheme string `json:"scheme,omitempty"`
+
+	// UriOverrideEnforceMode: Uri Override Enforce Mode Determines the
+	// Target UriOverride mode.
+	//
+	// Possible values:
+	//   "URI_OVERRIDE_ENFORCE_MODE_UNSPECIFIED" - OverrideMode Unspecified.
+	// Defaults to ALWAYS.
+	//   "IF_NOT_EXISTS" - In the IF_NOT_EXISTS mode, queue-level
+	// configuration is only applied where task-level configuration does not
+	// exist.
+	//   "ALWAYS" - In the ALWAYS mode, queue-level configuration overrides
+	// all task-level configuration
+	UriOverrideEnforceMode string `json:"uriOverrideEnforceMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with

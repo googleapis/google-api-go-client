@@ -558,6 +558,12 @@ type Backup struct {
 	// SizeBytes: Output only. Size of the backup in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 
+	// SourceBackup: Output only. Name of the backup from which this backup
+	// was copied. If a backup is not created by copying a backup, this
+	// field will be empty. Values are of the form:
+	// projects//instances//backups/.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
 	// SourceTable: Required. Immutable. Name of the table from which this
 	// backup was created. This needs to be in the same instance as the
 	// backup. Values are of the form
@@ -615,6 +621,12 @@ type BackupInfo struct {
 	// EndTime: Output only. This time that the backup was finished. Row
 	// data in the backup will be no newer than this timestamp.
 	EndTime string `json:"endTime,omitempty"`
+
+	// SourceBackup: Output only. Name of the backup from which this backup
+	// was copied. If a backup is not created by copying a backup, this
+	// field will be empty. Values are of the form:
+	// projects//instances//backups/.
+	SourceBackup string `json:"sourceBackup,omitempty"`
 
 	// SourceTable: Output only. Name of the table the backup was created
 	// from.
@@ -1023,6 +1035,92 @@ type ColumnFamily struct {
 
 func (s *ColumnFamily) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnFamily
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyBackupMetadata: Metadata type for the
+// google.longrunning.Operation returned by CopyBackup.
+type CopyBackupMetadata struct {
+	// Name: The name of the backup being created through the copy
+	// operation. Values are of the form
+	// `projects//instances//clusters//backups/`.
+	Name string `json:"name,omitempty"`
+
+	// Progress: The progress of the CopyBackup operation.
+	Progress *OperationProgress `json:"progress,omitempty"`
+
+	// SourceBackupInfo: Information about the source backup that is being
+	// copied from.
+	SourceBackupInfo *BackupInfo `json:"sourceBackupInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CopyBackupRequest: The request for CopyBackup.
+type CopyBackupRequest struct {
+	// BackupId: Required. The id of the new backup. The `backup_id` along
+	// with `parent` are combined as {parent}/backups/{backup_id} to create
+	// the full backup name, of the form:
+	// `projects/{project}/instances/{instance}/clusters/{cluster}/backups/{b
+	// ackup_id}`. This string must be between 1 and 50 characters in length
+	// and match the regex _a-zA-Z0-9*.
+	BackupId string `json:"backupId,omitempty"`
+
+	// ExpireTime: Required. Required. The expiration time of the copied
+	// backup with microsecond granularity that must be at least 6 hours and
+	// at most 30 days from the time the request is received. Once the
+	// `expire_time` has passed, Cloud Bigtable will delete the backup and
+	// free the resources used by the backup.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// SourceBackup: Required. The source backup to be copied from. The
+	// source backup needs to be in READY state for it to be copied. Copying
+	// a copied backup is not allowed. Once CopyBackup is in progress, the
+	// source backup cannot be deleted or cleaned up on expiration until
+	// CopyBackup is finished. Values are of the form:
+	// `projects//instances//clusters//backups/`.
+	SourceBackup string `json:"sourceBackup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CopyBackupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CopyBackupRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7123,6 +7221,155 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 	//     "https://www.googleapis.com/auth/bigtable.admin.instance",
 	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
 	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.clusters.backups.copy":
+
+type ProjectsInstancesClustersBackupsCopyCall struct {
+	s                 *Service
+	parent            string
+	copybackuprequest *CopyBackupRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Copy: Copy a Cloud Bigtable backup to a new backup in the destination
+// cluster located in the destination instance and project.
+//
+//   - parent: The name of the destination cluster that will contain the
+//     backup copy. The cluster must already exists. Values are of the
+//     form: `projects/{project}/instances/{instance}/clusters/{cluster}`.
+func (r *ProjectsInstancesClustersBackupsService) Copy(parent string, copybackuprequest *CopyBackupRequest) *ProjectsInstancesClustersBackupsCopyCall {
+	c := &ProjectsInstancesClustersBackupsCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.copybackuprequest = copybackuprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersBackupsCopyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Context(ctx context.Context) *ProjectsInstancesClustersBackupsCopyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersBackupsCopyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copybackuprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/backups:copy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.backups.copy" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersBackupsCopyCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Copy a Cloud Bigtable backup to a new backup in the destination cluster located in the destination instance and project.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}/backups:copy",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.clusters.backups.copy",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the destination cluster that will contain the backup copy. The cluster must already exists. Values are of the form: `projects/{project}/instances/{instance}/clusters/{cluster}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/backups:copy",
+	//   "request": {
+	//     "$ref": "CopyBackupRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }

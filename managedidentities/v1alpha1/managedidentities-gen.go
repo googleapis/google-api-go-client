@@ -453,6 +453,54 @@ func (s *Certificate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CheckMigrationPermissionRequest: CheckMigrationPermissionRequest is
+// the request message for CheckMigrationPermission method.
+type CheckMigrationPermissionRequest struct {
+}
+
+// CheckMigrationPermissionResponse: CheckMigrationPermissionResponse is
+// the response message for CheckMigrationPermission method.
+type CheckMigrationPermissionResponse struct {
+	// OnpremDomains: The state of SID filtering of all the domains which
+	// has trust established.
+	OnpremDomains []*OnPremDomainSIDDetails `json:"onpremDomains,omitempty"`
+
+	// State: The state of DomainMigration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - DomainMigration is in unspecified state.
+	//   "DISABLED" - Domain Migration is Disabled.
+	//   "ENABLED" - Domain Migration is Enabled.
+	//   "NEEDS_MAINTENANCE" - Domain Migration is not in valid state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "OnpremDomains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OnpremDomains") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckMigrationPermissionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckMigrationPermissionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DailyCycle: Time window specified for daily operations.
 type DailyCycle struct {
 	// Duration: Output only. Duration of the time window, set by service
@@ -603,6 +651,11 @@ func (s *DetachTrustRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DisableMigrationRequest: DisableMigrationRequest is the request
+// message for DisableMigration method.
+type DisableMigrationRequest struct {
+}
+
 // Domain: If the domain is being changed, it will be placed into the
 // UPDATING state, which indicates that the resource is being
 // reconciled. At this point, Get will reflect an intermediate state.
@@ -718,6 +771,37 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EnableMigrationRequest: EnableMigrationRequest is the request message
+// for EnableMigration method.
+type EnableMigrationRequest struct {
+	// MigratingDomains: Required. List of the on-prem domains to be
+	// migrated.
+	MigratingDomains []*OnPremDomainDetails `json:"migratingDomains,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigratingDomains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigratingDomains") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnableMigrationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnableMigrationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -1869,6 +1953,79 @@ type MaintenanceWindow struct {
 
 func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnPremDomainDetails: OnPremDomainDetails is the message which
+// contains details of on-prem domain which is trusted and needs to be
+// migrated.
+type OnPremDomainDetails struct {
+	// DisableSidFiltering: Optional. Option to disable SID filtering.
+	DisableSidFiltering bool `json:"disableSidFiltering,omitempty"`
+
+	// DomainName: Required. FQDN of the on-prem domain being migrated.
+	DomainName string `json:"domainName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisableSidFiltering")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisableSidFiltering") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnPremDomainDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OnPremDomainDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnPremDomainSIDDetails: OnPremDomainDetails is the message which
+// contains details of on-prem domain which is trusted and needs to be
+// migrated.
+type OnPremDomainSIDDetails struct {
+	// Name: FQDN of the on-prem domain being migrated.
+	Name string `json:"name,omitempty"`
+
+	// SidFilteringState: Current SID filtering state.
+	//
+	// Possible values:
+	//   "SID_FILTERING_STATE_UNSPECIFIED" - SID Filtering is in unspecified
+	// state.
+	//   "ENABLED" - SID Filtering is Enabled.
+	//   "DISABLED" - SID Filtering is Disabled.
+	SidFilteringState string `json:"sidFilteringState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnPremDomainSIDDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OnPremDomainSIDDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3241,6 +3398,150 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "managedidentities.projects.locations.global.domains.checkMigrationPermission":
+
+type ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall struct {
+	s                               *Service
+	domain                          string
+	checkmigrationpermissionrequest *CheckMigrationPermissionRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// CheckMigrationPermission: AuditMigration API gets the current state
+// of DomainMigration
+//
+//   - domain: The domain resource name using the form:
+//     `projects/{project_id}/locations/global/domains/{domain_name}`.
+func (r *ProjectsLocationsGlobalDomainsService) CheckMigrationPermission(domain string, checkmigrationpermissionrequest *CheckMigrationPermissionRequest) *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall {
+	c := &ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.checkmigrationpermissionrequest = checkmigrationpermissionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.checkmigrationpermissionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+domain}:checkMigrationPermission")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.checkMigrationPermission" call.
+// Exactly one of *CheckMigrationPermissionResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *CheckMigrationPermissionResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsCheckMigrationPermissionCall) Do(opts ...googleapi.CallOption) (*CheckMigrationPermissionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CheckMigrationPermissionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "AuditMigration API gets the current state of DomainMigration",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/domains/{domainsId}:checkMigrationPermission",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.checkMigrationPermission",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+domain}:checkMigrationPermission",
+	//   "request": {
+	//     "$ref": "CheckMigrationPermissionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CheckMigrationPermissionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "managedidentities.projects.locations.global.domains.create":
 
 type ProjectsLocationsGlobalDomainsCreateCall struct {
@@ -3669,6 +3970,292 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Do(opts ...googleapi.Cal
 	//   "path": "v1alpha1/{+name}:detachTrust",
 	//   "request": {
 	//     "$ref": "DetachTrustRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.domains.disableMigration":
+
+type ProjectsLocationsGlobalDomainsDisableMigrationCall struct {
+	s                       *Service
+	domain                  string
+	disablemigrationrequest *DisableMigrationRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// DisableMigration: Disable Domain Migration
+//
+//   - domain: The domain resource name using the form:
+//     `projects/{project_id}/locations/global/domains/{domain_name}`.
+func (r *ProjectsLocationsGlobalDomainsService) DisableMigration(domain string, disablemigrationrequest *DisableMigrationRequest) *ProjectsLocationsGlobalDomainsDisableMigrationCall {
+	c := &ProjectsLocationsGlobalDomainsDisableMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.disablemigrationrequest = disablemigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsDisableMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsDisableMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disablemigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+domain}:disableMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.disableMigration" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsDisableMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disable Domain Migration",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/domains/{domainsId}:disableMigration",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.disableMigration",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+domain}:disableMigration",
+	//   "request": {
+	//     "$ref": "DisableMigrationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "managedidentities.projects.locations.global.domains.enableMigration":
+
+type ProjectsLocationsGlobalDomainsEnableMigrationCall struct {
+	s                      *Service
+	domain                 string
+	enablemigrationrequest *EnableMigrationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// EnableMigration: Enable Domain Migration
+//
+//   - domain: The domain resource name using the form:
+//     `projects/{project_id}/locations/global/domains/{domain_name}`.
+func (r *ProjectsLocationsGlobalDomainsService) EnableMigration(domain string, enablemigrationrequest *EnableMigrationRequest) *ProjectsLocationsGlobalDomainsEnableMigrationCall {
+	c := &ProjectsLocationsGlobalDomainsEnableMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.domain = domain
+	c.enablemigrationrequest = enablemigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalDomainsEnableMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) Context(ctx context.Context) *ProjectsLocationsGlobalDomainsEnableMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.enablemigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+domain}:enableMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"domain": c.domain,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "managedidentities.projects.locations.global.domains.enableMigration" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalDomainsEnableMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enable Domain Migration",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/global/domains/{domainsId}:enableMigration",
+	//   "httpMethod": "POST",
+	//   "id": "managedidentities.projects.locations.global.domains.enableMigration",
+	//   "parameterOrder": [
+	//     "domain"
+	//   ],
+	//   "parameters": {
+	//     "domain": {
+	//       "description": "Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+domain}:enableMigration",
+	//   "request": {
+	//     "$ref": "EnableMigrationRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

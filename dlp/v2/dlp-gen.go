@@ -491,8 +491,9 @@ type GooglePrivacyDlpV2Action struct {
 	// Deidentify: Create a de-identified copy of the input data.
 	Deidentify *GooglePrivacyDlpV2Deidentify `json:"deidentify,omitempty"`
 
-	// JobNotificationEmails: Enable email notification for project owners
-	// and editors on job's completion/failure.
+	// JobNotificationEmails: Sends an email when the job completes. The
+	// email goes to IAM project owners and technical Essential Contacts
+	// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts).
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 
 	// PubSub: Publish a notification to a Pub/Sub topic.
@@ -1635,8 +1636,6 @@ func (s *GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2ContentItem: Container structure for the content to
-// inspect.
 type GooglePrivacyDlpV2ContentItem struct {
 	// ByteItem: Content data to inspect or redact. Replaces `type` and
 	// `data`.
@@ -4386,7 +4385,7 @@ type GooglePrivacyDlpV2InfoType struct {
 	// when creating a CustomInfoType, or one of the names listed at
 	// https://cloud.google.com/dlp/docs/infotypes-reference when specifying
 	// a built-in type. When sending Cloud DLP results to Data Catalog,
-	// infoType names should conform to the pattern `[A-Za-z0-9$-_]{1,64}`.
+	// infoType names should conform to the pattern `[A-Za-z0-9$_-]{1,64}`.
 	Name string `json:"name,omitempty"`
 
 	// Version: Optional version name for this InfoType.
@@ -4540,6 +4539,9 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 
 	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`
+
+	// SensitivityScore: The default sensitivity of the infoType.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
 
 	// SupportedBy: Which parts of the API supports this InfoType.
 	//

@@ -2633,8 +2633,9 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 
 // Policy: The device policy for a given managed device.
 type Policy struct {
-	// AutoUpdatePolicy: Deprecated. Use autoUpdateMode instead. When
-	// autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
+	// AutoUpdatePolicy: Recommended alternative: autoUpdateMode which is
+	// set per app, provides greater flexibility around update frequency.
+	// When autoUpdateMode is set to AUTO_UPDATE_POSTPONED or
 	// AUTO_UPDATE_HIGH_PRIORITY, this field has no effect.
 	// "choiceToTheUser" allows the device's user to configure the app
 	// update policy. "always" enables auto updates. "never" disables auto

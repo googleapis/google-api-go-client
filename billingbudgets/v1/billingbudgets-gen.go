@@ -369,8 +369,7 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// `projects/{project}`, specifying that usage from only this set of
 	// projects should be included in the budget. If omitted, the report
 	// includes all usage for the billing account, regardless of which
-	// project the usage occurred on. Only zero or one project can be
-	// specified currently.
+	// project the usage occurred on.
 	Projects []string `json:"projects,omitempty"`
 
 	// Services: Optional. A set of services of the form

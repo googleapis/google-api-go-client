@@ -251,14 +251,17 @@ func (s *AdSource) MarshalJSON() ([]byte, error) {
 // AdUnit: Describes an AdMob ad unit.
 type AdUnit struct {
 	// AdFormat: AdFormat of the ad unit. Possible values are as follows:
-	// "BANNER" - Banner ad format. "BANNER_INTERSTITIAL" - Legacy format
-	// that can be used as either banner or interstitial. This format can no
-	// longer be created but can be targeted by mediation groups.
-	// "INTERSTITIAL" - A full screen ad. Supported ad types are
-	// "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad format. "REWARDED" -
-	// An ad that, once viewed, gets a callback verifying the view so that a
-	// reward can be given to the user. Supported ad types are "RICH_MEDIA"
-	// (interactive) and video where video can not be excluded.
+	// "APP_OPEN" - App Open ad format. "BANNER" - Banner ad format.
+	// "BANNER_INTERSTITIAL" - Legacy format that can be used as either
+	// banner or interstitial. This format can no longer be created but can
+	// be targeted by mediation groups. "INTERSTITIAL" - A full screen ad.
+	// Supported ad types are "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad
+	// format. "REWARDED" - An ad that, once viewed, gets a callback
+	// verifying the view so that a reward can be given to the user.
+	// Supported ad types are "RICH_MEDIA" (interactive) and video where
+	// video can not be excluded. "REWARDED_INTERSTITIAL" - Rewarded
+	// Interstitial ad format. Only supports video ad type. See
+	// https://support.google.com/admob/answer/9884467.
 	AdFormat string `json:"adFormat,omitempty"`
 
 	// AdTypes: Ad media type supported by this ad unit. Possible values as

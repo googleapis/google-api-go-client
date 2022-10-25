@@ -156,6 +156,167 @@ type ProjectsService struct {
 	s *Service
 }
 
+// Aggregation: Defines a aggregation that produces a single result.
+type Aggregation struct {
+	// Alias: Optional. Optional name of the property to store the result of
+	// the aggregation. If not provided, Datastore will pick a default name
+	// following the format `property_`. For example: ``` AGGREGATE
+	// COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS
+	// count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ```
+	// AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS
+	// property_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS
+	// property_2 OVER ( ... ); ``` Requires: * Must be unique across all
+	// aggregation aliases. * Conform to entity property name limitations.
+	Alias string `json:"alias,omitempty"`
+
+	// Count: Count aggregator.
+	Count *Count `json:"count,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alias") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alias") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Aggregation) MarshalJSON() ([]byte, error) {
+	type NoMethod Aggregation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AggregationQuery: Datastore query for running an aggregation over a
+// Query.
+type AggregationQuery struct {
+	// Aggregations: Optional. Series of aggregations to apply over the
+	// results of the `nested_query`. Requires: * A minimum of one and
+	// maximum of five aggregations per query.
+	Aggregations []*Aggregation `json:"aggregations,omitempty"`
+
+	// NestedQuery: Nested query for aggregation
+	NestedQuery *Query `json:"nestedQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Aggregations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Aggregations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AggregationResult: The result of a single bucket from a Datastore
+// aggregation query. The keys of `aggregate_properties` are the same
+// for all results in an aggregation query, unlike entity queries which
+// can have different fields present for each result.
+type AggregationResult struct {
+	// AggregateProperties: The result of the aggregation functions, ex:
+	// `COUNT(*) AS total_entities`. The key is the alias assigned to the
+	// aggregation function on input and the size of this map equals the
+	// number of aggregation functions in the query.
+	AggregateProperties map[string]Value `json:"aggregateProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateProperties")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateProperties") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AggregationResultBatch: A batch of aggregation results produced by an
+// aggregation query.
+type AggregationResultBatch struct {
+	// AggregationResults: The aggregation results for this batch.
+	AggregationResults []*AggregationResult `json:"aggregationResults,omitempty"`
+
+	// MoreResults: The state of the query after the current batch. Only
+	// COUNT(*) aggregations are supported in the initial launch. Therefore,
+	// expected result type is limited to `NO_MORE_RESULTS`.
+	//
+	// Possible values:
+	//   "MORE_RESULTS_TYPE_UNSPECIFIED" - Unspecified. This value is never
+	// used.
+	//   "NOT_FINISHED" - There may be additional batches to fetch from this
+	// query.
+	//   "MORE_RESULTS_AFTER_LIMIT" - The query is finished, but there may
+	// be more results after the limit.
+	//   "MORE_RESULTS_AFTER_CURSOR" - The query is finished, but there may
+	// be more results after the end cursor.
+	//   "NO_MORE_RESULTS" - The query is finished, and there are no more
+	// results.
+	MoreResults string `json:"moreResults,omitempty"`
+
+	// ReadTime: Read timestamp this batch was returned from. In a single
+	// transaction, subsequent query result batches for the same query can
+	// have a greater timestamp. Each batch's read timestamp is valid for
+	// all preceding batches.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationResults")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationResults") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AggregationResultBatch) MarshalJSON() ([]byte, error) {
+	type NoMethod AggregationResultBatch
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AllocateIdsRequest: The request for Datastore.AllocateIds.
 type AllocateIdsRequest struct {
 	// Keys: Required. A list of keys with incomplete key paths for which to
@@ -435,6 +596,42 @@ type CompositeFilter struct {
 
 func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Count: Count of entities that match the query. The `COUNT(*)`
+// aggregation function operates on the entire entity so it does not
+// require a field reference.
+type Count struct {
+	// UpTo: Optional. Optional constraint on the maximum number of entities
+	// to count. This provides a way to set an upper bound on the number of
+	// entities to scan, limiting latency and cost. Unspecified is
+	// interpreted as no bound. If a zero value is provided, a count result
+	// of zero should always be expected. High-Level Example: ``` AGGREGATE
+	// COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be
+	// non-negative when present.
+	UpTo int64 `json:"upTo,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "UpTo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpTo") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Count) MarshalJSON() ([]byte, error) {
+	type NoMethod Count
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2312,6 +2509,86 @@ type RollbackResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// RunAggregationQueryRequest: The request for
+// Datastore.RunAggregationQuery.
+type RunAggregationQueryRequest struct {
+	// AggregationQuery: The query to run.
+	AggregationQuery *AggregationQuery `json:"aggregationQuery,omitempty"`
+
+	// GqlQuery: The GQL query to run. This query must be an aggregation
+	// query.
+	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
+
+	// PartitionId: Entities are partitioned into subsets, identified by a
+	// partition ID. Queries are scoped to a single partition. This
+	// partition ID is normalized with the standard default context
+	// partition ID.
+	PartitionId *PartitionId `json:"partitionId,omitempty"`
+
+	// ReadOptions: The options for this query.
+	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationQuery") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAggregationQueryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunAggregationQueryResponse: The response for
+// Datastore.RunAggregationQuery.
+type RunAggregationQueryResponse struct {
+	// Batch: A batch of aggregation results. Always present.
+	Batch *AggregationResultBatch `json:"batch,omitempty"`
+
+	// Query: The parsed form of the `GqlQuery` from the request, if it was
+	// set.
+	Query *AggregationQuery `json:"query,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Batch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Batch") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAggregationQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
 	// GqlQuery: The GQL query to run. This query must be a non-aggregation
@@ -3365,6 +3642,148 @@ func (c *ProjectsRollbackCall) Do(opts ...googleapi.CallOption) (*RollbackRespon
 	//   },
 	//   "response": {
 	//     "$ref": "RollbackResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "datastore.projects.runAggregationQuery":
+
+type ProjectsRunAggregationQueryCall struct {
+	s                          *Service
+	projectId                  string
+	runaggregationqueryrequest *RunAggregationQueryRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RunAggregationQuery: Runs an aggregation query.
+//
+// - projectId: The ID of the project against which to make the request.
+func (r *ProjectsService) RunAggregationQuery(projectId string, runaggregationqueryrequest *RunAggregationQueryRequest) *ProjectsRunAggregationQueryCall {
+	c := &ProjectsRunAggregationQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.runaggregationqueryrequest = runaggregationqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRunAggregationQueryCall) Fields(s ...googleapi.Field) *ProjectsRunAggregationQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRunAggregationQueryCall) Context(ctx context.Context) *ProjectsRunAggregationQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRunAggregationQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRunAggregationQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runaggregationqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectId}:runAggregationQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastore.projects.runAggregationQuery" call.
+// Exactly one of *RunAggregationQueryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunAggregationQueryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsRunAggregationQueryCall) Do(opts ...googleapi.CallOption) (*RunAggregationQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RunAggregationQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Runs an aggregation query.",
+	//   "flatPath": "v1beta3/projects/{projectId}:runAggregationQuery",
+	//   "httpMethod": "POST",
+	//   "id": "datastore.projects.runAggregationQuery",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "Required. The ID of the project against which to make the request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectId}:runAggregationQuery",
+	//   "request": {
+	//     "$ref": "RunAggregationQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RunAggregationQueryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

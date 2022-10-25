@@ -3810,6 +3810,35 @@ type RegionalTaxRateInfo struct {
 	// sales tax. Field only supported in United States.
 	EligibleForStreamingServiceTaxRate bool `json:"eligibleForStreamingServiceTaxRate,omitempty"`
 
+	// StreamingTaxType: To collect communications or amusement taxes in the
+	// United States, choose the appropriate tax category. By default Google
+	// will determine the collected rate based on the buyer ZIP code. Learn
+	// more
+	// (https://support.google.com/googleplay/android-developer/answer/10463498#streaming_tax).
+	//
+	// Possible values:
+	//   "STREAMING_TAX_TYPE_UNSPECIFIED" - No telecommunications tax
+	// collected.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_RENTAL" - US-specific
+	// telecommunications tax tier for video streaming, on demand, rentals /
+	// subscriptions / pay-per-view.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_SALES" - US-specific
+	// telecommunications tax tier for video streaming of pre-recorded
+	// content like movies, tv shows.
+	//   "STREAMING_TAX_TYPE_TELCO_VIDEO_MULTI_CHANNEL" - US-specific
+	// telecommunications tax tier for video streaming of multi-channel
+	// programming.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_RENTAL" - US-specific
+	// telecommunications tax tier for audio streaming, rental /
+	// subscription.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_SALES" - US-specific
+	// telecommunications tax tier for audio streaming, sale / permanent
+	// download.
+	//   "STREAMING_TAX_TYPE_TELCO_AUDIO_MULTI_CHANNEL" - US-specific
+	// telecommunications tax tier for multi channel audio streaming like
+	// radio.
+	StreamingTaxType string `json:"streamingTaxType,omitempty"`
+
 	// TaxTier: Tax tier to specify reduced tax rate. Developers who sell
 	// digital news, magazines, newspapers, books, or audiobooks in various
 	// regions may be eligible for reduced tax rates. Learn more

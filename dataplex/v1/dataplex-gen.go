@@ -3012,6 +3012,11 @@ type GoogleCloudDataplexV1SessionEvent struct {
 	// EventSucceeded: The status of the event.
 	EventSucceeded bool `json:"eventSucceeded,omitempty"`
 
+	// FastStartupEnabled: If the session is associated with an environment
+	// with fast startup enabled, and was created before being assigned to a
+	// user.
+	FastStartupEnabled bool `json:"fastStartupEnabled,omitempty"`
+
 	// Message: The log message.
 	Message string `json:"message,omitempty"`
 
@@ -3039,9 +3044,6 @@ type GoogleCloudDataplexV1SessionEvent struct {
 	// UserId: The information about the user that created the session. It
 	// will be the email address of the user.
 	UserId string `json:"userId,omitempty"`
-
-	// WarmPoolEnabled: If the session is a warm pooled session.
-	WarmPoolEnabled bool `json:"warmPoolEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventSucceeded") to
 	// unconditionally include in API requests. By default, fields with
@@ -3593,22 +3595,23 @@ func (s *GoogleCloudDataplexV1TaskInfrastructureSpecVpcNetwork) MarshalJSON() ([
 // GoogleCloudDataplexV1TaskNotebookTaskConfig: Config for running
 // scheduled notebooks.
 type GoogleCloudDataplexV1TaskNotebookTaskConfig struct {
-	// ArchiveUris: Optional. GCS URIs of archives to be extracted into the
-	// working directory of each executor. Supported file types: .jar, .tar,
-	// .tar.gz, .tgz, and .zip.
+	// ArchiveUris: Optional. Cloud Storage URIs of archives to be extracted
+	// into the working directory of each executor. Supported file types:
+	// .jar, .tar, .tar.gz, .tgz, and .zip.
 	ArchiveUris []string `json:"archiveUris,omitempty"`
 
-	// FileUris: Optional. GCS URIs of files to be placed in the working
-	// directory of each executor.
+	// FileUris: Optional. Cloud Storage URIs of files to be placed in the
+	// working directory of each executor.
 	FileUris []string `json:"fileUris,omitempty"`
 
 	// InfrastructureSpec: Optional. Infrastructure specification for the
 	// execution.
 	InfrastructureSpec *GoogleCloudDataplexV1TaskInfrastructureSpec `json:"infrastructureSpec,omitempty"`
 
-	// Notebook: Required. Path to input notebook. This can be the GCS URI
-	// of the notebook file or the path to a Notebook Content. The execution
-	// args are accessible as environment variables (TASK_key=value).
+	// Notebook: Required. Path to input notebook. This can be the Cloud
+	// Storage URI of the notebook file or the path to a Notebook Content.
+	// The execution args are accessible as environment variables
+	// (TASK_key=value).
 	Notebook string `json:"notebook,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to

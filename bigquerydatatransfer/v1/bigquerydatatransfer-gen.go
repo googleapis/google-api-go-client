@@ -458,7 +458,7 @@ type DataSourceParameter struct {
 	// Immutable: Cannot be changed after initial creation.
 	Immutable bool `json:"immutable,omitempty"`
 
-	// MaxValue: For integer and double values specifies maxminum allowed
+	// MaxValue: For integer and double values specifies maximum allowed
 	// value.
 	MaxValue float64 `json:"maxValue,omitempty"`
 

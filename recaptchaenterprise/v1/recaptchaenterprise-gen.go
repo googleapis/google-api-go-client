@@ -1060,7 +1060,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1ScoreDistribution) MarshalJSON() ([]byt
 type GoogleCloudRecaptchaenterpriseV1ScoreMetrics struct {
 	// ActionMetrics: Action-based metrics. The map key is the action name
 	// which specified by the site owners at time of the "execute"
-	// client-side call. Populated only for SCORE keys.
+	// client-side call.
 	ActionMetrics map[string]GoogleCloudRecaptchaenterpriseV1ScoreDistribution `json:"actionMetrics,omitempty"`
 
 	// OverallMetrics: Aggregated score metrics for all traffic.

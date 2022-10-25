@@ -5735,9 +5735,6 @@ func (s *UserMakeAdmin) MarshalJSON() ([]byte, error) {
 }
 
 type UserName struct {
-	// DisplayName: The user's display name. Limit: 256 characters.
-	DisplayName string `json:"displayName,omitempty"`
-
 	// FamilyName: The user's last name. Required when creating a user
 	// account.
 	FamilyName string `json:"familyName,omitempty"`
@@ -5750,7 +5747,7 @@ type UserName struct {
 	// account.
 	GivenName string `json:"givenName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "FamilyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5758,10 +5755,10 @@ type UserName struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FamilyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

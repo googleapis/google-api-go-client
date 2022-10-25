@@ -1944,7 +1944,7 @@ type RouteInfo struct {
 	//   "PEERING_SUBNET" - A subnet route received from peering network.
 	//   "PEERING_STATIC" - A static route received from peering network.
 	//   "PEERING_DYNAMIC" - A dynamic route received from peering network.
-	//   "POLICY_BASED_ROUTE" - Policy based route.
+	//   "POLICY_BASED" - Policy based route.
 	RouteType string `json:"routeType,omitempty"`
 
 	// SrcIpRange: Source IP address range of the route. Policy based routes

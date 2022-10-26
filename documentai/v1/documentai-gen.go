@@ -4112,14 +4112,17 @@ type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
 // type.
 type GoogleCloudDocumentaiV1EntityTypeMetadata struct {
 	// HumanReviewLabelingMetadata: Human review labeling config on the
-	// property.
+	// entity.
 	HumanReviewLabelingMetadata *GoogleCloudDocumentaiV1HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
 
-	// HumanReviewMetadata: Human review config on the entity type.
+	// HumanReviewMetadata: Human review config on the entity.
 	HumanReviewMetadata *GoogleCloudDocumentaiV1HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
 
 	// Inactive: Whether the entity type should be considered as "inactive".
 	Inactive bool `json:"inactive,omitempty"`
+
+	// SchemaMutabilityMetadata: Schema mutability metadata on the entity.
+	SchemaMutabilityMetadata *GoogleCloudDocumentaiV1SchemaMutabilityMetadata `json:"schemaMutabilityMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewLabelingMetadata") to unconditionally include in API
@@ -4959,6 +4962,9 @@ type GoogleCloudDocumentaiV1PropertyMetadata struct {
 	// Inactive: Whether the property should be considered as "inactive".
 	Inactive bool `json:"inactive,omitempty"`
 
+	// SchemaMutabilityMetadata: Schema mutability metadata on the property.
+	SchemaMutabilityMetadata *GoogleCloudDocumentaiV1SchemaMutabilityMetadata `json:"schemaMutabilityMetadata,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewLabelingMetadata") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -5135,6 +5141,42 @@ type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
 
 func (s *GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ReviewDocumentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SchemaMutabilityMetadata: Metadata that
+// specifies whether a label is editable and reasons why. These fields
+// are read-only. Changing these fields has no impact on the backend.
+type GoogleCloudDocumentaiV1SchemaMutabilityMetadata struct {
+	// Editable: Explicit flag that controls whether the label is editable.
+	Editable bool `json:"editable,omitempty"`
+
+	// ProcessorVersions: Full resource name of processor versions that
+	// contain this label. e.g.
+	// `projects/{project}/locations/{location}/processors/{processor}/proces
+	// sorVersions/{processorVersion}`
+	ProcessorVersions []string `json:"processorVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Editable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Editable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1SchemaMutabilityMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SchemaMutabilityMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

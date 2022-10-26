@@ -2827,9 +2827,9 @@ type AccountsAdclientsAdunitsCreateCall struct {
 // (https://developers.google.com/adsense/platforms/) product. Note that
 // ad units can only be created for ad clients with an "AFC" product
 // code. For more info see the AdClient resource
-// (https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients).
-// For now, this method can only be used to create `DISPLAY` ad units.
-// See: https://support.google.com/adsense/answer/9183566
+// (/adsense/management/reference/rest/v2/accounts.adclients). For now,
+// this method can only be used to create `DISPLAY` ad units. See:
+// https://support.google.com/adsense/answer/9183566
 //
 //   - parent: Ad client to create an ad unit under. Format:
 //     accounts/{account}/adclients/{adclient}.
@@ -2931,7 +2931,7 @@ func (c *AccountsAdclientsAdunitsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](https://developers.google.com/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits",
 	//   "httpMethod": "POST",
 	//   "id": "adsense.accounts.adclients.adunits.create",
@@ -5740,7 +5740,9 @@ func (c *AccountsReportsGenerateCall) EndDateYear(endDateYear int64) *AccountsRe
 	return c
 }
 
-// Filters sets the optional parameter "filters": Filters to be run on
+// Filters sets the optional parameter "filters": A list of filters
+// (/adsense/management/reporting/filtering) to apply to the report. All
+// provided filters must match in order for the data to be included in
 // the report.
 func (c *AccountsReportsGenerateCall) Filters(filters ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("filters", append([]string{}, filters...))
@@ -6218,7 +6220,7 @@ func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*ReportR
 	//       "type": "integer"
 	//     },
 	//     "filters": {
-	//       "description": "Filters to be run on the report.",
+	//       "description": "A list of [filters](/adsense/management/reporting/filtering) to apply to the report. All provided filters must match in order for the data to be included in the report.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6634,7 +6636,9 @@ func (c *AccountsReportsGenerateCsvCall) EndDateYear(endDateYear int64) *Account
 	return c
 }
 
-// Filters sets the optional parameter "filters": Filters to be run on
+// Filters sets the optional parameter "filters": A list of filters
+// (/adsense/management/reporting/filtering) to apply to the report. All
+// provided filters must match in order for the data to be included in
 // the report.
 func (c *AccountsReportsGenerateCsvCall) Filters(filters ...string) *AccountsReportsGenerateCsvCall {
 	c.urlParams_.SetMulti("filters", append([]string{}, filters...))
@@ -7112,7 +7116,7 @@ func (c *AccountsReportsGenerateCsvCall) Do(opts ...googleapi.CallOption) (*Http
 	//       "type": "integer"
 	//     },
 	//     "filters": {
-	//       "description": "Filters to be run on the report.",
+	//       "description": "A list of [filters](/adsense/management/reporting/filtering) to apply to the report. All provided filters must match in order for the data to be included in the report.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

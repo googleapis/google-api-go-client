@@ -1706,6 +1706,37 @@ func (s *GalleryReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GetContainerSnippetResponse struct {
+	// Snippet: Tagging snippet for a Container.
+	Snippet string `json:"snippet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Snippet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Snippet") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetContainerSnippetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetContainerSnippetResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetWorkspaceStatusResponse: The changes that have occurred in the
 // workspace since the base container version.
 type GetWorkspaceStatusResponse struct {
@@ -5497,7 +5528,7 @@ type AccountsContainersSnippetCall struct {
 	header_      http.Header
 }
 
-// Snippet: Gets the JavaScript snippet for a Container.
+// Snippet: Gets the tagging snippet for a Container.
 //
 //   - path: Container snippet's API relative path. Example:
 //     accounts/{account_id}/containers/{container_id}:snippet.
@@ -5569,19 +5600,44 @@ func (c *AccountsContainersSnippetCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "tagmanager.accounts.containers.snippet" call.
-func (c *AccountsContainersSnippetCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *GetContainerSnippetResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetContainerSnippetResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersSnippetCall) Do(opts ...googleapi.CallOption) (*GetContainerSnippetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &GetContainerSnippetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
-	//   "description": "Gets the JavaScript snippet for a Container.",
+	//   "description": "Gets the tagging snippet for a Container.",
 	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}:snippet",
 	//   "httpMethod": "GET",
 	//   "id": "tagmanager.accounts.containers.snippet",
@@ -5599,7 +5655,7 @@ func (c *AccountsContainersSnippetCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "tagmanager/v2/{+path}:snippet",
 	//   "response": {
-	//     "type": "string"
+	//     "$ref": "GetContainerSnippetResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
@@ -5937,9 +5993,9 @@ func (r *AccountsContainersDestinationsService) Link(parent string) *AccountsCon
 
 // AllowUserPermissionFeatureUpdate sets the optional parameter
 // "allowUserPermissionFeatureUpdate": Must be set to true to allow
-// features.user_permissions to change from false to true (i.e. Google
-// product owned to GTM permission). If this operation causes an update
-// but this bit is false, the operation will fail.
+// features.user_permissions to change from false to true. If this
+// operation causes an update but this bit is false, the operation will
+// fail.
 func (c *AccountsContainersDestinationsLinkCall) AllowUserPermissionFeatureUpdate(allowUserPermissionFeatureUpdate bool) *AccountsContainersDestinationsLinkCall {
 	c.urlParams_.Set("allowUserPermissionFeatureUpdate", fmt.Sprint(allowUserPermissionFeatureUpdate))
 	return c
@@ -6047,7 +6103,7 @@ func (c *AccountsContainersDestinationsLinkCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "allowUserPermissionFeatureUpdate": {
-	//       "description": "Must be set to true to allow features.user_permissions to change from false to true (i.e. Google product owned to GTM permission). If this operation causes an update but this bit is false, the operation will fail.",
+	//       "description": "Must be set to true to allow features.user_permissions to change from false to true. If this operation causes an update but this bit is false, the operation will fail.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

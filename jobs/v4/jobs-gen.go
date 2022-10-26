@@ -723,7 +723,9 @@ type Company struct {
 	// ImageUri: A URI that hosts the employer's company logo.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// KeywordSearchableJobCustomAttributes: A list of keys of filterable
+	// KeywordSearchableJobCustomAttributes: This field is deprecated.
+	// Please set the searchability of the custom attribute in the
+	// Job.custom_attributes going forward. A list of keys of filterable
 	// Job.custom_attributes, whose corresponding `string_values` are used
 	// in keyword searches. Jobs with `string_values` under these specified
 	// field keys are returned if any of the values match the search
@@ -3250,8 +3252,8 @@ type SearchJobsRequest struct {
 	// facets: * company_display_name: histogram by
 	// [Job.company_display_name. * employment_type: histogram by
 	// Job.employment_types, for example, "FULL_TIME", "PART_TIME". *
-	// company_size: histogram by CompanySize, for example, "SMALL",
-	// "MEDIUM", "BIG". * publish_time_in_day: histogram by the
+	// company_size (DEPRECATED): histogram by CompanySize, for example,
+	// "SMALL", "MEDIUM", "BIG". * publish_time_in_day: histogram by the
 	// Job.posting_publish_time in days. Must specify list of numeric
 	// buckets in spec. * publish_time_in_month: histogram by the
 	// Job.posting_publish_time in months. Must specify list of numeric

@@ -1643,6 +1643,12 @@ type TranslateDocumentRequest struct {
 	// otherwise an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
 
+	// IsTranslateNativePdfOnly: Optional. is_translate_native_pdf_only
+	// field for external customers. If true, the page limit of online
+	// native pdf translation is 300 and only native pdf pages will be
+	// translated.
+	IsTranslateNativePdfOnly bool `json:"isTranslateNativePdfOnly,omitempty"`
+
 	// Labels: Optional. The labels with user-defined metadata for the
 	// request. Label keys and values can be no longer than 63 characters
 	// (Unicode codepoints), can only contain lowercase letters, numeric

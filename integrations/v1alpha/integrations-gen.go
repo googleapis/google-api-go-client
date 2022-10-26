@@ -6,7 +6,7 @@
 
 // Package integrations provides access to the Application Integration API.
 //
-// For product documentation, see: http://www.google.com
+// For product documentation, see: https://cloud.google.com/application-integration
 //
 // # Creating a client
 //
@@ -1223,6 +1223,47 @@ type EnterpriseCrmEventbusProtoBuganizerNotification struct {
 
 func (s *EnterpriseCrmEventbusProtoBuganizerNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseCrmEventbusProtoBuganizerNotification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnterpriseCrmEventbusProtoCloudSchedulerConfig: Cloud Scheduler
+// Trigger configuration
+type EnterpriseCrmEventbusProtoCloudSchedulerConfig struct {
+	// CronTab: Required. The cron tab of cloud scheduler trigger.
+	CronTab string `json:"cronTab,omitempty"`
+
+	// ErrorMessage: Optional. When the job was deleted from Pantheon UI,
+	// error_message will be populated when Get/List integrations
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Location: Required. The location where associated cloud scheduler job
+	// will be created
+	Location string `json:"location,omitempty"`
+
+	// ServiceAccountEmail: Required. Service account used by Cloud
+	// Scheduler to trigger the integration at scheduled time
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CronTab") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CronTab") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnterpriseCrmEventbusProtoCloudSchedulerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EnterpriseCrmEventbusProtoCloudSchedulerConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5954,7 +5995,7 @@ func (s *EnterpriseCrmFrontendsEventbusProtoTaskEntity) MarshalJSON() ([]byte, e
 }
 
 // EnterpriseCrmFrontendsEventbusProtoTriggerConfig: Configuration
-// detail of a trigger. Next available id: 16
+// detail of a trigger. Next available id: 17
 type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// AlertConfig: An alert threshold configuration for the [trigger +
 	// client + workflow] tuple. If these values are not specified in the
@@ -5962,6 +6003,8 @@ type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	// that there must be exactly one alert threshold configured per [client
 	// + trigger + workflow] when published.
 	AlertConfig []*EnterpriseCrmEventbusProtoWorkflowAlertConfig `json:"alertConfig,omitempty"`
+
+	CloudSchedulerConfig *EnterpriseCrmEventbusProtoCloudSchedulerConfig `json:"cloudSchedulerConfig,omitempty"`
 
 	// Description: User-provided description intended to give more business
 	// context about the task.
@@ -6037,6 +6080,7 @@ type EnterpriseCrmFrontendsEventbusProtoTriggerConfig struct {
 	//   "CLOUD_PUBSUB_EXTERNAL"
 	//   "SFDC_CDC_CHANNEL"
 	//   "SFDC_PLATFORM_EVENTS_CHANNEL"
+	//   "CLOUD_SCHEDULER"
 	TriggerType string `json:"triggerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertConfig") to
@@ -6511,10 +6555,6 @@ func (s *GoogleCloudConnectorsV1AuthConfigOauth2JwtBearerJwtClaims) MarshalJSON(
 type GoogleCloudConnectorsV1AuthConfigSshPublicKey struct {
 	// CertType: Format of SSH Client cert.
 	CertType string `json:"certType,omitempty"`
-
-	// Password: This is an optional field used in case client has enabled
-	// multi-factor authentication
-	Password *GoogleCloudConnectorsV1Secret `json:"password,omitempty"`
 
 	// SshClientCert: SSH Client Cert. It should contain both public and
 	// private key.
@@ -7386,6 +7426,47 @@ type GoogleCloudIntegrationsV1alphaClientCertificate struct {
 
 func (s *GoogleCloudIntegrationsV1alphaClientCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIntegrationsV1alphaClientCertificate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIntegrationsV1alphaCloudSchedulerConfig: Cloud Scheduler
+// Trigger configuration
+type GoogleCloudIntegrationsV1alphaCloudSchedulerConfig struct {
+	// CronTab: Required. The cron tab of cloud scheduler trigger.
+	CronTab string `json:"cronTab,omitempty"`
+
+	// ErrorMessage: Optional. When the job was deleted from Pantheon UI,
+	// error_message will be populated when Get/List integrations
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Location: Required. The location where associated cloud scheduler job
+	// will be created
+	Location string `json:"location,omitempty"`
+
+	// ServiceAccountEmail: Required. Service account used by Cloud
+	// Scheduler to trigger the integration at scheduled time
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CronTab") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CronTab") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIntegrationsV1alphaCloudSchedulerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIntegrationsV1alphaCloudSchedulerConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11121,6 +11202,10 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	// configured per [client + trigger + integration] when published.
 	AlertConfig []*GoogleCloudIntegrationsV1alphaIntegrationAlertConfig `json:"alertConfig,omitempty"`
 
+	// CloudSchedulerConfig: Optional. Cloud Scheduler Trigger related
+	// metadata
+	CloudSchedulerConfig *GoogleCloudIntegrationsV1alphaCloudSchedulerConfig `json:"cloudSchedulerConfig,omitempty"`
+
 	// Description: Optional. User-provided description intended to give
 	// additional business context about the task.
 	Description string `json:"description,omitempty"`
@@ -11168,6 +11253,7 @@ type GoogleCloudIntegrationsV1alphaTriggerConfig struct {
 	//   "SFDC_CHANNEL" - Trigger by Salesforce Channel.
 	//   "CLOUD_PUBSUB_EXTERNAL" - Trigger by Pub/Sub external.
 	//   "SFDC_CDC_CHANNEL" - SFDC Channel Trigger for CDC.
+	//   "CLOUD_SCHEDULER" - Trigger by Cloud Scheduler job.
 	TriggerType string `json:"triggerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertConfig") to
@@ -14996,13 +15082,6 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) FilterParamsTaskStatus
 	return c
 }
 
-// FilterParamsTriggerId sets the optional parameter
-// "filterParams.triggerId": Trigger id.
-func (c *ProjectsLocationsIntegrationsExecutionsListCall) FilterParamsTriggerId(filterParamsTriggerId string) *ProjectsLocationsIntegrationsExecutionsListCall {
-	c.urlParams_.Set("filterParams.triggerId", filterParamsTriggerId)
-	return c
-}
-
 // FilterParamsWorkflowName sets the optional parameter
 // "filterParams.workflowName": Workflow name.
 func (c *ProjectsLocationsIntegrationsExecutionsListCall) FilterParamsWorkflowName(filterParamsWorkflowName string) *ProjectsLocationsIntegrationsExecutionsListCall {
@@ -15231,11 +15310,6 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	//       "description": "List of possible task statuses.",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "filterParams.triggerId": {
-	//       "description": "Trigger id.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filterParams.workflowName": {
@@ -20085,13 +20159,6 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) FilterParamsTa
 	return c
 }
 
-// FilterParamsTriggerId sets the optional parameter
-// "filterParams.triggerId": Trigger id.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) FilterParamsTriggerId(filterParamsTriggerId string) *ProjectsLocationsProductsIntegrationsExecutionsListCall {
-	c.urlParams_.Set("filterParams.triggerId", filterParamsTriggerId)
-	return c
-}
-
 // FilterParamsWorkflowName sets the optional parameter
 // "filterParams.workflowName": Workflow name.
 func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) FilterParamsWorkflowName(filterParamsWorkflowName string) *ProjectsLocationsProductsIntegrationsExecutionsListCall {
@@ -20320,11 +20387,6 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	//       "description": "List of possible task statuses.",
 	//       "location": "query",
 	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "filterParams.triggerId": {
-	//       "description": "Trigger id.",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filterParams.workflowName": {

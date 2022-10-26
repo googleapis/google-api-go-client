@@ -724,6 +724,10 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
+	// ComplianceStatus: Output only. Count of active Violations in the
+	// Workload.
+	ComplianceStatus *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
+
 	// CompliantButDisallowedServices: Output only. Urls for services which
 	// are compliant for this Assured Workload, but which are currently
 	// disallowed by the ResourceUsageRestriction org policy. Invoke
@@ -832,6 +836,42 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 
 func (s *GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1Workload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus: Represents the
+// Compliance Status of this workload
+type GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus struct {
+	// AcknowledgedViolationCount: Count of active Violations which are
+	// acknowledged in the Workload.
+	AcknowledgedViolationCount int64 `json:"acknowledgedViolationCount,omitempty"`
+
+	// ActiveViolationCount: Count of active Violations which haven't been
+	// acknowledged.
+	ActiveViolationCount int64 `json:"activeViolationCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AcknowledgedViolationCount") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AcknowledgedViolationCount") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

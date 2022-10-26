@@ -2956,7 +2956,7 @@
       }
     }
   },
-  "revision": "20221013",
+  "revision": "20221025",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -5708,7 +5708,8 @@
               "SEARCH_ADS_360_LINK",
               "DATA_STREAM",
               "ATTRIBUTION_SETTINGS",
-              "EXPANDED_DATA_SET"
+              "EXPANDED_DATA_SET",
+              "CHANNEL_GROUPING"
             ],
             "enumDescriptions": [
               "Resource type unknown or not specified.",
@@ -5727,7 +5728,8 @@
               "SearchAds360Link resource",
               "DataStream resource",
               "AttributionSettings resource",
-              "ExpandedDataSet resource"
+              "ExpandedDataSet resource",
+              "ChannelGrouping resource"
             ],
             "type": "string"
           },

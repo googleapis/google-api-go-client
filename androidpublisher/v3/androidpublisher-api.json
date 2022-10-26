@@ -12,7 +12,7 @@
   "baseUrl": "https://androidpublisher.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Android Publisher",
-  "description": "Lets Android application developers access their Google Play accounts.",
+  "description": "Lets Android application developers access their Google Play accounts. At a high level, the expected workflow is to \"insert\" an Edit, make changes as necessary, and then \"commit\" it. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
   "icons": {
@@ -3920,7 +3920,7 @@
       }
     }
   },
-  "revision": "20221024",
+  "revision": "20221025",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "AcquisitionTargetingRule": {

@@ -1069,7 +1069,7 @@
       }
     }
   },
-  "revision": "20221017",
+  "revision": "20221023",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
@@ -3339,15 +3339,19 @@
       "properties": {
         "humanReviewLabelingMetadata": {
           "$ref": "GoogleCloudDocumentaiV1HumanReviewLabelingMetadata",
-          "description": "Human review labeling config on the property."
+          "description": "Human review labeling config on the entity."
         },
         "humanReviewMetadata": {
           "$ref": "GoogleCloudDocumentaiV1HumanReviewValidationMetadata",
-          "description": "Human review config on the entity type."
+          "description": "Human review config on the entity."
         },
         "inactive": {
           "description": "Whether the entity type should be considered as \"inactive\".",
           "type": "boolean"
+        },
+        "schemaMutabilityMetadata": {
+          "$ref": "GoogleCloudDocumentaiV1SchemaMutabilityMetadata",
+          "description": "Schema mutability metadata on the entity."
         }
       },
       "type": "object"
@@ -3795,6 +3799,10 @@
         "inactive": {
           "description": "Whether the property should be considered as \"inactive\".",
           "type": "boolean"
+        },
+        "schemaMutabilityMetadata": {
+          "$ref": "GoogleCloudDocumentaiV1SchemaMutabilityMetadata",
+          "description": "Schema mutability metadata on the property."
         }
       },
       "type": "object"
@@ -3886,6 +3894,24 @@
             "The review operation is succeeded."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1SchemaMutabilityMetadata": {
+      "description": "Metadata that specifies whether a label is editable and reasons why. These fields are read-only. Changing these fields has no impact on the backend.",
+      "id": "GoogleCloudDocumentaiV1SchemaMutabilityMetadata",
+      "properties": {
+        "editable": {
+          "description": "Explicit flag that controls whether the label is editable.",
+          "type": "boolean"
+        },
+        "processorVersions": {
+          "description": "Full resource name of processor versions that contain this label. e.g. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

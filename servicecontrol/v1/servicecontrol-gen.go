@@ -2404,15 +2404,17 @@ func (s *Request) MarshalJSON() ([]byte, error) {
 
 // RequestMetadata: Metadata about the request.
 type RequestMetadata struct {
-	// CallerIp: The IP address of the caller. For caller from internet,
-	// this will be public IPv4 or IPv6 address. For caller from a Compute
-	// Engine VM with external IP address, this will be the VM's external IP
-	// address. For caller from a Compute Engine VM without external IP
-	// address, if the VM is in the same organization (or project) as the
-	// accessed resource, `caller_ip` will be the VM's internal IPv4
-	// address, otherwise the `caller_ip` will be redacted to
-	// "gce-internal-ip". See https://cloud.google.com/compute/docs/vpc/ for
-	// more information.
+	// CallerIp: The IP address of the caller. For a caller from the
+	// internet, this will be the public IPv4 or IPv6 address. For calls
+	// made from inside Google's internal production network from one GCP
+	// service to another, `caller_ip` will be redacted to "private". For a
+	// caller from a Compute Engine VM with a external IP address,
+	// `caller_ip` will be the VM's external IP address. For a caller from a
+	// Compute Engine VM without a external IP address, if the VM is in the
+	// same organization (or project) as the accessed resource, `caller_ip`
+	// will be the VM's internal IPv4 address, otherwise `caller_ip` will be
+	// redacted to "gce-internal-ip". See
+	// https://cloud.google.com/compute/docs/vpc/ for more information.
 	CallerIp string `json:"callerIp,omitempty"`
 
 	// CallerNetwork: The network of the caller. Set only if the network
@@ -2431,7 +2433,7 @@ type RequestMetadata struct {
 	// apitools-client/1.0 gcloud/0.9.62`: The request was made by the
 	// Google Cloud SDK CLI (gcloud). + `AppEngine-Google;
 	// (+http://code.google.com/appengine; appid: s~my-project`: The request
-	// was made from the `my-project` App Engine app. NOLINT
+	// was made from the `my-project` App Engine app.
 	CallerSuppliedUserAgent string `json:"callerSuppliedUserAgent,omitempty"`
 
 	// DestinationAttributes: The destination of a network activity, such as

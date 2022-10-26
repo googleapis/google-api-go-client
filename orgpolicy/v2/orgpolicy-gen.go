@@ -455,7 +455,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// `organizations/{organization_id}/customConstraints/{custom_constraint_
 	// id}` Example :
 	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms" The
-	// max length is 100 characters and the min length is 1. Note that the
+	// max length is 70 characters and the min length is 1. Note that the
 	// prefix "organizations/{organization_id}/customConstraints/" is not
 	// counted.
 	Name string `json:"name,omitempty"`
@@ -2891,7 +2891,7 @@ type OrganizationsCustomConstraintsPatchCall struct {
 //     `organizations/{organization_id}/customConstraints/{custom_constrain
 //     t_id}` Example :
 //     "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
-//     The max length is 100 characters and the min length is 1. Note that
+//     The max length is 70 characters and the min length is 1. Note that
 //     the prefix "organizations/{organization_id}/customConstraints/" is
 //     not counted.
 func (r *OrganizationsCustomConstraintsService) Patch(name string, googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint) *OrganizationsCustomConstraintsPatchCall {
@@ -3002,7 +3002,7 @@ func (c *OrganizationsCustomConstraintsPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example : \"organizations/123/customConstraints/custom.createOnlyE2TypeVms\" The max length is 100 characters and the min length is 1. Note that the prefix \"organizations/{organization_id}/customConstraints/\" is not counted.",
+	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example : \"organizations/123/customConstraints/custom.createOnlyE2TypeVms\" The max length is 70 characters and the min length is 1. Note that the prefix \"organizations/{organization_id}/customConstraints/\" is not counted.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
 	//       "required": true,

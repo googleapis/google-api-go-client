@@ -79,6 +79,8 @@ type Error struct {
 	Header http.Header
 
 	Errors []ErrorItem
+	// Err is a wrapped apierror.APIError, typically derived from this Error.
+	Err error
 }
 
 // ErrorItem is a detailed error code & message from the Google API frontend.
@@ -120,6 +122,10 @@ func (e *Error) Error() string {
 		fmt.Fprintf(&buf, "Reason: %s, Message: %s\n", v.Reason, v.Message)
 	}
 	return buf.String()
+}
+
+func (e *Error) Unwrap() error {
+	return e.Err
 }
 
 type errorReply struct {

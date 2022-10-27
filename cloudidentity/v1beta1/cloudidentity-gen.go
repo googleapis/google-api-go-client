@@ -315,8 +315,8 @@ type AddIdpCredentialOperationMetadata struct {
 // with its associated payload. An InboundSamlSsoProfile can own up to 2
 // credentials.
 type AddIdpCredentialRequest struct {
-	// PemData: PEM encoded x509 certificate containing the public signing
-	// key.
+	// PemData: PEM encoded x509 certificate containing the public key for
+	// verifying IdP signatures.
 	PemData string `json:"pemData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PemData") to
@@ -2309,8 +2309,8 @@ func (s *GroupRelation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IdpCredential: The identity provider's credentials (for signing
-// assertions, etc).
+// IdpCredential: Credential for verifying signatures produced by the
+// Identity Provider.
 type IdpCredential struct {
 	// DsaKeyInfo: Output only. Information of a DSA public key.
 	DsaKeyInfo *DsaPublicKeyInfo `json:"dsaKeyInfo,omitempty"`
@@ -11470,12 +11470,13 @@ func (r *InboundSamlSsoProfilesService) List() *InboundSamlSsoProfilesListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": A CEL expression to
-// filter the results. The only currently-supported filter is filtering
-// by customer. For example: `customer==customers/C0123abc`. Omitting
-// the filter or specifying a filter of
-// `customer==customers/my_customer` will return the profiles for the
-// customer that the caller (authenticated user) belongs to.
+// Filter sets the optional parameter "filter": A Common Expression
+// Language (https://github.com/google/cel-spec) expression to filter
+// the results. The only currently-supported filter is filtering by
+// customer. For example: `customer=="customers/C0123abc". Omitting the
+// filter or specifying a filter of `customer=="customers/my_customer"
+// will return the profiles for the customer that the caller
+// (authenticated user) belongs to.
 func (c *InboundSamlSsoProfilesListCall) Filter(filter string) *InboundSamlSsoProfilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -11485,9 +11486,8 @@ func (c *InboundSamlSsoProfilesListCall) Filter(filter string) *InboundSamlSsoPr
 // of InboundSamlSsoProfiles to return. The service may return fewer
 // than this value. If omitted (or defaulted to zero) the server will
 // use a sensible default. This default may change over time. The
-// maximum allowed value is 100, though requests with page_size greater
-// than that will be silently interpreted as having this maximum value.
-// This may increase in the futue.
+// maximum allowed value is 100. Requests with page_size greater than
+// that will be silently interpreted as having this maximum value.
 func (c *InboundSamlSsoProfilesListCall) PageSize(pageSize int64) *InboundSamlSsoProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -11607,12 +11607,12 @@ func (c *InboundSamlSsoProfilesListCall) Do(opts ...googleapi.CallOption) (*List
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A CEL expression to filter the results. The only currently-supported filter is filtering by customer. For example: `customer==customers/C0123abc`. Omitting the filter or specifying a filter of `customer==customers/my_customer` will return the profiles for the customer that the caller (authenticated user) belongs to.",
+	//       "description": "A [Common Expression Language](https://github.com/google/cel-spec) expression to filter the results. The only currently-supported filter is filtering by customer. For example: `customer==\"customers/C0123abc\"`. Omitting the filter or specifying a filter of `customer==\"customers/my_customer\"` will return the profiles for the customer that the caller (authenticated user) belongs to.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of InboundSamlSsoProfiles to return. The service may return fewer than this value. If omitted (or defaulted to zero) the server will use a sensible default. This default may change over time. The maximum allowed value is 100, though requests with page_size greater than that will be silently interpreted as having this maximum value. This may increase in the futue.",
+	//       "description": "The maximum number of InboundSamlSsoProfiles to return. The service may return fewer than this value. If omitted (or defaulted to zero) the server will use a sensible default. This default may change over time. The maximum allowed value is 100. Requests with page_size greater than that will be silently interpreted as having this maximum value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

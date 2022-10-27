@@ -469,7 +469,7 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportRequest: Request to generate an AdMob
-// Mediation report.
+// mediation report.
 type GenerateMediationReportRequest struct {
 	// ReportSpec: Network report specification.
 	ReportSpec *MediationReportSpec `json:"reportSpec,omitempty"`
@@ -498,7 +498,7 @@ func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
-// Mediation report where the first response contains the report header,
+// mediation report where the first response contains the report header,
 // then a stream of row responses, and finally a footer as the last
 // response message. For example: [{ "header": { "date_range": {
 // "start_date": {"year": 2018, "month": 9, "day": 1}, "end_date":
@@ -2528,7 +2528,7 @@ type AccountsMediationReportGenerateCall struct {
 	header_                        http.Header
 }
 
-// Generate: Generates an AdMob Mediation report based on the provided
+// Generate: Generates an AdMob mediation report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
 //
@@ -2632,7 +2632,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
+	//   "description": "Generates an AdMob mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1/accounts/{accountsId}/mediationReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.mediationReport.generate",

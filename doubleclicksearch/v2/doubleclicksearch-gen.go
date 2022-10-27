@@ -1081,6 +1081,575 @@ func (s *UpdateAvailabilityResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "doubleclicksearch.conversion.GetCustomerId":
+
+type ConversionGetCustomerIdCall struct {
+	s            *Service
+	customerId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCustomerId: Retrieves a list of conversions from a DoubleClick
+// Search engine account.
+//
+//   - customerId: Customer ID of a client account in the new Search Ads
+//     360 experience.
+//   - endDate: Last date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - rowCount: The number of conversions to return per call.
+//   - startDate: First date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - startRow: The 0-based starting index for retrieving conversions
+//     results.
+func (r *ConversionService) GetCustomerId(customerId string, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetCustomerIdCall {
+	c := &ConversionGetCustomerIdCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.urlParams_.Set("endDate", fmt.Sprint(endDate))
+	c.urlParams_.Set("rowCount", fmt.Sprint(rowCount))
+	c.urlParams_.Set("startDate", fmt.Sprint(startDate))
+	c.urlParams_.Set("startRow", fmt.Sprint(startRow))
+	return c
+}
+
+// AdGroupId sets the optional parameter "adGroupId": Numeric ID of the
+// ad group.
+func (c *ConversionGetCustomerIdCall) AdGroupId(adGroupId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("adGroupId", fmt.Sprint(adGroupId))
+	return c
+}
+
+// AdId sets the optional parameter "adId": Numeric ID of the ad.
+func (c *ConversionGetCustomerIdCall) AdId(adId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("adId", fmt.Sprint(adId))
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": Numeric ID
+// of the advertiser.
+func (c *ConversionGetCustomerIdCall) AdvertiserId(advertiserId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// AgencyId sets the optional parameter "agencyId": Numeric ID of the
+// agency.
+func (c *ConversionGetCustomerIdCall) AgencyId(agencyId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("agencyId", fmt.Sprint(agencyId))
+	return c
+}
+
+// CampaignId sets the optional parameter "campaignId": Numeric ID of
+// the campaign.
+func (c *ConversionGetCustomerIdCall) CampaignId(campaignId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("campaignId", fmt.Sprint(campaignId))
+	return c
+}
+
+// CriterionId sets the optional parameter "criterionId": Numeric ID of
+// the criterion.
+func (c *ConversionGetCustomerIdCall) CriterionId(criterionId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("criterionId", fmt.Sprint(criterionId))
+	return c
+}
+
+// EngineAccountId sets the optional parameter "engineAccountId":
+// Numeric ID of the engine account.
+func (c *ConversionGetCustomerIdCall) EngineAccountId(engineAccountId int64) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("engineAccountId", fmt.Sprint(engineAccountId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionGetCustomerIdCall) Fields(s ...googleapi.Field) *ConversionGetCustomerIdCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConversionGetCustomerIdCall) IfNoneMatch(entityTag string) *ConversionGetCustomerIdCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionGetCustomerIdCall) Context(ctx context.Context) *ConversionGetCustomerIdCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionGetCustomerIdCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionGetCustomerIdCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/customer/{customerId}/conversion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "doubleclicksearch.conversion.GetCustomerId" call.
+// Exactly one of *ConversionList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConversionList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionGetCustomerIdCall) Do(opts ...googleapi.CallOption) (*ConversionList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConversionList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of conversions from a DoubleClick Search engine account.",
+	//   "flatPath": "doubleclicksearch/v2/customer/{customerId}/conversion",
+	//   "httpMethod": "GET",
+	//   "id": "doubleclicksearch.conversion.GetCustomerId",
+	//   "parameterOrder": [
+	//     "customerId",
+	//     "endDate",
+	//     "rowCount",
+	//     "startDate",
+	//     "startRow"
+	//   ],
+	//   "parameters": {
+	//     "adGroupId": {
+	//       "description": "Numeric ID of the ad group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "adId": {
+	//       "description": "Numeric ID of the ad.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "advertiserId": {
+	//       "description": "Numeric ID of the advertiser.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "agencyId": {
+	//       "description": "Numeric ID of the agency.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Numeric ID of the campaign.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "criterionId": {
+	//       "description": "Numeric ID of the criterion.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Customer ID of a client account in the new Search Ads 360 experience.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "Last date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "engineAccountId": {
+	//       "description": "Numeric ID of the engine account.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "rowCount": {
+	//       "description": "The number of conversions to return per call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startDate": {
+	//       "description": "First date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startRow": {
+	//       "description": "The 0-based starting index for retrieving conversions results.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "doubleclicksearch/v2/customer/{customerId}/conversion",
+	//   "response": {
+	//     "$ref": "ConversionList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
+}
+
+// method id "doubleclicksearch.conversion.get":
+
+type ConversionGetCall struct {
+	s               *Service
+	agencyId        int64
+	advertiserId    int64
+	engineAccountId int64
+	urlParams_      gensupport.URLParams
+	ifNoneMatch_    string
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Get: Retrieves a list of conversions from a DoubleClick Search engine
+// account.
+//
+//   - advertiserId: Numeric ID of the advertiser.
+//   - agencyId: Numeric ID of the agency.
+//   - endDate: Last date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - engineAccountId: Numeric ID of the engine account.
+//   - rowCount: The number of conversions to return per call.
+//   - startDate: First date (inclusive) on which to retrieve conversions.
+//     Format is yyyymmdd.
+//   - startRow: The 0-based starting index for retrieving conversions
+//     results.
+func (r *ConversionService) Get(agencyId int64, advertiserId int64, engineAccountId int64, endDate int64, rowCount int64, startDate int64, startRow int64) *ConversionGetCall {
+	c := &ConversionGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.agencyId = agencyId
+	c.advertiserId = advertiserId
+	c.engineAccountId = engineAccountId
+	c.urlParams_.Set("endDate", fmt.Sprint(endDate))
+	c.urlParams_.Set("rowCount", fmt.Sprint(rowCount))
+	c.urlParams_.Set("startDate", fmt.Sprint(startDate))
+	c.urlParams_.Set("startRow", fmt.Sprint(startRow))
+	return c
+}
+
+// AdGroupId sets the optional parameter "adGroupId": Numeric ID of the
+// ad group.
+func (c *ConversionGetCall) AdGroupId(adGroupId int64) *ConversionGetCall {
+	c.urlParams_.Set("adGroupId", fmt.Sprint(adGroupId))
+	return c
+}
+
+// AdId sets the optional parameter "adId": Numeric ID of the ad.
+func (c *ConversionGetCall) AdId(adId int64) *ConversionGetCall {
+	c.urlParams_.Set("adId", fmt.Sprint(adId))
+	return c
+}
+
+// CampaignId sets the optional parameter "campaignId": Numeric ID of
+// the campaign.
+func (c *ConversionGetCall) CampaignId(campaignId int64) *ConversionGetCall {
+	c.urlParams_.Set("campaignId", fmt.Sprint(campaignId))
+	return c
+}
+
+// CriterionId sets the optional parameter "criterionId": Numeric ID of
+// the criterion.
+func (c *ConversionGetCall) CriterionId(criterionId int64) *ConversionGetCall {
+	c.urlParams_.Set("criterionId", fmt.Sprint(criterionId))
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": Customer ID of a
+// client account in the new Search Ads 360 experience.
+func (c *ConversionGetCall) CustomerId(customerId string) *ConversionGetCall {
+	c.urlParams_.Set("customerId", customerId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConversionGetCall) Fields(s ...googleapi.Field) *ConversionGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConversionGetCall) IfNoneMatch(entityTag string) *ConversionGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConversionGetCall) Context(ctx context.Context) *ConversionGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConversionGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConversionGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"agencyId":        strconv.FormatInt(c.agencyId, 10),
+		"advertiserId":    strconv.FormatInt(c.advertiserId, 10),
+		"engineAccountId": strconv.FormatInt(c.engineAccountId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "doubleclicksearch.conversion.get" call.
+// Exactly one of *ConversionList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConversionList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConversionGetCall) Do(opts ...googleapi.CallOption) (*ConversionList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConversionList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of conversions from a DoubleClick Search engine account.",
+	//   "flatPath": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
+	//   "httpMethod": "GET",
+	//   "id": "doubleclicksearch.conversion.get",
+	//   "parameterOrder": [
+	//     "agencyId",
+	//     "advertiserId",
+	//     "engineAccountId",
+	//     "endDate",
+	//     "rowCount",
+	//     "startDate",
+	//     "startRow"
+	//   ],
+	//   "parameters": {
+	//     "adGroupId": {
+	//       "description": "Numeric ID of the ad group.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "adId": {
+	//       "description": "Numeric ID of the ad.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "advertiserId": {
+	//       "description": "Numeric ID of the advertiser.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "agencyId": {
+	//       "description": "Numeric ID of the agency.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Numeric ID of the campaign.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "criterionId": {
+	//       "description": "Numeric ID of the criterion.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customerId": {
+	//       "description": "Customer ID of a client account in the new Search Ads 360 experience.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "endDate": {
+	//       "description": "Last date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "engineAccountId": {
+	//       "description": "Numeric ID of the engine account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "rowCount": {
+	//       "description": "The number of conversions to return per call.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startDate": {
+	//       "description": "First date (inclusive) on which to retrieve conversions. Format is yyyymmdd.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "99991231",
+	//       "minimum": "20091101",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "startRow": {
+	//       "description": "The 0-based starting index for retrieving conversions results.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "doubleclicksearch/v2/agency/{agencyId}/advertiser/{advertiserId}/engine/{engineAccountId}/conversion",
+	//   "response": {
+	//     "$ref": "ConversionList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/doubleclicksearch"
+	//   ]
+	// }
+
+}
+
 // method id "doubleclicksearch.conversion.insert":
 
 type ConversionInsertCall struct {

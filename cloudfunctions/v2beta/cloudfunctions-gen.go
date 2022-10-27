@@ -376,12 +376,35 @@ type BuildConfig struct {
 	// deployment of the function.
 	Build string `json:"build,omitempty"`
 
-	// DockerRepository: Optional. User managed repository created in
-	// Artifact Registry optionally with a customer managed encryption key.
-	// This is the repository to which the function docker image will be
-	// pushed after it is built by Cloud Build. If unspecified, GCF will
-	// create and use a repository named 'gcf-artifacts' for every deployed
-	// region. It must match the pattern
+	// BuildpackStack: Specifies one of the Google provided buildpack
+	// stacks.
+	BuildpackStack string `json:"buildpackStack,omitempty"`
+
+	// DockerRegistry: Optional. Docker Registry to use for this deployment.
+	// This configuration is only applicable to 1st Gen functions, 2nd Gen
+	// functions can only use Artifact Registry. If `docker_repository`
+	// field is specified, this field will be automatically set as
+	// `ARTIFACT_REGISTRY`. If unspecified, it currently defaults to
+	// `CONTAINER_REGISTRY`. This field may be overridden by the backend for
+	// eligible deployments.
+	//
+	// Possible values:
+	//   "DOCKER_REGISTRY_UNSPECIFIED" - Unspecified.
+	//   "CONTAINER_REGISTRY" - Docker images will be stored in
+	// multi-regional Container Registry repositories named `gcf`.
+	//   "ARTIFACT_REGISTRY" - Docker images will be stored in regional
+	// Artifact Registry repositories. By default, GCF will create and use
+	// repositories named `gcf-artifacts` in every region in which a
+	// function is deployed. But the repository to use can also be specified
+	// by the user using the `docker_repository` field.
+	DockerRegistry string `json:"dockerRegistry,omitempty"`
+
+	// DockerRepository: User managed repository created in Artifact
+	// Registry optionally with a customer managed encryption key. This is
+	// the repository to which the function docker image will be pushed
+	// after it is built by Cloud Build. If unspecified, GCF will create and
+	// use a repository named 'gcf-artifacts' for every deployed region. It
+	// must match the pattern
 	// `projects/{project}/locations/{location}/repositories/{repository}`.
 	// Cross-project repositories are not supported. Cross-location
 	// repositories are not supported. Repository format must be 'DOCKER'.
@@ -1993,6 +2016,22 @@ type ServiceConfig struct {
 
 	// SecretVolumes: Secret volumes configuration.
 	SecretVolumes []*SecretVolume `json:"secretVolumes,omitempty"`
+
+	// SecurityLevel: Optional. Security level configure whether the
+	// function only accepts https. This configuration is only applicable to
+	// 1st Gen functions with Http trigger. By default https is optional for
+	// 1st Gen functions; 2nd Gen functions are https ONLY.
+	//
+	// Possible values:
+	//   "SECURITY_LEVEL_UNSPECIFIED" - Unspecified.
+	//   "SECURE_ALWAYS" - Requests for a URL that match this handler that
+	// do not use HTTPS are automatically redirected to the HTTPS URL with
+	// the same path. Query parameters are reserved for the redirect.
+	//   "SECURE_OPTIONAL" - Both HTTP and HTTPS requests with URLs that
+	// match the handler succeed without redirects. The application can
+	// examine the request to determine which protocol was used and respond
+	// accordingly.
+	SecurityLevel string `json:"securityLevel,omitempty"`
 
 	// Service: Output only. Name of the service associated with a Function.
 	// The format of this field is

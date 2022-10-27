@@ -5105,6 +5105,164 @@ func (c *LabelsUpdateLabelCopyModeCall) Do(opts ...googleapi.CallOption) (*Googl
 
 }
 
+// method id "drivelabels.labels.updatePermissions":
+
+type LabelsUpdatePermissionsCall struct {
+	s                                          *Service
+	parent                                     string
+	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
+//
+// - parent: The parent Label resource name.
+func (r *LabelsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsUpdatePermissionsCall {
+	c := &LabelsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
+	return c
+}
+
+// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
+// `true` in order to use the user's admin credentials. The server will
+// verify the user is an admin for the Label before allowing access.
+func (c *LabelsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LabelsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsUpdatePermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LabelsUpdatePermissionsCall) Context(ctx context.Context) *LabelsUpdatePermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LabelsUpdatePermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LabelsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2betalabelpermission)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drivelabels.labels.updatePermissions" call.
+// Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsDriveLabelsV2betaLabelPermission.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *LabelsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
+	//   "flatPath": "v2beta/labels/{labelsId}/permissions",
+	//   "httpMethod": "PATCH",
+	//   "id": "drivelabels.labels.updatePermissions",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name.",
+	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useAdminAccess": {
+	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v2beta/{+parent}/permissions",
+	//   "request": {
+	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
+	//   }
+	// }
+
+}
+
 // method id "drivelabels.labels.locks.list":
 
 type LabelsLocksListCall struct {
@@ -5300,7 +5458,7 @@ func (c *LabelsLocksListCall) Pages(ctx context.Context, f func(*GoogleAppsDrive
 
 type LabelsPermissionsBatchDeleteCall struct {
 	s                                                             *Service
-	labelsId                                                      string
+	parent                                                        string
 	googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
@@ -5311,10 +5469,13 @@ type LabelsPermissionsBatchDeleteCall struct {
 // resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-// - labelsId: .
-func (r *LabelsPermissionsService) BatchDelete(labelsId string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsPermissionsBatchDeleteCall {
 	c := &LabelsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.labelsId = labelsId
+	c.parent = parent
 	c.googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest = googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest
 	return c
 }
@@ -5359,7 +5520,7 @@ func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/labels/{labelsId}/permissions:batchDelete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -5367,7 +5528,7 @@ func (c *LabelsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"labelsId": c.labelsId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -5415,16 +5576,18 @@ func (c *LabelsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "httpMethod": "POST",
 	//   "id": "drivelabels.labels.permissions.batchDelete",
 	//   "parameterOrder": [
-	//     "labelsId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "labelsId": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
 	//       "location": "path",
+	//       "pattern": "^labels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta/labels/{labelsId}/permissions:batchDelete",
+	//   "path": "v2beta/{+parent}/permissions:batchDelete",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest"
 	//   },
@@ -6093,9 +6256,9 @@ func (c *LabelsPermissionsListCall) Pages(ctx context.Context, f func(*GoogleApp
 	}
 }
 
-// method id "drivelabels.labels.permissions.patch":
+// method id "drivelabels.labels.revisions.updatePermissions":
 
-type LabelsPermissionsPatchCall struct {
+type LabelsRevisionsUpdatePermissionsCall struct {
 	s                                          *Service
 	parent                                     string
 	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
@@ -6104,15 +6267,15 @@ type LabelsPermissionsPatchCall struct {
 	header_                                    http.Header
 }
 
-// Patch: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the
-// Label resource as a whole, are not revisioned, and do not require
-// publishing.
+// UpdatePermissions: Updates a Label's permissions. If a permission for
+// the indicated principal doesn't exist, a new Label Permission is
+// created, otherwise the existing permission is updated. Permissions
+// affect the Label resource as a whole, are not revisioned, and do not
+// require publishing.
 //
 // - parent: The parent Label resource name.
-func (r *LabelsPermissionsService) Patch(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsPermissionsPatchCall {
-	c := &LabelsPermissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *LabelsRevisionsService) UpdatePermissions(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsUpdatePermissionsCall {
+	c := &LabelsRevisionsUpdatePermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
 	return c
@@ -6121,7 +6284,7 @@ func (r *LabelsPermissionsService) Patch(parent string, googleappsdrivelabelsv2b
 // UseAdminAccess sets the optional parameter "useAdminAccess": Set to
 // `true` in order to use the user's admin credentials. The server will
 // verify the user is an admin for the Label before allowing access.
-func (c *LabelsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsUpdatePermissionsCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
 }
@@ -6129,7 +6292,7 @@ func (c *LabelsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *Labels
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *LabelsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) Fields(s ...googleapi.Field) *LabelsRevisionsUpdatePermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -6137,21 +6300,21 @@ func (c *LabelsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsPermiss
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *LabelsPermissionsPatchCall) Context(ctx context.Context) *LabelsPermissionsPatchCall {
+func (c *LabelsRevisionsUpdatePermissionsCall) Context(ctx context.Context) *LabelsRevisionsUpdatePermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *LabelsPermissionsPatchCall) Header() http.Header {
+func (c *LabelsRevisionsUpdatePermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *LabelsRevisionsUpdatePermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
 	for k, v := range c.header_ {
@@ -6166,7 +6329,7 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -6179,7 +6342,7 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "drivelabels.labels.permissions.patch" call.
+// Do executes the "drivelabels.labels.revisions.updatePermissions" call.
 // Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
 // will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
@@ -6188,7 +6351,7 @@ func (c *LabelsPermissionsPatchCall) doRequest(alt string) (*http.Response, erro
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
+func (c *LabelsRevisionsUpdatePermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6220,9 +6383,9 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	return ret, nil
 	// {
 	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
-	//   "flatPath": "v2beta/labels/{labelsId}/permissions/{permissionsId}",
+	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions",
 	//   "httpMethod": "PATCH",
-	//   "id": "drivelabels.labels.permissions.patch",
+	//   "id": "drivelabels.labels.revisions.updatePermissions",
 	//   "parameterOrder": [
 	//     "parent"
 	//   ],
@@ -6230,7 +6393,7 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//     "parent": {
 	//       "description": "Required. The parent Label resource name.",
 	//       "location": "path",
-	//       "pattern": "^labels/[^/]+/permissions/[^/]+$",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -6240,7 +6403,7 @@ func (c *LabelsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//       "type": "boolean"
 	//     }
 	//   },
-	//   "path": "v2beta/{+parent}",
+	//   "path": "v2beta/{+parent}/permissions",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
 	//   },
@@ -6446,8 +6609,7 @@ func (c *LabelsRevisionsLocksListCall) Pages(ctx context.Context, f func(*Google
 
 type LabelsRevisionsPermissionsBatchDeleteCall struct {
 	s                                                             *Service
-	labelsId                                                      string
-	revisionsId                                                   string
+	parent                                                        string
 	googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
@@ -6458,12 +6620,13 @@ type LabelsRevisionsPermissionsBatchDeleteCall struct {
 // resource as a whole, are not revisioned, and do not require
 // publishing.
 //
-// - labelsId: .
-// - revisionsId: .
-func (r *LabelsRevisionsPermissionsService) BatchDelete(labelsId string, revisionsId string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
+//   - parent: The parent Label resource name shared by all permissions
+//     being deleted. Format: labels/{label} If this is set, the parent
+//     field in the UpdateLabelPermissionRequest messages must either be
+//     empty or match this field.
+func (r *LabelsRevisionsPermissionsService) BatchDelete(parent string, googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) *LabelsRevisionsPermissionsBatchDeleteCall {
 	c := &LabelsRevisionsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.labelsId = labelsId
-	c.revisionsId = revisionsId
+	c.parent = parent
 	c.googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest = googleappsdrivelabelsv2betabatchdeletelabelpermissionsrequest
 	return c
 }
@@ -6508,7 +6671,7 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions:batchDelete")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}/permissions:batchDelete")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -6516,8 +6679,7 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) doRequest(alt string) (*http
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"labelsId":    c.labelsId,
-		"revisionsId": c.revisionsId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -6565,22 +6727,18 @@ func (c *LabelsRevisionsPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "httpMethod": "POST",
 	//   "id": "drivelabels.labels.revisions.permissions.batchDelete",
 	//   "parameterOrder": [
-	//     "labelsId",
-	//     "revisionsId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "labelsId": {
+	//     "parent": {
+	//       "description": "Required. The parent Label resource name shared by all permissions being deleted. Format: labels/{label} If this is set, the parent field in the UpdateLabelPermissionRequest messages must either be empty or match this field.",
 	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "revisionsId": {
-	//       "location": "path",
+	//       "pattern": "^labels/[^/]+/revisions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions:batchDelete",
+	//   "path": "v2beta/{+parent}/permissions:batchDelete",
 	//   "request": {
 	//     "$ref": "GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest"
 	//   },
@@ -7247,164 +7405,6 @@ func (c *LabelsRevisionsPermissionsListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "drivelabels.labels.revisions.permissions.patch":
-
-type LabelsRevisionsPermissionsPatchCall struct {
-	s                                          *Service
-	parent                                     string
-	googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission
-	urlParams_                                 gensupport.URLParams
-	ctx_                                       context.Context
-	header_                                    http.Header
-}
-
-// Patch: Updates a Label's permissions. If a permission for the
-// indicated principal doesn't exist, a new Label Permission is created,
-// otherwise the existing permission is updated. Permissions affect the
-// Label resource as a whole, are not revisioned, and do not require
-// publishing.
-//
-// - parent: The parent Label resource name.
-func (r *LabelsRevisionsPermissionsService) Patch(parent string, googleappsdrivelabelsv2betalabelpermission *GoogleAppsDriveLabelsV2betaLabelPermission) *LabelsRevisionsPermissionsPatchCall {
-	c := &LabelsRevisionsPermissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleappsdrivelabelsv2betalabelpermission = googleappsdrivelabelsv2betalabelpermission
-	return c
-}
-
-// UseAdminAccess sets the optional parameter "useAdminAccess": Set to
-// `true` in order to use the user's admin credentials. The server will
-// verify the user is an admin for the Label before allowing access.
-func (c *LabelsRevisionsPermissionsPatchCall) UseAdminAccess(useAdminAccess bool) *LabelsRevisionsPermissionsPatchCall {
-	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LabelsRevisionsPermissionsPatchCall) Fields(s ...googleapi.Field) *LabelsRevisionsPermissionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LabelsRevisionsPermissionsPatchCall) Context(ctx context.Context) *LabelsRevisionsPermissionsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LabelsRevisionsPermissionsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LabelsRevisionsPermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappsdrivelabelsv2betalabelpermission)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "drivelabels.labels.revisions.permissions.patch" call.
-// Exactly one of *GoogleAppsDriveLabelsV2betaLabelPermission or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleAppsDriveLabelsV2betaLabelPermission.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *LabelsRevisionsPermissionsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabelsV2betaLabelPermission, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleAppsDriveLabelsV2betaLabelPermission{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a Label's permissions. If a permission for the indicated principal doesn't exist, a new Label Permission is created, otherwise the existing permission is updated. Permissions affect the Label resource as a whole, are not revisioned, and do not require publishing.",
-	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/permissions/{permissionsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "drivelabels.labels.revisions.permissions.patch",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent Label resource name.",
-	//       "location": "path",
-	//       "pattern": "^labels/[^/]+/revisions/[^/]+/permissions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "useAdminAccess": {
-	//       "description": "Set to `true` in order to use the user's admin credentials. The server will verify the user is an admin for the Label before allowing access.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v2beta/{+parent}",
-	//   "request": {
-	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleAppsDriveLabelsV2betaLabelPermission"
-	//   }
-	// }
-
 }
 
 // method id "drivelabels.limits.getLabel":

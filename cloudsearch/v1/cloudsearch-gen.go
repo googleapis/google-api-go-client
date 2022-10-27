@@ -755,6 +755,35 @@ func (s *ActionParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type AddonComposeUiActionMarkup struct {
+	// Possible values:
+	//   "UNSPECIFIED" - Default. When unspecified, no action is taken.
+	//   "DISMISS" - Dismisses the add-on compose UI.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddonComposeUiActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AddonComposeUiActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AffectedMembership: Earlier we used to populate just the
 // affected_members list and inferred the new membership state (roles
 // didn't exist back then) from the Type. go/dynamite-finra required
@@ -3684,6 +3713,11 @@ type AppsDynamiteSharedOnClick struct {
 	// Action: If specified, an action is triggered by this onClick.
 	Action *AppsDynamiteSharedAction `json:"action,omitempty"`
 
+	// HostAppAction: Triggers host app action on click directly without
+	// invoking form actions. This is currently not available to end-users
+	// and is used internal only.
+	HostAppAction *HostAppActionMarkup `json:"hostAppAction,omitempty"`
+
 	// OpenDynamicLinkAction: An add-on triggers this action when the action
 	// needs to open a link. This differs from the open_link above in that
 	// this needs to talk to server to get the link. Thus some preparation
@@ -4984,6 +5018,342 @@ func (s *AppsDynamiteV1ApiCompatV1Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkup struct {
+	AddonAttachments []*AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkupAddonAttachment `json:"addonAttachments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddonAttachments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddonAttachments") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkupAddonAttachment struct {
+	// IconUrl: Link to the resource's icon.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// MimeType: MIME type of the content in resource_url.
+	MimeType string `json:"mimeType,omitempty"`
+
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// Title: Title of the attachment.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IconUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IconUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkupAddonAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkupAddonAttachment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkup:
+// Markup that defines conference data associated to a Google Calendar
+// event.
+type AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkup struct {
+	// ConferenceId: Unique identifier for this conference data. Maximum 512
+	// characters long.
+	ConferenceId string `json:"conferenceId,omitempty"`
+
+	// ConferenceSolutionId: An identifier of the conferencing solution.
+	// Must match a value from the deployment's
+	// `calendar.conferenceSolution.id` field.
+	ConferenceSolutionId string `json:"conferenceSolutionId,omitempty"`
+
+	// EntryPoints: Entry points to the conference. Maximum 300 entry points
+	// are allowed.
+	EntryPoints []*AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupEntryPointMarkup `json:"entryPoints,omitempty"`
+
+	// Error: If set, it means an error occurred during conference creation.
+	Error *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupError `json:"error,omitempty"`
+
+	// Note: Additional notes (such as instructions from the administrator,
+	// legal notices) to display to the user. Can contain HTML. Max length
+	// 2048 characters.
+	Note string `json:"note,omitempty"`
+
+	// Parameters: Additional add-on parameters. Maximum 300 parameters are
+	// allowed.
+	Parameters []*AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupParameter `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConferenceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConferenceId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupEntr
+// yPointMarkup: A way to join the conference.
+type AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupEntryPointMarkup struct {
+	// AccessCode: An access code for accessing the conference. Maximum 128
+	// characters long.
+	AccessCode string `json:"accessCode,omitempty"`
+
+	// Features: Features of the entry point, such as being toll or
+	// toll-free. One entry point can have multiple features.
+	//
+	// Possible values:
+	//   "UNKNOWN_FEATURE" - Unknown feature.
+	//   "TOLL" - Applies to `PHONE` entry point. A call to a toll number is
+	// charged to the calling party. A number can't be toll and toll-free at
+	// the same time.
+	//   "TOLL_FREE" - Applies to `PHONE` entry point. For the calling
+	// party, a call to a toll-free number is free of charge. A number can't
+	// be toll and toll-free at the same time.
+	Features []string `json:"features,omitempty"`
+
+	// Label: The label of the entry point to display to the user. Maximum
+	// 512 characters long.
+	Label string `json:"label,omitempty"`
+
+	// MeetingCode: A meeting code for accessing the conference. Maximum 128
+	// characters long.
+	MeetingCode string `json:"meetingCode,omitempty"`
+
+	// Passcode: A passcode for accessing the conference. Maximum 128
+	// characters long.
+	Passcode string `json:"passcode,omitempty"`
+
+	// Password: A password for accessing the conference. Maximum 128
+	// characters long.
+	Password string `json:"password,omitempty"`
+
+	// Pin: A PIN for accessing the conference. Maximum 128 characters long.
+	Pin string `json:"pin,omitempty"`
+
+	// RegionCode: The CLDR/ISO 3166 region code for the country associated
+	// with this entry point. Applicable only to `Type.PHONE`.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// Type: The type of the entry point. Required.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown conference type.
+	//   "VIDEO" - A video conference.
+	//   "PHONE" - A phone conference.
+	//   "MORE" - Used to provide a link to further conference joining
+	// information.
+	//   "SIP" - A conference using [Session Initiation
+	// Protocol](https://en.wikipedia.org/wiki/Session_Initiation_Protocol)
+	Type string `json:"type,omitempty"`
+
+	// Uri: A URI for joining the conference. Supports tel: and http(s): and
+	// should be at most 1300 characters long. Required.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupEntryPointMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupEntryPointMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupErro
+// r: Represents an error that occurred during conference creation.
+type AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupError struct {
+	// AuthenticationUrl: If the error type is `AUTHENTICATION`, the add-on
+	// can provide a URL allowing users to log in. Maximum 1300 characters
+	// long.
+	AuthenticationUrl string `json:"authenticationUrl,omitempty"`
+
+	// Type: The type of error. Required.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown error.
+	//   "AUTHENTICATION" - An authentication error.
+	//   "TEMPORARY" - A temporary error.
+	//   "PERMANENT" - A permanent error.
+	//   "PERMISSION_DENIED" - The user isn't allowed to perform some action
+	// in the third-party conferencing system.
+	//   "CONFERENCE_SOLUTION_FORBIDDEN" - The user isn't allowed to use the
+	// selected conference solution (but might be allowed to use other
+	// solutions offered by the add-on).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthenticationUrl")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthenticationUrl") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupError) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupPara
+// meter: Solution-specific parameters that are persisted with the event
+// data and, if an update or delete is needed, are passed to the add-on.
+// For example: `[{key: 'sessionKey', value: '123'}, {key: 'meetingId',
+// value: '456'}]`
+type AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupParameter struct {
+	// Key: The key of the parameter. Maximum 50 characters long. Required.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the parameter. Maximum 1024 characters long.
+	// Required.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkupParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsExtensionsMarkupCalendarClientActionMarkupEditAttendeesActionMarkup struct {
+	// AddAttendeeEmails: A list of attendees to add to the Google Calendar
+	// event.
+	AddAttendeeEmails []string `json:"addAttendeeEmails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddAttendeeEmails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddAttendeeEmails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupEditAttendeesActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupEditAttendeesActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsExtensionsMarkupCalendarClientActionMarkupEditConferenceDataActionMarkup struct {
+	// ConferenceData: The conference data to add to the Google Calendar
+	// event.
+	ConferenceData *AppsExtensionsMarkupCalendarClientActionMarkupConferenceDataMarkup `json:"conferenceData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConferenceData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConferenceData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsExtensionsMarkupCalendarClientActionMarkupEditConferenceDataActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsExtensionsMarkupCalendarClientActionMarkupEditConferenceDataActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Attachment: Attachments that follow the message text.
 type Attachment struct {
 	// AddOnData: Revised version of Gmail AddOn attachment approved by API
@@ -5475,6 +5845,7 @@ type BotResponse struct {
 	//   "DISABLED_BY_DEVELOPER" - Bot fails to respond because it is
 	// disabled by the bot's developer
 	//   "PRIVATE" - Message to bot should be permanently private.
+	//   "APP_SUGGESTION" - A suggestion to promote an app.
 	ResponseType string `json:"responseType,omitempty"`
 
 	// SetupUrl: URL for setting up bot.
@@ -5642,6 +6013,44 @@ func (s *Button) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type CalendarClientActionMarkup struct {
+	// AddAttachmentsActionMarkup: An action that adds attachments to the
+	// Google Calendar event.
+	AddAttachmentsActionMarkup *AppsExtensionsMarkupCalendarClientActionMarkupAddAttachmentsActionMarkup `json:"addAttachmentsActionMarkup,omitempty"`
+
+	// EditAttendeesActionMarkup: An action that adds attendees to the
+	// Google Calendar event.
+	EditAttendeesActionMarkup *AppsExtensionsMarkupCalendarClientActionMarkupEditAttendeesActionMarkup `json:"editAttendeesActionMarkup,omitempty"`
+
+	// EditConferenceDataActionMarkup: An action that adds conference data
+	// to the Google Calendar event.
+	EditConferenceDataActionMarkup *AppsExtensionsMarkupCalendarClientActionMarkupEditConferenceDataActionMarkup `json:"editConferenceDataActionMarkup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AddAttachmentsActionMarkup") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AddAttachmentsActionMarkup") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CalendarClientActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarClientActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CallInfo: Contains information regarding an ongoing conference (aka
 // call) for a meeting space.
 type CallInfo struct {
@@ -5800,6 +6209,26 @@ type CallSettings struct {
 	// AccessLock: Indicates whether the access lock is currently on or off.
 	AccessLock bool `json:"accessLock,omitempty"`
 
+	// AccessType: The current access type of the conference.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACCESS_TYPE_OPEN" - Anyone with meeting join information (url,
+	// phone access...) can join, no knocking required. (Subject to
+	// organization policies)
+	//   "ACCESS_TYPE_TRUSTED" - Members of the Host's organization, invited
+	// external users, and dial-in users can join without knocking, everyone
+	// else must knock. (Subject to organization policies)
+	//   "ACCESS_TYPE_RESTRICTED" - Only participants invited by a host can
+	// automatically join, everyone else must knock and be admitted.
+	// (Subject to organization policies) Participants cannot dial out from
+	// the meeting. And only hosts can accept knocks.
+	AccessType string `json:"accessType,omitempty"`
+
+	// AllowJoiningBeforeHost: Whether users can join this conference before
+	// a host (Host or Cohost).
+	AllowJoiningBeforeHost bool `json:"allowJoiningBeforeHost,omitempty"`
+
 	// AttendanceReportEnabled: Indicates whether the attendance report is
 	// currently enabled or disabled.
 	AttendanceReportEnabled bool `json:"attendanceReportEnabled,omitempty"`
@@ -5814,7 +6243,8 @@ type CallSettings struct {
 	// conference.
 	CseEnabled bool `json:"cseEnabled,omitempty"`
 
-	// ModerationEnabled: Indicates whether the current call is moderated.
+	// ModerationEnabled: Indicates whether moderation is currently on or
+	// off.
 	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
 
 	// PresentLock: Indicates whether the present lock is currently on or
@@ -6048,6 +6478,10 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod CardHeader
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChatClientActionMarkup: Actions handled by Chat Clients.
+type ChatClientActionMarkup struct {
 }
 
 // ChatConfig: Configuration of the in meeting chat.
@@ -7068,6 +7502,39 @@ type CustomEmojiMetadata struct {
 
 func (s *CustomEmojiMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomEmojiMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomFunctionReturnValueMarkup: The result of a user running a
+// custom function.
+type CustomFunctionReturnValueMarkup struct {
+	// ErrorMessage: The error message to show to the user if something went
+	// wrong.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Value: The value that resulted from running the custom function.
+	Value interface{} `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomFunctionReturnValueMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomFunctionReturnValueMarkup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8185,6 +8652,33 @@ func (s *DoubleValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DriveClientActionMarkup struct {
+	RequestFileScope *RequestFileScope `json:"requestFileScope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestFileScope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestFileScope") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveClientActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveClientActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DriveFollowUpRestrict: Drive follow-up search restricts (e.g.
 // "followup:suggestions").
 type DriveFollowUpRestrict struct {
@@ -8567,6 +9061,34 @@ func (s *DynamiteSpacesScoringInfo) UnmarshalJSON(data []byte) error {
 // EditMetadata: A message edit in Dynamite inserts a Babel-only item
 // containing this field.
 type EditMetadata struct {
+}
+
+type EditorClientActionMarkup struct {
+	RequestFileScopeForActiveDocument *RequestFileScopeForActiveDocument `json:"requestFileScopeForActiveDocument,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RequestFileScopeForActiveDocument") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RequestFileScopeForActiveDocument") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EditorClientActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod EditorClientActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // EmailAddress: A person's email address.
@@ -10422,6 +10944,40 @@ func (s *GetSearchApplicationUserStatsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GmailClientActionMarkup struct {
+	AddonComposeUiActionMarkup *AddonComposeUiActionMarkup `json:"addonComposeUiActionMarkup,omitempty"`
+
+	OpenCreatedDraftActionMarkup *OpenCreatedDraftActionMarkup `json:"openCreatedDraftActionMarkup,omitempty"`
+
+	TaskAction *TaskActionMarkup `json:"taskAction,omitempty"`
+
+	UpdateDraftActionMarkup *UpdateDraftActionMarkup `json:"updateDraftActionMarkup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AddonComposeUiActionMarkup") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AddonComposeUiActionMarkup") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailClientActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailClientActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChatConfig: Configuration of the Google Chat in Meet.
 type GoogleChatConfig struct {
 	// ChatGroupId: ID of the Chat group.
@@ -10522,7 +11078,7 @@ func (s *GoogleChatV1ContextualAddOnMarkupCard) MarshalJSON() ([]byte, error) {
 // GoogleChatV1ContextualAddOnMarkupCardCardAction: A card action is the
 // action associated with the card. For an invoice card, a typical
 // action would be: delete invoice, email invoice or open the invoice in
-// browser.
+// browser. Not supported by Google Chat apps.
 type GoogleChatV1ContextualAddOnMarkupCardCardAction struct {
 	// ActionLabel: The label used to be displayed in the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -11634,6 +12190,50 @@ func (s *HashtagData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HostAppActionMarkup: Actions handled by individual host apps.
+type HostAppActionMarkup struct {
+	// CalendarAction: Actions handled by Calendar.
+	CalendarAction *CalendarClientActionMarkup `json:"calendarAction,omitempty"`
+
+	// ChatAction: Actions handled by Chat.
+	ChatAction *ChatClientActionMarkup `json:"chatAction,omitempty"`
+
+	// DriveAction: Actions handled by Drive.
+	DriveAction *DriveClientActionMarkup `json:"driveAction,omitempty"`
+
+	// EditorAction: Actions handled by Docs, Sheets, or Slides.
+	EditorAction *EditorClientActionMarkup `json:"editorAction,omitempty"`
+
+	// GmailAction: Actions handled by Gmail.
+	GmailAction *GmailClientActionMarkup `json:"gmailAction,omitempty"`
+
+	// SheetsAction: Actions handled by Sheets.
+	SheetsAction *SheetsClientActionMarkup `json:"sheetsAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CalendarAction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CalendarAction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HostAppActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod HostAppActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HostProto: Represents a single host. Optionally, the MDB owner of the
 // host can be specified.
 type HostProto struct {
@@ -12322,6 +12922,53 @@ func (s *IndexItemRequest) MarshalJSON() ([]byte, error) {
 // InitializeCustomerRequest: Request message for `InitializeCustomer`
 // method.
 type InitializeCustomerRequest struct {
+}
+
+type InsertContent struct {
+	// Content: The content to be inserted.
+	Content string `json:"content,omitempty"`
+
+	// ContentType: The type of inserted content.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_CONTENT_TYPE" - Default value when nothing is set for
+	// ContentType.
+	//   "TEXT" - Specifies that the content is in plain text.
+	//   "MUTABLE_HTML" - Specifies that the content is in HTML and is
+	// mutable (can be edited).
+	//   "IMMUTABLE_HTML" - Specifies that the content is in HTML and is
+	// immutable (cannot be edited).
+	ContentType string `json:"contentType,omitempty"`
+
+	// Possible values:
+	//   "UNSPECIFIED_EMAIL_MIME_TYPE" - Default value when nothing is set
+	// for EmailMimeType.
+	//   "PLAIN_TEXT" - Specifies that the inserted content is in plain
+	// text.
+	//   "HTML" - Specifies that the inserted content is in HTML.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertContent) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // IntegerOperatorOptions: Used to provide a search operator for integer
@@ -13977,7 +14624,7 @@ func (s *MembershipChangeEvent) MarshalJSON() ([]byte, error) {
 }
 
 // MembershipChangedMetadata: Annotation metadata to display system
-// messages for membership changes.
+// messages for membership changes. Next Tag: 8
 type MembershipChangedMetadata struct {
 	AffectedMemberProfiles []*Member `json:"affectedMemberProfiles,omitempty"`
 
@@ -13993,6 +14640,15 @@ type MembershipChangedMetadata struct {
 	// InitiatorProfile: Complete member profiles, when ListTopicsRequest
 	// FetchOptions.USER is set. Otherwise, only the id will be filled in.
 	InitiatorProfile *User `json:"initiatorProfile,omitempty"`
+
+	// InitiatorType: The type of the user who initiated this membership
+	// change.
+	//
+	// Possible values:
+	//   "INITIATOR_TYPE_UNSPECIFIED"
+	//   "INITIATOR_TYPE_END_USER"
+	//   "INITIATOR_TYPE_ADMIN"
+	InitiatorType string `json:"initiatorType,omitempty"`
 
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
@@ -15024,6 +15680,47 @@ type OnClick struct {
 
 func (s *OnClick) MarshalJSON() ([]byte, error) {
 	type NoMethod OnClick
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OpenCreatedDraftActionMarkup struct {
+	// DraftId: The ID of the newly created draft in the form "r123".
+	DraftId string `json:"draftId,omitempty"`
+
+	// DraftStorageId: The server storage ID in hex format, for
+	// example,"15e9fa622ce1029d".
+	DraftStorageId string `json:"draftStorageId,omitempty"`
+
+	// DraftThreadId: The ID of the thread containing the newly created
+	// draft, for example, "15e9fa622ce1029d".
+	DraftThreadId string `json:"draftThreadId,omitempty"`
+
+	// DraftThreadServerPermId: The server permanent ID for the draft's
+	// thread. This field isn't set anywhere, and it's ignored when
+	// processing OpenCreatedDraftActionMarkup. Supply and use
+	// draftThreadStorageId instead.
+	DraftThreadServerPermId string `json:"draftThreadServerPermId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DraftId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DraftId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OpenCreatedDraftActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod OpenCreatedDraftActionMarkup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16867,6 +17564,32 @@ func (s *ReadReceiptsSettingsUpdatedMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Recipient struct {
+	Email string `json:"email,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Recipient) MarshalJSON() ([]byte, error) {
+	type NoMethod Recipient
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RecordingEvent: A recording event is something that happens to the
 // recording in a conference.
 type RecordingEvent struct {
@@ -17119,6 +17842,35 @@ func (s *RepositoryError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type RequestFileScope struct {
+	ItemId string `json:"itemId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ItemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ItemId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestFileScope) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestFileScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RequestFileScopeForActiveDocument struct {
+}
+
 // RequestOptions: Shared request options for all RPC methods.
 type RequestOptions struct {
 	// DebugOptions: Debug options of the request
@@ -17273,13 +18025,10 @@ func (s *ResourceRoleProto) MarshalJSON() ([]byte, error) {
 
 // ResponseDebugInfo: Debugging information about the response.
 type ResponseDebugInfo struct {
-	// EnabledExperiments: Experiments enabled in QAPI.
-	EnabledExperiments []int64 `json:"enabledExperiments,omitempty"`
-
 	// FormattedDebugInfo: General debug info formatted for display.
 	FormattedDebugInfo string `json:"formattedDebugInfo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EnabledExperiments")
+	// ForceSendFields is a list of field names (e.g. "FormattedDebugInfo")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -17287,7 +18036,7 @@ type ResponseDebugInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnabledExperiments") to
+	// NullFields is a list of field names (e.g. "FormattedDebugInfo") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -17618,6 +18367,10 @@ type Roster struct {
 	AvatarUrl string `json:"avatarUrl,omitempty"`
 
 	Id *RosterId `json:"id,omitempty"`
+
+	// IsMembershipVisibleToCaller: Whether caller has visibility into
+	// members of the roster.
+	IsMembershipVisibleToCaller bool `json:"isMembershipVisibleToCaller,omitempty"`
 
 	MembershipCount int64 `json:"membershipCount,omitempty"`
 
@@ -18614,22 +19367,40 @@ func (s *SessionStateInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Settings: Settings of a meeting space that can be viewed and edited
-// by users with permissions. These settings are always populated for
-// output.
+// Settings: Settings of a meeting space that can be edited by users
+// with corresponding manage privilege. These settings are always
+// populated in responses.
 type Settings struct {
-	// AccessLock: The access lock of the meeting space that lets owner
-	// control who can join the meeting. True if the access lock feature is
-	// enabled for the meeting space.
+	// AccessLock: The access lock of the meeting space that lets hosts
+	// control who can join the meeting.
 	AccessLock bool `json:"accessLock,omitempty"`
+
+	// AccessType: The access type of the meeting space.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACCESS_TYPE_OPEN" - Anyone with meeting join information (url,
+	// phone access...) can join, no knocking required. (Subject to
+	// organization policies)
+	//   "ACCESS_TYPE_TRUSTED" - Members of the Host's organization, invited
+	// external users, and dial-in users can join without knocking, everyone
+	// else must knock. (Subject to organization policies)
+	//   "ACCESS_TYPE_RESTRICTED" - Only participants invited by a host can
+	// automatically join, everyone else must knock and be admitted.
+	// (Subject to organization policies) Participants cannot dial out from
+	// the meeting. And only hosts can accept knocks.
+	AccessType string `json:"accessType,omitempty"`
+
+	// AllowJoiningBeforeHost: Whether users can join before host in the
+	// conferences of this meeting space.
+	AllowJoiningBeforeHost bool `json:"allowJoiningBeforeHost,omitempty"`
 
 	// AttendanceReportEnabled: Whether attendance report is enabled for the
 	// meeting space.
 	AttendanceReportEnabled bool `json:"attendanceReportEnabled,omitempty"`
 
 	// ChatLock: The chat lock of the meeting space that lets owner control
-	// whether the participants can send chat messages. True if the chat
-	// lock feature is enabled for the meeting space.
+	// whether the participants can send chat messages.
 	ChatLock bool `json:"chatLock,omitempty"`
 
 	// CohostArtifactSharingEnabled: Whether meeting artifacts will be
@@ -18647,13 +19418,11 @@ type Settings struct {
 	ModerationEnabled bool `json:"moderationEnabled,omitempty"`
 
 	// PresentLock: The present lock of the meeting space that lets owner
-	// control whether the participants can present their screen. True if
-	// the present lock feature is enabled for the meeting space.
+	// control whether the participants can present their screen.
 	PresentLock bool `json:"presentLock,omitempty"`
 
 	// ReactionsLock: The reactions lock of the meeting space that lets
-	// owner control whether the participants can send reactions. True if
-	// the reactions lock feature is enabled for the meeting space.
+	// owner control whether the participants can send reactions.
 	ReactionsLock bool `json:"reactionsLock,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLock") to
@@ -18714,6 +19483,34 @@ type ShareScope struct {
 
 func (s *ShareScope) MarshalJSON() ([]byte, error) {
 	type NoMethod ShareScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SheetsClientActionMarkup struct {
+	CustomFunctionReturnValueMarkup *CustomFunctionReturnValueMarkup `json:"customFunctionReturnValueMarkup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomFunctionReturnValueMarkup") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomFunctionReturnValueMarkup") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SheetsClientActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod SheetsClientActionMarkup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19870,6 +20667,32 @@ func (s *SwitchWidget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type TaskActionMarkup struct {
+	ReloadTasks bool `json:"reloadTasks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReloadTasks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReloadTasks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TaskActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod TaskActionMarkup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type TextButton struct {
 	// AltText: The alternative text used for accessibility Next field
 	// number: 7.
@@ -20594,19 +21417,116 @@ func (s *UnreserveItemsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type UpdateBccRecipients struct {
+	BccRecipients []*Recipient `json:"bccRecipients,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BccRecipients") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BccRecipients") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateBccRecipients) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateBccRecipients
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UpdateBody struct {
+	// InsertContents: A repeated field that contains a series of content to
+	// insert into the draft that the user is currently editing. The content
+	// can contain HTML content or plain text content.
+	InsertContents []*InsertContent `json:"insertContents,omitempty"`
+
+	// Possible values:
+	//   "UNSPECIFIED_ACTION_TYPE" - Default value when nothing is set for
+	// Type.
+	//   "IN_PLACE_INSERT" - Indicates this action is to perform an in-place
+	// insertion. By default the content is inserted at the current cursor
+	// position, if there is selected content, it replaces the selected
+	// content.
+	//   "INSERT_AT_START" - Indicates this action is to perform insert at
+	// the start of the message body.
+	//   "INSERT_AT_END" - Indicates this action is to perform insert at the
+	// end of the message body.
+	//   "REPLACE" - Indicates this action is to replace the message body.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InsertContents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InsertContents") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateBody) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateBody
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UpdateCcRecipients struct {
+	CcRecipients []*Recipient `json:"ccRecipients,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CcRecipients") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CcRecipients") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateCcRecipients) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateCcRecipients
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type UpdateDataSourceRequest struct {
 	// DebugOptions: Common debug options.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 
 	Source *DataSource `json:"source,omitempty"`
 
-	// UpdateMask: Update mask to control which fields to update. If
-	// update_mask is non-empty then only the fields specified in the
-	// update_mask are updated. If you specify a field in the update_mask,
-	// but don't specify its value in the source that field will be cleared.
-	// If the update_mask is not present or empty or has the value * then
-	// all fields will be updated. Some example field paths: name,
-	// display_name
+	// UpdateMask: Only applies to `settings.datasources.patch`
+	// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+	// Update mask to control which fields to update. Example field paths:
+	// `name`, `displayName`. * If `update_mask` is non-empty, then only the
+	// fields specified in the `update_mask` are updated. * If you specify a
+	// field in the `update_mask`, but don't specify its value in the
+	// source, that field is cleared. * If the `update_mask` is not present
+	// or empty or has the value `*`, then all fields are updated.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
@@ -20628,6 +21548,51 @@ type UpdateDataSourceRequest struct {
 
 func (s *UpdateDataSourceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDataSourceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UpdateDraftActionMarkup struct {
+	// UpdateBccRecipients: If set, replaces the existing Bcc recipients of
+	// the draft the user is currently editing.
+	UpdateBccRecipients *UpdateBccRecipients `json:"updateBccRecipients,omitempty"`
+
+	// UpdateBody: A field that contains a series of update actions to
+	// perform on the draft body that the user is currently editing.
+	UpdateBody *UpdateBody `json:"updateBody,omitempty"`
+
+	// UpdateCcRecipients: If set, replaces the existing Cc recipients of
+	// the draft the user is currently editing.
+	UpdateCcRecipients *UpdateCcRecipients `json:"updateCcRecipients,omitempty"`
+
+	// UpdateSubject: If set, replaces the existing subject of the draft the
+	// user is currently editing.
+	UpdateSubject *UpdateSubject `json:"updateSubject,omitempty"`
+
+	// UpdateToRecipients: If set, replaces the existing To recipients of
+	// the draft the user is currently editing.
+	UpdateToRecipients *UpdateToRecipients `json:"updateToRecipients,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UpdateBccRecipients")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UpdateBccRecipients") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDraftActionMarkup) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDraftActionMarkup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20662,6 +21627,58 @@ type UpdateSchemaRequest struct {
 
 func (s *UpdateSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSchemaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UpdateSubject struct {
+	Subject string `json:"subject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subject") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subject") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSubject) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSubject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type UpdateToRecipients struct {
+	ToRecipients []*Recipient `json:"toRecipients,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ToRecipients") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ToRecipients") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateToRecipients) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateToRecipients
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -20840,6 +21857,20 @@ type UrlMetadata struct {
 	// IntImageWidth: Dimensions of the image: width.
 	IntImageWidth int64 `json:"intImageWidth,omitempty"`
 
+	// LinkType: NEXT TAG : 18
+	//
+	// Possible values:
+	//   "UNDEFINED"
+	//   "AUTO_DETECTED_PLAIN_TEXT" - Set by the server, when it detects a
+	// URL in the message text
+	//   "RICH_TEXT" - Set by the client, when the user adds a link via the
+	// rich-text editing (RTE) toolbar
+	//   "MARKDOWN" - Set by the server, when it detects a URL in
+	// markdown-syntax in the message text
+	//   "NO_ASSOCIATED_TEXT" - Set by the server when a URL annotation
+	// received from client has 0 length and 0 start index
+	LinkType string `json:"linkType,omitempty"`
+
 	// MimeType: Mime type of the content (Currently mapped from Page Render
 	// Service ItemType) Note that this is not necessarily the mime type of
 	// the http resource. For example a text/html from youtube or vimeo may
@@ -20863,8 +21894,6 @@ type UrlMetadata struct {
 	// Url: The original URL.
 	Url *SafeUrlProto `json:"url,omitempty"`
 
-	// UrlSource: NEXT TAG : 17
-	//
 	// Possible values:
 	//   "URL_SOURCE_UNKNOWN"
 	//   "USER_SUPPLIED_URL"
@@ -26962,13 +27991,15 @@ func (c *SettingsDatasourcesPatchCall) DebugOptionsEnableDebugging(debugOptionsE
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Update mask to
-// control which fields to update. If update_mask is non-empty then only
-// the fields specified in the update_mask are updated. If you specify a
-// field in the update_mask, but don't specify its value in the source
-// that field will be cleared. If the update_mask is not present or
-// empty or has the value * then all fields will be updated. Some
-// example field paths: name, display_name
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.datasources.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch).
+// Update mask to control which fields to update. Example field paths:
+// `name`, `displayName`. * If `update_mask` is non-empty, then only the
+// fields specified in the `update_mask` are updated. * If you specify a
+// field in the `update_mask`, but don't specify its value in the
+// source, that field is cleared. * If the `update_mask` is not present
+// or empty or has the value `*`, then all fields are updated.
 func (c *SettingsDatasourcesPatchCall) UpdateMask(updateMask string) *SettingsDatasourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -27086,7 +28117,7 @@ func (c *SettingsDatasourcesPatchCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the source that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: name, display_name",
+	//       "description": "Only applies to [`settings.datasources.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.datasources/patch). Update mask to control which fields to update. Example field paths: `name`, `displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the source, that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -27911,14 +28942,17 @@ func (r *SettingsSearchapplicationsService) Patch(name string, searchapplication
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Update mask to
-// control which fields to update. If update_mask is non-empty then only
-// the fields specified in the update_mask are updated. If you specify a
-// field in the update_mask, but don't specify its value in the
-// search_application then that field will be cleared. If the
-// update_mask is not present or empty or has the value * then all
-// fields will be updated. Some example field paths:
-// search_application.name, search_application.display_name
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.searchapplications.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// Update mask to control which fields to update. Example field paths:
+// `search_application.name`, `search_application.displayName`. * If
+// `update_mask` is non-empty, then only the fields specified in the
+// `update_mask` are updated. * If you specify a field in the
+// `update_mask`, but don't specify its value in the
+// `search_application`, then that field is cleared. * If the
+// `update_mask` is not present or empty or has the value `*`, then all
+// fields are updated.
 func (c *SettingsSearchapplicationsPatchCall) UpdateMask(updateMask string) *SettingsSearchapplicationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -28031,7 +29065,7 @@ func (c *SettingsSearchapplicationsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the search_application then that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: search_application.name, search_application.display_name",
+	//       "description": "Only applies to [`settings.searchapplications.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch). Update mask to control which fields to update. Example field paths: `search_application.name`, `search_application.displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the `search_application`, then that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -28223,14 +29257,17 @@ func (r *SettingsSearchapplicationsService) Update(name string, searchapplicatio
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Update mask to
-// control which fields to update. If update_mask is non-empty then only
-// the fields specified in the update_mask are updated. If you specify a
-// field in the update_mask, but don't specify its value in the
-// search_application then that field will be cleared. If the
-// update_mask is not present or empty or has the value * then all
-// fields will be updated. Some example field paths:
-// search_application.name, search_application.display_name
+// UpdateMask sets the optional parameter "updateMask": Only applies to
+// `settings.searchapplications.patch`
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch).
+// Update mask to control which fields to update. Example field paths:
+// `search_application.name`, `search_application.displayName`. * If
+// `update_mask` is non-empty, then only the fields specified in the
+// `update_mask` are updated. * If you specify a field in the
+// `update_mask`, but don't specify its value in the
+// `search_application`, then that field is cleared. * If the
+// `update_mask` is not present or empty or has the value `*`, then all
+// fields are updated.
 func (c *SettingsSearchapplicationsUpdateCall) UpdateMask(updateMask string) *SettingsSearchapplicationsUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -28343,7 +29380,7 @@ func (c *SettingsSearchapplicationsUpdateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Update mask to control which fields to update. If update_mask is non-empty then only the fields specified in the update_mask are updated. If you specify a field in the update_mask, but don't specify its value in the search_application then that field will be cleared. If the update_mask is not present or empty or has the value * then all fields will be updated. Some example field paths: search_application.name, search_application.display_name",
+	//       "description": "Only applies to [`settings.searchapplications.patch`](https://developers.google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/patch). Update mask to control which fields to update. Example field paths: `search_application.name`, `search_application.displayName`. * If `update_mask` is non-empty, then only the fields specified in the `update_mask` are updated. * If you specify a field in the `update_mask`, but don't specify its value in the `search_application`, then that field is cleared. * If the `update_mask` is not present or empty or has the value `*`, then all fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

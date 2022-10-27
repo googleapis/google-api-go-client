@@ -2327,12 +2327,12 @@ type PackageData struct {
 	// Maven packages.
 	HashDigest string `json:"hashDigest,omitempty"`
 
-	// Os: The OS affected by a vulnerability This field is deprecated and
-	// the information is in cpe_uri
+	// Os: The OS affected by a vulnerability Used to generate the cpe_uri
+	// for OS packages
 	Os string `json:"os,omitempty"`
 
-	// OsVersion: The version of the OS This field is deprecated and the
-	// information is in cpe_uri
+	// OsVersion: The version of the OS Used to generate the cpe_uri for OS
+	// packages
 	OsVersion string `json:"osVersion,omitempty"`
 
 	// Package: The package being analysed for vulnerabilities

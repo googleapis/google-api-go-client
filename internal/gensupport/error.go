@@ -14,8 +14,7 @@ import (
 // err is not a googleapi.Error (or a gRPC Status), it returns
 // err without modification.
 func WrapError(err *googleapi.Error) *googleapi.Error {
-	// TODO: Update this call to apierror.FromWrappingError once it is available.
-	if apiError, ok := apierror.FromError(err); ok {
+	if apiError, ok := apierror.ParseError(err, false); ok {
 		err.Err = apiError
 	}
 	return err

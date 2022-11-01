@@ -24,7 +24,7 @@ func TestPool(t *testing.T) {
 	}
 
 	if got := pool.Conn(); got != conn2 {
-		t.Errorf("pool.Conn() #1 got %v; want conn2 (%v)", got, conn1)
+		t.Errorf("pool.Conn() #1 got %v; want conn2 (%v)", got, conn2)
 	}
 
 	if got := pool.Conn(); got != conn1 {
@@ -32,7 +32,7 @@ func TestPool(t *testing.T) {
 	}
 
 	if got := pool.Conn(); got != conn2 {
-		t.Errorf("pool.Conn() #3 got %v; want conn2 (%v)", got, conn1)
+		t.Errorf("pool.Conn() #3 got %v; want conn2 (%v)", got, conn2)
 	}
 }
 

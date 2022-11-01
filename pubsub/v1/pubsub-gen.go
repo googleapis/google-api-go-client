@@ -1252,7 +1252,8 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 // PullResponse: Response for the `Pull` method.
 type PullResponse struct {
 	// ReceivedMessages: Received Pub/Sub messages. The list will be empty
-	// if there are no more messages available in the backlog. For JSON, the
+	// if there are no more messages available in the backlog, or if no
+	// messages could be returned before the request timeout. For JSON, the
 	// response can be entirely empty. The Pub/Sub system may return fewer
 	// than the `maxMessages` requested even if there are more messages
 	// available in the backlog.

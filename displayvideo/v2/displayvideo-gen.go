@@ -7268,6 +7268,71 @@ func (s *DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DuplicateLineItemRequest: Request message for
+// LineItemService.DuplicateLineItem.
+type DuplicateLineItemRequest struct {
+	// TargetDisplayName: The display name of the resulting line item. Must
+	// be UTF-8 encoded with a maximum size of 240 bytes.
+	TargetDisplayName string `json:"targetDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetDisplayName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetDisplayName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DuplicateLineItemRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DuplicateLineItemRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DuplicateLineItemResponse: Response message for
+// LineItemService.DuplicateLineItem.
+type DuplicateLineItemResponse struct {
+	// DuplicateLineItemId: The ID of the successfully created line item.
+	DuplicateLineItemId int64 `json:"duplicateLineItemId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DuplicateLineItemId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DuplicateLineItemId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DuplicateLineItemResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DuplicateLineItemResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EditCustomerMatchMembersRequest: Request message for
 // FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
 type EditCustomerMatchMembersRequest struct {
@@ -23824,6 +23889,584 @@ func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.create":
+
+type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall struct {
+	s                       *Service
+	advertiserId            int64
+	insertionOrderId        int64
+	targetingType           string
+	assignedtargetingoption *AssignedTargetingOption
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Assigns a targeting option to an insertion order. Returns the
+// assigned targeting option if successful. Supported targeting types: *
+// `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_BROWSER` *
+// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
+// `TARGETING_TYPE_DEVICE_MAKE_MODEL` *
+// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` *
+// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` *
+// `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS`
+// * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+// `TARGETING_TYPE_VIEWABILITY`
+//
+//   - advertiserId: The ID of the advertiser the insertion order belongs
+//     to.
+//   - insertionOrderId: The ID of the insertion order the assigned
+//     targeting option will belong to.
+//   - targetingType: Identifies the type of this assigned targeting
+//     option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_VIEWABILITY`.
+func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, insertionOrderId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	c.targetingType = targetingType
+	c.assignedtargetingoption = assignedtargetingoption
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall) Context(ctx context.Context) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.assignedtargetingoption)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+		"targetingType":    c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.create" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Assigns a targeting option to an insertion order. Returns the assigned targeting option if successful. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_VIEWABILITY`",
+	//   "flatPath": "v2/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.create",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order the assigned targeting option will belong to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_VIEWABILITY`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID",
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory.",
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.delete":
+
+type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
+	s                         *Service
+	advertiserId              int64
+	insertionOrderId          int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an assigned targeting option from an insertion order.
+// Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+// `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` *
+// `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` *
+// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` *
+// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` *
+// `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS`
+// * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+// `TARGETING_TYPE_VIEWABILITY`
+//
+//   - advertiserId: The ID of the advertiser the insertion order belongs
+//     to.
+//   - assignedTargetingOptionId: The ID of the assigned targeting option
+//     to delete.
+//   - insertionOrderId: The ID of the insertion order the assigned
+//     targeting option belongs to.
+//   - targetingType: Identifies the type of this assigned targeting
+//     option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` *
+//     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` *
+//     `TARGETING_TYPE_OPERATING_SYSTEM` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_VIEWABILITY`.
+func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, insertionOrderId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall) Context(ctx context.Context) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId":          strconv.FormatInt(c.insertionOrderId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an assigned targeting option from an insertion order. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_VIEWABILITY`",
+	//   "flatPath": "v2/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.delete",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. The ID of the assigned targeting option to delete.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_VIEWABILITY`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID",
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory.",
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get":
 
 type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall struct {
@@ -25710,6 +26353,163 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	//   "path": "v2/advertisers/{+advertiserId}/lineItems/{+lineItemId}",
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.lineItems.duplicate":
+
+type AdvertisersLineItemsDuplicateCall struct {
+	s                        *Service
+	advertiserId             int64
+	lineItemId               int64
+	duplicatelineitemrequest *DuplicateLineItemRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Duplicate: Duplicates a line item. Returns the newly created line
+// item id if successful.
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+// - lineItemId: The ID of the line item to duplicate.
+func (r *AdvertisersLineItemsService) Duplicate(advertiserId int64, lineItemId int64, duplicatelineitemrequest *DuplicateLineItemRequest) *AdvertisersLineItemsDuplicateCall {
+	c := &AdvertisersLineItemsDuplicateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.lineItemId = lineItemId
+	c.duplicatelineitemrequest = duplicatelineitemrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsDuplicateCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsDuplicateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsDuplicateCall) Context(ctx context.Context) *AdvertisersLineItemsDuplicateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsDuplicateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsDuplicateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.duplicatelineitemrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/lineItems/{+lineItemId}:duplicate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"lineItemId":   strconv.FormatInt(c.lineItemId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.duplicate" call.
+// Exactly one of *DuplicateLineItemResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DuplicateLineItemResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*DuplicateLineItemResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DuplicateLineItemResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Duplicates a line item. Returns the newly created line item id if successful.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}:duplicate",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.lineItems.duplicate",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "lineItemId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "lineItemId": {
+	//       "description": "Required. The ID of the line item to duplicate.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/lineItems/{+lineItemId}:duplicate",
+	//   "request": {
+	//     "$ref": "DuplicateLineItemRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DuplicateLineItemResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/display-video"

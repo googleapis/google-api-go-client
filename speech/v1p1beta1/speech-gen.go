@@ -615,6 +615,10 @@ type LongRunningRecognizeResponse struct {
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
+	// SpeechAdaptationInfo: Provides information on speech adaptation
+	// behavior in response
+	SpeechAdaptationInfo *SpeechAdaptationInfo `json:"speechAdaptationInfo,omitempty"`
+
 	// TotalBilledTime: When available, billed audio seconds for the
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
@@ -912,12 +916,11 @@ type RecognitionConfig struct {
 
 	// AudioChannelCount: The number of channels in the input audio data.
 	// ONLY set this for MULTI-CHANNEL recognition. Valid values for
-	// LINEAR16 and FLAC are `1`-`8`. Valid values for OGG_OPUS are
-	// '1'-'254'. Valid value for MULAW, AMR, AMR_WB and
-	// SPEEX_WITH_HEADER_BYTE is only `1`. If `0` or omitted, defaults to
-	// one channel (mono). Note: We only recognize the first channel by
-	// default. To perform independent recognition on each channel set
-	// `enable_separate_recognition_per_channel` to 'true'.
+	// LINEAR16, OGG_OPUS and FLAC are `1`-`8`. Valid value for MULAW, AMR,
+	// AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`. If `0` or omitted,
+	// defaults to one channel (mono). Note: We only recognize the first
+	// channel by default. To perform independent recognition on each
+	// channel set `enable_separate_recognition_per_channel` to 'true'.
 	AudioChannelCount int64 `json:"audioChannelCount,omitempty"`
 
 	// DiarizationConfig: Config to enable speaker diarization and set
@@ -1286,6 +1289,10 @@ type RecognizeResponse struct {
 	// sequential portions of audio.
 	Results []*SpeechRecognitionResult `json:"results,omitempty"`
 
+	// SpeechAdaptationInfo: Provides information on adaptation behavior in
+	// response
+	SpeechAdaptationInfo *SpeechAdaptationInfo `json:"speechAdaptationInfo,omitempty"`
+
 	// TotalBilledTime: When available, billed audio seconds for the
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
@@ -1400,6 +1407,41 @@ type SpeechAdaptation struct {
 
 func (s *SpeechAdaptation) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechAdaptation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpeechAdaptationInfo: Information on speech adaptation use in results
+type SpeechAdaptationInfo struct {
+	// AdaptationTimeout: Whether there was a timeout when applying speech
+	// adaptation. If true, adaptation had no effect in the response
+	// transcript.
+	AdaptationTimeout bool `json:"adaptationTimeout,omitempty"`
+
+	// TimeoutMessage: If set, returns a message specifying which part of
+	// the speech adaptation request timed out.
+	TimeoutMessage string `json:"timeoutMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptationTimeout")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptationTimeout") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeechAdaptationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeechAdaptationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

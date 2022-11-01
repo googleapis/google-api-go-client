@@ -4864,7 +4864,7 @@ type GoogleCloudRetailV2betaPredictRequest struct {
 	// field in the prediction response. * `returnScore`: Boolean. If set to
 	// true, the prediction 'score' corresponding to each returned product
 	// will be set in the `results.metadata` field in the prediction
-	// response. The given 'score' indicates the probability of an product
+	// response. The given 'score' indicates the probability of a product
 	// being clicked/purchased given the user's context and history. *
 	// `strictFiltering`: Boolean. True by default. If set to false, the
 	// service will return generic (unfiltered) popular products instead of
@@ -6986,7 +6986,7 @@ type GoogleCloudRetailV2betaSearchRequestFacetSpec struct {
 	FacetKey *GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey `json:"facetKey,omitempty"`
 
 	// Limit: Maximum of facet values that should be returned for this
-	// facet. If unspecified, defaults to 20. The maximum allowed value is
+	// facet. If unspecified, defaults to 50. The maximum allowed value is
 	// 300. Values above 300 will be coerced to 300. If this field is
 	// negative, an INVALID_ARGUMENT is returned.
 	Limit int64 `json:"limit,omitempty"`

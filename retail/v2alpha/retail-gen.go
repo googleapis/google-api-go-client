@@ -1730,6 +1730,10 @@ func (s *GoogleCloudRetailV2alphaColorInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2alphaCompleteQueryResponse: Response of the
 // auto-complete query.
 type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
+	// AttributeResults: A map of matched attribute suggestions. Current
+	// supported keys: * `brands` * `categories`
+	AttributeResults map[string]GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult `json:"attributeResults,omitempty"`
+
 	// AttributionToken: A unique complete token. This should be included in
 	// the UserEvent.completion_detail for search events resulting from this
 	// completion, which enables accurate attribution of complete model
@@ -1757,7 +1761,7 @@ type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// ForceSendFields is a list of field names (e.g. "AttributeResults") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1765,7 +1769,7 @@ type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttributionToken") to
+	// NullFields is a list of field names (e.g. "AttributeResults") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1777,6 +1781,35 @@ type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
 
 func (s *GoogleCloudRetailV2alphaCompleteQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCompleteQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult:
+// Resource that represents attribute results.
+type GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult struct {
+	// Suggestions: The list of suggestions for the attribute.
+	Suggestions []string `json:"suggestions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Suggestions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3911,7 +3944,7 @@ type GoogleCloudRetailV2alphaPredictRequest struct {
 	// field in the prediction response. * `returnScore`: Boolean. If set to
 	// true, the prediction 'score' corresponding to each returned product
 	// will be set in the `results.metadata` field in the prediction
-	// response. The given 'score' indicates the probability of an product
+	// response. The given 'score' indicates the probability of a product
 	// being clicked/purchased given the user's context and history. *
 	// `strictFiltering`: Boolean. True by default. If set to false, the
 	// service will return generic (unfiltered) popular products instead of
@@ -6177,7 +6210,7 @@ type GoogleCloudRetailV2alphaSearchRequestFacetSpec struct {
 	FacetKey *GoogleCloudRetailV2alphaSearchRequestFacetSpecFacetKey `json:"facetKey,omitempty"`
 
 	// Limit: Maximum of facet values that should be returned for this
-	// facet. If unspecified, defaults to 20. The maximum allowed value is
+	// facet. If unspecified, defaults to 50. The maximum allowed value is
 	// 300. Values above 300 will be coerced to 300. If this field is
 	// negative, an INVALID_ARGUMENT is returned.
 	Limit int64 `json:"limit,omitempty"`
@@ -8606,6 +8639,14 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 	return c
 }
 
+// EnableAttributeSuggestions sets the optional parameter
+// "enableAttributeSuggestions": If true, attribute suggestions are
+// enabled and provided in response.
+func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
+	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
+	return c
+}
+
 // LanguageCodes sets the optional parameter "languageCodes": Note that
 // this field applies for `user-data` dataset only. For requests with
 // `cloud-retail` dataset, setting this field has no effect. The
@@ -8776,6 +8817,11 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "description": "The device type context for completion suggestions. We recommend that you leave this field empty. It can apply different suggestions on different device types, e.g. `DESKTOP`, `MOBILE`. If it is empty, the suggestions are across all device types. Supported formats: * `UNKNOWN_DEVICE_TYPE` * `DESKTOP` * `MOBILE` * A customized string starts with `OTHER_`, e.g. `OTHER_IPHONE`.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "enableAttributeSuggestions": {
+	//       "description": "If true, attribute suggestions are enabled and provided in response.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "languageCodes": {
 	//       "description": "Note that this field applies for `user-data` dataset only. For requests with `cloud-retail` dataset, setting this field has no effect. The language filters applied to the output suggestions. If set, it should contain the language of the query. If not set, suggestions are returned without considering language restrictions. This is the BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more information, see [Tags for Identifying Languages](https://tools.ietf.org/html/bcp47). The maximum number of language codes is 3.",

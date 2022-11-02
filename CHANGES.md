@@ -1,5 +1,15 @@
 # Changes
 
+## [0.102.0](https://github.com/googleapis/google-api-go-client/compare/v0.101.0...v0.102.0) (2022-11-02)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1725](https://github.com/googleapis/google-api-go-client/issues/1725)) ([06360d8](https://github.com/googleapis/google-api-go-client/commit/06360d8f37b88e064a8a60788077f376b597d942))
+* **all:** Auto-regenerate discovery clients ([#1727](https://github.com/googleapis/google-api-go-client/issues/1727)) ([1e1eab9](https://github.com/googleapis/google-api-go-client/commit/1e1eab98aac0e967a6c52b65fe9eb5a4d6d8a946))
+* **all:** Auto-regenerate discovery clients ([#1734](https://github.com/googleapis/google-api-go-client/issues/1734)) ([ce57a67](https://github.com/googleapis/google-api-go-client/commit/ce57a67eddb98f3ccd21c1c01dfcb18df0d77009))
+* Rely on new compute metadata module directly ([#1736](https://github.com/googleapis/google-api-go-client/issues/1736)) ([0528475](https://github.com/googleapis/google-api-go-client/commit/0528475d51393bb6e3244816d9c6ea8c16275677))
+
 ## [0.101.0](https://github.com/googleapis/google-api-go-client/compare/v0.100.0...v0.101.0) (2022-10-25)
 
 

@@ -23,6 +23,10 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//	chatService, err := chat.NewService(ctx, option.WithScopes(chat.ChatMessagesReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //	chatService, err := chat.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -82,12 +86,25 @@ const mtlsBasePath = "https://chat.mtls.googleapis.com/"
 const (
 	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
+
+	// View, compose, send, update, and delete messages, and add, view, and
+	// delete reactions to messages.
+	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
+
+	// Compose and send messages in Google Chat
+	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
+
+	// view messages and reactions in Google Chat
+	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chat.memberships",
+		"https://www.googleapis.com/auth/chat.messages",
+		"https://www.googleapis.com/auth/chat.messages.create",
+		"https://www.googleapis.com/auth/chat.messages.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1341,6 +1358,31 @@ type GoogleAppsCardV1Action struct {
 	// Function: Apps Script function to invoke when the containing element
 	// is clicked/activated.
 	Function string `json:"function,omitempty"`
+
+	// Interaction: Optional. Required when opening a dialog
+	// (https://developers.google.com/chat/how-tos/dialogs). What to do in
+	// response to an interaction with a user, such as a user clicking
+	// button on a card message. If unspecified, the app responds by
+	// executing an `action` - like opening a link or running a function -
+	// as normal. By specifying an `interaction`, the app can respond in
+	// special interactive ways. For example, by setting `interaction` to
+	// `OPEN_DIALOG`, the app can open a dialog
+	// (https://developers.google.com/chat/how-tos/dialogs). When specified,
+	// a loading indicator is not shown. Supported by Chat apps, but not
+	// Google Workspace Add-ons. If specified for an add-on, the entire card
+	// is stripped and nothing is shown in the client.
+	//
+	// Possible values:
+	//   "INTERACTION_UNSPECIFIED" - Default value. The `action` executes as
+	// normal.
+	//   "OPEN_DIALOG" - Opens a
+	// [dialog](https://developers.google.com/chat/how-tos/dialogs), a
+	// windowed, card-based interface that Chat apps use to interact with
+	// users. Only supported by Chat apps in response to button-clicks on
+	// card messages. Not supported by Google Workspace Add-ons. If
+	// specified for an add-on, the entire card is stripped and nothing is
+	// shown in the client.
+	Interaction string `json:"interaction,omitempty"`
 
 	// LoadIndicator: Specifies the loading indicator that the action
 	// displays while making the call to the action.
@@ -3911,8 +3953,8 @@ type DmsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3962,8 +4004,8 @@ func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -4092,7 +4134,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
@@ -4104,7 +4146,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4134,8 +4176,8 @@ type DmsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4185,8 +4227,8 @@ func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -4315,7 +4357,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
@@ -4327,7 +4369,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4357,8 +4399,8 @@ type DmsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4408,8 +4450,8 @@ func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversat
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -4538,7 +4580,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -4550,7 +4592,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4723,6 +4765,10 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	//   "response": {
 	//     "$ref": "Media"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages",
+	//     "https://www.googleapis.com/auth/chat.messages.readonly"
+	//   ],
 	//   "supportsMediaDownload": true
 	// }
 
@@ -4742,8 +4788,8 @@ type RoomsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4793,8 +4839,8 @@ func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -4923,7 +4969,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
@@ -4935,7 +4981,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4965,8 +5011,8 @@ type RoomsWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5016,8 +5062,8 @@ func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -5146,7 +5192,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
@@ -5158,7 +5204,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5188,8 +5234,8 @@ type RoomsConversationsMessagesCall struct {
 // Messages: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5239,8 +5285,8 @@ func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConve
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -5369,7 +5415,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -5381,7 +5427,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5736,8 +5782,8 @@ type SpacesWebhooksCall struct {
 // Webhooks: Legacy path for creating message. Calling these will result
 // in a BadRequest response.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5787,8 +5833,8 @@ func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -5917,7 +5963,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5929,7 +5975,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6104,8 +6150,8 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists human memberships in a space for joined members. Requires
-// service account authentication
+// List: Lists memberships in a space. Requires service account
+// authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 //   - parent: The resource name of the space for which to fetch a
@@ -6234,7 +6280,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists human memberships in a space for joined members. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Lists memberships in a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -6304,13 +6350,22 @@ type SpacesMessagesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Developer Preview
-// (https://developers.google.com/workspace/preview): Creates a message.
+// Create: Creates a message. For example usage, see Create a message
+// (https://developers.google.com/chat/api/guides/crudl/messages#create_a_message).
 // Requires authentication
-// (https://developers.google.com/chat/api/guides/auth).
+// (https://developers.google.com/chat/api/guides/auth). Fully supports
+// service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.messages` or `chat.messages.create` authorization scope.
 //
-//   - parent: Space resource name, in the form "spaces/*". Example:
-//     spaces/AAAAAAAAAAA.
+//   - parent: The resource name of the space in which to create a
+//     message. Format: spaces/{space}.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6360,8 +6415,8 @@ func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCr
 }
 
 // ThreadKey sets the optional parameter "threadKey": Deprecated: Use
-// thread_key instead. Opaque thread identifier. To start or add to a
-// thread, create a message and specify a `threadKey` or the
+// thread.thread_key instead. Opaque thread identifier. To start or add
+// to a thread, create a message and specify a `threadKey` or the
 // thread.name. For example usage, see Start or reply to a message
 // thread
 // (/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).
@@ -6461,7 +6516,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Creates a message. Requires [authentication](https://developers.google.com/chat/api/guides/auth).",
+	//   "description": "Creates a message. For example usage, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",
@@ -6490,7 +6545,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
+	//       "description": "Required. The resource name of the space in which to create a message. Format: spaces/{space}",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -6502,7 +6557,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "threadKey": {
-	//       "description": "Optional. Deprecated: Use thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
+	//       "description": "Optional. Deprecated: Use thread.thread_key instead. Opaque thread identifier. To start or add to a thread, create a message and specify a `threadKey` or the thread.name. For example usage, see [Start or reply to a message thread](/chat/api/guides/crudl/messages#start_or_reply_to_a_message_thread).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6513,7 +6568,11 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   },
 	//   "response": {
 	//     "$ref": "Message"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages",
+	//     "https://www.googleapis.com/auth/chat.messages.create"
+	//   ]
 	// }
 
 }
@@ -6528,12 +6587,19 @@ type SpacesMessagesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a message. Requires service account authentication
+// Delete: Deletes a message. For example usage, see Delete a message
+// (https://developers.google.com/chat/api/guides/crudl/messages#delete_a_message).
+// Requires authentication
+// (https://developers.google.com/chat/api/guides/auth). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
-// Developer Preview (https://developers.google.com/workspace/preview):
-// Deletes a message. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` authorization scope.
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.messages` authorization scope.
 //
 //   - name: Resource name of the message to be deleted, in the form
 //     "spaces/*/messages/*" Example:
@@ -6630,7 +6696,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Deletes a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` authorization scope.",
+	//   "description": "Deletes a message. For example usage, see [Delete a message](https://developers.google.com/chat/api/guides/crudl/messages#delete_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "chat.spaces.messages.delete",
@@ -6649,7 +6715,10 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages"
+	//   ]
 	// }
 
 }
@@ -6665,14 +6734,20 @@ type SpacesMessagesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a message. Requires service account authentication
+// Get: Returns a message. For example usage, see Read a message
+// (https://developers.google.com/chat/api/guides/crudl/messages#read_a_message).
+// Requires authentication
+// (https://developers.google.com/chat/api/guides/auth). Fully supports
+// Service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
-// Developer Preview (https://developers.google.com/workspace/preview):
-// Returns a message. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users) and the
-// `chat.messages` or `chat.messages.readonly` authorization scope.
-// Messages from a blocked member or messages from a blocked space can
-// also be fetched.
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.messages` or `chat.messages.readonly` authorization scope.
+// Note: Might return a message from a blocked member or space.
 //
 //   - name: Resource name of the message to retrieve. Format:
 //     spaces/{space}/messages/{message} If the message begins with
@@ -6786,7 +6861,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). [Developer Preview](https://developers.google.com/workspace/preview): Returns a message. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users) and the `chat.messages` or `chat.messages.readonly` authorization scope. Messages from a blocked member or messages from a blocked space can also be fetched.",
+	//   "description": "Returns a message. For example usage, see [Read a message](https://developers.google.com/chat/api/guides/crudl/messages#read_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [Service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.readonly` authorization scope. Note: Might return a message from a blocked member or space.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.messages.get",
@@ -6805,7 +6880,11 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Message"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages",
+	//     "https://www.googleapis.com/auth/chat.messages.readonly"
+	//   ]
 	// }
 
 }
@@ -6821,7 +6900,9 @@ type SpacesMessagesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a message. Requires service account authentication
+// Update: Updates a message. For example usage, see Update a message
+// (https://developers.google.com/chat/api/guides/crudl/messages#update_a_message).
+// Requires service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
@@ -6945,7 +7026,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",
@@ -6978,7 +7059,10 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   },
 	//   "response": {
 	//     "$ref": "Message"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages"
+	//   ]
 	// }
 
 }

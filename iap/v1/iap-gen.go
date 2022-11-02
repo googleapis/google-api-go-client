@@ -1242,6 +1242,7 @@ type ReauthSettings struct {
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.
 	//   "LOGIN" - Prompts the user to log in again.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
+	//   "ENROLLED_SECOND_FACTORS" - User can use any enabled 2nd factor.
 	Method string `json:"method,omitempty"`
 
 	// PolicyType: How IAP determines the effective policy in cases of
@@ -1450,10 +1451,10 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // TunnelDestGroup: A TunnelDestGroup.
 type TunnelDestGroup struct {
-	// Cidrs: null List of CIDRs that this group applies to.
+	// Cidrs: Unordered list. List of CIDRs that this group applies to.
 	Cidrs []string `json:"cidrs,omitempty"`
 
-	// Fqdns: null List of FQDNs that this group applies to.
+	// Fqdns: Unordered list. List of FQDNs that this group applies to.
 	Fqdns []string `json:"fqdns,omitempty"`
 
 	// Name: Required. Immutable. Identifier for the TunnelDestGroup. Must

@@ -14433,6 +14433,23 @@ type GoogleCloudDialogflowV2Participant struct {
 	// `projects//locations//conversations//participants/`.
 	Name string `json:"name,omitempty"`
 
+	// ObfuscatedExternalUserId: Optional. Obfuscated user id that should be
+	// associated with the created participant. You can specify a user id as
+	// follows: 1. If you set this field in CreateParticipantRequest or
+	// UpdateParticipantRequest, Dialogflow adds the obfuscated user id with
+	// the participant. 2. If you set this field in AnalyzeContent or
+	// StreamingAnalyzeContent, Dialogflow will update
+	// Participant.obfuscated_external_user_id. Dialogflow returns an error
+	// if you try to add a user id for a non-END_USER participant.
+	// Dialogflow uses this user id for billing and measurement purposes.
+	// For example, Dialogflow determines whether a user in one conversation
+	// returned in a later conversation. Note: * Please never pass raw user
+	// ids to Dialogflow. Always obfuscate your user id first. * Dialogflow
+	// only accepts a UTF-8 encoded string, e.g., a hex digest of a hash
+	// function like SHA-512. * The length of the user id must be <= 256
+	// characters.
+	ObfuscatedExternalUserId string `json:"obfuscatedExternalUserId,omitempty"`
+
 	// Role: Immutable. The role this participant plays in the conversation.
 	// This field must be set during participant creation and is then
 	// immutable.
@@ -15401,6 +15418,14 @@ func (s *GoogleCloudDialogflowV2SpeechContext) UnmarshalJSON(data []byte) error 
 // GoogleCloudDialogflowV2SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2SpeechToTextConfig struct {
+	// Model: Which Speech model to select. Select the model best suited to
+	// your domain to get best results. If a model is not explicitly
+	// specified, then a default model is used. Refer to Cloud Speech API
+	// documentation
+	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
+	// for more details.
+	Model string `json:"model,omitempty"`
+
 	// SpeechModelVariant: The speech model used in speech to text.
 	// `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be
 	// treated as `USE_ENHANCED`. It can be overridden in
@@ -15431,21 +15456,20 @@ type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// to make your project eligible.
 	SpeechModelVariant string `json:"speechModelVariant,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SpeechModelVariant")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SpeechModelVariant") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

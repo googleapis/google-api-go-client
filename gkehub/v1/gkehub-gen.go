@@ -663,6 +663,9 @@ type CommonFeatureSpec struct {
 	// Appdevexperience: Appdevexperience specific spec.
 	Appdevexperience *AppDevExperienceFeatureSpec `json:"appdevexperience,omitempty"`
 
+	// Fleetobservability: FleetObservability feature spec.
+	Fleetobservability *FleetObservabilityFeatureSpec `json:"fleetobservability,omitempty"`
+
 	// Multiclusteringress: Multicluster Ingress-specific spec.
 	Multiclusteringress *MultiClusterIngressFeatureSpec `json:"multiclusteringress,omitempty"`
 
@@ -695,6 +698,9 @@ func (s *CommonFeatureSpec) MarshalJSON() ([]byte, error) {
 type CommonFeatureState struct {
 	// Appdevexperience: Appdevexperience specific state.
 	Appdevexperience *AppDevExperienceFeatureState `json:"appdevexperience,omitempty"`
+
+	// Fleetobservability: FleetObservability feature state.
+	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
 
 	// State: Output only. The "running state" of the Feature in this Hub.
 	State *FeatureState `json:"state,omitempty"`
@@ -1952,6 +1958,28 @@ type Feature struct {
 	// ResourceState: Output only. State of the Feature resource itself.
 	ResourceState *FeatureResourceState `json:"resourceState,omitempty"`
 
+	// ScopeSpecs: Optional. Scope-specific configuration for this Feature.
+	// If this Feature does not support any per-Scope configuration, this
+	// field may be unused. The keys indicate which Scope the configuration
+	// is for, in the form: `projects/{p}/locations/global/scopes/{s}` Where
+	// {p} is the project, {s} is a valid Scope in this project. {p} WILL
+	// match the Feature's project. {p} will always be returned as the
+	// project number, but the project ID is also accepted during input. If
+	// the same Scope is specified in the map twice (using the project ID
+	// form, and the project number form), exactly ONE of the entries will
+	// be saved, with no guarantees as to which. For this reason, it is
+	// recommended the same format be used for all entries when mutating a
+	// Feature.
+	ScopeSpecs map[string]ScopeFeatureSpec `json:"scopeSpecs,omitempty"`
+
+	// ScopeStates: Output only. Scope-specific Feature status. If this
+	// Feature does report any per-Scope status, this field may be unused.
+	// The keys indicate which Scope the state is for, in the form:
+	// `projects/{p}/locations/global/scopes/{s}` Where {p} is the project,
+	// {s} is a valid Scope in this project. {p} WILL match the Feature's
+	// project.
+	ScopeStates map[string]ScopeFeatureState `json:"scopeStates,omitempty"`
+
 	// Spec: Optional. Hub-wide Feature configuration. If this Feature does
 	// not support any Hub-wide configuration, this field may be unused.
 	Spec *CommonFeatureSpec `json:"spec,omitempty"`
@@ -2079,6 +2107,26 @@ func (s *FeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FleetObservabilityFeatureSpec: **Fleet Observability**: The Hub-wide
+// input for the FleetObservability feature.
+type FleetObservabilityFeatureSpec struct {
+}
+
+// FleetObservabilityFeatureState: **FleetObservability**: An empty
+// state left as an example Hub-wide Feature state.
+type FleetObservabilityFeatureState struct {
+}
+
+// FleetObservabilityMembershipSpec: **FleetObservability**: The
+// membership-specific input for FleetObservability feature.
+type FleetObservabilityMembershipSpec struct {
+}
+
+// FleetObservabilityMembershipState: **FleetObservability**: An empty
+// state left as an example membership-specific Feature state.
+type FleetObservabilityMembershipState struct {
 }
 
 // GenerateConnectManifestResponse: GenerateConnectManifestResponse
@@ -2930,6 +2978,9 @@ type MembershipFeatureSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
 
+	// Fleetobservability: Fleet observability membership spec
+	Fleetobservability *FleetObservabilityMembershipSpec `json:"fleetobservability,omitempty"`
+
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
 
@@ -2970,6 +3021,9 @@ type MembershipFeatureState struct {
 
 	// Configmanagement: Config Management-specific state.
 	Configmanagement *ConfigManagementMembershipState `json:"configmanagement,omitempty"`
+
+	// Fleetobservability: Fleet observability membership state.
+	Fleetobservability *FleetObservabilityMembershipState `json:"fleetobservability,omitempty"`
 
 	// Identityservice: Identity Service-specific state.
 	Identityservice *IdentityServiceMembershipState `json:"identityservice,omitempty"`
@@ -3476,6 +3530,40 @@ type ResourceOptions struct {
 
 func (s *ResourceOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScopeFeatureSpec: ScopeFeatureSpec contains feature specs for a fleet
+// scope.
+type ScopeFeatureSpec struct {
+}
+
+// ScopeFeatureState: ScopeFeatureState contains Scope-wide Feature
+// status information.
+type ScopeFeatureState struct {
+	// State: Output only. The "running state" of the Feature in this Scope.
+	State *FeatureState `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScopeFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod ScopeFeatureState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -1122,7 +1122,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
-// Individual line item definition of a subscription. Next id: 8
+// Individual line item definition of a subscription. Next id: 9
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`

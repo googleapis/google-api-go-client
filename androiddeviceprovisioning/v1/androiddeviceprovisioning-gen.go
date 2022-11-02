@@ -272,6 +272,11 @@ type ClaimDeviceRequest struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
+	// SimlockProfileId: Optional. Must and can only be set when
+	// DeviceProvisioningSectionType is SECTION_TYPE_SIM_LOCK. The unique
+	// identifier of the SimLock profile (go/simlock/profiles).
+	SimlockProfileId int64 `json:"simlockProfileId,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

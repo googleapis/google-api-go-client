@@ -1392,8 +1392,8 @@ type GoogleAnalyticsAdminV1alphaAudience struct {
 	// ever met the filter clause.
 	ExclusionDurationMode string `json:"exclusionDurationMode,omitempty"`
 
-	// FilterClauses: Required. Immutable. null Filter clauses that define
-	// the Audience. All clauses will be AND’ed together.
+	// FilterClauses: Required. Immutable. Unordered list. Filter clauses
+	// that define the Audience. All clauses will be AND’ed together.
 	FilterClauses []*GoogleAnalyticsAdminV1alphaAudienceFilterClause `json:"filterClauses,omitempty"`
 
 	// MembershipDurationDays: Required. Immutable. The duration a user
@@ -5034,7 +5034,7 @@ type GoogleAnalyticsAdminV1alphaSearchChangeHistoryEventsRequest struct {
 	//   "DATA_STREAM" - DataStream resource
 	//   "ATTRIBUTION_SETTINGS" - AttributionSettings resource
 	//   "EXPANDED_DATA_SET" - ExpandedDataSet resource
-	//   "CHANNEL_GROUPING" - ChannelGrouping resource
+	//   "CHANNEL_GROUP" - ChannelGroup resource
 	ResourceType []string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -8328,7 +8328,7 @@ type PropertiesDeleteCall struct {
 // Property and all child resources (eg: GoogleAdsLinks, Streams,
 // UserLinks) will be permanently purged.
 // https://support.google.com/analytics/answer/6154772 Returns an error
-// if the target is not found, or is not an GA4 Property.
+// if the target is not found, or is not a GA4 Property.
 //
 //   - name: The name of the Property to soft-delete. Format:
 //     properties/{property_id} Example: "properties/1000".
@@ -8425,7 +8425,7 @@ func (c *PropertiesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytic
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks target Property as soft-deleted (ie: \"trashed\") and returns it. This API does not have a method to restore soft-deleted properties. However, they can be restored using the Trash Can UI. If the properties are not restored before the expiration time, the Property and all child resources (eg: GoogleAdsLinks, Streams, UserLinks) will be permanently purged. https://support.google.com/analytics/answer/6154772 Returns an error if the target is not found, or is not an GA4 Property.",
+	//   "description": "Marks target Property as soft-deleted (ie: \"trashed\") and returns it. This API does not have a method to restore soft-deleted properties. However, they can be restored using the Trash Can UI. If the properties are not restored before the expiration time, the Property and all child resources (eg: GoogleAdsLinks, Streams, UserLinks) will be permanently purged. https://support.google.com/analytics/answer/6154772 Returns an error if the target is not found, or is not a GA4 Property.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "analyticsadmin.properties.delete",

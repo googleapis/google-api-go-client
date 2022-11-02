@@ -1260,6 +1260,161 @@ func (s *GoogleCloudDataplexV1ContentSqlScript) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataScanEvent: These messages contain
+// information about the execution of a datascan. The monitored resource
+// is 'DataScan'
+type GoogleCloudDataplexV1DataScanEvent struct {
+	// DataProfile: Data profile result for data profile type data scan.
+	DataProfile *GoogleCloudDataplexV1DataScanEventDataProfileResult `json:"dataProfile,omitempty"`
+
+	// DataQuality: Data quality result for data quality type data scan.
+	DataQuality *GoogleCloudDataplexV1DataScanEventDataQualityResult `json:"dataQuality,omitempty"`
+
+	// DataSource: The data source of the data scan
+	DataSource string `json:"dataSource,omitempty"`
+
+	// EndTime: The time when the data scan job finished.
+	EndTime string `json:"endTime,omitempty"`
+
+	// JobId: The identifier of the specific data scan job this log entry is
+	// for.
+	JobId string `json:"jobId,omitempty"`
+
+	// Message: The message describing the data scan job event.
+	Message string `json:"message,omitempty"`
+
+	// Scope: The scope of the data scan (e.g. full, incremental).
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - An unspecified scope type.
+	//   "FULL" - Data scan runs on all of the data.
+	//   "INCREMENTAL" - Data scan runs on incremental data.
+	Scope string `json:"scope,omitempty"`
+
+	// SpecVersion: A version identifier of the spec which was used to
+	// execute this job.
+	SpecVersion string `json:"specVersion,omitempty"`
+
+	// StartTime: The time when the data scan job started to run.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: The status of the data scan job.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified job state.
+	//   "STARTED" - Data scan started.
+	//   "SUCCEEDED" - Data scan successfully completed.
+	//   "FAILED" - Data scan was unsuccessful.
+	//   "CANCELLED" - Data scan was cancelled.
+	State string `json:"state,omitempty"`
+
+	// Trigger: The trigger type of the data scan job.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - An unspecified trigger type.
+	//   "ON_DEMAND" - Data scan triggers on demand.
+	//   "SCHEDULE" - Data scan triggers as per schedule.
+	Trigger string `json:"trigger,omitempty"`
+
+	// Type: The type of the data scan.
+	//
+	// Possible values:
+	//   "SCAN_TYPE_UNSPECIFIED" - An unspecified data scan type.
+	//   "DATA_PROFILE" - Data scan for data profile.
+	//   "DATA_QUALITY" - Data scan for data quality.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataProfile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataProfile") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanEventDataProfileResult: Data profile
+// result for data scan job.
+type GoogleCloudDataplexV1DataScanEventDataProfileResult struct {
+	// RowCount: The count of rows processed in the data scan job.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "RowCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RowCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventDataProfileResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataProfileResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanEventDataQualityResult: Data quality
+// result for data scan job.
+type GoogleCloudDataplexV1DataScanEventDataQualityResult struct {
+	// DimensionPassed: The result of each dimension for data quality
+	// result. The key of the map is the name of the dimension. The value is
+	// the bool value depicting whether the dimension result was pass or
+	// not.
+	DimensionPassed map[string]bool `json:"dimensionPassed,omitempty"`
+
+	// Passed: Whether the data quality result was pass or not.
+	Passed bool `json:"passed,omitempty"`
+
+	// RowCount: The count of rows processed in the data scan job.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionPassed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionPassed") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataQualityResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DiscoveryEvent: The payload associated with
 // Discovery data processing.
 type GoogleCloudDataplexV1DiscoveryEvent struct {

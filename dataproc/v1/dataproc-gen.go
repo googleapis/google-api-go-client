@@ -1794,66 +1794,6 @@ func (s *GceClusterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceNodePoolOperationMetadata: Metadata describing the Compute Engine
-// node pool operation.
-type GceNodePoolOperationMetadata struct {
-	// ClusterUuid: Output only. Cluster UUID associated with the Compute
-	// Engine node pool operation.
-	ClusterUuid string `json:"clusterUuid,omitempty"`
-
-	// Description: Output only. Short description of operation.
-	Description string `json:"description,omitempty"`
-
-	// GceNodePoolId: Output only. Compute Engine node pool ID for the
-	// operation.
-	GceNodePoolId string `json:"gceNodePoolId,omitempty"`
-
-	// Labels: Output only. Labels associated with the operation
-	Labels map[string]string `json:"labels,omitempty"`
-
-	// OperationType: The operation type.
-	//
-	// Possible values:
-	//   "GCE_NODE_POOL_OPERATION_TYPE_UNSPECIFIED" - Compute Engine node
-	// pool operation type is unknown.
-	//   "CREATE" - Create Compute Engine node pool operation type.
-	//   "UPDATE" - Update Compute Engine node pool operation type.
-	//   "DELETE" - Delete Compute Engine node pool operation type.
-	//   "RESIZE" - Resize Compute Engine node pool operation type.
-	OperationType string `json:"operationType,omitempty"`
-
-	// Status: Output only. Current operation status.
-	Status *ClusterOperationStatus `json:"status,omitempty"`
-
-	// StatusHistory: Output only. The previous operation status.
-	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
-
-	// Warnings: Output only. Errors encountered during operation execution.
-	Warnings []string `json:"warnings,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClusterUuid") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClusterUuid") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GceNodePoolOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GceNodePoolOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GetIamPolicyRequest: Request message for GetIamPolicy method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A GetPolicyOptions object for specifying options
@@ -3736,6 +3676,65 @@ func (s *NodeGroupAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeGroupOperationMetadata: Metadata describing the node group
+// operation.
+type NodeGroupOperationMetadata struct {
+	// ClusterUuid: Output only. Cluster UUID associated with the node group
+	// operation.
+	ClusterUuid string `json:"clusterUuid,omitempty"`
+
+	// Description: Output only. Short description of operation.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Output only. Labels associated with the operation.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// NodeGroupId: Output only. Node group ID for the operation.
+	NodeGroupId string `json:"nodeGroupId,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "NODE_GROUP_OPERATION_TYPE_UNSPECIFIED" - Node group operation type
+	// is unknown.
+	//   "CREATE" - Create node group operation type.
+	//   "UPDATE" - Update node group operation type.
+	//   "DELETE" - Delete node group operation type.
+	//   "RESIZE" - Resize node group operation type.
+	OperationType string `json:"operationType,omitempty"`
+
+	// Status: Output only. Current operation status.
+	Status *ClusterOperationStatus `json:"status,omitempty"`
+
+	// StatusHistory: Output only. The previous operation status.
+	StatusHistory []*ClusterOperationStatus `json:"statusHistory,omitempty"`
+
+	// Warnings: Output only. Errors encountered during operation execution.
+	Warnings []string `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterUuid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterUuid") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeGroupOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeGroupOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeInitializationAction: Specifies an executable to run on a fully
 // configured node and a timeout period for executable completion.
 type NodeInitializationAction struct {
@@ -4563,6 +4562,10 @@ func (s *RuntimeConfig) MarshalJSON() ([]byte, error) {
 
 // RuntimeInfo: Runtime information about workload execution.
 type RuntimeInfo struct {
+	// ApproximateUsage: Output only. Approximate workload resource usage
+	// calculated after workload finishes.
+	ApproximateUsage *UsageMetrics `json:"approximateUsage,omitempty"`
+
 	// DiagnosticOutputUri: Output only. A URI pointing to the location of
 	// the diagnostics tarball.
 	DiagnosticOutputUri string `json:"diagnosticOutputUri,omitempty"`
@@ -4575,15 +4578,15 @@ type RuntimeInfo struct {
 	// and stderr of the workload.
 	OutputUri string `json:"outputUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DiagnosticOutputUri")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ApproximateUsage") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DiagnosticOutputUri") to
+	// NullFields is a list of field names (e.g. "ApproximateUsage") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -5651,6 +5654,40 @@ type TrinoJob struct {
 
 func (s *TrinoJob) MarshalJSON() ([]byte, error) {
 	type NoMethod TrinoJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsageMetrics: Usage metrics represent total resources consumed by a
+// workload.
+type UsageMetrics struct {
+	// MilliDcuSeconds: Optional. DCU usage in milliDCU*seconds.
+	MilliDcuSeconds int64 `json:"milliDcuSeconds,omitempty,string"`
+
+	// ShuffleStorageGbSeconds: Optional. Shuffle storage usage in
+	// GB*Seconds
+	ShuffleStorageGbSeconds int64 `json:"shuffleStorageGbSeconds,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MilliDcuSeconds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MilliDcuSeconds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

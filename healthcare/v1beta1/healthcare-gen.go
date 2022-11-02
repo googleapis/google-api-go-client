@@ -398,6 +398,73 @@ type ProjectsLocationsServicesNlpService struct {
 	s *Service
 }
 
+// Action: Specifies a selection of tags and an `Action` to apply to
+// each one.
+type Action struct {
+	// CleanImageTag: Inspect image and transform sensitive burnt-in text.
+	// Doesn't apply to elements nested in a sequence, which revert to
+	// `Keep`. Supported tags
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html):
+	// PixelData
+	CleanImageTag *ImageConfig `json:"cleanImageTag,omitempty"`
+
+	// CleanTextTag: Inspect text and transform sensitive text. Configurable
+	// via TextConfig. Supported Value Representations: AE, LO, LT, PN, SH,
+	// ST, UC, UT, DA, DT, AS
+	CleanTextTag *CleanTextTag `json:"cleanTextTag,omitempty"`
+
+	// DeleteTag: Delete tag.
+	DeleteTag *DeleteTag `json:"deleteTag,omitempty"`
+
+	// KeepTag: Keep tag unchanged.
+	KeepTag *KeepTag `json:"keepTag,omitempty"`
+
+	// Queries: Select all tags with the listed tag IDs, names, or Value
+	// Representations (VRs). Examples: ID: "00100010" Keyword:
+	// "PatientName" VR: "PN"
+	Queries []string `json:"queries,omitempty"`
+
+	// RecurseTag: Recursively apply DICOM de-id to tags nested in a
+	// sequence. Supported [Value Representation]
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// SQ
+	RecurseTag *RecurseTag `json:"recurseTag,omitempty"`
+
+	// RegenUidTag: Replace UID with a new generated UID. Supported [Value
+	// Representation]
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// UI
+	RegenUidTag *RegenUidTag `json:"regenUidTag,omitempty"`
+
+	// RemoveTag: Replace with empty tag.
+	RemoveTag *RemoveTag `json:"removeTag,omitempty"`
+
+	// ResetTag: Reset tag to a placeholder value.
+	ResetTag *ResetTag `json:"resetTag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CleanImageTag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CleanImageTag") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Action) MarshalJSON() ([]byte, error) {
+	type NoMethod Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ActivateConsentRequest: Activates the latest revision of the
 // specified Consent by committing a new revision with `state` updated
 // to `ACTIVE`. If the latest revision of the given Consent is in the
@@ -1097,6 +1164,13 @@ func (s *CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CharacterMaskField: Replace field value with masking character.
+// Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
+// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
+// Uuid, Xhtml
+type CharacterMaskField struct {
+}
+
 // CheckDataAccessRequest: Checks if a particular data_id of a User data
 // mapping in the given consent store is consented for a given use.
 type CheckDataAccessRequest struct {
@@ -1193,6 +1267,34 @@ func (s *CheckDataAccessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckDataAccessResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CleanDescriptorsOption: This option is based on the DICOM Standard's
+// Clean Descriptors Option
+// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/sect_E.3.5.html),
+// and the `CleanText` `Action` is applied to all the specified fields.
+// When cleaning text, the process attempts to transform phrases
+// matching any of the tags marked for removal (action codes D, Z, X,
+// and U) in the Basic Profile
+// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html).
+// These contextual phrases are replaced with the token "[CTX]". This
+// option uses an additional `InfoType` during inspection.
+type CleanDescriptorsOption struct {
+}
+
+// CleanTextField: Inspect text and transform sensitive text. Configure
+// using `TextConfig`. Supported types
+// (https://www.hl7.org/fhir/datatypes.html): Code, Date, DateTime,
+// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
+// Uuid, Xhtml
+type CleanTextField struct {
+}
+
+// CleanTextTag: Inspect text and transform sensitive text. Configurable
+// using `TextConfig`. Supported [Value Representations]
+// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
+type CleanTextTag struct {
 }
 
 // CloudHealthcareSource: Cloud Healthcare API resource.
@@ -1550,6 +1652,15 @@ func (s *ConsentStore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContextualDeidConfig: The fields that aren't marked `Keep` or
+// `CleanText` in the `BASIC` profile are collected into a contextual
+// phrase list. For fields marked `CleanText`, the process attempts to
+// transform phrases matching these contextual entries. These contextual
+// phrases are replaced with the token "[CTX]". This feature uses an
+// additional InfoType during inspection.
+type ContextualDeidConfig struct {
+}
+
 // CreateMessageRequest: Creates a new message.
 type CreateMessageRequest struct {
 	// Message: HL7v2 message.
@@ -1613,6 +1724,13 @@ func (s *CryptoHashConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoHashConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CryptoHashField: Replace field value with a hash of that value.
+// Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
+// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
+// Uuid, Xhtml
+type CryptoHashField struct {
 }
 
 // Dataset: A message representing a health dataset. A health dataset
@@ -1694,6 +1812,14 @@ func (s *DateShiftConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DateShiftField: Shift the date by a randomized number of days. See
+// date shifting
+// (https://cloud.google.com/dlp/docs/concepts-date-shifting) for more
+// information. Supported types
+// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime
+type DateShiftField struct {
+}
+
 // DeidentifiedStoreDestination: Contains configuration for streaming
 // de-identified FHIR export.
 type DeidentifiedStoreDestination struct {
@@ -1744,9 +1870,15 @@ type DeidentifyConfig struct {
 	// `dicom_tag_config` instead.
 	Dicom *DicomConfig `json:"dicom,omitempty"`
 
+	// DicomTagConfig: Configures de-id of application/DICOM content.
+	DicomTagConfig *DicomTagConfig `json:"dicomTagConfig,omitempty"`
+
 	// Fhir: Configures de-id of application/FHIR content. Deprecated. Use
 	// `fhir_field_config` instead.
 	Fhir *FhirConfig `json:"fhir,omitempty"`
+
+	// FhirFieldConfig: Configures de-id of application/FHIR content.
+	FhirFieldConfig *FhirFieldConfig `json:"fhirFieldConfig,omitempty"`
 
 	// Image: Configures the de-identification of image pixels in the
 	// source_dataset. Deprecated. Use
@@ -1975,6 +2107,10 @@ func (s *DeidentifyOperationMetadata) MarshalJSON() ([]byte, error) {
 type DeidentifySummary struct {
 }
 
+// DeleteTag: Delete tag.
+type DeleteTag struct {
+}
+
 // Detail: Contains multiple sensitive information findings for each
 // resource slice.
 type Detail struct {
@@ -2155,6 +2291,61 @@ type DicomStore struct {
 
 func (s *DicomStore) MarshalJSON() ([]byte, error) {
 	type NoMethod DicomStore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DicomTagConfig: Specifies the parameters needed for the
+// de-identification of DICOM stores.
+type DicomTagConfig struct {
+	// Actions: Specifies custom tag selections and `Actions` to apply to
+	// them. Overrides `options` and `profile`. Conflicting `Actions` are
+	// applied in the order given.
+	Actions []*Action `json:"actions,omitempty"`
+
+	// Options: Specifies additional options to apply, overriding the base
+	// `profile`.
+	Options *Options `json:"options,omitempty"`
+
+	// ProfileType: Base profile type for handling DICOM tags.
+	//
+	// Possible values:
+	//   "PROFILE_TYPE_UNSPECIFIED" - No profile provided. Same as
+	// `ATTRIBUTE_CONFIDENTIALITY_BASIC_PROFILE`.
+	//   "MINIMAL_KEEP_LIST_PROFILE" - Keep only the tags required to
+	// produce valid DICOM objects.
+	//   "ATTRIBUTE_CONFIDENTIALITY_BASIC_PROFILE" - Remove tags based on
+	// DICOM Standard's [Attribute Confidentiality Basic Profile (DICOM
+	// Standard Edition
+	// 2018e)](http://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/
+	// chapter_E.html).
+	//   "KEEP_ALL_PROFILE" - Keep all tags.
+	//   "DEIDENTIFY_TAG_CONTENTS" - Inspect tag contents and replace
+	// sensitive text. The process can be configured using the TextConfig.
+	// Applies to all tags with the following [Value Representations]
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+	// AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
+	ProfileType string `json:"profileType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DicomTagConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DicomTagConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2856,6 +3047,56 @@ type FhirConfig struct {
 
 func (s *FhirConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod FhirConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FhirFieldConfig: Specifies how to handle the de-identification of a
+// FHIR store.
+type FhirFieldConfig struct {
+	// FieldMetadataList: Specifies FHIR paths to match and how to transform
+	// them. Any field that is not matched by a `FieldMetadata` is passed
+	// through to the output dataset unmodified. All extensions will be
+	// processed according to `keep_extensions`. If a field can be matched
+	// by more than one `FieldMetadata`, the first `FieldMetadata.Action` is
+	// applied. Overrides `options` and `profile`.
+	FieldMetadataList []*GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata `json:"fieldMetadataList,omitempty"`
+
+	// Options: Specifies additional options, overriding the base `profile`.
+	Options *GoogleCloudHealthcareV1beta1DeidentifyOptions `json:"options,omitempty"`
+
+	// ProfileType: Base profile type for handling FHIR fields.
+	//
+	// Possible values:
+	//   "PROFILE_TYPE_UNSPECIFIED" - No profile provided. Same as `BASIC`.
+	//   "KEEP_ALL" - `Keep` all fields.
+	//   "BASIC" - Transforms known HIPAA 18 fields and cleans known
+	// unstructured text fields.
+	//   "CLEAN_ALL" - Cleans all supported tags. Applies to types: Code,
+	// Date, DateTime, Decimal, HumanName, Id, LanguageCode, Markdown, Oid,
+	// String, Uri, Uuid, Xhtml
+	ProfileType string `json:"profileType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldMetadataList")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldMetadataList") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirFieldConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirFieldConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3624,6 +3865,130 @@ type GoogleCloudHealthcareV1beta1DeidentifyDeidentifyDicomStoreSummary struct {
 type GoogleCloudHealthcareV1beta1DeidentifyDeidentifyFhirStoreSummary struct {
 }
 
+// GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata: Specifies the
+// FHIR paths to match and how to handle the de-identification of
+// matching fields.
+type GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata struct {
+	// CharacterMaskField: Replace the field's value with a masking
+	// character. Supported types (https://www.hl7.org/fhir/datatypes.html):
+	// Code, Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String,
+	// Uri, Uuid, Xhtml
+	CharacterMaskField *CharacterMaskField `json:"characterMaskField,omitempty"`
+
+	// CleanTextField: Inspect the field's text and transform sensitive
+	// text. Configure using `TextConfig`. Supported types
+	// (https://www.hl7.org/fhir/datatypes.html): Code, Date, DateTime,
+	// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
+	// Uuid, Xhtml
+	CleanTextField *CleanTextField `json:"cleanTextField,omitempty"`
+
+	// CryptoHashField: Replace field value with a hash of that value.
+	// Supported types (https://www.hl7.org/fhir/datatypes.html): Code,
+	// Decimal, HumanName, Id, LanguageCode, Markdown, Oid, String, Uri,
+	// Uuid, Xhtml
+	CryptoHashField *CryptoHashField `json:"cryptoHashField,omitempty"`
+
+	// DateShiftField: Shift the date by a randomized number of days. See
+	// date shifting
+	// (https://cloud.google.com/dlp/docs/concepts-date-shifting) for more
+	// information. Supported types
+	// (https://www.hl7.org/fhir/datatypes.html): Date, DateTime
+	DateShiftField *DateShiftField `json:"dateShiftField,omitempty"`
+
+	// KeepField: Keep the field unchanged.
+	KeepField *KeepField `json:"keepField,omitempty"`
+
+	// Paths: List of paths to FHIR fields to redact. Each path is a
+	// period-separated list where each component is either a field name or
+	// FHIR type name. All types begin with an upper case letter. For
+	// example, the resource field "Patient.Address.city", which uses a
+	// string type, can be matched by "Patient.Address.String". Path also
+	// supports partialkk matching. For example, "Patient.Address.city" can
+	// be matched by "Address.city" (Patient omitted). Partial matching and
+	// type matching can be combined, for example "Patient.Address.city" can
+	// be matched by "Address.String". For "choice" types (those defined in
+	// the FHIR spec with the form: field[x]), use two separate components.
+	// For example, "deceasedAge.unit" is matched by "Deceased.Age.unit".
+	// Supported types (https://www.hl7.org/fhir/datatypes.html) are:
+	// AdministrativeGenderCode, Base64Binary, Boolean, Code, Date,
+	// DateTime, Decimal, HumanName, Id, Instant, Integer, LanguageCode,
+	// Markdown, Oid, PositiveInt, String, UnsignedInt, Uri, Uuid, Xhtml.
+	// The sub-type for HumanName (for example HumanName.given,
+	// HumanName.family) can be omitted.
+	Paths []string `json:"paths,omitempty"`
+
+	// RemoveField: Remove the field.
+	RemoveField *RemoveField `json:"removeField,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CharacterMaskField")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CharacterMaskField") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudHealthcareV1beta1DeidentifyOptions: Specifies additional
+// options to apply to the base `profile`.
+type GoogleCloudHealthcareV1beta1DeidentifyOptions struct {
+	// CharacterMaskConfig: Character mask config for `CharacterMaskField`
+	// `FieldMetadatas`.
+	CharacterMaskConfig *CharacterMaskConfig `json:"characterMaskConfig,omitempty"`
+
+	// ContextualDeid: Configure contextual de-id.
+	ContextualDeid *ContextualDeidConfig `json:"contextualDeid,omitempty"`
+
+	// CryptoHashConfig: Crypo hash config for `CharacterMaskField`
+	// `FieldMetadatas`.
+	CryptoHashConfig *CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
+
+	// DateShiftConfig: Date shifting config for `CharacterMaskField`
+	// `FieldMetadatas`.
+	DateShiftConfig *DateShiftConfig `json:"dateShiftConfig,omitempty"`
+
+	// KeepExtensions: Configure keeping extensions by default.
+	KeepExtensions *KeepExtensionsConfig `json:"keepExtensions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CharacterMaskConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CharacterMaskConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudHealthcareV1beta1DeidentifyOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudHealthcareV1beta1DeidentifyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudHealthcareV1beta1DicomBigQueryDestination: The BigQuery
 // table where the server writes output.
 type GoogleCloudHealthcareV1beta1DicomBigQueryDestination struct {
@@ -4366,6 +4731,19 @@ func (s *ImageAnnotation) MarshalJSON() ([]byte, error) {
 // ImageConfig: Specifies how to handle de-identification of image
 // pixels.
 type ImageConfig struct {
+	// AdditionalInfoTypes: Additional InfoTypes to redact in the images in
+	// addition to those used by `text_redaction_mode`. Can only be used
+	// when `text_redaction_mode` is set to `REDACT_SENSITIVE_TEXT`,
+	// `REDACT_SENSITIVE_TEXT_CLEAN_DESCRIPTORS` or
+	// `TEXT_REDACTION_MODE_UNSPECIFIED`.
+	AdditionalInfoTypes []string `json:"additionalInfoTypes,omitempty"`
+
+	// ExcludeInfoTypes: InfoTypes to skip redacting, overriding those used
+	// by `text_redaction_mode`. Can only be used when `text_redaction_mode`
+	// is set to `REDACT_SENSITIVE_TEXT` or
+	// `REDACT_SENSITIVE_TEXT_CLEAN_DESCRIPTORS`.
+	ExcludeInfoTypes []string `json:"excludeInfoTypes,omitempty"`
+
 	// TextRedactionMode: Determines how to redact text from image.
 	//
 	// Possible values:
@@ -4377,9 +4755,19 @@ type ImageConfig struct {
 	// InfoTypes](https://cloud.google.com/healthcare-api/docs/how-tos/dicom-
 	// deidentify#default_dicom_infotypes).
 	//   "REDACT_NO_TEXT" - Do not redact text.
+	//   "REDACT_SENSITIVE_TEXT_CLEAN_DESCRIPTORS" - This mode is like
+	// `REDACT_SENSITIVE_TEXT` with the addition of the [Clean Descriptors
+	// Option]
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/sect_E.3.5.html)
+	// enabled: When cleaning text, the process attempts to transform
+	// phrases matching any of the tags marked for removal (action codes D,
+	// Z, X, and U) in the [Basic Profile]
+	// (https://dicom.nema.org/medical/dicom/2018e/output/chtml/part15/chapter_E.html).
+	// These contextual phrases are replaced with the token "[CTX]". This
+	// mode uses an additional InfoType during inspection.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TextRedactionMode")
+	// ForceSendFields is a list of field names (e.g. "AdditionalInfoTypes")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4387,7 +4775,7 @@ type ImageConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TextRedactionMode") to
+	// NullFields is a list of field names (e.g. "AdditionalInfoTypes") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4723,6 +5111,22 @@ func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestMessageResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeepExtensionsConfig: The behaviour for handling FHIR extensions that
+// aren't otherwise specified for de-identification. If provided, all
+// extensions are preserved during de-identification by default. If
+// unspecified, all extensions are removed during de-identification by
+// default.
+type KeepExtensionsConfig struct {
+}
+
+// KeepField: Keep field unchanged.
+type KeepField struct {
+}
+
+// KeepTag: Keep tag unchanged.
+type KeepTag struct {
 }
 
 // KmsWrappedCryptoKey: Include to use an existing data crypto key
@@ -5648,6 +6052,51 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Options: Specifies additional options to apply to the base profile.
+type Options struct {
+	// CleanDescriptors: Set Clean Descriptors Option.
+	CleanDescriptors *CleanDescriptorsOption `json:"cleanDescriptors,omitempty"`
+
+	// CleanImage: Apply `Action.clean_image` to `PixelData`
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html)
+	// as configured.
+	CleanImage *ImageConfig `json:"cleanImage,omitempty"`
+
+	// PrimaryIds: Set `Action` for `StudyInstanceUID`, `SeriesInstanceUID`,
+	// `SOPInstanceUID`, and `MediaStorageSOPInstanceUID`
+	// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part06/chapter_6.html).
+	//
+	// Possible values:
+	//   "PRIMARY_IDS_OPTION_UNSPECIFIED" - No value provided. Default to
+	// the behavior specified by the base profile.
+	//   "KEEP" - Keep primary IDs.
+	//   "REGEN" - Regenerate primary IDs.
+	PrimaryIds string `json:"primaryIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CleanDescriptors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CleanDescriptors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Options) MarshalJSON() ([]byte, error) {
+	type NoMethod Options
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ParsedData: The content of an HL7v2 message in a structured format.
 type ParsedData struct {
 	Segments []*Segment `json:"segments,omitempty"`
@@ -5992,10 +6441,24 @@ func (s *QueryAccessibleDataResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RecurseTag: Recursively apply DICOM de-id to tags nested in a
+// sequence. Supported [Value Representation]
+// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// SQ
+type RecurseTag struct {
+}
+
 // RedactConfig: Define how to redact sensitive values. Default
 // behaviour is erase. For example, "My name is Jane." becomes "My name
 // is ."
 type RedactConfig struct {
+}
+
+// RegenUidTag: Replace UID with a new generated UID. Supported [Value
+// Representation]
+// (http://dicom.nema.org/medical/dicom/2018e/output/chtml/part05/sect_6.2.html#table_6.2-1):
+// UI
+type RegenUidTag struct {
 }
 
 // RejectConsentRequest: Rejects the latest revision of the specified
@@ -6036,11 +6499,23 @@ func (s *RejectConsentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RemoveField: Remove field.
+type RemoveField struct {
+}
+
+// RemoveTag: Replace with empty tag.
+type RemoveTag struct {
+}
+
 // ReplaceWithInfoTypeConfig: When using the INSPECT_AND_TRANSFORM
 // action, each match is replaced with the name of the info_type. For
 // example, "My name is Jane" becomes "My name is [PERSON_NAME]." The
 // TRANSFORM action is equivalent to redacting.
 type ReplaceWithInfoTypeConfig struct {
+}
+
+// ResetTag: Reset tag to a placeholder value.
+type ResetTag struct {
 }
 
 // ResourceAnnotation: Resource level annotation.
@@ -6896,25 +7371,43 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // TextConfig: Configures how to transform sensitive text `InfoTypes`.
 type TextConfig struct {
+	// AdditionalTransformations: Additional transformations to apply to the
+	// detected data, overriding `profile`.
+	AdditionalTransformations []*InfoTypeTransformation `json:"additionalTransformations,omitempty"`
+
+	// ExcludeInfoTypes: InfoTypes to skip transforming, overriding
+	// `profile`.
+	ExcludeInfoTypes []string `json:"excludeInfoTypes,omitempty"`
+
+	// ProfileType: Base profile type for text transformation.
+	//
+	// Possible values:
+	//   "PROFILE_TYPE_UNSPECIFIED" - Same as BASIC.
+	//   "EMPTY" - Empty profile which does not perform any transformations.
+	//   "BASIC" - Basic profile applies: DATE -> DateShift Default ->
+	// ReplaceWithInfoType
+	ProfileType string `json:"profileType,omitempty"`
+
 	// Transformations: The transformations to apply to the detected data.
 	// Deprecated. Use `additional_transformations` instead.
 	Transformations []*InfoTypeTransformation `json:"transformations,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Transformations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalTransformations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Transformations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditionalTransformations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

@@ -5503,7 +5503,7 @@
       "name": "transcoder",
       "version": "v1",
       "title": "Transcoder API",
-      "description": "This API converts video files into formats suitable for consumer distribution.",
+      "description": "This API converts video files into formats suitable for consumer distribution. For more information, see the Transcoder API overview \u003chttps://cloud.google.com/transcoder/docs/concepts/overview\u003e.",
       "discoveryRestUrl": "https://transcoder.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -5555,6 +5555,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "travelimpactmodel:v1",
+      "name": "travelimpactmodel",
+      "version": "v1",
+      "title": "Travel Impact Model API",
+      "description": "Travel Impact Model API lets you query travel carbon emission estimates.",
+      "discoveryRestUrl": "https://travelimpactmodel.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/travel/impact-model",
       "preferred": true
     },
     {

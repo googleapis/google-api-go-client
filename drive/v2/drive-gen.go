@@ -1984,8 +1984,8 @@ type File struct {
 	Description string `json:"description,omitempty"`
 
 	// DownloadUrl: Short lived download URL for the file. This field is
-	// only populated for files with content stored in Google Drive; it is
-	// not populated for Docs Editors or shortcut files.
+	// only populated for files with content stored in Google Drive; it
+	// isn't populated for Docs Editors or shortcut files.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// DriveId: ID of the shared drive the file resides in. Only populated
@@ -2012,12 +2012,12 @@ type File struct {
 	// FileExtension: The final component of fullFileExtension with trailing
 	// text that does not appear to be part of the extension removed. This
 	// field is only populated for files with content stored in Google
-	// Drive; it is not populated for Docs Editors or shortcut files.
+	// Drive; it isn't populated for Docs Editors or shortcut files.
 	FileExtension string `json:"fileExtension,omitempty"`
 
 	// FileSize: The size of the file in bytes. This field is populated for
 	// files with content stored in Google Drive and for files in Docs
-	// Editors; it is not populated for shortcut files.
+	// Editors; it isn't populated for shortcut files.
 	FileSize int64 `json:"fileSize,omitempty,string"`
 
 	// FolderColorRgb: Folder color as an RGB hex string if the file is a
@@ -2032,7 +2032,7 @@ type File struct {
 	// Removing an extension from the title does not clear this field;
 	// however, changing the extension on the title does update this field.
 	// This field is only populated for files with content stored in Google
-	// Drive; it is not populated for Docs Editors or shortcut files.
+	// Drive; it isn't populated for Docs Editors or shortcut files.
 	FullFileExtension string `json:"fullFileExtension,omitempty"`
 
 	// HasAugmentedPermissions: Whether there are permissions directly on
@@ -2045,8 +2045,8 @@ type File struct {
 	HasThumbnail bool `json:"hasThumbnail,omitempty"`
 
 	// HeadRevisionId: The ID of the file's head revision. This field is
-	// only populated for files with content stored in Google Drive; it is
-	// not populated for Docs Editors or shortcut files.
+	// only populated for files with content stored in Google Drive; it
+	// isn't populated for Docs Editors or shortcut files.
 	HeadRevisionId string `json:"headRevisionId,omitempty"`
 
 	// IconLink: A link to the file's icon.
@@ -2061,7 +2061,7 @@ type File struct {
 	ImageMediaMetadata *FileImageMediaMetadata `json:"imageMediaMetadata,omitempty"`
 
 	// IndexableText: Indexable text attributes for the file (can only be
-	// written)
+	// written). For more information, see Manage file metadata.
 	IndexableText *FileIndexableText `json:"indexableText,omitempty"`
 
 	// IsAppAuthorized: Whether the file was created or opened by the
@@ -2096,7 +2096,7 @@ type File struct {
 
 	// Md5Checksum: An MD5 checksum for the content of this file. This field
 	// is only populated for files with content stored in Google Drive; it
-	// is not populated for Docs Editors or shortcut files.
+	// isn't populated for Docs Editors or shortcut files.
 	Md5Checksum string `json:"md5Checksum,omitempty"`
 
 	// MimeType: The MIME type of the file. This is only mutable on update
@@ -2167,13 +2167,13 @@ type File struct {
 
 	// Sha1Checksum: The SHA1 checksum associated with this file, if
 	// available. This field is only populated for files with content stored
-	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// in Google Drive; it isn't populated for Docs Editors or shortcut
 	// files.
 	Sha1Checksum string `json:"sha1Checksum,omitempty"`
 
 	// Sha256Checksum: The SHA256 checksum associated with this file, if
 	// available. This field is only populated for files with content stored
-	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// in Google Drive; it isn't populated for Docs Editors or shortcut
 	// files.
 	Sha256Checksum string `json:"sha256Checksum,omitempty"`
 
@@ -2419,7 +2419,7 @@ type FileCapabilities struct {
 
 	// CanReadRevisions: Whether the current user can read the revisions
 	// resource of this file. For a shared drive item, whether revisions of
-	// non-folder descendants of this item, or this item itself if it is not
+	// non-folder descendants of this item, or this item itself if it isn't
 	// a folder, can be read.
 	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
 
@@ -2649,7 +2649,7 @@ func (s *FileImageMediaMetadataLocation) UnmarshalJSON(data []byte) error {
 }
 
 // FileIndexableText: Indexable text attributes for the file (can only
-// be written)
+// be written). For more information, see Manage file metadata.
 type FileIndexableText struct {
 	// Text: The text to be indexed for this file.
 	Text string `json:"text,omitempty"`

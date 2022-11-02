@@ -5,6 +5,8 @@
 package gensupport
 
 import (
+	"errors"
+
 	"github.com/googleapis/gax-go/v2/apierror"
 	"google.golang.org/api/googleapi"
 )
@@ -13,9 +15,12 @@ import (
 // does not wrap err), wraps it in err, and returns err. If
 // err is not a googleapi.Error (or a gRPC Status), it returns
 // err without modification.
-func WrapError(err *googleapi.Error) *googleapi.Error {
+func WrapError(err error) error {
 	if apiError, ok := apierror.ParseError(err, false); ok {
-		err.Err = apiError
+		var herr *googleapi.Error
+		if errors.As(err, &herr) {
+			herr.Err = apiError
+		}
 	}
 	return err
 }

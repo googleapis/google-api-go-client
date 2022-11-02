@@ -21,10 +21,10 @@ func TestWrapError(t *testing.T) {
 	hae := &googleapi.Error{
 		Body: jsonErrStr,
 	}
-	hae = WrapError(hae)
+	err := WrapError(hae)
 
 	var aerr *apierror.APIError
-	if ok := errors.As(hae, &aerr); !ok {
+	if ok := errors.As(err, &aerr); !ok {
 		t.Errorf("got false, want true")
 	}
 

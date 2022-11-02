@@ -814,8 +814,8 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
-	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
-	// notification.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliveryPipeline") to
@@ -1297,8 +1297,8 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
-	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
-	// notification.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobRun") to
@@ -2201,8 +2201,8 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
-	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
-	// notification.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -2475,8 +2475,8 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
-	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
-	// notification.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -2894,8 +2894,8 @@ type TargetNotificationEvent struct {
 	//   "TYPE_UNSPECIFIED" - Type is unspecified.
 	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
 	// to be sent.
-	//   "TYPE_RENDER_STATUES_CHANGE" - Release render status changed
-	// notification.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to

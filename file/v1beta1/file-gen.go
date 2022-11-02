@@ -1035,6 +1035,9 @@ type Instance struct {
 	// details from the `suspension_reasons` field of the `Instance`
 	// resource.
 	//   "REVERTING" - The instance is reverting to a snapshot.
+	//   "SUSPENDING" - The instance is in the process of becoming
+	// suspended.
+	//   "RESUMING" - The instance is in the process of becoming active.
 	State string `json:"state,omitempty"`
 
 	// StatusMessage: Output only. Additional information about the instance

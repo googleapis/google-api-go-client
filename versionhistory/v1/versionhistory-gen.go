@@ -426,6 +426,7 @@ type Platform struct {
 	//   "LACROS_ARM32"
 	//   "CHROMEOS"
 	//   "LACROS_ARM64"
+	//   "FUCHSIA"
 	PlatformType string `json:"platformType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

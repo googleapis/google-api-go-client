@@ -1440,8 +1440,8 @@ type ExecutionSpec struct {
 	// execution.
 	TaskCount int64 `json:"taskCount,omitempty"`
 
-	// Template: Optional. Describes the task(s) that will be created when
-	// executing an execution.
+	// Template: Optional. The template used to create tasks for this
+	// execution.
 	Template *TaskTemplateSpec `json:"template,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Parallelism") to

@@ -251,22 +251,22 @@ func (s *GoogleCloudEssentialcontactsV1ComputeContactsResponse) MarshalJSON() ([
 // GoogleCloudEssentialcontactsV1Contact: A contact that will receive
 // notifications from Google Cloud.
 type GoogleCloudEssentialcontactsV1Contact struct {
-	// Email: Required. The email address to send notifications to. This
-	// does not need to be a Google account.
+	// Email: Required. The email address to send notifications to. The
+	// email address does not need to be a Google Account.
 	Email string `json:"email,omitempty"`
 
-	// LanguageTag: The preferred language for notifications, as a ISO 639-1
-	// language code. See Supported languages
+	// LanguageTag: Required. The preferred language for notifications, as a
+	// ISO 639-1 language code. See Supported languages
 	// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts#supported-languages)
 	// for a list of supported languages.
 	LanguageTag string `json:"languageTag,omitempty"`
 
-	// Name: The identifier for the contact. Format:
+	// Name: Output only. The identifier for the contact. Format:
 	// {resource_type}/{resource_id}/contacts/{contact_id}
 	Name string `json:"name,omitempty"`
 
-	// NotificationCategorySubscriptions: The categories of notifications
-	// that the contact will receive communications for.
+	// NotificationCategorySubscriptions: Required. The categories of
+	// notifications that the contact will receive communications for.
 	//
 	// Possible values:
 	//   "NOTIFICATION_CATEGORY_UNSPECIFIED" - Notification category is
@@ -1371,7 +1371,7 @@ type FoldersContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *FoldersContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *FoldersContactsPatchCall {
 	c := &FoldersContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1489,7 +1489,7 @@ func (c *FoldersContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/contacts/[^/]+$",
 	//       "required": true,
@@ -2589,7 +2589,7 @@ type OrganizationsContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *OrganizationsContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *OrganizationsContactsPatchCall {
 	c := &OrganizationsContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2707,7 +2707,7 @@ func (c *OrganizationsContactsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/contacts/[^/]+$",
 	//       "required": true,
@@ -3807,7 +3807,7 @@ type ProjectsContactsPatchCall struct {
 // Patch: Updates a contact. Note: A contact's email address cannot be
 // changed.
 //
-//   - name: The identifier for the contact. Format:
+//   - name: Output only. The identifier for the contact. Format:
 //     {resource_type}/{resource_id}/contacts/{contact_id}.
 func (r *ProjectsContactsService) Patch(nameid string, googlecloudessentialcontactsv1contact *GoogleCloudEssentialcontactsV1Contact) *ProjectsContactsPatchCall {
 	c := &ProjectsContactsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3925,7 +3925,7 @@ func (c *ProjectsContactsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
+	//       "description": "Output only. The identifier for the contact. Format: {resource_type}/{resource_id}/contacts/{contact_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/contacts/[^/]+$",
 	//       "required": true,

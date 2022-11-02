@@ -1846,9 +1846,9 @@ type Trigger struct {
 	// to ensure that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// EventFilters: Required. null The list of filters that applies to
-	// event attributes. Only events that match all the provided filters are
-	// sent to the destination.
+	// EventFilters: Required. Unordered list. The list of filters that
+	// applies to event attributes. Only events that match all the provided
+	// filters are sent to the destination.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
 	// Labels: Optional. User labels attached to the triggers that can be

@@ -6264,11 +6264,9 @@ type GoogleCloudDialogflowCxV3SecuritySettings struct {
 	// RetentionWindowDays: Retains data in interaction logging for the
 	// specified number of days. This does not apply to Cloud logging, which
 	// is owned by the user - not Dialogflow. User must set a value lower
-	// than Dialogflow's default 365d TTL. Setting a value higher than that
-	// has no effect. A missing value or setting to 0 also means we use
-	// Dialogflow's default TTL. Note: Interaction logging is a limited
-	// access feature. Talk to your Google representative to check
-	// availability for you.
+	// than Dialogflow's default 365d TTL (time to live). Setting a value
+	// higher than that has no effect. A missing value or setting to 0 also
+	// means we use Dialogflow's default TTL.
 	RetentionWindowDays int64 `json:"retentionWindowDays,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6318,7 +6316,7 @@ type GoogleCloudDialogflowCxV3SecuritySettingsAudioExportSettings struct {
 	// EnableAudioRedaction: Enable audio redaction if it is true.
 	EnableAudioRedaction bool `json:"enableAudioRedaction,omitempty"`
 
-	// GcsBucket: Cloud Storage bucket to export audio record to. Settings
+	// GcsBucket: Cloud Storage bucket to export audio record to. Setting
 	// this field would grant the Storage Object Creator role to the
 	// Dialogflow Service Agent. API caller that tries to modify this field
 	// should have the permission of storage.buckets.setIamPolicy.

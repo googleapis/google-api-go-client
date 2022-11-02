@@ -1045,8 +1045,8 @@ type ApplicationReport struct {
 	// DisplayName: The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Events: List of app events. The most recent 20 events are stored in
-	// the list.
+	// Events: The list of app events which have occurred in the last 30
+	// hours.
 	Events []*ApplicationEvent `json:"events,omitempty"`
 
 	// InstallerPackageName: The package name of the app that installed this

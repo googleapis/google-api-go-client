@@ -364,6 +364,36 @@ func (s *CidrBlock) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudDataLineageIntegration: Configuration for Cloud Data Lineage
+// integration.
+type CloudDataLineageIntegration struct {
+	// Enabled: Optional. Whether or not Cloud Data Lineage integration is
+	// enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudDataLineageIntegration) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudDataLineageIntegration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
 // by the Apache Airflow software.
 type DatabaseConfig struct {
@@ -915,6 +945,18 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 // LoadSnapshotRequest: Request to load a snapshot into a Cloud Composer
 // environment.
 type LoadSnapshotRequest struct {
+	// SkipAirflowOverridesSetting: Whether or not to skip setting Airflow
+	// overrides when loading the environment's state.
+	SkipAirflowOverridesSetting bool `json:"skipAirflowOverridesSetting,omitempty"`
+
+	// SkipEnvironmentVariablesSetting: Whether or not to skip setting
+	// environment variables when loading the environment's state.
+	SkipEnvironmentVariablesSetting bool `json:"skipEnvironmentVariablesSetting,omitempty"`
+
+	// SkipGcsDataCopying: Whether or not to skip copying Cloud Storage data
+	// when loading the environment's state.
+	SkipGcsDataCopying bool `json:"skipGcsDataCopying,omitempty"`
+
 	// SkipPypiPackagesInstallation: Whether or not to skip installing Pypi
 	// packages when loading the environment's state.
 	SkipPypiPackagesInstallation bool `json:"skipPypiPackagesInstallation,omitempty"`
@@ -924,7 +966,7 @@ type LoadSnapshotRequest struct {
 	SnapshotPath string `json:"snapshotPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "SkipPypiPackagesInstallation") to unconditionally include in API
+	// "SkipAirflowOverridesSetting") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -933,7 +975,7 @@ type LoadSnapshotRequest struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "SkipPypiPackagesInstallation") to include in API requests with the
+	// "SkipAirflowOverridesSetting") to include in API requests with the
 	// JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
@@ -1609,6 +1651,10 @@ type SoftwareConfig struct {
 	// blocked (/composer/docs/concepts/airflow-configurations), and cannot
 	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
+
+	// CloudDataLineageIntegration: Optional. The configuration for Cloud
+	// Data Lineage integration.
+	CloudDataLineageIntegration *CloudDataLineageIntegration `json:"cloudDataLineageIntegration,omitempty"`
 
 	// EnvVariables: Optional. Additional environment variables to provide
 	// to the Apache Airflow scheduler, worker, and webserver processes.

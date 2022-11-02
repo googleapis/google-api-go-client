@@ -2183,6 +2183,11 @@ type Dataset struct {
 	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// StorageBillingModel: [Optional] Storage billing model to be used for
+	// all tables in the dataset. Can be set to PHYSICAL. Default is
+	// LOGICAL.
+	StorageBillingModel string `json:"storageBillingModel,omitempty"`
+
 	// Tags: [Optional]The tags associated with this dataset. Tag keys are
 	// globally unique.
 	Tags []*DatasetTags `json:"tags,omitempty"`
@@ -3247,6 +3252,17 @@ type ExternalDataConfiguration struct {
 	// is ignored for Google Cloud Bigtable, Google Cloud Datastore backups
 	// and Avro formats.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
+
+	// MetadataCacheMode: [Optional] Metadata Cache Mode for the table. Set
+	// this to enable caching of metadata from external data source.
+	MetadataCacheMode string `json:"metadataCacheMode,omitempty"`
+
+	// ObjectMetadata: ObjectMetadata is used to create Object Tables.
+	// Object Tables contain a listing of objects (with their metadata)
+	// found at the source_uris. If ObjectMetadata is set, source_format
+	// should be omitted. Currently SIMPLE is the only supported Object
+	// Metadata type.
+	ObjectMetadata string `json:"objectMetadata,omitempty"`
 
 	// ParquetOptions: Additional properties to set if sourceFormat is set
 	// to Parquet.

@@ -773,8 +773,8 @@ type GoogleCloudRunV2Execution struct {
 	// https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
 	TaskCount int64 `json:"taskCount,omitempty"`
 
-	// Template: Output only. Describes the task(s) that will be created
-	// when executing an execution.
+	// Template: Output only. The template used to create tasks for this
+	// execution.
 	Template *GoogleCloudRunV2TaskTemplate `json:"template,omitempty"`
 
 	// Uid: Output only. Server assigned unique identifier for the
@@ -3502,16 +3502,6 @@ func (c *ProjectsLocationsJobsDeleteCall) Etag(etag string) *ProjectsLocationsJo
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, the Job
-// and its Executions will be deleted no matter whether any Executions
-// are still running or not. If set to false or unset, the Job and its
-// Executions can only be deleted if there are no running Executions.
-// Any running Execution will fail the deletion.
-func (c *ProjectsLocationsJobsDeleteCall) Force(force bool) *ProjectsLocationsJobsDeleteCall {
-	c.urlParams_.Set("force", fmt.Sprint(force))
-	return c
-}
-
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated without actually deleting any
 // resources.
@@ -3618,11 +3608,6 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "description": "A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.",
 	//       "location": "query",
 	//       "type": "string"
-	//     },
-	//     "force": {
-	//       "description": "If set to true, the Job and its Executions will be deleted no matter whether any Executions are still running or not. If set to false or unset, the Job and its Executions can only be deleted if there are no running Executions. Any running Execution will fail the deletion.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     },
 	//     "name": {
 	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",

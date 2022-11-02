@@ -1856,7 +1856,8 @@ type OracleSourceConfig struct {
 	// default value will be used.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
 
-	// StreamLargeObjects: Stream large object values.
+	// StreamLargeObjects: Stream large object values. NOTE: This feature is
+	// currently experimental.
 	StreamLargeObjects *StreamLargeObjects `json:"streamLargeObjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
@@ -2108,8 +2109,8 @@ type PostgresqlSourceConfig struct {
 	// set of all tables that are defined in the stream's include_objects.
 	Publication string `json:"publication,omitempty"`
 
-	// ReplicationSlot: Required. The name of the logical replication slot
-	// that's configured with the pgoutput plugin.
+	// ReplicationSlot: Required. Immutable. The name of the logical
+	// replication slot that's configured with the pgoutput plugin.
 	ReplicationSlot string `json:"replicationSlot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to

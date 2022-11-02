@@ -997,6 +997,9 @@ type Instance struct {
 	//   "SUSPENDED" - The instance is suspended. You can get further
 	// details from the `suspension_reasons` field of the `Instance`
 	// resource.
+	//   "SUSPENDING" - The instance is in the process of becoming
+	// suspended.
+	//   "RESUMING" - The instance is in the process of becoming active.
 	State string `json:"state,omitempty"`
 
 	// StatusMessage: Output only. Additional information about the instance

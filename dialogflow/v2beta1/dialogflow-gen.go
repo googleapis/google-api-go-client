@@ -19177,6 +19177,14 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 // GoogleCloudDialogflowV2beta1SpeechToTextConfig: Configures speech
 // transcription for ConversationProfile.
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
+	// Model: Which Speech model to select. Select the model best suited to
+	// your domain to get best results. If a model is not explicitly
+	// specified, then a default model is used. Refer to Cloud Speech API
+	// documentation
+	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
+	// for more details.
+	Model string `json:"model,omitempty"`
+
 	// SpeechModelVariant: The speech model used in speech to text.
 	// `SPEECH_MODEL_VARIANT_UNSPECIFIED`, `USE_BEST_AVAILABLE` will be
 	// treated as `USE_ENHANCED`. It can be overridden in
@@ -19207,21 +19215,20 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	// to make your project eligible.
 	SpeechModelVariant string `json:"speechModelVariant,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SpeechModelVariant")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SpeechModelVariant") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

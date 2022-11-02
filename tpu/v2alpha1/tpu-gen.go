@@ -212,7 +212,7 @@ type AcceleratorType struct {
 	// Name: The resource name.
 	Name string `json:"name,omitempty"`
 
-	// Type: the accelerator type.
+	// Type: The accelerator type.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

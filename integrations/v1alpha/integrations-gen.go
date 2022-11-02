@@ -15412,7 +15412,8 @@ type ProjectsLocationsIntegrationsVersionsArchiveCall struct {
 // there is no unarchive mechanism.
 //
 //   - name: The version to archive. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Archive(name string, googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsArchiveCall {
 	c := &ProjectsLocationsIntegrationsVersionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15523,7 +15524,7 @@ func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to archive. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to archive. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -15559,7 +15560,8 @@ type ProjectsLocationsIntegrationsVersionsCreateCall struct {
 // project.
 //
 //   - parent: The parent resource where this version will be created.
-//     Format: projects/{project}/integrations/{integration}.
+//     Format:
+//     projects/{project}/locations/{location}/integrations/{integration}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Create(parent string, googlecloudintegrationsv1alphaintegrationversion *GoogleCloudIntegrationsV1alphaIntegrationVersion) *ProjectsLocationsIntegrationsVersionsCreateCall {
 	c := &ProjectsLocationsIntegrationsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15685,7 +15687,7 @@ func (c *ProjectsLocationsIntegrationsVersionsCreateCall) Do(opts ...googleapi.C
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/integrations/{integration}",
+	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -15724,7 +15726,8 @@ type ProjectsLocationsIntegrationsVersionsDeactivateCall struct {
 // added include action, action_by, action_timestamp.
 //
 //   - name: The version to deactivate. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Deactivate(name string, googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsDeactivateCall {
 	c := &ProjectsLocationsIntegrationsVersionsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15835,7 +15838,7 @@ func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to deactivate. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -15870,7 +15873,8 @@ type ProjectsLocationsIntegrationsVersionsGetCall struct {
 // Get: Get a integration in the specified project.
 //
 //   - name: The version to retrieve. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Get(name string) *ProjectsLocationsIntegrationsVersionsGetCall {
 	c := &ProjectsLocationsIntegrationsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15987,7 +15991,7 @@ func (c *ProjectsLocationsIntegrationsVersionsGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to retrieve. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to retrieve. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -16020,9 +16024,11 @@ type ProjectsLocationsIntegrationsVersionsListCall struct {
 // project.
 //
 //   - parent: The parent resource where this version will be created.
-//     Format: projects/{project}/integrations/{integration} Specifically,
-//     when parent equals: 1. projects//locations//integrations/, Meaning:
-//     "List versions (with filter) for a particular integration". 2.
+//     Format:
+//     projects/{project}/locations/{location}/integrations/{integration}
+//     Specifically, when parent equals: 1.
+//     projects//locations//integrations/, Meaning: "List versions (with
+//     filter) for a particular integration". 2.
 //     projects//locations//integrations/- Meaning: "List versions (with
 //     filter) for a client within a particular region". 3.
 //     projects//locations/-/integrations/- Meaning: "List versions (with
@@ -16219,7 +16225,7 @@ func (c *ProjectsLocationsIntegrationsVersionsListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/integrations/{integration} Specifically, when parent equals: 1. projects//locations//integrations/, Meaning: \"List versions (with filter) for a particular integration\". 2. projects//locations//integrations/- Meaning: \"List versions (with filter) for a client within a particular region\". 3. projects//locations/-/integrations/- Meaning: \"List versions (with filter) for a client\".",
+	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration} Specifically, when parent equals: 1. projects//locations//integrations/, Meaning: \"List versions (with filter) for a particular integration\". 2. projects//locations//integrations/- Meaning: \"List versions (with filter) for a client within a particular region\". 3. projects//locations/-/integrations/- Meaning: \"List versions (with filter) for a client\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -16437,7 +16443,8 @@ type ProjectsLocationsIntegrationsVersionsPublishCall struct {
 // released.
 //
 //   - name: The version to publish. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Publish(name string, googlecloudintegrationsv1alphapublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaPublishIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsPublishCall {
 	c := &ProjectsLocationsIntegrationsVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16548,7 +16555,7 @@ func (c *ProjectsLocationsIntegrationsVersionsPublishCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to publish. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to publish. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -16594,7 +16601,8 @@ type ProjectsLocationsIntegrationsVersionsTakeoverEditLockCall struct {
 // updated include last_modified_timestamp, last_modified_by.
 //
 //   - integrationVersion: The version to take over edit lock. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) TakeoverEditLock(integrationVersion string, googlecloudintegrationsv1alphatakeovereditlockrequest *GoogleCloudIntegrationsV1alphaTakeoverEditLockRequest) *ProjectsLocationsIntegrationsVersionsTakeoverEditLockCall {
 	c := &ProjectsLocationsIntegrationsVersionsTakeoverEditLockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.integrationVersion = integrationVersion
@@ -16705,7 +16713,7 @@ func (c *ProjectsLocationsIntegrationsVersionsTakeoverEditLockCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "integrationVersion": {
-	//       "description": "Required. The version to take over edit lock. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to take over edit lock. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -16743,7 +16751,8 @@ type ProjectsLocationsIntegrationsVersionsValidateCall struct {
 // response is returned.
 //
 //   - name: The version to validate. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsIntegrationsVersionsService) Validate(name string, googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsValidateCall {
 	c := &ProjectsLocationsIntegrationsVersionsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16854,7 +16863,7 @@ func (c *ProjectsLocationsIntegrationsVersionsValidateCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to validate. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to validate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -18950,7 +18959,7 @@ type ProjectsLocationsProductsIntegrationsArchiveBundleCall struct {
 // MOVED TO A SEPARATE SERVICE. Soft-deletes the bundle.
 //
 //   - name: The bundle to archive. Format:
-//     projects/{project}/integrations/{integration}.
+//     projects/{project}/locations/{location}/integrations/{integration}.
 func (r *ProjectsLocationsProductsIntegrationsService) ArchiveBundle(name string, googlecloudintegrationsv1alphaarchivebundlerequest *GoogleCloudIntegrationsV1alphaArchiveBundleRequest) *ProjectsLocationsProductsIntegrationsArchiveBundleCall {
 	c := &ProjectsLocationsProductsIntegrationsArchiveBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19060,7 +19069,7 @@ func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The bundle to archive. Format: projects/{project}/integrations/{integration}",
+	//       "description": "Required. The bundle to archive. Format: projects/{project}/locations/{location}/integrations/{integration}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -21233,7 +21242,8 @@ type ProjectsLocationsProductsIntegrationsVersionsArchiveCall struct {
 // there is no unarchive mechanism.
 //
 //   - name: The version to archive. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Archive(name string, googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsArchiveCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21344,7 +21354,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to archive. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to archive. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -21380,7 +21390,8 @@ type ProjectsLocationsProductsIntegrationsVersionsCreateCall struct {
 // project.
 //
 //   - parent: The parent resource where this version will be created.
-//     Format: projects/{project}/integrations/{integration}.
+//     Format:
+//     projects/{project}/locations/{location}/integrations/{integration}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Create(parent string, googlecloudintegrationsv1alphaintegrationversion *GoogleCloudIntegrationsV1alphaIntegrationVersion) *ProjectsLocationsProductsIntegrationsVersionsCreateCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21506,7 +21517,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsCreateCall) Do(opts ...goo
 	//       "type": "boolean"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/integrations/{integration}",
+	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -21545,7 +21556,8 @@ type ProjectsLocationsProductsIntegrationsVersionsDeactivateCall struct {
 // added include action, action_by, action_timestamp.
 //
 //   - name: The version to deactivate. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Deactivate(name string, googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21656,7 +21668,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to deactivate. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -21693,7 +21705,8 @@ type ProjectsLocationsProductsIntegrationsVersionsDownloadCall struct {
 // response as a string.
 //
 //   - name: The version to download. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Download(name string) *ProjectsLocationsProductsIntegrationsVersionsDownloadCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21839,7 +21852,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsDownloadCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The version to download. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to download. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -21871,7 +21884,8 @@ type ProjectsLocationsProductsIntegrationsVersionsGetCall struct {
 // Get: Get a integration in the specified project.
 //
 //   - name: The version to retrieve. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Get(name string) *ProjectsLocationsProductsIntegrationsVersionsGetCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21988,7 +22002,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to retrieve. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to retrieve. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -22172,9 +22186,11 @@ type ProjectsLocationsProductsIntegrationsVersionsListCall struct {
 // project.
 //
 //   - parent: The parent resource where this version will be created.
-//     Format: projects/{project}/integrations/{integration} Specifically,
-//     when parent equals: 1. projects//locations//integrations/, Meaning:
-//     "List versions (with filter) for a particular integration". 2.
+//     Format:
+//     projects/{project}/locations/{location}/integrations/{integration}
+//     Specifically, when parent equals: 1.
+//     projects//locations//integrations/, Meaning: "List versions (with
+//     filter) for a particular integration". 2.
 //     projects//locations//integrations/- Meaning: "List versions (with
 //     filter) for a client within a particular region". 3.
 //     projects//locations/-/integrations/- Meaning: "List versions (with
@@ -22371,7 +22387,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/integrations/{integration} Specifically, when parent equals: 1. projects//locations//integrations/, Meaning: \"List versions (with filter) for a particular integration\". 2. projects//locations//integrations/- Meaning: \"List versions (with filter) for a client within a particular region\". 3. projects//locations/-/integrations/- Meaning: \"List versions (with filter) for a client\".",
+	//       "description": "Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration} Specifically, when parent equals: 1. projects//locations//integrations/, Meaning: \"List versions (with filter) for a particular integration\". 2. projects//locations//integrations/- Meaning: \"List versions (with filter) for a client within a particular region\". 3. projects//locations/-/integrations/- Meaning: \"List versions (with filter) for a client\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -22589,7 +22605,8 @@ type ProjectsLocationsProductsIntegrationsVersionsPublishCall struct {
 // released.
 //
 //   - name: The version to publish. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Publish(name string, googlecloudintegrationsv1alphapublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaPublishIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsPublishCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -22700,7 +22717,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsPublishCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to publish. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to publish. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -22746,7 +22763,8 @@ type ProjectsLocationsProductsIntegrationsVersionsTakeoverEditLockCall struct {
 // updated include last_modified_timestamp, last_modified_by.
 //
 //   - integrationVersion: The version to take over edit lock. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) TakeoverEditLock(integrationVersion string, googlecloudintegrationsv1alphatakeovereditlockrequest *GoogleCloudIntegrationsV1alphaTakeoverEditLockRequest) *ProjectsLocationsProductsIntegrationsVersionsTakeoverEditLockCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsTakeoverEditLockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.integrationVersion = integrationVersion
@@ -22857,7 +22875,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsTakeoverEditLockCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "integrationVersion": {
-	//       "description": "Required. The version to take over edit lock. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to take over edit lock. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -23041,7 +23059,7 @@ type ProjectsLocationsProductsIntegrationsVersionsUploadCall struct {
 // content.
 //
 //   - parent: The version to upload. Format:
-//     projects/{project}/integrations/{integration}.
+//     projects/{project}/locations/{location}/integrations/{integration}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Upload(parent string, googlecloudintegrationsv1alphauploadintegrationversionrequest *GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsUploadCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23152,7 +23170,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsUploadCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The version to upload. Format: projects/{project}/integrations/{integration}",
+	//       "description": "Required. The version to upload. Format: projects/{project}/locations/{location}/integrations/{integration}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
 	//       "required": true,
@@ -23190,7 +23208,8 @@ type ProjectsLocationsProductsIntegrationsVersionsValidateCall struct {
 // response is returned.
 //
 //   - name: The version to validate. Format:
-//     projects/{project}/integrations/{integration}/versions/{version}.
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
 func (r *ProjectsLocationsProductsIntegrationsVersionsService) Validate(name string, googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsValidateCall {
 	c := &ProjectsLocationsProductsIntegrationsVersionsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23301,7 +23320,7 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The version to validate. Format: projects/{project}/integrations/{integration}/versions/{version}",
+	//       "description": "Required. The version to validate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
 	//       "required": true,

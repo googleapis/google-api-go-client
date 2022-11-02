@@ -1954,7 +1954,7 @@ func (s *SecretVolume) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceConfig: Describes the Service being deployed. Currently
-// Supported : Cloud Run (fully managed).
+// Supported : Cloud Run (fully managed). Next tag: 23
 type ServiceConfig struct {
 	// AllTrafficOnLatestRevision: Whether 100% of traffic is routed to the
 	// latest revision. On CreateFunction and UpdateFunction, when set to

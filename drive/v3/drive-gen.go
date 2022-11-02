@@ -1267,7 +1267,7 @@ type File struct {
 	// "tar.gz". This is only available for files with binary content in
 	// Google Drive.
 	// This is automatically updated when the name field changes, however it
-	// is not cleared if the new name does not contain a valid extension.
+	// isn't cleared if the new name does not contain a valid extension.
 	FullFileExtension string `json:"fullFileExtension,omitempty"`
 
 	// HasAugmentedPermissions: Whether there are permissions directly on
@@ -1389,13 +1389,13 @@ type File struct {
 
 	// Sha1Checksum: The SHA1 checksum associated with this file, if
 	// available. This field is only populated for files with content stored
-	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// in Google Drive; it isn't populated for Docs Editors or shortcut
 	// files.
 	Sha1Checksum string `json:"sha1Checksum,omitempty"`
 
 	// Sha256Checksum: The SHA256 checksum associated with this file, if
 	// available. This field is only populated for files with content stored
-	// in Google Drive; it is not populated for Docs Editors or shortcut
+	// in Google Drive; it isn't populated for Docs Editors or shortcut
 	// files.
 	Sha256Checksum string `json:"sha256Checksum,omitempty"`
 
@@ -1649,7 +1649,7 @@ type FileCapabilities struct {
 
 	// CanReadRevisions: Whether the current user can read the revisions
 	// resource of this file. For a shared drive item, whether revisions of
-	// non-folder descendants of this item, or this item itself if it is not
+	// non-folder descendants of this item, or this item itself if it isn't
 	// a folder, can be read.
 	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
 
@@ -1714,8 +1714,8 @@ func (s *FileCapabilities) MarshalJSON() ([]byte, error) {
 // file. These fields are never populated in responses.
 type FileContentHints struct {
 	// IndexableText: Text to be indexed for the file to improve fullText
-	// queries. This is limited to 128KB in length and may contain HTML
-	// elements.
+	// queries. This is limited to 128 KB in length and may contain HTML
+	// elements. For more information, see Manage file metadata.
 	IndexableText string `json:"indexableText,omitempty"`
 
 	// Thumbnail: A thumbnail for the file. This will only be used if Google

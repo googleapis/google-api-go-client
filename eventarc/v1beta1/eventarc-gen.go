@@ -1163,9 +1163,9 @@ type Trigger struct {
 	// used to group resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MatchingCriteria: Required. null The criteria by which events are
-	// filtered. Only events that match with this criteria will be sent to
-	// the destination.
+	// MatchingCriteria: Required. Unordered list. The criteria by which
+	// events are filtered. Only events that match with this criteria will
+	// be sent to the destination.
 	MatchingCriteria []*MatchingCriteria `json:"matchingCriteria,omitempty"`
 
 	// Name: Required. The resource name of the trigger. Must be unique

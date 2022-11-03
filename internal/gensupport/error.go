@@ -16,11 +16,10 @@ import (
 // (or a [google.golang.org/grpc/status.Status]), it returns err without
 // modification.
 func WrapError(err error) error {
-	if apiError, ok := apierror.ParseError(err, false); ok {
-		var herr *googleapi.Error
-		if errors.As(err, &herr) {
-			herr.Err = apiError
-		}
+	apiError, ok := apierror.ParseError(err, false)
+	var herr *googleapi.Error
+	if ok && errors.As(err, &herr) {
+		herr.Err = apiError
 	}
 	return err
 }

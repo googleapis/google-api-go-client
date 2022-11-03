@@ -3372,7 +3372,7 @@
       }
     }
   },
-  "revision": "20221014",
+  "revision": "20221027",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -4661,6 +4661,10 @@
           "description": "Name for the resource value config",
           "type": "string"
         },
+        "resourceType": {
+          "description": "Apply resource_value only to resources that match resource_type. resource_type will be checked with \"AND\" of other resources. E.g. \"storage.googleapis.com/Bucket\" with resource_value \"HIGH\" will apply \"HIGH\" value only to \"storage.googleapis.com/Bucket\" resources.",
+          "type": "string"
+        },
         "resourceValue": {
           "description": "Required. Resource value level this expression represents",
           "enum": [
@@ -4677,6 +4681,10 @@
             "Low resource value",
             "No resource value, e.g. ignore these resources"
           ],
+          "type": "string"
+        },
+        "scope": {
+          "description": "Project or folder to scope this config to. For example, \"project/456\" would apply this config only to resources in \"project/456\" scope will be checked with \"AND\" of other resources.",
           "type": "string"
         },
         "tagValues": {

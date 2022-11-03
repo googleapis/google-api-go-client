@@ -2530,10 +2530,6 @@ type GoogleAppsDriveLabelsV2betaLabelLock struct {
 	// Name: Output only. Resource name of this LabelLock.
 	Name string `json:"name,omitempty"`
 
-	// PolicyUri: Output only. A URI referring to the policy that created
-	// this Lock.
-	PolicyUri string `json:"policyUri,omitempty"`
-
 	// State: Output only. This LabelLock's state.
 	//
 	// Possible values:
@@ -5274,7 +5270,7 @@ type LabelsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Locks on a Label.
+// List: Lists the LabelLocks on a Label.
 //
 // - parent: Label on which Locks are applied. Format: labels/{label}.
 func (r *LabelsLocksService) List(parent string) *LabelsLocksListCall {
@@ -5398,7 +5394,7 @@ func (c *LabelsLocksListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDrive
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Locks on a Label.",
+	//   "description": "Lists the LabelLocks on a Label.",
 	//   "flatPath": "v2beta/labels/{labelsId}/locks",
 	//   "httpMethod": "GET",
 	//   "id": "drivelabels.labels.locks.list",
@@ -6425,7 +6421,7 @@ type LabelsRevisionsLocksListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Locks on a Label.
+// List: Lists the LabelLocks on a Label.
 //
 // - parent: Label on which Locks are applied. Format: labels/{label}.
 func (r *LabelsRevisionsLocksService) List(parent string) *LabelsRevisionsLocksListCall {
@@ -6549,7 +6545,7 @@ func (c *LabelsRevisionsLocksListCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Locks on a Label.",
+	//   "description": "Lists the LabelLocks on a Label.",
 	//   "flatPath": "v2beta/labels/{labelsId}/revisions/{revisionsId}/locks",
 	//   "httpMethod": "GET",
 	//   "id": "drivelabels.labels.revisions.locks.list",

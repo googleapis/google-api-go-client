@@ -13,9 +13,8 @@ import (
 
 // WrapError creates an [apierror.APIError] from err (one that does not wrap
 // err), wraps it in err, and returns err. If err is not a [googleapi.Error]
-// (or a gRPC [Status]), it returns err without modification.
-//
-// [Status]: https://pkg.go.dev/google.golang.org/grpc/status#Status
+// (or a [google.golang.org/grpc/status.Status]), it returns err without
+// modification.
 func WrapError(err error) error {
 	if apiError, ok := apierror.ParseError(err, false); ok {
 		var herr *googleapi.Error

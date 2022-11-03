@@ -3446,6 +3446,44 @@ func (s *GooglePrivacyDlpV2Error) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ExcludeByHotword: The rule to exclude findings
+// based on a hotword. For record inspection of tables, column names are
+// considered hotwords. An example of this is to exclude a finding if a
+// BigQuery column matches a specific pattern.
+type GooglePrivacyDlpV2ExcludeByHotword struct {
+	// HotwordRegex: Regular expression pattern defining what qualifies as a
+	// hotword.
+	HotwordRegex *GooglePrivacyDlpV2Regex `json:"hotwordRegex,omitempty"`
+
+	// Proximity: Range of characters within which the entire hotword must
+	// reside. The total length of the window cannot exceed 1000 characters.
+	// The windowBefore property in proximity should be set to 1 if the
+	// hotword needs to be included in a column header.
+	Proximity *GooglePrivacyDlpV2Proximity `json:"proximity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HotwordRegex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HotwordRegex") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ExcludeByHotword) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ExcludeByHotword
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2ExcludeInfoTypes: List of excluded infoTypes.
 type GooglePrivacyDlpV2ExcludeInfoTypes struct {
 	// InfoTypes: InfoType list in ExclusionRule rule drops a finding when
@@ -3487,6 +3525,11 @@ func (s *GooglePrivacyDlpV2ExcludeInfoTypes) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ExclusionRule struct {
 	// Dictionary: Dictionary which defines the rule.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
+
+	// ExcludeByHotword: Drop if the hotword rule is contained in the
+	// proximate context. For tabular data, the context includes the column
+	// name.
+	ExcludeByHotword *GooglePrivacyDlpV2ExcludeByHotword `json:"excludeByHotword,omitempty"`
 
 	// ExcludeInfoTypes: Set of infoTypes for which findings would affect
 	// this rule.

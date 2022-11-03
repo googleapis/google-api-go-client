@@ -450,6 +450,10 @@ type GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesRequest struct {
 	// regime, allowed list changes. See -
 	// https://cloud.google.com/assured-workloads/docs/supported-products
 	// for the list of supported resources.
+	//   "APPEND_COMPLIANT_RESOURCES" - Similar to ALLOW_COMPLIANT_RESOURCES
+	// but adds the list of compliant resources to the existing list of
+	// compliant resources. Effective org-policy of the Folder is considered
+	// to ensure there is no disruption to the existing customer workflows.
 	RestrictionType string `json:"restrictionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RestrictionType") to
@@ -860,6 +864,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Possible values:
 	//   "PARTNER_UNSPECIFIED" - Unknown partner regime/controls.
 	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime/controls.
+	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - TSystems regime/controls.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the

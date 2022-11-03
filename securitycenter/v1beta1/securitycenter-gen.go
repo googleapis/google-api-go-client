@@ -2204,6 +2204,13 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// Name: Name for the resource value config
 	Name string `json:"name,omitempty"`
 
+	// ResourceType: Apply resource_value only to resources that match
+	// resource_type. resource_type will be checked with "AND" of other
+	// resources. E.g. "storage.googleapis.com/Bucket" with resource_value
+	// "HIGH" will apply "HIGH" value only to
+	// "storage.googleapis.com/Bucket" resources.
+	ResourceType string `json:"resourceType,omitempty"`
+
 	// ResourceValue: Required. Resource value level this expression
 	// represents
 	//
@@ -2214,6 +2221,11 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	//   "LOW" - Low resource value
 	//   "NONE" - No resource value, e.g. ignore these resources
 	ResourceValue string `json:"resourceValue,omitempty"`
+
+	// Scope: Project or folder to scope this config to. For example,
+	// "project/456" would apply this config only to resources in
+	// "project/456" scope will be checked with "AND" of other resources.
+	Scope string `json:"scope,omitempty"`
 
 	// TagValues: Required. Tag values combined with AND to check against.
 	// Values in the form "tagValues/123" E.g. [ "tagValues/123",

@@ -907,6 +907,18 @@ type Device struct {
 	// BuildNumber: Output only. Build number of the device.
 	BuildNumber string `json:"buildNumber,omitempty"`
 
+	// ClientTypes: List of the clients the device is reporting to.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Default value
+	//   "DRIVE_FS" - Managed by DriveFS
+	//   "FUNDAMENTAL" - Management type for every secure device
+	//   "ENDPOINT_VERIFICATION" - Managed by Endpoint Verification
+	//   "WINDOWS_ADVANCED" - Managed by Windows
+	//   "GOOGLE_CREDENTIALS_PROVIDER_FOR_WINDOWS" - Managed by Google
+	// credential provider for windows
+	ClientTypes []string `json:"clientTypes,omitempty"`
+
 	// CompromisedState: Output only. Represents whether the Device is
 	// compromised.
 	//
@@ -958,6 +970,9 @@ type Device struct {
 	// EndpointVerificationSpecificAttributes: Output only. Attributes
 	// specific to Endpoint Verification devices.
 	EndpointVerificationSpecificAttributes *EndpointVerificationSpecificAttributes `json:"endpointVerificationSpecificAttributes,omitempty"`
+
+	// Hostname: Host name of the device.
+	Hostname string `json:"hostname,omitempty"`
 
 	// Imei: Output only. IMEI number of device if GSM device; empty
 	// otherwise.

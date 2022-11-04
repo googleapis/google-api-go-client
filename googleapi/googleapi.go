@@ -79,8 +79,9 @@ type Error struct {
 	Header http.Header
 
 	Errors []ErrorItem
-	// Err is a wrapped apierror.APIError, typically derived from this Error.
-	Err error
+	// err is typically a wrapped apierror.APIError, see
+	// google-api-go-client/internal/gensupport/error.go.
+	err error
 }
 
 // ErrorItem is a detailed error code & message from the Google API frontend.
@@ -124,8 +125,13 @@ func (e *Error) Error() string {
 	return buf.String()
 }
 
+// Wrap allows an existing Error to wrap another error. See also [Error.Unwrap].
+func (e *Error) Wrap(err error) {
+	e.err = err
+}
+
 func (e *Error) Unwrap() error {
-	return e.Err
+	return e.err
 }
 
 type errorReply struct {

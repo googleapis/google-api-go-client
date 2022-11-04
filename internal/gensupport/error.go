@@ -19,7 +19,7 @@ func WrapError(err error) error {
 	apiError, ok := apierror.ParseError(err, false)
 	var herr *googleapi.Error
 	if ok && errors.As(err, &herr) {
-		herr.Err = apiError
+		herr.Wrap(apiError)
 	}
 	return err
 }

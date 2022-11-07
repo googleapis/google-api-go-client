@@ -843,6 +843,11 @@ type Container struct {
 	// TagManagerUrl: Auto generated link to the tag manager UI
 	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
 
+	// TaggingServerUrls: The URLs of the cloud environment for the GTM
+	// Container. @mutable tagmanager.accounts.containers.create @mutable
+	// tagmanager.accounts.containers.update
+	TaggingServerUrls []string `json:"taggingServerUrls,omitempty"`
+
 	// UsageContext: List of Usage Contexts for the Container. Valid values
 	// include: web, android, or ios. @mutable
 	// tagmanager.accounts.containers.create @mutable

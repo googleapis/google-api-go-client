@@ -424,6 +424,266 @@ func (s *AvailableUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AwsSecurityGroup: AwsSecurityGroup describes a security group of an
+// AWS VM.
+type AwsSecurityGroup struct {
+	// Id: The AWS security group id.
+	Id string `json:"id,omitempty"`
+
+	// Name: The AWS security group name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSecurityGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSecurityGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceDetails: AwsSourceDetails message describes a specific
+// source details for the AWS source type.
+type AwsSourceDetails struct {
+	// AccessKeyId: AWS access key ID.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+
+	// AwsRegion: Immutable. The AWS region that the source VMs will be
+	// migrated from.
+	AwsRegion string `json:"awsRegion,omitempty"`
+
+	// Error: Output only. Provides details on the state of the Source in
+	// case of an error.
+	Error *Status `json:"error,omitempty"`
+
+	// InventorySecurityGroupNames: AWS security group names to limit the
+	// scope of the source inventory.
+	InventorySecurityGroupNames []string `json:"inventorySecurityGroupNames,omitempty"`
+
+	// InventoryTags: AWS resource tags to limit the scope of the source
+	// inventory.
+	InventoryTags map[string]string `json:"inventoryTags,omitempty"`
+
+	// MigrationResourcesUserTags: User specified tags to add to every M2VM
+	// generated resource in AWS. These tags will be set in addition to the
+	// default tags that are set as part of the migration process. The tags
+	// must not begin with the reserved prefix `m2vm`.
+	MigrationResourcesUserTags map[string]string `json:"migrationResourcesUserTags,omitempty"`
+
+	// PublicIp: Output only. The source's public IP. All communication
+	// initiated by this source will originate from this IP.
+	PublicIp string `json:"publicIp,omitempty"`
+
+	// SecretAccessKey: Input only. AWS secret access key.
+	SecretAccessKey string `json:"secretAccessKey,omitempty"`
+
+	// State: Output only. State of the source as determined by the health
+	// check.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unknown. This is used for API
+	// compatibility only and is not used by the system.
+	//   "PENDING" - The state was not sampled by the health checks yet.
+	//   "FAILED" - The source is available but might not be usable yet due
+	// to invalid credentials or another reason. The error message will
+	// contain further details.
+	//   "ACTIVE" - The source exists and its credentials were verified.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsSourceVmDetails: Represent the source AWS VM details.
+type AwsSourceVmDetails struct {
+	// CommittedStorageBytes: The total size of the disks being migrated in
+	// bytes.
+	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
+
+	// Firmware: The firmware type of the source VM.
+	//
+	// Possible values:
+	//   "FIRMWARE_UNSPECIFIED" - The firmware is unknown.
+	//   "EFI" - The firmware is EFI.
+	//   "BIOS" - The firmware is BIOS.
+	Firmware string `json:"firmware,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommittedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsSourceVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsVmDetails: AwsVmDetails describes a VM in AWS.
+type AwsVmDetails struct {
+	// BootOption: The VM Boot Option.
+	//
+	// Possible values:
+	//   "BOOT_OPTION_UNSPECIFIED" - The boot option is unknown.
+	//   "EFI" - The boot option is UEFI.
+	//   "BIOS" - The boot option is LEGACY-BIOS.
+	BootOption string `json:"bootOption,omitempty"`
+
+	// CommittedStorageMb: The total size of the storage allocated to the VM
+	// in MB.
+	CommittedStorageMb int64 `json:"committedStorageMb,omitempty,string"`
+
+	// CpuCount: The number of cpus the VM has.
+	CpuCount int64 `json:"cpuCount,omitempty"`
+
+	// DiskCount: The number of disks the VM has.
+	DiskCount int64 `json:"diskCount,omitempty"`
+
+	// DisplayName: The display name of the VM. Note that this value is not
+	// necessarily unique.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InstanceType: The instance type of the VM.
+	InstanceType string `json:"instanceType,omitempty"`
+
+	// MemoryMb: The memory size of the VM in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// OsDescription: The VM's OS.
+	OsDescription string `json:"osDescription,omitempty"`
+
+	// PowerState: Output only. The power state of the VM at the moment list
+	// was taken.
+	//
+	// Possible values:
+	//   "POWER_STATE_UNSPECIFIED" - Power state is not specified.
+	//   "ON" - The VM is turned on.
+	//   "OFF" - The VM is turned off.
+	//   "SUSPENDED" - The VM is suspended. This is similar to hibernation
+	// or sleep mode.
+	//   "PENDING" - The VM is starting.
+	PowerState string `json:"powerState,omitempty"`
+
+	// SecurityGroups: The security groups the VM belongs to.
+	SecurityGroups []*AwsSecurityGroup `json:"securityGroups,omitempty"`
+
+	// SourceDescription: The descriptive name of the AWS's source this VM
+	// is connected to.
+	SourceDescription string `json:"sourceDescription,omitempty"`
+
+	// SourceId: The id of the AWS's source this VM is connected to.
+	SourceId string `json:"sourceId,omitempty"`
+
+	// Tags: The tags of the VM.
+	Tags map[string]string `json:"tags,omitempty"`
+
+	// VmId: The VM ID in AWS.
+	VmId string `json:"vmId,omitempty"`
+
+	// VpcId: The VPC ID the VM belongs to.
+	VpcId string `json:"vpcId,omitempty"`
+
+	// Zone: The AWS zone of the VM.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BootOption") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BootOption") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsVmDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsVmDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AwsVmsDetails: AWSVmsDetails describes VMs in AWS.
+type AwsVmsDetails struct {
+	// Details: The details of the AWS VMs.
+	Details []*AwsVmDetails `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AwsVmsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AwsVmsDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelCloneJobRequest: Request message for 'CancelCloneJob' request.
 type CancelCloneJobRequest struct {
 }
@@ -1148,6 +1408,9 @@ type Empty struct {
 
 // FetchInventoryResponse: Response message for fetchInventory.
 type FetchInventoryResponse struct {
+	// AwsVms: The description of the VMs in a Source of type AWS.
+	AwsVms *AwsVmsDetails `json:"awsVms,omitempty"`
+
 	// NextPageToken: Output only. A token, which can be sent as
 	// `page_token` to retrieve the next page. If this field is omitted,
 	// there are no subsequent pages.
@@ -1164,7 +1427,7 @@ type FetchInventoryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "AwsVms") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1172,10 +1435,10 @@ type FetchInventoryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AwsVms") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1809,6 +2072,10 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MigratingVm: MigratingVm describes the VM that will be migrated from
 // a Source environment and its replication state.
 type MigratingVm struct {
+	// AwsSourceVmDetails: Output only. Details of the VM from an AWS
+	// source.
+	AwsSourceVmDetails *AwsSourceVmDetails `json:"awsSourceVmDetails,omitempty"`
+
 	// ComputeEngineTargetDefaults: Details of the target VM in Compute
 	// Engine.
 	ComputeEngineTargetDefaults *ComputeEngineTargetDefaults `json:"computeEngineTargetDefaults,omitempty"`
@@ -1919,22 +2186,21 @@ type MigratingVm struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AwsSourceVmDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ComputeEngineTargetDefaults") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AwsSourceVmDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2435,6 +2701,9 @@ type ShuttingDownSourceVMStep struct {
 // Source: Source message describes a specific vm migration Source
 // resource. It contains the source environment information.
 type Source struct {
+	// Aws: AWS type source details.
+	Aws *AwsSourceDetails `json:"aws,omitempty"`
+
 	// CreateTime: Output only. The create time timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2461,7 +2730,7 @@ type Source struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Aws") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2469,8 +2738,8 @@ type Source struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Aws") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

@@ -756,6 +756,10 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// size of 2000 bytes.
 	Description string `json:"description,omitempty"`
 
+	// GcRule: Optional. Garbage collection policy for the column or column
+	// family. Applies to systems like Cloud Bigtable.
+	GcRule string `json:"gcRule,omitempty"`
+
 	// Mode: Optional. A column's mode indicates whether values in this
 	// column are required, nullable, or repeated. Only `NULLABLE`,
 	// `REQUIRED`, and `REPEATED` values are supported. Default mode is

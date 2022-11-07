@@ -11,13 +11,12 @@ import (
 	"google.golang.org/api/googleapi"
 )
 
-// WrapError creates an [apierror.APIError] from err (one that does not wrap
-// err), wraps it in err, and returns err. If err is not a [googleapi.Error]
-// (or a [google.golang.org/grpc/status.Status]), it returns err without
-// modification.
+// WrapError creates an [apierror.APIError] from err, wraps it in err, and
+// returns err. If err is not a [googleapi.Error] (or a
+// [google.golang.org/grpc/status.Status]), it returns err without modification.
 func WrapError(err error) error {
-	apiError, ok := apierror.ParseError(err, false)
 	var herr *googleapi.Error
+	apiError, ok := apierror.ParseError(err, false)
 	if ok && errors.As(err, &herr) {
 		herr.Wrap(apiError)
 	}

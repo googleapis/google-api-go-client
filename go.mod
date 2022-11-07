@@ -12,7 +12,6 @@ require (
 	golang.org/x/net v0.1.0
 	golang.org/x/oauth2 v0.1.0
 	golang.org/x/sync v0.1.0
-	golang.org/x/sys v0.1.0
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2
 	google.golang.org/appengine v1.6.7
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c
@@ -23,6 +22,7 @@ require (
 	cloud.google.com/go/compute v1.12.1 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	golang.org/x/text v0.4.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )

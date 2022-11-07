@@ -2166,7 +2166,7 @@ func (meth *Method) generateCode() {
 			pn("if err := googleapi.CheckResponse(res); err != nil {")
 		}
 		pn("res.Body.Close()")
-		pn("return nil, err")
+		pn("return nil, gensupport.WrapError(err)")
 		pn("}")
 		pn("return res, nil")
 		pn("}")
@@ -2198,15 +2198,15 @@ func (meth *Method) generateCode() {
 		if retTypeComma != "" && !mapRetType {
 			pn("if res != nil && res.StatusCode == http.StatusNotModified {")
 			pn(" if res.Body != nil { res.Body.Close() }")
-			pn(" return nil, &googleapi.Error{")
+			pn(" return nil, gensupport.WrapError(&googleapi.Error{")
 			pn("  Code: res.StatusCode,")
 			pn("  Header: res.Header,")
-			pn(" }")
+			pn(" })")
 			pn("}")
 		}
 		pn("if err != nil { return %serr }", nilRet)
 		pn("defer googleapi.CloseBody(res)")
-		pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+		pn("if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 		if meth.supportsMediaUpload() {
 			pn(`rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))`)
 			pn("if rx != nil {")
@@ -2223,7 +2223,7 @@ func (meth *Method) generateCode() {
 			pn(" res, err = rx.Upload(ctx)")
 			pn(" if err != nil { return %serr }", nilRet)
 			pn(" defer res.Body.Close()")
-			pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+			pn(" if err := googleapi.CheckResponse(res); err != nil { return %sgensupport.WrapError(err) }", nilRet)
 			pn("}")
 		}
 		if retTypeComma == "" {

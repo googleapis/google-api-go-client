@@ -2499,17 +2499,17 @@ func (c *RelyingpartyCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*Creat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CreateAuthUriResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2621,17 +2621,17 @@ func (c *RelyingpartyDeleteAccountCall) Do(opts ...googleapi.CallOption) (*Delet
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DeleteAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2743,17 +2743,17 @@ func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*Dow
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &DownloadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2887,17 +2887,17 @@ func (c *RelyingpartyEmailLinkSigninCall) Do(opts ...googleapi.CallOption) (*Ema
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EmailLinkSigninResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3009,17 +3009,17 @@ func (c *RelyingpartyGetAccountInfoCall) Do(opts ...googleapi.CallOption) (*GetA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3131,17 +3131,17 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetOobConfirmationCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3277,17 +3277,17 @@ func (c *RelyingpartyGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentitytoolkitRelyingpartyGetProjectConfigResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3410,7 +3410,7 @@ func (c *RelyingpartyGetPublicKeysCall) Do(opts ...googleapi.CallOption) (map[st
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	var ret map[string]string
 	target := &ret
@@ -3521,17 +3521,17 @@ func (c *RelyingpartyGetRecaptchaParamCall) Do(opts ...googleapi.CallOption) (*G
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GetRecaptchaParamResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3640,17 +3640,17 @@ func (c *RelyingpartyResetPasswordCall) Do(opts ...googleapi.CallOption) (*Reset
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ResetPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3765,17 +3765,17 @@ func (c *RelyingpartySendVerificationCodeCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentitytoolkitRelyingpartySendVerificationCodeResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3887,17 +3887,17 @@ func (c *RelyingpartySetAccountInfoCall) Do(opts ...googleapi.CallOption) (*SetA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SetAccountInfoResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4011,17 +4011,17 @@ func (c *RelyingpartySetProjectConfigCall) Do(opts ...googleapi.CallOption) (*Id
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentitytoolkitRelyingpartySetProjectConfigResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4135,17 +4135,17 @@ func (c *RelyingpartySignOutUserCall) Do(opts ...googleapi.CallOption) (*Identit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentitytoolkitRelyingpartySignOutUserResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4257,17 +4257,17 @@ func (c *RelyingpartySignupNewUserCall) Do(opts ...googleapi.CallOption) (*Signu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SignupNewUserResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4379,17 +4379,17 @@ func (c *RelyingpartyUploadAccountCall) Do(opts ...googleapi.CallOption) (*Uploa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &UploadAccountResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4502,17 +4502,17 @@ func (c *RelyingpartyVerifyAssertionCall) Do(opts ...googleapi.CallOption) (*Ver
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VerifyAssertionResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4624,17 +4624,17 @@ func (c *RelyingpartyVerifyCustomTokenCall) Do(opts ...googleapi.CallOption) (*V
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VerifyCustomTokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4746,17 +4746,17 @@ func (c *RelyingpartyVerifyPasswordCall) Do(opts ...googleapi.CallOption) (*Veri
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &VerifyPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4871,17 +4871,17 @@ func (c *RelyingpartyVerifyPhoneNumberCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &IdentitytoolkitRelyingpartyVerifyPhoneNumberResponse{
 		ServerResponse: googleapi.ServerResponse{

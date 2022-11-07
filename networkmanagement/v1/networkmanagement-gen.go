@@ -237,6 +237,12 @@ type AbortInfo struct {
 	//   "MISMATCHED_DESTINATION_NETWORK" - Aborted because the destination
 	// network does not match the destination endpoint.
 	//   "UNSUPPORTED" - Aborted because the test scenario is not supported.
+	//   "MISMATCHED_IP_VERSION" - Aborted because the source and
+	// destination resources have no common IP version.
+	//   "GKE_KONNECTIVITY_PROXY_UNSUPPORTED" - Aborted because the
+	// connection between the control plane and the node of the source
+	// cluster is initiated by the node and managed by the Konnectivity
+	// proxy.
 	Cause string `json:"cause,omitempty"`
 
 	// ProjectsMissingPermission: List of project IDs that the user has
@@ -675,14 +681,15 @@ type DeliverInfo struct {
 	//   "GOOGLE_API" - Target is a Google API.
 	//   "GKE_MASTER" - Target is a Google Kubernetes Engine cluster master.
 	//   "CLOUD_SQL_INSTANCE" - Target is a Cloud SQL instance.
-	//   "PSC_PUBLISHED_SERVICE" - Target is a published service using
+	//   "PSC_PUBLISHED_SERVICE" - Target is a published service that uses
 	// [Private Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
 	// onnect-services).
-	//   "PSC_GOOGLE_API" - Target is all Google APIs using [Private Service
+	//   "PSC_GOOGLE_API" - Target is all Google APIs that use [Private
+	// Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
 	// onnect-apis).
-	//   "PSC_VPC_SC" - Target is VPC-SC using [Private Service
+	//   "PSC_VPC_SC" - Target is a VPC-SC that uses [Private Service
 	// Connect](https://cloud.google.com/vpc/docs/configure-private-service-c
 	// onnect-apis).
 	Target string `json:"target,omitempty"`
@@ -745,6 +752,9 @@ type DropInfo struct {
 	// verify if the IP address is being used in the project.
 	//   "FORWARDING_RULE_MISMATCH" - Forwarding rule's protocol and ports
 	// do not match the packet header.
+	//   "FORWARDING_RULE_REGION_MISMATCH" - Packet could be dropped because
+	// it was sent from a different region to a regional forwarding without
+	// global access.
 	//   "FORWARDING_RULE_NO_INSTANCES" - Forwarding rule does not have
 	// backends configured.
 	//   "FIREWALL_BLOCKING_LOAD_BALANCER_BACKEND_HEALTH_CHECK" - Firewalls
@@ -755,6 +765,10 @@ type DropInfo struct {
 	// wall_rules).
 	//   "INSTANCE_NOT_RUNNING" - Packet is sent from or to a Compute Engine
 	// instance that is not in a running state.
+	//   "GKE_CLUSTER_NOT_RUNNING" - Packet sent from or to a GKE cluster
+	// that is not in running state.
+	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud
+	// SQL instance that is not in running state.
 	//   "TRAFFIC_TYPE_BLOCKED" - The type of traffic is blocked and the
 	// user cannot configure a firewall rule to enable it. See [Always
 	// blocked
@@ -778,14 +792,31 @@ type DropInfo struct {
 	// Managed Services Network.
 	//   "CLOUD_SQL_INSTANCE_NO_IP_ADDRESS" - Packet was dropped because the
 	// Cloud SQL instance has neither a private nor a public IP address.
+	//   "GKE_CONTROL_PLANE_REGION_MISMATCH" - Packet was dropped because a
+	// GKE cluster private endpoint is unreachable from a region different
+	// from the cluster's region.
+	//   "PUBLIC_GKE_CONTROL_PLANE_TO_PRIVATE_DESTINATION" - Packet sent
+	// from a public GKE cluster control plane to a private IP address.
+	//   "GKE_CONTROL_PLANE_NO_ROUTE" - Packet was dropped because there is
+	// no route from a GKE cluster control plane to a destination network.
+	//   "CLOUD_SQL_INSTANCE_NOT_CONFIGURED_FOR_EXTERNAL_TRAFFIC" - Packet
+	// sent from a Cloud SQL instance to an external IP address is not
+	// allowed. The Cloud SQL instance is not configured to send packets to
+	// external IP addresses.
+	//   "PUBLIC_CLOUD_SQL_INSTANCE_TO_PRIVATE_DESTINATION" - Packet sent
+	// from a Cloud SQL instance with only a public IP address to a private
+	// IP address.
+	//   "CLOUD_SQL_INSTANCE_NO_ROUTE" - Packet was dropped because there is
+	// no route from a Cloud SQL instance to a destination network.
 	//   "CLOUD_FUNCTION_NOT_ACTIVE" - Packet could be dropped because the
 	// Cloud Function is not in an active status.
 	//   "VPC_CONNECTOR_NOT_SET" - Packet could be dropped because no VPC
 	// connector is set.
 	//   "VPC_CONNECTOR_NOT_RUNNING" - Packet could be dropped because the
 	// VPC connector is not in a running state.
-	//   "PSC_CONNECTION_NOT_ACCEPTED" - Privte Service Connect (PSC)
-	// connection is not in accepted state.
+	//   "PSC_CONNECTION_NOT_ACCEPTED" - The Private Service Connect
+	// endpoint is in a project that is not approved to connect to the
+	// service.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -1118,6 +1149,7 @@ type ForwardInfo struct {
 	//   "IMPORTED_CUSTOM_ROUTE_NEXT_HOP" - Forwarded to the next hop of a
 	// custom route imported from a peering VPC.
 	//   "CLOUD_SQL_INSTANCE" - Forwarded to a Cloud SQL instance.
+	//   "ANOTHER_PROJECT" - Forwarded to a VPC network in another project.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
@@ -2562,17 +2594,17 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Location{
 		ServerResponse: googleapi.ServerResponse{
@@ -2734,17 +2766,17 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2931,17 +2963,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3072,17 +3104,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3219,17 +3251,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ConnectivityTest{
 		ServerResponse: googleapi.ServerResponse{
@@ -3388,17 +3420,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -3579,17 +3611,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Do(opts ...googleapi.
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListConnectivityTestsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3780,17 +3812,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3937,17 +3969,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4084,17 +4116,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4234,17 +4266,17 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Do(opts
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4385,17 +4417,17 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4523,17 +4555,17 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -4671,17 +4703,17 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -4847,17 +4879,17 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListOperationsResponse{
 		ServerResponse: googleapi.ServerResponse{

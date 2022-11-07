@@ -395,17 +395,17 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*SiteSummaryResponse, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteSummaryResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -532,17 +532,17 @@ func (c *ViolatingSitesListCall) Do(opts ...googleapi.CallOption) (*ViolatingSit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ViolatingSitesResponse{
 		ServerResponse: googleapi.ServerResponse{

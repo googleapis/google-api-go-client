@@ -251,7 +251,7 @@ func (c *AtlasGetMapCall) Do(opts ...googleapi.CallOption) (map[string]string, e
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	var ret map[string]string
 	target := &ret

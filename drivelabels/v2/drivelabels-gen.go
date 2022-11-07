@@ -1726,17 +1726,17 @@ func (c *LabelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabels
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2Label{
 		ServerResponse: googleapi.ServerResponse{
@@ -1973,17 +1973,17 @@ func (c *LabelsListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsDriveLabel
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAppsDriveLabelsV2ListLabelsResponse{
 		ServerResponse: googleapi.ServerResponse{

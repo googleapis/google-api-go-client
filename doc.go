@@ -60,13 +60,28 @@
 //
 // # Inspecting errors
 //
-// All of the errors returned by a client's `Do` method may be cast to a
-// `*googleapis.Error`. This can be useful for getting more information on an
-// error while debugging.
+// An error returned by a client's Do method may be cast to a *googleapi.Error
+// or unwrapped to an *apierror.APIError.
+//
+// The https://pkg.go.dev/google.golang.org/api/googleapi#Error type is useful
+// for getting the HTTP status code:
 //
 //	if _, err := svc.FooCall().Do(); err != nil {
-//	    if gErr, ok := err.(*googleapi.Error); ok {
-//	        fmt.Println("Status code: %v", gErr.Code)
-//	    }
+//		if gErr, ok := err.(*googleapi.Error); ok {
+//			fmt.Println("Status code: %v", gErr.Code)
+//		}
+//	}
+//
+// The https://pkg.go.dev/github.com/googleapis/gax-go/v2/apierror#APIError type
+// is useful for inspecting structured details of the underlying API response,
+// such as the reason for the error and the error domain, which is typically the
+// registered service name of the tool or product that generated the error:
+//
+//	if _, err := svc.FooCall().Do(); err != nil {
+//		var aErr *apierror.APIError
+//		if ok := errors.As(err, &aErr); ok {
+//			fmt.Println("Reason: %s", aErr.Reason())
+//			fmt.Println("Domain: %s", aErr.Domain())
+//		}
 //	}
 package api

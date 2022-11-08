@@ -789,6 +789,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Regions and Support controls Available for public preview
 	// consumption. Don't create production workloads.
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
+	//   "ISR_REGIONS" - Assured Workloads for Israel
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the

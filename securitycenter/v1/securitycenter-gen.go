@@ -1795,6 +1795,9 @@ type Finding struct {
 	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
+	// Files: File associated with the finding.
+	Files []*File `json:"files,omitempty"`
+
 	// FindingClass: The class of the finding.
 	//
 	// Possible values:
@@ -4014,6 +4017,7 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -4081,6 +4085,7 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.
@@ -9450,10 +9455,10 @@ type FoldersSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *FoldersSourcesFindingsSetMuteCall {
 	c := &FoldersSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9561,7 +9566,7 @@ func (c *FoldersSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*F
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -9598,8 +9603,8 @@ type FoldersSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9707,7 +9712,7 @@ func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -16312,10 +16317,10 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *OrganizationsSourcesFindingsSetMuteCall {
 	c := &OrganizationsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16423,7 +16428,7 @@ func (c *OrganizationsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -16460,8 +16465,8 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16569,7 +16574,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -21043,10 +21048,10 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}",
-//     "folders/{folder_id}/sources/{source_id}/finding/{finding_id}",
-//     "projects/{project_id}/sources/{source_id}/finding/{finding_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) SetMute(name string, setmuterequest *SetMuteRequest) *ProjectsSourcesFindingsSetMuteCall {
 	c := &ProjectsSourcesFindingsSetMuteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21154,7 +21159,7 @@ func (c *ProjectsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/finding/{finding_id}\", \"projects/{project_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -21191,8 +21196,8 @@ type ProjectsSourcesFindingsSetStateCall struct {
 //   - name: The relative resource name of the finding. See:
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
-//     "organizations/{organization_id}/sources/{source_id}/finding/{findin
-//     g_id}".
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21300,7 +21305,7 @@ func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,

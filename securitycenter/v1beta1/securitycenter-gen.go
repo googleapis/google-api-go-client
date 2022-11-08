@@ -1462,6 +1462,9 @@ type Finding struct {
 	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
 
+	// Files: File associated with the finding.
+	Files []*File `json:"files,omitempty"`
+
 	// FindingClass: The class of the finding.
 	//
 	// Possible values:
@@ -3544,6 +3547,7 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
 	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
 
 	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
@@ -3611,6 +3615,7 @@ type MitreAttack struct {
 	//   "NETWORK_SERVICE_DISCOVERY" - T1046
 	//   "ACCESS_TOKEN_MANIPULATION" - T1134
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
+	//   "DEFAULT_ACCOUNTS" - T1078.001
 	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
 
 	// Version: The MITRE ATT&CK version referenced by the above fields.

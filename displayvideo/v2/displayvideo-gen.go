@@ -837,6 +837,9 @@ type Advertiser struct {
 	// by the system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// BillingConfig: Billing related settings of the advertiser.
+	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
+
 	// CreativeConfig: Required. Creative related settings of the
 	// advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
@@ -965,6 +968,10 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserAdServerConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdvertiserBillingConfig: Billing related settings of an advertiser.
+type AdvertiserBillingConfig struct {
 }
 
 // AdvertiserCreativeConfig: Creatives related settings of an
@@ -7271,8 +7278,8 @@ func (s *DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
 // DuplicateLineItemRequest: Request message for
 // LineItemService.DuplicateLineItem.
 type DuplicateLineItemRequest struct {
-	// TargetDisplayName: The display name of the resulting line item. Must
-	// be UTF-8 encoded with a maximum size of 240 bytes.
+	// TargetDisplayName: The display name of the new line item. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	TargetDisplayName string `json:"targetDisplayName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetDisplayName")
@@ -7299,10 +7306,8 @@ func (s *DuplicateLineItemRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DuplicateLineItemResponse: Response message for
-// LineItemService.DuplicateLineItem.
 type DuplicateLineItemResponse struct {
-	// DuplicateLineItemId: The ID of the successfully created line item.
+	// DuplicateLineItemId: The ID of the created line item.
 	DuplicateLineItemId int64 `json:"duplicateLineItemId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9780,8 +9785,7 @@ type InsertionOrderBudgetSegment struct {
 
 	// Description: The budget segment description. It can be used to enter
 	// Purchase Order information for each budget segment and have that
-	// information printed on the invoices. Must be UTF-8 encoded with a
-	// length of no more than 80 characters.
+	// information printed on the invoices. Must be UTF-8 encoded.
 	Description string `json:"description,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
@@ -11031,9 +11035,13 @@ type LineItem struct {
 	ReservationType string `json:"reservationType,omitempty"`
 
 	// TargetingExpansion: The targeting expansion
-	// (https://support.google.com/displayvideo/answer/10191558) settings of
-	// the line item. This config is only applicable when eligible audience
-	// list targeting is assigned to the line item.
+	// (//support.google.com/displayvideo/answer/10191558) settings of the
+	// line item. This config is only applicable when eligible audience list
+	// targeting is assigned to the line item. Beginning November 7, 2022,
+	// these settings may represent the optimized targeting feature
+	// (//support.google.com/displayvideo/answer/12060859) in place of
+	// targeting expansion. This feature will be rolled out to all partners
+	// by November 9, 2022.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -15087,7 +15095,7 @@ type SearchTargetingOptionsRequest struct {
 	// Can only be used when targeting_type is `TARGETING_TYPE_GEO_REGION`.
 	GeoRegionSearchTerms *GeoRegionSearchTerms `json:"geoRegionSearchTerms,omitempty"`
 
-	// PageSize: Requested page size. Must be between `1` and `100`. If
+	// PageSize: Requested page size. Must be between `1` and `200`. If
 	// unspecified will default to `100`. Returns error code
 	// `INVALID_ARGUMENT` if an invalid value is specified.
 	PageSize int64 `json:"pageSize,omitempty"`
@@ -15497,17 +15505,32 @@ func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // TargetingExpansionConfig: Settings that control the targeting
 // expansion of the line item. Targeting expansion allows the line item
 // to reach a larger audience based on the original audience list and
-// the targeting expansion level.
+// the targeting expansion level. Beginning November 7, 2022, these
+// settings may represent the optimized targeting feature
+// (//support.google.com/displayvideo/answer/12060859) in place of
+// targeting expansion. This feature will be rolled out to all partners
+// by November 9, 2022.
 type TargetingExpansionConfig struct {
-	// ExcludeFirstPartyAudience: Required. Whether to exclude first party
-	// audiences from targeting. Similar audiences of the excluded first
-	// party lists will not be excluded. Only applicable when a first-party
-	// audience is positively targeted (directly or included in a combined
-	// audience), otherwise this selection will be ignored.
+	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
+	// audiences from use in targeting expansion or optimized targeting.
+	// Similar audiences of the excluded first-party lists will not be
+	// excluded. Only applicable when a first-party audience is positively
+	// targeted (directly or included in a combined audience), otherwise
+	// this selection will be ignored.
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
 	// TargetingExpansionLevel: Required. Magnitude of expansion for
-	// applicable targeting under this line item.
+	// applicable targeting under this line item. Beginning November 7,
+	// 2022, the behavior of this field will change in the following ways
+	// with the replacement of targeting expansion with optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859): * This field
+	// will represent the optimized targeting checkbox, with a
+	// `NO_EXPANSION` value representing optimized targeting turned off and
+	// a `LEAST_EXPANSION` value representing optimized targeting turned on.
+	// * `NO_EXPANSION` will be the default value for the field and will be
+	// automatically assigned if you do not set the field. * If you set the
+	// field to any value other than `NO_EXPANSION`, it will automatically
+	// be set to `LEAST_EXPANSION`.
 	//
 	// Possible values:
 	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level
@@ -17572,7 +17595,7 @@ func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersListCall) PageSize(pageSize int64) *AdvertisersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -17709,7 +17732,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -18895,7 +18918,7 @@ func (c *AdvertisersCampaignsListCall) OrderBy(orderBy string) *AdvertisersCampa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersCampaignsListCall) PageSize(pageSize int64) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -19037,7 +19060,7 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -20558,7 +20581,7 @@ func (c *AdvertisersChannelsListCall) OrderBy(orderBy string) *AdvertisersChanne
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersChannelsListCall) PageSize(pageSize int64) *AdvertisersChannelsListCall {
@@ -20709,7 +20732,7 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -22393,7 +22416,7 @@ func (c *AdvertisersCreativesListCall) OrderBy(orderBy string) *AdvertisersCreat
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersCreativesListCall) PageSize(pageSize int64) *AdvertisersCreativesListCall {
@@ -22537,7 +22560,7 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -25159,7 +25182,7 @@ func (c *AdvertisersInvoicesListCall) LoiSapinInvoiceType(loiSapinInvoiceType st
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersInvoicesListCall) PageSize(pageSize int64) *AdvertisersInvoicesListCall {
@@ -25313,7 +25336,7 @@ func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInv
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -26373,8 +26396,8 @@ type AdvertisersLineItemsDuplicateCall struct {
 	header_                  http.Header
 }
 
-// Duplicate: Duplicates a line item. Returns the newly created line
-// item id if successful.
+// Duplicate: Duplicates a line item. Returns the ID of the created line
+// item if successful.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to duplicate.
@@ -26478,7 +26501,7 @@ func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*D
 	}
 	return ret, nil
 	// {
-	//   "description": "Duplicates a line item. Returns the newly created line item id if successful.",
+	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}:duplicate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.duplicate",
@@ -26899,7 +26922,7 @@ func (c *AdvertisersLineItemsListCall) OrderBy(orderBy string) *AdvertisersLineI
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersLineItemsListCall) PageSize(pageSize int64) *AdvertisersLineItemsListCall {
@@ -27043,7 +27066,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -28803,7 +28826,7 @@ func (c *AdvertisersLocationListsListCall) OrderBy(orderBy string) *AdvertisersL
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// Must be between `1` and `200`. Defaults to `100` if not set. Returns
 // error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersLocationListsListCall) PageSize(pageSize int64) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -28946,7 +28969,7 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -29687,7 +29710,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) OrderBy(orderBy stri
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) PageSize(pageSize int64) *AdvertisersLocationListsAssignedLocationsListCall {
@@ -29839,7 +29862,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -30552,7 +30575,7 @@ func (c *AdvertisersManualTriggersListCall) OrderBy(orderBy string) *Advertisers
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersManualTriggersListCall) PageSize(pageSize int64) *AdvertisersManualTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -30694,7 +30717,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -31387,7 +31410,7 @@ func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *Adver
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// Must be between `1` and `200`. Defaults to `100` if not set. Returns
 // error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersNegativeKeywordListsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -31520,7 +31543,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -33972,7 +33995,7 @@ func (c *CombinedAudiencesListCall) OrderBy(orderBy string) *CombinedAudiencesLi
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CombinedAudiencesListCall) PageSize(pageSize int64) *CombinedAudiencesListCall {
@@ -34116,7 +34139,7 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -34524,7 +34547,7 @@ func (c *CustomBiddingAlgorithmsListCall) OrderBy(orderBy string) *CustomBidding
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomBiddingAlgorithmsListCall) PageSize(pageSize int64) *CustomBiddingAlgorithmsListCall {
@@ -34669,7 +34692,7 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -35455,7 +35478,7 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) OrderBy(orderBy string) *Custom
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomBiddingAlgorithmsScriptsListCall) PageSize(pageSize int64) *CustomBiddingAlgorithmsScriptsListCall {
@@ -35608,7 +35631,7 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -35865,7 +35888,7 @@ func (c *CustomListsListCall) OrderBy(orderBy string) *CustomListsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomListsListCall) PageSize(pageSize int64) *CustomListsListCall {
@@ -36002,7 +36025,7 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -36559,7 +36582,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndT
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
@@ -36705,7 +36728,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -37480,7 +37503,7 @@ func (c *GoogleAudiencesListCall) OrderBy(orderBy string) *GoogleAudiencesListCa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *GoogleAudiencesListCall) PageSize(pageSize int64) *GoogleAudiencesListCall {
@@ -37624,7 +37647,7 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -38200,8 +38223,7 @@ func (c *GuaranteedOrdersListCall) OrderBy(orderBy string) *GuaranteedOrdersList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified or greater than `100`
-// will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *GuaranteedOrdersListCall) PageSize(pageSize int64) *GuaranteedOrdersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -38343,7 +38365,7 @@ func (c *GuaranteedOrdersListCall) Do(opts ...googleapi.CallOption) (*ListGuaran
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified or greater than `100` will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -39120,7 +39142,7 @@ func (c *InventorySourceGroupsListCall) OrderBy(orderBy string) *InventorySource
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *InventorySourceGroupsListCall) PageSize(pageSize int64) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -39264,7 +39286,7 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -40780,7 +40802,7 @@ func (c *InventorySourcesListCall) OrderBy(orderBy string) *InventorySourcesList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *InventorySourcesListCall) PageSize(pageSize int64) *InventorySourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -40922,7 +40944,7 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -41890,7 +41912,7 @@ func (c *PartnersListCall) OrderBy(orderBy string) *PartnersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *PartnersListCall) PageSize(pageSize int64) *PartnersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -42019,7 +42041,7 @@ func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -42443,7 +42465,7 @@ func (c *PartnersChannelsListCall) OrderBy(orderBy string) *PartnersChannelsList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *PartnersChannelsListCall) PageSize(pageSize int64) *PartnersChannelsListCall {
@@ -42585,7 +42607,7 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -44555,7 +44577,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
@@ -44695,7 +44717,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -45496,7 +45518,7 @@ func (c *TargetingTypesTargetingOptionsListCall) OrderBy(orderBy string) *Target
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *TargetingTypesTargetingOptionsListCall) PageSize(pageSize int64) *TargetingTypesTargetingOptionsListCall {
@@ -45638,7 +45660,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -46659,7 +46681,7 @@ func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *UsersListCall) PageSize(pageSize int64) *UsersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -46788,7 +46810,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

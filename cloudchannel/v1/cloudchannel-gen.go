@@ -23,6 +23,10 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithScopes(cloudchannel.AppsReportsUsageReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //	cloudchannelService, err := cloudchannel.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -82,12 +86,16 @@ const mtlsBasePath = "https://cloudchannel.mtls.googleapis.com/"
 const (
 	// Manage users on your domain
 	AppsOrderScope = "https://www.googleapis.com/auth/apps.order"
+
+	// View usage reports for your G Suite domain
+	AppsReportsUsageReadonlyScope = "https://www.googleapis.com/auth/apps.reports.usage.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/apps.order",
+		"https://www.googleapis.com/auth/apps.reports.usage.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -147,6 +155,8 @@ func NewAccountsService(s *Service) *AccountsService {
 	rs.ChannelPartnerLinks = NewAccountsChannelPartnerLinksService(s)
 	rs.Customers = NewAccountsCustomersService(s)
 	rs.Offers = NewAccountsOffersService(s)
+	rs.ReportJobs = NewAccountsReportJobsService(s)
+	rs.Reports = NewAccountsReportsService(s)
 	return rs
 }
 
@@ -158,6 +168,10 @@ type AccountsService struct {
 	Customers *AccountsCustomersService
 
 	Offers *AccountsOffersService
+
+	ReportJobs *AccountsReportJobsService
+
+	Reports *AccountsReportsService
 }
 
 func NewAccountsChannelPartnerLinksService(s *Service) *AccountsChannelPartnerLinksService {
@@ -232,6 +246,24 @@ func NewAccountsOffersService(s *Service) *AccountsOffersService {
 }
 
 type AccountsOffersService struct {
+	s *Service
+}
+
+func NewAccountsReportJobsService(s *Service) *AccountsReportJobsService {
+	rs := &AccountsReportJobsService{s: s}
+	return rs
+}
+
+type AccountsReportJobsService struct {
+	s *Service
+}
+
+func NewAccountsReportsService(s *Service) *AccountsReportsService {
+	rs := &AccountsReportsService{s: s}
+	return rs
+}
+
+type AccountsReportsService struct {
 	s *Service
 }
 
@@ -841,6 +873,55 @@ func (s *GoogleCloudChannelV1CloudIdentityInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1Column: The definition of a report column.
+// Specifies the data properties in the corresponding position of the
+// report rows.
+type GoogleCloudChannelV1Column struct {
+	// ColumnId: The unique name of the column (for example,
+	// customer_domain, channel_partner, customer_cost). You can use column
+	// IDs in RunReportJobRequest.filter. To see all reports and their
+	// columns, call CloudChannelReportsService.ListReports.
+	ColumnId string `json:"columnId,omitempty"`
+
+	// DataType: The type of the values for this column.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not used.
+	//   "STRING" - ReportValues for this column will use string_value.
+	//   "INT" - ReportValues for this column will use int_value.
+	//   "DECIMAL" - ReportValues for this column will use decimal_value.
+	//   "MONEY" - ReportValues for this column will use money_value.
+	//   "DATE" - ReportValues for this column will use date_value.
+	//   "DATE_TIME" - ReportValues for this column will use
+	// date_time_value.
+	DataType string `json:"dataType,omitempty"`
+
+	// DisplayName: The column's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1Column) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1Column
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1CommitmentSettings: Commitment settings for
 // commitment-based offers.
 type GoogleCloudChannelV1CommitmentSettings struct {
@@ -1222,6 +1303,59 @@ func (s *GoogleCloudChannelV1CustomerRepricingConfig) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1DateRange: A representation of usage or invoice
+// date ranges.
+type GoogleCloudChannelV1DateRange struct {
+	// InvoiceEndDate: The latest invoice date (exclusive). If your product
+	// uses monthly invoices, and this value is not the beginning of a
+	// month, this will adjust the date to the first day of the following
+	// month.
+	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
+
+	// InvoiceStartDate: The earliest invoice date (inclusive). If your
+	// product uses monthly invoices, and this value is not the beginning of
+	// a month, this will adjust the date to the first day of the given
+	// month.
+	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
+
+	// UsageEndDateTime: The latest usage date time (exclusive). If you use
+	// time groupings (daily, weekly, etc), each group uses midnight to
+	// midnight (Pacific time). The usage end date is rounded down to
+	// include all usage from the specified date. We recommend that clients
+	// pass `usage_start_date_time` in Pacific time.
+	UsageEndDateTime *GoogleTypeDateTime `json:"usageEndDateTime,omitempty"`
+
+	// UsageStartDateTime: The earliest usage date time (inclusive). If you
+	// use time groupings (daily, weekly, etc), each group uses midnight to
+	// midnight (Pacific time). The usage start date is rounded down to
+	// include all usage from the specified date. We recommend that clients
+	// pass `usage_start_date_time` in Pacific time.
+	UsageStartDateTime *GoogleTypeDateTime `json:"usageStartDateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InvoiceEndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InvoiceEndDate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1DateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1DateRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1EduData: Required Edu Attributes
 type GoogleCloudChannelV1EduData struct {
 	// InstituteSize: Size of the institute.
@@ -1428,6 +1562,89 @@ type GoogleCloudChannelV1EntitlementEvent struct {
 
 func (s *GoogleCloudChannelV1EntitlementEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1EntitlementEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1FetchReportResultsRequest: Request message for
+// CloudChannelReportsService.FetchReportResults.
+type GoogleCloudChannelV1FetchReportResultsRequest struct {
+	// PageSize: Optional. Requested page size of the report. The server may
+	// return fewer results than requested. If you don't specify a page
+	// size, the server uses a sensible default (may change over time). The
+	// maximum value is 30,000; the server will change larger values to
+	// 30,000.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A token that specifies a page of results beyond
+	// the first page. Obtained through
+	// FetchReportResultsResponse.next_page_token of the previous
+	// CloudChannelReportsService.FetchReportResults call.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1FetchReportResultsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1FetchReportResultsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1FetchReportResultsResponse: Response message for
+// CloudChannelReportsService.FetchReportResults. Contains a tabular
+// representation of the report results.
+type GoogleCloudChannelV1FetchReportResultsResponse struct {
+	// NextPageToken: Pass this token to
+	// FetchReportResultsRequest.page_token to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ReportMetadata: The metadata for the report results (display name,
+	// columns, row count, and date ranges).
+	ReportMetadata *GoogleCloudChannelV1ReportResultsMetadata `json:"reportMetadata,omitempty"`
+
+	// Rows: The report's lists of values. Each row follows the settings and
+	// ordering of the columns from `report_metadata`.
+	Rows []*GoogleCloudChannelV1Row `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1FetchReportResultsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1FetchReportResultsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1825,6 +2042,44 @@ func (s *GoogleCloudChannelV1ListPurchasableSkusResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1ListReportsResponse: Response message for
+// CloudChannelReportsService.ListReports.
+type GoogleCloudChannelV1ListReportsResponse struct {
+	// NextPageToken: Pass this token to
+	// FetchReportResultsRequest.page_token to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Reports: The reports available to the partner.
+	Reports []*GoogleCloudChannelV1Report `json:"reports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ListReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ListReportsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1ListSkusResponse: Response message for ListSkus.
 type GoogleCloudChannelV1ListSkusResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
@@ -2166,6 +2421,10 @@ func (s *GoogleCloudChannelV1Media) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1Offer struct {
 	// Constraints: Constraints on transacting the Offer.
 	Constraints *GoogleCloudChannelV1Constraints `json:"constraints,omitempty"`
+
+	// DealCode: The deal code of the offer to get a special promotion or
+	// discount.
+	DealCode string `json:"dealCode,omitempty"`
 
 	// EndTime: Output only. End of the Offer validity time.
 	EndTime string `json:"endTime,omitempty"`
@@ -2972,6 +3231,215 @@ func (s *GoogleCloudChannelV1RenewalSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1Report: The ID and description of a report that
+// was used to generate report data. For example, "GCP Daily Spend",
+// "Google Workspace License Activity", etc.
+type GoogleCloudChannelV1Report struct {
+	// Columns: The list of columns included in the report. This defines the
+	// schema of the report results.
+	Columns []*GoogleCloudChannelV1Column `json:"columns,omitempty"`
+
+	// Description: A description of other aspects of the report, such as
+	// the products it supports.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: A human-readable name for this report.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Required. The report's resource name. Specifies the account and
+	// report used to generate report data. The report_id identifier is a
+	// UID (for example, `613bf59q`). Name uses the format:
+	// accounts/{account_id}/reports/{report_id}
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1Report) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1Report
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ReportJob: The result of a RunReportJob
+// operation. Contains the name to use in
+// FetchReportResultsRequest.report_job and the status of the operation.
+type GoogleCloudChannelV1ReportJob struct {
+	// Name: Required. The resource name of a report job. Name uses the
+	// format: `accounts/{account_id}/reportJobs/{report_job_id}`
+	Name string `json:"name,omitempty"`
+
+	// ReportStatus: The current status of report generation.
+	ReportStatus *GoogleCloudChannelV1ReportStatus `json:"reportStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ReportJob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ReportJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ReportResultsMetadata: The features describing
+// the data. Returned by CloudChannelReportsService.RunReportJob and
+// CloudChannelReportsService.FetchReportResults.
+type GoogleCloudChannelV1ReportResultsMetadata struct {
+	// DateRange: The date range of reported usage.
+	DateRange *GoogleCloudChannelV1DateRange `json:"dateRange,omitempty"`
+
+	// PrecedingDateRange: The usage dates immediately preceding
+	// `date_range` with the same duration. Use this to calculate trending
+	// usage and costs. This is only populated if you request trending data.
+	// For example, if `date_range` is July 1-15, `preceding_date_range`
+	// will be June 16-30.
+	PrecedingDateRange *GoogleCloudChannelV1DateRange `json:"precedingDateRange,omitempty"`
+
+	// Report: Details of the completed report.
+	Report *GoogleCloudChannelV1Report `json:"report,omitempty"`
+
+	// RowCount: The total number of rows of data in the final report.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ReportResultsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ReportResultsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ReportStatus: Status of a report generation
+// process.
+type GoogleCloudChannelV1ReportStatus struct {
+	// EndTime: The report generation's completion time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: The report generation's start time.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: The current state of the report generation process.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not used.
+	//   "STARTED" - Report processing started.
+	//   "WRITING" - Data generated from the report is being staged.
+	//   "AVAILABLE" - Report data is available for access.
+	//   "FAILED" - Report failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ReportStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ReportStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1ReportValue: A single report value.
+type GoogleCloudChannelV1ReportValue struct {
+	// DateTimeValue: A value of type `google.type.DateTime` (year, month,
+	// day, hour, minute, second, and UTC offset or timezone.)
+	DateTimeValue *GoogleTypeDateTime `json:"dateTimeValue,omitempty"`
+
+	// DateValue: A value of type `google.type.Date` (year, month, day).
+	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
+
+	// DecimalValue: A value of type `google.type.Decimal`, representing
+	// non-integer numeric values.
+	DecimalValue *GoogleTypeDecimal `json:"decimalValue,omitempty"`
+
+	// IntValue: A value of type `int`.
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// MoneyValue: A value of type `google.type.Money` (currency code, whole
+	// units, decimal units).
+	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
+
+	// StringValue: A value of type `string`.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateTimeValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateTimeValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ReportValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ReportValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1RepricingAdjustment: A type that represents the
 // various adjustments you can apply to a bill.
 type GoogleCloudChannelV1RepricingAdjustment struct {
@@ -3094,6 +3562,114 @@ type GoogleCloudChannelV1RepricingConfigEntitlementGranularity struct {
 
 func (s *GoogleCloudChannelV1RepricingConfigEntitlementGranularity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1RepricingConfigEntitlementGranularity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1Row: A row of report values.
+type GoogleCloudChannelV1Row struct {
+	// Values: The list of values in the row.
+	Values []*GoogleCloudChannelV1ReportValue `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1Row) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1Row
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1RunReportJobRequest: Request message for
+// CloudChannelReportsService.RunReportJob.
+type GoogleCloudChannelV1RunReportJobRequest struct {
+	// DateRange: Optional. The range of usage or invoice dates to include
+	// in the result.
+	DateRange *GoogleCloudChannelV1DateRange `json:"dateRange,omitempty"`
+
+	// Filter: Optional. A structured string that defines conditions on
+	// dimension columns to restrict the report output. Filters support
+	// logical operators (AND, OR, NOT) and conditional operators (=, !=, <,
+	// >, <=, and >=) using `column_id` as keys. For example:
+	// `(customer:"accounts/C123abc/customers/S456def" OR
+	// customer:"accounts/C123abc/customers/S789ghi") AND
+	// invoice_start_date.year >= 2022`
+	Filter string `json:"filter,omitempty"`
+
+	// LanguageCode: Optional. The BCP-47 language code, such as "en-US". If
+	// specified, the response is localized to the corresponding language
+	// code if the original data sources support it. Default is "en-US".
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RunReportJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RunReportJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1RunReportJobResponse: Response message for
+// CloudChannelReportsService.RunReportJob.
+type GoogleCloudChannelV1RunReportJobResponse struct {
+	// ReportJob: Pass `report_job.name` to
+	// FetchReportResultsRequest.report_job to retrieve the report's
+	// results.
+	ReportJob *GoogleCloudChannelV1ReportJob `json:"reportJob,omitempty"`
+
+	// ReportMetadata: The metadata for the report's results (display name,
+	// columns, row count, and date range). If you view this before the
+	// operation finishes, you may see incomplete data.
+	ReportMetadata *GoogleCloudChannelV1ReportResultsMetadata `json:"reportMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReportJob") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RunReportJobResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RunReportJobResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3737,6 +4313,55 @@ func (s *GoogleCloudChannelV1alpha1ChannelPartnerEvent) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1alpha1Column: The definition of a report column.
+// Specifies the data properties in the corresponding position of the
+// report rows.
+type GoogleCloudChannelV1alpha1Column struct {
+	// ColumnId: The unique name of the column (for example,
+	// customer_domain, channel_partner, customer_cost). You can use column
+	// IDs in RunReportJobRequest.filter. To see all reports and their
+	// columns, call CloudChannelReportsService.ListReports.
+	ColumnId string `json:"columnId,omitempty"`
+
+	// DataType: The type of the values for this column.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not used.
+	//   "STRING" - ReportValues for this column will use string_value.
+	//   "INT" - ReportValues for this column will use int_value.
+	//   "DECIMAL" - ReportValues for this column will use decimal_value.
+	//   "MONEY" - ReportValues for this column will use money_value.
+	//   "DATE" - ReportValues for this column will use date_value.
+	//   "DATE_TIME" - ReportValues for this column will use
+	// date_time_value.
+	DataType string `json:"dataType,omitempty"`
+
+	// DisplayName: The column's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1Column) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1Column
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1alpha1CommitmentSettings: Commitment settings for
 // commitment-based offers.
 type GoogleCloudChannelV1alpha1CommitmentSettings struct {
@@ -3808,6 +4433,59 @@ type GoogleCloudChannelV1alpha1CustomerEvent struct {
 
 func (s *GoogleCloudChannelV1alpha1CustomerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1CustomerEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1DateRange: A representation of usage or
+// invoice date ranges.
+type GoogleCloudChannelV1alpha1DateRange struct {
+	// InvoiceEndDate: The latest invoice date (exclusive). If your product
+	// uses monthly invoices, and this value is not the beginning of a
+	// month, this will adjust the date to the first day of the following
+	// month.
+	InvoiceEndDate *GoogleTypeDate `json:"invoiceEndDate,omitempty"`
+
+	// InvoiceStartDate: The earliest invoice date (inclusive). If your
+	// product uses monthly invoices, and this value is not the beginning of
+	// a month, this will adjust the date to the first day of the given
+	// month.
+	InvoiceStartDate *GoogleTypeDate `json:"invoiceStartDate,omitempty"`
+
+	// UsageEndDateTime: The latest usage date time (exclusive). If you use
+	// time groupings (daily, weekly, etc), each group uses midnight to
+	// midnight (Pacific time). The usage end date is rounded down to
+	// include all usage from the specified date. We recommend that clients
+	// pass `usage_start_date_time` in Pacific time.
+	UsageEndDateTime *GoogleTypeDateTime `json:"usageEndDateTime,omitempty"`
+
+	// UsageStartDateTime: The earliest usage date time (inclusive). If you
+	// use time groupings (daily, weekly, etc), each group uses midnight to
+	// midnight (Pacific time). The usage start date is rounded down to
+	// include all usage from the specified date. We recommend that clients
+	// pass `usage_start_date_time` in Pacific time.
+	UsageStartDateTime *GoogleTypeDateTime `json:"usageStartDateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InvoiceEndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InvoiceEndDate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1DateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1DateRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4243,6 +4921,206 @@ func (s *GoogleCloudChannelV1alpha1RenewalSettings) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1alpha1Report: The ID and description of a report
+// that was used to generate report data. For example, "GCP Daily
+// Spend", "Google Workspace License Activity", etc.
+type GoogleCloudChannelV1alpha1Report struct {
+	// Columns: The list of columns included in the report. This defines the
+	// schema of the report results.
+	Columns []*GoogleCloudChannelV1alpha1Column `json:"columns,omitempty"`
+
+	// Description: A description of other aspects of the report, such as
+	// the products it supports.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: A human-readable name for this report.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Required. The report's resource name. Specifies the account and
+	// report used to generate report data. The report_id identifier is a
+	// UID (for example, `613bf59q`). Name uses the format:
+	// accounts/{account_id}/reports/{report_id}
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1Report) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1Report
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1ReportJob: The result of a RunReportJob
+// operation. Contains the name to use in
+// FetchReportResultsRequest.report_job and the status of the operation.
+type GoogleCloudChannelV1alpha1ReportJob struct {
+	// Name: Required. The resource name of a report job. Name uses the
+	// format: `accounts/{account_id}/reportJobs/{report_job_id}`
+	Name string `json:"name,omitempty"`
+
+	// ReportStatus: The current status of report generation.
+	ReportStatus *GoogleCloudChannelV1alpha1ReportStatus `json:"reportStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1ReportJob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1ReportJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1ReportResultsMetadata: The features
+// describing the data. Returned by
+// CloudChannelReportsService.RunReportJob and
+// CloudChannelReportsService.FetchReportResults.
+type GoogleCloudChannelV1alpha1ReportResultsMetadata struct {
+	// DateRange: The date range of reported usage.
+	DateRange *GoogleCloudChannelV1alpha1DateRange `json:"dateRange,omitempty"`
+
+	// PrecedingDateRange: The usage dates immediately preceding
+	// `date_range` with the same duration. Use this to calculate trending
+	// usage and costs. This is only populated if you request trending data.
+	// For example, if `date_range` is July 1-15, `preceding_date_range`
+	// will be June 16-30.
+	PrecedingDateRange *GoogleCloudChannelV1alpha1DateRange `json:"precedingDateRange,omitempty"`
+
+	// Report: Details of the completed report.
+	Report *GoogleCloudChannelV1alpha1Report `json:"report,omitempty"`
+
+	// RowCount: The total number of rows of data in the final report.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1ReportResultsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1ReportResultsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1ReportStatus: Status of a report generation
+// process.
+type GoogleCloudChannelV1alpha1ReportStatus struct {
+	// EndTime: The report generation's completion time.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: The report generation's start time.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: The current state of the report generation process.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not used.
+	//   "STARTED" - Report processing started.
+	//   "WRITING" - Data generated from the report is being staged.
+	//   "AVAILABLE" - Report data is available for access.
+	//   "FAILED" - Report failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1ReportStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1ReportStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1RunReportJobResponse: Response message for
+// CloudChannelReportsService.RunReportJob.
+type GoogleCloudChannelV1alpha1RunReportJobResponse struct {
+	// ReportJob: Pass `report_job.name` to
+	// FetchReportResultsRequest.report_job to retrieve the report's
+	// results.
+	ReportJob *GoogleCloudChannelV1alpha1ReportJob `json:"reportJob,omitempty"`
+
+	// ReportMetadata: The metadata for the report's results (display name,
+	// columns, row count, and date range). If you view this before the
+	// operation finishes, you may see incomplete data.
+	ReportMetadata *GoogleCloudChannelV1alpha1ReportResultsMetadata `json:"reportMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReportJob") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1alpha1RunReportJobResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1RunReportJobResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1alpha1SubscriberEvent: Represents information
 // which resellers will get as part of notification from Pub/Sub.
 type GoogleCloudChannelV1alpha1SubscriberEvent struct {
@@ -4607,6 +5485,84 @@ func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleTypeDateTime: Represents civil time (or occasionally physical
+// time). This type can represent a civil time in one of a few possible
+// ways: * When utc_offset is set and time_zone is unset: a civil time
+// on a calendar day with a particular offset from UTC. * When time_zone
+// is set and utc_offset is unset: a civil time on a calendar day in a
+// particular time zone. * When neither time_zone nor utc_offset is set:
+// a civil time on a calendar day in local time. The date is relative to
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
+type GoogleTypeDateTime struct {
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
+	Day int64 `json:"day,omitempty"`
+
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
+	Month int64 `json:"month,omitempty"`
+
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// TimeZone: Time zone.
+	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
+
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and
+	// +18 hours. For example, a UTC offset of -4:00 would be represented as
+	// { seconds: -14400 }.
+	UtcOffset string `json:"utcOffset,omitempty"`
+
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if
+	// specifying a datetime without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDateTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleTypeDecimal: A representation of a decimal value, such as 2.5.
 // Clients may convert values into language-native decimal formats, such
 // as Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
@@ -4837,6 +5793,39 @@ type GoogleTypePostalAddress struct {
 
 func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypePostalAddress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
+// Database (https://www.iana.org/time-zones).
+type GoogleTypeTimeZone struct {
+	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	Id string `json:"id,omitempty"`
+
+	// Version: Optional. IANA Time Zone Database version number, e.g.
+	// "2019a".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeTimeZone
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13314,6 +14303,545 @@ func (c *AccountsOffersListCall) Pages(ctx context.Context, f func(*GoogleCloudC
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudchannel.accounts.reportJobs.fetchReportResults":
+
+type AccountsReportJobsFetchReportResultsCall struct {
+	s                                             *Service
+	reportJob                                     string
+	googlecloudchannelv1fetchreportresultsrequest *GoogleCloudChannelV1FetchReportResultsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// FetchReportResults: Retrieves data generated by
+// CloudChannelReportsService.RunReportJob.
+//
+//   - reportJob: The report job created by
+//     CloudChannelReportsService.RunReportJob. Report_job uses the
+//     format: accounts/{account_id}/reportJobs/{report_job_id}.
+func (r *AccountsReportJobsService) FetchReportResults(reportJob string, googlecloudchannelv1fetchreportresultsrequest *GoogleCloudChannelV1FetchReportResultsRequest) *AccountsReportJobsFetchReportResultsCall {
+	c := &AccountsReportJobsFetchReportResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.reportJob = reportJob
+	c.googlecloudchannelv1fetchreportresultsrequest = googlecloudchannelv1fetchreportresultsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsReportJobsFetchReportResultsCall) Fields(s ...googleapi.Field) *AccountsReportJobsFetchReportResultsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsReportJobsFetchReportResultsCall) Context(ctx context.Context) *AccountsReportJobsFetchReportResultsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsReportJobsFetchReportResultsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReportJobsFetchReportResultsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1fetchreportresultsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+reportJob}:fetchReportResults")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"reportJob": c.reportJob,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.reportJobs.fetchReportResults" call.
+// Exactly one of *GoogleCloudChannelV1FetchReportResultsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudChannelV1FetchReportResultsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsReportJobsFetchReportResultsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1FetchReportResultsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1FetchReportResultsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves data generated by CloudChannelReportsService.RunReportJob.",
+	//   "flatPath": "v1/accounts/{accountsId}/reportJobs/{reportJobsId}:fetchReportResults",
+	//   "httpMethod": "POST",
+	//   "id": "cloudchannel.accounts.reportJobs.fetchReportResults",
+	//   "parameterOrder": [
+	//     "reportJob"
+	//   ],
+	//   "parameters": {
+	//     "reportJob": {
+	//       "description": "Required. The report job created by CloudChannelReportsService.RunReportJob. Report_job uses the format: accounts/{account_id}/reportJobs/{report_job_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/reportJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+reportJob}:fetchReportResults",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1FetchReportResultsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1FetchReportResultsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsReportJobsFetchReportResultsCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1FetchReportResultsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudchannelv1fetchreportresultsrequest.PageToken = pt }(c.googlecloudchannelv1fetchreportresultsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudchannelv1fetchreportresultsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "cloudchannel.accounts.reports.list":
+
+type AccountsReportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the reports that RunReportJob can run. These reports
+// include an ID, a description, and the list of columns that will be in
+// the result.
+//
+//   - parent: The resource name of the partner account to list available
+//     reports for. Parent uses the format: accounts/{account_id}.
+func (r *AccountsReportsService) List(parent string) *AccountsReportsListCall {
+	c := &AccountsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code, such as "en-US". If specified, the response is
+// localized to the corresponding language code if the original data
+// sources support it. Default is "en-US".
+func (c *AccountsReportsListCall) LanguageCode(languageCode string) *AccountsReportsListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size
+// of the report. The server might return fewer results than requested.
+// If unspecified, returns 20 reports. The maximum value is 100.
+func (c *AccountsReportsListCall) PageSize(pageSize int64) *AccountsReportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that
+// specifies a page of results beyond the first page. Obtained through
+// ListReportsResponse.next_page_token of the previous
+// CloudChannelReportsService.ListReports call.
+func (c *AccountsReportsListCall) PageToken(pageToken string) *AccountsReportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsReportsListCall) Fields(s ...googleapi.Field) *AccountsReportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsReportsListCall) IfNoneMatch(entityTag string) *AccountsReportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsReportsListCall) Context(ctx context.Context) *AccountsReportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsReportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.reports.list" call.
+// Exactly one of *GoogleCloudChannelV1ListReportsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudChannelV1ListReportsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsReportsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudChannelV1ListReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the reports that RunReportJob can run. These reports include an ID, a description, and the list of columns that will be in the result.",
+	//   "flatPath": "v1/accounts/{accountsId}/reports",
+	//   "httpMethod": "GET",
+	//   "id": "cloudchannel.accounts.reports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "Optional. The BCP-47 language code, such as \"en-US\". If specified, the response is localized to the corresponding language code if the original data sources support it. Default is \"en-US\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size of the report. The server might return fewer results than requested. If unspecified, returns 20 reports. The maximum value is 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token that specifies a page of results beyond the first page. Obtained through ListReportsResponse.next_page_token of the previous CloudChannelReportsService.ListReports call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the partner account to list available reports for. Parent uses the format: accounts/{account_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/reports",
+	//   "response": {
+	//     "$ref": "GoogleCloudChannelV1ListReportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsReportsListCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudchannel.accounts.reports.run":
+
+type AccountsReportsRunCall struct {
+	s                                       *Service
+	nameid                                  string
+	googlecloudchannelv1runreportjobrequest *GoogleCloudChannelV1RunReportJobRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Run: Begins generation of data for a given report. The report
+// identifier is a UID (for example, `613bf59q`). Possible error codes:
+// * PERMISSION_DENIED: The user doesn't have access to this report. *
+// INVALID_ARGUMENT: Required request parameters are missing or invalid.
+// * NOT_FOUND: The report identifier was not found. * INTERNAL: Any
+// non-user error related to a technical issue in the backend. Contact
+// Cloud Channel support. * UNKNOWN: Any non-user error related to a
+// technical issue in the backend. Contact Cloud Channel support. Return
+// value: The ID of a long-running operation. To get the results of the
+// operation, call the GetOperation method of
+// CloudChannelOperationsService. The Operation metadata contains an
+// instance of OperationMetadata. To get the results of report
+// generation, call CloudChannelReportsService.FetchReportResults with
+// the RunReportJobResponse.report_job.
+//
+//   - name: The report's resource name. Specifies the account and report
+//     used to generate report data. The report_id identifier is a UID
+//     (for example, `613bf59q`). Name uses the format:
+//     accounts/{account_id}/reports/{report_id}.
+func (r *AccountsReportsService) Run(nameid string, googlecloudchannelv1runreportjobrequest *GoogleCloudChannelV1RunReportJobRequest) *AccountsReportsRunCall {
+	c := &AccountsReportsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googlecloudchannelv1runreportjobrequest = googlecloudchannelv1runreportjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsReportsRunCall) Fields(s ...googleapi.Field) *AccountsReportsRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsReportsRunCall) Context(ctx context.Context) *AccountsReportsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsReportsRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReportsRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudchannelv1runreportjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudchannel.accounts.reports.run" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsReportsRunCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Begins generation of data for a given report. The report identifier is a UID (for example, `613bf59q`). Possible error codes: * PERMISSION_DENIED: The user doesn't have access to this report. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The report identifier was not found. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The ID of a long-running operation. To get the results of the operation, call the GetOperation method of CloudChannelOperationsService. The Operation metadata contains an instance of OperationMetadata. To get the results of report generation, call CloudChannelReportsService.FetchReportResults with the RunReportJobResponse.report_job.",
+	//   "flatPath": "v1/accounts/{accountsId}/reports/{reportsId}:run",
+	//   "httpMethod": "POST",
+	//   "id": "cloudchannel.accounts.reports.run",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The report's resource name. Specifies the account and report used to generate report data. The report_id identifier is a UID (for example, `613bf59q`). Name uses the format: accounts/{account_id}/reports/{report_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/reports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:run",
+	//   "request": {
+	//     "$ref": "GoogleCloudChannelV1RunReportJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.reports.usage.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "cloudchannel.operations.cancel":

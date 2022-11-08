@@ -1,5 +1,16 @@
 # Changes
 
+## [0.103.0](https://github.com/googleapis/google-api-go-client/compare/v0.102.0...v0.103.0) (2022-11-08)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1737](https://github.com/googleapis/google-api-go-client/issues/1737)) ([de99200](https://github.com/googleapis/google-api-go-client/commit/de9920088db16562740c31183eca6651f669e582))
+* **all:** Auto-regenerate discovery clients ([#1739](https://github.com/googleapis/google-api-go-client/issues/1739)) ([bbd4259](https://github.com/googleapis/google-api-go-client/commit/bbd42597f4710f527f83fd900cb7f9e6706bc195))
+* **all:** Auto-regenerate discovery clients ([#1743](https://github.com/googleapis/google-api-go-client/issues/1743)) ([4248dc3](https://github.com/googleapis/google-api-go-client/commit/4248dc3db6b32d00720293980fb8e845b684fbd8))
+* **googleapi:** Inject gax apierror.APIError into googleapi.Error ([#1730](https://github.com/googleapis/google-api-go-client/issues/1730)) ([ee25e29](https://github.com/googleapis/google-api-go-client/commit/ee25e29fd586cde25a006504d0059194a90f19ac))
+* Rm hard dep on x/sys ([#1742](https://github.com/googleapis/google-api-go-client/issues/1742)) ([9695aa1](https://github.com/googleapis/google-api-go-client/commit/9695aa13a084c1ad9857db4a6c12d57e13fc00dc))
+
 ## [0.102.0](https://github.com/googleapis/google-api-go-client/compare/v0.101.0...v0.102.0) (2022-11-02)
 
 

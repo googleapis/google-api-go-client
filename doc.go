@@ -68,7 +68,7 @@
 //
 //	if _, err := svc.FooCall().Do(); err != nil {
 //		if gErr, ok := err.(*googleapi.Error); ok {
-//			fmt.Println("Status code: %v", gErr.Code)
+//			fmt.Printf("Status code: %v\n", gErr.Code)
 //		}
 //	}
 //

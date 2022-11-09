@@ -885,6 +885,10 @@ type AutoRenewingPlan struct {
 	// e.g. the user has not canceled the subscription
 	AutoRenewEnabled bool `json:"autoRenewEnabled,omitempty"`
 
+	// PriceChangeDetails: The information of the last price change for the
+	// item since subscription signup.
+	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AutoRenewEnabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3100,6 +3104,42 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OfferDetails: Offer details information related to a purchase line
+// item.
+type OfferDetails struct {
+	// BasePlanId: The base plan ID. Present for all base plan and offers.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// OfferId: The offer ID. Only present for discounted offers.
+	OfferId string `json:"offerId,omitempty"`
+
+	// OfferTags: The latest offer tags associated with the offer. It
+	// includes tags inherited from the base plan.
+	OfferTags []string `json:"offerTags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OfferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OfferDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OfferTag: Represents a custom tag specified for base plans and
 // subscription offers.
 type OfferTag struct {
@@ -4263,6 +4303,65 @@ func (s *SubscriptionDeferralInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SubscriptionItemPriceChangeDetails: Price change related information
+// of a subscription item.
+type SubscriptionItemPriceChangeDetails struct {
+	// ExpectedNewPriceChargeTime: The renewal time at which the price
+	// change will become effective for the user. This is subject to
+	// change(to a future time) due to cases where the renewal time shifts
+	// like pause.
+	ExpectedNewPriceChargeTime string `json:"expectedNewPriceChargeTime,omitempty"`
+
+	// NewPrice: New recurring price for the subscription item.
+	NewPrice *Money `json:"newPrice,omitempty"`
+
+	// PriceChangeMode: Price change mode specifies how the subscription
+	// item price is changing.
+	//
+	// Possible values:
+	//   "PRICE_CHANGE_MODE_UNSPECIFIED" - Price change mode unspecified.
+	// This value should never be set.
+	//   "PRICE_DECREASE" - If the subscription price is decreasing.
+	//   "PRICE_INCREASE" - If the subscription price is increasing and the
+	// user needs to accept it.
+	PriceChangeMode string `json:"priceChangeMode,omitempty"`
+
+	// PriceChangeState: State the price change is currently in.
+	//
+	// Possible values:
+	//   "PRICE_CHANGE_STATE_UNSPECIFIED" - Price change state unspecified.
+	// This value should not be used.
+	//   "OUTSTANDING" - Waiting for the user to agree for the price change.
+	//   "CONFIRMED" - The price change is confirmed to happen for the user.
+	//   "APPLIED" - The price change is applied, i.e. the user has started
+	// being charged the new price.
+	PriceChangeState string `json:"priceChangeState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExpectedNewPriceChargeTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExpectedNewPriceChargeTime") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscriptionItemPriceChangeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionItemPriceChangeDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SubscriptionListing: The consumer-visible metadata of a subscription.
 type SubscriptionListing struct {
 	// Benefits: A list of benefits shown to the user on platforms such as
@@ -4713,6 +4812,9 @@ type SubscriptionPurchaseLineItem struct {
 	// ExpiryTime: Time at which the subscription expired or will expire
 	// unless the access is extended (ex. renews).
 	ExpiryTime string `json:"expiryTime,omitempty"`
+
+	// OfferDetails: The offer details for this item.
+	OfferDetails *OfferDetails `json:"offerDetails,omitempty"`
 
 	// PrepaidPlan: The item is prepaid.
 	PrepaidPlan *PrepaidPlan `json:"prepaidPlan,omitempty"`

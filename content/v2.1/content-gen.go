@@ -3662,6 +3662,9 @@ type DatafeedStatus struct {
 	// Errors: The list of errors occurring in the feed.
 	Errors []*DatafeedStatusError `json:"errors,omitempty"`
 
+	// FeedLabel: The feed label status is reported for.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
 	// ItemsTotal: The number of items in the feed that were processed.
 	ItemsTotal uint64 `json:"itemsTotal,omitempty,string"`
 
@@ -3792,13 +3795,19 @@ func (s *DatafeedStatusExample) MarshalJSON() ([]byte, error) {
 }
 
 type DatafeedTarget struct {
-	// Country: The country where the items in the feed will be included in
-	// the search index, represented as a CLDR territory code.
+	// Country: Deprecated. Use `feedLabel` instead. The country where the
+	// items in the feed will be included in the search index, represented
+	// as a CLDR territory code.
 	Country string `json:"country,omitempty"`
 
 	// ExcludedDestinations: The list of destinations to exclude for this
 	// target (corresponds to cleared check boxes in Merchant Center).
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
+
+	// FeedLabel: Feed label for the DatafeedTarget. Either `country` or
+	// `feedLabel` is required. If both `feedLabel` and `country` is
+	// specified, the values must match.
+	FeedLabel string `json:"feedLabel,omitempty"`
 
 	// IncludedDestinations: The list of destinations to include for this
 	// target (corresponds to checked check boxes in Merchant Center).
@@ -3809,6 +3818,11 @@ type DatafeedTarget struct {
 	// Language: The two-letter ISO 639-1 language of the items in the feed.
 	// Must be a valid language for `targets[].country`.
 	Language string `json:"language,omitempty"`
+
+	// TargetCountries: The countries where the items may be displayed.
+	// Represented as a CLDR territory code. Will be ignored for "product
+	// inventory" feeds.
+	TargetCountries []string `json:"targetCountries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
@@ -4077,16 +4091,22 @@ type DatafeedstatusesCustomBatchRequestEntry struct {
 	// BatchId: An entry ID, unique within the batch request.
 	BatchId int64 `json:"batchId,omitempty"`
 
-	// Country: The country for which to get the datafeed status. If this
-	// parameter is provided then language must also be provided. Note that
-	// for multi-target datafeeds this parameter is required.
+	// Country: Deprecated. Use `feedLabel` instead. The country to get the
+	// datafeed status for. If this parameter is provided, then `language`
+	// must also be provided. Note that for multi-target datafeeds this
+	// parameter is required.
 	Country string `json:"country,omitempty"`
 
 	// DatafeedId: The ID of the data feed to get.
 	DatafeedId uint64 `json:"datafeedId,omitempty,string"`
 
-	// Language: The language for which to get the datafeed status. If this
-	// parameter is provided then country must also be provided. Note that
+	// FeedLabel: The feed label to get the datafeed status for. If this
+	// parameter is provided, then `language` must also be provided. Note
+	// that for multi-target datafeeds this parameter is required.
+	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// Language: The language to get the datafeed status for. If this
+	// parameter is provided then `country` must also be provided. Note that
 	// for multi-target datafeeds this parameter is required.
 	Language string `json:"language,omitempty"`
 
@@ -13586,10 +13606,11 @@ type ProductsCustomBatchRequestEntry struct {
 	// UpdateMask: The comma-separated list of product attributes to be
 	// updated. Example: "title,salePrice". Attributes specified in the
 	// update mask without a value specified in the body will be deleted
-	// from the product. Only top-level product attributes can be updated.
-	// If not defined, product attributes with set values will be updated
-	// and other attributes will stay unchanged. Only defined if the method
-	// is `update`.
+	// from the product. *You must specify the update mask to delete
+	// attributes.* Only top-level product attributes can be updated. If not
+	// defined, product attributes with set values will be updated and other
+	// attributes will stay unchanged. Only defined if the method is
+	// `update`.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
@@ -14083,6 +14104,12 @@ type Promotion struct {
 	// identify the promotion.
 	PromotionId string `json:"promotionId,omitempty"`
 
+	// PromotionUrl: URL to the page on the merchant's site where the
+	// promotion shows. Local Inventory ads promotions throw an error if no
+	// promo url is included. URL is used to confirm that the promotion is
+	// valid and can be redeemed.
+	PromotionUrl string `json:"promotionUrl,omitempty"`
+
 	// RedemptionChannel: Required. Redemption channel for the promotion. At
 	// least one channel is required.
 	//
@@ -14095,6 +14122,25 @@ type Promotion struct {
 
 	// ShippingServiceNames: Shipping service names for the promotion.
 	ShippingServiceNames []string `json:"shippingServiceNames,omitempty"`
+
+	// StoreApplicability: Whether the promotion applies to all stores, or
+	// only specified stores. Local Inventory ads promotions throw an error
+	// if no store applicability is included. An INVALID_ARGUMENT error is
+	// thrown if store_applicability is set to ALL_STORES and store_code or
+	// score_code_exclusion is set to a value.
+	//
+	// Possible values:
+	//   "STORE_APPLICABILITY_UNSPECIFIED" - Which store codes the promotion
+	// applies to is unknown.
+	//   "ALL_STORES" - Promotion applies to all stores.
+	//   "SPECIFIC_STORES" - Promotion applies to only the specified stores.
+	StoreApplicability string `json:"storeApplicability,omitempty"`
+
+	// StoreCode: Store codes to include for the promotion.
+	StoreCode []string `json:"storeCode,omitempty"`
+
+	// StoreCodeExclusion: Store codes to exclude for the promotion.
+	StoreCodeExclusion []string `json:"storeCodeExclusion,omitempty"`
 
 	// TargetCountry: Required. The target country used as part of the
 	// unique identifier. Can be `AU`, `CA`, `DE`, `FR`, `GB`, `IN` or `US`.
@@ -26907,21 +26953,32 @@ func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *Dat
 	return c
 }
 
-// Country sets the optional parameter "country": The country for which
-// to get the datafeed status. If this parameter is provided then
-// language must also be provided. Note that this parameter is required
-// for feeds targeting multiple countries and languages, since a feed
-// may have a different status for each target.
+// Country sets the optional parameter "country": Deprecated. Use
+// `feedLabel` instead. The country to get the datafeed status for. If
+// this parameter is provided then `language` must also be provided.
+// Note that this parameter is required for feeds targeting multiple
+// countries and languages, since a feed may have a different status for
+// each target.
 func (c *DatafeedstatusesGetCall) Country(country string) *DatafeedstatusesGetCall {
 	c.urlParams_.Set("country", country)
 	return c
 }
 
-// Language sets the optional parameter "language": The language for
-// which to get the datafeed status. If this parameter is provided then
-// country must also be provided. Note that this parameter is required
-// for feeds targeting multiple countries and languages, since a feed
-// may have a different status for each target.
+// FeedLabel sets the optional parameter "feedLabel": The feed label to
+// get the datafeed status for. If this parameter is provided then
+// `language` must also be provided. Note that this parameter is
+// required for feeds targeting multiple countries and languages, since
+// a feed may have a different status for each target.
+func (c *DatafeedstatusesGetCall) FeedLabel(feedLabel string) *DatafeedstatusesGetCall {
+	c.urlParams_.Set("feedLabel", feedLabel)
+	return c
+}
+
+// Language sets the optional parameter "language": The language to get
+// the datafeed status for. If this parameter is provided then `country`
+// must also be provided. Note that this parameter is required for feeds
+// targeting multiple countries and languages, since a feed may have a
+// different status for each target.
 func (c *DatafeedstatusesGetCall) Language(language string) *DatafeedstatusesGetCall {
 	c.urlParams_.Set("language", language)
 	return c
@@ -27037,7 +27094,7 @@ func (c *DatafeedstatusesGetCall) Do(opts ...googleapi.CallOption) (*DatafeedSta
 	//   ],
 	//   "parameters": {
 	//     "country": {
-	//       "description": "The country for which to get the datafeed status. If this parameter is provided then language must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+	//       "description": "Deprecated. Use `feedLabel` instead. The country to get the datafeed status for. If this parameter is provided then `language` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27048,8 +27105,13 @@ func (c *DatafeedstatusesGetCall) Do(opts ...googleapi.CallOption) (*DatafeedSta
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "feedLabel": {
+	//       "description": "The feed label to get the datafeed status for. If this parameter is provided then `language` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "language": {
-	//       "description": "The language for which to get the datafeed status. If this parameter is provided then country must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+	//       "description": "The language to get the datafeed status for. If this parameter is provided then `country` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -37405,10 +37467,11 @@ func (r *ProductsService) Update(merchantId uint64, productId string, product *P
 // UpdateMask sets the optional parameter "updateMask": The
 // comma-separated list of product attributes to be updated. Example:
 // "title,salePrice". Attributes specified in the update mask without
-// a value specified in the body will be deleted from the product. Only
-// top-level product attributes can be updated. If not defined, product
-// attributes with set values will be updated and other attributes will
-// stay unchanged.
+// a value specified in the body will be deleted from the product. *You
+// must specify the update mask to delete attributes.* Only top-level
+// product attributes can be updated. If not defined, product attributes
+// with set values will be updated and other attributes will stay
+// unchanged.
 func (c *ProductsUpdateCall) UpdateMask(updateMask string) *ProductsUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -37529,7 +37592,7 @@ func (c *ProductsUpdateCall) Do(opts ...googleapi.CallOption) (*Product, error) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged.",
+	//       "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. *You must specify the update mask to delete attributes.* Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

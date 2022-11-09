@@ -1239,6 +1239,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// Action: Action name provided at token generation.
 	Action string `json:"action,omitempty"`
 
+	// AndroidPackageName: The name of the Android package with which the
+	// token was generated (Android keys only).
+	AndroidPackageName string `json:"androidPackageName,omitempty"`
+
 	// CreateTime: The timestamp corresponding to the generation of the
 	// token.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1261,6 +1265,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	//   "BROWSER_ERROR" - A retriable error (such as network failure)
 	// occurred on the browser. Could easily be simulated by an attacker.
 	InvalidReason string `json:"invalidReason,omitempty"`
+
+	// IosBundleId: The ID of the iOS bundle with which the token was
+	// generated (iOS keys only).
+	IosBundleId string `json:"iosBundleId,omitempty"`
 
 	// Valid: Whether the provided user response token is valid. When valid
 	// = false, the reason could be specified in invalid_reason or it could

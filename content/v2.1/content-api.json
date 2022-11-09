@@ -1864,7 +1864,7 @@
           ],
           "parameters": {
             "country": {
-              "description": "The country for which to get the datafeed status. If this parameter is provided then language must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+              "description": "Deprecated. Use `feedLabel` instead. The country to get the datafeed status for. If this parameter is provided then `language` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
               "location": "query",
               "type": "string"
             },
@@ -1875,8 +1875,13 @@
               "required": true,
               "type": "string"
             },
+            "feedLabel": {
+              "description": "The feed label to get the datafeed status for. If this parameter is provided then `language` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+              "location": "query",
+              "type": "string"
+            },
             "language": {
-              "description": "The language for which to get the datafeed status. If this parameter is provided then country must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
+              "description": "The language to get the datafeed status for. If this parameter is provided then `country` must also be provided. Note that this parameter is required for feeds targeting multiple countries and languages, since a feed may have a different status for each target.",
               "location": "query",
               "type": "string"
             },
@@ -4267,7 +4272,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged.",
+              "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. *You must specify the update mask to delete attributes.* Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -5948,7 +5953,7 @@
       }
     }
   },
-  "revision": "20221024",
+  "revision": "20221107",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7785,6 +7790,10 @@
           },
           "type": "array"
         },
+        "feedLabel": {
+          "description": "The feed label status is reported for.",
+          "type": "string"
+        },
         "itemsTotal": {
           "description": "The number of items in the feed that were processed.",
           "format": "uint64",
@@ -7872,7 +7881,7 @@
       "id": "DatafeedTarget",
       "properties": {
         "country": {
-          "description": "The country where the items in the feed will be included in the search index, represented as a CLDR territory code.",
+          "description": "Deprecated. Use `feedLabel` instead. The country where the items in the feed will be included in the search index, represented as a CLDR territory code.",
           "type": "string"
         },
         "excludedDestinations": {
@@ -7881,6 +7890,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "feedLabel": {
+          "description": "Feed label for the DatafeedTarget. Either `country` or `feedLabel` is required. If both `feedLabel` and `country` is specified, the values must match.",
+          "type": "string"
         },
         "includedDestinations": {
           "description": "The list of destinations to include for this target (corresponds to checked check boxes in Merchant Center). Default destinations are always included unless provided in `excludedDestinations`.",
@@ -7892,6 +7905,13 @@
         "language": {
           "description": "The two-letter ISO 639-1 language of the items in the feed. Must be a valid language for `targets[].country`.",
           "type": "string"
+        },
+        "targetCountries": {
+          "description": "The countries where the items may be displayed. Represented as a CLDR territory code. Will be ignored for \"product inventory\" feeds.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -8029,7 +8049,7 @@
           "type": "integer"
         },
         "country": {
-          "description": "The country for which to get the datafeed status. If this parameter is provided then language must also be provided. Note that for multi-target datafeeds this parameter is required.",
+          "description": "Deprecated. Use `feedLabel` instead. The country to get the datafeed status for. If this parameter is provided, then `language` must also be provided. Note that for multi-target datafeeds this parameter is required.",
           "type": "string"
         },
         "datafeedId": {
@@ -8037,8 +8057,12 @@
           "format": "uint64",
           "type": "string"
         },
+        "feedLabel": {
+          "description": "The feed label to get the datafeed status for. If this parameter is provided, then `language` must also be provided. Note that for multi-target datafeeds this parameter is required.",
+          "type": "string"
+        },
         "language": {
-          "description": "The language for which to get the datafeed status. If this parameter is provided then country must also be provided. Note that for multi-target datafeeds this parameter is required.",
+          "description": "The language to get the datafeed status for. If this parameter is provided then `country` must also be provided. Note that for multi-target datafeeds this parameter is required.",
           "type": "string"
         },
         "merchantId": {
@@ -13638,7 +13662,7 @@
           "type": "string"
         },
         "updateMask": {
-          "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged. Only defined if the method is `update`.",
+          "description": "The comma-separated list of product attributes to be updated. Example: `\"title,salePrice\"`. Attributes specified in the update mask without a value specified in the body will be deleted from the product. *You must specify the update mask to delete attributes.* Only top-level product attributes can be updated. If not defined, product attributes with set values will be updated and other attributes will stay unchanged. Only defined if the method is `update`.",
           "format": "google-fieldmask",
           "type": "string"
         }
@@ -14035,6 +14059,10 @@
           "description": "Required. The user provided promotion ID to uniquely identify the promotion.",
           "type": "string"
         },
+        "promotionUrl": {
+          "description": "URL to the page on the merchant's site where the promotion shows. Local Inventory ads promotions throw an error if no promo url is included. URL is used to confirm that the promotion is valid and can be redeemed.",
+          "type": "string"
+        },
         "redemptionChannel": {
           "description": "Required. Redemption channel for the promotion. At least one channel is required.",
           "items": {
@@ -14054,6 +14082,34 @@
         },
         "shippingServiceNames": {
           "description": "Shipping service names for the promotion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "storeApplicability": {
+          "description": "Whether the promotion applies to all stores, or only specified stores. Local Inventory ads promotions throw an error if no store applicability is included. An INVALID_ARGUMENT error is thrown if store_applicability is set to ALL_STORES and store_code or score_code_exclusion is set to a value.",
+          "enum": [
+            "STORE_APPLICABILITY_UNSPECIFIED",
+            "ALL_STORES",
+            "SPECIFIC_STORES"
+          ],
+          "enumDescriptions": [
+            "Which store codes the promotion applies to is unknown.",
+            "Promotion applies to all stores.",
+            "Promotion applies to only the specified stores."
+          ],
+          "type": "string"
+        },
+        "storeCode": {
+          "description": "Store codes to include for the promotion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "storeCodeExclusion": {
+          "description": "Store codes to exclude for the promotion.",
           "items": {
             "type": "string"
           },

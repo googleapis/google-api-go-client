@@ -1672,7 +1672,7 @@ func (s *GoogleCloudDiscoveryengineV1betaTransactionInfo) UnmarshalJSON(data []b
 }
 
 // GoogleCloudDiscoveryengineV1betaUserEvent: UserEvent captures all
-// metadata information DiscoveryEngine API needs to know about how end
+// metadata information Discovery Engine API needs to know about how end
 // users interact with customers' website.
 type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// Attributes: Extra user event features to include in the
@@ -1682,7 +1682,7 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// also include them in the user events that you associate with
 	// prediction requests. Custom attribute formatting must be consistent
 	// between imported events and events provided with prediction requests.
-	// This lets the DiscoveryEngine API use those custom attributes when
+	// This lets the Discovery Engine API use those custom attributes when
 	// training models and serving predictions, which helps improve
 	// recommendation quality. This field needs to pass all below criteria,
 	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a
@@ -1788,7 +1788,7 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// SessionId: A unique identifier for tracking a visitor session with a
 	// length limit of 128 bytes. A session is an aggregation of an end user
 	// behavior in a time span. A general guideline to populate the
-	// sesion_id: 1. If user has no activity for 30 min, a new session_id
+	// session_id: 1. If user has no activity for 30 min, a new session_id
 	// should be assigned. 2. The session_id should be unique across users,
 	// suggest use uuid or add UserEvent.user_pseudo_id as prefix.
 	SessionId string `json:"sessionId,omitempty"`

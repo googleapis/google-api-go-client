@@ -595,7 +595,7 @@
       }
     }
   },
-  "revision": "20221028",
+  "revision": "20221104",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest": {
@@ -924,7 +924,8 @@
             "CA_REGIONS_AND_SUPPORT",
             "ITAR",
             "AU_REGIONS_AND_US_SUPPORT",
-            "ASSURED_WORKLOADS_FOR_PARTNERS"
+            "ASSURED_WORKLOADS_FOR_PARTNERS",
+            "ISR_REGIONS"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -939,7 +940,8 @@
             "Assured Workloads For Canada Regions and Support controls",
             "International Traffic in Arms Regulations",
             "Assured Workloads for Australia Regions and Support controls Available for public preview consumption. Don't create production workloads.",
-            "Assured Workloads for Partners;"
+            "Assured Workloads for Partners;",
+            "Assured Workloads for Israel"
           ],
           "type": "string"
         },

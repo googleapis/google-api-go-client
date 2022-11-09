@@ -1636,17 +1636,17 @@ func (c *EncodedFullHashesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindFullHashesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1807,17 +1807,17 @@ func (c *EncodedUpdatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1948,17 +1948,17 @@ func (c *FullHashesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindFullHashesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2071,17 +2071,17 @@ func (c *ThreatHitsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
@@ -2197,17 +2197,17 @@ func (c *ThreatListUpdatesFetchCall) Do(opts ...googleapi.CallOption) (*GoogleSe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2328,17 +2328,17 @@ func (c *ThreatListsListCall) Do(opts ...googleapi.CallOption) (*GoogleSecurityS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4ListThreatListsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2449,17 +2449,17 @@ func (c *ThreatMatchesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleSecuritySafebrowsingV4FindThreatMatchesResponse{
 		ServerResponse: googleapi.ServerResponse{

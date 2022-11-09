@@ -847,17 +847,17 @@ func (c *V1betaTokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIdentityStsV1betaExchangeTokenResponse{
 		ServerResponse: googleapi.ServerResponse{

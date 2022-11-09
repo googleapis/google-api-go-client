@@ -439,7 +439,7 @@ func (c *WebResourceDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
 	// {
@@ -561,17 +561,17 @@ func (c *WebResourceGetCall) Do(opts ...googleapi.CallOption) (*SiteVerification
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -694,17 +694,17 @@ func (c *WebResourceGetTokenCall) Do(opts ...googleapi.CallOption) (*SiteVerific
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceGettokenResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -822,17 +822,17 @@ func (c *WebResourceInsertCall) Do(opts ...googleapi.CallOption) (*SiteVerificat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -964,17 +964,17 @@ func (c *WebResourceListCall) Do(opts ...googleapi.CallOption) (*SiteVerificatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1092,17 +1092,17 @@ func (c *WebResourcePatchCall) Do(opts ...googleapi.CallOption) (*SiteVerificati
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceResource{
 		ServerResponse: googleapi.ServerResponse{
@@ -1233,17 +1233,17 @@ func (c *WebResourceUpdateCall) Do(opts ...googleapi.CallOption) (*SiteVerificat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SiteVerificationWebResourceResource{
 		ServerResponse: googleapi.ServerResponse{

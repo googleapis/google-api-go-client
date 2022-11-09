@@ -9462,8 +9462,7 @@ type InsertionOrderBudgetSegment struct {
 
 	// Description: The budget segment description. It can be used to enter
 	// Purchase Order information for each budget segment and have that
-	// information printed on the invoices. Must be UTF-8 encoded with a
-	// length of no more than 80 characters.
+	// information printed on the invoices. Must be UTF-8 encoded.
 	Description string `json:"description,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
@@ -10692,9 +10691,13 @@ type LineItem struct {
 	ReservationType string `json:"reservationType,omitempty"`
 
 	// TargetingExpansion: The targeting expansion
-	// (https://support.google.com/displayvideo/answer/10191558) settings of
-	// the line item. This config is only applicable when eligible audience
-	// list targeting is assigned to the line item.
+	// (//support.google.com/displayvideo/answer/10191558) settings of the
+	// line item. This config is only applicable when eligible audience list
+	// targeting is assigned to the line item. Beginning November 7, 2022,
+	// these settings may represent the optimized targeting feature
+	// (//support.google.com/displayvideo/answer/12060859) in place of
+	// targeting expansion. This feature will be rolled out to all partners
+	// by November 9, 2022.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -14738,7 +14741,7 @@ type SearchTargetingOptionsRequest struct {
 	// Can only be used when targeting_type is `TARGETING_TYPE_GEO_REGION`.
 	GeoRegionSearchTerms *GeoRegionSearchTerms `json:"geoRegionSearchTerms,omitempty"`
 
-	// PageSize: Requested page size. Must be between `1` and `100`. If
+	// PageSize: Requested page size. Must be between `1` and `200`. If
 	// unspecified will default to `100`. Returns error code
 	// `INVALID_ARGUMENT` if an invalid value is specified.
 	PageSize int64 `json:"pageSize,omitempty"`
@@ -15140,17 +15143,32 @@ func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // TargetingExpansionConfig: Settings that control the targeting
 // expansion of the line item. Targeting expansion allows the line item
 // to reach a larger audience based on the original audience list and
-// the targeting expansion level.
+// the targeting expansion level. Beginning November 7, 2022, these
+// settings may represent the optimized targeting feature
+// (//support.google.com/displayvideo/answer/12060859) in place of
+// targeting expansion. This feature will be rolled out to all partners
+// by November 9, 2022.
 type TargetingExpansionConfig struct {
-	// ExcludeFirstPartyAudience: Required. Whether to exclude first party
-	// audiences from targeting. Similar audiences of the excluded first
-	// party lists will not be excluded. Only applicable when a first-party
-	// audience is positively targeted (directly or included in a combined
-	// audience), otherwise this selection will be ignored.
+	// ExcludeFirstPartyAudience: Required. Whether to exclude first-party
+	// audiences from use in targeting expansion or optimized targeting.
+	// Similar audiences of the excluded first-party lists will not be
+	// excluded. Only applicable when a first-party audience is positively
+	// targeted (directly or included in a combined audience), otherwise
+	// this selection will be ignored.
 	ExcludeFirstPartyAudience bool `json:"excludeFirstPartyAudience,omitempty"`
 
 	// TargetingExpansionLevel: Required. Magnitude of expansion for
-	// applicable targeting under this line item.
+	// applicable targeting under this line item. Beginning November 7,
+	// 2022, the behavior of this field will change in the following ways
+	// with the replacement of targeting expansion with optimized targeting
+	// (//support.google.com/displayvideo/answer/12060859): * This field
+	// will represent the optimized targeting checkbox, with a
+	// `NO_EXPANSION` value representing optimized targeting turned off and
+	// a `LEAST_EXPANSION` value representing optimized targeting turned on.
+	// * `NO_EXPANSION` will be the default value for the field and will be
+	// automatically assigned if you do not set the field. * If you set the
+	// field to any value other than `NO_EXPANSION`, it will automatically
+	// be set to `LEAST_EXPANSION`.
 	//
 	// Possible values:
 	//   "TARGETING_EXPANSION_LEVEL_UNSPECIFIED" - Targeting expansion level
@@ -16293,17 +16311,17 @@ func (c *AdvertisersAuditCall) Do(opts ...googleapi.CallOption) (*AuditAdvertise
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AuditAdvertiserResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16446,17 +16464,17 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditAdvertiserAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16642,17 +16660,17 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkListAdvertiserAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -16819,17 +16837,17 @@ func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Advertiser{
 		ServerResponse: googleapi.ServerResponse{
@@ -16946,17 +16964,17 @@ func (c *AdvertisersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -17093,17 +17111,17 @@ func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Advertiser{
 		ServerResponse: googleapi.ServerResponse{
@@ -17196,7 +17214,7 @@ func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersListCall) PageSize(pageSize int64) *AdvertisersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -17292,17 +17310,17 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdvertisersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -17333,7 +17351,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -17479,17 +17497,17 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Advertiser{
 		ServerResponse: googleapi.ServerResponse{
@@ -17687,17 +17705,17 @@ func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -17713,7 +17731,7 @@ func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateA
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &CreateAssetResponse{
@@ -17921,17 +17939,17 @@ func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkListCampaignAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18114,17 +18132,17 @@ func (c *AdvertisersCampaignsCreateCall) Do(opts ...googleapi.CallOption) (*Camp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Campaign{
 		ServerResponse: googleapi.ServerResponse{
@@ -18257,17 +18275,17 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -18418,17 +18436,17 @@ func (c *AdvertisersCampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaig
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Campaign{
 		ServerResponse: googleapi.ServerResponse{
@@ -18537,7 +18555,7 @@ func (c *AdvertisersCampaignsListCall) OrderBy(orderBy string) *AdvertisersCampa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersCampaignsListCall) PageSize(pageSize int64) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -18628,17 +18646,17 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCampaignsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -18679,7 +18697,7 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -18825,17 +18843,17 @@ func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campa
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Campaign{
 		ServerResponse: googleapi.ServerResponse{
@@ -19022,17 +19040,17 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -19364,17 +19382,17 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCampaignAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -19668,17 +19686,17 @@ func (c *AdvertisersChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Chann
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -19836,17 +19854,17 @@ func (c *AdvertisersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -19947,7 +19965,7 @@ func (c *AdvertisersChannelsListCall) OrderBy(orderBy string) *AdvertisersChanne
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersChannelsListCall) PageSize(pageSize int64) *AdvertisersChannelsListCall {
@@ -20047,17 +20065,17 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -20098,7 +20116,7 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -20255,17 +20273,17 @@ func (c *AdvertisersChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channe
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -20425,17 +20443,17 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -20589,17 +20607,17 @@ func (c *AdvertisersChannelsSitesCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -20755,17 +20773,17 @@ func (c *AdvertisersChannelsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -20977,17 +20995,17 @@ func (c *AdvertisersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -21182,17 +21200,17 @@ func (c *AdvertisersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReplaceSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -21335,17 +21353,17 @@ func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Crea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -21478,17 +21496,17 @@ func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -21638,17 +21656,17 @@ func (c *AdvertisersCreativesGetCall) Do(opts ...googleapi.CallOption) (*Creativ
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -21782,7 +21800,7 @@ func (c *AdvertisersCreativesListCall) OrderBy(orderBy string) *AdvertisersCreat
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersCreativesListCall) PageSize(pageSize int64) *AdvertisersCreativesListCall {
@@ -21875,17 +21893,17 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCreativesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -21926,7 +21944,7 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -22071,17 +22089,17 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Creative{
 		ServerResponse: googleapi.ServerResponse{
@@ -22293,17 +22311,17 @@ func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkListInsertionOrderAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -22486,17 +22504,17 @@ func (c *AdvertisersInsertionOrdersCreateCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InsertionOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -22630,17 +22648,17 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -22792,17 +22810,17 @@ func (c *AdvertisersInsertionOrdersGetCall) Do(opts ...googleapi.CallOption) (*I
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InsertionOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -23012,17 +23030,17 @@ func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInsertionOrdersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -23208,17 +23226,17 @@ func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InsertionOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -23390,17 +23408,17 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -23717,17 +23735,17 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInsertionOrderAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -23970,7 +23988,7 @@ func (c *AdvertisersInvoicesListCall) LoiSapinInvoiceType(loiSapinInvoiceType st
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersInvoicesListCall) PageSize(pageSize int64) *AdvertisersInvoicesListCall {
@@ -24063,17 +24081,17 @@ func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInv
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInvoicesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24124,7 +24142,7 @@ func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInv
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -24273,17 +24291,17 @@ func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Do(opts ...googleapi.Call
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LookupInvoiceCurrencyResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24436,17 +24454,17 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditLineItemAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24650,17 +24668,17 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Do(op
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkListLineItemAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -24843,17 +24861,17 @@ func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*Line
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LineItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -24986,17 +25004,17 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -25140,17 +25158,17 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LineItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -25294,17 +25312,17 @@ func (c *AdvertisersLineItemsGetCall) Do(opts ...googleapi.CallOption) (*LineIte
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LineItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -25428,7 +25446,7 @@ func (c *AdvertisersLineItemsListCall) OrderBy(orderBy string) *AdvertisersLineI
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersLineItemsListCall) PageSize(pageSize int64) *AdvertisersLineItemsListCall {
@@ -25521,17 +25539,17 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLineItemsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -25572,7 +25590,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -25721,17 +25739,17 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LineItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -25894,17 +25912,17 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -26163,17 +26181,17 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -26447,17 +26465,17 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -26773,17 +26791,17 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLineItemAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27070,17 +27088,17 @@ func (c *AdvertisersLocationListsCreateCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LocationList{
 		ServerResponse: googleapi.ServerResponse{
@@ -27225,17 +27243,17 @@ func (c *AdvertisersLocationListsGetCall) Do(opts ...googleapi.CallOption) (*Loc
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LocationList{
 		ServerResponse: googleapi.ServerResponse{
@@ -27332,7 +27350,7 @@ func (c *AdvertisersLocationListsListCall) OrderBy(orderBy string) *AdvertisersL
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// Must be between `1` and `200`. Defaults to `100` if not set. Returns
 // error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersLocationListsListCall) PageSize(pageSize int64) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -27424,17 +27442,17 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListLocationListsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27475,7 +27493,7 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -27620,17 +27638,17 @@ func (c *AdvertisersLocationListsPatchCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &LocationList{
 		ServerResponse: googleapi.ServerResponse{
@@ -27789,17 +27807,17 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditAssignedLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -27946,17 +27964,17 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedLocation{
 		ServerResponse: googleapi.ServerResponse{
@@ -28100,17 +28118,17 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -28216,7 +28234,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) OrderBy(orderBy stri
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) PageSize(pageSize int64) *AdvertisersLocationListsAssignedLocationsListCall {
@@ -28310,17 +28328,17 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssignedLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -28368,7 +28386,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -28506,17 +28524,17 @@ func (c *AdvertisersManualTriggersActivateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManualTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -28660,17 +28678,17 @@ func (c *AdvertisersManualTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManualTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -28808,17 +28826,17 @@ func (c *AdvertisersManualTriggersDeactivateCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManualTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -28972,17 +28990,17 @@ func (c *AdvertisersManualTriggersGetCall) Do(opts ...googleapi.CallOption) (*Ma
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManualTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -29081,7 +29099,7 @@ func (c *AdvertisersManualTriggersListCall) OrderBy(orderBy string) *Advertisers
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *AdvertisersManualTriggersListCall) PageSize(pageSize int64) *AdvertisersManualTriggersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -29172,17 +29190,17 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListManualTriggersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -29223,7 +29241,7 @@ func (c *AdvertisersManualTriggersListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -29367,17 +29385,17 @@ func (c *AdvertisersManualTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ManualTrigger{
 		ServerResponse: googleapi.ServerResponse{
@@ -29527,17 +29545,17 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NegativeKeywordList{
 		ServerResponse: googleapi.ServerResponse{
@@ -29670,17 +29688,17 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Do(opts ...googleapi.CallOpt
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -29833,17 +29851,17 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NegativeKeywordList{
 		ServerResponse: googleapi.ServerResponse{
@@ -29916,7 +29934,7 @@ func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *Adver
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// Must be between `1` and `200`. Defaults to `100` if not set. Returns
 // error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersNegativeKeywordListsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -30008,17 +30026,17 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNegativeKeywordListsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30049,7 +30067,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -30194,17 +30212,17 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NegativeKeywordList{
 		ServerResponse: googleapi.ServerResponse{
@@ -30363,17 +30381,17 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditNegativeKeywordsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -30520,17 +30538,17 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &NegativeKeyword{
 		ServerResponse: googleapi.ServerResponse{
@@ -30674,17 +30692,17 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -30884,17 +30902,17 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListNegativeKeywordsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -31084,17 +31102,17 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReplaceNegativeKeywordsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -31244,17 +31262,17 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -31497,17 +31515,17 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -31770,17 +31788,17 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -32082,17 +32100,17 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAdvertiserAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -32389,17 +32407,17 @@ func (c *CombinedAudiencesGetCall) Do(opts ...googleapi.CallOption) (*CombinedAu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CombinedAudience{
 		ServerResponse: googleapi.ServerResponse{
@@ -32501,7 +32519,7 @@ func (c *CombinedAudiencesListCall) OrderBy(orderBy string) *CombinedAudiencesLi
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CombinedAudiencesListCall) PageSize(pageSize int64) *CombinedAudiencesListCall {
@@ -32598,17 +32616,17 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCombinedAudiencesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -32645,7 +32663,7 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -32776,17 +32794,17 @@ func (c *CustomBiddingAlgorithmsCreateCall) Do(opts ...googleapi.CallOption) (*C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingAlgorithm{
 		ServerResponse: googleapi.ServerResponse{
@@ -32930,17 +32948,17 @@ func (c *CustomBiddingAlgorithmsGetCall) Do(opts ...googleapi.CallOption) (*Cust
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingAlgorithm{
 		ServerResponse: googleapi.ServerResponse{
@@ -33053,7 +33071,7 @@ func (c *CustomBiddingAlgorithmsListCall) OrderBy(orderBy string) *CustomBidding
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomBiddingAlgorithmsListCall) PageSize(pageSize int64) *CustomBiddingAlgorithmsListCall {
@@ -33151,17 +33169,17 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomBiddingAlgorithmsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -33198,7 +33216,7 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -33344,17 +33362,17 @@ func (c *CustomBiddingAlgorithmsPatchCall) Do(opts ...googleapi.CallOption) (*Cu
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingAlgorithm{
 		ServerResponse: googleapi.ServerResponse{
@@ -33520,17 +33538,17 @@ func (c *CustomBiddingAlgorithmsUploadScriptCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingScriptRef{
 		ServerResponse: googleapi.ServerResponse{
@@ -33689,17 +33707,17 @@ func (c *CustomBiddingAlgorithmsScriptsCreateCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingScript{
 		ServerResponse: googleapi.ServerResponse{
@@ -33872,17 +33890,17 @@ func (c *CustomBiddingAlgorithmsScriptsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomBiddingScript{
 		ServerResponse: googleapi.ServerResponse{
@@ -33984,7 +34002,7 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) OrderBy(orderBy string) *Custom
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomBiddingAlgorithmsScriptsListCall) PageSize(pageSize int64) *CustomBiddingAlgorithmsScriptsListCall {
@@ -34085,17 +34103,17 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomBiddingScriptsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34137,7 +34155,7 @@ func (c *CustomBiddingAlgorithmsScriptsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -34288,17 +34306,17 @@ func (c *CustomListsGetCall) Do(opts ...googleapi.CallOption) (*CustomList, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomList{
 		ServerResponse: googleapi.ServerResponse{
@@ -34394,7 +34412,7 @@ func (c *CustomListsListCall) OrderBy(orderBy string) *CustomListsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *CustomListsListCall) PageSize(pageSize int64) *CustomListsListCall {
@@ -34484,17 +34502,17 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomListsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34531,7 +34549,7 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -34665,17 +34683,17 @@ func (c *FirstAndThirdPartyAudiencesCreateCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FirstAndThirdPartyAudience{
 		ServerResponse: googleapi.ServerResponse{
@@ -34807,17 +34825,17 @@ func (c *FirstAndThirdPartyAudiencesEditCustomerMatchMembersCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EditCustomerMatchMembersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -34974,17 +34992,17 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FirstAndThirdPartyAudience{
 		ServerResponse: googleapi.ServerResponse{
@@ -35088,7 +35106,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndT
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
@@ -35187,17 +35205,17 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListFirstAndThirdPartyAudiencesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -35234,7 +35252,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -35391,17 +35409,17 @@ func (c *FirstAndThirdPartyAudiencesPatchCall) Do(opts ...googleapi.CallOption) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FirstAndThirdPartyAudience{
 		ServerResponse: googleapi.ServerResponse{
@@ -35560,17 +35578,17 @@ func (c *FloodlightGroupsGetCall) Do(opts ...googleapi.CallOption) (*FloodlightG
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FloodlightGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -35722,17 +35740,17 @@ func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Floodligh
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &FloodlightGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -35897,17 +35915,17 @@ func (c *GoogleAudiencesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAudien
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleAudience{
 		ServerResponse: googleapi.ServerResponse{
@@ -36009,7 +36027,7 @@ func (c *GoogleAudiencesListCall) OrderBy(orderBy string) *GoogleAudiencesListCa
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *GoogleAudiencesListCall) PageSize(pageSize int64) *GoogleAudiencesListCall {
@@ -36106,17 +36124,17 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGoogleAudiencesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36153,7 +36171,7 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -36298,17 +36316,17 @@ func (c *GuaranteedOrdersCreateCall) Do(opts ...googleapi.CallOption) (*Guarante
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GuaranteedOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -36447,17 +36465,17 @@ func (c *GuaranteedOrdersEditGuaranteedOrderReadAccessorsCall) Do(opts ...google
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &EditGuaranteedOrderReadAccessorsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36611,17 +36629,17 @@ func (c *GuaranteedOrdersGetCall) Do(opts ...googleapi.CallOption) (*GuaranteedO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GuaranteedOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -36729,8 +36747,7 @@ func (c *GuaranteedOrdersListCall) OrderBy(orderBy string) *GuaranteedOrdersList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified or greater than `100`
-// will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *GuaranteedOrdersListCall) PageSize(pageSize int64) *GuaranteedOrdersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -36825,17 +36842,17 @@ func (c *GuaranteedOrdersListCall) Do(opts ...googleapi.CallOption) (*ListGuaran
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListGuaranteedOrdersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -36872,7 +36889,7 @@ func (c *GuaranteedOrdersListCall) Do(opts ...googleapi.CallOption) (*ListGuaran
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified or greater than `100` will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -37033,17 +37050,17 @@ func (c *GuaranteedOrdersPatchCall) Do(opts ...googleapi.CallOption) (*Guarantee
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GuaranteedOrder{
 		ServerResponse: googleapi.ServerResponse{
@@ -37204,17 +37221,17 @@ func (c *InventorySourceGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Inv
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySourceGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -37359,17 +37376,17 @@ func (c *InventorySourceGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -37536,17 +37553,17 @@ func (c *InventorySourceGroupsGetCall) Do(opts ...googleapi.CallOption) (*Invent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySourceGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -37649,7 +37666,7 @@ func (c *InventorySourceGroupsListCall) OrderBy(orderBy string) *InventorySource
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *InventorySourceGroupsListCall) PageSize(pageSize int64) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -37746,17 +37763,17 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInventorySourceGroupsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -37793,7 +37810,7 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -37955,17 +37972,17 @@ func (c *InventorySourceGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Inve
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySourceGroup{
 		ServerResponse: googleapi.ServerResponse{
@@ -38124,17 +38141,17 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditAssignedInventorySourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -38286,17 +38303,17 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedInventorySource{
 		ServerResponse: googleapi.ServerResponse{
@@ -38458,17 +38475,17 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -38688,17 +38705,17 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListAssignedInventorySourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -38890,17 +38907,17 @@ func (c *InventorySourcesCreateCall) Do(opts ...googleapi.CallOption) (*Inventor
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySource{
 		ServerResponse: googleapi.ServerResponse{
@@ -39037,17 +39054,17 @@ func (c *InventorySourcesEditInventorySourceReadWriteAccessorsCall) Do(opts ...g
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySourceAccessors{
 		ServerResponse: googleapi.ServerResponse{
@@ -39195,17 +39212,17 @@ func (c *InventorySourcesGetCall) Do(opts ...googleapi.CallOption) (*InventorySo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySource{
 		ServerResponse: googleapi.ServerResponse{
@@ -39309,7 +39326,7 @@ func (c *InventorySourcesListCall) OrderBy(orderBy string) *InventorySourcesList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *InventorySourcesListCall) PageSize(pageSize int64) *InventorySourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -39404,17 +39421,17 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListInventorySourcesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -39451,7 +39468,7 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -39611,17 +39628,17 @@ func (c *InventorySourcesPatchCall) Do(opts ...googleapi.CallOption) (*Inventory
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &InventorySource{
 		ServerResponse: googleapi.ServerResponse{
@@ -39779,7 +39796,7 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 	}
 	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
@@ -39798,17 +39815,17 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleBytestreamMedia{
 		ServerResponse: googleapi.ServerResponse{
@@ -39994,17 +40011,17 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamMed
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -40020,7 +40037,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamMed
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &GoogleBytestreamMedia{
@@ -40175,17 +40192,17 @@ func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Do(opts ...googlea
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditPartnerAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -40325,17 +40342,17 @@ func (c *PartnersGetCall) Do(opts ...googleapi.CallOption) (*Partner, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Partner{
 		ServerResponse: googleapi.ServerResponse{
@@ -40419,7 +40436,7 @@ func (c *PartnersListCall) OrderBy(orderBy string) *PartnersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *PartnersListCall) PageSize(pageSize int64) *PartnersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -40507,17 +40524,17 @@ func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersRespon
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPartnersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -40548,7 +40565,7 @@ func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -40687,17 +40704,17 @@ func (c *PartnersChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel,
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -40854,17 +40871,17 @@ func (c *PartnersChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -40972,7 +40989,7 @@ func (c *PartnersChannelsListCall) OrderBy(orderBy string) *PartnersChannelsList
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *PartnersChannelsListCall) PageSize(pageSize int64) *PartnersChannelsListCall {
@@ -41065,17 +41082,17 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListChannelsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41114,7 +41131,7 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -41272,17 +41289,17 @@ func (c *PartnersChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Channel{
 		ServerResponse: googleapi.ServerResponse{
@@ -41441,17 +41458,17 @@ func (c *PartnersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) (*B
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -41604,17 +41621,17 @@ func (c *PartnersChannelsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Sit
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Site{
 		ServerResponse: googleapi.ServerResponse{
@@ -41769,17 +41786,17 @@ func (c *PartnersChannelsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -41990,17 +42007,17 @@ func (c *PartnersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*ListS
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -42194,17 +42211,17 @@ func (c *PartnersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*Re
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ReplaceSitesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -42351,17 +42368,17 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -42601,17 +42618,17 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -42871,17 +42888,17 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AssignedTargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -43084,7 +43101,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
@@ -43180,17 +43197,17 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListPartnerAssignedTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -43224,7 +43241,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -43467,17 +43484,17 @@ func (c *SdfdownloadtasksCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -43608,17 +43625,17 @@ func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -43786,17 +43803,17 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TargetingOption{
 		ServerResponse: googleapi.ServerResponse{
@@ -44025,7 +44042,7 @@ func (c *TargetingTypesTargetingOptionsListCall) OrderBy(orderBy string) *Target
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *TargetingTypesTargetingOptionsListCall) PageSize(pageSize int64) *TargetingTypesTargetingOptionsListCall {
@@ -44118,17 +44135,17 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -44167,7 +44184,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -44404,17 +44421,17 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SearchTargetingOptionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -44668,17 +44685,17 @@ func (c *UsersBulkEditAssignedUserRolesCall) Do(opts ...googleapi.CallOption) (*
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &BulkEditAssignedUserRolesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -44805,17 +44822,17 @@ func (c *UsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &User{
 		ServerResponse: googleapi.ServerResponse{
@@ -44930,17 +44947,17 @@ func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Empty{
 		ServerResponse: googleapi.ServerResponse{
@@ -45077,17 +45094,17 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &User{
 		ServerResponse: googleapi.ServerResponse{
@@ -45188,7 +45205,7 @@ func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `200`. If unspecified will default to `100`.
 func (c *UsersListCall) PageSize(pageSize int64) *UsersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -45276,17 +45293,17 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListUsersResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -45317,7 +45334,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -45457,17 +45474,17 @@ func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &User{
 		ServerResponse: googleapi.ServerResponse{

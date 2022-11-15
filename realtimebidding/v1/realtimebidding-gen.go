@@ -1545,16 +1545,16 @@ type Endpoint struct {
 	//   "BID_PROTOCOL_UNSPECIFIED" - Placeholder for undefined bid
 	// protocol. This value should not be used.
 	//   "GOOGLE_RTB" - Google RTB protocol / Protobuf encoding.
-	//   "OPENRTB_2_2" - OpenRTB / JSON encoding, specification version 2.2.
-	//   "OPENRTB_2_3" - OpenRTB / JSON encoding, specification version 2.3.
-	//   "OPENRTB_PROTOBUF_2_3" - OpenRTB / Protobuf encoding, specification
-	// version 2.3.
-	//   "OPENRTB_2_4" - OpenRTB / JSON encoding, specification version 2.4.
-	//   "OPENRTB_PROTOBUF_2_4" - OpenRTB / Protobuf encoding, specification
-	// version 2.4.
-	//   "OPENRTB_2_5" - OpenRTB / JSON encoding, specification version 2.5.
-	//   "OPENRTB_PROTOBUF_2_5" - OpenRTB / Protobuf encoding, specification
-	// version 2.5.
+	//   "OPENRTB_JSON" - OpenRTB / JSON encoding (unversioned/latest).
+	//   "OPENRTB_PROTOBUF" - OpenRTB / Protobuf encoding
+	// (unversioned/latest).
+	//   "OPENRTB_2_2" - Deprecated: Use OPENRTB_JSON.
+	//   "OPENRTB_2_3" - Deprecated: Use OPENRTB_JSON.
+	//   "OPENRTB_PROTOBUF_2_3" - Deprecated: Use OPENRTB_PROTOBUF.
+	//   "OPENRTB_2_4" - Deprecated: Use OPENRTB_JSON.
+	//   "OPENRTB_PROTOBUF_2_4" - Deprecated: Use OPENRTB_PROTOBUF.
+	//   "OPENRTB_2_5" - Deprecated: Use OPENRTB_JSON.
+	//   "OPENRTB_PROTOBUF_2_5" - Deprecated: Use OPENRTB_PROTOBUF.
 	BidProtocol string `json:"bidProtocol,omitempty"`
 
 	// MaximumQps: The maximum number of queries per second allowed to be

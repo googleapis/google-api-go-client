@@ -14,7 +14,7 @@ require (
 	golang.org/x/sync v0.1.0
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c
+	google.golang.org/genproto v0.0.0-20221111202108-142d8a6fa32e
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
 )

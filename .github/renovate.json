@@ -11,7 +11,9 @@
   "commitMessagePrefix": "chore(all): ",
   "commitMessageAction": "update",
   "groupName": "all",
-  "ignoreDeps": [],
+  "ignoreDeps": [
+    "golang.org/x/net"
+  ],
   "force": {
     "constraints": {
       "go": "1.19"

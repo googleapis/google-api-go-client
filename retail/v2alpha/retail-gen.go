@@ -1730,8 +1730,9 @@ func (s *GoogleCloudRetailV2alphaColorInfo) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2alphaCompleteQueryResponse: Response of the
 // auto-complete query.
 type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
-	// AttributeResults: A map of matched attribute suggestions. Current
-	// supported keys: * `brands` * `categories`
+	// AttributeResults: A map of matched attribute suggestions. This field
+	// is only available for "cloud-retail" dataset. Current supported keys:
+	// * `brands` * `categories`
 	AttributeResults map[string]GoogleCloudRetailV2alphaCompleteQueryResponseAttributeResult `json:"attributeResults,omitempty"`
 
 	// AttributionToken: A unique complete token. This should be included in
@@ -5762,7 +5763,7 @@ func (s *GoogleCloudRetailV2alphaRuleReplacementAction) MarshalJSON() ([]byte, e
 
 // GoogleCloudRetailV2alphaRuleTwowaySynonymsAction: Creates a set of
 // terms that will be treated as synonyms of each other. Example:
-// synonyms of "sneakers" and "shoes". * "sneakers" will use a synonym
+// synonyms of "sneakers" and "shoes": * "sneakers" will use a synonym
 // of "shoes". * "shoes" will use a synonym of "sneakers".
 type GoogleCloudRetailV2alphaRuleTwowaySynonymsAction struct {
 	// Synonyms: Defines a set of synonyms. Can specify up to 100 synonyms.
@@ -8641,7 +8642,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 
 // EnableAttributeSuggestions sets the optional parameter
 // "enableAttributeSuggestions": If true, attribute suggestions are
-// enabled and provided in response.
+// enabled and provided in response. This field is only available for
+// "cloud-retail" dataset.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
 	return c
@@ -8819,7 +8821,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "enableAttributeSuggestions": {
-	//       "description": "If true, attribute suggestions are enabled and provided in response.",
+	//       "description": "If true, attribute suggestions are enabled and provided in response. This field is only available for \"cloud-retail\" dataset.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

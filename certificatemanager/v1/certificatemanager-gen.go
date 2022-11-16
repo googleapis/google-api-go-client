@@ -520,7 +520,7 @@ type CertificateMap struct {
 	// certificate map.
 	Description string `json:"description,omitempty"`
 
-	// GclbTargets: Output only. A list of GCLB targets which use this
+	// GclbTargets: Output only. A list of GCLB targets that use this
 	// Certificate Map. A Target Proxy is only present on this list if it's
 	// attached to a Forwarding Rule.
 	GclbTargets []*GclbTarget `json:"gclbTargets,omitempty"`
@@ -657,7 +657,7 @@ type DnsAuthorization struct {
 	// added to DNS configuration.
 	DnsResourceRecord *DnsResourceRecord `json:"dnsResourceRecord,omitempty"`
 
-	// Domain: Required. Immutable. A domain which is being authorized. A
+	// Domain: Required. Immutable. A domain that is being authorized. A
 	// DnsAuthorization resource covers a single domain and its wildcard,
 	// e.g. authorization for `example.com` can be used to issue
 	// certificates for `example.com` and `*.example.com`.
@@ -751,7 +751,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GclbTarget: Describes a Target Proxy which uses this Certificate Map.
+// GclbTarget: Describes a Target Proxy that uses this Certificate Map.
 type GclbTarget struct {
 	// IpConfigs: Output only. IP configurations for this Target Proxy where
 	// the Certificate Map is serving.

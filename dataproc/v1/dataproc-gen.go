@@ -1557,9 +1557,10 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 type ExecutionConfig struct {
 	// IdleTtl: Optional. The duration to keep the session alive while it's
 	// idling. Passing this threshold will cause the session to be
-	// terminated. Minimum value is 30 minutes; maximum value is 14 days
+	// terminated. Minimum value is 10 minutes; maximum value is 14 days
 	// (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+	// Defaults to 10 minutes if not set.
 	IdleTtl string `json:"idleTtl,omitempty"`
 
 	// KmsKey: Optional. The Cloud KMS key to use for encryption.
@@ -4563,7 +4564,8 @@ func (s *RuntimeConfig) MarshalJSON() ([]byte, error) {
 // RuntimeInfo: Runtime information about workload execution.
 type RuntimeInfo struct {
 	// ApproximateUsage: Output only. Approximate workload resource usage
-	// calculated after workload finishes.
+	// calculated after workload finishes (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	ApproximateUsage *UsageMetrics `json:"approximateUsage,omitempty"`
 
 	// DiagnosticOutputUri: Output only. A URI pointing to the location of
@@ -4793,6 +4795,7 @@ type SoftwareConfig struct {
 	// accessing HCatalog).
 	//   "JUPYTER" - The Jupyter Notebook.
 	//   "PRESTO" - The Presto query engine.
+	//   "TRINO" - The Trino query engine.
 	//   "RANGER" - The Ranger service.
 	//   "SOLR" - The Solr service.
 	//   "ZEPPELIN" - The Zeppelin notebook.
@@ -5658,14 +5661,17 @@ func (s *TrinoJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UsageMetrics: Usage metrics represent total resources consumed by a
-// workload.
+// UsageMetrics: Usage metrics represent approximate total resources
+// consumed by a workload.
 type UsageMetrics struct {
-	// MilliDcuSeconds: Optional. DCU usage in milliDCU*seconds.
+	// MilliDcuSeconds: Optional. DCU (Dataproc Compute Units) usage in
+	// (milliDCU x seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	MilliDcuSeconds int64 `json:"milliDcuSeconds,omitempty,string"`
 
-	// ShuffleStorageGbSeconds: Optional. Shuffle storage usage in
-	// GB*Seconds
+	// ShuffleStorageGbSeconds: Optional. Shuffle storage usage in (GB x
+	// seconds) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	ShuffleStorageGbSeconds int64 `json:"shuffleStorageGbSeconds,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "MilliDcuSeconds") to

@@ -846,6 +846,9 @@ type ApkManifest struct {
 	// to run.
 	MaxSdkVersion int64 `json:"maxSdkVersion,omitempty"`
 
+	// Metadata: Meta-data tags defined in the manifest.
+	Metadata []*Metadata `json:"metadata,omitempty"`
+
 	// MinSdkVersion: Minimum API level required for the application to run.
 	MinSdkVersion int64 `json:"minSdkVersion,omitempty"`
 
@@ -856,6 +859,9 @@ type ApkManifest struct {
 	// TargetSdkVersion: Specifies the API Level on which the application is
 	// designed to run.
 	TargetSdkVersion int64 `json:"targetSdkVersion,omitempty"`
+
+	// UsesFeature: Feature usage tags defined in the manifest.
+	UsesFeature []*UsesFeature `json:"usesFeature,omitempty"`
 
 	// UsesPermission: Permissions declared to be used by the application
 	UsesPermission []string `json:"usesPermission,omitempty"`
@@ -2000,6 +2006,38 @@ type ManualSharding struct {
 
 func (s *ManualSharding) MarshalJSON() ([]byte, error) {
 	type NoMethod ManualSharding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Metadata: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/meta-data-element.html
+type Metadata struct {
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// Value: The android:value value
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3231,6 +3269,38 @@ type UniformSharding struct {
 
 func (s *UniformSharding) MarshalJSON() ([]byte, error) {
 	type NoMethod UniformSharding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsesFeature: A tag within a manifest.
+// https://developer.android.com/guide/topics/manifest/uses-feature-element.html
+type UsesFeature struct {
+	// IsRequired: The android:required value
+	IsRequired bool `json:"isRequired,omitempty"`
+
+	// Name: The android:name value
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsRequired") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsRequired") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsesFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod UsesFeature
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

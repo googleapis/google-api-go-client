@@ -3644,9 +3644,6 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityType struct {
 	// DisplayName: User defined name for the type.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// EntityTypeMetadata: Metadata for the entity type.
-	EntityTypeMetadata *GoogleCloudDocumentaiV1EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
-
 	// EnumValues: If specified, lists all the possible values for this
 	// entity. This should not be more than a handful of values. If the
 	// number of values is >10 or could change frequently use the
@@ -3741,10 +3738,6 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty struct {
 	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
 	// times.
 	OccurrenceType string `json:"occurrenceType,omitempty"`
-
-	// PropertyMetadata: Any additional metadata about the property can be
-	// added here.
-	PropertyMetadata *GoogleCloudDocumentaiV1PropertyMetadata `json:"propertyMetadata,omitempty"`
 
 	// ValueType: A reference to the value type of the property. This type
 	// is subject to the same conventions as the `Entity.base_types` field.
@@ -4108,44 +4101,6 @@ type GoogleCloudDocumentaiV1EnableProcessorRequest struct {
 type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
 }
 
-// GoogleCloudDocumentaiV1EntityTypeMetadata: Metadata about an entity
-// type.
-type GoogleCloudDocumentaiV1EntityTypeMetadata struct {
-	// HumanReviewLabelingMetadata: Human review labeling config on the
-	// property.
-	HumanReviewLabelingMetadata *GoogleCloudDocumentaiV1HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
-
-	// HumanReviewMetadata: Human review config on the entity type.
-	HumanReviewMetadata *GoogleCloudDocumentaiV1HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
-
-	// Inactive: Whether the entity type should be considered as "inactive".
-	Inactive bool `json:"inactive,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1EntityTypeMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1EntityTypeMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1FetchProcessorTypesResponse: Response message
 // for fetch processor types.
 type GoogleCloudDocumentaiV1FetchProcessorTypesResponse struct {
@@ -4270,37 +4225,6 @@ func (s *GoogleCloudDocumentaiV1GcsPrefix) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1HumanReviewLabelingMetadata: Metadata for
-// human review labeling config.
-type GoogleCloudDocumentaiV1HumanReviewLabelingMetadata struct {
-	// EnableNormalizationEditing: Whether to enable normalization editing.
-	EnableNormalizationEditing bool `json:"enableNormalizationEditing,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableNormalizationEditing") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EnableNormalizationEditing") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1HumanReviewLabelingMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1HumanReviewLabelingMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1HumanReviewStatus: The status of human review
 // on a processed document.
 type GoogleCloudDocumentaiV1HumanReviewStatus struct {
@@ -4354,54 +4278,6 @@ func (s *GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudDocumentaiV1HumanReviewStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1HumanReviewValidationMetadata: Metadata for
-// Human Review config.
-type GoogleCloudDocumentaiV1HumanReviewValidationMetadata struct {
-	// ConfidenceThreshold: The confidence threshold if human review
-	// validation is enabled.
-	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
-
-	// EnableValidation: Whether to enable human review validation.
-	EnableValidation bool `json:"enableValidation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1HumanReviewValidationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1HumanReviewValidationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDocumentaiV1HumanReviewValidationMetadata) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDocumentaiV1HumanReviewValidationMetadata
-	var s1 struct {
-		ConfidenceThreshold gensupport.JSONFloat64 `json:"confidenceThreshold"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceThreshold = float64(s1.ConfidenceThreshold)
-	return nil
 }
 
 // GoogleCloudDocumentaiV1ListProcessorTypesResponse: Response message
@@ -4853,6 +4729,10 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// DocumentSchema: The schema of the processor version. Describes the
+	// output.
+	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
+
 	// GoogleManaged: Denotes that this ProcessorVersion is managed by
 	// google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
@@ -4943,43 +4823,6 @@ type GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo struct {
 
 func (s *GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1PropertyMetadata: Metadata about a property.
-type GoogleCloudDocumentaiV1PropertyMetadata struct {
-	// HumanReviewLabelingMetadata: Human review labeling config on the
-	// property.
-	HumanReviewLabelingMetadata *GoogleCloudDocumentaiV1HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
-
-	// HumanReviewMetadata: Human review validation config on the property.
-	HumanReviewMetadata *GoogleCloudDocumentaiV1HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
-
-	// Inactive: Whether the property should be considered as "inactive".
-	Inactive bool `json:"inactive,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1PropertyMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1PropertyMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

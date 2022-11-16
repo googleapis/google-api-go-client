@@ -2862,7 +2862,9 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	// Singular sub-messages and groups are recursively merged.
 	InspectTemplateName string `json:"inspectTemplateName,omitempty"`
 
-	// Item: The item to de-identify. Will be treated as text.
+	// Item: The item to de-identify. Will be treated as text. This value
+	// must be of type Table if your deidentify_config is a
+	// RecordTransformations object.
 	Item *GooglePrivacyDlpV2ContentItem `json:"item,omitempty"`
 
 	// LocationId: Deprecated. This field has no effect.
@@ -4521,6 +4523,7 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "URUGUAY" - The infoType is typically used in Uruguay.
 	//   "VENEZUELA" - The infoType is typically used in Venezuela.
 	//   "INTERNAL" - The infoType is typically used in Google internally.
+	//   "NEW_ZEALAND" - The infoType is typically used in New Zealand.
 	LocationCategory string `json:"locationCategory,omitempty"`
 
 	// TypeCategory: The class of identifiers where this infoType belongs

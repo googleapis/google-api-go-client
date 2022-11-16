@@ -401,6 +401,221 @@ func (s *AnalyzeMoveResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalyzeOrgPoliciesResponse: The response message for
+// AssetService.AnalyzeOrgPolicies.
+type AnalyzeOrgPoliciesResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPoliciesResponse.org_policy_results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// OrgPolicyResults: The organization policies under the
+	// AnalyzeOrgPoliciesRequest.scope with the
+	// AnalyzeOrgPoliciesRequest.constraint.
+	OrgPolicyResults []*OrgPolicyResult `json:"orgPolicyResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPoliciesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeOrgPolicyGovernedAssetsResponse: The response message for
+// AssetService.AnalyzeOrgPolicyGovernedAssets.
+type AnalyzeOrgPolicyGovernedAssetsResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// GovernedAssets: The list of the analyzed governed assets.
+	GovernedAssets []*GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset `json:"governedAssets,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPolicyGovernedAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPolicyGovernedAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeOrgPolicyGovernedContainersResponse: The response message for
+// AssetService.AnalyzeOrgPolicyGovernedContainers.
+type AnalyzeOrgPolicyGovernedContainersResponse struct {
+	// Constraint: The definition of the constraint in the request.
+	Constraint *AnalyzerOrgPolicyConstraint `json:"constraint,omitempty"`
+
+	// GovernedContainers: The list of the analyzed governed containers.
+	GovernedContainers []*GoogleCloudAssetV1GovernedContainer `json:"governedContainers,omitempty"`
+
+	// NextPageToken: The page token to fetch the next page for
+	// AnalyzeOrgPolicyGovernedContainersResponse.governed_containers.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Constraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Constraint") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeOrgPolicyGovernedContainersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeOrgPolicyGovernedContainersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzerOrgPolicy: This organization policy message is a modified
+// version of the one defined in the OrgPolicy system. This message
+// contains several fields defined in the original organization policy
+// with some new fields for analysis purpose.
+type AnalyzerOrgPolicy struct {
+	// AppliedResource: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource where this organization
+	// policy applies to. For any user defined org policies, this field has
+	// the same value as the [attached_resource] field. Only for default
+	// policy, this field has the different value.
+	AppliedResource string `json:"appliedResource,omitempty"`
+
+	// AttachedResource: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource where this organization
+	// policy is set. Notice that some type of constraints are defined with
+	// default policy. This field will be empty for them.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// InheritFromParent: If `inherit_from_parent` is true, Rules set higher
+	// up in the hierarchy (up to the closest root) are inherited and
+	// present in the effective policy. If it is false, then no rules are
+	// inherited, and this policy becomes the effective root for evaluation.
+	InheritFromParent bool `json:"inheritFromParent,omitempty"`
+
+	// Reset: Ignores policies set above this resource and restores the
+	// default behavior of the constraint at this resource. This field can
+	// be set in policies for either list or boolean constraints. If set,
+	// `rules` must be empty and `inherit_from_parent` must be set to false.
+	Reset bool `json:"reset,omitempty"`
+
+	// Rules: List of rules for this organization policy.
+	Rules []*GoogleCloudAssetV1Rule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppliedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppliedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzerOrgPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzerOrgPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzerOrgPolicyConstraint: The organization policy constraint
+// definition.
+type AnalyzerOrgPolicyConstraint struct {
+	// CustomConstraint: The definition of the custom constraint.
+	CustomConstraint *GoogleCloudAssetV1CustomConstraint `json:"customConstraint,omitempty"`
+
+	// GoogleDefinedConstraint: The definition of the canned constraint
+	// defined by Google.
+	GoogleDefinedConstraint *GoogleCloudAssetV1Constraint `json:"googleDefinedConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomConstraint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzerOrgPolicyConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzerOrgPolicyConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
@@ -1537,6 +1752,168 @@ func (s *GoogleCloudAssetV1AccessControlList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset:
+//
+//	Represents a GCP asset(resource or IAM policy) governed by the
+//
+// organization policies of the
+// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset struct {
+	// ConsolidatedPolicy: The consolidated policy for the analyzed asset.
+	// The consolidated policy is computed by merging and evaluating
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.policy_bundle.
+	// The evaluation will respect the organization policy hierarchy rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// GovernedIamPolicy: An IAM policy governed by the organization
+	// policies of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+	GovernedIamPolicy *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy `json:"governedIamPolicy,omitempty"`
+
+	// GovernedResource: A GCP resource governed by the organization
+	// policies of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+	GovernedResource *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource `json:"governedResource,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPol
+// icy: The IAM policies governed by the organization policies of the
+// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy struct {
+	// AttachedResource: The full resource name of the resource associated
+	// with this IAM policy. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1`. See Cloud Asset Inventory Resource Name Format
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// for more information.
+	AttachedResource string `json:"attachedResource,omitempty"`
+
+	// Folders: The folder(s) that this IAM policy belongs to, in the form
+	// of folders/{FOLDER_NUMBER}. This field is available when the IAM
+	// policy belongs(directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// Organization: The organization that this IAM policy belongs to, in
+	// the form of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the IAM policy belongs(directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
+
+	// Policy: The IAM policy directly set on the given resource.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// Project: The project that this IAM policy belongs to, in the form of
+	// projects/{PROJECT_NUMBER}. This field is available when the IAM
+	// policy belongs to a project.
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachedResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResour
+// ce: The GCP resources governed by the organization policies of the
+// AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource struct {
+	// Folders: The folder(s) that this resource belongs to, in the form of
+	// folders/{FOLDER_NUMBER}. This field is available when the resource
+	// belongs(directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// FullResourceName: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the GCP resource.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Organization: The organization that this resource belongs to, in the
+	// form of organizations/{ORGANIZATION_NUMBER}. This field is available
+	// when the resource belongs(directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
+
+	// Parent: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the parent of
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource.full_resource_
+	// name.
+	Parent string `json:"parent,omitempty"`
+
+	// Project: The project that this resource belongs to, in the form of
+	// projects/{PROJECT_NUMBER}. This field is available when the resource
+	// belongs to a project.
+	Project string `json:"project,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1BigQueryDestination: A BigQuery destination.
 type GoogleCloudAssetV1BigQueryDestination struct {
 	// Dataset: Required. The BigQuery dataset in format
@@ -1596,6 +1973,141 @@ type GoogleCloudAssetV1BigQueryDestination struct {
 
 func (s *GoogleCloudAssetV1BigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1BigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1BooleanConstraint: A `Constraint` that is either
+// enforced or not. For example a constraint
+// `constraints/compute.disableSerialPortAccess`. If it is enforced on a
+// VM instance, serial port connections will not be opened to that
+// instance.
+type GoogleCloudAssetV1BooleanConstraint struct {
+}
+
+// GoogleCloudAssetV1Constraint: The definition of a constraint.
+type GoogleCloudAssetV1Constraint struct {
+	// BooleanConstraint: Defines this constraint as being a
+	// BooleanConstraint.
+	BooleanConstraint *GoogleCloudAssetV1BooleanConstraint `json:"booleanConstraint,omitempty"`
+
+	// ConstraintDefault: The evaluation behavior of this constraint in the
+	// absence of 'Policy'.
+	//
+	// Possible values:
+	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for
+	// distinguishing unset values and should never be used.
+	//   "ALLOW" - Indicate that all values are allowed for list
+	// constraints. Indicate that enforcement is off for boolean
+	// constraints.
+	//   "DENY" - Indicate that all values are denied for list constraints.
+	// Indicate that enforcement is on for boolean constraints.
+	ConstraintDefault string `json:"constraintDefault,omitempty"`
+
+	// Description: Detailed description of what this `Constraint` controls
+	// as well as how and where it is enforced.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The human readable name of the constraint.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ListConstraint: Defines this constraint as being a ListConstraint.
+	ListConstraint *GoogleCloudAssetV1ListConstraint `json:"listConstraint,omitempty"`
+
+	// Name: The unique name of the constraint. Format of the name should be
+	// * `constraints/{constraint_name}` For example,
+	// `constraints/compute.disableSerialPortAccess`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BooleanConstraint")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BooleanConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Constraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Constraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1CustomConstraint: The definition of a custom
+// constraint.
+type GoogleCloudAssetV1CustomConstraint struct {
+	// ActionType: Allow or deny type.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "ALLOW" - Allowed action type.
+	//   "DENY" - Deny action type.
+	ActionType string `json:"actionType,omitempty"`
+
+	// Condition: Organization policy condition/expression. For example:
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.management.auto_upgrade == true`
+	Condition string `json:"condition,omitempty"`
+
+	// Description: Detailed information about this custom policy
+	// constraint.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: One line display name for the UI.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MethodTypes: All the operations being applied for this constraint.
+	//
+	// Possible values:
+	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "CREATE" - Constraint applied when creating the resource.
+	//   "UPDATE" - Constraint applied when updating the resource.
+	//   "DELETE" - Constraint applied when deleting the resource.
+	MethodTypes []string `json:"methodTypes,omitempty"`
+
+	// Name: Name of the constraint. This is unique within the organization.
+	// Format of the name should be *
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_
+	// id}` Example :
+	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
+	Name string `json:"name,omitempty"`
+
+	// ResourceTypes: The Resource Instance type on which this policy
+	// applies to. Format will be of the form : "/" Example: *
+	// `compute.googleapis.com/Instance`.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1CustomConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1CustomConstraint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1664,6 +2176,61 @@ type GoogleCloudAssetV1GcsDestination struct {
 
 func (s *GoogleCloudAssetV1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1GovernedContainer: The organization/folder/project
+// resource governed by organization policies of
+// AnalyzeOrgPolicyGovernedContainersRequest.constraint.
+type GoogleCloudAssetV1GovernedContainer struct {
+	// ConsolidatedPolicy: The consolidated organization policy for the
+	// analyzed resource. The consolidated organization policy is computed
+	// by merging and evaluating
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.policy_bu
+	// ndle. The evaluation will respect the organization policy hierarchy
+	// rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// FullResourceName: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of an organization/folder/project resource.
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Parent: The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the parent of
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.full_reso
+	// urce_name.
+	Parent string `json:"parent,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource. to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1GovernedContainer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1GovernedContainer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1742,6 +2309,91 @@ func (s *GoogleCloudAssetV1IdentityList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssetV1ListConstraint: A `Constraint` that allows or
+// disallows a list of string values, which are configured by an
+// Organization's policy administrator with a `Policy`.
+type GoogleCloudAssetV1ListConstraint struct {
+	// SupportsIn: Indicates whether values grouped into categories can be
+	// used in `Policy.allowed_values` and `Policy.denied_values`. For
+	// example, "in:Python" would match any value in the 'Python' group.
+	SupportsIn bool `json:"supportsIn,omitempty"`
+
+	// SupportsUnder: Indicates whether subtrees of Cloud Resource Manager
+	// resource hierarchy can be used in `Policy.allowed_values` and
+	// `Policy.denied_values`. For example, "under:folders/123" would
+	// match any resource under the 'folders/123' folder.
+	SupportsUnder bool `json:"supportsUnder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SupportsIn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SupportsIn") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1ListConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1ListConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination:
+// BigQuery destination.
+type GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination struct {
+	// Dataset: Required. The BigQuery dataset where the query results will
+	// be saved. It has the format of
+	// "projects/{projectId}/datasets/{datasetId}".
+	Dataset string `json:"dataset,omitempty"`
+
+	// Table: Required. The BigQuery table where the query results will be
+	// saved. If this table does not exist, a new table with the given name
+	// will be created.
+	Table string `json:"table,omitempty"`
+
+	// WriteDisposition: Specifies the action that occurs if the destination
+	// table or partition already exists. The following values are
+	// supported: * WRITE_TRUNCATE: If the table or partition already
+	// exists, BigQuery overwrites the entire table or all the partitions
+	// data. * WRITE_APPEND: If the table or partition already exists,
+	// BigQuery appends the data to the table or the latest partition. *
+	// WRITE_EMPTY: If the table already exists and contains data, a
+	// 'duplicate' error is returned in the job result. The default value is
+	// WRITE_EMPTY.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dataset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssetV1Resource: A Google Cloud resource under analysis.
 type GoogleCloudAssetV1Resource struct {
 	// AnalysisState: The analysis state of this resource.
@@ -1770,6 +2422,84 @@ type GoogleCloudAssetV1Resource struct {
 
 func (s *GoogleCloudAssetV1Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1Resource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1Rule: Represents a rule defined in an organization
+// policy
+type GoogleCloudAssetV1Rule struct {
+	// AllowAll: Setting this to true means that all values are allowed.
+	// This field can be set only in Policies for list constraints.
+	AllowAll bool `json:"allowAll,omitempty"`
+
+	// Condition: The evaluating condition for this rule.
+	Condition *Expr `json:"condition,omitempty"`
+
+	// DenyAll: Setting this to true means that all values are denied. This
+	// field can be set only in Policies for list constraints.
+	DenyAll bool `json:"denyAll,omitempty"`
+
+	// Enforce: If `true`, then the `Policy` is enforced. If `false`, then
+	// any configuration is acceptable. This field can be set only in
+	// Policies for boolean constraints.
+	Enforce bool `json:"enforce,omitempty"`
+
+	// Values: List of values to be used for this PolicyRule. This field can
+	// be set only in Policies for list constraints.
+	Values *GoogleCloudAssetV1StringValues `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowAll") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowAll") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Rule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1StringValues: The string values for the list
+// constraints.
+type GoogleCloudAssetV1StringValues struct {
+	// AllowedValues: List of values allowed at this resource.
+	AllowedValues []string `json:"allowedValues,omitempty"`
+
+	// DeniedValues: List of values denied at this resource.
+	DeniedValues []string `json:"deniedValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1StringValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1StringValues
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2351,11 +3081,11 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the Access Level. The `short_name`
-	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format:
+	// Name: Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
-	// maximum length of the `access_level` component is 50 characters.
+	// `access_level` component must begin with a letter, followed by
+	// alphanumeric characters or `_`. Its maximum length is 50 characters.
+	// After you create an `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -3149,10 +3879,11 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// not affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the ServicePerimeter. The
-	// `short_name` component must begin with a letter and only include
-	// alphanumeric and '_'. Format:
+	// Name: Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
+	// . The `service_perimeter` component must begin with a letter,
+	// followed by alphanumeric characters or `_`. After you create a
+	// `ServicePerimeter`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// PerimeterType: Perimeter type indicator. A single project is allowed
@@ -3163,7 +3894,8 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// must be empty.
 	//
 	// Possible values:
-	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 
@@ -4220,6 +4952,45 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OrgPolicyResult: The organization policy result to the query.
+type OrgPolicyResult struct {
+	// ConsolidatedPolicy: The consolidated organization policy for the
+	// analyzed resource. The consolidated organization policy is computed
+	// by merging and evaluating AnalyzeOrgPoliciesResponse.policy_bundle.
+	// The evaluation will respect the organization policy hierarchy rules
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
+	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
+
+	// PolicyBundle: The ordered list of all organization policies from the
+	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
+	// d_resource. to the scope specified in the request. If the constraint
+	// is defined with default policy, it will also appear in the list.
+	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsolidatedPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrgPolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod OrgPolicyResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OsInfo: Operating system information for the VM.
 type OsInfo struct {
 	// Architecture: The system architecture of the operating system.
@@ -4546,6 +5317,163 @@ func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryAssetsOutputConfig: Output configuration query assets.
+type QueryAssetsOutputConfig struct {
+	// BigqueryDestination: BigQuery destination where the query results
+	// will be saved.
+	BigqueryDestination *GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination `json:"bigqueryDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAssetsRequest: QueryAssets request.
+type QueryAssetsRequest struct {
+	// JobReference: Optional. Reference to the query job, which is from the
+	// `QueryAssetsResponse` of previous `QueryAssets` call.
+	JobReference string `json:"jobReference,omitempty"`
+
+	// OutputConfig: Optional. Destination where the query results will be
+	// saved. When this field is specified, the query results won't be saved
+	// in the [QueryAssetsResponse.query_result]. Instead
+	// [QueryAssetsResponse.output_config] will be set. Meanwhile,
+	// [QueryAssetsResponse.job_reference] will be set and can be used to
+	// check the status of the query job when passed to a following
+	// [QueryAssets] API call.
+	OutputConfig *QueryAssetsOutputConfig `json:"outputConfig,omitempty"`
+
+	// PageSize: Optional. The maximum number of rows to return in the
+	// results. Responses are limited to 10 MB and 1000 rows. By default,
+	// the maximum row count is 1000. When the byte or row count limit is
+	// reached, the rest of the query results will be paginated. The field
+	// will be ignored when [output_config] is specified.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token received from previous
+	// `QueryAssets`. The field will be ignored when [output_config] is
+	// specified.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ReadTime: Optional. Queries cloud assets as they appeared at the
+	// specified point in time.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ReadTimeWindow: Optional. [start_time] is required. [start_time] must
+	// be less than [end_time] Defaults [end_time] to now if [start_time] is
+	// set and [end_time] isn't. Maximum permitted time range is 7 days.
+	ReadTimeWindow *TimeWindow `json:"readTimeWindow,omitempty"`
+
+	// Statement: Optional. A SQL statement that's compatible with BigQuery
+	// Standard SQL
+	// (http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+	Statement string `json:"statement,omitempty"`
+
+	// Timeout: Optional. Specifies the maximum amount of time that the
+	// client is willing to wait for the query to complete. By default, this
+	// limit is 5 min for the first query, and 1 minute for the following
+	// queries. If the query is complete, the `done` field in the
+	// `QueryAssetsResponse` is true, otherwise false. Like BigQuery
+	// jobs.query API
+	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query#queryrequest)
+	// The call is not guaranteed to wait for the specified timeout; it
+	// typically returns after around 200 seconds (200,000 milliseconds),
+	// even if the query is not complete. The field will be ignored when
+	// [output_config] is specified.
+	Timeout string `json:"timeout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobReference") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobReference") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryAssetsResponse: QueryAssets response.
+type QueryAssetsResponse struct {
+	// Done: The query response, which can be either an `error` or a valid
+	// `response`. If `done` == `false` and the query result is being saved
+	// in a output, the output_config field will be set. If `done` ==
+	// `true`, exactly one of `error`, `query_result` or `output_config`
+	// will be set.
+	Done bool `json:"done,omitempty"`
+
+	// Error: Error status.
+	Error *Status `json:"error,omitempty"`
+
+	// JobReference: Reference to a query job.
+	JobReference string `json:"jobReference,omitempty"`
+
+	// OutputConfig: Output configuration which indicates instead of being
+	// returned in API response on the fly, the query result will be saved
+	// in a specific output.
+	OutputConfig *QueryAssetsOutputConfig `json:"outputConfig,omitempty"`
+
+	// QueryResult: Result of the query.
+	QueryResult *QueryResult `json:"queryResult,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryAssetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryContent: The query content.
 type QueryContent struct {
 	// IamPolicyAnalysisQuery: An IAM Policy Analysis query, which could be
@@ -4574,6 +5502,46 @@ type QueryContent struct {
 
 func (s *QueryContent) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryResult: Execution results of the query. The result is formatted
+// as rows represented by BigQuery compatible [schema]. When pagination
+// is necessary, it will contains the page token to retrieve the results
+// of following pages.
+type QueryResult struct {
+	// NextPageToken: Token to retrieve the next page of the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Rows: Each row hold a query result in the format of `Struct`.
+	Rows []googleapi.RawMessage `json:"rows,omitempty"`
+
+	// Schema: Describes the format of the [rows].
+	Schema *TableSchema `json:"schema,omitempty"`
+
+	// TotalRows: Total rows of the whole query results.
+	TotalRows int64 `json:"totalRows,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5373,6 +6341,78 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableFieldSchema: A field in TableSchema.
+type TableFieldSchema struct {
+	// Field: The field name. The name must contain only letters (a-z, A-Z),
+	// numbers (0-9), or underscores (_), and must start with a letter or
+	// underscore. The maximum length is 128 characters.
+	Field string `json:"field,omitempty"`
+
+	// Fields: Describes the nested schema fields if the type property is
+	// set to RECORD.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// Mode: The field mode. Possible values include NULLABLE, REQUIRED and
+	// REPEATED. The default value is NULLABLE.
+	Mode string `json:"mode,omitempty"`
+
+	// Type: The field data type. Possible values include * STRING * BYTES *
+	// INTEGER * FLOAT * BOOLEAN * TIMESTAMP * DATE * TIME * DATETIME *
+	// GEOGRAPHY, * NUMERIC, * BIGNUMERIC, * RECORD (where RECORD indicates
+	// that the field contains a nested schema).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableFieldSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod TableFieldSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableSchema: BigQuery Compatible table schema.
+type TableSchema struct {
+	// Fields: Describes the fields in a table.
+	Fields []*TableFieldSchema `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod TableSchema
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8754,6 +9794,710 @@ func (c *V1AnalyzeMoveCall) Do(opts ...googleapi.CallOption) (*AnalyzeMoveRespon
 
 }
 
+// method id "cloudasset.analyzeOrgPolicies":
+
+type V1AnalyzeOrgPoliciesCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicies: Analyzes organization policies under a scope.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. *
+//     organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicies(scope string) *V1AnalyzeOrgPoliciesCall {
+	c := &V1AnalyzeOrgPoliciesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze organization policies for. The
+// response only contains analyzed organization policies for the
+// provided constraint.
+func (c *V1AnalyzeOrgPoliciesCall) Constraint(constraint string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// AnalyzeOrgPoliciesResponse.org_policy_results. The only supported
+// field is `consolidated_policy.attached_resource`, and the only
+// supported operator is `=`. Example:
+// consolidated_policy.attached_resource="//cloudresourcemanager.googleap
+// is.com/folders/001" will return the org policy results
+// of"folders/001".
+func (c *V1AnalyzeOrgPoliciesCall) Filter(filter string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPoliciesResponse.org_policy_results will contain 20 items
+// with a maximum of 200.
+func (c *V1AnalyzeOrgPoliciesCall) PageSize(pageSize int64) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPoliciesCall) PageToken(pageToken string) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPoliciesCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPoliciesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPoliciesCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPoliciesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPoliciesCall) Context(ctx context.Context) *V1AnalyzeOrgPoliciesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPoliciesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPoliciesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicies" call.
+// Exactly one of *AnalyzeOrgPoliciesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnalyzeOrgPoliciesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeOrgPoliciesCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies under a scope.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicies",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicies",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze organization policies for. The response only contains analyzed organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter AnalyzeOrgPoliciesResponse.org_policy_results. The only supported field is `consolidated_policy.attached_resource`, and the only supported operator is `=`. Example: consolidated_policy.attached_resource=\"//cloudresourcemanager.googleapis.com/folders/001\" will return the org policy results of\"folders/001\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPoliciesResponse.org_policy_results will contain 20 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicies",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPoliciesCall) Pages(ctx context.Context, f func(*AnalyzeOrgPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.analyzeOrgPolicyGovernedAssets":
+
+type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicyGovernedAssets: Analyzes organization policies
+// governed assets (GCP resources or policies) under a scope. This RPC
+// supports custom constraints and the following 10 canned constraints:
+// * storage.uniformBucketLevelAccess *
+// iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains
+// * compute.vmExternalIpAccess *
+// appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations *
+// compute.trustedImageProjects * compute.skipDefaultNetworkCreation *
+// compute.requireOsLogin * compute.disableNestedVirtualization This RPC
+// only returns either: * resources of types supported by searchable
+// asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+// or * IAM policies.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. The output assets will
+//     also be limited to the ones governed by those in-scope organization
+//     policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicyGovernedAssets(scope string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c := &V1AnalyzeOrgPolicyGovernedAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze governed assets for. The analysis
+// only contains analyzed organization policies for the provided
+// constraint.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Constraint(constraint string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// the governed assets in result. The only supported fields for governed
+// resources are `governed_resource.project` and
+// `governed_resource.folders`. The only supported fields for governed
+// iam policies are `governed_iam_policy.project` and
+// `governed_iam_policy.folders`. The only supported operator is `=`.
+// Example 1: governed_resource.project="projects/12345678" filter will
+// return all governed resources under projects/12345678 including the
+// project ifself, if applicable. Example 2:
+// governed_iam_policy.folders="folders/12345678" filter will return all
+// governed iam policies under folders/12345678, if applicable.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Filter(filter string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets will contain
+// 100 items with a maximum of 200.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) PageSize(pageSize int64) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) PageToken(pageToken string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Context(ctx context.Context) *V1AnalyzeOrgPolicyGovernedAssetsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicyGovernedAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicyGovernedAssets" call.
+// Exactly one of *AnalyzeOrgPolicyGovernedAssetsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *AnalyzeOrgPolicyGovernedAssetsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPolicyGovernedAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPolicyGovernedAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies governed assets (GCP resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either: * resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or * IAM policies.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze governed assets for. The analysis only contains analyzed organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter the governed assets in result. The only supported fields for governed resources are `governed_resource.project` and `governed_resource.folders`. The only supported fields for governed iam policies are `governed_iam_policy.project` and `governed_iam_policy.folders`. The only supported operator is `=`. Example 1: governed_resource.project=\"projects/12345678\" filter will return all governed resources under projects/12345678 including the project ifself, if applicable. Example 2: governed_iam_policy.folders=\"folders/12345678\" filter will return all governed iam policies under folders/12345678, if applicable.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets will contain 100 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. The output assets will also be limited to the ones governed by those in-scope organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicyGovernedAssets",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPolicyGovernedAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Pages(ctx context.Context, f func(*AnalyzeOrgPolicyGovernedAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.analyzeOrgPolicyGovernedContainers":
+
+type V1AnalyzeOrgPolicyGovernedContainersCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeOrgPolicyGovernedContainers: Analyzes organization policies
+// governed containers (projects, folders or organization) under a
+// scope.
+//
+//   - scope: The organization to scope the request. Only organization
+//     policies within the scope will be analyzed. The output containers
+//     will also be limited to the ones governed by those in-scope
+//     organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g.,
+//     "organizations/123456").
+func (r *V1Service) AnalyzeOrgPolicyGovernedContainers(scope string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c := &V1AnalyzeOrgPolicyGovernedContainersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// Constraint sets the optional parameter "constraint": Required. The
+// name of the constraint to analyze governed containers for. The
+// analysis only contains organization policies for the provided
+// constraint.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Constraint(constraint string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("constraint", constraint)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// the governed containers in result. The only supported field is
+// `parent`, and the only supported operator is `=`. Example:
+// parent="//cloudresourcemanager.googleapis.com/folders/001" will
+// return all containers under "folders/001".
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Filter(filter string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return per page. If unspecified,
+// AnalyzeOrgPolicyGovernedContainersResponse.governed_containers will
+// contain 100 items with a maximum of 200.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) PageSize(pageSize int64) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token to retrieve the next page.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) PageToken(pageToken string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Fields(s ...googleapi.Field) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) IfNoneMatch(entityTag string) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Context(ctx context.Context) *V1AnalyzeOrgPolicyGovernedContainersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeOrgPolicyGovernedContainers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeOrgPolicyGovernedContainers" call.
+// Exactly one of *AnalyzeOrgPolicyGovernedContainersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *AnalyzeOrgPolicyGovernedContainersResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Do(opts ...googleapi.CallOption) (*AnalyzeOrgPolicyGovernedContainersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AnalyzeOrgPolicyGovernedContainersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes organization policies governed containers (projects, folders or organization) under a scope.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedContainers",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeOrgPolicyGovernedContainers",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "constraint": {
+	//       "description": "Required. The name of the constraint to analyze governed containers for. The analysis only contains organization policies for the provided constraint.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The expression to filter the governed containers in result. The only supported field is `parent`, and the only supported operator is `=`. Example: parent=\"//cloudresourcemanager.googleapis.com/folders/001\" will return all containers under \"folders/001\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return per page. If unspecified, AnalyzeOrgPolicyGovernedContainersResponse.governed_containers will contain 100 items with a maximum of 200.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pagination token to retrieve the next page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The organization to scope the request. Only organization policies within the scope will be analyzed. The output containers will also be limited to the ones governed by those in-scope organization policies. * organizations/{ORGANIZATION_NUMBER} (e.g., \"organizations/123456\")",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeOrgPolicyGovernedContainers",
+	//   "response": {
+	//     "$ref": "AnalyzeOrgPolicyGovernedContainersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *V1AnalyzeOrgPolicyGovernedContainersCall) Pages(ctx context.Context, f func(*AnalyzeOrgPolicyGovernedContainersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "cloudasset.batchGetAssetsHistory":
 
 type V1BatchGetAssetsHistoryCall struct {
@@ -9170,6 +10914,162 @@ func (c *V1ExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.queryAssets":
+
+type V1QueryAssetsCall struct {
+	s                  *Service
+	parent             string
+	queryassetsrequest *QueryAssetsRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// QueryAssets: Issue a job that queries assets using a SQL statement
+// compatible with BigQuery Standard SQL
+// (http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+// If the query execution finishes within timeout and there's no
+// pagination, the full query results will be returned in the
+// `QueryAssetsResponse`. Otherwise, full query results can be obtained
+// by issuing extra requests with the `job_reference` from the a
+// previous `QueryAssets` call. Note, the query result has approximately
+// 10 GB limitation enforced by BigQuery
+// https://cloud.google.com/bigquery/docs/best-practices-performance-output,
+// queries return larger results will result in errors.
+//
+//   - parent: The relative name of the root asset. This can only be an
+//     organization number (such as "organizations/123"), a project ID
+//     (such as "projects/my-project-id"), or a project number (such as
+//     "projects/12345"), or a folder number (such as "folders/123"). Only
+//     assets belonging to the `parent` will be returned.
+func (r *V1Service) QueryAssets(parent string, queryassetsrequest *QueryAssetsRequest) *V1QueryAssetsCall {
+	c := &V1QueryAssetsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.queryassetsrequest = queryassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1QueryAssetsCall) Fields(s ...googleapi.Field) *V1QueryAssetsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1QueryAssetsCall) Context(ctx context.Context) *V1QueryAssetsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1QueryAssetsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1QueryAssetsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:queryAssets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.queryAssets" call.
+// Exactly one of *QueryAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *QueryAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1QueryAssetsCall) Do(opts ...googleapi.CallOption) (*QueryAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Issue a job that queries assets using a SQL statement compatible with [BigQuery Standard SQL](http://cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql). If the query execution finishes within timeout and there's no pagination, the full query results will be returned in the `QueryAssetsResponse`. Otherwise, full query results can be obtained by issuing extra requests with the `job_reference` from the a previous `QueryAssets` call. Note, the query result has approximately 10 GB limitation enforced by BigQuery https://cloud.google.com/bigquery/docs/best-practices-performance-output, queries return larger results will result in errors.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:queryAssets",
+	//   "httpMethod": "POST",
+	//   "id": "cloudasset.queryAssets",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The relative name of the root asset. This can only be an organization number (such as \"organizations/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"), or a folder number (such as \"folders/123\"). Only assets belonging to the `parent` will be returned.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:queryAssets",
+	//   "request": {
+	//     "$ref": "QueryAssetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "QueryAssetsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -211,10 +211,22 @@ type ProjectsLocationsProcessorsHumanReviewConfigService struct {
 
 func NewProjectsLocationsProcessorsProcessorVersionsService(s *Service) *ProjectsLocationsProcessorsProcessorVersionsService {
 	rs := &ProjectsLocationsProcessorsProcessorVersionsService{s: s}
+	rs.Evaluations = NewProjectsLocationsProcessorsProcessorVersionsEvaluationsService(s)
 	return rs
 }
 
 type ProjectsLocationsProcessorsProcessorVersionsService struct {
+	s *Service
+
+	Evaluations *ProjectsLocationsProcessorsProcessorVersionsEvaluationsService
+}
+
+func NewProjectsLocationsProcessorsProcessorVersionsEvaluationsService(s *Service) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsService {
+	rs := &ProjectsLocationsProcessorsProcessorVersionsEvaluationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProcessorsProcessorVersionsEvaluationsService struct {
 	s *Service
 }
 
@@ -8528,9 +8540,6 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	// DisplayName: User defined name for the type.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// EntityTypeMetadata: Metadata for the entity type.
-	EntityTypeMetadata *GoogleCloudDocumentaiV1beta3EntityTypeMetadata `json:"entityTypeMetadata,omitempty"`
-
 	// EnumValues: If specified, lists all the possible values for this
 	// entity. This should not be more than a handful of values. If the
 	// number of values is >10 or could change frequently use the
@@ -8625,10 +8634,6 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
 	// times.
 	OccurrenceType string `json:"occurrenceType,omitempty"`
-
-	// PropertyMetadata: Any additional metadata about the property can be
-	// added here.
-	PropertyMetadata *GoogleCloudDocumentaiV1beta3PropertyMetadata `json:"propertyMetadata,omitempty"`
 
 	// ValueType: A reference to the value type of the property. This type
 	// is subject to the same conventions as the `Entity.base_types` field.
@@ -8993,21 +8998,159 @@ type GoogleCloudDocumentaiV1beta3EnableProcessorRequest struct {
 type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
 }
 
-// GoogleCloudDocumentaiV1beta3EntityTypeMetadata: Metadata about an
-// entity type.
-type GoogleCloudDocumentaiV1beta3EntityTypeMetadata struct {
-	// HumanReviewLabelingMetadata: Human review labeling config on the
-	// property.
-	HumanReviewLabelingMetadata *GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
+// GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest:
+// Evaluates the given ProcessorVersion against the supplied documents.
+type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest struct {
+	// EvaluationDocuments: Optional. The documents used in the evaluation.
+	// If unspecified, use the processor's dataset as evaluation input.
+	EvaluationDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"evaluationDocuments,omitempty"`
 
-	// HumanReviewMetadata: Human review config on the entity type.
-	HumanReviewMetadata *GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationDocuments")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
 
-	// Inactive: Whether the entity type should be considered as "inactive".
-	Inactive bool `json:"inactive,omitempty"`
+	// NullFields is a list of field names (e.g. "EvaluationDocuments") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3Evaluation: An evaluation of a
+// ProcessorVersion's performance.
+type GoogleCloudDocumentaiV1beta3Evaluation struct {
+	// AllEntitiesMetrics: Metrics for all the entities in aggregate.
+	AllEntitiesMetrics *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics `json:"allEntitiesMetrics,omitempty"`
+
+	// CreateTime: The time that the evaluation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DocumentCounters: Counters for the documents used in the evaluation.
+	DocumentCounters *GoogleCloudDocumentaiV1beta3EvaluationCounters `json:"documentCounters,omitempty"`
+
+	// EntityMetrics: Metrics across confidence levels, for different
+	// entities.
+	EntityMetrics map[string]GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics `json:"entityMetrics,omitempty"`
+
+	// KmsKeyName: The KMS key name used for encryption.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// KmsKeyVersionName: The KMS key version with which data is encrypted.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
+	// Name: The resource name of the evaluation. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}/proces
+	// sorVersions/{processor_version}/evaluations/{evaluation}`
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AllEntitiesMetrics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllEntitiesMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3Evaluation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3Evaluation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics:
+// Evaluations metrics, at a specific confidence level.
+type GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics struct {
+	// ConfidenceLevel: The confidence level.
+	ConfidenceLevel float64 `json:"confidenceLevel,omitempty"`
+
+	// Metrics: The metrics at the specific confidence level.
+	Metrics *GoogleCloudDocumentaiV1beta3EvaluationMetrics `json:"metrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConfidenceLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConfidenceLevel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics
+	var s1 struct {
+		ConfidenceLevel gensupport.JSONFloat64 `json:"confidenceLevel"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceLevel = float64(s1.ConfidenceLevel)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationCounters: Evaluation counters
+// for the documents that were used.
+type GoogleCloudDocumentaiV1beta3EvaluationCounters struct {
+	// EvaluatedDocumentsCount: How many documents were used in the
+	// evaluation.
+	EvaluatedDocumentsCount int64 `json:"evaluatedDocumentsCount,omitempty"`
+
+	// FailedDocumentsCount: How many documents were not included in the
+	// evaluation as Document AI failed to process them.
+	FailedDocumentsCount int64 `json:"failedDocumentsCount,omitempty"`
+
+	// InputDocumentsCount: How many documents were sent for evaluation.
+	InputDocumentsCount int64 `json:"inputDocumentsCount,omitempty"`
+
+	// InvalidDocumentsCount: How many documents were not included in the
+	// evaluation as they didn't pass validation.
+	InvalidDocumentsCount int64 `json:"invalidDocumentsCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to unconditionally include in API
+	// "EvaluatedDocumentsCount") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -9015,20 +9158,186 @@ type GoogleCloudDocumentaiV1beta3EntityTypeMetadata struct {
 	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EvaluatedDocumentsCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EntityTypeMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3EntityTypeMetadata
+func (s *GoogleCloudDocumentaiV1beta3EvaluationCounters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationCounters
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationMetrics: Evaluation metrics,
+// either in aggregate or about a specific entity.
+type GoogleCloudDocumentaiV1beta3EvaluationMetrics struct {
+	// F1Score: The calculated f1 score.
+	F1Score float64 `json:"f1Score,omitempty"`
+
+	// FalseNegativesCount: The amount of false negatives.
+	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
+
+	// FalsePositivesCount: The amount of false positives.
+	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
+
+	// GroundTruthDocumentCount: The amount of documents with a ground truth
+	// occurrence.
+	GroundTruthDocumentCount int64 `json:"groundTruthDocumentCount,omitempty"`
+
+	// GroundTruthOccurrencesCount: The amount of occurrences in ground
+	// truth documents.
+	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
+
+	// Precision: The calculated precision.
+	Precision float64 `json:"precision,omitempty"`
+
+	// PredictedDocumentCount: The amount of documents with a predicted
+	// occurrence.
+	PredictedDocumentCount int64 `json:"predictedDocumentCount,omitempty"`
+
+	// PredictedOccurrencesCount: The amount of occurrences in predicted
+	// documents.
+	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
+
+	// Recall: The calculated recall.
+	Recall float64 `json:"recall,omitempty"`
+
+	// TotalDocumentsCount: The amount of documents that had an occurrence
+	// of this label.
+	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
+
+	// TruePositivesCount: The amount of true positives.
+	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "F1Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "F1Score") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	var s1 struct {
+		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
+		Precision gensupport.JSONFloat64 `json:"precision"`
+		Recall    gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.F1Score = float64(s1.F1Score)
+	s.Precision = float64(s1.Precision)
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics: Metrics
+// across multiple confidence levels.
+type GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics struct {
+	// Auprc: The calculated area under the precision recall curve (AUPRC),
+	// computed by integrating over all confidence thresholds.
+	Auprc float64 `json:"auprc,omitempty"`
+
+	// AuprcExact: The AUPRC for metrics with fuzzy matching disabled, i.e.,
+	// exact matching only.
+	AuprcExact float64 `json:"auprcExact,omitempty"`
+
+	// ConfidenceLevelMetrics: Metrics across confidence levels with fuzzy
+	// matching enabled.
+	ConfidenceLevelMetrics []*GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics `json:"confidenceLevelMetrics,omitempty"`
+
+	// ConfidenceLevelMetricsExact: Metrics across confidence levels with
+	// only exact matching.
+	ConfidenceLevelMetricsExact []*GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics `json:"confidenceLevelMetricsExact,omitempty"`
+
+	// EstimatedCalibrationError: The Estimated Calibration Error (ECE) of
+	// the confidence of the predicted entities.
+	EstimatedCalibrationError float64 `json:"estimatedCalibrationError,omitempty"`
+
+	// EstimatedCalibrationErrorExact: The ECE for the predicted entities
+	// with fuzzy matching disabled, i.e., exact matching only.
+	EstimatedCalibrationErrorExact float64 `json:"estimatedCalibrationErrorExact,omitempty"`
+
+	// MetricsType: The metrics type for the label.
+	//
+	// Possible values:
+	//   "METRICS_TYPE_UNSPECIFIED" - The metrics type is unspecified. By
+	// default, metrics without a particular specification are for leaf
+	// entity types (i.e., top-level entity types without child types, or
+	// child types which are not parent types themselves).
+	//   "AGGREGATE" - Indicates whether metrics for this particular label
+	// type represent an aggregate of metrics for other types instead of
+	// being based on actual TP/FP/FN values for the label type. Metrics for
+	// parent (i.e., non-leaf) entity types are an aggregate of metrics for
+	// their children.
+	MetricsType string `json:"metricsType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Auprc") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Auprc") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics
+	var s1 struct {
+		Auprc                          gensupport.JSONFloat64 `json:"auprc"`
+		AuprcExact                     gensupport.JSONFloat64 `json:"auprcExact"`
+		EstimatedCalibrationError      gensupport.JSONFloat64 `json:"estimatedCalibrationError"`
+		EstimatedCalibrationErrorExact gensupport.JSONFloat64 `json:"estimatedCalibrationErrorExact"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Auprc = float64(s1.Auprc)
+	s.AuprcExact = float64(s1.AuprcExact)
+	s.EstimatedCalibrationError = float64(s1.EstimatedCalibrationError)
+	s.EstimatedCalibrationErrorExact = float64(s1.EstimatedCalibrationErrorExact)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse: Response
@@ -9155,37 +9464,6 @@ func (s *GoogleCloudDocumentaiV1beta3GcsPrefix) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata: Metadata for
-// human review labeling config.
-type GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata struct {
-	// EnableNormalizationEditing: Whether to enable normalization editing.
-	EnableNormalizationEditing bool `json:"enableNormalizationEditing,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableNormalizationEditing") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EnableNormalizationEditing") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1beta3HumanReviewStatus: The status of human
 // review on a processed document.
 type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
@@ -9241,52 +9519,42 @@ func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata: Metadata
-// for Human Review config.
-type GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata struct {
-	// ConfidenceThreshold: The confidence threshold if human review
-	// validation is enabled.
-	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
+// GoogleCloudDocumentaiV1beta3ListEvaluationsResponse: The response
+// from ListEvaluations.
+type GoogleCloudDocumentaiV1beta3ListEvaluationsResponse struct {
+	// Evaluations: The evaluations requested.
+	Evaluations []*GoogleCloudDocumentaiV1beta3Evaluation `json:"evaluations,omitempty"`
 
-	// EnableValidation: Whether to enable human review validation.
-	EnableValidation bool `json:"enableValidation,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold")
-	// to unconditionally include in API requests. By default, fields with
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Evaluations") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Evaluations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata
+func (s *GoogleCloudDocumentaiV1beta3ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ListEvaluationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata
-	var s1 struct {
-		ConfidenceThreshold gensupport.JSONFloat64 `json:"confidenceThreshold"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceThreshold = float64(s1.ConfidenceThreshold)
-	return nil
 }
 
 // GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse: Response
@@ -9748,6 +10016,10 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// DocumentSchema: The schema of the processor version. Describes the
+	// output.
+	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
+
 	// GoogleManaged: Denotes that this ProcessorVersion is managed by
 	// google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
@@ -9838,44 +10110,6 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo struct {
 
 func (s *GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1beta3PropertyMetadata: Metadata about a
-// property.
-type GoogleCloudDocumentaiV1beta3PropertyMetadata struct {
-	// HumanReviewLabelingMetadata: Human review labeling config on the
-	// property.
-	HumanReviewLabelingMetadata *GoogleCloudDocumentaiV1beta3HumanReviewLabelingMetadata `json:"humanReviewLabelingMetadata,omitempty"`
-
-	// HumanReviewMetadata: Human review validation config on the property.
-	HumanReviewMetadata *GoogleCloudDocumentaiV1beta3HumanReviewValidationMetadata `json:"humanReviewMetadata,omitempty"`
-
-	// Inactive: Whether the property should be considered as "inactive".
-	Inactive bool `json:"inactive,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "HumanReviewLabelingMetadata") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta3PropertyMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3PropertyMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10127,6 +10361,84 @@ func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJ
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse:
 // Response message for set default processor version method.
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest: Request
+// message for the create processor version method.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest struct {
+	// BaseProcessorVersion: Optional. The processor version to use as a
+	// base for training. This processor version must be a child of
+	// `parent`. Format:
+	// `projects/{project}/locations/{location}/processors/{processor}/proces
+	// sorVersions/{processorVersion}`.
+	BaseProcessorVersion string `json:"baseProcessorVersion,omitempty"`
+
+	// DocumentSchema: Optional. The schema the processor version will be
+	// trained with.
+	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
+
+	// InputData: Optional. The input data used to train the
+	// `ProcessorVersion`.
+	InputData *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData `json:"inputData,omitempty"`
+
+	// ProcessorVersion: Required. The processor version to be created.
+	ProcessorVersion *GoogleCloudDocumentaiV1beta3ProcessorVersion `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BaseProcessorVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData:
+// The input data used to train a new `ProcessorVersion`.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData struct {
+	// TestDocuments: The documents used for testing the trained version.
+	TestDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"testDocuments,omitempty"`
+
+	// TrainingDocuments: The documents used for training the new version.
+	TrainingDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"trainingDocuments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TestDocuments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TestDocuments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata: The
@@ -14016,6 +14328,152 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Do(opts ...goog
 
 }
 
+// method id "documentai.projects.locations.processors.processorVersions.evaluateProcessorVersion":
+
+type ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall struct {
+	s                                                           *Service
+	processorVersion                                            string
+	googleclouddocumentaiv1beta3evaluateprocessorversionrequest *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// EvaluateProcessorVersion: Evaluates a ProcessorVersion against
+// annotated documents, producing an Evaluation.
+//
+//   - processorVersion: The resource name of the ProcessorVersion to
+//     evaluate.
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) EvaluateProcessorVersion(processorVersion string, googleclouddocumentaiv1beta3evaluateprocessorversionrequest *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.processorVersion = processorVersion
+	c.googleclouddocumentaiv1beta3evaluateprocessorversionrequest = googleclouddocumentaiv1beta3evaluateprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3evaluateprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+processorVersion}:evaluateProcessorVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"processorVersion": c.processorVersion,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.evaluateProcessorVersion" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluateProcessorVersionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}:evaluateProcessorVersion",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.evaluateProcessorVersion",
+	//   "parameterOrder": [
+	//     "processorVersion"
+	//   ],
+	//   "parameters": {
+	//     "processorVersion": {
+	//       "description": "Required. The resource name of the ProcessorVersion to evaluate. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+processorVersion}:evaluateProcessorVersion",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.processors.processorVersions.get":
 
 type ProjectsLocationsProcessorsProcessorVersionsGetCall struct {
@@ -14514,6 +14972,151 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 
 }
 
+// method id "documentai.projects.locations.processors.processorVersions.train":
+
+type ProjectsLocationsProcessorsProcessorVersionsTrainCall struct {
+	s                                                        *Service
+	parent                                                   string
+	googleclouddocumentaiv1beta3trainprocessorversionrequest *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Train: Trains a new processor version. Operation metadata is returned
+// as cloud_documentai_core.TrainProcessorVersionMetadata.
+//
+//   - parent: The parent (project, location and processor) to create the
+//     new version for. Format:
+//     `projects/{project}/locations/{location}/processors/{processor}`.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Train(parent string, googleclouddocumentaiv1beta3trainprocessorversionrequest *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsTrainCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsTrainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1beta3trainprocessorversionrequest = googleclouddocumentaiv1beta3trainprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsTrainCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsTrainCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsTrainCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsTrainCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsTrainCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsTrainCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3trainprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/processorVersions:train")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.train" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsTrainCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Trains a new processor version. Operation metadata is returned as cloud_documentai_core.TrainProcessorVersionMetadata.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions:train",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.train",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent (project, location and processor) to create the new version for. Format: `projects/{project}/locations/{location}/processors/{processor}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/processorVersions:train",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.processors.processorVersions.undeploy":
 
 type ProjectsLocationsProcessorsProcessorVersionsUndeployCall struct {
@@ -14654,4 +15257,352 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Do(opts ...go
 	//   ]
 	// }
 
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.evaluations.get":
+
+type ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a specific evaluation.
+//
+//   - name: The resource name of the Evaluation to get.
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}/evaluations/{evaluation}`.
+func (r *ProjectsLocationsProcessorsProcessorVersionsEvaluationsService) Get(name string) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.evaluations.get" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3Evaluation or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDocumentaiV1beta3Evaluation.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3Evaluation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1beta3Evaluation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a specific evaluation.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}/evaluations/{evaluationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.evaluations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Evaluation to get. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}/evaluations/{evaluation}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+/evaluations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3Evaluation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.evaluations.list":
+
+type ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a set of evaluations for a given processor version.
+//
+//   - parent: The resource name of the ProcessorVersion to list
+//     evaluations for.
+//     `projects/{project}/locations/{location}/processors/{processor}/proc
+//     essorVersions/{processorVersion}`.
+func (r *ProjectsLocationsProcessorsProcessorVersionsEvaluationsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size. If unspecified, at most 5 evaluations will be returned.
+// The maximum value is 100; values above 100 will be coerced to 100.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListEvaluations` call. Provide this to
+// retrieve the subsequent page.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) PageToken(pageToken string) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/evaluations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.evaluations.list" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3ListEvaluationsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDocumentaiV1beta3ListEvaluationsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3ListEvaluationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDocumentaiV1beta3ListEvaluationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a set of evaluations for a given processor version.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}/evaluations",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.evaluations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The standard list page size. If unspecified, at most 5 evaluations will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListEvaluations` call. Provide this to retrieve the subsequent page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the ProcessorVersion to list evaluations for. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/evaluations",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ListEvaluationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsProcessorVersionsEvaluationsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1beta3ListEvaluationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

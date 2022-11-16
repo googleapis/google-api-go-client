@@ -819,7 +819,8 @@ type ServicePerimeter struct {
 	// lists must be empty.
 	//
 	// Possible values:
-	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 

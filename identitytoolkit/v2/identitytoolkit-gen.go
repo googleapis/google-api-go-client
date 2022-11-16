@@ -618,6 +618,10 @@ type GoogleCloudIdentitytoolkitAdminV2Config struct {
 	// project should be configured.
 	Client *GoogleCloudIdentitytoolkitAdminV2ClientConfig `json:"client,omitempty"`
 
+	// EmailPrivacyConfig: Configuration for settings related to email
+	// privacy and public visibility.
+	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
+
 	// Mfa: Configuration for this project's multi-factor authentication,
 	// including whether it is active and what factors can be used for the
 	// second factor
@@ -848,6 +852,46 @@ type GoogleCloudIdentitytoolkitAdminV2Email struct {
 
 func (s *GoogleCloudIdentitytoolkitAdminV2Email) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitAdminV2Email
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig: Configuration
+// for settings related to email privacy and public visibility. Settings
+// in this config protect against email enumeration, but may make some
+// trade-offs in user-friendliness.
+type GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig struct {
+	// EnableImprovedEmailPrivacy: Migrates the project to a state of
+	// improved email privacy. For example certain error codes are more
+	// generic to avoid giving away information on whether the account
+	// exists. In addition, this disables certain features that as a
+	// side-effect allow user enumeration. Enabling this toggle disables the
+	// fetchSignInMethodsForEmail functionality and changing the user's
+	// email to an unverified email. It is recommended to remove dependence
+	// on this functionality and enable this toggle to improve user privacy.
+	EnableImprovedEmailPrivacy bool `json:"enableImprovedEmailPrivacy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableImprovedEmailPrivacy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableImprovedEmailPrivacy") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2133,6 +2177,10 @@ type GoogleCloudIdentitytoolkitAdminV2Tenant struct {
 
 	// DisplayName: Display name of the tenant.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// EmailPrivacyConfig: Configuration for settings related to email
+	// privacy and public visibility.
+	EmailPrivacyConfig *GoogleCloudIdentitytoolkitAdminV2EmailPrivacyConfig `json:"emailPrivacyConfig,omitempty"`
 
 	// EnableAnonymousUser: Whether to enable anonymous user authentication.
 	EnableAnonymousUser bool `json:"enableAnonymousUser,omitempty"`

@@ -5017,7 +5017,7 @@ func (s *Tokens) MarshalJSON() ([]byte, error) {
 // (/admin-sdk/directory/v1/guides/manage-user-aliases.html).
 type User struct {
 	// Addresses: The list of the user's addresses. The maximum allowed data
-	// size for this field is 10Kb.
+	// size for this field is 10KB.
 	Addresses interface{} `json:"addresses,omitempty"`
 
 	// AgreedToTerms: Output only. This property is `true` if the user has
@@ -5057,7 +5057,7 @@ type User struct {
 	DeletionTime string `json:"deletionTime,omitempty"`
 
 	// Emails: The list of the user's email addresses. The maximum allowed
-	// data size for this field is 10Kb.
+	// data size for this field is 10KB.
 	Emails interface{} `json:"emails,omitempty"`
 
 	// Etag: Output only. ETag of the resource.
@@ -5065,11 +5065,11 @@ type User struct {
 
 	// ExternalIds: The list of external IDs for the user, such as an
 	// employee or network ID. The maximum allowed data size for this field
-	// is 2Kb.
+	// is 2KB.
 	ExternalIds interface{} `json:"externalIds,omitempty"`
 
 	// Gender: The user's gender. The maximum allowed data size for this
-	// field is 1Kb.
+	// field is 1KB.
 	Gender interface{} `json:"gender,omitempty"`
 
 	// HashFunction: Stores the hash format of the `password` property. The
@@ -5089,7 +5089,7 @@ type User struct {
 	// Ims: The list of the user's Instant Messenger (IM) accounts. A user
 	// account can have multiple ims properties. But, only one of these ims
 	// properties can be the primary IM contact. The maximum allowed data
-	// size for this field is 2Kb.
+	// size for this field is 2KB.
 	Ims interface{} `json:"ims,omitempty"`
 
 	// IncludeInGlobalAddressList: Indicates if the user's profile is
@@ -5137,7 +5137,7 @@ type User struct {
 	IsMailboxSetup bool `json:"isMailboxSetup,omitempty"`
 
 	// Keywords: The list of the user's keywords. The maximum allowed data
-	// size for this field is 1Kb.
+	// size for this field is 1KB.
 	Keywords interface{} `json:"keywords,omitempty"`
 
 	// Kind: Output only. The type of the API resource. For Users resources,
@@ -5145,14 +5145,14 @@ type User struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Languages: The user's languages. The maximum allowed data size for
-	// this field is 1Kb.
+	// this field is 1KB.
 	Languages interface{} `json:"languages,omitempty"`
 
 	// LastLoginTime: User's last login time. (Read-only)
 	LastLoginTime string `json:"lastLoginTime,omitempty"`
 
 	// Locations: The user's locations. The maximum allowed data size for
-	// this field is 10Kb.
+	// this field is 10KB.
 	Locations interface{} `json:"locations,omitempty"`
 
 	// Name: Holds the given and family names of the user, and the read-only
@@ -5163,7 +5163,7 @@ type User struct {
 	// (.). For more information about character usage rules, see the
 	// administration help center
 	// (https://support.google.com/a/answer/9193374). Maximum allowed data
-	// size for this field is 1Kb.
+	// size for this field is 1KB.
 	Name *UserName `json:"name,omitempty"`
 
 	// NonEditableAliases: Output only. The list of the user's non-editable
@@ -5180,14 +5180,14 @@ type User struct {
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 
 	// Organizations: The list of organizations the user belongs to. The
-	// maximum allowed data size for this field is 10Kb.
+	// maximum allowed data size for this field is 10KB.
 	Organizations interface{} `json:"organizations,omitempty"`
 
 	// Password: User's password
 	Password string `json:"password,omitempty"`
 
 	// Phones: The list of the user's phone numbers. The maximum allowed
-	// data size for this field is 1Kb.
+	// data size for this field is 1KB.
 	Phones interface{} `json:"phones,omitempty"`
 
 	// PosixAccounts: The list of POSIX
@@ -5209,7 +5209,7 @@ type User struct {
 	RecoveryPhone string `json:"recoveryPhone,omitempty"`
 
 	// Relations: The list of the user's relationships to other users. The
-	// maximum allowed data size for this field is 2Kb.
+	// maximum allowed data size for this field is 2KB.
 	Relations interface{} `json:"relations,omitempty"`
 
 	// SshPublicKeys: A list of SSH public keys.
@@ -5231,7 +5231,7 @@ type User struct {
 	ThumbnailPhotoUrl string `json:"thumbnailPhotoUrl,omitempty"`
 
 	// Websites: The user's websites. The maximum allowed data size for this
-	// field is 2Kb.
+	// field is 2KB.
 	Websites interface{} `json:"websites,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5735,6 +5735,9 @@ func (s *UserMakeAdmin) MarshalJSON() ([]byte, error) {
 }
 
 type UserName struct {
+	// DisplayName: The user's display name. Limit: 256 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// FamilyName: The user's last name. Required when creating a user
 	// account.
 	FamilyName string `json:"familyName,omitempty"`
@@ -5747,7 +5750,7 @@ type UserName struct {
 	// account.
 	GivenName string `json:"givenName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5755,10 +5758,10 @@ type UserName struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FamilyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

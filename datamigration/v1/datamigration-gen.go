@@ -455,6 +455,12 @@ type CancelOperationRequest struct {
 // and, optionally, the parameters required to create a Cloud SQL
 // destination database instance.
 type CloudSqlConnectionProfile struct {
+	// AdditionalPublicIp: Output only. The Cloud SQL database instance's
+	// additional (outgoing) public IP. Used when the Cloud SQL database
+	// availability type is REGIONAL (i.e. multiple zones / highly
+	// available).
+	AdditionalPublicIp string `json:"additionalPublicIp,omitempty"`
+
 	// CloudSqlId: Output only. The Cloud SQL instance ID that this
 	// connection profile is associated with.
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
@@ -469,20 +475,21 @@ type CloudSqlConnectionProfile struct {
 	// SQL database.
 	Settings *CloudSqlSettings `json:"settings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudSqlId") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdditionalPublicIp")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudSqlId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdditionalPublicIp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -514,6 +521,18 @@ type CloudSqlSettings struct {
 	// falls below the threshold size, Cloud SQL continues to add storage
 	// until it reaches the maximum of 30 TB.
 	AutoStorageIncrease bool `json:"autoStorageIncrease,omitempty"`
+
+	// AvailabilityType: Optional. Availability type. Potential values: *
+	// `ZONAL`: The instance serves data from only one zone. Outages in that
+	// zone affect data availability. * `REGIONAL`: The instance can serve
+	// data from more than one zone in a region (it is highly available).
+	//
+	// Possible values:
+	//   "SQL_AVAILABILITY_TYPE_UNSPECIFIED" - This is an unknown
+	// Availability type.
+	//   "ZONAL" - Zonal availablility instance.
+	//   "REGIONAL" - Regional availability instance.
+	AvailabilityType string `json:"availabilityType,omitempty"`
 
 	// CmekKeyName: The KMS key name used for the csql instance.
 	CmekKeyName string `json:"cmekKeyName,omitempty"`
@@ -564,6 +583,12 @@ type CloudSqlSettings struct {
 	// RootPasswordSet: Output only. Indicates If this connection profile
 	// root password is stored.
 	RootPasswordSet bool `json:"rootPasswordSet,omitempty"`
+
+	// SecondaryZone: Optional. The Google Cloud Platform zone where the
+	// failover Cloud SQL database instance is located. Used when the Cloud
+	// SQL database availability type is REGIONAL (i.e. multiple zones /
+	// highly available).
+	SecondaryZone string `json:"secondaryZone,omitempty"`
 
 	// SourceId: The Database Migration Service source connection profile
 	// ID, in the format:

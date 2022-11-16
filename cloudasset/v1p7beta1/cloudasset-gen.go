@@ -1290,11 +1290,11 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the Access Level. The `short_name`
-	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format:
+	// Name: Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
-	// maximum length of the `access_level` component is 50 characters.
+	// `access_level` component must begin with a letter, followed by
+	// alphanumeric characters or `_`. Its maximum length is 50 characters.
+	// After you create an `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -2088,10 +2088,11 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// not affect behavior.
 	Description string `json:"description,omitempty"`
 
-	// Name: Required. Resource name for the ServicePerimeter. The
-	// `short_name` component must begin with a letter and only include
-	// alphanumeric and '_'. Format:
+	// Name: Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
+	// . The `service_perimeter` component must begin with a letter,
+	// followed by alphanumeric characters or `_`. After you create a
+	// `ServicePerimeter`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
 
 	// PerimeterType: Perimeter type indicator. A single project is allowed
@@ -2102,7 +2103,8 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// must be empty.
 	//
 	// Possible values:
-	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter.
+	//   "PERIMETER_TYPE_REGULAR" - Regular Perimeter. When no value is
+	// specified, the perimeter uses this type.
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 

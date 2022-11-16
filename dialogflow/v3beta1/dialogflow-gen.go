@@ -9682,9 +9682,10 @@ type GoogleCloudDialogflowCxV3beta1SecuritySettings struct {
 	// RetentionWindowDays: Retains data in interaction logging for the
 	// specified number of days. This does not apply to Cloud logging, which
 	// is owned by the user - not Dialogflow. User must set a value lower
-	// than Dialogflow's default 365d TTL (time to live). Setting a value
-	// higher than that has no effect. A missing value or setting to 0 also
-	// means we use Dialogflow's default TTL.
+	// than Dialogflow's default 365d TTL (30 days for Agent Assist
+	// traffic), higher value will be ignored and use default. Setting a
+	// value higher than that has no effect. A missing value or setting to 0
+	// also means we use default TTL.
 	RetentionWindowDays int64 `json:"retentionWindowDays,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

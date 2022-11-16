@@ -474,8 +474,8 @@ type AwsSourceDetails struct {
 	// scope of the source inventory.
 	InventorySecurityGroupNames []string `json:"inventorySecurityGroupNames,omitempty"`
 
-	// InventoryTags: AWS resource tags to limit the scope of the source
-	// inventory.
+	// InventoryTags: Deprecated: AWS resource tags to limit the scope of
+	// the source inventory. Use inventory_tag_list instead.
 	InventoryTags map[string]string `json:"inventoryTags,omitempty"`
 
 	// MigrationResourcesUserTags: User specified tags to add to every M2VM
@@ -568,6 +568,16 @@ func (s *AwsSourceVmDetails) MarshalJSON() ([]byte, error) {
 
 // AwsVmDetails: AwsVmDetails describes a VM in AWS.
 type AwsVmDetails struct {
+	// Architecture: The CPU architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "I386" - The architecture is I386.
+	//   "X86_64" - The architecture is X86_64.
+	//   "ARM64" - The architecture is ARM64.
+	//   "X86_64_MAC" - The architecture is X86_64_MAC.
+	Architecture string `json:"architecture,omitempty"`
+
 	// BootOption: The VM Boot Option.
 	//
 	// Possible values:
@@ -624,6 +634,15 @@ type AwsVmDetails struct {
 	// Tags: The tags of the VM.
 	Tags map[string]string `json:"tags,omitempty"`
 
+	// VirtualizationType: The virtualization type.
+	//
+	// Possible values:
+	//   "VM_VIRTUALIZATION_TYPE_UNSPECIFIED" - The virtualization type is
+	// unknown.
+	//   "HVM" - The virtualziation type is HVM.
+	//   "PARAVIRTUAL" - The virtualziation type is PARAVIRTUAL.
+	VirtualizationType string `json:"virtualizationType,omitempty"`
+
 	// VmId: The VM ID in AWS.
 	VmId string `json:"vmId,omitempty"`
 
@@ -633,7 +652,7 @@ type AwsVmDetails struct {
 	// Zone: The AWS zone of the VM.
 	Zone string `json:"zone,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BootOption") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -641,10 +660,10 @@ type AwsVmDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BootOption") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2530,12 +2549,14 @@ type ReplicationCycle struct {
 	Progress int64 `json:"progress,omitempty"`
 
 	// ProgressPercent: The current progress in percentage of this cycle.
+	// Was replaced by 'steps' field, which breaks down the cycle
+	// progression more accurately.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
 	// StartTime: The time the replication cycle has started.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of the MigratingVm.
+	// State: State of the ReplicationCycle.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unknown. This is used for API

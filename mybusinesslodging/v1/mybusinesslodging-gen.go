@@ -1250,6 +1250,25 @@ type Families struct {
 	// depends on the day of the week.
 	KidsClubException string `json:"kidsClubException,omitempty"`
 
+	// KidsFriendly: Kids friendly. The hotel has one or more special
+	// features for families with children, such as reduced rates,
+	// child-sized beds, kids' club, babysitting service, or suitable place
+	// to play on premises.
+	KidsFriendly bool `json:"kidsFriendly,omitempty"`
+
+	// KidsFriendlyException: Kids friendly exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	KidsFriendlyException string `json:"kidsFriendlyException,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Babysitting") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

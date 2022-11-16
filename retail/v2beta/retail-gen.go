@@ -6553,7 +6553,7 @@ func (s *GoogleCloudRetailV2betaRuleReplacementAction) MarshalJSON() ([]byte, er
 
 // GoogleCloudRetailV2betaRuleTwowaySynonymsAction: Creates a set of
 // terms that will be treated as synonyms of each other. Example:
-// synonyms of "sneakers" and "shoes". * "sneakers" will use a synonym
+// synonyms of "sneakers" and "shoes": * "sneakers" will use a synonym
 // of "shoes". * "shoes" will use a synonym of "sneakers".
 type GoogleCloudRetailV2betaRuleTwowaySynonymsAction struct {
 	// Synonyms: Defines a set of synonyms. Can specify up to 100 synonyms.

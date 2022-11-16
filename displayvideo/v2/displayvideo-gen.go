@@ -972,6 +972,32 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
+	// BillingProfileId: The ID of a billing profile assigned to the
+	// advertiser.
+	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingProfileId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserBillingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserBillingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserCreativeConfig: Creatives related settings of an
@@ -8782,6 +8808,19 @@ type GenerateDefaultLineItemRequest struct {
 	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_SIMPLE" - Default YouTube
 	// video ads. Line items of this type and their targeting cannot be
 	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE_OVER_THE_TOP" -
+	// Connected TV youTube video ads (up to 15 seconds) that cannot be
+	// skipped. Line items of this type and their targeting cannot be
+	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_REACH_OVER_THE_TOP" -
+	// Connected TV youTube video ads that optimize reaching more unique
+	// users at lower cost. May include bumper ads, skippable in-stream ads,
+	// or a mix of types. Line items of this type and their targeting cannot
+	// be created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_SIMPLE_OVER_THE_TOP" -
+	// Connected TV default YouTube video ads. Only include in-stream
+	// ad-format. Line items of this type and their targeting cannot be
+	// created or updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -10993,6 +11032,19 @@ type LineItem struct {
 	// API.
 	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_SIMPLE" - Default YouTube
 	// video ads. Line items of this type and their targeting cannot be
+	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE_OVER_THE_TOP" -
+	// Connected TV youTube video ads (up to 15 seconds) that cannot be
+	// skipped. Line items of this type and their targeting cannot be
+	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_REACH_OVER_THE_TOP" -
+	// Connected TV youTube video ads that optimize reaching more unique
+	// users at lower cost. May include bumper ads, skippable in-stream ads,
+	// or a mix of types. Line items of this type and their targeting cannot
+	// be created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_SIMPLE_OVER_THE_TOP" -
+	// Connected TV default YouTube video ads. Only include in-stream
+	// ad-format. Line items of this type and their targeting cannot be
 	// created or updated using the API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
@@ -25559,7 +25611,11 @@ type AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall struct {
 // options provided in
 // BulkEditAssignedTargetingOptionsRequest.delete_requests and then
 // create the assigned targeting options provided in
-// BulkEditAssignedTargetingOptionsRequest.create_requests .
+// BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to
+// this endpoint cannot be made concurrently with the following requests
+// updating the same line item: * BulkUpdate * UpdateLineItem *
+// CreateLineItemAssignedTargetingOption *
+// DeleteLineItemAssignedTargetingOption
 //
 // - advertiserId: The ID of the advertiser the line items belong to.
 func (r *AdvertisersLineItemsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditassignedtargetingoptionsrequest *BulkEditAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall {
@@ -25662,7 +25718,7 @@ func (c *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests .",
+	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkUpdate * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkEditAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkEditAssignedTargetingOptions",
@@ -25961,7 +26017,11 @@ type AdvertisersLineItemsBulkUpdateCall struct {
 	header_                    http.Header
 }
 
-// BulkUpdate: Updates multiple line items.
+// BulkUpdate: Updates multiple line items. Requests to this endpoint
+// cannot be made concurrently with the following requests updating the
+// same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem *
+// CreateLineItemAssignedTargetingOption *
+// DeleteLineItemAssignedTargetingOption
 //
 // - advertisersId: .
 func (r *AdvertisersLineItemsService) BulkUpdate(advertisersId string, bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest) *AdvertisersLineItemsBulkUpdateCall {
@@ -26062,7 +26122,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates multiple line items.",
+	//   "description": "Updates multiple line items. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkUpdate",
@@ -27124,7 +27184,7 @@ type AdvertisersLineItemsPatchCall struct {
 // Patch: Updates an existing line item. Returns the updated line item
 // if successful. Requests to this endpoint cannot be made concurrently
 // with the following requests updating the same line item: *
-// BulkEditLineItemAssignedTargetingOptions * UpdateLineItem *
+// BulkEditAssignedTargetingOptions * BulkUpdateLineItems *
 // CreateLineItemAssignedTargetingOption *
 // DeleteLineItemAssignedTargetingOption
 //
@@ -27239,7 +27299,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditLineItemAssignedTargetingOptions * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -27301,9 +27361,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 // Create: Assigns a targeting option to a line item. Returns the
 // assigned targeting option if successful. Requests to this endpoint
 // cannot be made concurrently with the following requests updating the
-// same line item: * BulkEditLineItemAssignedTargetingOptions *
-// UpdateLineItem * CreateLineItemAssignedTargetingOption *
-// DeleteLineItemAssignedTargetingOption
+// same line item: * BulkEditAssignedTargetingOptions * BulkUpdate *
+// UpdateLineItem * DeleteLineItemAssignedTargetingOption
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - lineItemId: The ID of the line item the assigned targeting option
@@ -27412,7 +27471,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditLineItemAssignedTargetingOptions * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem * DeleteLineItemAssignedTargetingOption",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
@@ -27572,9 +27631,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 // Delete: Deletes an assigned targeting option from a line item.
 // Requests to this endpoint cannot be made concurrently with the
 // following requests updating the same line item: *
-// BulkEditLineItemAssignedTargetingOptions * UpdateLineItem *
-// CreateLineItemAssignedTargetingOption *
-// DeleteLineItemAssignedTargetingOption
+// BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem *
+// CreateLineItemAssignedTargetingOption
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - assignedTargetingOptionId: The ID of the assigned targeting option
@@ -27681,7 +27739,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditLineItemAssignedTargetingOptions * UpdateLineItem * CreateLineItemAssignedTargetingOption * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem * CreateLineItemAssignedTargetingOption",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete",

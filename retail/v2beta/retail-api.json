@@ -2024,7 +2024,7 @@
       }
     }
   },
-  "revision": "20221024",
+  "revision": "20221107",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5293,7 +5293,7 @@
       "type": "object"
     },
     "GoogleCloudRetailV2betaRuleTwowaySynonymsAction": {
-      "description": "Creates a set of terms that will be treated as synonyms of each other. Example: synonyms of \"sneakers\" and \"shoes\". * \"sneakers\" will use a synonym of \"shoes\". * \"shoes\" will use a synonym of \"sneakers\".",
+      "description": "Creates a set of terms that will be treated as synonyms of each other. Example: synonyms of \"sneakers\" and \"shoes\": * \"sneakers\" will use a synonym of \"shoes\". * \"shoes\" will use a synonym of \"sneakers\".",
       "id": "GoogleCloudRetailV2betaRuleTwowaySynonymsAction",
       "properties": {
         "synonyms": {

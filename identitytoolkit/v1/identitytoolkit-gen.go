@@ -2068,7 +2068,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// CustomAttributes: JSON formatted custom attributes to be stored in
 	// the Identity Platform ID token. Specifying this field requires a
-	// Google OAuth 2.0 credential with proper permissions
+	// Google OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	CustomAttributes string `json:"customAttributes,omitempty"`
 
@@ -2109,7 +2109,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// EmailVerified: Whether the user's email has been verified. Specifying
 	// this field requires a Google OAuth 2.0 credential with proper
-	// permissions
+	// [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	EmailVerified bool `json:"emailVerified,omitempty"`
 
@@ -2125,12 +2125,12 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// LinkProviderUserInfo: The provider to be linked to the user's
 	// account. Specifying this field requires a Google OAuth 2.0 credential
-	// with proper permissions
+	// with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	LinkProviderUserInfo *GoogleCloudIdentitytoolkitV1ProviderUserInfo `json:"linkProviderUserInfo,omitempty"`
 
 	// LocalId: The ID of the user. Specifying this field requires a Google
-	// OAuth 2.0 credential with proper permissions
+	// OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control). For
 	// requests from end-users, an ID token should be passed instead.
 	LocalId string `json:"localId,omitempty"`
@@ -2138,7 +2138,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	// Mfa: The multi-factor authentication related information to be set on
 	// the user's account. This will overwrite any previous multi-factor
 	// related information on the account. Specifying this field requires a
-	// Google OAuth 2.0 credential with proper permissions
+	// Google OAuth 2.0 credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	Mfa *GoogleCloudIdentitytoolkitV1MfaInfo `json:"mfa,omitempty"`
 
@@ -2171,7 +2171,7 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 
 	// TargetProjectId: The project ID for the project that the account
 	// belongs to. Specifying this field requires Google OAuth 2.0
-	// credential with proper permissions
+	// credential with proper [permissions]
 	// (https://cloud.google.com/identity-platform/docs/access-control).
 	// Requests from end users should pass an Identity Platform ID token
 	// instead.
@@ -5727,7 +5727,7 @@ type AccountsVerifyIosClientCall struct {
 }
 
 // VerifyIosClient: Verifies an iOS client is a real iOS device. If the
-// request is valid, a reciept will be sent in the response and a secret
+// request is valid, a receipt will be sent in the response and a secret
 // will be sent via Apple Push Notification Service. The client should
 // send both of them back to certain Identity Platform APIs in a later
 // call (for example, /accounts:sendVerificationCode), in order to
@@ -5831,7 +5831,7 @@ func (c *AccountsVerifyIosClientCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	}
 	return ret, nil
 	// {
-	//   "description": "Verifies an iOS client is a real iOS device. If the request is valid, a reciept will be sent in the response and a secret will be sent via Apple Push Notification Service. The client should send both of them back to certain Identity Platform APIs in a later call (for example, /accounts:sendVerificationCode), in order to verify the client. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
+	//   "description": "Verifies an iOS client is a real iOS device. If the request is valid, a receipt will be sent in the response and a secret will be sent via Apple Push Notification Service. The client should send both of them back to certain Identity Platform APIs in a later call (for example, /accounts:sendVerificationCode), in order to verify the client. The bundle ID is required in the request header as `x-ios-bundle-identifier`. An [API key](https://cloud.google.com/docs/authentication/api-keys) is required in the request in order to identify the Google Cloud project.",
 	//   "flatPath": "v1/accounts:verifyIosClient",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.accounts.verifyIosClient",
@@ -6468,8 +6468,8 @@ type ProjectsAccountsBatchDeleteCall struct {
 // to be deleted, error info is contained in the response. The method
 // ignores accounts that do not exist or are duplicated in the request.
 // This method requires a Google OAuth 2.0 credential with proper
-// permissions.
-// (https://cloud.google.com/identity-platform/docs/access-control)
+// [permissions]
+// (https://cloud.google.com/identity-platform/docs/access-control).
 //
 //   - targetProjectId: If `tenant_id` is specified, the ID of the Google
 //     Cloud project that the Identity Platform tenant belongs to.
@@ -6576,7 +6576,7 @@ func (c *ProjectsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper permissions. (https://cloud.google.com/identity-platform/docs/access-control)",
+	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).",
 	//   "flatPath": "v1/projects/{projectsId}/accounts:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.projects.accounts.batchDelete",
@@ -7447,7 +7447,7 @@ type ProjectsAccountsUpdateCall struct {
 //
 //   - targetProjectId: The project ID for the project that the account
 //     belongs to. Specifying this field requires Google OAuth 2.0
-//     credential with proper permissions
+//     credential with proper [permissions]
 //     (https://cloud.google.com/identity-platform/docs/access-control).
 //     Requests from end users should pass an Identity Platform ID token
 //     instead.
@@ -7560,7 +7560,7 @@ func (c *ProjectsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "targetProjectId": {
-	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper permissions (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
+	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -8092,8 +8092,8 @@ type ProjectsTenantsAccountsBatchDeleteCall struct {
 // to be deleted, error info is contained in the response. The method
 // ignores accounts that do not exist or are duplicated in the request.
 // This method requires a Google OAuth 2.0 credential with proper
-// permissions.
-// (https://cloud.google.com/identity-platform/docs/access-control)
+// [permissions]
+// (https://cloud.google.com/identity-platform/docs/access-control).
 //
 //   - targetProjectId: If `tenant_id` is specified, the ID of the Google
 //     Cloud project that the Identity Platform tenant belongs to.
@@ -8205,7 +8205,7 @@ func (c *ProjectsTenantsAccountsBatchDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper permissions. (https://cloud.google.com/identity-platform/docs/access-control)",
+	//   "description": "Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).",
 	//   "flatPath": "v1/projects/{projectsId}/tenants/{tenantsId}/accounts:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "identitytoolkit.projects.tenants.accounts.batchDelete",
@@ -9139,7 +9139,7 @@ type ProjectsTenantsAccountsUpdateCall struct {
 //
 //   - targetProjectId: The project ID for the project that the account
 //     belongs to. Specifying this field requires Google OAuth 2.0
-//     credential with proper permissions
+//     credential with proper [permissions]
 //     (https://cloud.google.com/identity-platform/docs/access-control).
 //     Requests from end users should pass an Identity Platform ID token
 //     instead.
@@ -9258,7 +9258,7 @@ func (c *ProjectsTenantsAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "targetProjectId": {
-	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper permissions (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
+	//       "description": "The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,

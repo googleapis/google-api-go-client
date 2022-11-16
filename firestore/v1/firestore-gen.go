@@ -1823,6 +1823,15 @@ func (s *GoogleFirestoreAdminV1ImportDocumentsRequest) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1Index: Cloud Firestore indexes enable simple
 // and complex queries against documents in a database.
 type GoogleFirestoreAdminV1Index struct {
+	// ApiScope: The API scope supported by this index.
+	//
+	// Possible values:
+	//   "ANY_API" - The index can be used by both Firestore Native and
+	// Firestore in Datastore Mode query API. This is the default.
+	//   "DATASTORE_MODE_API" - The index can only be used by the Firestore
+	// in Datastore Mode query API.
+	ApiScope string `json:"apiScope,omitempty"`
+
 	// Fields: The fields supported by this index. For composite indexes,
 	// this requires a minimum of 2 and a maximum of 100 fields. The last
 	// field entry is always for the field path `__name__`. If, on creation,
@@ -1860,6 +1869,8 @@ type GoogleFirestoreAdminV1Index struct {
 	//   "COLLECTION_GROUP" - Indexes with a collection group query scope
 	// specified allow queries against all collections that has the
 	// collection id specified by the index.
+	//   "COLLECTION_RECURSIVE" - Include all the collections's ancestor in
+	// the index. Only available for Datastore Mode databases.
 	QueryScope string `json:"queryScope,omitempty"`
 
 	// State: Output only. The serving state of the index.
@@ -1885,7 +1896,7 @@ type GoogleFirestoreAdminV1Index struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// ForceSendFields is a list of field names (e.g. "ApiScope") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1893,8 +1904,8 @@ type GoogleFirestoreAdminV1Index struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ApiScope") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

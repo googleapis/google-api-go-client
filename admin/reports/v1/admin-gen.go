@@ -1874,9 +1874,9 @@ type CustomerUsageReportsGetCall struct {
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
 //
-//   - date: Represents the date the usage occurred. The timestamp is in
-//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//     account's time zone for this.
+//   - date: Represents the date the usage occurred, based on PST time
+//     zone. The timestamp is in the ISO 8601 format
+//     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -2035,7 +2035,7 @@ func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRe
 	//       "type": "string"
 	//     },
 	//     "date": {
-	//       "description": "Represents the date the usage occurred. The timestamp is in the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's time zone for this.",
+	//       "description": "Represents the date the usage occurred, based on PST time zone. The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
 	//       "location": "path",
 	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
 	//       "required": true,
@@ -2411,9 +2411,9 @@ type UserUsageReportGetCall struct {
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred. The timestamp is in
-//     the ISO 8601 format, yyyy-mm-dd. We recommend you use your
-//     account's time zone for this.
+//   - date: Represents the date the usage occurred, based on GMT-7:00
+//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 //   - userKey: Represents the profile ID or the user email for which the
 //     data should be filtered. Can be `all` for all information, or
 //     `userKey` for a user's unique Google Workspace profile ID or their
@@ -2633,7 +2633,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "date": {
-	//       "description": "Represents the date the usage occurred. The timestamp is in the ISO 8601 format, yyyy-mm-dd. We recommend you use your account's time zone for this.",
+	//       "description": "Represents the date the usage occurred, based on GMT-7:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
 	//       "location": "path",
 	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
 	//       "required": true,

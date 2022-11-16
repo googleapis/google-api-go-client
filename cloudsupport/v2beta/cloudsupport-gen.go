@@ -1425,7 +1425,8 @@ type AttachmentsCreateCall struct {
 	header_                 http.Header
 }
 
-// Create: Create a file attachment on a case or Cloud resource.
+// Create: Create a file attachment on a case or Cloud resource. The
+// attachment object must have the following fields set: filename.
 //
 //   - parent: The resource name of the case to which attachment should be
 //     attached.
@@ -1527,7 +1528,7 @@ func (c *AttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Attachment, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a file attachment on a case or Cloud resource.",
+	//   "description": "Create a file attachment on a case or Cloud resource. The attachment object must have the following fields set: filename.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/attachments",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.attachments.create",
@@ -1906,7 +1907,8 @@ type CasesCreateCall struct {
 }
 
 // Create: Create a new case and associate it with the given Cloud
-// resource.
+// resource. The case object must have the following fields set:
+// display_name, description, classification, and severity.
 //
 //   - parent: The name of the Cloud resource under which the case should
 //     be created.
@@ -2008,7 +2010,7 @@ func (c *CasesCreateCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new case and associate it with the given Cloud resource.",
+	//   "description": "Create a new case and associate it with the given Cloud resource. The case object must have the following fields set: display_name, description, classification, and severity.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.create",
@@ -3135,7 +3137,8 @@ type CasesCommentsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Add a new comment to the specified Case.
+// Create: Add a new comment to the specified Case. The comment object
+// must have the following fields set: body.
 //
 //   - parent: The resource name of Case to which this comment should be
 //     added.
@@ -3237,7 +3240,7 @@ func (c *CasesCommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new comment to the specified Case.",
+	//   "description": "Add a new comment to the specified Case. The comment object must have the following fields set: body.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/comments",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.cases.comments.create",
@@ -3638,7 +3641,8 @@ type MediaUploadCall struct {
 	header_                 http.Header
 }
 
-// Upload: Create a file attachment on a case or Cloud resource.
+// Upload: Create a file attachment on a case or Cloud resource. The
+// attachment object must have the following fields set: filename.
 //
 //   - parent: The resource name of the case to which attachment should be
 //     attached.
@@ -3807,7 +3811,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a file attachment on a case or Cloud resource.",
+	//   "description": "Create a file attachment on a case or Cloud resource. The attachment object must have the following fields set: filename.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}/attachments",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsupport.media.upload",

@@ -949,6 +949,10 @@ type CryptoKeyVersion struct {
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
 	// This curve is only supported for HSM protection level.
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -1132,6 +1136,10 @@ type CryptoKeyVersionTemplate struct {
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
 	// This curve is only supported for HSM protection level.
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -1801,6 +1809,10 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
 	// This curve is only supported for HSM protection level.
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -2854,6 +2866,10 @@ type PublicKey struct {
 	//   "EC_SIGN_SECP256K1_SHA256" - ECDSA on the non-NIST secp256k1 curve.
 	// This curve is only supported for HSM protection level.
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
+	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
+	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
+	//   "HMAC_SHA512" - HMAC-SHA512 signing with a 512 bit key.
+	//   "HMAC_SHA224" - HMAC-SHA224 signing with a 224 bit key.
 	//   "EXTERNAL_SYMMETRIC_ENCRYPTION" - Algorithm representing symmetric
 	// encryption by an external key manager.
 	Algorithm string `json:"algorithm,omitempty"`

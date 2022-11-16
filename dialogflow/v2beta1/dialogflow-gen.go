@@ -11930,6 +11930,11 @@ type GoogleCloudDialogflowV2beta1AutomatedAgentReply struct {
 	//   "FINAL" - Final reply.
 	AutomatedAgentReplyType string `json:"automatedAgentReplyType,omitempty"`
 
+	// CxCurrentPage: The unique identifier of the current Dialogflow CX
+	// conversation page. Format:
+	// `projects//locations//agents//flows//pages/`.
+	CxCurrentPage string `json:"cxCurrentPage,omitempty"`
+
 	// CxSessionParameters: The collection of current Dialogflow CX agent
 	// session parameters at the time of this response. Deprecated: Use
 	// `parameters` instead.

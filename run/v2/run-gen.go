@@ -900,6 +900,42 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2GRPCAction: GRPCAction describes an action involving
+// a GRPC port.
+type GoogleCloudRunV2GRPCAction struct {
+	// Port: Port number of the gRPC service. Number must be in the range 1
+	// to 65535. If not specified, defaults to 8080.
+	Port int64 `json:"port,omitempty"`
+
+	// Service: Service is the name of the service to place in the gRPC
+	// HealthCheckRequest (see
+	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If
+	// this is not specified, the default behavior is defined by gRPC.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Port") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Port") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2GRPCAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2GRPCAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2HTTPGetAction: HTTPGetAction describes an action
 // based on HTTP Get requests.
 type GoogleCloudRunV2HTTPGetAction struct {
@@ -1347,8 +1383,12 @@ type GoogleCloudRunV2Probe struct {
 	// value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
+	// Grpc: GRPC specifies an action involving a gRPC port. Exactly one of
+	// httpGet, tcpSocket, or grpc must be specified.
+	Grpc *GoogleCloudRunV2GRPCAction `json:"grpc,omitempty"`
+
 	// HttpGet: HTTPGet specifies the http request to perform. Exactly one
-	// of HTTPGet or TCPSocket must be specified.
+	// of httpGet, tcpSocket, or grpc must be specified.
 	HttpGet *GoogleCloudRunV2HTTPGetAction `json:"httpGet,omitempty"`
 
 	// InitialDelaySeconds: Number of seconds after the container has
@@ -1365,7 +1405,7 @@ type GoogleCloudRunV2Probe struct {
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
 	// TcpSocket: TCPSocket specifies an action involving a TCP port.
-	// Exactly one of HTTPGet or TCPSocket must be specified.
+	// Exactly one of httpGet, tcpSocket, or grpc must be specified.
 	TcpSocket *GoogleCloudRunV2TCPSocketAction `json:"tcpSocket,omitempty"`
 
 	// TimeoutSeconds: Number of seconds after which the probe times out.
@@ -1406,9 +1446,9 @@ type GoogleCloudRunV2ResourceRequirements struct {
 	CpuIdle bool `json:"cpuIdle,omitempty"`
 
 	// Limits: Only memory and CPU are supported. Note: The only supported
-	// values for CPU are '1', '2', and '4'. Setting 4 CPU requires at least
-	// 2Gi of memory. The values of the map is string form of the 'quantity'
-	// k8s type:
+	// values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at
+	// least 2Gi of memory. The values of the map is string form of the
+	// 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
@@ -1777,7 +1817,8 @@ type GoogleCloudRunV2SecretKeySelector struct {
 	Secret string `json:"secret,omitempty"`
 
 	// Version: The Cloud Secret Manager secret version. Can be 'latest' for
-	// the latest value or an integer for a specific version.
+	// the latest version, an integer for a specific version, or a version
+	// alias.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Secret") to
@@ -2513,7 +2554,8 @@ type GoogleCloudRunV2VersionToPath struct {
 	Path string `json:"path,omitempty"`
 
 	// Version: The Cloud Secret Manager secret version. Can be 'latest' for
-	// the latest value or an integer for a specific version.
+	// the latest value, or an integer or a secret alias for a specific
+	// version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
@@ -2624,7 +2666,8 @@ func (s *GoogleCloudRunV2VolumeMount) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/run/docs/configuring/connecting-vpc
 type GoogleCloudRunV2VpcAccess struct {
 	// Connector: VPC Access connector name. Format:
-	// projects/{project}/locations/{location}/connectors/{connector}
+	// projects/{project}/locations/{location}/connectors/{connector}, where
+	// {project} can be project id or number.
 	Connector string `json:"connector,omitempty"`
 
 	// Egress: Traffic VPC egress settings.
@@ -3275,10 +3318,11 @@ type ProjectsLocationsJobsCreateCall struct {
 	header_             http.Header
 }
 
-// Create: Create a Job.
+// Create: Creates a Job.
 //
 //   - parent: The location and project in which this Job should be
-//     created. Format: projects/{project}/locations/{location}.
+//     created. Format: projects/{project}/locations/{location}, where
+//     {project} can be project id or number.
 func (r *ProjectsLocationsJobsService) Create(parent string, googlecloudrunv2job *GoogleCloudRunV2Job) *ProjectsLocationsJobsCreateCall {
 	c := &ProjectsLocationsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3393,7 +3437,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a Job.",
+	//   "description": "Creates a Job.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs",
 	//   "httpMethod": "POST",
 	//   "id": "run.projects.locations.jobs.create",
@@ -3407,7 +3451,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project in which this Job should be created. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location and project in which this Job should be created. Format: projects/{project}/locations/{location}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3446,7 +3490,8 @@ type ProjectsLocationsJobsDeleteCall struct {
 // Delete: Deletes a Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{project}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}, where {project}
+//     can be project id or number.
 func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJobsDeleteCall {
 	c := &ProjectsLocationsJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3569,7 +3614,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -3606,7 +3651,8 @@ type ProjectsLocationsJobsGetCall struct {
 // Get: Gets information about a Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{project}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}, where {project}
+//     can be project id or number.
 func (r *ProjectsLocationsJobsService) Get(name string) *ProjectsLocationsJobsGetCall {
 	c := &ProjectsLocationsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3721,7 +3767,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -3750,7 +3796,7 @@ type ProjectsLocationsJobsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Get the IAM Access Control policy currently in effect
+// GetIamPolicy: Gets the IAM Access Control policy currently in effect
 // for the given Job. This result does not include any inherited
 // policies.
 //
@@ -3881,7 +3927,7 @@ func (c *ProjectsLocationsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the IAM Access Control policy currently in effect for the given Job. This result does not include any inherited policies.",
+	//   "description": "Gets the IAM Access Control policy currently in effect for the given Job. This result does not include any inherited policies.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.jobs.getIamPolicy",
@@ -3925,10 +3971,11 @@ type ProjectsLocationsJobsListCall struct {
 	header_      http.Header
 }
 
-// List: List Jobs.
+// List: Lists Jobs.
 //
 //   - parent: The location and project to list resources on. Format:
-//     projects/{project}/locations/{location}.
+//     projects/{project}/locations/{location}, where {project} can be
+//     project id or number.
 func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJobsListCall {
 	c := &ProjectsLocationsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4056,7 +4103,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "List Jobs.",
+	//   "description": "Lists Jobs.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.jobs.list",
@@ -4076,7 +4123,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Format: projects/{project}/locations/{location}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4304,7 +4351,8 @@ type ProjectsLocationsJobsRunCall struct {
 // Run: Triggers creation of a new Execution of this Job.
 //
 //   - name: The full name of the Job. Format:
-//     projects/{project}/locations/{location}/jobs/{job}.
+//     projects/{project}/locations/{location}/jobs/{job}, where {project}
+//     can be project id or number.
 func (r *ProjectsLocationsJobsService) Run(name string, googlecloudrunv2runjobrequest *GoogleCloudRunV2RunJobRequest) *ProjectsLocationsJobsRunCall {
 	c := &ProjectsLocationsJobsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4412,7 +4460,7 @@ func (c *ProjectsLocationsJobsRunCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The full name of the Job. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -4737,11 +4785,11 @@ type ProjectsLocationsJobsExecutionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete an Execution.
+// Delete: Deletes an Execution.
 //
 //   - name: The name of the Execution to delete. Format:
 //     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}.
+//     tion}, where {project} can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) Delete(name string) *ProjectsLocationsJobsExecutionsDeleteCall {
 	c := &ProjectsLocationsJobsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4850,7 +4898,7 @@ func (c *ProjectsLocationsJobsExecutionsDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete an Execution.",
+	//   "description": "Deletes an Execution.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "run.projects.locations.jobs.executions.delete",
@@ -4864,7 +4912,7 @@ func (c *ProjectsLocationsJobsExecutionsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the Execution to delete. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}",
+	//       "description": "Required. The name of the Execution to delete. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -4898,11 +4946,11 @@ type ProjectsLocationsJobsExecutionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information about a Execution.
+// Get: Gets information about an Execution.
 //
 //   - name: The full name of the Execution. Format:
 //     projects/{project}/locations/{location}/jobs/{job}/executions/{execu
-//     tion}.
+//     tion}, where {project} can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) Get(name string) *ProjectsLocationsJobsExecutionsGetCall {
 	c := &ProjectsLocationsJobsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5008,7 +5056,7 @@ func (c *ProjectsLocationsJobsExecutionsGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets information about a Execution.",
+	//   "description": "Gets information about an Execution.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.jobs.executions.get",
@@ -5017,7 +5065,7 @@ func (c *ProjectsLocationsJobsExecutionsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Execution. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}",
+	//       "description": "Required. The full name of the Execution. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
 	//       "required": true,
@@ -5046,11 +5094,12 @@ type ProjectsLocationsJobsExecutionsListCall struct {
 	header_      http.Header
 }
 
-// List: List Executions from a Job.
+// List: Lists Executions from a Job.
 //
 //   - parent: The Execution from which the Executions should be listed.
 //     To list all Executions across Jobs, use "-" instead of Job name.
-//     Format: projects/{project}/locations/{location}/jobs/{job}.
+//     Format: projects/{project}/locations/{location}/jobs/{job}, where
+//     {project} can be project id or number.
 func (r *ProjectsLocationsJobsExecutionsService) List(parent string) *ProjectsLocationsJobsExecutionsListCall {
 	c := &ProjectsLocationsJobsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5179,7 +5228,7 @@ func (c *ProjectsLocationsJobsExecutionsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "List Executions from a Job.",
+	//   "description": "Lists Executions from a Job.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.jobs.executions.list",
@@ -5199,7 +5248,7 @@ func (c *ProjectsLocationsJobsExecutionsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}",
+	//       "description": "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
 	//       "required": true,
@@ -5402,7 +5451,7 @@ type ProjectsLocationsJobsExecutionsTasksListCall struct {
 	header_      http.Header
 }
 
-// List: List Tasks from an Execution of a Job.
+// List: Lists Tasks from an Execution of a Job.
 //
 //   - parent: The Execution from which the Tasks should be listed. To
 //     list all Tasks across Executions of a Job, use "-" instead of
@@ -5538,7 +5587,7 @@ func (c *ProjectsLocationsJobsExecutionsTasksListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "List Tasks from an Execution of a Job.",
+	//   "description": "Lists Tasks from an Execution of a Job.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}/tasks",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.jobs.executions.tasks.list",
@@ -6119,8 +6168,9 @@ type ProjectsLocationsServicesCreateCall struct {
 // Create: Creates a new Service in a given project and location.
 //
 //   - parent: The location and project in which this service should be
-//     created. Format: projects/{project}/locations/{location} Only
-//     lowercase characters, digits, and hyphens.
+//     created. Format: projects/{project}/locations/{location}, where
+//     {project} can be project id or number. Only lowercase characters,
+//     digits, and hyphens.
 func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv2service *GoogleCloudRunV2Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6129,9 +6179,9 @@ func (r *ProjectsLocationsServicesService) Create(parent string, googlecloudrunv
 }
 
 // ServiceId sets the optional parameter "serviceId": Required. The
-// unique identifier for the Service. It must begin with letter, and may
-// not end with hyphen; must contain fewer than 50 characters. The name
-// of the service becomes {parent}/services/{service_id}.
+// unique identifier for the Service. It must begin with letter, and
+// cannot end with hyphen; must contain fewer than 50 characters. The
+// name of the service becomes {parent}/services/{service_id}.
 func (c *ProjectsLocationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -6245,14 +6295,14 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The location and project in which this service should be created. Format: projects/{project}/locations/{location} Only lowercase characters, digits, and hyphens.",
+	//       "description": "Required. The location and project in which this service should be created. Format: projects/{project}/locations/{location}, where {project} can be project id or number. Only lowercase characters, digits, and hyphens.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceId": {
-	//       "description": "Required. The unique identifier for the Service. It must begin with letter, and may not end with hyphen; must contain fewer than 50 characters. The name of the service becomes {parent}/services/{service_id}.",
+	//       "description": "Required. The unique identifier for the Service. It must begin with letter, and cannot end with hyphen; must contain fewer than 50 characters. The name of the service becomes {parent}/services/{service_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6290,7 +6340,8 @@ type ProjectsLocationsServicesDeleteCall struct {
 // serving traffic and will delete all revisions.
 //
 //   - name: The full name of the Service. Format:
-//     projects/{project}/locations/{location}/services/{service}.
+//     projects/{project}/locations/{location}/services/{service}, where
+//     {project} can be project id or number.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6413,7 +6464,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}",
+	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6450,7 +6501,8 @@ type ProjectsLocationsServicesGetCall struct {
 // Get: Gets information about a Service.
 //
 //   - name: The full name of the Service. Format:
-//     projects/{project}/locations/{location}/services/{service}.
+//     projects/{project}/locations/{location}/services/{service}, where
+//     {project} can be project id or number.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6565,7 +6617,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}",
+	//       "description": "Required. The full name of the Service. Format: projects/{project}/locations/{location}/services/{service}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6594,7 +6646,7 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Get the IAM Access Control policy currently in effect
+// GetIamPolicy: Gets the IAM Access Control policy currently in effect
 // for the given Cloud Run Service. This result does not include any
 // inherited policies.
 //
@@ -6725,7 +6777,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the IAM Access Control policy currently in effect for the given Cloud Run Service. This result does not include any inherited policies.",
+	//   "description": "Gets the IAM Access Control policy currently in effect for the given Cloud Run Service. This result does not include any inherited policies.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:getIamPolicy",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.services.getIamPolicy",
@@ -6769,11 +6821,12 @@ type ProjectsLocationsServicesListCall struct {
 	header_      http.Header
 }
 
-// List: List Services.
+// List: Lists Services.
 //
 //   - parent: The location and project to list resources on. Location
-//     must be a valid GCP region, and may not be the "-" wildcard.
-//     Format: projects/{project}/locations/{location}.
+//     must be a valid GCP region, and cannot be the "-" wildcard. Format:
+//     projects/{project}/locations/{location}, where {project} can be
+//     project id or number.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6902,7 +6955,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "List Services.",
+	//   "description": "Lists Services.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.services.list",
@@ -6922,7 +6975,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and may not be the \"-\" wildcard. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and cannot be the \"-\" wildcard. Format: projects/{project}/locations/{location}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7443,7 +7496,7 @@ type ProjectsLocationsServicesRevisionsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a Revision.
+// Delete: Deletes a Revision.
 //
 //   - name: The name of the Revision to delete. Format:
 //     projects/{project}/locations/{location}/services/{service}/revisions
@@ -7556,7 +7609,7 @@ func (c *ProjectsLocationsServicesRevisionsDeleteCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a Revision.",
+	//   "description": "Deletes a Revision.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "run.projects.locations.services.revisions.delete",
@@ -7752,7 +7805,7 @@ type ProjectsLocationsServicesRevisionsListCall struct {
 	header_      http.Header
 }
 
-// List: List Revisions from a given Service, or from a given location.
+// List: Lists Revisions from a given Service, or from a given location.
 //
 //   - parent: The Service from which the Revisions should be listed. To
 //     list all Revisions across Services, use "-" instead of Service
@@ -7886,7 +7939,7 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "List Revisions from a given Service, or from a given location.",
+	//   "description": "Lists Revisions from a given Service, or from a given location.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions",
 	//   "httpMethod": "GET",
 	//   "id": "run.projects.locations.services.revisions.list",

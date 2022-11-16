@@ -2745,6 +2745,136 @@ func (s *Amount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BestSellers: Fields related to the Best Sellers reports
+// (https://support.google.com/merchants/answer/9488679).
+type BestSellers struct {
+	// CategoryId: Google product category ID to calculate the ranking for,
+	// represented in Google's product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	CategoryId int64 `json:"categoryId,omitempty,string"`
+
+	// CountryCode: Country where the ranking is calculated.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// PreviousRank: Popularity rank in the previous week or month.
+	PreviousRank int64 `json:"previousRank,omitempty,string"`
+
+	// PreviousRelativeDemand: Estimated demand in relation to the item with
+	// the highest popularity rank in the same category and country in the
+	// previous week or month.
+	//
+	// Possible values:
+	//   "RELATIVE_DEMAND_UNSPECIFIED" - Relative demand is unknown.
+	//   "VERY_LOW" - Demand is 0-5% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "LOW" - Demand is 6-10% of the demand of the highest ranked product
+	// clusters or brands.
+	//   "MEDIUM" - Demand is 11-20% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "HIGH" - Demand is 21-50% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "VERY_HIGH" - Demand is 51-100% of the demand of the highest ranked
+	// product clusters or brands.
+	PreviousRelativeDemand string `json:"previousRelativeDemand,omitempty"`
+
+	// Rank: Popularity on Shopping ads and free listings, in the selected
+	// category and country, based on the estimated number of units sold.
+	Rank int64 `json:"rank,omitempty,string"`
+
+	// RelativeDemand: Estimated demand in relation to the item with the
+	// highest popularity rank in the same category and country.
+	//
+	// Possible values:
+	//   "RELATIVE_DEMAND_UNSPECIFIED" - Relative demand is unknown.
+	//   "VERY_LOW" - Demand is 0-5% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "LOW" - Demand is 6-10% of the demand of the highest ranked product
+	// clusters or brands.
+	//   "MEDIUM" - Demand is 11-20% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "HIGH" - Demand is 21-50% of the demand of the highest ranked
+	// product clusters or brands.
+	//   "VERY_HIGH" - Demand is 51-100% of the demand of the highest ranked
+	// product clusters or brands.
+	RelativeDemand string `json:"relativeDemand,omitempty"`
+
+	// RelativeDemandChange: Change in the estimated demand. Whether it
+	// rose, sank or remained flat.
+	//
+	// Possible values:
+	//   "RELATIVE_DEMAND_CHANGE_TYPE_UNSPECIFIED" - Relative demand change
+	// is unknown.
+	//   "SINKER" - Relative demand is lower than previous time period.
+	//   "FLAT" - Relative demand is equal to previous time period.
+	//   "RISER" - Relative demand is higher than the previous time period.
+	RelativeDemandChange string `json:"relativeDemandChange,omitempty"`
+
+	// ReportDate: Report date. The value of this field can only be one of
+	// the following: * The first day of the week (Monday) for weekly
+	// reports. * The first day of the month for monthly reports.
+	ReportDate *Date `json:"reportDate,omitempty"`
+
+	// ReportGranularity: Granularity of the report. The ranking can be done
+	// over a week or a month timeframe.
+	//
+	// Possible values:
+	//   "REPORT_GRANULARITY_UNSPECIFIED" - Report granularity is unknown.
+	//   "WEEKLY" - Ranking is done over a week timeframe.
+	//   "MONTHLY" - Ranking is done over a month timeframe.
+	ReportGranularity string `json:"reportGranularity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CategoryId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CategoryId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BestSellers) MarshalJSON() ([]byte, error) {
+	type NoMethod BestSellers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Brand: Brand fields. Values are only set for fields requested
+// explicitly in the request's search query.
+type Brand struct {
+	// Name: Name of the brand.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Brand) MarshalJSON() ([]byte, error) {
+	type NoMethod Brand
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BusinessDayConfig struct {
 	// BusinessDays: Regular business days, such as '"monday"'. May not be
 	// empty.
@@ -12072,6 +12202,137 @@ func (s *PriceAmount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PriceCompetitiveness: Price Competitiveness fields requested by the
+// merchant in the query. Field values are only set if the merchant
+// queries `PriceCompetitivenessProductView`.
+// https://support.google.com/merchants/answer/9626903
+type PriceCompetitiveness struct {
+	// BenchmarkPriceCurrencyCode: The price benchmark currency (ISO 4217
+	// code).
+	BenchmarkPriceCurrencyCode string `json:"benchmarkPriceCurrencyCode,omitempty"`
+
+	// BenchmarkPriceMicros: The latest available price benchmark in micros
+	// for the product's catalog in the benchmark country.
+	BenchmarkPriceMicros int64 `json:"benchmarkPriceMicros,omitempty,string"`
+
+	// CountryCode: The country of the price benchmark (ISO 3166 code).
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BenchmarkPriceCurrencyCode") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BenchmarkPriceCurrencyCode") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PriceCompetitiveness) MarshalJSON() ([]byte, error) {
+	type NoMethod PriceCompetitiveness
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PriceInsights: Price Insights fields requested by the merchant in the
+// query. Field values are only set if the merchant queries
+// `PriceInsightsProductView`.
+// https://support.google.com/merchants/answer/11916926
+type PriceInsights struct {
+	// PredictedClicksChangeFraction: The predicted change in clicks as a
+	// fraction after introducing the suggested price compared to current
+	// active price. For example, 0.05 is a 5% predicted increase in clicks.
+	PredictedClicksChangeFraction float64 `json:"predictedClicksChangeFraction,omitempty"`
+
+	// PredictedConversionsChangeFraction: The predicted change in
+	// conversions as a fraction after introducing the suggested price
+	// compared to current active price. For example, 0.05 is a 5% predicted
+	// increase in conversions).
+	PredictedConversionsChangeFraction float64 `json:"predictedConversionsChangeFraction,omitempty"`
+
+	// PredictedGrossProfitChangeFraction: The predicted change in gross
+	// profit as a fraction after introducing the suggested price compared
+	// to current active price. For example, 0.05 is a 5% predicted increase
+	// in gross profit.
+	PredictedGrossProfitChangeFraction float64 `json:"predictedGrossProfitChangeFraction,omitempty"`
+
+	// PredictedImpressionsChangeFraction: The predicted change in
+	// impressions as a fraction after introducing the suggested price
+	// compared to current active price. For example, 0.05 is a 5% predicted
+	// increase in impressions.
+	PredictedImpressionsChangeFraction float64 `json:"predictedImpressionsChangeFraction,omitempty"`
+
+	// PredictedMonthlyGrossProfitChangeCurrencyCode: The predicted monthly
+	// gross profit change currency (ISO 4217 code).
+	PredictedMonthlyGrossProfitChangeCurrencyCode string `json:"predictedMonthlyGrossProfitChangeCurrencyCode,omitempty"`
+
+	// PredictedMonthlyGrossProfitChangeMicros: The predicted change in
+	// gross profit in micros after introducing the suggested price for a
+	// month compared to current active price.
+	PredictedMonthlyGrossProfitChangeMicros int64 `json:"predictedMonthlyGrossProfitChangeMicros,omitempty,string"`
+
+	// SuggestedPriceCurrencyCode: The suggested price currency (ISO 4217
+	// code).
+	SuggestedPriceCurrencyCode string `json:"suggestedPriceCurrencyCode,omitempty"`
+
+	// SuggestedPriceMicros: The latest suggested price in micros for the
+	// product.
+	SuggestedPriceMicros int64 `json:"suggestedPriceMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PredictedClicksChangeFraction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PredictedClicksChangeFraction") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PriceInsights) MarshalJSON() ([]byte, error) {
+	type NoMethod PriceInsights
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PriceInsights) UnmarshalJSON(data []byte) error {
+	type NoMethod PriceInsights
+	var s1 struct {
+		PredictedClicksChangeFraction      gensupport.JSONFloat64 `json:"predictedClicksChangeFraction"`
+		PredictedConversionsChangeFraction gensupport.JSONFloat64 `json:"predictedConversionsChangeFraction"`
+		PredictedGrossProfitChangeFraction gensupport.JSONFloat64 `json:"predictedGrossProfitChangeFraction"`
+		PredictedImpressionsChangeFraction gensupport.JSONFloat64 `json:"predictedImpressionsChangeFraction"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PredictedClicksChangeFraction = float64(s1.PredictedClicksChangeFraction)
+	s.PredictedConversionsChangeFraction = float64(s1.PredictedConversionsChangeFraction)
+	s.PredictedGrossProfitChangeFraction = float64(s1.PredictedGrossProfitChangeFraction)
+	s.PredictedImpressionsChangeFraction = float64(s1.PredictedImpressionsChangeFraction)
+	return nil
+}
+
 // Product:  Required product attributes are primarily defined by the
 // products data specification. See the Products Data Specification Help
 // Center article for information. Product data. After inserting,
@@ -12510,6 +12771,94 @@ type ProductAmount struct {
 
 func (s *ProductAmount) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductAmount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductCluster: Product cluster fields. A product cluster is a
+// grouping for different offers that represent the same product. Values
+// are only set for fields requested explicitly in the request's search
+// query.
+type ProductCluster struct {
+	// Brand: Brand of the product cluster.
+	Brand string `json:"brand,omitempty"`
+
+	// BrandInventoryStatus: Tells if there is at least one product of the
+	// brand currently `IN_STOCK` in your product feed across multiple
+	// countries, all products are `OUT_OF_STOCK` in your product feed, or
+	// `NOT_IN_INVENTORY`. The field doesn't take the Best Sellers report
+	// country filter into account.
+	//
+	// Possible values:
+	//   "INVENTORY_STATUS_UNSPECIFIED" - Inventory status is unknown.
+	//   "IN_STOCK" - Merchant has a product for this product cluster or
+	// brand in stock.
+	//   "OUT_OF_STOCK" - Merchant has a product for this product cluster or
+	// brand in inventory but it is currently out of stock.
+	//   "NOT_IN_INVENTORY" - Merchant does not have a product for this
+	// product cluster or brand in inventory.
+	BrandInventoryStatus string `json:"brandInventoryStatus,omitempty"`
+
+	// CategoryL1: Product category (1st level) of the product cluster,
+	// represented in Google's product taxonomy.
+	CategoryL1 string `json:"categoryL1,omitempty"`
+
+	// CategoryL2: Product category (2nd level) of the product cluster,
+	// represented in Google's product taxonomy.
+	CategoryL2 string `json:"categoryL2,omitempty"`
+
+	// CategoryL3: Product category (3rd level) of the product cluster,
+	// represented in Google's product taxonomy.
+	CategoryL3 string `json:"categoryL3,omitempty"`
+
+	// CategoryL4: Product category (4th level) of the product cluster,
+	// represented in Google's product taxonomy.
+	CategoryL4 string `json:"categoryL4,omitempty"`
+
+	// CategoryL5: Product category (5th level) of the product cluster,
+	// represented in Google's product taxonomy.
+	CategoryL5 string `json:"categoryL5,omitempty"`
+
+	// InventoryStatus: Tells whether the product cluster is `IN_STOCK` in
+	// your product feed across multiple countries, `OUT_OF_STOCK` in your
+	// product feed, or `NOT_IN_INVENTORY` at all. The field doesn't take
+	// the Best Sellers report country filter into account.
+	//
+	// Possible values:
+	//   "INVENTORY_STATUS_UNSPECIFIED" - Inventory status is unknown.
+	//   "IN_STOCK" - Merchant has a product for this product cluster or
+	// brand in stock.
+	//   "OUT_OF_STOCK" - Merchant has a product for this product cluster or
+	// brand in inventory but it is currently out of stock.
+	//   "NOT_IN_INVENTORY" - Merchant does not have a product for this
+	// product cluster or brand in inventory.
+	InventoryStatus string `json:"inventoryStatus,omitempty"`
+
+	// Title: Title of the product cluster.
+	Title string `json:"title,omitempty"`
+
+	// VariantGtins: GTINs of example variants of the product cluster.
+	VariantGtins []string `json:"variantGtins,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Brand") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Brand") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14689,9 +15038,33 @@ func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error
 
 // ReportRow: Result row returned from the search query.
 type ReportRow struct {
+	// BestSellers: Best Sellers fields requested by the merchant in the
+	// query. Field values are only set if the merchant queries
+	// `BestSellersProductClusterView` or `BestSellersBrandView`.
+	BestSellers *BestSellers `json:"bestSellers,omitempty"`
+
+	// Brand: Brand fields requested by the merchant in the query. Field
+	// values are only set if the merchant queries `BestSellersBrandView`.
+	Brand *Brand `json:"brand,omitempty"`
+
 	// Metrics: Metrics requested by the merchant in the query. Metric
 	// values are only set for metrics requested explicitly in the query.
 	Metrics *Metrics `json:"metrics,omitempty"`
+
+	// PriceCompetitiveness: Price Competitiveness fields requested by the
+	// merchant in the query. Field values are only set if the merchant
+	// queries `PriceCompetitivenessProductView`.
+	PriceCompetitiveness *PriceCompetitiveness `json:"priceCompetitiveness,omitempty"`
+
+	// PriceInsights: Price Insights fields requested by the merchant in the
+	// query. Field values are only set if the merchant queries
+	// `PriceInsightsProductView`.
+	PriceInsights *PriceInsights `json:"priceInsights,omitempty"`
+
+	// ProductCluster: Product cluster fields requested by the merchant in
+	// the query. Field values are only set if the merchant queries
+	// `BestSellersProductClusterView`.
+	ProductCluster *ProductCluster `json:"productCluster,omitempty"`
 
 	// ProductView: Product fields requested by the merchant in the query.
 	// Field values are only set if the merchant queries `ProductView`.
@@ -14704,7 +15077,7 @@ type ReportRow struct {
 	// explicitly in the query.
 	Segments *Segments `json:"segments,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// ForceSendFields is a list of field names (e.g. "BestSellers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -14712,10 +15085,10 @@ type ReportRow struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metrics") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BestSellers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -27340,7 +27713,9 @@ type FreelistingsprogramGetCall struct {
 }
 
 // Get: Retrieves the status and review eligibility for the free listing
-// program.
+// program. Returns errors and warnings if they require action to
+// resolve, will become disapprovals, or impact impressions. Use
+// `accountstatuses` to view all issues for an account.
 //
 // - merchantId: The ID of the account.
 func (r *FreelistingsprogramService) Get(merchantId int64) *FreelistingsprogramGetCall {
@@ -27448,7 +27823,7 @@ func (c *FreelistingsprogramGetCall) Do(opts ...googleapi.CallOption) (*FreeList
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the status and review eligibility for the free listing program.",
+	//   "description": "Retrieves the status and review eligibility for the free listing program. Returns errors and warnings if they require action to resolve, will become disapprovals, or impact impressions. Use `accountstatuses` to view all issues for an account.",
 	//   "flatPath": "{merchantId}/freelistingsprogram",
 	//   "httpMethod": "GET",
 	//   "id": "content.freelistingsprogram.get",
@@ -45312,7 +45687,9 @@ type ShoppingadsprogramGetCall struct {
 }
 
 // Get: Retrieves the status and review eligibility for the Shopping Ads
-// program.
+// program. Returns errors and warnings if they require action to
+// resolve, will become disapprovals, or impact impressions. Use
+// `accountstatuses` to view all issues for an account.
 //
 // - merchantId: The ID of the account.
 func (r *ShoppingadsprogramService) Get(merchantId int64) *ShoppingadsprogramGetCall {
@@ -45420,7 +45797,7 @@ func (c *ShoppingadsprogramGetCall) Do(opts ...googleapi.CallOption) (*ShoppingA
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the status and review eligibility for the Shopping Ads program.",
+	//   "description": "Retrieves the status and review eligibility for the Shopping Ads program. Returns errors and warnings if they require action to resolve, will become disapprovals, or impact impressions. Use `accountstatuses` to view all issues for an account.",
 	//   "flatPath": "{merchantId}/shoppingadsprogram",
 	//   "httpMethod": "GET",
 	//   "id": "content.shoppingadsprogram.get",

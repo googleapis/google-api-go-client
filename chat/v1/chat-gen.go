@@ -1355,8 +1355,10 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 // the form is submitted. For example, an Apps Script can be invoked to
 // handle the form.
 type GoogleAppsCardV1Action struct {
-	// Function: Apps Script function to invoke when the containing element
-	// is clicked/activated.
+	// Function: A custom function to invoke when the containing element is
+	// clicked or othrwise activated. For example usage, see Create
+	// interactive cards
+	// (https://developers.google.com/chat/how-tos/cards-onclick).
 	Function string `json:"function,omitempty"`
 
 	// Interaction: Optional. Required when opening a dialog
@@ -1408,7 +1410,7 @@ type GoogleAppsCardV1Action struct {
 	// (https://developers.google.com/workspace/add-ons/reference/rpc/google.apps.card.v1#loadindicator)
 	// for all actions, as this locks the UI to ensure no changes are made
 	// by the user while the action is being processed. Not supported by
-	// Google Chat apps.
+	// Chat apps.
 	PersistValues bool `json:"persistValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Function") to
@@ -1438,7 +1440,8 @@ func (s *GoogleAppsCardV1Action) MarshalJSON() ([]byte, error) {
 // when the action method is invoked. For example, consider three snooze
 // buttons: snooze now, snooze 1 day, snooze next week. You might use
 // action method = snooze(), passing the snooze type and snooze time in
-// the list of string parameters.
+// the list of string parameters. To learn more, see CommonEventObject
+// (https://developers.google.com/chat/api/reference/rest/v1/Event#commoneventobject).
 type GoogleAppsCardV1ActionParameter struct {
 	// Key: The name of the parameter for the action script.
 	Key string `json:"key,omitempty"`
@@ -1470,7 +1473,7 @@ func (s *GoogleAppsCardV1ActionParameter) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1BorderStyle: Represents the complete border style
-// applied to widgets.
+// applied to items in a widget.
 type GoogleAppsCardV1BorderStyle struct {
 	// CornerRadius: The corner radius for the border.
 	CornerRadius int64 `json:"cornerRadius,omitempty"`
@@ -1482,7 +1485,7 @@ type GoogleAppsCardV1BorderStyle struct {
 	//
 	// Possible values:
 	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
-	//   "NO_BORDER" - No border.
+	//   "NO_BORDER" - Default value. No border.
 	//   "STROKE" - Outline.
 	Type string `json:"type,omitempty"`
 
@@ -1509,27 +1512,50 @@ func (s *GoogleAppsCardV1BorderStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Button: A button. Can be a text button or an image
-// button.
+// GoogleAppsCardV1Button: A text, icon, or text + icon button that
+// users can click. To make an image a clickable button, specify an
+// Image (not an ImageComponent) and set an `onClick` action.
 type GoogleAppsCardV1Button struct {
-	// AltText: The alternative text used for accessibility. Has no effect
-	// when an icon is set; use `icon.alt_text` instead.
+	// AltText: The alternative text used for accessibility. Set descriptive
+	// text that lets users know what the button does. For example, if a
+	// button opens a hyperlink, you might write: "Opens a new browser tab
+	// and navigates to the Google Chat developer documentation at
+	// https://developers.google.com/chat". Has no effect when an icon is
+	// set; use `icon.alt_text` instead.
 	AltText string `json:"altText,omitempty"`
 
-	// Color: If set, the button is filled with a solid background.
+	// Color: If set, the button is filled with a solid background color and
+	// the font color changes to maintain contrast with the background
+	// color. For example, setting a blue background will likely result in
+	// white text. If unset, the image background is white and the font
+	// color is blue. For red, green and blue, the value of each field is a
+	// `float` number that can be expressed in either of two ways: as a
+	// number between 0 and 255 divided by 255 (153/255) or as a value
+	// between 0 and 1 (0.6). 0 represents the absence of a color and 1 or
+	// 255/255 represent the full presence of that color on the RGB scale.
+	// Optionally set alpha, which sets a level of transparency using this
+	// equation: ``` pixel color = alpha * (this color) + (1.0 - alpha) *
+	// (background color) ``` For alpha, a value of 1 corresponds with a
+	// solid color, and a value of 0 corresponds with a completely
+	// transparent color. For example, the following color represents a half
+	// transparent red: ``` "color": { "red": 1, "green": 0, "blue": 0,
+	// "alpha": 0.5 } ```
 	Color *Color `json:"color,omitempty"`
 
-	// Disabled: If `true`, the button is displayed in a disabled state and
+	// Disabled: If `true`, the button is displayed in an inactive state and
 	// doesn't respond to user actions.
 	Disabled bool `json:"disabled,omitempty"`
 
-	// Icon: The icon image.
+	// Icon: The icon image. If both `icon` and `text` are set, then the
+	// icon appears in place of the text. Support for both an icon and text
+	// is coming soon.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
 
-	// OnClick: The action to perform when the button is clicked.
+	// OnClick: The action to perform when the button is clicked, such as
+	// opening a hyperlink or running a custom function.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
-	// Text: The text of the button.
+	// Text: The text displayed inside the button.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -1594,9 +1620,10 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // the contact's name, job title, avatar picture. - A section with the
 // contact information, including formatted text. - Buttons that users
 // can click to share the contact or see more or less info. !Example
-// contact card (/chat/images/card_api_reference.png) ``` { "cardsV2": [
-// { "cardId": "unique-card-id", "card": { "header": { "title": "Sasha",
-// "subtitle": "Software Engineer", "imageUrl":
+// contact card
+// (https://developers.google.com/chat/images/card_api_reference.png)
+// ``` { "cardsV2": [ { "cardId": "unique-card-id", "card": { "header":
+// { "title": "Sasha", "subtitle": "Software Engineer", "imageUrl":
 // "https://developers.google.com/chat/images/quickstart-app-avatar.png",
 //
 //	"imageType": "CIRCLE", "imageAltText": "Avatar for Sasha", },
@@ -1614,18 +1641,19 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // } }, ], }, ], }, } ], } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's
-	// generated toolbar menu. Not supported by Google Chat apps. For
-	// example, the following JSON constructs a card action menu with
-	// Settings and Send Feedback options: ``` "card_actions": [ {
-	// "actionLabel": "Settings", "onClick": { "action": { "functionName":
-	// "goToView", "parameters": [ { "key": "viewType", "value": "SETTING" }
-	// ], "loadIndicator": "LoadIndicator.SPINNER" } } }, { "actionLabel":
-	// "Send Feedback", "onClick": { "openLink": { "url":
-	// "https://example.com/feedback" } } } ] ```
+	// toolbar menu. Because Chat app cards have no toolbar, `cardActions[]`
+	// is not supported by Chat apps. For example, the following JSON
+	// constructs a card action menu with Settings and Send Feedback
+	// options: ``` "card_actions": [ { "actionLabel": "Settings",
+	// "onClick": { "action": { "functionName": "goToView", "parameters": [
+	// { "key": "viewType", "value": "SETTING" } ], "loadIndicator":
+	// "LoadIndicator.SPINNER" } } }, { "actionLabel": "Send Feedback",
+	// "onClick": { "openLink": { "url": "https://example.com/feedback" } }
+	// } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 
-	// DisplayStyle: The `peekCardHeader` display style for. Not supported
-	// by Google Chat apps.
+	// DisplayStyle: In Google Workspace add-ons, sets the display
+	// properties of the `peekCardHeader`. Not supported by Chat apps.
 	//
 	// Possible values:
 	//   "DISPLAY_STYLE_UNSPECIFIED" - Do not use.
@@ -1638,22 +1666,30 @@ type GoogleAppsCardV1Card struct {
 	DisplayStyle string `json:"displayStyle,omitempty"`
 
 	// FixedFooter: The fixed footer shown at the bottom of this card.
+	// Setting `fixedFooter` without specifying a `primaryButton` or a
+	// `secondaryButton` causes an error. Chat apps support `fixedFooter` in
+	// dialogs (https://developers.google.com/chat/how-tos/dialogs), but not
+	// in card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards).
 	FixedFooter *GoogleAppsCardV1CardFixedFooter `json:"fixedFooter,omitempty"`
 
-	// Header: The header of the card. A header usually contains a title and
-	// an image.
+	// Header: The header of the card. A header usually contains a leading
+	// image and a title. Headers always appear at the top of a card.
 	Header *GoogleAppsCardV1CardHeader `json:"header,omitempty"`
 
 	// Name: Name of the card. Used as a card identifier in card navigation.
+	// Because Chat apps don't support card navigation, they ignore this
+	// field.
 	Name string `json:"name,omitempty"`
 
 	// PeekCardHeader: When displaying contextual content, the peek card
 	// header acts as a placeholder so that the user can navigate forward
 	// between the homepage cards and the contextual cards. Not supported by
-	// Google Chat apps.
+	// Chat apps.
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
 
-	// Sections: Sections are separated by a line divider.
+	// Sections: Contains a collection of widgets. Each section has its own,
+	// optional header. Sections are visually separated by a line divider.
 	Sections []*GoogleAppsCardV1Section `json:"sections,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CardActions") to
@@ -1682,7 +1718,7 @@ func (s *GoogleAppsCardV1Card) MarshalJSON() ([]byte, error) {
 // GoogleAppsCardV1CardAction: A card action is the action associated
 // with the card. For example, an invoice card might include actions
 // such as delete invoice, email invoice, or open the invoice in a
-// browser. Not supported by Google Chat apps.
+// browser. Not supported by Chat apps.
 type GoogleAppsCardV1CardAction struct {
 	// ActionLabel: The label that displays as the action menu item.
 	ActionLabel string `json:"actionLabel,omitempty"`
@@ -1713,8 +1749,13 @@ func (s *GoogleAppsCardV1CardAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1CardFixedFooter: A persistent (sticky) footer that is
-// added to the bottom of the card.
+// GoogleAppsCardV1CardFixedFooter: A persistent (sticky) footer that
+// that appears at the bottom of the card. Setting `fixedFooter` without
+// specifying a `primaryButton` or a `secondaryButton` causes an error.
+// Chat apps support `fixedFooter` in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs), but not in card
+// messages
+// (https://developers.google.com/chat/api/guides/message-formats/cards).
 type GoogleAppsCardV1CardFixedFooter struct {
 	// PrimaryButton: The primary button of the fixed footer. The button
 	// must be a text button with text and color set.
@@ -1754,17 +1795,20 @@ type GoogleAppsCardV1CardHeader struct {
 	// accessibility.
 	ImageAltText string `json:"imageAltText,omitempty"`
 
-	// ImageType: The image's type.
+	// ImageType: The shape used to crop the image.
 	//
 	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
+	//   "SQUARE" - Default value. Applies a square mask to the image. For
+	// example, a 4x3 image becomes 3x3.
+	//   "CIRCLE" - Applies a circular mask to the image. For example, a 4x3
+	// image becomes a circle with a diameter of 3.
 	ImageType string `json:"imageType,omitempty"`
 
-	// ImageUrl: The URL of the image in the card header.
+	// ImageUrl: The HTTPS URL of the image in the card header.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// Subtitle: The subtitle of the card header.
+	// Subtitle: The subtitle of the card header. If specified, appears on
+	// its own line below the `title`.
 	Subtitle string `json:"subtitle,omitempty"`
 
 	// Title: Required. The title of the card header. The header has a fixed
@@ -1795,19 +1839,29 @@ func (s *GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1DateTimePicker: The widget that lets users to specify
-// a date and time. Not supported by Google Chat apps.
+// GoogleAppsCardV1DateTimePicker: Lets users specify a date, a time, or
+// both a date and a time. Accepts text input from users, but features
+// an interactive date and time selector that helps users enter
+// correctly-formatted dates and times. If users enter a date or time
+// incorrectly, the widget shows an error that prompts users to enter
+// the correct format. Not supported by Chat apps. Support by Chat apps
+// coming soon.
 type GoogleAppsCardV1DateTimePicker struct {
-	// Label: The label for the field that displays to the user.
+	// Label: The text that prompts users to enter a date, time, or
+	// datetime. Specify text that helps the user enter the information your
+	// app needs. For example, if users are setting an appointment, then a
+	// label like "Appointment date" or "Appointment date and time" might
+	// work well.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input that's used in `formInput`, and
-	// uniquely identifies this input.
+	// Name: The name by which the datetime picker is identified in a form
+	// input event. For details about working with form inputs, see Receive
+	// form data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Name string `json:"name,omitempty"`
 
-	// OnChangeAction: Triggered when the user clicks Save or Clear from the
-	// date/time picker dialog. This is only triggered if the value changed
-	// as a result of the Save/Clear operation.
+	// OnChangeAction: Triggered when the user clicks **Save** or **Clear**
+	// from the datetime picker interface.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
 	// TimezoneOffsetDate: The number representing the time zone offset from
@@ -1816,7 +1870,7 @@ type GoogleAppsCardV1DateTimePicker struct {
 	// on the client side.
 	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
 
-	// Type: The type of the date/time picker.
+	// Type: What kind of date and time input the datetime picker supports.
 	//
 	// Possible values:
 	//   "DATE_AND_TIME" - The user can select a date and time.
@@ -1824,12 +1878,13 @@ type GoogleAppsCardV1DateTimePicker struct {
 	//   "TIME_ONLY" - The user can only select a time.
 	Type string `json:"type,omitempty"`
 
-	// ValueMsEpoch: The value to display as the default value before user
-	// input or previous user input. It is represented in milliseconds
-	// (Epoch time). For `DATE_AND_TIME` type, the full epoch value is used.
-	// For `DATE_ONLY` type, only date of the epoch time is used. For
-	// `TIME_ONLY` type, only time of the epoch time is used. For example,
-	// you can set epoch time to `3 * 60 * 60 * 1000` to represent 3am.
+	// ValueMsEpoch: The value displayed as the default value before user
+	// input or previous user input, represented in milliseconds (Epoch time
+	// (https://en.wikipedia.org/wiki/Unix_time)). For `DATE_AND_TIME` type,
+	// the full epoch value is used. For `DATE_ONLY` type, only date of the
+	// epoch time is used. For `TIME_ONLY` type, only time of the epoch time
+	// is used. For example, to represent 3:00 AM, set epoch time to `3 * 60
+	// * 60 * 1000`.
 	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
@@ -1859,38 +1914,51 @@ func (s *GoogleAppsCardV1DateTimePicker) MarshalJSON() ([]byte, error) {
 // optional decorations such as a label above or below the text, an icon
 // in front of the text, a selection widget or a button after the text.
 type GoogleAppsCardV1DecoratedText struct {
-	// BottomLabel: The formatted text label that shows below the main text.
+	// BottomLabel: The text that appears below `text`. Always truncates.
+	// Supports simple formatting. See Text formatting for formatting
+	// details.
 	BottomLabel string `json:"bottomLabel,omitempty"`
 
 	// Button: A button that can be clicked to trigger an action.
 	Button *GoogleAppsCardV1Button `json:"button,omitempty"`
 
-	// EndIcon: An icon displayed after the text.
+	// EndIcon: An icon displayed after the text. Supports standard
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#builtinicons)
+	// and custom
+	// (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
+	// icons.
 	EndIcon *GoogleAppsCardV1Icon `json:"endIcon,omitempty"`
 
-	// Icon: Deprecated in favor of start_icon.
+	// Icon: Deprecated in favor of `startIcon`.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
 
-	// OnClick: Only the top and bottom label and content region are
-	// clickable.
+	// OnClick: When users click on `topLabel` or `bottomLabel`, this action
+	// triggers.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// StartIcon: The icon displayed in front of the text.
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
 
-	// SwitchControl: A switch widget can be clicked to change its state or
-	// trigger an action.
+	// SwitchControl: A switch widget can be clicked to change its state and
+	// trigger an action. Currently supported in dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). Support for
+	// card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// is coming soon.
 	SwitchControl *GoogleAppsCardV1SwitchControl `json:"switchControl,omitempty"`
 
-	// Text: Required. The main widget formatted text. See Text formatting
-	// for details.
+	// Text: Required. The primary text. Supports simple formatting. See
+	// Text formatting for formatting details.
 	Text string `json:"text,omitempty"`
 
-	// TopLabel: The formatted text label that shows above the main text.
+	// TopLabel: The text that appears above `text`. Always truncates.
+	// Supports simple formatting. See Text formatting for formatting
+	// details.
 	TopLabel string `json:"topLabel,omitempty"`
 
-	// WrapText: The wrap text setting. If `true`, the text is wrapped and
-	// displayed in multiline. Otherwise, the text is truncated.
+	// WrapText: The wrap text setting. If `true`, the text wraps and
+	// displays on multiple lines. Otherwise, the text is truncated. Only
+	// applies to `text`, not `topLabel` and `bottomLabel`.
 	WrapText bool `json:"wrapText,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
@@ -1916,12 +1984,28 @@ func (s *GoogleAppsCardV1DecoratedText) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Divider: A divider that appears in between widgets.
+// GoogleAppsCardV1Divider: Displays a divider between widgets, a
+// horizontal line. For example, the following JSON creates a divider:
+// ``` "divider": { } ```
 type GoogleAppsCardV1Divider struct {
 }
 
-// GoogleAppsCardV1Grid: Represents a Grid widget that displays items in
-// a configurable grid layout.
+// GoogleAppsCardV1Grid: Displays a grid with a collection of items. A
+// grid supports any number of columns and items. The number of rows is
+// determined by items divided by columns. A grid with 10 items and 2
+// columns has 5 rows. A grid with 11 items and 2 columns has 6 rows.
+// Currently supported in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs). Support for
+// card messages
+// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// is coming soon. For example, the following JSON creates a 2 column
+// grid with a single item: ``` "grid": { "title": "A fine collection of
+// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
+// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
+// }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
+// "textAlignment": "CENTER" ], "onClick": { "openLink": {
+// "url":"https://www.example.com" } } } ```
 type GoogleAppsCardV1Grid struct {
 	// BorderStyle: The border style to apply to each grid item.
 	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
@@ -1989,15 +2073,6 @@ type GoogleAppsCardV1GridItem struct {
 	// Subtitle: The grid item's subtitle.
 	Subtitle string `json:"subtitle,omitempty"`
 
-	// TextAlignment: The horizontal alignment of the grid item's text.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	TextAlignment string `json:"textAlignment,omitempty"`
-
 	// Title: The grid item's title.
 	Title string `json:"title,omitempty"`
 
@@ -2024,12 +2099,29 @@ func (s *GoogleAppsCardV1GridItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1Icon: An icon displayed in a widget on a card.
+// Supports standard
+// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// and custom
+// (https://developers.google.com/chat/api/guides/message-formats/cards#customicons)
+// icons.
 type GoogleAppsCardV1Icon struct {
-	// AltText: The description of the icon, used for accessibility. The
-	// default value is provided if you don't specify one.
+	// AltText: Optional. A description of the icon used for accessibility.
+	// If unspecified, a default value is provided. As a best practice, you
+	// should set a helpful description. For example, if an icon displays a
+	// user's account portrait, you could describe it as "A user's account
+	// portrait." If the icon displays in a Button, this alt text takes
+	// precedence and overwrites the button's alt text, so you should write
+	// alt text for the button: Set descriptive text that lets users know
+	// what the button does. For example, if a button opens a hyperlink, you
+	// might write: "Opens a new browser tab and navigates to the Google
+	// Chat developer documentation at https://developers.google.com/chat".
 	AltText string `json:"altText,omitempty"`
 
-	// IconUrl: The icon specified by a URL.
+	// IconUrl: Display a custom icon hosted at an HTTPS URL. For example:
+	// ``` "iconUrl":
+	// "https://developers.google.com/chat/images/quickstart-app-avatar.png"
+	// ``` Supported file types include `.png` and `.jpg`.
 	IconUrl string `json:"iconUrl,omitempty"`
 
 	// ImageType: The crop style applied to the image. In some cases,
@@ -2037,12 +2129,17 @@ type GoogleAppsCardV1Icon struct {
 	// standard icon.
 	//
 	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
+	//   "SQUARE" - Default value. Applies a square mask to the image. For
+	// example, a 4x3 image becomes 3x3.
+	//   "CIRCLE" - Applies a circular mask to the image. For example, a 4x3
+	// image becomes a circle with a diameter of 3.
 	ImageType string `json:"imageType,omitempty"`
 
-	// KnownIcon: The icon specified by the string name of a list of known
-	// icons.
+	// KnownIcon: Display one of the standard icons provided by Google
+	// Workspace. For example, to display an airplane icon, specify
+	// `AIRPLANE`. For a bus, specify `BUS`. For a full list of supported
+	// icons, see standard icons
+	// (https://developers.google.com/chat/api/guides/message-formats/cards).
 	KnownIcon string `json:"knownIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -2074,10 +2171,13 @@ type GoogleAppsCardV1Image struct {
 	// AltText: The alternative text of this image, used for accessibility.
 	AltText string `json:"altText,omitempty"`
 
-	// ImageUrl: An image URL.
+	// ImageUrl: The `https` URL that hosts the image. For example: ```
+	// https://developers.google.com/chat/images/quickstart-app-avatar.png
+	// ```
 	ImageUrl string `json:"imageUrl,omitempty"`
 
-	// OnClick: The action triggered by an `onClick` event.
+	// OnClick: When a user clicks on the image, the click triggers this
+	// action.
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -2141,20 +2241,23 @@ func (s *GoogleAppsCardV1ImageComponent) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1ImageCropStyle: Represents the crop style applied to
-// an image.
+// an image. For example, here's how to apply a 16 by 9 aspect ratio:
+// ``` cropStyle { "type": "RECTANGLE_CUSTOM", "aspectRatio": 16/9 } ```
 type GoogleAppsCardV1ImageCropStyle struct {
 	// AspectRatio: The aspect ratio to use if the crop type is
-	// `RECTANGLE_CUSTOM`.
+	// `RECTANGLE_CUSTOM`. For example, here's how to apply a 16 by 9 aspect
+	// ratio: ``` cropStyle { "type": "RECTANGLE_CUSTOM", "aspectRatio":
+	// 16/9 } ```
 	AspectRatio float64 `json:"aspectRatio,omitempty"`
 
 	// Type: The crop type.
 	//
 	// Possible values:
-	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified.
-	//   "SQUARE" - Applies a square crop.
+	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified. Do not use.
+	//   "SQUARE" - Default value. Applies a square crop.
 	//   "CIRCLE" - Applies a circular crop.
 	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
+	// aspect ratio. Set the custom aspect ratio with `aspectRatio`.
 	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
 	// ratio.
 	Type string `json:"type,omitempty"`
@@ -2196,14 +2299,14 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleAppsCardV1OnClick: Represents the response to an `onClick`
-// event.
+// GoogleAppsCardV1OnClick: Represents how to respond when users click
+// an interactive element on a card, such as a button.
 type GoogleAppsCardV1OnClick struct {
 	// Action: If specified, an action is triggered by this `onClick`.
 	Action *GoogleAppsCardV1Action `json:"action,omitempty"`
 
 	// Card: A new card is pushed to the card stack after clicking if
-	// specified.
+	// specified. Supported by Google Workspace Add-ons, but not Chat apps.
 	Card *GoogleAppsCardV1Card `json:"card,omitempty"`
 
 	// OpenDynamicLinkAction: An add-on triggers this action when the action
@@ -2292,25 +2395,30 @@ func (s *GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 
 // GoogleAppsCardV1Section: A section contains a collection of widgets
 // that are rendered vertically in the order that they are specified.
-// Across all platforms, cards have a narrow fixed width, so there is
-// currently no need for layout properties, for example, float.
 type GoogleAppsCardV1Section struct {
-	// Collapsible: Indicates whether this section is collapsible. If a
-	// section is collapsible, the description must be given.
+	// Collapsible: Indicates whether this section is collapsible.
+	// Collapsible sections hide some or all widgets, but users can expand
+	// the section to reveal the hidden widgets by clicking **Show more**.
+	// Users can hide the widgets again by clicking **Show less**. To
+	// determine which widgets are hidden, specify
+	// `uncollapsibleWidgetsCount`.
 	Collapsible bool `json:"collapsible,omitempty"`
 
-	// Header: The header of the section. Formatted text is supported.
+	// Header: Text that appears at the top of a section. Supports simple
+	// HTML formatted text
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
 	Header string `json:"header,omitempty"`
 
-	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
-	// example, when a section contains five widgets and the
-	// `uncollapsibleWidgetsCount` is set to `2`, the first two widgets are
-	// always shown and the last three are collapsed as default. The
-	// `uncollapsibleWidgetsCount` is taken into account only when
-	// `collapsible` is `true`.
+	// UncollapsibleWidgetsCount: The number of uncollapsible widgets which
+	// remain visible even when a section is collapsed. For example, when a
+	// section contains five widgets and the `uncollapsibleWidgetsCount` is
+	// set to `2`, the first two widgets are always shown and the last three
+	// are collapsed by default. The `uncollapsibleWidgetsCount` is taken
+	// into account only when `collapsible` is `true`.
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
 
-	// Widgets: A section must contain at least 1 widget.
+	// Widgets: All the widgets in the section. Must contain at least 1
+	// widget.
 	Widgets []*GoogleAppsCardV1Widget `json:"widgets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Collapsible") to
@@ -2337,29 +2445,74 @@ func (s *GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SelectionInput: A widget that creates a UI item with
-// options for users to select. For example, a dropdown menu.
+// options for users to select. For example, a dropdown menu or check
+// list. Chat apps receive and can process the value of entered text
+// during form input events. For details about working with form inputs,
+// see Receive form data
+// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+// When you need to collect data from users that matches options you
+// set, use a selection input. To collect abstract data from users, use
+// the text input widget instead. Only supported in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs). Support for
+// card messages
+// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// coming soon.
 type GoogleAppsCardV1SelectionInput struct {
-	// Items: An array of the selected items.
+	// Items: An array of the selected items. For example, all the selected
+	// check boxes.
 	Items []*GoogleAppsCardV1SelectionItem `json:"items,omitempty"`
 
-	// Label: The label displayed ahead of the switch control.
+	// Label: The text that appears above the selection input field in the
+	// user interface. Specify text that helps the user enter the
+	// information your app needs. For example, if users are selecting the
+	// urgency of a work ticket from a drop-down menu, the label might be
+	// "Urgency" or "Select urgency".
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in `formInput`.
+	// Name: The name by which the selection input is identified in a form
+	// input event. For details about working with form inputs, see Receive
+	// form data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Name string `json:"name,omitempty"`
 
 	// OnChangeAction: If specified, the form is submitted when the
 	// selection changes. If not specified, you must specify a separate
-	// button.
+	// button that submits the form. For details about working with form
+	// inputs, see Receive form data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
-	// Type: The type of the selection.
+	// Type: The way that an option appears to users. Different options
+	// support different types of interactions. For example, users can
+	// enable multiple check boxes, but can only select one value from a
+	// dropdown menu. Each selection input supports one type of selection.
+	// Mixing check boxes and switches, for example, is not supported.
 	//
 	// Possible values:
-	//   "CHECK_BOX" - A checkbox.
-	//   "RADIO_BUTTON" - A radio button.
-	//   "SWITCH" - A switch.
-	//   "DROPDOWN" - A dropdown menu.
+	//   "CHECK_BOX" - A set of checkboxes. Users can select multiple check
+	// boxes per selection input. Currently supported in
+	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
+	// Support for [card
+	// messages](https://developers.google.com/chat/api/guides/message-format
+	// s/cards) is coming soon.
+	//   "RADIO_BUTTON" - A set of radio buttons. Users can select one radio
+	// button per selection input. Currently supported in
+	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
+	// Support for [card
+	// messages](https://developers.google.com/chat/api/guides/message-format
+	// s/cards) is coming soon.
+	//   "SWITCH" - A set of switches. Users can turn on multiple switches
+	// at once per selection input. Currently supported in
+	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
+	// Support for [card
+	// messages](https://developers.google.com/chat/api/guides/message-format
+	// s/cards) is coming soon.
+	//   "DROPDOWN" - A dropdown menu. Users can select one dropdown menu
+	// item per selection input. Currently supported in
+	// [dialogs](https://developers.google.com/chat/how-tos/dialogs).
+	// Support for [card
+	// messages](https://developers.google.com/chat/api/guides/message-format
+	// s/cards) is coming soon.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2385,19 +2538,21 @@ func (s *GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SelectionItem: A selectable item in the switch
-// control.
+// GoogleAppsCardV1SelectionItem: A selectable item in a selection
+// input, such as a check box or a switch.
 type GoogleAppsCardV1SelectionItem struct {
-	// Selected: If more than one item is selected for `RADIO_BUTTON` and
-	// `DROPDOWN`, the first selected item is treated as selected and the
-	// ones after are ignored.
+	// Selected: When `true`, more than one item is selected. If more than
+	// one item is selected for radio buttons and dropdown menus, the first
+	// selected item is received and the ones after are ignored.
 	Selected bool `json:"selected,omitempty"`
 
-	// Text: The text to be displayed.
+	// Text: The text displayed to users.
 	Text string `json:"text,omitempty"`
 
 	// Value: The value associated with this item. The client should use
-	// this as a form input value.
+	// this as a form input value. For details about working with form
+	// inputs, see Receive form data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Selected") to
@@ -2423,9 +2578,11 @@ func (s *GoogleAppsCardV1SelectionItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1SuggestionItem: A suggestion item.
+// GoogleAppsCardV1SuggestionItem: One suggested value that users can
+// enter in a text input field.
 type GoogleAppsCardV1SuggestionItem struct {
-	// Text: The suggested autocomplete result.
+	// Text: The value of a suggested input to a text input field. This is
+	// equivalent to what users would enter themselves.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -2451,10 +2608,21 @@ func (s *GoogleAppsCardV1SuggestionItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Suggestions: A container wrapping elements necessary
-// for showing suggestion items used in text input autocomplete.
+// GoogleAppsCardV1Suggestions: Suggested values that users can enter.
+// These values appear when users click inside the text input field. As
+// users type, the suggested values dynamically filter to match what the
+// users have typed. For example, a text input field for programming
+// language might suggest Java, JavaScript, Python, and C++. When users
+// start typing "Jav", the list of suggestions filters to show just Java
+// and JavaScript. Suggested values help guide users to enter values
+// that your app can make sense of. When referring to JavaScript, some
+// users might enter "javascript" and others "java script". Suggesting
+// "JavaScript" can standardize how users interact with your app. When
+// specified, `TextInput.type` is always `SINGLE_LINE`, even if it is
+// set to `MULTIPLE_LINE`.
 type GoogleAppsCardV1Suggestions struct {
-	// Items: A list of suggestions used for autocomplete recommendations.
+	// Items: A list of suggestions used for autocomplete recommendations in
+	// text input fields.
 	Items []*GoogleAppsCardV1SuggestionItem `json:"items,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
@@ -2481,9 +2649,14 @@ func (s *GoogleAppsCardV1Suggestions) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SwitchControl: Either a toggle-style switch or a
-// checkbox.
+// checkbox inside a `decoratedText` widget. Only supported on the
+// `decoratedText` widget. Currently supported in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs). Support for
+// card messages
+// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// is coming soon.
 type GoogleAppsCardV1SwitchControl struct {
-	// ControlType: The control type, either switch or checkbox.
+	// ControlType: How the switch appears in the user interface.
 	//
 	// Possible values:
 	//   "SWITCH" - A toggle-style switch.
@@ -2491,16 +2664,23 @@ type GoogleAppsCardV1SwitchControl struct {
 	//   "CHECK_BOX" - A checkbox.
 	ControlType string `json:"controlType,omitempty"`
 
-	// Name: The name of the switch widget that's used in `formInput`.
+	// Name: The name by which the switch widget is identified in a form
+	// input event. For details about working with form inputs, see Receive
+	// form data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Name string `json:"name,omitempty"`
 
-	// OnChangeAction: The action when the switch state is changed.
+	// OnChangeAction: The action to perform when the switch state is
+	// changed, such as what function to run.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
-	// Selected: If the switch is selected.
+	// Selected: When `true`, the switch is selected.
 	Selected bool `json:"selected,omitempty"`
 
-	// Value: The value is what is passed back in the callback.
+	// Value: The value entered by a user, returned as part of a form input
+	// event. For details about working with form inputs, see Receive form
+	// data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ControlType") to
@@ -2526,41 +2706,82 @@ func (s *GoogleAppsCardV1SwitchControl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1TextInput: A text input is a UI item where users can
-// input text. A text input can also have an onChange action and
-// suggestions.
+// GoogleAppsCardV1TextInput: A field in which users can enter text.
+// Supports suggestions and on-change actions. Chat apps receive and can
+// process the value of entered text during form input events. For
+// details about working with form inputs, see Receive form data
+// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
+// When you need to collect abstract data from users, use a text input.
+// To collect defined data from users, use the selection input widget
+// instead. Only supported in dialogs
+// (https://developers.google.com/chat/how-tos/dialogs). Support for
+// card messages
+// (https://developers.google.com/chat/api/guides/message-formats/cards)
+// coming soon.
 type GoogleAppsCardV1TextInput struct {
-	// AutoCompleteAction: The refresh function that returns suggestions
-	// based on the user's input text. If the callback is not specified,
-	// autocomplete is done in client side based on the initial suggestion
-	// items.
+	// AutoCompleteAction: Optional. Specify what action to take when the
+	// text input field provides suggestions to users who interact with it.
+	// If unspecified, the suggestions are set by `initialSuggestions` and
+	// are processed by the client. If specified, the app takes the action
+	// specified here, such as running a custom function. Supported by
+	// Google Workspace Add-ons, but not Chat apps. Support by Chat apps
+	// coming soon.
 	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
 
-	// HintText: The hint text.
+	// HintText: Text that appears inside the text input field meant to
+	// assist users by prompting them to enter a certain value. This text is
+	// not visible after users begin typing. Required if `label` is
+	// unspecified. Otherwise, optional.
 	HintText string `json:"hintText,omitempty"`
 
-	// InitialSuggestions: The initial suggestions made before any user
-	// input.
+	// InitialSuggestions: Suggested values that users can enter. These
+	// values appear when users click inside the text input field. As users
+	// type, the suggested values dynamically filter to match what the users
+	// have typed. For example, a text input field for programming language
+	// might suggest Java, JavaScript, Python, and C++. When users start
+	// typing "Jav", the list of suggestions filters to show just Java and
+	// JavaScript. Suggested values help guide users to enter values that
+	// your app can make sense of. When referring to JavaScript, some users
+	// might enter "javascript" and others "java script". Suggesting
+	// "JavaScript" can standardize how users interact with your app. When
+	// specified, `TextInput.type` is always `SINGLE_LINE`, even if it is
+	// set to `MULTIPLE_LINE`.
 	InitialSuggestions *GoogleAppsCardV1Suggestions `json:"initialSuggestions,omitempty"`
 
-	// Label: At least one of label and hintText must be specified.
+	// Label: The text that appears above the text input field in the user
+	// interface. Specify text that helps the user enter the information
+	// your app needs. For example, if you are asking someone's name, but
+	// specifically need their surname, write "surname" instead of "name".
+	// Required if `hintText` is unspecified. Otherwise, optional.
 	Label string `json:"label,omitempty"`
 
-	// Name: The name of the text input which is used in `formInput`.
+	// Name: The name by which the text input is identified in a form input
+	// event. For details about working with form inputs, see Receive form
+	// data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Name string `json:"name,omitempty"`
 
-	// OnChangeAction: The onChange action, for example, invoke a function.
+	// OnChangeAction: What to do when a change occurs in the text input
+	// field. Examples of changes include a user adding to the field, or
+	// deleting text. Examples of actions to take include running a custom
+	// function or opening a dialog
+	// (https://developers.google.com/chat/how-tos/dialogs) in Google Chat.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 
-	// Type: The style of the text, for example, a single line or multiple
-	// lines.
+	// Type: How a text input field appears in the user interface. For
+	// example, whether the field is single or multi-line.
 	//
 	// Possible values:
-	//   "SINGLE_LINE" - The text is put into a single line.
-	//   "MULTIPLE_LINE" - The text is put into multiple lines.
+	//   "SINGLE_LINE" - The text input field has a fixed height of one
+	// line.
+	//   "MULTIPLE_LINE" - The text input field has a fixed height of
+	// multiple lines.
 	Type string `json:"type,omitempty"`
 
-	// Value: The default value when there is no input from the user.
+	// Value: The value entered by a user, returned as part of a form input
+	// event. For details about working with form inputs, see Receive form
+	// data
+	// (https://developers.google.com/chat/how-tos/dialogs#receive_form_data_from_dialogs).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
@@ -2618,87 +2839,100 @@ func (s *GoogleAppsCardV1TextParagraph) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Widget: A widget is a UI element that presents texts,
-// images, etc.
+// GoogleAppsCardV1Widget: Each card is made up of widgets. A widget is
+// a composite object that can represent one of text, images, buttons,
+// and other object types.
 type GoogleAppsCardV1Widget struct {
 	// ButtonList: A list of buttons. For example, the following JSON
-	// creates two buttons. The first is a filled text button and the second
+	// creates two buttons. The first is a blue text button and the second
 	// is an image button that opens a link: ``` "buttonList": { "buttons":
-	// [ "button": { "text": "Edit", "Color": { "Red": 255 "Green": 255
-	// "Blue": 255 } "disabled": true }, "button": { "icon": { "knownIcon":
-	// "INVITE" "altText": "check calendar" }, "onClick": { "openLink": {
-	// "url": "https://example.com/calendar" } } }, ] } ```
+	// [ "button": { "text": "Edit", "color": { "red": 0, "green": 0,
+	// "blue": 1, "alpha": 1 } "disabled": true }, "button": { "icon": {
+	// "knownIcon": "INVITE" "altText": "check calendar" }, "onClick": {
+	// "openLink": { "url": "https://example.com/calendar" } } }, ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
 
-	// DateTimePicker: Displays a selection/input widget for date/time. For
-	// example, the following JSON creates a date/time picker for an
-	// appointment time: ``` "date_time_picker": { "name":
+	// DateTimePicker: Displays a selection/input widget for date, time, or
+	// date and time. Not supported by Chat apps. Support by Chat apps is
+	// coming soon. For example, the following JSON creates a datetime
+	// picker to schedule an appointment: ``` "date_time_picker": { "name":
 	// "appointment_time", "label": "Book your appointment at:", "type":
 	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
 	// ```
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 
-	// DecoratedText: Displays a decorated text item in this widget. For
-	// example, the following JSON creates a decorated text widget showing
-	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "sasha@example.com",
-	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_sasha", "selected": false,
-	// "controlType": "ControlType.CHECKBOX" } } ```
+	// DecoratedText: Displays a decorated text item. For example, the
+	// following JSON creates a decorated text widget showing email address:
+	// ``` "decoratedText": { "icon": { "knownIcon": "EMAIL" }, "topLabel":
+	// "Email Address", "text": "sasha@example.com", "bottomLabel": "This is
+	// a new Email address!", "switchWidget": { "name":
+	// "has_send_welcome_email_to_sasha", "selected": false, "controlType":
+	// "ControlType.CHECKBOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 
-	// Divider: Displays a divider. For example, the following JSON creates
-	// a divider: ``` "divider": { } ```
+	// Divider: Displays a horizontal line divider between widgets. For
+	// example, the following JSON creates a divider: ``` "divider": { } ```
 	Divider *GoogleAppsCardV1Divider `json:"divider,omitempty"`
 
-	// Grid: Displays a grid with a collection of items. For example, the
-	// following JSON creates a 2 column grid with a single item: ```
-	// "grid": { "title": "A fine collection of items", "numColumns": 2,
-	// "borderStyle": { "type": "STROKE", "cornerRadius": 4.0 }, "items": [
-	// "image": { "imageUri": "https://www.example.com/image.png",
-	// "cropStyle": { "type": "SQUARE" }, "borderStyle": { "type": "STROKE"
-	// } }, "title": "An item", "textAlignment": "CENTER" ], "onClick": {
-	// "openLink": { "url":"https://www.example.com" } } } ```
+	// Grid: Displays a grid with a collection of items. A grid supports any
+	// number of columns and items. The number of rows is determined by the
+	// upper bounds of the number items divided by the number of columns. A
+	// grid with 10 items and 2 columns has 5 rows. A grid with 11 items and
+	// 2 columns has 6 rows. Currently supported in dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). Support for
+	// card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// is coming soon. For example, the following JSON creates a 2 column
+	// grid with a single item: ``` "grid": { "title": "A fine collection of
+	// items", "numColumns": 2, "borderStyle": { "type": "STROKE",
+	// "cornerRadius": 4.0 }, "items": [ "image": { "imageUri":
+	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE"
+	// }, "borderStyle": { "type": "STROKE" } }, "title": "An item",
+	// "textAlignment": "CENTER" ], "onClick": { "openLink": {
+	// "url":"https://www.example.com" } } } ```
 	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
 
-	// HorizontalAlignment: The horizontal alignment of this widget.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
-
-	// Image: Displays an image in this widget. For example, the following
-	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/sasha.png" "altText": "Avatar for
-	// Sasha" } ```
+	// Image: Displays an image. For example, the following JSON creates an
+	// image with alternative text: ``` "image": { "imageUrl":
+	// "https://developers.google.com/chat/images/quickstart-app-avatar.png"
+	// "altText": "Chat app avatar" } ```
 	Image *GoogleAppsCardV1Image `json:"image,omitempty"`
 
-	// SelectionInput: Displays a switch control in this widget. For
-	// example, the following JSON creates a dropdown selection for size:
-	// ``` "switchControl": { "name": "size", "label": "Size" "type":
-	// "SelectionType.DROPDOWN", "items": [ { "text": "S", "value": "small",
-	// "selected": false }, { "text": "M", "value": "medium", "selected":
-	// true }, { "text": "L", "value": "large", "selected": false }, {
-	// "text": "XL", "value": "extra_large", "selected": false } ] } ```
+	// SelectionInput: Displays a selection control that lets users select
+	// items. Selection controls can be check boxes, radio buttons,
+	// switches, or dropdown menus. Currently supported in dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). Support for
+	// card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// is coming soon. For example, the following JSON creates a dropdown
+	// menu that lets users choose a size: ``` "selectionInput": { "name":
+	// "size", "label": "Size" "type": "SelectionType.DROPDOWN", "items": [
+	// { "text": "S", "value": "small", "selected": false }, { "text": "M",
+	// "value": "medium", "selected": true }, { "text": "L", "value":
+	// "large", "selected": false }, { "text": "XL", "value": "extra_large",
+	// "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 
-	// TextInput: Displays a text input in this widget. For example, the
-	// following JSON creates a text input for mail address: ```
-	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
-	// } ``` As another example, the following JSON creates a text input for
-	// programming language with static suggestions: ``` "textInput": {
-	// "name": "preferred_programing_language", "label": "Preferred
-	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
-	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
-	// } ```
+	// TextInput: Displays a text box that users can type into. Currently
+	// supported in dialogs
+	// (https://developers.google.com/chat/how-tos/dialogs). Support for
+	// card messages
+	// (https://developers.google.com/chat/api/guides/message-formats/cards)
+	// is coming soon. For example, the following JSON creates a text input
+	// for an email address: ``` "textInput": { "name": "mailing_address",
+	// "label": "Mailing Address" } ``` As another example, the following
+	// JSON creates a text input for a programming language with static
+	// suggestions: ``` "textInput": { "name":
+	// "preferred_programing_language", "label": "Preferred Language",
+	// "initialSuggestions": { "items": [ { "text": "C++" }, { "text":
+	// "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] } } ```
 	TextInput *GoogleAppsCardV1TextInput `json:"textInput,omitempty"`
 
-	// TextParagraph: Displays a text paragraph in this widget. For example,
-	// the following JSON creates a bolded text: ``` "textParagraph": {
-	// "text": " *bold text*" } ```
+	// TextParagraph: Displays a text paragraph. Supports simple HTML
+	// formatted text
+	// (https://developers.google.com/apps-script/add-ons/concepts/widgets#text_formatting).
+	// For example, the following JSON creates a bolded text: ```
+	// "textParagraph": { "text": " *bold text*" } ```
 	TextParagraph *GoogleAppsCardV1TextParagraph `json:"textParagraph,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ButtonList") to
@@ -3013,6 +3247,7 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSpacesResponse: The response corresponding to ListSpacesRequest.
 type ListSpacesResponse struct {
 	// NextPageToken: A token that can be sent as `pageToken` to retrieve
 	// the next page of results. If empty, there are no subsequent pages.
@@ -5454,8 +5689,17 @@ type SpacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a space. Requires service account authentication
+// Get: Returns a space. Requires authentication
+// (https://developers.google.com/chat/api/guides/auth). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.spaces` or `chat.spaces.readonly` authorization scope.
 //
 //   - name: Resource name of the space, in the form "spaces/*". Format:
 //     spaces/{space}.
@@ -5564,7 +5808,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Returns a space. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.spaces` or `chat.spaces.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.get",
@@ -5598,9 +5842,19 @@ type SpacesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists spaces the caller is a member of. Requires service
-// account authentication
+// List: Lists spaces the caller is a member of. Requires authentication
+// (https://developers.google.com/chat/api/guides/auth). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.spaces` or `chat.spaces.readonly` authorization scope.
+// Lists spaces visible to the caller or authenticated user. Group chats
+// and DMs aren't listed until the first message is sent.
 func (r *SpacesService) List() *SpacesListCall {
 	c := &SpacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5721,7 +5975,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists spaces the caller is a member of. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). ",
+	//   "description": "Lists spaces the caller is a member of. Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.spaces` or `chat.spaces.readonly` authorization scope. Lists spaces visible to the caller or authenticated user. Group chats and DMs aren't listed until the first message is sent.",
 	//   "flatPath": "v1/spaces",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.list",

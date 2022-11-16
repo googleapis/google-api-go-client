@@ -152,6 +152,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Pipelines = NewProjectsLocationsPipelinesService(s)
+	rs.TransformDescriptions = NewProjectsLocationsTransformDescriptionsService(s)
 	return rs
 }
 
@@ -159,6 +160,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Pipelines *ProjectsLocationsPipelinesService
+
+	TransformDescriptions *ProjectsLocationsTransformDescriptionsService
 }
 
 func NewProjectsLocationsPipelinesService(s *Service) *ProjectsLocationsPipelinesService {
@@ -180,6 +183,233 @@ func NewProjectsLocationsPipelinesJobsService(s *Service) *ProjectsLocationsPipe
 
 type ProjectsLocationsPipelinesJobsService struct {
 	s *Service
+}
+
+func NewProjectsLocationsTransformDescriptionsService(s *Service) *ProjectsLocationsTransformDescriptionsService {
+	rs := &ProjectsLocationsTransformDescriptionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsTransformDescriptionsService struct {
+	s *Service
+}
+
+// GoogleCloudDatapipelinesV1ArrayValue: Represents an array of values.
+// The elements can be of any type.
+type GoogleCloudDatapipelinesV1ArrayValue struct {
+	// Elements: The elements of the array.
+	Elements []*GoogleCloudDatapipelinesV1FieldValue `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Elements") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1ArrayValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1ArrayValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1AtomicValue: Represents a non-dividable
+// value.
+type GoogleCloudDatapipelinesV1AtomicValue struct {
+	// BooleanValue: A boolean value.
+	BooleanValue bool `json:"booleanValue,omitempty"`
+
+	// ByteValue: An 8-bit signed value.
+	ByteValue int64 `json:"byteValue,omitempty"`
+
+	// BytesValue: An array of raw bytes.
+	BytesValue string `json:"bytesValue,omitempty"`
+
+	// DatetimeValue: A datetime value.
+	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
+
+	// DecimalValue: A large decimal value, equivalent to Java BigDecimal.
+	DecimalValue *GoogleTypeDecimal `json:"decimalValue,omitempty"`
+
+	// DoubleValue: A 64-bit floating point value.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+
+	// FloatValue: A 32-bit floating point value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// Int16Value: A 16-bit signed value.
+	Int16Value int64 `json:"int16Value,omitempty"`
+
+	// Int32Value: A 32-bit signed value.
+	Int32Value int64 `json:"int32Value,omitempty"`
+
+	// Int64Value: A 64-bit signed value.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+
+	// StringValue: A string value.
+	StringValue string `json:"stringValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BooleanValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BooleanValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1AtomicValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1AtomicValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDatapipelinesV1AtomicValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDatapipelinesV1AtomicValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		FloatValue  gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
+// GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse:
+// Response message for BatchGetTransformDescriptions
+type GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse struct {
+	// TransformDescriptions: List of requested transform descriptions.
+	TransformDescriptions []*GoogleCloudDatapipelinesV1TransformDescription `json:"transformDescriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TransformDescriptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TransformDescriptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1ComputeSchemaRequest: Request message for
+// ComputeSchema
+type GoogleCloudDatapipelinesV1ComputeSchemaRequest struct {
+	// Config: Required. The configuration for the transform. If this is not
+	// a source, then each input with its schema must be set. It is not
+	// required to have any outputs set.
+	Config *GoogleCloudDatapipelinesV1ConfiguredTransform `json:"config,omitempty"`
+
+	// InputSchemas: Optional. In relation to the full pipeline graph, the
+	// schemas of the transforms that are used as inputs to the one for
+	// `config`. If `config` represents a transform for reading from some
+	// resource, then this should be empty. For all other transforms, at
+	// least one value must be provided.
+	InputSchemas []*GoogleCloudDatapipelinesV1Schema `json:"inputSchemas,omitempty"`
+
+	// RawSchema: Optional. If set, this will use the provided raw schema to
+	// compute the schema rather than connecting to any resources.
+	// Validation will still occur to make sure it is compatible with all
+	// input schemas. If the transform is an IO, the IO must support that
+	// schema type.
+	RawSchema *GoogleCloudDatapipelinesV1RawSchemaInfo `json:"rawSchema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1ComputeSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1ComputeSchemaRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1ConfiguredTransform: A fully configured
+// transform that can be validated.
+type GoogleCloudDatapipelinesV1ConfiguredTransform struct {
+	// Config: Configuration values provided. These must match the schema
+	// provided in the row's schema.
+	Config *GoogleCloudDatapipelinesV1Row `json:"config,omitempty"`
+
+	// UniformResourceName: Unique resource name of the transform. This
+	// should be the same as the equivalent `TransformDescription` value.
+	UniformResourceName string `json:"uniformResourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1ConfiguredTransform) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1ConfiguredTransform
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatapipelinesV1DataflowJobDetails: Pipeline job details
@@ -218,6 +448,222 @@ type GoogleCloudDatapipelinesV1DataflowJobDetails struct {
 
 func (s *GoogleCloudDatapipelinesV1DataflowJobDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1DataflowJobDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1EnumerationValue: Represents a selected
+// value from an EnumerationType.
+type GoogleCloudDatapipelinesV1EnumerationValue struct {
+	// Name: Name of the enum option.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1EnumerationValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1EnumerationValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1Field: Info for a single field in the
+// schema.
+type GoogleCloudDatapipelinesV1Field struct {
+	// Name: Name of the field.
+	Name string `json:"name,omitempty"`
+
+	// Type: Type info for the field.
+	Type *GoogleCloudDatapipelinesV1FieldType `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1Field) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1Field
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1FieldType: Type info about a field.
+type GoogleCloudDatapipelinesV1FieldType struct {
+	// CollectionElementType: If `type` is an array or iterable, this is the
+	// type contained in that array or iterable.
+	CollectionElementType *GoogleCloudDatapipelinesV1FieldType `json:"collectionElementType,omitempty"`
+
+	// LogicalType: If `type` is a logical type, this is the info for the
+	// specific logical type.
+	LogicalType *GoogleCloudDatapipelinesV1LogicalType `json:"logicalType,omitempty"`
+
+	// MapType: If `type` is a map, this is the key and value types for that
+	// map.
+	MapType *GoogleCloudDatapipelinesV1MapType `json:"mapType,omitempty"`
+
+	// Nullable: Whether or not this field is nullable.
+	Nullable bool `json:"nullable,omitempty"`
+
+	// RowSchema: If `type` is a row, this is the schema of that row.
+	RowSchema *GoogleCloudDatapipelinesV1Schema `json:"rowSchema,omitempty"`
+
+	// Type: Specific type of the field. For non-atomic types, the
+	// corresponding type info for that non-atomic must be set.
+	//
+	// Possible values:
+	//   "TYPE_NAME_UNSPECIFIED" - Type name is not set (generally an error)
+	//   "TYPE_NAME_BYTE" - 8-bit signed integer
+	//   "TYPE_NAME_INT16" - 16-bit signed integer
+	//   "TYPE_NAME_INT32" - 32-bit signed integer
+	//   "TYPE_NAME_INT64" - 64-bit signed integer
+	//   "TYPE_NAME_DECIMAL" - Large decimal type (equivalent to Java
+	// BigDecimal)
+	//   "TYPE_NAME_FLOAT" - 32-bit floating point integer
+	//   "TYPE_NAME_DOUBLE" - 64-bit floating point integer
+	//   "TYPE_NAME_STRING" - String
+	//   "TYPE_NAME_DATETIME" - Datetime
+	//   "TYPE_NAME_BOOLEAN" - Bool
+	//   "TYPE_NAME_BYTES" - Convenience for an ARRAY of BYTE values
+	//   "TYPE_NAME_ARRAY" - Array of some other values.
+	//   "TYPE_NAME_ITERABLE" - Iterable of some other values.
+	//   "TYPE_NAME_MAP" - Key/Value mapping between values.
+	//   "TYPE_NAME_ROW" - Struct that follows a particular schema
+	//   "TYPE_NAME_LOGICAL_TYPE" - Beam logical type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CollectionElementType") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionElementType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1FieldType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1FieldType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1FieldValue: A single value in a row. The
+// value set must correspond to the correct type from the row's schema.
+type GoogleCloudDatapipelinesV1FieldValue struct {
+	// ArrayValue: The array value of this field. Corresponds to
+	// TYPE_NAME_ARRAY in the schema.
+	ArrayValue *GoogleCloudDatapipelinesV1ArrayValue `json:"arrayValue,omitempty"`
+
+	// AtomicValue: The atomic value of this field. Must correspond to the
+	// correct atomic type in the schema.
+	AtomicValue *GoogleCloudDatapipelinesV1AtomicValue `json:"atomicValue,omitempty"`
+
+	// EnumValue: The enum value of this field. Corresponds to
+	// TYPE_NAME_LOGICAL_TYPE in the schema if that logical type represents
+	// an `EnumerationType` type.
+	EnumValue *GoogleCloudDatapipelinesV1EnumerationValue `json:"enumValue,omitempty"`
+
+	// FixedBytesValue: The fixed-length byte collection of this field.
+	// Corresponds to TYPE_NAME_LOGICAL_TYPE in the schema if that logical
+	// type represents a `FixedBytes` type.
+	FixedBytesValue *GoogleCloudDatapipelinesV1FixedBytesValue `json:"fixedBytesValue,omitempty"`
+
+	// IterableValue: The iterable value of this field. Corresponds to
+	// TYPE_NAME_ITERABLE in the schema.
+	IterableValue *GoogleCloudDatapipelinesV1IterableValue `json:"iterableValue,omitempty"`
+
+	// MapValue: The map value of this field. Corresponds to TYPE_NAME_MAP
+	// in the schema.
+	MapValue *GoogleCloudDatapipelinesV1MapValue `json:"mapValue,omitempty"`
+
+	// RowValue: The row value of this field. Corresponds to TYPE_NAME_ROW
+	// in the schema. This row also holds to its own schema.
+	RowValue *GoogleCloudDatapipelinesV1Row `json:"rowValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArrayValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArrayValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1FieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1FieldValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1FixedBytesValue: Represents a collection of
+// bytes whose size is the same as the associated FixedBytes size value.
+type GoogleCloudDatapipelinesV1FixedBytesValue struct {
+	// Value: The raw bytes. It must be exactly the size specified in the
+	// schema.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1FixedBytesValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1FixedBytesValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -338,6 +784,35 @@ type GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment struct {
 
 func (s *GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1FlexTemplateRuntimeEnvironment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1IterableValue: Represents an iterable of
+// values. The elements can be of any type.
+type GoogleCloudDatapipelinesV1IterableValue struct {
+	// Elements: The elements of the iterable.
+	Elements []*GoogleCloudDatapipelinesV1FieldValue `json:"elements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Elements") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Elements") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1IterableValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1IterableValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -675,6 +1150,190 @@ func (s *GoogleCloudDatapipelinesV1ListPipelinesResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatapipelinesV1LogicalType: Represents the input for
+// creating a specified logical type.
+type GoogleCloudDatapipelinesV1LogicalType struct {
+	// EnumerationType: The enum represented by this logical type.
+	EnumerationType *GoogleCloudDatapipelinesV1LogicalTypeEnumerationType `json:"enumerationType,omitempty"`
+
+	// FixedBytes: The fixed-size byte collection represented by this
+	// logical type.
+	FixedBytes *GoogleCloudDatapipelinesV1LogicalTypeFixedBytes `json:"fixedBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnumerationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnumerationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1LogicalType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1LogicalType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1LogicalTypeEnumerationType: Represents the
+// Beam EnumerationType logical type.
+type GoogleCloudDatapipelinesV1LogicalTypeEnumerationType struct {
+	// Values: Names of the values. The numeric value is the same as the
+	// index.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1LogicalTypeEnumerationType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1LogicalTypeEnumerationType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1LogicalTypeFixedBytes: Represents the Beam
+// FixedBytes logical type.
+type GoogleCloudDatapipelinesV1LogicalTypeFixedBytes struct {
+	// SizeBytes: Number of bytes to allocate.
+	SizeBytes int64 `json:"sizeBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1LogicalTypeFixedBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1LogicalTypeFixedBytes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1MapType: Represents a map in a schema.
+type GoogleCloudDatapipelinesV1MapType struct {
+	// MapKeyType: Key type of the map. Only atomic types are supported.
+	MapKeyType *GoogleCloudDatapipelinesV1FieldType `json:"mapKeyType,omitempty"`
+
+	// MapValueType: Value type of the map.
+	MapValueType *GoogleCloudDatapipelinesV1FieldType `json:"mapValueType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MapKeyType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MapKeyType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1MapType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1MapType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1MapValue: Represents a key/value pairing.
+type GoogleCloudDatapipelinesV1MapValue struct {
+	// Entries: The entries in the map.
+	Entries []*GoogleCloudDatapipelinesV1MapValueEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1MapValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1MapValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1MapValueEntry: A single entry in the map.
+// Each entry must have a unique key.
+type GoogleCloudDatapipelinesV1MapValueEntry struct {
+	// Key: The key value. Only atomic values are supported.
+	Key *GoogleCloudDatapipelinesV1FieldValue `json:"key,omitempty"`
+
+	// Value: The value associated with the key. It may be of any type.
+	Value *GoogleCloudDatapipelinesV1FieldValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1MapValueEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1MapValueEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatapipelinesV1Pipeline: The main pipeline entity and all
 // the necessary metadata for launching and managing linked jobs.
 type GoogleCloudDatapipelinesV1Pipeline struct {
@@ -788,6 +1447,75 @@ type GoogleCloudDatapipelinesV1Pipeline struct {
 
 func (s *GoogleCloudDatapipelinesV1Pipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatapipelinesV1Pipeline
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1RawSchemaInfo: The raw schema and its type.
+type GoogleCloudDatapipelinesV1RawSchemaInfo struct {
+	// RawSchema: The schema.
+	RawSchema string `json:"rawSchema,omitempty"`
+
+	// Type: The type of the schema.
+	//
+	// Possible values:
+	//   "RAW_SCHEMA_TYPE_UNSPECIFIED" - The schema type is unknown.
+	//   "RAW_SCHEMA_TYPE_AVRO" - The schema is an Avro schema.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RawSchema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RawSchema") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1RawSchemaInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1RawSchemaInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1Row: Represents an Apache Beam row, though
+// the `Any` nature of values is replaced with more concrete
+// representations of valid values.
+type GoogleCloudDatapipelinesV1Row struct {
+	// Schema: Required. The schema of the row's data.
+	Schema *GoogleCloudDatapipelinesV1SchemaSource `json:"schema,omitempty"`
+
+	// Values: Required. The values of this Row. A fully built row is
+	// required to hold to the schema specified by `schema`.
+	Values []*GoogleCloudDatapipelinesV1FieldValue `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1Row) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1Row
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -983,6 +1711,77 @@ func (s *GoogleCloudDatapipelinesV1ScheduleSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatapipelinesV1Schema: Represents a simplified Apache Beam
+// schema.
+type GoogleCloudDatapipelinesV1Schema struct {
+	// Fields: Fields in the schema. Every field within a schema must have a
+	// unique name.
+	Fields []*GoogleCloudDatapipelinesV1Field `json:"fields,omitempty"`
+
+	// ReferenceId: An identifier of the schema for looking it up in a
+	// repository. This only needs to be set if the schema is stored in a
+	// repository.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1Schema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatapipelinesV1SchemaSource: Holds a schema or a reference
+// to a schema in some repository.
+type GoogleCloudDatapipelinesV1SchemaSource struct {
+	// LocalSchema: Schema located locally with the message.
+	LocalSchema *GoogleCloudDatapipelinesV1Schema `json:"localSchema,omitempty"`
+
+	// ReferenceId: The `reference_id` value of a schema in a repository.
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocalSchema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocalSchema") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1SchemaSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1SchemaSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatapipelinesV1SdkVersion: The version of the SDK used to
 // run the job.
 type GoogleCloudDatapipelinesV1SdkVersion struct {
@@ -1033,6 +1832,49 @@ func (s *GoogleCloudDatapipelinesV1SdkVersion) MarshalJSON() ([]byte, error) {
 // GoogleCloudDatapipelinesV1StopPipelineRequest: Request message for
 // StopPipeline.
 type GoogleCloudDatapipelinesV1StopPipelineRequest struct {
+}
+
+// GoogleCloudDatapipelinesV1TransformDescription: Description of a
+// schema-aware transform, which provides info on how it can be
+// configured.
+type GoogleCloudDatapipelinesV1TransformDescription struct {
+	// Name: Output only. The full name of this resource formatted as:
+	// projects/{project}/locations/{location}/transformDescriptions/{transfo
+	// rm_description} `transform_description` is the same as the
+	// `uniform_resource_name` field.
+	Name string `json:"name,omitempty"`
+
+	// Options: Available options for configuring the transform.
+	Options *GoogleCloudDatapipelinesV1Schema `json:"options,omitempty"`
+
+	// UniformResourceName: Unique resource name of the transform.
+	UniformResourceName string `json:"uniformResourceName,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatapipelinesV1TransformDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatapipelinesV1TransformDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatapipelinesV1Workload: Workload details for creating the
@@ -1125,6 +1967,346 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeDateTime: Represents civil time (or occasionally physical
+// time). This type can represent a civil time in one of a few possible
+// ways: * When utc_offset is set and time_zone is unset: a civil time
+// on a calendar day with a particular offset from UTC. * When time_zone
+// is set and utc_offset is unset: a civil time on a calendar day in a
+// particular time zone. * When neither time_zone nor utc_offset is set:
+// a civil time on a calendar day in local time. The date is relative to
+// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
+// DateTime is considered not to have a specific year, month, or day
+// respectively. This type may also be used to represent a physical time
+// if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for
+// physical time instead. If your use case also would like to store the
+// user's timezone, that can be done in another field. This type is more
+// flexible than some applications may want. Make sure to document and
+// validate your application's limitations.
+type GoogleTypeDateTime struct {
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
+	// year and month, or 0 if specifying a datetime without a day.
+	Day int64 `json:"day,omitempty"`
+
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
+	// 23, defaults to 0 (midnight). An API may choose to allow the value
+	// "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
+	// defaults to 0.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
+	// specifying a datetime without a month.
+	Month int64 `json:"month,omitempty"`
+
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
+	// to 999,999,999, defaults to 0.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be
+	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
+	// allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// TimeZone: Time zone.
+	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
+
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and
+	// +18 hours. For example, a UTC offset of -4:00 would be represented as
+	// { seconds: -14400 }.
+	UtcOffset string `json:"utcOffset,omitempty"`
+
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if
+	// specifying a datetime without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDateTime
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeDecimal: A representation of a decimal value, such as 2.5.
+// Clients may convert values into language-native decimal formats, such
+// as Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
+// https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
+// [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
+type GoogleTypeDecimal struct {
+	// Value: The decimal value, as a string. The string representation
+	// consists of an optional sign, `+` (`U+002B`) or `-` (`U+002D`),
+	// followed by a sequence of zero or more decimal digits ("the
+	// integer"), optionally followed by a fraction, optionally followed by
+	// an exponent. An empty string **should** be interpreted as `0`. The
+	// fraction consists of a decimal point followed by zero or more decimal
+	// digits. The string must contain at least one digit in either the
+	// integer or the fraction. The number formed by the sign, the integer
+	// and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed
+	// by one or more decimal digits. Services **should** normalize decimal
+	// values before storing them by: - Removing an explicitly-provided `+`
+	// sign (`+2.5` -> `2.5`). - Replacing a zero-length integer value with
+	// `0` (`.5` -> `0.5`). - Coercing the exponent character to upper-case,
+	// with explicit sign (`2.5e8` -> `2.5E+8`). - Removing an
+	// explicitly-provided zero exponent (`2.5E0` -> `2.5`). Services
+	// **may** perform additional normalization based on its own needs and
+	// the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <->
+	// `0.25`). Additionally, services **may** preserve trailing zeroes in
+	// the fraction to indicate increased precision, but are not required to
+	// do so. Note that only the `.` character is supported to divide the
+	// integer and the fraction; `,` **should not** be supported regardless
+	// of locale. Additionally, thousand separators **should not** be
+	// supported. If a service does support them, values **must** be
+	// normalized. The ENBF grammar is: DecimalString = '' | [Sign]
+	// Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = {
+	// '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services
+	// **should** clearly document the range of supported values, the
+	// maximum supported precision (total number of digits), and, if
+	// applicable, the scale (number of digits after the decimal point), as
+	// well as how it behaves when receiving out-of-bounds values. Services
+	// **may** choose to accept values passed as input even when the value
+	// has a higher precision or scale than the service supports, and
+	// **should** round the value to fit the supported scale. Alternatively,
+	// the service **may** error with `400 Bad Request` (`INVALID_ARGUMENT`
+	// in gRPC) if precision would be lost. Services **should** error with
+	// `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// receives a value outside of the supported range.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDecimal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
+// Database (https://www.iana.org/time-zones).
+type GoogleTypeTimeZone struct {
+	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	Id string `json:"id,omitempty"`
+
+	// Version: Optional. IANA Time Zone Database version number, e.g.
+	// "2019a".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeTimeZone
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "datapipelines.projects.locations.computeSchema":
+
+type ProjectsLocationsComputeSchemaCall struct {
+	s                                              *Service
+	location                                       string
+	googleclouddatapipelinesv1computeschemarequest *GoogleCloudDatapipelinesV1ComputeSchemaRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// ComputeSchema: Computes the schema for the transform. Computation
+// from `raw_schema` will always occur if it is set. This requires that
+// the transform supports that encoding. If no raw schema is provided
+// and if the transform is for an IO, then this will attempt to connect
+// to the resource using the details provided in `config` and infer the
+// schema from that. If the transform is not an IO, is a sink that
+// doesn't exist yet, or is a sink with no schema requirement, then this
+// will fall back to basing the schema off the one provided in
+// `input_schemas`. The computed schema will be validated.
+//
+//   - location: The full location formatted as
+//     "projects/{your-project}/locations/{google-cloud-region}". If
+//     attempting to infer the schema from an existing Google Cloud
+//     resource, the default Data Pipelines service account for this
+//     project will be used in making requests for the resource. If the
+//     region given for "{google-cloud-region}" is different than the
+//     region where the resource is stored, then the data will be
+//     transferred to and processed in the region specified here, but it
+//     will not be persistently stored in this region.
+func (r *ProjectsLocationsService) ComputeSchema(location string, googleclouddatapipelinesv1computeschemarequest *GoogleCloudDatapipelinesV1ComputeSchemaRequest) *ProjectsLocationsComputeSchemaCall {
+	c := &ProjectsLocationsComputeSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.googleclouddatapipelinesv1computeschemarequest = googleclouddatapipelinesv1computeschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsComputeSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsComputeSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsComputeSchemaCall) Context(ctx context.Context) *ProjectsLocationsComputeSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsComputeSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsComputeSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatapipelinesv1computeschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}:computeSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datapipelines.projects.locations.computeSchema" call.
+// Exactly one of *GoogleCloudDatapipelinesV1Schema or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDatapipelinesV1Schema.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsComputeSchemaCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1Schema, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatapipelinesV1Schema{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Computes the schema for the transform. Computation from `raw_schema` will always occur if it is set. This requires that the transform supports that encoding. If no raw schema is provided and if the transform is for an IO, then this will attempt to connect to the resource using the details provided in `config` and infer the schema from that. If the transform is not an IO, is a sink that doesn't exist yet, or is a sink with no schema requirement, then this will fall back to basing the schema off the one provided in `input_schemas`. The computed schema will be validated.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:computeSchema",
+	//   "httpMethod": "POST",
+	//   "id": "datapipelines.projects.locations.computeSchema",
+	//   "parameterOrder": [
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Required. The full location formatted as \"projects/{your-project}/locations/{google-cloud-region}\". If attempting to infer the schema from an existing Google Cloud resource, the default Data Pipelines service account for this project will be used in making requests for the resource. If the region given for \"{google-cloud-region}\" is different than the region where the resource is stored, then the data will be transferred to and processed in the region specified here, but it will not be persistently stored in this region.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+location}:computeSchema",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatapipelinesV1ComputeSchemaRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDatapipelinesV1Schema"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "datapipelines.projects.locations.listPipelines":
@@ -2448,4 +3630,323 @@ func (c *ProjectsLocationsPipelinesJobsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "datapipelines.projects.locations.transformDescriptions.batchGet":
+
+type ProjectsLocationsTransformDescriptionsBatchGetCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Gets transform descriptions in a batch, associated with a
+// list of provided uniform resource names.
+//
+//   - parent: The project and location shared by all transform
+//     descriptions being retrieved, formatted as
+//     "projects/{project}/locations/{location}".
+func (r *ProjectsLocationsTransformDescriptionsService) BatchGet(parent string) *ProjectsLocationsTransformDescriptionsBatchGetCall {
+	c := &ProjectsLocationsTransformDescriptionsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Names sets the optional parameter "names": The names of the transform
+// descriptions being retrieved, formatted as
+// "projects/{project}/locations/{location}/transformdescriptions/{transf
+// orm_description}". If no name is provided, all of the transform
+// descriptions will be returned.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) Names(names ...string) *ProjectsLocationsTransformDescriptionsBatchGetCall {
+	c.urlParams_.SetMulti("names", append([]string{}, names...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransformDescriptionsBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransformDescriptionsBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) Context(ctx context.Context) *ProjectsLocationsTransformDescriptionsBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/transformDescriptions:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datapipelines.projects.locations.transformDescriptions.batchGet" call.
+// Exactly one of
+// *GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsTransformDescriptionsBatchGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets transform descriptions in a batch, associated with a list of provided uniform resource names.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transformDescriptions:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "datapipelines.projects.locations.transformDescriptions.batchGet",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "names": {
+	//       "description": "Optional. The names of the transform descriptions being retrieved, formatted as \"projects/{project}/locations/{location}/transformdescriptions/{transform_description}\". If no name is provided, all of the transform descriptions will be returned.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project and location shared by all transform descriptions being retrieved, formatted as \"projects/{project}/locations/{location}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/transformDescriptions:batchGet",
+	//   "response": {
+	//     "$ref": "GoogleCloudDatapipelinesV1BatchGetTransformDescriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datapipelines.projects.locations.transformDescriptions.get":
+
+type ProjectsLocationsTransformDescriptionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the transform description associated with the provided
+// uniform resource name.
+//
+//   - name: The full name formatted as
+//     "projects/{your-project}/locations/{google-cloud-region}/transformde
+//     scriptions/{uniform-resource-name}".
+func (r *ProjectsLocationsTransformDescriptionsService) Get(name string) *ProjectsLocationsTransformDescriptionsGetCall {
+	c := &ProjectsLocationsTransformDescriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsTransformDescriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsTransformDescriptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsTransformDescriptionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsTransformDescriptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsTransformDescriptionsGetCall) Context(ctx context.Context) *ProjectsLocationsTransformDescriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsTransformDescriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTransformDescriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datapipelines.projects.locations.transformDescriptions.get" call.
+// Exactly one of *GoogleCloudDatapipelinesV1TransformDescription or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDatapipelinesV1TransformDescription.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsTransformDescriptionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatapipelinesV1TransformDescription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatapipelinesV1TransformDescription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the transform description associated with the provided uniform resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/transformDescriptions/{transformDescriptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "datapipelines.projects.locations.transformDescriptions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full name formatted as \"projects/{your-project}/locations/{google-cloud-region}/transformdescriptions/{uniform-resource-name}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/transformDescriptions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDatapipelinesV1TransformDescription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

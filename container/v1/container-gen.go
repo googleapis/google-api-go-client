@@ -4228,6 +4228,9 @@ type NodePool struct {
 	// specified, it overrides the cluster-level defaults.
 	NetworkConfig *NodeNetworkConfig `json:"networkConfig,omitempty"`
 
+	// PlacementPolicy: Specifies the node placement policy.
+	PlacementPolicy *PlacementPolicy `json:"placementPolicy,omitempty"`
+
 	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in
 	// this node pool.
 	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
@@ -4718,6 +4721,41 @@ type OperationProgress struct {
 
 func (s *OperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PlacementPolicy: PlacementPolicy defines the placement policy used by
+// the node pool.
+type PlacementPolicy struct {
+	// Type: The type of placement.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - TYPE_UNSPECIFIED specifies no requirements on
+	// nodes placement.
+	//   "COMPACT" - COMPACT specifies node placement in the same
+	// availability domain to ensure low communication latency.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlacementPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacementPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

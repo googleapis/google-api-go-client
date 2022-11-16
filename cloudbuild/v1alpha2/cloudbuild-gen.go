@@ -539,6 +539,35 @@ func (s *BatchCreateGitLabConnectedRepositoriesResponseMetadata) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateRepositoriesResponse: Message for response of creating
+// repositories in batch.
+type BatchCreateRepositoriesResponse struct {
+	// Repositories: Repository resources created.
+	Repositories []*Repository `json:"repositories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Repositories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Repositories") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateRepositoriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateRepositoriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BitbucketServerConnectedRepository: /
 // BitbucketServerConnectedRepository represents a connected Bitbucket
 // Server / repository.
@@ -2408,6 +2437,54 @@ type RepoSource struct {
 
 func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	type NoMethod RepoSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Repository: A repository associated to a parent connection.
+type Repository struct {
+	// Annotations: Allows clients to store small amounts of arbitrary data.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. Server assigned timestamp for when the
+	// connection was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update and delete requests to ensure
+	// the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Immutable. Resource name of the repository, in the format
+	// `projects/*/locations/*/connections/*/repositories/*`.
+	Name string `json:"name,omitempty"`
+
+	// RemoteUri: Required. Git Clone HTTPS URI.
+	RemoteUri string `json:"remoteUri,omitempty"`
+
+	// UpdateTime: Output only. Server assigned timestamp for when the
+	// connection was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Repository) MarshalJSON() ([]byte, error) {
+	type NoMethod Repository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

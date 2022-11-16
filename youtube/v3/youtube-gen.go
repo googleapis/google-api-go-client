@@ -15804,6 +15804,8 @@ func (c *LiveBroadcastsInsertCuepointCall) Do(opts ...googleapi.CallOption) (*Cu
 	//     "$ref": "Cuepoint"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
 	// }

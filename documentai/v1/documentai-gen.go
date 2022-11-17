@@ -120,7 +120,6 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Operations = NewOperationsService(s)
 	s.Projects = NewProjectsService(s)
-	s.Uiv1beta3 = NewUiv1beta3Service(s)
 	return s, nil
 }
 
@@ -132,8 +131,6 @@ type Service struct {
 	Operations *OperationsService
 
 	Projects *ProjectsService
-
-	Uiv1beta3 *Uiv1beta3Service
 }
 
 func (s *Service) userAgent() string {
@@ -242,51 +239,6 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 }
 
 type ProjectsOperationsService struct {
-	s *Service
-}
-
-func NewUiv1beta3Service(s *Service) *Uiv1beta3Service {
-	rs := &Uiv1beta3Service{s: s}
-	rs.Projects = NewUiv1beta3ProjectsService(s)
-	return rs
-}
-
-type Uiv1beta3Service struct {
-	s *Service
-
-	Projects *Uiv1beta3ProjectsService
-}
-
-func NewUiv1beta3ProjectsService(s *Service) *Uiv1beta3ProjectsService {
-	rs := &Uiv1beta3ProjectsService{s: s}
-	rs.Locations = NewUiv1beta3ProjectsLocationsService(s)
-	return rs
-}
-
-type Uiv1beta3ProjectsService struct {
-	s *Service
-
-	Locations *Uiv1beta3ProjectsLocationsService
-}
-
-func NewUiv1beta3ProjectsLocationsService(s *Service) *Uiv1beta3ProjectsLocationsService {
-	rs := &Uiv1beta3ProjectsLocationsService{s: s}
-	rs.Operations = NewUiv1beta3ProjectsLocationsOperationsService(s)
-	return rs
-}
-
-type Uiv1beta3ProjectsLocationsService struct {
-	s *Service
-
-	Operations *Uiv1beta3ProjectsLocationsOperationsService
-}
-
-func NewUiv1beta3ProjectsLocationsOperationsService(s *Service) *Uiv1beta3ProjectsLocationsOperationsService {
-	rs := &Uiv1beta3ProjectsLocationsOperationsService{s: s}
-	return rs
-}
-
-type Uiv1beta3ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
@@ -1644,24 +1596,26 @@ func (s *GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata) Marsh
 // GoogleCloudDocumentaiV1Barcode: Encodes the detailed information of a
 // barcode.
 type GoogleCloudDocumentaiV1Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -1695,7 +1649,7 @@ type GoogleCloudDocumentaiV1BatchDocumentsInputConfig struct {
 	GcsDocuments *GoogleCloudDocumentaiV1GcsDocuments `json:"gcsDocuments,omitempty"`
 
 	// GcsPrefix: The set of documents that match the specified Cloud
-	// Storage [gcs_prefix].
+	// Storage `gcs_prefix`.
 	GcsPrefix *GoogleCloudDocumentaiV1GcsPrefix `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDocuments") to
@@ -2129,9 +2083,9 @@ type GoogleCloudDocumentaiV1Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -2170,8 +2124,8 @@ func (s *GoogleCloudDocumentaiV1Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -2553,7 +2507,7 @@ type GoogleCloudDocumentaiV1DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -2689,10 +2643,10 @@ func (s *GoogleCloudDocumentaiV1DocumentPageDetectedBarcode) MarshalJSON() ([]by
 // GoogleCloudDocumentaiV1DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -2888,7 +2842,7 @@ type GoogleCloudDocumentaiV1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -2933,15 +2887,15 @@ func (s *GoogleCloudDocumentaiV1DocumentPageImageQualityScores) UnmarshalJSON(da
 // GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect:
 // Image Quality Defects
 type GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -2989,7 +2943,7 @@ type GoogleCloudDocumentaiV1DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -3653,13 +3607,13 @@ type GoogleCloudDocumentaiV1DocumentSchemaEntityType struct {
 
 	// Name: Name of the type. It must be unique within the schema file and
 	// cannot be a 'Common Type'. Besides that we use the following naming
-	// conventions: - *use snake_casing* - name matching is case-insensitive
-	// - Maximum 64 characters. - Must start with a letter. - Allowed
-	// characters: ASCII letters `[a-z0-9_-]`. (For backward compatibility
-	// internal infrastructure and tooling can handle any ascii character) -
-	// The '/' is sometimes used to denote a property of a type. For example
-	// line_item/amount. This convention is deprecated, but will still be
-	// honored for backward compatibility.
+	// conventions: - *use `snake_casing`* - name matching is
+	// case-insensitive - Maximum 64 characters. - Must start with a letter.
+	// - Allowed characters: ASCII letters `[a-z0-9_-]`. (For backward
+	// compatibility internal infrastructure and tooling can handle any
+	// ascii character) - The `/` is sometimes used to denote a property of
+	// a type. For example `line_item/amount`. This convention is
+	// deprecated, but will still be honored for backward compatibility.
 	Name string `json:"name,omitempty"`
 
 	// Properties: Describing the nested structure, or composition of an
@@ -3860,7 +3814,7 @@ type GoogleCloudDocumentaiV1DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -4551,13 +4505,13 @@ type GoogleCloudDocumentaiV1Processor struct {
 	// which can currently serve processing requests and all the feature
 	// dependencies have been successfully initialized.
 	//   "DISABLED" - The processor is disabled.
-	//   "ENABLING" - The processor is being enabled, will become ENABLED if
-	// successful.
-	//   "DISABLING" - The processor is being disabled, will become DISABLED
+	//   "ENABLING" - The processor is being enabled, will become `ENABLED`
 	// if successful.
+	//   "DISABLING" - The processor is being disabled, will become
+	// `DISABLED` if successful.
 	//   "CREATING" - The processor is being created, will become either
-	// ENABLED (for successful creation) or FAILED (for failed ones). Once a
-	// processor is in this state, it can then be used for document
+	// `ENABLED` (for successful creation) or `FAILED` (for failed ones).
+	// Once a processor is in this state, it can then be used for document
 	// processing, but the feature dependencies of the processor might not
 	// be fully created yet.
 	//   "FAILED" - The processor failed during creation or initialization
@@ -4568,7 +4522,7 @@ type GoogleCloudDocumentaiV1Processor struct {
 	// successful.
 	State string `json:"state,omitempty"`
 
-	// Type: The processor type, e.g., OCR_PROCESSOR, INVOICE_PROCESSOR,
+	// Type: The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`,
 	// etc. To get a list of processors types, see FetchProcessorTypes.
 	Type string `json:"type,omitempty"`
 
@@ -4654,10 +4608,11 @@ type GoogleCloudDocumentaiV1ProcessorType struct {
 	LaunchStage string `json:"launchStage,omitempty"`
 
 	// Name: The resource name of the processor type. Format:
-	// projects/{project}/processorTypes/{processor_type}
+	// `projects/{project}/processorTypes/{processor_type}`
 	Name string `json:"name,omitempty"`
 
-	// Type: The type of the processor, e.g., "invoice_parsing".
+	// Type: The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`,
+	// etc.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowCreation") to
@@ -4834,7 +4789,7 @@ type GoogleCloudDocumentaiV1RawDocument struct {
 	Content string `json:"content,omitempty"`
 
 	// MimeType: An IANA MIME type (RFC6838) indicating the nature and
-	// format of the [content].
+	// format of the content.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -5207,24 +5162,26 @@ func (s *GoogleCloudDocumentaiV1alpha1CommonOperationMetadata) MarshalJSON() ([]
 // GoogleCloudDocumentaiV1beta1Barcode: Encodes the detailed information
 // of a barcode.
 type GoogleCloudDocumentaiV1beta1Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -5355,9 +5312,9 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta1DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -5396,8 +5353,8 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -5715,7 +5672,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -5851,10 +5808,10 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -6051,7 +6008,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -6096,15 +6053,15 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -6152,7 +6109,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -6804,7 +6761,7 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -7310,24 +7267,26 @@ func (s *GoogleCloudDocumentaiV1beta1Vertex) MarshalJSON() ([]byte, error) {
 // GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information
 // of a barcode.
 type GoogleCloudDocumentaiV1beta2Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -7461,9 +7420,9 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta2DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -7502,8 +7461,8 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -7876,7 +7835,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -8012,10 +7971,10 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -8212,7 +8171,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -8257,15 +8216,15 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -8313,7 +8272,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -8965,7 +8924,7 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -9803,6 +9762,65 @@ func (s *GoogleCloudDocumentaiV1beta3EnableProcessorMetadata) MarshalJSON() ([]b
 type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
 }
 
+// GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata:
+// Metadata of the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse:
+// Metadata of the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse struct {
+	// Evaluation: The resource name of the created evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Evaluation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Evaluation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3HumanReviewStatus: The status of human
 // review on a processed document.
 type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
@@ -9990,6 +10008,118 @@ func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) Marshal
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse:
 // Response message for set default processor version method.
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata: The
+// metadata that represents a processor version being created.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// TestDatasetValidation: The test dataset validation information.
+	TestDatasetValidation *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation `json:"testDatasetValidation,omitempty"`
+
+	// TrainingDatasetValidation: The training dataset validation
+	// information.
+	TrainingDatasetValidation *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation `json:"trainingDatasetValidation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValida
+// tion: The dataset validation information. This includes any and all
+// errors with documents and the dataset.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation struct {
+	// DatasetErrorCount: The total number of dataset errors.
+	DatasetErrorCount int64 `json:"datasetErrorCount,omitempty"`
+
+	// DatasetErrors: Error information for the dataset as a whole. A
+	// maximum of 10 dataset errors will be returned. A single dataset error
+	// is terminal for training.
+	DatasetErrors []*GoogleRpcStatus `json:"datasetErrors,omitempty"`
+
+	// DocumentErrorCount: The total number of document errors.
+	DocumentErrorCount int64 `json:"documentErrorCount,omitempty"`
+
+	// DocumentErrors: Error information pertaining to specific documents. A
+	// maximum of 10 document errors will be returned. Any document with
+	// errors will not be used throughout training.
+	DocumentErrors []*GoogleRpcStatus `json:"documentErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetErrorCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetErrorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse: The
+// response for the TrainProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse struct {
+	// ProcessorVersion: The resource name of the processor version produced
+	// by training.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata: The
@@ -14754,864 +14884,4 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 	//   ]
 	// }
 
-}
-
-// method id "documentai.uiv1beta3.projects.locations.get":
-
-type Uiv1beta3ProjectsLocationsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets information about a location.
-//
-// - name: Resource name for the location.
-func (r *Uiv1beta3ProjectsLocationsService) Get(name string) *Uiv1beta3ProjectsLocationsGetCall {
-	c := &Uiv1beta3ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *Uiv1beta3ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *Uiv1beta3ProjectsLocationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *Uiv1beta3ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *Uiv1beta3ProjectsLocationsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *Uiv1beta3ProjectsLocationsGetCall) Context(ctx context.Context) *Uiv1beta3ProjectsLocationsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *Uiv1beta3ProjectsLocationsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *Uiv1beta3ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "uiv1beta3/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "documentai.uiv1beta3.projects.locations.get" call.
-// Exactly one of *GoogleCloudLocationLocation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudLocationLocation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *Uiv1beta3ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudLocationLocation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudLocationLocation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "documentai.uiv1beta3.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "uiv1beta3/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudLocationLocation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "documentai.uiv1beta3.projects.locations.list":
-
-type Uiv1beta3ProjectsLocationsListCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists information about the supported locations for this
-// service.
-//
-//   - name: The resource that owns the locations collection, if
-//     applicable.
-func (r *Uiv1beta3ProjectsLocationsService) List(name string) *Uiv1beta3ProjectsLocationsListCall {
-	c := &Uiv1beta3ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in
-// AIP-160 (https://google.aip.dev/160).
-func (c *Uiv1beta3ProjectsLocationsListCall) Filter(filter string) *Uiv1beta3ProjectsLocationsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
-func (c *Uiv1beta3ProjectsLocationsListCall) PageSize(pageSize int64) *Uiv1beta3ProjectsLocationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the `next_page_token` field in the response. Send that
-// page token to receive the subsequent page.
-func (c *Uiv1beta3ProjectsLocationsListCall) PageToken(pageToken string) *Uiv1beta3ProjectsLocationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *Uiv1beta3ProjectsLocationsListCall) Fields(s ...googleapi.Field) *Uiv1beta3ProjectsLocationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *Uiv1beta3ProjectsLocationsListCall) IfNoneMatch(entityTag string) *Uiv1beta3ProjectsLocationsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *Uiv1beta3ProjectsLocationsListCall) Context(ctx context.Context) *Uiv1beta3ProjectsLocationsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *Uiv1beta3ProjectsLocationsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *Uiv1beta3ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "uiv1beta3/{+name}/locations")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "documentai.uiv1beta3.projects.locations.list" call.
-// Exactly one of *GoogleCloudLocationListLocationsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudLocationListLocationsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *Uiv1beta3ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudLocationListLocationsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudLocationListLocationsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "uiv1beta3/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "documentai.uiv1beta3.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "uiv1beta3/{+name}/locations",
-	//   "response": {
-	//     "$ref": "GoogleCloudLocationListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *Uiv1beta3ProjectsLocationsListCall) Pages(ctx context.Context, f func(*GoogleCloudLocationListLocationsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "documentai.uiv1beta3.projects.locations.operations.cancel":
-
-type Uiv1beta3ProjectsLocationsOperationsCancelCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
-// `Code.CANCELLED`.
-//
-// - name: The name of the operation resource to be cancelled.
-func (r *Uiv1beta3ProjectsLocationsOperationsService) Cancel(name string) *Uiv1beta3ProjectsLocationsOperationsCancelCall {
-	c := &Uiv1beta3ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *Uiv1beta3ProjectsLocationsOperationsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *Uiv1beta3ProjectsLocationsOperationsCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "uiv1beta3/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "documentai.uiv1beta3.projects.locations.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "documentai.uiv1beta3.projects.locations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "uiv1beta3/{+name}:cancel",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "documentai.uiv1beta3.projects.locations.operations.get":
-
-type Uiv1beta3ProjectsLocationsOperationsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
-//
-// - name: The name of the operation resource.
-func (r *Uiv1beta3ProjectsLocationsOperationsService) Get(name string) *Uiv1beta3ProjectsLocationsOperationsGetCall {
-	c := &Uiv1beta3ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *Uiv1beta3ProjectsLocationsOperationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *Uiv1beta3ProjectsLocationsOperationsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *Uiv1beta3ProjectsLocationsOperationsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "uiv1beta3/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "documentai.uiv1beta3.projects.locations.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "documentai.uiv1beta3.projects.locations.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "uiv1beta3/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "documentai.uiv1beta3.projects.locations.operations.list":
-
-type Uiv1beta3ProjectsLocationsOperationsListCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
-// override the binding to use different resource name schemes, such as
-// `users/*/operations`. To override the binding, API services can add a
-// binding such as "/v1/{name=users/*}/operations" to their service
-// configuration. For backwards compatibility, the default name includes
-// the operations collection id, however overriding users must ensure
-// the name binding is the parent resource, without the operations
-// collection id.
-//
-// - name: The name of the operation's parent resource.
-func (r *Uiv1beta3ProjectsLocationsOperationsService) List(name string) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c := &Uiv1beta3ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Filter sets the optional parameter "filter": The standard list
-// filter.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Filter(filter string) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) PageToken(pageToken string) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Context(ctx context.Context) *Uiv1beta3ProjectsLocationsOperationsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "uiv1beta3/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "documentai.uiv1beta3.projects.locations.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningListOperationsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
-	//   "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "documentai.uiv1beta3.projects.locations.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "uiv1beta3/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

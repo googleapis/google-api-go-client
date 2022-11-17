@@ -2187,24 +2187,26 @@ func (s *GoogleCloudDocumentaiV1alpha1CommonOperationMetadata) MarshalJSON() ([]
 // GoogleCloudDocumentaiV1beta1Barcode: Encodes the detailed information
 // of a barcode.
 type GoogleCloudDocumentaiV1beta1Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -2335,9 +2337,9 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta1DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -2376,8 +2378,8 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -2695,7 +2697,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -2831,10 +2833,10 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -3031,7 +3033,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -3076,15 +3078,15 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -3132,7 +3134,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -3784,7 +3786,7 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -4290,24 +4292,26 @@ func (s *GoogleCloudDocumentaiV1beta1Vertex) MarshalJSON() ([]byte, error) {
 // GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information
 // of a barcode.
 type GoogleCloudDocumentaiV1beta2Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -4441,9 +4445,9 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta2DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -4482,8 +4486,8 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -4856,7 +4860,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -4992,10 +4996,10 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -5192,7 +5196,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -5237,15 +5241,15 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -5293,7 +5297,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -5945,7 +5949,7 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -6457,24 +6461,26 @@ func (s *GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
 // GoogleCloudDocumentaiV1beta3Barcode: Encodes the detailed information
 // of a barcode.
 type GoogleCloudDocumentaiV1beta3Barcode struct {
-	// Format: Format of a barcode. The supported formats are: CODE_128:
-	// Code 128 type. CODE_39: Code 39 type. CODE_93: Code 93 type. CODABAR:
-	// Codabar type. DATA_MATRIX: 2D Data Matrix type. ITF: ITF type.
-	// EAN_13: EAN-13 type. EAN_8: EAN-8 type. QR_CODE: 2D QR code type.
-	// UPC_A: UPC-A type. UPC_E: UPC-E type. PDF417: PDF417 type. AZTEC: 2D
-	// Aztec code type. DATABAR: GS1 DataBar code type.
+	// Format: Format of a barcode. The supported formats are: - `CODE_128`:
+	// Code 128 type. - `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type.
+	// - `CODABAR`: Codabar type. - `DATA_MATRIX`: 2D Data Matrix type. -
+	// `ITF`: ITF type. - `EAN_13`: EAN-13 type. - `EAN_8`: EAN-8 type. -
+	// `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A type. - `UPC_E`: UPC-E
+	// type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code type. -
+	// `DATABAR`: GS1 DataBar code type.
 	Format string `json:"format,omitempty"`
 
-	// RawValue: Raw value encoded in the barcode. For example,
-	// 'MEBKM:TITLE:Google;URL:https://www.google.com;;'.
+	// RawValue: Raw value encoded in the barcode. For example:
+	// `'MEBKM:TITLE:Google;URL:https://www.google.com;;'`.
 	RawValue string `json:"rawValue,omitempty"`
 
 	// ValueFormat: Value format describes the format of the value that a
-	// barcode encodes. The supported formats are: CONTACT_INFO: Contact
-	// information. EMAIL: Email address. ISBN: ISBN identifier. PHONE:
-	// Phone number. PRODUCT: Product. SMS: SMS message. TEXT: Text string.
-	// URL: URL address. WIFI: Wifi information. GEO: Geo-localization.
-	// CALENDAR_EVENT: Calendar event. DRIVER_LICENSE: Driver's license.
+	// barcode encodes. The supported formats are: - `CONTACT_INFO`: Contact
+	// information. - `EMAIL`: Email address. - `ISBN`: ISBN identifier. -
+	// `PHONE`: Phone number. - `PRODUCT`: Product. - `SMS`: SMS message. -
+	// `TEXT`: Text string. - `URL`: URL address. - `WIFI`: Wifi
+	// information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`: Calendar
+	// event. - `DRIVER_LICENSE`: Driver's license.
 	ValueFormat string `json:"valueFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
@@ -6508,7 +6514,7 @@ type GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig struct {
 	GcsDocuments *GoogleCloudDocumentaiV1beta3GcsDocuments `json:"gcsDocuments,omitempty"`
 
 	// GcsPrefix: The set of documents that match the specified Cloud
-	// Storage [gcs_prefix].
+	// Storage `gcs_prefix`.
 	GcsPrefix *GoogleCloudDocumentaiV1beta3GcsPrefix `json:"gcsPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDocuments") to
@@ -7023,9 +7029,9 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: Placeholder. A list of text corrections made to
-	// [Document.text]. This is usually used for annotating corrections to
-	// OCR mistakes. Text changes for a given revision may not overlap with
-	// each other.
+	// Document.text. This is usually used for annotating corrections to OCR
+	// mistakes. Text changes for a given revision may not overlap with each
+	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta3DocumentTextChange `json:"textChanges,omitempty"`
 
 	// TextStyles: Placeholder. Styles for the Document.text.
@@ -7064,8 +7070,8 @@ func (s *GoogleCloudDocumentaiV1beta3Document) MarshalJSON() ([]byte, error) {
 // phrase in the text or a property that belongs to the document. It is
 // a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
-	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
-	// 1].
+	// Confidence: Optional. Confidence of detected Schema entity. Range
+	// `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Id: Optional. Canonical id. This will be a unique value in the entity
@@ -7448,7 +7454,7 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	BoundingPoly *GoogleCloudDocumentaiV1beta3BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
-	// applicable. Range [0, 1].
+	// applicable. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
@@ -7584,10 +7590,10 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode) MarshalJSON() 
 // GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage: Detected
 // language for a structural component.
 type GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage struct {
-	// Confidence: Confidence of detected language. Range [0, 1].
+	// Confidence: Confidence of detected language. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// LanguageCode: The BCP-47 language code, such as `en-US` or `sr-Latn`.
 	// For more information, see
 	// https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -7784,7 +7790,7 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores struct {
 	// DetectedDefects: A list of detected defects.
 	DetectedDefects []*GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect `json:"detectedDefects,omitempty"`
 
-	// QualityScore: The overall quality score. Range [0, 1] where 1 is
+	// QualityScore: The overall quality score. Range `[0, 1]` where 1 is
 	// perfect quality.
 	QualityScore float64 `json:"qualityScore,omitempty"`
 
@@ -7829,15 +7835,15 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) UnmarshalJS
 // GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefe
 // ct: Image Quality Defects
 type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect struct {
-	// Confidence: Confidence of detected defect. Range [0, 1] where 1
+	// Confidence: Confidence of detected defect. Range `[0, 1]` where 1
 	// indicates strong confidence of that the defect exists.
 	Confidence float64 `json:"confidence,omitempty"`
 
-	// Type: Name of the defect type. Supported values are
-	// "quality/defect_blurry", "quality/defect_noisy",
-	// "quality/defect_dark", "quality/defect_faint",
-	// "quality/defect_text_too_small", "quality/defect_document_cutoff",
-	// "quality/defect_text_cutoff", "quality/defect_glare"
+	// Type: Name of the defect type. Supported values are: -
+	// `quality/defect_blurry` - `quality/defect_noisy` -
+	// `quality/defect_dark` - `quality/defect_faint` -
+	// `quality/defect_text_too_small` - `quality/defect_document_cutoff` -
+	// `quality/defect_text_cutoff` - `quality/defect_glare`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -7885,7 +7891,7 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLayout struct {
 
 	// Confidence: Confidence of the current Layout within context of the
 	// object this layout is for. e.g. confidence can be for a single token,
-	// a table, a visual element, etc. depending on context. Range [0, 1].
+	// a table, a visual element, etc. depending on context. Range `[0, 1]`.
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Orientation: Detected orientation for the Layout.
@@ -8549,13 +8555,13 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 
 	// Name: Name of the type. It must be unique within the schema file and
 	// cannot be a 'Common Type'. Besides that we use the following naming
-	// conventions: - *use snake_casing* - name matching is case-insensitive
-	// - Maximum 64 characters. - Must start with a letter. - Allowed
-	// characters: ASCII letters `[a-z0-9_-]`. (For backward compatibility
-	// internal infrastructure and tooling can handle any ascii character) -
-	// The '/' is sometimes used to denote a property of a type. For example
-	// line_item/amount. This convention is deprecated, but will still be
-	// honored for backward compatibility.
+	// conventions: - *use `snake_casing`* - name matching is
+	// case-insensitive - Maximum 64 characters. - Must start with a letter.
+	// - Allowed characters: ASCII letters `[a-z0-9_-]`. (For backward
+	// compatibility internal infrastructure and tooling can handle any
+	// ascii character) - The `/` is sometimes used to denote a property of
+	// a type. For example `line_item/amount`. This convention is
+	// deprecated, but will still be honored for backward compatibility.
 	Name string `json:"name,omitempty"`
 
 	// Properties: Describing the nested structure, or composition of an
@@ -8756,7 +8762,7 @@ type GoogleCloudDocumentaiV1beta3DocumentStyle struct {
 	// Color: Text color.
 	Color *GoogleTypeColor `json:"color,omitempty"`
 
-	// FontFamily: Font family such as "Arial", "Times New Roman".
+	// FontFamily: Font family such as `Arial`, `Times New Roman`.
 	// https://www.w3schools.com/cssref/pr_font_font-family.asp
 	FontFamily string `json:"fontFamily,omitempty"`
 
@@ -8998,6 +9004,36 @@ type GoogleCloudDocumentaiV1beta3EnableProcessorRequest struct {
 type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
 }
 
+// GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata:
+// Metadata of the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest:
 // Evaluates the given ProcessorVersion against the supplied documents.
 type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest struct {
@@ -9025,6 +9061,35 @@ type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest struct {
 
 func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse:
+// Metadata of the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse struct {
+	// Evaluation: The resource name of the created evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Evaluation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Evaluation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9838,13 +9903,13 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	// which can currently serve processing requests and all the feature
 	// dependencies have been successfully initialized.
 	//   "DISABLED" - The processor is disabled.
-	//   "ENABLING" - The processor is being enabled, will become ENABLED if
-	// successful.
-	//   "DISABLING" - The processor is being disabled, will become DISABLED
+	//   "ENABLING" - The processor is being enabled, will become `ENABLED`
 	// if successful.
+	//   "DISABLING" - The processor is being disabled, will become
+	// `DISABLED` if successful.
 	//   "CREATING" - The processor is being created, will become either
-	// ENABLED (for successful creation) or FAILED (for failed ones). Once a
-	// processor is in this state, it can then be used for document
+	// `ENABLED` (for successful creation) or `FAILED` (for failed ones).
+	// Once a processor is in this state, it can then be used for document
 	// processing, but the feature dependencies of the processor might not
 	// be fully created yet.
 	//   "FAILED" - The processor failed during creation or initialization
@@ -9855,7 +9920,7 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	// successful.
 	State string `json:"state,omitempty"`
 
-	// Type: The processor type, e.g., OCR_PROCESSOR, INVOICE_PROCESSOR,
+	// Type: The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`,
 	// etc. To get a list of processors types, see FetchProcessorTypes.
 	Type string `json:"type,omitempty"`
 
@@ -9941,10 +10006,11 @@ type GoogleCloudDocumentaiV1beta3ProcessorType struct {
 	LaunchStage string `json:"launchStage,omitempty"`
 
 	// Name: The resource name of the processor type. Format:
-	// projects/{project}/processorTypes/{processor_type}
+	// `projects/{project}/processorTypes/{processor_type}`
 	Name string `json:"name,omitempty"`
 
-	// Type: The type of the processor, e.g., "invoice_parsing".
+	// Type: The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`,
+	// etc.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowCreation") to
@@ -10121,7 +10187,7 @@ type GoogleCloudDocumentaiV1beta3RawDocument struct {
 	Content string `json:"content,omitempty"`
 
 	// MimeType: An IANA MIME type (RFC6838) indicating the nature and
-	// format of the [content].
+	// format of the content.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -10363,6 +10429,87 @@ func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJ
 type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
 }
 
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata: The
+// metadata that represents a processor version being created.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// TestDatasetValidation: The test dataset validation information.
+	TestDatasetValidation *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation `json:"testDatasetValidation,omitempty"`
+
+	// TrainingDatasetValidation: The training dataset validation
+	// information.
+	TrainingDatasetValidation *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation `json:"trainingDatasetValidation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValida
+// tion: The dataset validation information. This includes any and all
+// errors with documents and the dataset.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation struct {
+	// DatasetErrorCount: The total number of dataset errors.
+	DatasetErrorCount int64 `json:"datasetErrorCount,omitempty"`
+
+	// DatasetErrors: Error information for the dataset as a whole. A
+	// maximum of 10 dataset errors will be returned. A single dataset error
+	// is terminal for training.
+	DatasetErrors []*GoogleRpcStatus `json:"datasetErrors,omitempty"`
+
+	// DocumentErrorCount: The total number of document errors.
+	DocumentErrorCount int64 `json:"documentErrorCount,omitempty"`
+
+	// DocumentErrors: Error information pertaining to specific documents. A
+	// maximum of 10 document errors will be returned. Any document with
+	// errors will not be used throughout training.
+	DocumentErrors []*GoogleRpcStatus `json:"documentErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetErrorCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetErrorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest: Request
 // message for the create processor version method.
 type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest struct {
@@ -10437,6 +10584,37 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData struct {
 
 func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse: The
+// response for the TrainProcessorVersion method.
+type GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse struct {
+	// ProcessorVersion: The resource name of the processor version produced
+	// by training.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

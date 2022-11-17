@@ -1085,6 +1085,18 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// `attributes.abc-xyz` cannot be indexed.
 	Key string `json:"key,omitempty"`
 
+	// RetrievableOption: If RETRIEVABLE_ENABLED, attribute values will be
+	// retrievabled in the search results.
+	//
+	// Possible values:
+	//   "RETRIEVABLE_OPTION_UNSPECIFIED" - Value used when unset. Defaults
+	// to RETRIEVABLE_DISABLED.
+	//   "RETRIEVABLE_ENABLED" - Retrievable option enabled for an
+	// attribute.
+	//   "RETRIEVABLE_DISABLED" - Retrievable option disabled for an
+	// attribute.
+	RetrievableOption string `json:"retrievableOption,omitempty"`
+
 	// SearchableOption: When AttributesConfig.attribute_config_level is
 	// CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute
 	// values are searchable by text queries in SearchService.Search. If

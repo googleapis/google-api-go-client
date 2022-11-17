@@ -1740,10 +1740,10 @@ func (s *DistributionCut) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Documentation: User-defined documentation of the generated
-// notification.
+// Documentation: A content string and a MIME type that describes the
+// content string's format.
 type Documentation struct {
-	// Content: The body of the notification, interpreted according to
+	// Content: The body of the documentation, interpreted according to
 	// mime_type. The content may not exceed 8,192 Unicode characters and
 	// may not exceed more than 10,240 bytes when encoded in UTF-8 format,
 	// whichever is smaller. This text can be templatized by using variables
@@ -1754,10 +1754,6 @@ type Documentation struct {
 	// "text/markdown" is supported. See Markdown
 	// (https://en.wikipedia.org/wiki/Markdown) for more information.
 	MimeType string `json:"mimeType,omitempty"`
-
-	// Subject: A public comment for an internal field, because the linter
-	// insists that all fields must have a comment. Sigh.
-	Subject string `json:"subject,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with

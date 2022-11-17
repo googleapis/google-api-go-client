@@ -786,12 +786,13 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//  Read-only.
 	Name string `json:"name,omitempty"`
 
-	// Partner: Optional. Compliance Regime associated with this workload.
+	// Partner: Optional. Partner regime associated with this workload.
 	//
 	// Possible values:
-	//   "PARTNER_UNSPECIFIED" - Unknown partner regime/controls.
-	//   "LOCAL_CONTROLS_BY_S3NS" - S3NS regime/controls.
-	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - TSystem regime/controls.
+	//   "PARTNER_UNSPECIFIED"
+	//   "LOCAL_CONTROLS_BY_S3NS" - Enum representing S3NS partner.
+	//   "SOVEREIGN_CONTROLS_BY_T_SYSTEMS" - Enum representing T_SYSTEM
+	// partner.
 	Partner string `json:"partner,omitempty"`
 
 	// ProvisionedResourcesParent: Input only. The parent resource for the

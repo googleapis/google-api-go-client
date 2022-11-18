@@ -518,15 +518,15 @@ type ApnsConfig struct {
 	// Service. Refer to APNs request headers
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
 	// for supported headers such as `apns-expiration` and `apns-priority`.
+	// The backend sets a default value for `apns-expiration` of 30 days and
+	// a default value for `apns-priority` of 10 if not explicitly set.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
 	// dictionary and custom payload. See Payload Key Reference
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).
 	// If present, it overrides google.firebase.fcm.v1.Notification.title
-	// and google.firebase.fcm.v1.Notification.body. The backend sets a
-	// default value for `apns-expiration` of 30 days and a default value
-	// for `apns-priority` of 10 if not explicitly set.
+	// and google.firebase.fcm.v1.Notification.body.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FcmOptions") to

@@ -648,8 +648,7 @@ type BinaryAuthorization struct {
 	// EVALUATION_MODE_UNSPECIFIED, this field is ignored.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// EvaluationMode: Mode of operation for binauthz policy evaluation.
-	// Currently the only options are equivalent to enable/disable. If
+	// EvaluationMode: Mode of operation for binauthz policy evaluation. If
 	// unspecified, defaults to DISABLED.
 	//
 	// Possible values:
@@ -2026,6 +2025,34 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FastSocket: Configuration of Fast Socket feature.
+type FastSocket struct {
+	// Enabled: Whether Fast Socket features are enabled in the node pool.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FastSocket) MarshalJSON() ([]byte, error) {
+	type NoMethod FastSocket
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Filter: Allows filtering to one or more specific event types. If
@@ -3797,6 +3824,9 @@ type NodeConfig struct {
 	// 'pd-ssd' or 'pd-balanced') If unspecified, the default disk type is
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
+
+	// FastSocket: Enable or disable NCCL fast socket for the node pool.
+	FastSocket *FastSocket `json:"fastSocket,omitempty"`
 
 	// GcfsConfig: Google Container File System (image streaming) configs.
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
@@ -6615,6 +6645,9 @@ type UpdateNodePoolRequest struct {
 	// ConfidentialNodes: Confidential nodes config. All the nodes in the
 	// node pool will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+
+	// FastSocket: Enable or disable NCCL fast socket for the node pool.
+	FastSocket *FastSocket `json:"fastSocket,omitempty"`
 
 	// GcfsConfig: GCFS config.
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`

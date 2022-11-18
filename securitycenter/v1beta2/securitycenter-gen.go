@@ -570,6 +570,9 @@ type AssociatedFinding struct {
 	// given source.
 	FindingCategory string `json:"findingCategory,omitempty"`
 
+	// Name: Full resource name of the finding.
+	Name string `json:"name,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CanonicalFindingName") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API

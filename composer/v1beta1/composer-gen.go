@@ -662,6 +662,11 @@ type EnvironmentConfig struct {
 	// Cloud Composer environment.
 	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
 
+	// RecoveryConfig: Optional. The Recovery settings configuration of an
+	// environment. This field is supported for Cloud Composer environments
+	// in versions composer-2.*.*-airflow-*.*.* and newer.
+	RecoveryConfig *RecoveryConfig `json:"recoveryConfig,omitempty"`
+
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
@@ -1644,6 +1649,37 @@ func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RecoveryConfig: The Recovery settings of an environment.
+type RecoveryConfig struct {
+	// ScheduledSnapshotsConfig: Optional. The configuration for scheduled
+	// snapshot creation mechanism.
+	ScheduledSnapshotsConfig *ScheduledSnapshotsConfig `json:"scheduledSnapshotsConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ScheduledSnapshotsConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ScheduledSnapshotsConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecoveryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RecoveryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RestartWebServerRequest: Restart Airflow web server.
 type RestartWebServerRequest struct {
 }
@@ -1706,6 +1742,48 @@ type SaveSnapshotResponse struct {
 
 func (s *SaveSnapshotResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SaveSnapshotResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScheduledSnapshotsConfig: The configuration for scheduled snapshot
+// creation mechanism.
+type ScheduledSnapshotsConfig struct {
+	// Enabled: Optional. Whether scheduled snapshots creation is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// SnapshotCreationSchedule: Optional. The cron expression representing
+	// the time when snapshots creation mechanism runs. This field is
+	// subject to additional validation around frequency of execution.
+	SnapshotCreationSchedule string `json:"snapshotCreationSchedule,omitempty"`
+
+	// SnapshotLocation: Optional. The Cloud Storage location for storing
+	// automatically created snapshots.
+	SnapshotLocation string `json:"snapshotLocation,omitempty"`
+
+	// TimeZone: Optional. Time zone that sets the context to interpret
+	// snapshot_creation_schedule.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduledSnapshotsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledSnapshotsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

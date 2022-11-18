@@ -14555,7 +14555,9 @@ func (s *GoogleCloudDialogflowV2QueryResult) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudDialogflowV2Sentiment: The sentiment, such as
 // positive/negative feeling or association, for a unit of analysis,
-// such as the query text.
+// such as the query text. See:
+// https://cloud.google.com/natural-language/docs/basics#interpreting_sentiment_analysis_values
+// for how to interpret the result.
 type GoogleCloudDialogflowV2Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
 	// represents the absolute magnitude of sentiment, regardless of score
@@ -18349,7 +18351,9 @@ func (s *GoogleCloudDialogflowV2beta1QueryResult) UnmarshalJSON(data []byte) err
 
 // GoogleCloudDialogflowV2beta1Sentiment: The sentiment, such as
 // positive/negative feeling or association, for a unit of analysis,
-// such as the query text.
+// such as the query text. See:
+// https://cloud.google.com/natural-language/docs/basics#interpreting_sentiment_analysis_values
+// for how to interpret the result.
 type GoogleCloudDialogflowV2beta1Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
 	// represents the absolute magnitude of sentiment, regardless of score

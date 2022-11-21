@@ -3344,7 +3344,7 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 
 // DocumentNote: DocumentNote represents an SPDX Document Creation
 // Information section:
-// https://spdx.github.io/spdx-spec/2-document-creation-information/
+// https://spdx.github.io/spdx-spec/v2.3/document-creation-information/
 type DocumentNote struct {
 	// DataLicence: Compliance with the SPDX specification includes
 	// populating the SPDX fields therein with data related to such fields
@@ -3380,7 +3380,7 @@ func (s *DocumentNote) MarshalJSON() ([]byte, error) {
 
 // DocumentOccurrence: DocumentOccurrence represents an SPDX Document
 // Creation Information section:
-// https://spdx.github.io/spdx-spec/2-document-creation-information/
+// https://spdx.github.io/spdx-spec/v2.3/document-creation-information/
 type DocumentOccurrence struct {
 	// CreateTime: Identify when the SPDX file was originally created. The
 	// date is to be specified according to combined date and time in UTC

@@ -1743,10 +1743,10 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // RestoreInstanceRequest: RestoreInstanceRequest restores an existing
-// instance's file share from a snapshot or backup.
+// instance's file share from a backup.
 type RestoreInstanceRequest struct {
 	// FileShare: Required. Name of the file share in the Filestore instance
-	// that the snapshot is being restored to.
+	// that the backup is being restored to.
 	FileShare string `json:"fileShare,omitempty"`
 
 	// SourceBackup: The resource name of the backup, in the format
@@ -2540,7 +2540,7 @@ type ProjectsLocationsBackupsCreateCall struct {
 //
 //   - parent: The backup's project and location, in the format
 //     `projects/{project_id}/locations/{location}`. In Filestore, backup
-//     locations map to GCP regions, for example **us-west1**.
+//     locations map to Google Cloud regions, for example **us-west1**.
 func (r *ProjectsLocationsBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupsCreateCall {
 	c := &ProjectsLocationsBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2663,7 +2663,7 @@ func (c *ProjectsLocationsBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The backup's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to GCP regions, for example **us-west1**.",
+	//       "description": "Required. The backup's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to Google Cloud regions, for example **us-west1**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2981,9 +2981,9 @@ type ProjectsLocationsBackupsListCall struct {
 //   - parent: The project and location for which to retrieve backup
 //     information, in the format
 //     `projects/{project_id}/locations/{location}`. In Filestore, backup
-//     locations map to GCP regions, for example **us-west1**. To retrieve
-//     backup information for all locations, use "-" for the `{location}`
-//     value.
+//     locations map to Google Cloud regions, for example **us-west1**. To
+//     retrieve backup information for all locations, use "-" for the
+//     `{location}` value.
 func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
 	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3147,7 +3147,7 @@ func (c *ProjectsLocationsBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
+	//       "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_id}/locations/{location}`. In Filestore, backup locations map to Google Cloud regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3361,7 +3361,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 //
 //   - parent: The instance's project and location, in the format
 //     `projects/{project_id}/locations/{location}`. In Filestore,
-//     locations map to GCP zones, for example **us-west1-b**.
+//     locations map to Google Cloud zones, for example **us-west1-b**.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3484,7 +3484,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, locations map to GCP zones, for example **us-west1-b**.",
+	//       "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Filestore, locations map to Google Cloud zones, for example **us-west1-b**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3816,8 +3816,8 @@ type ProjectsLocationsInstancesListCall struct {
 //   - parent: The project and location for which to retrieve instance
 //     information, in the format
 //     `projects/{project_id}/locations/{location}`. In Cloud Filestore,
-//     locations map to GCP zones, for example **us-west1-b**. To retrieve
-//     instance information for all locations, use "-" for the
+//     locations map to Google Cloud zones, for example **us-west1-b**. To
+//     retrieve instance information for all locations, use "-" for the
 //     `{location}` value.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3982,7 +3982,7 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location for which to retrieve instance information, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the `{location}` value.",
+	//       "description": "Required. The project and location for which to retrieve instance information, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to Google Cloud zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the `{location}` value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

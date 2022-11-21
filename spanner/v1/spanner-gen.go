@@ -351,8 +351,8 @@ type Backup struct {
 	//   "POSTGRESQL" - PostgreSQL supported SQL.
 	DatabaseDialect string `json:"databaseDialect,omitempty"`
 
-	// EncryptionInfo: Output only. Output only. The encryption information
-	// for the backup. .
+	// EncryptionInfo: Output only. The encryption information for the
+	// backup.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 
 	// ExpireTime: Required for the CreateBackup operation. The expiration

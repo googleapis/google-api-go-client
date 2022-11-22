@@ -25,6 +25,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	grpcgoogle "google.golang.org/grpc/credentials/google"
+	grpcinsecure "google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/credentials/oauth"
 
 	// Install grpclb, which is required for direct path.
@@ -126,18 +127,26 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 	if err != nil {
 		return nil, err
 	}
-	var grpcOpts []grpc.DialOption
+
+	var transportCreds credentials.TransportCredentials
 	if insecure {
-		grpcOpts = []grpc.DialOption{grpc.WithInsecure()}
+		transportCreds = grpcinsecure.NewCredentials()
 	} else {
-		tlsConfig := &tls.Config{
+		transportCreds = credentials.NewTLS(&tls.Config{
 			GetClientCertificate: clientCertSource,
-		}
-		grpcOpts = []grpc.DialOption{
-			grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig)),
-		}
+		})
 	}
-	if !o.NoAuth {
+
+	// Initialize gRPC dial options with transport-level security options.
+	grpcOpts := []grpc.DialOption{
+		grpc.WithTransportCredentials(transportCreds),
+	}
+
+	// Authentication can only be sent when communicating over a secure connection.
+	//
+	// TODO: Should we be more lenient in the future and allow sending credentials
+	// when dialing an insecure connection?
+	if !o.NoAuth && !insecure {
 		if o.APIKey != "" {
 			log.Print("API keys are not supported for gRPC APIs. Remove the WithAPIKey option from your client-creating call.")
 		}

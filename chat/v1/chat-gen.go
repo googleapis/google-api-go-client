@@ -590,7 +590,8 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AttachmentDataRef: A reference to the data of an attachment.
+// AttachmentDataRef: Developer Preview
+// (https://developers.google.com/workspace/preview).
 type AttachmentDataRef struct {
 	// ResourceName: The resource name of the attachment data. This is used
 	// with the media API to download the attachment data.
@@ -3247,7 +3248,6 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSpacesResponse: The response corresponding to ListSpacesRequest.
 type ListSpacesResponse struct {
 	// NextPageToken: A token that can be sent as `pageToken` to retrieve
 	// the next page of results. If empty, there are no subsequent pages.
@@ -5872,8 +5872,9 @@ func (c *SpacesListCall) PageSize(pageSize int64) *SpacesListCall {
 
 // PageToken sets the optional parameter "pageToken": A page token,
 // received from a previous list spaces call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided
-// must match the call that provided the page token.
+// the subsequent page. When paginating, the filter value should match
+// the call that provided the page token. Passing a different value may
+// lead to unexpected results.
 func (c *SpacesListCall) PageToken(pageToken string) *SpacesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5988,7 +5989,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous list spaces call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided must match the call that provided the page token.",
+	//       "description": "Optional. A page token, received from a previous list spaces call. Provide this to retrieve the subsequent page. When paginating, the filter value should match the call that provided the page token. Passing a different value may lead to unexpected results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7156,8 +7157,17 @@ type SpacesMessagesUpdateCall struct {
 
 // Update: Updates a message. For example usage, see Update a message
 // (https://developers.google.com/chat/api/guides/crudl/messages#update_a_message).
-// Requires service account authentication
+// Requires authentication
+// (https://developers.google.com/chat/api/guides/auth/). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.messages` authorization scope.
 //
 //   - name: Resource name in the form `spaces/*/messages/*`. Example:
 //     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -7280,7 +7290,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "chat.spaces.messages.update",

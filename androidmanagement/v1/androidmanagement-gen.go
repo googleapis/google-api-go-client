@@ -968,7 +968,7 @@ type ApplicationPolicy struct {
 
 	// LockTaskAllowed: Whether the app is allowed to lock itself in
 	// full-screen mode. DEPRECATED. Use InstallType KIOSK or
-	// kioskCustomLauncherEnabled to to configure a dedicated device.
+	// kioskCustomLauncherEnabled to configure a dedicated device.
 	LockTaskAllowed bool `json:"lockTaskAllowed,omitempty"`
 
 	// ManagedConfiguration: Managed configuration applied to the app. The
@@ -1003,6 +1003,20 @@ type ApplicationPolicy struct {
 	// These values override the default_permission_policy and
 	// permission_grants which apply to all apps.
 	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+
+	// WorkProfileWidgets: Specifies whether the app installed in the work
+	// profile is allowed to add widgets to the home screen.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_UNSPECIFIED" - Unspecified. Defaults to
+	// work_profile_widgets_default
+	//   "WORK_PROFILE_WIDGETS_ALLOWED" - Work profile widgets are allowed.
+	// This means the application will be able to add widgets to the home
+	// screen.
+	//   "WORK_PROFILE_WIDGETS_DISALLOWED" - Work profile widgets are
+	// disallowed. This means the application will not be able to add
+	// widgets to the home screen.
+	WorkProfileWidgets string `json:"workProfileWidgets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessibleTrackIds")
 	// to unconditionally include in API requests. By default, fields with
@@ -1829,6 +1843,24 @@ type CrossProfilePolicies struct {
 	// and incoming calls
 	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
 
+	// WorkProfileWidgetsDefault: Specifies the default behaviour for work
+	// profile widgets. If the policy does not specify work_profile_widgets
+	// for a specific application, it will behave according to the value
+	// specified here.
+	//
+	// Possible values:
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_UNSPECIFIED" - Unspecified. Defaults
+	// to WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_ALLOWED" - Work profile widgets are
+	// allowed by default. This means that if the policy does not specify
+	// work_profile_widgets as WORK_PROFILE_WIDGETS_DISALLOWED for the
+	// application, it will be able to add widgets to the home screen.
+	//   "WORK_PROFILE_WIDGETS_DEFAULT_DISALLOWED" - Work profile widgets
+	// are disallowed by default. This means that if the policy does not
+	// specify work_profile_widgets as WORK_PROFILE_WIDGETS_ALLOWED for the
+	// application, it will be unable to add widgets to the home screen.
+	WorkProfileWidgetsDefault string `json:"workProfileWidgetsDefault,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "CrossProfileCopyPaste") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -2520,7 +2552,15 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 
 // ExtensionConfig: Configuration to enable an app as an extension app,
 // with the capability of interacting with Android Device Policy
-// offline.
+// offline. For Android versions 13 and above, extension apps are exempt
+// from battery restrictions so will not be placed into the restricted
+// App Standby Bucket
+// (https://developer.android.com/topic/performance/appstandby#restricted-bucket).
+// Extensions apps are also protected against users clearing their data
+// or force-closing the application, although admins can continue to use
+// the clear app data command
+// (https://developer.android.com/management/reference/rest/v1/enterprises.devices/issueCommand#CommandType)
+// on extension apps if needed for Android 13 and above.
 type ExtensionConfig struct {
 	// NotificationReceiver: Fully qualified class name of the receiver
 	// service class for Android Device Policy to notify the extension app

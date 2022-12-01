@@ -345,7 +345,7 @@ func (s *ListVoicesResponse) MarshalJSON() ([]byte, error) {
 // SynthesisInput: Contains text input to be synthesized. Either `text`
 // or `ssml` must be supplied. Supplying both or neither returns
 // google.rpc.Code.INVALID_ARGUMENT. The input size is limited to 5000
-// characters.
+// bytes.
 type SynthesisInput struct {
 	// Ssml: The SSML document to be synthesized. The SSML document must be
 	// valid and well-formed. Otherwise the RPC will fail and return

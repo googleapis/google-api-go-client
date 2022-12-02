@@ -1493,6 +1493,9 @@ type Finding struct {
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
 
+	// KernelRootkit: Kernel Rootkit signature.
+	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
+
 	// Kubernetes: Kubernetes resources associated with the finding.
 	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
 
@@ -3173,6 +3176,71 @@ type Indicator struct {
 
 func (s *Indicator) MarshalJSON() ([]byte, error) {
 	type NoMethod Indicator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KernelRootkit: Kernel mode rootkit signatures.
+type KernelRootkit struct {
+	// Name: Rootkit name when available.
+	Name string `json:"name,omitempty"`
+
+	// UnexpectedCodeModification: Flag indicating unexpected modifications
+	// of kernel code memory.
+	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
+
+	// UnexpectedFtraceHandler: Flag indicating presence of ftrace points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
+
+	// UnexpectedInterruptHandler: Flag indicating presence of interrupt
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
+
+	// UnexpectedKernelCodePages: Flag indicating presence of kernel code
+	// pages that are not in the expected kernel, module code regions.
+	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
+
+	// UnexpectedKprobeHandler: Flag indicating presence of kprobe points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
+
+	// UnexpectedProcessesInRunqueue: Flag indicating unexpected process(es)
+	// in the scheduler run-queue, those that are in the run-queue, but not
+	// in the process task-list.
+	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
+
+	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
+	// modifications of kernel read-only data memory.
+	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
+
+	// UnexpectedSystemCallHandler: Flag indicating presence of system call
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelRootkit
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

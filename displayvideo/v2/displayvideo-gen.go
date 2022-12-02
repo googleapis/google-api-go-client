@@ -1768,6 +1768,27 @@ type AssignedTargetingOption struct {
 	// targeting type. It may be reused in other contexts.
 	AssignedTargetingOptionId string `json:"assignedTargetingOptionId,omitempty"`
 
+	// AssignedTargetingOptionIdAlias: Output only. An alias for the
+	// assigned targeting option id field. This field is only supported for
+	// targeting types with enum targeting enabled. This value can be used
+	// in place of the assignedTargetingOptionId required for GET and DELETE
+	// targeting methods. An alias for the assignedTargetingOptionId. This
+	// value can be used in place of `assignedTargetingOptionId` when
+	// retrieving or deleting existing targeting. This field will only be
+	// supported for assigned targeting options of the following targeting
+	// types: * `TARGETING_TYPE_AGE_RANGE` *
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+	// `TARGETING_TYPE_DEVICE_TYPE` *
+	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+	// `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_OMID` *
+	// `TARGETING_TYPE_PARENTAL_STATUS` *
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`
+	AssignedTargetingOptionIdAlias string `json:"assignedTargetingOptionIdAlias,omitempty"`
+
 	// AudienceGroupDetails: Audience targeting details. This field will be
 	// populated when the targeting_type is `TARGETING_TYPE_AUDIENCE_GROUP`.
 	// You can only target one audience group option per resource.
@@ -26010,7 +26031,7 @@ func (c *AdvertisersLineItemsBulkListAssignedTargetingOptionsCall) Pages(ctx con
 
 type AdvertisersLineItemsBulkUpdateCall struct {
 	s                          *Service
-	advertisersId              string
+	advertiserId               int64
 	bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest
 	urlParams_                 gensupport.URLParams
 	ctx_                       context.Context
@@ -26023,10 +26044,10 @@ type AdvertisersLineItemsBulkUpdateCall struct {
 // CreateLineItemAssignedTargetingOption *
 // DeleteLineItemAssignedTargetingOption
 //
-// - advertisersId: .
-func (r *AdvertisersLineItemsService) BulkUpdate(advertisersId string, bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest) *AdvertisersLineItemsBulkUpdateCall {
+// - advertiserId: The ID of the advertiser this line item belongs to.
+func (r *AdvertisersLineItemsService) BulkUpdate(advertiserId int64, bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest) *AdvertisersLineItemsBulkUpdateCall {
 	c := &AdvertisersLineItemsBulkUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.advertisersId = advertisersId
+	c.advertiserId = advertiserId
 	c.bulkupdatelineitemsrequest = bulkupdatelineitemsrequest
 	return c
 }
@@ -26071,7 +26092,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) doRequest(alt string) (*http.Respon
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{advertisersId}/lineItems:bulkUpdate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/lineItems:bulkUpdate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -26079,7 +26100,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) doRequest(alt string) (*http.Respon
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"advertisersId": c.advertisersId,
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -26127,16 +26148,19 @@ func (c *AdvertisersLineItemsBulkUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkUpdate",
 	//   "parameterOrder": [
-	//     "advertisersId"
+	//     "advertiserId"
 	//   ],
 	//   "parameters": {
-	//     "advertisersId": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this line item belongs to.",
+	//       "format": "int64",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v2/advertisers/{advertisersId}/lineItems:bulkUpdate",
+	//   "path": "v2/advertisers/{+advertiserId}/lineItems:bulkUpdate",
 	//   "request": {
 	//     "$ref": "BulkUpdateLineItemsRequest"
 	//   },

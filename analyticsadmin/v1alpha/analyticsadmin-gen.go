@@ -2374,6 +2374,70 @@ func (s *GoogleAnalyticsAdminV1alphaBatchUpdateUserLinksResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1alphaBigQueryLink: A link between a GA4
+// Property and BigQuery project.
+type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
+	// CreateTime: Output only. Time when the link was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DailyExportEnabled: If set true, enables daily data export to the
+	// linked Google Cloud project.
+	DailyExportEnabled bool `json:"dailyExportEnabled,omitempty"`
+
+	// ExcludedEvents: The list of event names that will be excluded from
+	// exports.
+	ExcludedEvents []string `json:"excludedEvents,omitempty"`
+
+	// ExportStreams: The list of streams under the parent property for
+	// which data will be exported. Format:
+	// properties/{property_id}/dataStreams/{stream_id} Example:
+	// ['properties/1000/dataStreams/2000']
+	ExportStreams []string `json:"exportStreams,omitempty"`
+
+	// IncludeAdvertisingId: If set true, exported data will include
+	// advertising identifiers for mobile app streams.
+	IncludeAdvertisingId bool `json:"includeAdvertisingId,omitempty"`
+
+	// Name: Output only. Resource name of this BigQuery link. Format:
+	// 'properties/{property_id}/bigQueryLinks/{bigquery_link_id}' Format:
+	// 'properties/1234/bigQueryLinks/abc567'
+	Name string `json:"name,omitempty"`
+
+	// Project: Immutable. The linked Google Cloud project. When creating a
+	// BigQueryLink, you may provide this resource name using either a
+	// project number or project ID. Once this resource has been created,
+	// the returned project will always have a project that contains a
+	// project number. Format: 'projects/{project number}' Example:
+	// 'projects/1234'
+	Project string `json:"project,omitempty"`
+
+	// StreamingExportEnabled: If set true, enables streaming export to the
+	// linked Google Cloud project.
+	StreamingExportEnabled bool `json:"streamingExportEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaBigQueryLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaBigQueryLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAnalyticsAdminV1alphaCancelDisplayVideo360AdvertiserLinkProposal
 // Request: Request message for
 // CancelDisplayVideo360AdvertiserLinkProposal RPC.
@@ -2439,6 +2503,10 @@ type GoogleAnalyticsAdminV1alphaChangeHistoryChangeChangeHistoryResource struct 
 	// AttributionSettings: A snapshot of AttributionSettings resource in
 	// change history.
 	AttributionSettings *GoogleAnalyticsAdminV1alphaAttributionSettings `json:"attributionSettings,omitempty"`
+
+	// BigqueryLink: A snapshot of a BigQuery link resource in change
+	// history.
+	BigqueryLink *GoogleAnalyticsAdminV1alphaBigQueryLink `json:"bigqueryLink,omitempty"`
 
 	// ConversionEvent: A snapshot of a ConversionEvent resource in change
 	// history.
@@ -16887,7 +16955,7 @@ func (c *PropertiesFirebaseLinksListCall) PageSize(pageSize int64) *PropertiesFi
 // PageToken sets the optional parameter "pageToken": A page token,
 // received from a previous `ListFirebaseLinks` call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListProperties` must match the call that provided the
+// provided to `ListFirebaseLinks` must match the call that provided the
 // page token.
 func (c *PropertiesFirebaseLinksListCall) PageToken(pageToken string) *PropertiesFirebaseLinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -17010,7 +17078,7 @@ func (c *PropertiesFirebaseLinksListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListFirebaseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProperties` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous `ListFirebaseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFirebaseLinks` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1521,12 +1521,18 @@ type Site struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "REQUIRES_REVIEW" - The site hasn't been checked yet.
-	//   "GETTING_READY" - Running some checks on the site. This usually
-	// takes a few days, but in some cases can take up to 2 weeks.
-	//   "READY" - The site is ready to show ads.
+	//   "REQUIRES_REVIEW" - Either: * The site hasn't been checked yet. *
+	// The site is inactive and needs another review before it can show ads
+	// again. Learn how to [request a review for an inactive
+	// site](https://support.google.com/adsense/answer/9393996).
+	//   "GETTING_READY" - Google is running some checks on the site. This
+	// usually takes a few days, but in some cases it can take two to four
+	// weeks.
+	//   "READY" - The site is ready to show ads. Learn how to [set up ads
+	// on the site](https://support.google.com/adsense/answer/7037624).
 	//   "NEEDS_ATTENTION" - Publisher needs to fix some issues before the
-	// site is ready to show ads.
+	// site is ready to show ads. Learn what to do [if a new site isn't
+	// ready](https://support.google.com/adsense/answer/9061852).
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -366,6 +366,15 @@ type Case struct {
 	// Escalated: Whether the case is currently escalated.
 	Escalated bool `json:"escalated,omitempty"`
 
+	// LanguageCode: The language the user has requested to receive support
+	// in. This should be a BCP 47 language code (e.g., "en", "zh-CN",
+	// "zh-TW", "ja", "ko"). If no language or an unsupported language
+	// is specified, this field defaults to English (en). Language selection
+	// during case creation may affect your available support options. For a
+	// list of supported languages and their support working hours, see:
+	// https://cloud.google.com/support/docs/language-working-hours
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// Name: The resource name for the case.
 	Name string `json:"name,omitempty"`
 
@@ -1428,8 +1437,8 @@ type AttachmentsCreateCall struct {
 // Create: Create a file attachment on a case or Cloud resource. The
 // attachment object must have the following fields set: filename.
 //
-//   - parent: The resource name of the case to which attachment should be
-//     attached.
+//   - parent: The resource name of the case (or case parent) to which the
+//     attachment should be attached.
 func (r *AttachmentsService) Create(parent string, createattachmentrequest *CreateAttachmentRequest) *AttachmentsCreateCall {
 	c := &AttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1537,7 +1546,7 @@ func (c *AttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Attachment, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the case to which attachment should be attached.",
+	//       "description": "Required. The resource name of the case (or case parent) to which the attachment should be attached.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -3644,8 +3653,8 @@ type MediaUploadCall struct {
 // Upload: Create a file attachment on a case or Cloud resource. The
 // attachment object must have the following fields set: filename.
 //
-//   - parent: The resource name of the case to which attachment should be
-//     attached.
+//   - parent: The resource name of the case (or case parent) to which the
+//     attachment should be attached.
 func (r *MediaService) Upload(parent string, createattachmentrequest *CreateAttachmentRequest) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3831,7 +3840,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The resource name of the case to which attachment should be attached.",
+	//       "description": "Required. The resource name of the case (or case parent) to which the attachment should be attached.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/cases/[^/]+$",
 	//       "required": true,

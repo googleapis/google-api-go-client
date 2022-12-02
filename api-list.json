@@ -255,6 +255,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "http://code.google.com/apis/analytics/docs/mgmt/home.html",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "analyticsadmin:v1beta",
+      "name": "analyticsadmin",
+      "version": "v1beta",
+      "title": "Google Analytics Admin API",
+      "description": "",
+      "discoveryRestUrl": "https://analyticsadmin.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://code.google.com/apis/analytics/docs/mgmt/home.html",
       "preferred": true
     },
     {
@@ -877,7 +892,7 @@
       "name": "businessprofileperformance",
       "version": "v1",
       "title": "Business Profile Performance API",
-      "description": "The Business Profile Performance API allows merchants to fetch performance reports about their business profile on Google.",
+      "description": "The Business Profile Performance API allows merchants to fetch performance reports about their business profile on Google. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://businessprofileperformance.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3852,7 +3867,7 @@
       "name": "mybusinessaccountmanagement",
       "version": "v1",
       "title": "My Business Account Management API",
-      "description": "The My Business Account Management API provides an interface for managing access to a location on Google.",
+      "description": "The My Business Account Management API provides an interface for managing access to a location on Google. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessaccountmanagement.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3867,7 +3882,7 @@
       "name": "mybusinessbusinesscalls",
       "version": "v1",
       "title": "My Business Business Calls API",
-      "description": "The My Business Business Calls API manages business calls information of a location on Google and collect insights like the number of missed calls to their location. Additional information about Business calls can be found at https://support.google.com/business/answer/9688285?p=call_history. If the Google Business Profile links to a Google Ads account and call history is turned on, calls that last longer than a specific time, and that can be attributed to an ad interaction, will show in the linked Google Ads account under the \"Calls from Ads\" conversion. If smart bidding and call conversions are used in the optimization strategy, there could be a change in ad spend. Learn more about smart bidding \u003chttps://support.google.com/google-ads/answer/7065882\u003e. To view and perform actions on a location's calls, you need to be a `OWNER`, `CO_OWNER` or `MANAGER` of the location.",
+      "description": "The My Business Business Calls API manages business calls information of a location on Google and collect insights like the number of missed calls to their location. Additional information about Business calls can be found at https://support.google.com/business/answer/9688285?p=call_history. If the Google Business Profile links to a Google Ads account and call history is turned on, calls that last longer than a specific time, and that can be attributed to an ad interaction, will show in the linked Google Ads account under the \"Calls from Ads\" conversion. If smart bidding and call conversions are used in the optimization strategy, there could be a change in ad spend. Learn more about smart bidding \u003chttps://support.google.com/google-ads/answer/7065882\u003e. To view and perform actions on a location's calls, you need to be a `OWNER`, `CO_OWNER` or `MANAGER` of the location. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessbusinesscalls.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3882,7 +3897,7 @@
       "name": "mybusinessbusinessinformation",
       "version": "v1",
       "title": "My Business Business Information API",
-      "description": "The My Business Business Information API provides an interface for managing business information on Google.",
+      "description": "The My Business Business Information API provides an interface for managing business information. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessbusinessinformation.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3897,7 +3912,7 @@
       "name": "mybusinesslodging",
       "version": "v1",
       "title": "My Business Lodging API",
-      "description": "The My Business Lodging API enables managing lodging business information on Google.",
+      "description": "The My Business Lodging API enables managing lodging business information on Google. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinesslodging.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3912,7 +3927,7 @@
       "name": "mybusinessnotifications",
       "version": "v1",
       "title": "My Business Notifications API",
-      "description": "The My Business Notification Settings API enables managing notification settings for business accounts.",
+      "description": "The My Business Notification Settings API enables managing notification settings for business accounts. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessnotifications.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3927,7 +3942,7 @@
       "name": "mybusinessplaceactions",
       "version": "v1",
       "title": "My Business Place Actions API",
-      "description": "The My Business Place Actions API provides an interface for managing place action links of a location on Google.",
+      "description": "The My Business Place Actions API provides an interface for managing place action links of a location on Google. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessplaceactions.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3942,7 +3957,7 @@
       "name": "mybusinessqanda",
       "version": "v1",
       "title": "My Business Q&A API",
-      "description": "The My Business Q&A API allows questions and answers to be posted for specific listings.",
+      "description": "The My Business Q&A API allows questions and answers to be posted for specific listings. Note - If you have a quota of 0 after enabling the API, please request \u003chttps://developers.google.com/my-business/content/prereqs#request-access\u003e for GBP API access.",
       "discoveryRestUrl": "https://mybusinessqanda.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

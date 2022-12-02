@@ -6257,8 +6257,20 @@ type SpacesMembersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a membership. Requires service account authentication
+// Get: Developer Preview
+// (https://developers.google.com/workspace/preview): Returns a
+// membership. Requires authentication
+// (https://developers.google.com/chat/api/guides/auth/). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.memberships` or `chat.memberships.readonly` authorization
+// scope.
 //
 //   - name: Resource name of the membership to retrieve. Format:
 //     spaces/{space}/members/{member}.
@@ -6367,7 +6379,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a membership. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Returns a membership. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -6405,9 +6417,20 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists memberships in a space. Requires service account
-// authentication
+// List: Developer Preview
+// (https://developers.google.com/workspace/preview): Lists memberships
+// in a space. Requires authentication
+// (https://developers.google.com/chat/api/guides/auth/). Fully supports
+// service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.memberships` or `chat.memberships.readonly` authorization
+// scope.
 //
 //   - parent: The resource name of the space for which to fetch a
 //     membership list. Format: spaces/{space}.
@@ -6430,7 +6453,9 @@ func (c *SpacesMembersListCall) PageSize(pageSize int64) *SpacesMembersListCall 
 // PageToken sets the optional parameter "pageToken": A page token,
 // received from a previous list memberships call. Provide this to
 // retrieve the subsequent page. When paginating, all other parameters
-// provided must match the call that provided the page token.
+// provided should match the call that provided the page token. Passing
+// different values to the other parameters may lead to unexpected
+// results.
 func (c *SpacesMembersListCall) PageToken(pageToken string) *SpacesMembersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6535,7 +6560,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists memberships in a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Lists memberships in a space. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -6550,7 +6575,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided should match the call that provided the page token. Passing different values to the other parameters may lead to unexpected results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7139,6 +7164,193 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chat.messages",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chat.spaces.messages.patch":
+
+type SpacesMessagesPatchCall struct {
+	s          *Service
+	name       string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a message. For example usage, see Update a message
+// (https://developers.google.com/chat/api/guides/crudl/messages#update_a_message).
+// Requires authentication
+// (https://developers.google.com/chat/api/guides/auth/). Fully supports
+// service account authentication
+// (https://developers.google.com/chat/api/guides/auth/service-accounts).
+// Supports user authentication
+// (https://developers.google.com/chat/api/guides/auth/users) as part of
+// the Google Workspace Developer Preview Program
+// (https://developers.google.com/workspace/preview), which grants early
+// access to certain features. User authentication
+// (https://developers.google.com/chat/api/guides/auth/users) requires
+// the `chat.messages` authorization scope.
+//
+//   - name: Resource name in the form `spaces/*/messages/*`. Example:
+//     `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
+func (r *SpacesMessagesService) Patch(name string, message *Message) *SpacesMessagesPatchCall {
+	c := &SpacesMessagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.message = message
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If `true`
+// and the message is not found, a new message is created and
+// `updateMask` is ignored. The specified message ID must be
+// client-assigned
+// (https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message)
+// or the request fails.
+func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessagesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// field paths to update. Separate multiple values with commas.
+// Currently supported field paths: - text - cards (Requires service
+// account authentication (/chat/api/guides/auth/service-accounts).) -
+// cards_v2
+func (c *SpacesMessagesPatchCall) UpdateMask(updateMask string) *SpacesMessagesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesMessagesPatchCall) Fields(s ...googleapi.Field) *SpacesMessagesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesMessagesPatchCall) Context(ctx context.Context) *SpacesMessagesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesMessagesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messages.patch" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "chat.spaces.messages.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If `true` and the message is not found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message) or the request fails.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - cards_v2 ",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.messages"
 	//   ]
 	// }
 

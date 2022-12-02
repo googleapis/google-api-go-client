@@ -582,8 +582,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaDocumentInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaGcsSource: Google Cloud Storage
-// location for input content. format.
+// GoogleCloudDiscoveryengineV1alphaGcsSource: Cloud Storage location
+// for input content.
 type GoogleCloudDiscoveryengineV1alphaGcsSource struct {
 	// DataSchema: The schema to use when parsing the data from the source.
 	// Supported values for imports: * `user_event` (default): One JSON
@@ -591,12 +591,11 @@ type GoogleCloudDiscoveryengineV1alphaGcsSource struct {
 	// line. Each document must have a valid Document.id.
 	DataSchema string `json:"dataSchema,omitempty"`
 
-	// InputUris: Required. Google Cloud Storage URIs to input files. URI
-	// can be up to 2000 characters long. URIs can match the full object
-	// path (for example, `gs://bucket/directory/object.json`) or a pattern
-	// matching one or more files, such as `gs://bucket/directory/*.json`. A
-	// request can contain at most 100 files, and each file can be up to 2
-	// GB.
+	// InputUris: Required. Cloud Storage URIs to input files. URI can be up
+	// to 2000 characters long. URIs can match the full object path (for
+	// example, `gs://bucket/directory/object.json`) or a pattern matching
+	// one or more files, such as `gs://bucket/directory/*.json`. A request
+	// can contain at most 100 files, and each file can be up to 2 GB.
 	InputUris []string `json:"inputUris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataSchema") to
@@ -673,7 +672,7 @@ type GoogleCloudDiscoveryengineV1alphaImportDocumentsRequest struct {
 	// Import.
 	ErrorConfig *GoogleCloudDiscoveryengineV1alphaImportErrorConfig `json:"errorConfig,omitempty"`
 
-	// GcsSource: Google Cloud Storage location for the input content.
+	// GcsSource: Cloud Storage location for the input content.
 	GcsSource *GoogleCloudDiscoveryengineV1alphaGcsSource `json:"gcsSource,omitempty"`
 
 	// InlineSource: The Inline source for the input content for documents.
@@ -786,8 +785,8 @@ func (s *GoogleCloudDiscoveryengineV1alphaImportDocumentsResponse) MarshalJSON()
 // GoogleCloudDiscoveryengineV1alphaImportErrorConfig: Configuration of
 // destination for Import related errors.
 type GoogleCloudDiscoveryengineV1alphaImportErrorConfig struct {
-	// GcsPrefix: Google Cloud Storage prefix for import errors. This must
-	// be an empty, existing Cloud Storage directory. Import errors will be
+	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
+	// empty, existing Cloud Storage directory. Import errors will be
 	// written to sharded files in this directory, one per line, as a
 	// JSON-encoded `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
@@ -866,8 +865,7 @@ type GoogleCloudDiscoveryengineV1alphaImportUserEventsRequest struct {
 	// Import. Cannot be set for inline user event imports.
 	ErrorConfig *GoogleCloudDiscoveryengineV1alphaImportErrorConfig `json:"errorConfig,omitempty"`
 
-	// GcsSource: Required. Google Cloud Storage location for the input
-	// content.
+	// GcsSource: Required. Cloud Storage location for the input content.
 	GcsSource *GoogleCloudDiscoveryengineV1alphaGcsSource `json:"gcsSource,omitempty"`
 
 	// InlineSource: Required. The Inline source for the input content for
@@ -1773,8 +1771,8 @@ func (s *GoogleCloudDiscoveryengineV1betaImportDocumentsResponse) MarshalJSON() 
 // GoogleCloudDiscoveryengineV1betaImportErrorConfig: Configuration of
 // destination for Import related errors.
 type GoogleCloudDiscoveryengineV1betaImportErrorConfig struct {
-	// GcsPrefix: Google Cloud Storage prefix for import errors. This must
-	// be an empty, existing Cloud Storage directory. Import errors will be
+	// GcsPrefix: Cloud Storage prefix for import errors. This must be an
+	// empty, existing Cloud Storage directory. Import errors will be
 	// written to sharded files in this directory, one per line, as a
 	// JSON-encoded `google.rpc.Status` message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`

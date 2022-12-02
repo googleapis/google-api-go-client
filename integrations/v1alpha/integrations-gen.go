@@ -7902,9 +7902,10 @@ type GoogleCloudIntegrationsV1alphaExecuteIntegrationsRequest struct {
 	// execution is returned.
 	RequestId string `json:"requestId,omitempty"`
 
-	// TriggerId: Optional. Matched against all {@link TriggerConfig}s
+	// TriggerId: Required. Matched against all {@link TriggerConfig}s
 	// across all integrations. i.e.
-	// TriggerConfig.trigger_id.equals(trigger_id)
+	// TriggerConfig.trigger_id.equals(trigger_id). The trigger_id is in the
+	// format of `api_trigger/TRIGGER_NAME`.
 	TriggerId string `json:"triggerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DoNotPropagateError")
@@ -14980,7 +14981,10 @@ type ProjectsLocationsIntegrationsExecutionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the status of the integration executions.
+// List: Lists the results of all the integration executions. The
+// response includes the same information as the execution log
+// (https://cloud.google.com/application-integration/docs/viewing-logs)
+// in the Integration UI.
 //
 // - parent: The parent resource name of the integration execution.
 func (r *ProjectsLocationsIntegrationsExecutionsService) List(parent string) *ProjectsLocationsIntegrationsExecutionsListCall {
@@ -15240,7 +15244,7 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the status of the integration executions.",
+	//   "description": "Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/executions",
 	//   "httpMethod": "GET",
 	//   "id": "integrations.projects.locations.integrations.executions.list",
@@ -20066,7 +20070,10 @@ type ProjectsLocationsProductsIntegrationsExecutionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the status of the integration executions.
+// List: Lists the results of all the integration executions. The
+// response includes the same information as the execution log
+// (https://cloud.google.com/application-integration/docs/viewing-logs)
+// in the Integration UI.
 //
 // - parent: The parent resource name of the integration execution.
 func (r *ProjectsLocationsProductsIntegrationsExecutionsService) List(parent string) *ProjectsLocationsProductsIntegrationsExecutionsListCall {
@@ -20326,7 +20333,7 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsListCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the status of the integration executions.",
+	//   "description": "Lists the results of all the integration executions. The response includes the same information as the [execution log](https://cloud.google.com/application-integration/docs/viewing-logs) in the Integration UI.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/executions",
 	//   "httpMethod": "GET",
 	//   "id": "integrations.projects.locations.products.integrations.executions.list",

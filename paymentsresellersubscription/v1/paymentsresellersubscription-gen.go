@@ -568,6 +568,70 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload
+// specific to Google One products.
+type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
+	// Campaigns: Campaign attributed to sales of this subscription.
+	Campaigns []string `json:"campaigns,omitempty"`
+
+	// Offering: The type of offering the subscription was sold by the
+	// partner. e.g. VAS.
+	//
+	// Possible values:
+	//   "OFFERING_UNSPECIFIED" - The type of partner offering is
+	// unspecified.
+	//   "OFFERING_VAS_BUNDLE" - Google One product purchased as a Value
+	// added service in addition to existing partner's products. Customer
+	// pays additional amount for Google One product.
+	//   "OFFERING_VAS_STANDALONE" - Google One product purchased by itself
+	// by customer as a value add service. Customer pays additional amount
+	// for Google One product.
+	//   "OFFERING_HARD_BUNDLE" - Product purchased as part of a hard bundle
+	// where Google One was included with the bundle. Google One pricing is
+	// included in the bundle.
+	//   "OFFERING_SOFT_BUNDLE" - Purchased as part of a bundle where Google
+	// One was provided as an option. Google One pricing is included in the
+	// bundle.
+	Offering string `json:"offering,omitempty"`
+
+	// SalesChannel: The type of sales channel through which the
+	// subscription was sold.
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - The channel type is unspecified.
+	//   "CHANNEL_RETAIL" - Sold at store.
+	//   "CHANNEL_ONLINE_WEB" - Sold through partner website.
+	//   "CHANNEL_ONLINE_ANDROID_APP" - Sold through partner android app.
+	//   "CHANNEL_ONLINE_IOS_APP" - Sold through partner iOS app.
+	SalesChannel string `json:"salesChannel,omitempty"`
+
+	// StoreId: The identifier for the partner store where the subscription
+	// was sold.
+	StoreId string `json:"storeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Campaigns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Campaigns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -713,6 +777,39 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies
+// product specific payload.
+type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
+	// GoogleOnePayload: Payload specific to Google One products.
+	GoogleOnePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload `json:"googleOnePayload,omitempty"`
+
+	// YoutubePayload: Payload specific to Youtube products.
+	YoutubePayload *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload `json:"youtubePayload,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleOnePayload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleOnePayload") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1122,7 +1219,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetail
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
-// Individual line item definition of a subscription. Next id: 9
+// Individual line item definition of a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
@@ -1148,6 +1245,10 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// Product: Required. Product resource name that identifies one the line
 	// item The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
+
+	// ProductPayload: Optional. Product specific payload for this line
+	// item.
+	ProductPayload *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload `json:"productPayload,omitempty"`
 
 	// RecurrenceType: Output only. The recurrence type of the line item.
 	//
@@ -1358,6 +1459,38 @@ type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse str
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload
+// specific to Youtube products.
+type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
+	// PartnerEligibilityIds: The list of eligibility_ids which are
+	// applicable for the line item.
+	PartnerEligibilityIds []string `json:"partnerEligibilityIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PartnerEligibilityIds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PartnerEligibilityIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

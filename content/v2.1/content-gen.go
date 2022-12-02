@@ -2750,10 +2750,13 @@ func (s *Amount) MarshalJSON() ([]byte, error) {
 type BestSellers struct {
 	// CategoryId: Google product category ID to calculate the ranking for,
 	// represented in Google's product taxonomy
-	// (https://support.google.com/merchants/answer/6324436).
+	// (https://support.google.com/merchants/answer/6324436). If a `WHERE`
+	// condition on `best_sellers.category_id` is not specified in the
+	// query, rankings for all top-level categories are returned.
 	CategoryId int64 `json:"categoryId,omitempty,string"`
 
-	// CountryCode: Country where the ranking is calculated.
+	// CountryCode: Country where the ranking is calculated. A `WHERE`
+	// condition on `best_sellers.country_code` is required in the query.
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// PreviousRank: Popularity rank in the previous week or month.
@@ -2811,11 +2814,14 @@ type BestSellers struct {
 
 	// ReportDate: Report date. The value of this field can only be one of
 	// the following: * The first day of the week (Monday) for weekly
-	// reports. * The first day of the month for monthly reports.
+	// reports. * The first day of the month for monthly reports. If a
+	// `WHERE` condition on `best_sellers.report_date` is not specified in
+	// the query, the latest available weekly or monthly report is returned.
 	ReportDate *Date `json:"reportDate,omitempty"`
 
 	// ReportGranularity: Granularity of the report. The ranking can be done
-	// over a week or a month timeframe.
+	// over a week or a month timeframe. A `WHERE` condition on
+	// `best_sellers.report_granularity` is required in the query.
 	//
 	// Possible values:
 	//   "REPORT_GRANULARITY_UNSPECIFIED" - Report granularity is unknown.
@@ -3932,6 +3938,8 @@ type DatafeedTarget struct {
 
 	// ExcludedDestinations: The list of destinations to exclude for this
 	// target (corresponds to cleared check boxes in Merchant Center).
+	// Products that are excluded from all destinations for more than 7 days
+	// are automatically deleted.
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// FeedLabel: Feed label for the DatafeedTarget. Either `country` or
@@ -6918,18 +6926,20 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 }
 
 // MethodQuota: The quota information per method in the Content API.
+// Includes only methods with current usage greater than zero for your
+// account.
 type MethodQuota struct {
-	// Method: The method name, for example “products.list”. Method name
+	// Method: The method name, for example `products.list`. Method name
 	// does not contain version because quota can be shared between
 	// different API versions of the same method.
 	Method string `json:"method,omitempty"`
 
-	// QuotaLimit: The current quota limit, for example the maximum number
-	// of calls for the method.
+	// QuotaLimit: The current quota limit per day, meaning the maximum
+	// number of calls for the method.
 	QuotaLimit int64 `json:"quotaLimit,omitempty,string"`
 
-	// QuotaUsage: The current quota usage, for example the number of calls
-	// for the method.
+	// QuotaUsage: The current quota usage, meaning the number of calls
+	// already made to the method.
 	QuotaUsage int64 `json:"quotaUsage,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
@@ -6963,7 +6973,8 @@ type Metrics struct {
 	// customer_country_code.**
 	Aos float64 `json:"aos,omitempty"`
 
-	// AovMicros: Average order value - the average value (total price of
+	// AovMicros: Average order value in micros (1 millionth of a standard
+	// unit, 1 USD = 1000000 micros) - the average value (total price of
 	// items) of all placed orders. The currency of the returned value is
 	// stored in the currency_code segment. If this metric is selected,
 	// 'segments.currency_code' is automatically added to the SELECT clause
@@ -6981,14 +6992,15 @@ type Metrics struct {
 	// available only for the FREE_PRODUCT_LISTING program.
 	ConversionRate float64 `json:"conversionRate,omitempty"`
 
-	// ConversionValueMicros: Value of conversions in micros attributed to
-	// the product, reported on the conversion date. The metric is currently
-	// available only for the FREE_PRODUCT_LISTING program. The currency of
-	// the returned value is stored in the currency_code segment. If this
-	// metric is selected, 'segments.currency_code' is automatically added
-	// to the SELECT clause in the search query (unless it is explicitly
-	// selected by the user) and the currency_code segment is populated in
-	// the response.
+	// ConversionValueMicros: Value of conversions in micros (1 millionth of
+	// a standard unit, 1 USD = 1000000 micros) attributed to the product,
+	// reported on the conversion date. The metric is currently available
+	// only for the FREE_PRODUCT_LISTING program. The currency of the
+	// returned value is stored in the currency_code segment. If this metric
+	// is selected, 'segments.currency_code' is automatically added to the
+	// SELECT clause in the search query (unless it is explicitly selected
+	// by the user) and the currency_code segment is populated in the
+	// response.
 	ConversionValueMicros int64 `json:"conversionValueMicros,omitempty,string"`
 
 	// Conversions: Number of conversions attributed to the product,
@@ -7025,7 +7037,8 @@ type Metrics struct {
 	// segmented by customer_country_code.**
 	ItemFillRate float64 `json:"itemFillRate,omitempty"`
 
-	// OrderedItemSalesMicros: Total price of ordered items. Excludes
+	// OrderedItemSalesMicros: Total price of ordered items in micros (1
+	// millionth of a standard unit, 1 USD = 1000000 micros). Excludes
 	// shipping, taxes (US only), and customer cancellations that happened
 	// within 30 minutes of placing the order. The currency of the returned
 	// value is stored in the currency_code segment. If this metric is
@@ -7065,7 +7078,8 @@ type Metrics struct {
 	// cannot be segmented by customer_country_code.**
 	ReturnedItems int64 `json:"returnedItems,omitempty,string"`
 
-	// ReturnsMicros: Total price of ordered items sent back for return,
+	// ReturnsMicros: Total price of ordered items sent back for return in
+	// micros (1 millionth of a standard unit, 1 USD = 1000000 micros),
 	// reported on the date when the merchant accepted the return. The
 	// currency of the returned value is stored in the currency_code
 	// segment. If this metric is selected, 'segments.currency_code' is
@@ -7075,9 +7089,10 @@ type Metrics struct {
 	// customer_country_code.**
 	ReturnsMicros int64 `json:"returnsMicros,omitempty,string"`
 
-	// ShippedItemSalesMicros: Total price of shipped items, reported on the
-	// order date. Excludes shipping and taxes (US only). The currency of
-	// the returned value is stored in the currency_code segment. If this
+	// ShippedItemSalesMicros: Total price of shipped items in micros (1
+	// millionth of a standard unit, 1 USD = 1000000 micros), reported on
+	// the order date. Excludes shipping and taxes (US only). The currency
+	// of the returned value is stored in the currency_code segment. If this
 	// metric is selected, 'segments.currency_code' is automatically added
 	// to the SELECT clause in the search query (unless it is explicitly
 	// selected by the user) and the currency_code segment is populated in
@@ -12212,7 +12227,8 @@ type PriceCompetitiveness struct {
 	BenchmarkPriceCurrencyCode string `json:"benchmarkPriceCurrencyCode,omitempty"`
 
 	// BenchmarkPriceMicros: The latest available price benchmark in micros
-	// for the product's catalog in the benchmark country.
+	// (1 millionth of a standard unit, 1 USD = 1000000 micros) for the
+	// product's catalog in the benchmark country.
 	BenchmarkPriceMicros int64 `json:"benchmarkPriceMicros,omitempty,string"`
 
 	// CountryCode: The country of the price benchmark (ISO 3166 code).
@@ -12276,15 +12292,17 @@ type PriceInsights struct {
 	PredictedMonthlyGrossProfitChangeCurrencyCode string `json:"predictedMonthlyGrossProfitChangeCurrencyCode,omitempty"`
 
 	// PredictedMonthlyGrossProfitChangeMicros: The predicted change in
-	// gross profit in micros after introducing the suggested price for a
-	// month compared to current active price.
+	// gross profit in micros (1 millionth of a standard unit, 1 USD =
+	// 1000000 micros) after introducing the suggested price for a month
+	// compared to current active price.
 	PredictedMonthlyGrossProfitChangeMicros int64 `json:"predictedMonthlyGrossProfitChangeMicros,omitempty,string"`
 
 	// SuggestedPriceCurrencyCode: The suggested price currency (ISO 4217
 	// code).
 	SuggestedPriceCurrencyCode string `json:"suggestedPriceCurrencyCode,omitempty"`
 
-	// SuggestedPriceMicros: The latest suggested price in micros for the
+	// SuggestedPriceMicros: The latest suggested price in micros (1
+	// millionth of a standard unit, 1 USD = 1000000 micros) for the
 	// product.
 	SuggestedPriceMicros int64 `json:"suggestedPriceMicros,omitempty,string"`
 
@@ -12449,6 +12467,8 @@ type Product struct {
 
 	// ExcludedDestinations: The list of destinations to exclude for this
 	// target (corresponds to cleared check boxes in Merchant Center).
+	// Products that are excluded from all destinations for more than 7 days
+	// are automatically deleted.
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// ExpirationDate: Date on which the item should expire, as specified
@@ -12674,7 +12694,8 @@ type Product struct {
 	// contract.
 	SubscriptionCost *ProductSubscriptionCost `json:"subscriptionCost,omitempty"`
 
-	// TargetCountry: Required. The CLDR territory code for the item.
+	// TargetCountry: Required. The CLDR territory code for the item's
+	// country of sale.
 	TargetCountry string `json:"targetCountry,omitempty"`
 
 	// TaxCategory: The tax category of the product, used to configure
@@ -13618,6 +13639,26 @@ type ProductView struct {
 	// Brand: Brand of the product.
 	Brand string `json:"brand,omitempty"`
 
+	// CategoryL1: First level of the product category in Google's product
+	// taxonomy (https://support.google.com/merchants/answer/6324436).
+	CategoryL1 string `json:"categoryL1,omitempty"`
+
+	// CategoryL2: Second level of the product category in Google's product
+	// taxonomy (https://support.google.com/merchants/answer/6324436).
+	CategoryL2 string `json:"categoryL2,omitempty"`
+
+	// CategoryL3: Third level of the product category in Google's product
+	// taxonomy (https://support.google.com/merchants/answer/6324436).
+	CategoryL3 string `json:"categoryL3,omitempty"`
+
+	// CategoryL4: Fourth level of the product category in Google's product
+	// taxonomy (https://support.google.com/merchants/answer/6324436).
+	CategoryL4 string `json:"categoryL4,omitempty"`
+
+	// CategoryL5: Fifth level of the product category in Google's product
+	// taxonomy (https://support.google.com/merchants/answer/6324436).
+	CategoryL5 string `json:"categoryL5,omitempty"`
+
 	// Channel: Channel of the product (online versus local).
 	//
 	// Possible values:
@@ -13663,10 +13704,36 @@ type ProductView struct {
 	// OfferId: Merchant-provided id of the product.
 	OfferId string `json:"offerId,omitempty"`
 
-	// PriceMicros: Product price specified as micros in the product
-	// currency. Absent in case the information about the price of the
-	// product is not available.
+	// PriceMicros: Product price specified as micros (1 millionth of a
+	// standard unit, 1 USD = 1000000 micros) in the product currency.
+	// Absent in case the information about the price of the product is not
+	// available.
 	PriceMicros int64 `json:"priceMicros,omitempty,string"`
+
+	// ProductTypeL1: First level of the product type in merchant's own
+	// product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	ProductTypeL1 string `json:"productTypeL1,omitempty"`
+
+	// ProductTypeL2: Second level of the product type in merchant's own
+	// product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	ProductTypeL2 string `json:"productTypeL2,omitempty"`
+
+	// ProductTypeL3: Third level of the product type in merchant's own
+	// product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	ProductTypeL3 string `json:"productTypeL3,omitempty"`
+
+	// ProductTypeL4: Fourth level of the product type in merchant's own
+	// product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	ProductTypeL4 string `json:"productTypeL4,omitempty"`
+
+	// ProductTypeL5: Fifth level of the product type in merchant's own
+	// product taxonomy
+	// (https://support.google.com/merchants/answer/6324436).
+	ProductTypeL5 string `json:"productTypeL5,omitempty"`
 
 	// ShippingLabel: The normalized shipping label specified in the feed
 	ShippingLabel string `json:"shippingLabel,omitempty"`
@@ -39354,7 +39421,7 @@ type QuotasListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the quota limit and quota usage per method for your
+// List: Lists the daily call quota and usage per method for your
 // Merchant Center account.
 //
 //   - merchantId: The ID of the account that has quota. This account must
@@ -39480,7 +39547,7 @@ func (c *QuotasListCall) Do(opts ...googleapi.CallOption) (*ListMethodQuotasResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the quota limit and quota usage per method for your Merchant Center account.",
+	//   "description": "Lists the daily call quota and usage per method for your Merchant Center account.",
 	//   "flatPath": "{merchantId}/quotas",
 	//   "httpMethod": "GET",
 	//   "id": "content.quotas.list",

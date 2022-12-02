@@ -1576,6 +1576,9 @@ type Finding struct {
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
 
+	// KernelRootkit: Kernel Rootkit signature.
+	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
+
 	// Kubernetes: Kubernetes resources associated with the finding.
 	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
 
@@ -2774,6 +2777,71 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KernelRootkit: Kernel mode rootkit signatures.
+type KernelRootkit struct {
+	// Name: Rootkit name when available.
+	Name string `json:"name,omitempty"`
+
+	// UnexpectedCodeModification: Flag indicating unexpected modifications
+	// of kernel code memory.
+	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
+
+	// UnexpectedFtraceHandler: Flag indicating presence of ftrace points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
+
+	// UnexpectedInterruptHandler: Flag indicating presence of interrupt
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
+
+	// UnexpectedKernelCodePages: Flag indicating presence of kernel code
+	// pages that are not in the expected kernel, module code regions.
+	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
+
+	// UnexpectedKprobeHandler: Flag indicating presence of kprobe points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
+
+	// UnexpectedProcessesInRunqueue: Flag indicating unexpected process(es)
+	// in the scheduler run-queue, those that are in the run-queue, but not
+	// in the process task-list.
+	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
+
+	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
+	// modifications of kernel read-only data memory.
+	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
+
+	// UnexpectedSystemCallHandler: Flag indicating presence of system call
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelRootkit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Kubernetes: Kubernetes related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
@@ -3948,7 +4016,13 @@ type FoldersGetContainerThreatDetectionSettingsCall struct {
 }
 
 // GetContainerThreatDetectionSettings: Get the
-// ContainerThreatDetectionSettings resource.
+// ContainerThreatDetectionSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetContainerThreatDetectionSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateContainerThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -4062,7 +4136,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the ContainerThreatDetectionSettings resource.",
+	//   "description": "Get the ContainerThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetContainerThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateContainerThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/containerThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getContainerThreatDetectionSettings",
@@ -4101,7 +4175,13 @@ type FoldersGetEventThreatDetectionSettingsCall struct {
 }
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetEventThreatDetectionSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateEventThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the EventThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -4213,7 +4293,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the EventThreatDetectionSettings resource.",
+	//   "description": "Get the EventThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetEventThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateEventThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/eventThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getEventThreatDetectionSettings",
@@ -4401,7 +4481,13 @@ type FoldersGetRapidVulnerabilityDetectionSettingsCall struct {
 }
 
 // GetRapidVulnerabilityDetectionSettings: Get the
-// RapidVulnerabilityDetectionSettings resource.
+// RapidVulnerabilityDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetRapidVulnerabilityDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateRapidVulnerabilityDetectionSettings for this purpose.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     retrieve. Formats: *
@@ -4514,7 +4600,7 @@ func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetRapidVulnerabilityDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateRapidVulnerabilityDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/rapidVulnerabilityDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getRapidVulnerabilityDetectionSettings",
@@ -4702,7 +4788,13 @@ type FoldersGetSecurityHealthAnalyticsSettingsCall struct {
 }
 
 // GetSecurityHealthAnalyticsSettings: Get the
-// SecurityHealthAnalyticsSettings resource.
+// SecurityHealthAnalyticsSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetSecurityHealthAnalyticsSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateSecurityHealthAnalyticsSettings for this purpose.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
 //     Formats: *
@@ -4814,7 +4906,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the SecurityHealthAnalyticsSettings resource.",
+	//   "description": "Get the SecurityHealthAnalyticsSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetSecurityHealthAnalyticsSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateSecurityHealthAnalyticsSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/securityHealthAnalyticsSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getSecurityHealthAnalyticsSettings",
@@ -4853,7 +4945,13 @@ type FoldersGetVirtualMachineThreatDetectionSettingsCall struct {
 }
 
 // GetVirtualMachineThreatDetectionSettings: Get the
-// VirtualMachineThreatDetectionSettings resource.
+// VirtualMachineThreatDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetVirtualMachineThreatDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateVirtualMachineThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     retrieve. Formats: *
@@ -4966,7 +5064,7 @@ func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetVirtualMachineThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateVirtualMachineThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/virtualMachineThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getVirtualMachineThreatDetectionSettings",
@@ -5005,7 +5103,13 @@ type FoldersGetWebSecurityScannerSettingsCall struct {
 }
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetWebSecurityScannerSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateWebSecurityScannerSettings for this purpose.
 //
 //   - name: The name of the WebSecurityScannerSettings to retrieve.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -5116,7 +5220,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the WebSecurityScannerSettings resource.",
+	//   "description": "Get the WebSecurityScannerSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetWebSecurityScannerSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateWebSecurityScannerSettings for this purpose.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/webSecurityScannerSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.getWebSecurityScannerSettings",
@@ -6119,6 +6223,12 @@ type FoldersContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to
 //     calculate. Formats: *
@@ -6232,7 +6342,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/containerThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.containerThreatDetectionSettings.calculate",
@@ -6272,6 +6382,12 @@ type FoldersEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the EventThreatDetectionSettings to calculate.
 //     Formats: *
@@ -6383,7 +6499,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/eventThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.eventThreatDetectionSettings.calculate",
@@ -6423,7 +6539,12 @@ type FoldersRapidVulnerabilityDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // RapidVulnerabilityDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     calculate. Formats: *
@@ -6536,7 +6657,7 @@ func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/rapidVulnerabilityDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate",
@@ -6576,6 +6697,12 @@ type FoldersSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to calculate.
 //     Formats: *
@@ -6687,7 +6814,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/securityHealthAnalyticsSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.securityHealthAnalyticsSettings.calculate",
@@ -6727,7 +6854,12 @@ type FoldersVirtualMachineThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // VirtualMachineThreatDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     calculate. Formats: *
@@ -6840,7 +6972,7 @@ func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/virtualMachineThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate",
@@ -6879,7 +7011,13 @@ type FoldersWebSecurityScannerSettingsCalculateCall struct {
 }
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
-// on its level in the resource hierarchy and its settings.
+// on its level in the resource hierarchy and its settings. Settings
+// provided closer to the target resource take precedence over those
+// further away (e.g. folder will override organization level settings).
+// The default SCC setting for the detector service defaults can be
+// overridden at organization, folder and project levels. No assumptions
+// should be made about the SCC defaults as it is considered an internal
+// implementation detail.
 //
 //   - name: The name of the WebSecurityScannerSettings to calculate.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -6990,7 +7128,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/folders/{foldersId}/webSecurityScannerSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.webSecurityScannerSettings.calculate",
@@ -7029,7 +7167,13 @@ type OrganizationsGetContainerThreatDetectionSettingsCall struct {
 }
 
 // GetContainerThreatDetectionSettings: Get the
-// ContainerThreatDetectionSettings resource.
+// ContainerThreatDetectionSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetContainerThreatDetectionSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateContainerThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -7143,7 +7287,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the ContainerThreatDetectionSettings resource.",
+	//   "description": "Get the ContainerThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetContainerThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateContainerThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/containerThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getContainerThreatDetectionSettings",
@@ -7182,7 +7326,13 @@ type OrganizationsGetEventThreatDetectionSettingsCall struct {
 }
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetEventThreatDetectionSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateEventThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the EventThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -7294,7 +7444,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the EventThreatDetectionSettings resource.",
+	//   "description": "Get the EventThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetEventThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateEventThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/eventThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getEventThreatDetectionSettings",
@@ -7482,7 +7632,13 @@ type OrganizationsGetRapidVulnerabilityDetectionSettingsCall struct {
 }
 
 // GetRapidVulnerabilityDetectionSettings: Get the
-// RapidVulnerabilityDetectionSettings resource.
+// RapidVulnerabilityDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetRapidVulnerabilityDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateRapidVulnerabilityDetectionSettings for this purpose.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     retrieve. Formats: *
@@ -7595,7 +7751,7 @@ func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetRapidVulnerabilityDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateRapidVulnerabilityDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/rapidVulnerabilityDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getRapidVulnerabilityDetectionSettings",
@@ -7783,7 +7939,13 @@ type OrganizationsGetSecurityHealthAnalyticsSettingsCall struct {
 }
 
 // GetSecurityHealthAnalyticsSettings: Get the
-// SecurityHealthAnalyticsSettings resource.
+// SecurityHealthAnalyticsSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetSecurityHealthAnalyticsSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateSecurityHealthAnalyticsSettings for this purpose.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
 //     Formats: *
@@ -7895,7 +8057,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the SecurityHealthAnalyticsSettings resource.",
+	//   "description": "Get the SecurityHealthAnalyticsSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetSecurityHealthAnalyticsSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateSecurityHealthAnalyticsSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/securityHealthAnalyticsSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getSecurityHealthAnalyticsSettings",
@@ -8081,7 +8243,13 @@ type OrganizationsGetVirtualMachineThreatDetectionSettingsCall struct {
 }
 
 // GetVirtualMachineThreatDetectionSettings: Get the
-// VirtualMachineThreatDetectionSettings resource.
+// VirtualMachineThreatDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetVirtualMachineThreatDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateVirtualMachineThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     retrieve. Formats: *
@@ -8194,7 +8362,7 @@ func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetVirtualMachineThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateVirtualMachineThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/virtualMachineThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getVirtualMachineThreatDetectionSettings",
@@ -8233,7 +8401,13 @@ type OrganizationsGetWebSecurityScannerSettingsCall struct {
 }
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetWebSecurityScannerSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateWebSecurityScannerSettings for this purpose.
 //
 //   - name: The name of the WebSecurityScannerSettings to retrieve.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -8344,7 +8518,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the WebSecurityScannerSettings resource.",
+	//   "description": "Get the WebSecurityScannerSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetWebSecurityScannerSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateWebSecurityScannerSettings for this purpose.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/webSecurityScannerSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.getWebSecurityScannerSettings",
@@ -9347,6 +9521,12 @@ type OrganizationsContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to
 //     calculate. Formats: *
@@ -9460,7 +9640,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/containerThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.containerThreatDetectionSettings.calculate",
@@ -9500,6 +9680,12 @@ type OrganizationsEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the EventThreatDetectionSettings to calculate.
 //     Formats: *
@@ -9611,7 +9797,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/eventThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.eventThreatDetectionSettings.calculate",
@@ -9651,7 +9837,12 @@ type OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // RapidVulnerabilityDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     calculate. Formats: *
@@ -9764,7 +9955,7 @@ func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/rapidVulnerabilityDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate",
@@ -9804,6 +9995,12 @@ type OrganizationsSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to calculate.
 //     Formats: *
@@ -9915,7 +10112,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/securityHealthAnalyticsSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.securityHealthAnalyticsSettings.calculate",
@@ -9955,7 +10152,12 @@ type OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // VirtualMachineThreatDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     calculate. Formats: *
@@ -10068,7 +10270,7 @@ func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/virtualMachineThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate",
@@ -10107,7 +10309,13 @@ type OrganizationsWebSecurityScannerSettingsCalculateCall struct {
 }
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
-// on its level in the resource hierarchy and its settings.
+// on its level in the resource hierarchy and its settings. Settings
+// provided closer to the target resource take precedence over those
+// further away (e.g. folder will override organization level settings).
+// The default SCC setting for the detector service defaults can be
+// overridden at organization, folder and project levels. No assumptions
+// should be made about the SCC defaults as it is considered an internal
+// implementation detail.
 //
 //   - name: The name of the WebSecurityScannerSettings to calculate.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -10218,7 +10426,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/organizations/{organizationsId}/webSecurityScannerSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.webSecurityScannerSettings.calculate",
@@ -10257,7 +10465,13 @@ type ProjectsGetContainerThreatDetectionSettingsCall struct {
 }
 
 // GetContainerThreatDetectionSettings: Get the
-// ContainerThreatDetectionSettings resource.
+// ContainerThreatDetectionSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetContainerThreatDetectionSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateContainerThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -10371,7 +10585,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the ContainerThreatDetectionSettings resource.",
+	//   "description": "Get the ContainerThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetContainerThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateContainerThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/containerThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getContainerThreatDetectionSettings",
@@ -10410,7 +10624,13 @@ type ProjectsGetEventThreatDetectionSettingsCall struct {
 }
 
 // GetEventThreatDetectionSettings: Get the EventThreatDetectionSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetEventThreatDetectionSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateEventThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the EventThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -10522,7 +10742,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the EventThreatDetectionSettings resource.",
+	//   "description": "Get the EventThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetEventThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateEventThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/eventThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getEventThreatDetectionSettings",
@@ -10710,7 +10930,13 @@ type ProjectsGetRapidVulnerabilityDetectionSettingsCall struct {
 }
 
 // GetRapidVulnerabilityDetectionSettings: Get the
-// RapidVulnerabilityDetectionSettings resource.
+// RapidVulnerabilityDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetRapidVulnerabilityDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateRapidVulnerabilityDetectionSettings for this purpose.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     retrieve. Formats: *
@@ -10823,7 +11049,7 @@ func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the RapidVulnerabilityDetectionSettings resource.",
+	//   "description": "Get the RapidVulnerabilityDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetRapidVulnerabilityDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateRapidVulnerabilityDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/rapidVulnerabilityDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getRapidVulnerabilityDetectionSettings",
@@ -11011,7 +11237,13 @@ type ProjectsGetSecurityHealthAnalyticsSettingsCall struct {
 }
 
 // GetSecurityHealthAnalyticsSettings: Get the
-// SecurityHealthAnalyticsSettings resource.
+// SecurityHealthAnalyticsSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetSecurityHealthAnalyticsSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateSecurityHealthAnalyticsSettings for this purpose.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to retrieve.
 //     Formats: *
@@ -11123,7 +11355,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the SecurityHealthAnalyticsSettings resource.",
+	//   "description": "Get the SecurityHealthAnalyticsSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetSecurityHealthAnalyticsSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateSecurityHealthAnalyticsSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/securityHealthAnalyticsSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getSecurityHealthAnalyticsSettings",
@@ -11162,7 +11394,13 @@ type ProjectsGetVirtualMachineThreatDetectionSettingsCall struct {
 }
 
 // GetVirtualMachineThreatDetectionSettings: Get the
-// VirtualMachineThreatDetectionSettings resource.
+// VirtualMachineThreatDetectionSettings resource. In the returned
+// settings response, a missing field only indicates that it was not
+// explicitly set, so no assumption should be made about these fields.
+// In other words, GetVirtualMachineThreatDetectionSettings does not
+// calculate the effective service settings for the resource, which
+// accounts for inherited settings and defaults. Instead, use
+// CalculateVirtualMachineThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     retrieve. Formats: *
@@ -11275,7 +11513,7 @@ func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the VirtualMachineThreatDetectionSettings resource.",
+	//   "description": "Get the VirtualMachineThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetVirtualMachineThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateVirtualMachineThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/virtualMachineThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getVirtualMachineThreatDetectionSettings",
@@ -11314,7 +11552,13 @@ type ProjectsGetWebSecurityScannerSettingsCall struct {
 }
 
 // GetWebSecurityScannerSettings: Get the WebSecurityScannerSettings
-// resource.
+// resource. In the returned settings response, a missing field only
+// indicates that it was not explicitly set, so no assumption should be
+// made about these fields. In other words,
+// GetWebSecurityScannerSettings does not calculate the effective
+// service settings for the resource, which accounts for inherited
+// settings and defaults. Instead, use
+// CalculateWebSecurityScannerSettings for this purpose.
 //
 //   - name: The name of the WebSecurityScannerSettings to retrieve.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -11425,7 +11669,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the WebSecurityScannerSettings resource.",
+	//   "description": "Get the WebSecurityScannerSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetWebSecurityScannerSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateWebSecurityScannerSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/webSecurityScannerSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.getWebSecurityScannerSettings",
@@ -12428,6 +12672,12 @@ type ProjectsContainerThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to
 //     calculate. Formats: *
@@ -12541,7 +12791,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/containerThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.containerThreatDetectionSettings.calculate",
@@ -12581,6 +12831,12 @@ type ProjectsEventThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective EventThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the EventThreatDetectionSettings to calculate.
 //     Formats: *
@@ -12692,7 +12948,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective EventThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/eventThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.eventThreatDetectionSettings.calculate",
@@ -12731,7 +12987,13 @@ type ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall struct {
 }
 
 // GetContainerThreatDetectionSettings: Get the
-// ContainerThreatDetectionSettings resource.
+// ContainerThreatDetectionSettings resource. In the returned settings
+// response, a missing field only indicates that it was not explicitly
+// set, so no assumption should be made about these fields. In other
+// words, GetContainerThreatDetectionSettings does not calculate the
+// effective service settings for the resource, which accounts for
+// inherited settings and defaults. Instead, use
+// CalculateContainerThreatDetectionSettings for this purpose.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to retrieve.
 //     Formats: *
@@ -12845,7 +13107,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the ContainerThreatDetectionSettings resource.",
+	//   "description": "Get the ContainerThreatDetectionSettings resource. In the returned settings response, a missing field only indicates that it was not explicitly set, so no assumption should be made about these fields. In other words, GetContainerThreatDetectionSettings does not calculate the effective service settings for the resource, which accounts for inherited settings and defaults. Instead, use CalculateContainerThreatDetectionSettings for this purpose.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/containerThreatDetectionSettings",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.locations.clusters.getContainerThreatDetectionSettings",
@@ -13047,6 +13309,12 @@ type ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall stru
 
 // Calculate: Calculates the effective ContainerThreatDetectionSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the ContainerThreatDetectionSettings to
 //     calculate. Formats: *
@@ -13160,7 +13428,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective ContainerThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/containerThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.locations.clusters.containerThreatDetectionSettings.calculate",
@@ -13200,7 +13468,12 @@ type ProjectsRapidVulnerabilityDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // RapidVulnerabilityDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the RapidVulnerabilityDetectionSettings to
 //     calculate. Formats: *
@@ -13313,7 +13586,7 @@ func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective RapidVulnerabilityDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/rapidVulnerabilityDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate",
@@ -13353,6 +13626,12 @@ type ProjectsSecurityHealthAnalyticsSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective SecurityHealthAnalyticsSettings
 // based on its level in the resource hierarchy and its settings.
+// Settings provided closer to the target resource take precedence over
+// those further away (e.g. folder will override organization level
+// settings). The default SCC setting for the detector service defaults
+// can be overridden at organization, folder and project levels. No
+// assumptions should be made about the SCC defaults as it is considered
+// an internal implementation detail.
 //
 //   - name: The name of the SecurityHealthAnalyticsSettings to calculate.
 //     Formats: *
@@ -13464,7 +13743,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective SecurityHealthAnalyticsSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/securityHealthAnalyticsSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.securityHealthAnalyticsSettings.calculate",
@@ -13504,7 +13783,12 @@ type ProjectsVirtualMachineThreatDetectionSettingsCalculateCall struct {
 
 // Calculate: Calculates the effective
 // VirtualMachineThreatDetectionSettings based on its level in the
-// resource hierarchy and its settings.
+// resource hierarchy and its settings. Settings provided closer to the
+// target resource take precedence over those further away (e.g. folder
+// will override organization level settings). The default SCC setting
+// for the detector service defaults can be overridden at organization,
+// folder and project levels. No assumptions should be made about the
+// SCC defaults as it is considered an internal implementation detail.
 //
 //   - name: The name of the VirtualMachineThreatDetectionSettings to
 //     calculate. Formats: *
@@ -13617,7 +13901,7 @@ func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective VirtualMachineThreatDetectionSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/virtualMachineThreatDetectionSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate",
@@ -13656,7 +13940,13 @@ type ProjectsWebSecurityScannerSettingsCalculateCall struct {
 }
 
 // Calculate: Calculates the effective WebSecurityScannerSettings based
-// on its level in the resource hierarchy and its settings.
+// on its level in the resource hierarchy and its settings. Settings
+// provided closer to the target resource take precedence over those
+// further away (e.g. folder will override organization level settings).
+// The default SCC setting for the detector service defaults can be
+// overridden at organization, folder and project levels. No assumptions
+// should be made about the SCC defaults as it is considered an internal
+// implementation detail.
 //
 //   - name: The name of the WebSecurityScannerSettings to calculate.
 //     Formats: * organizations/{organization}/webSecurityScannerSettings
@@ -13767,7 +14057,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings.",
+	//   "description": "Calculates the effective WebSecurityScannerSettings based on its level in the resource hierarchy and its settings. Settings provided closer to the target resource take precedence over those further away (e.g. folder will override organization level settings). The default SCC setting for the detector service defaults can be overridden at organization, folder and project levels. No assumptions should be made about the SCC defaults as it is considered an internal implementation detail.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/webSecurityScannerSettings:calculate",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.webSecurityScannerSettings.calculate",

@@ -603,7 +603,7 @@
         "members": {
           "methods": {
             "get": {
-              "description": "Returns a membership. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+              "description": "[Developer Preview](https://developers.google.com/workspace/preview): Returns a membership. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
               "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
               "httpMethod": "GET",
               "id": "chat.spaces.members.get",
@@ -628,7 +628,7 @@
               ]
             },
             "list": {
-              "description": "Lists memberships in a space. Requires [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts).",
+              "description": "[Developer Preview](https://developers.google.com/workspace/preview): Lists memberships in a space. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
               "flatPath": "v1/spaces/{spacesId}/members",
               "httpMethod": "GET",
               "id": "chat.spaces.members.list",
@@ -643,7 +643,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided must match the call that provided the page token.",
+                  "description": "A page token, received from a previous list memberships call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided should match the call that provided the page token. Passing different values to the other parameters may lead to unexpected results.",
                   "location": "query",
                   "type": "string"
                 },
@@ -777,6 +777,45 @@
                 "https://www.googleapis.com/auth/chat.messages.readonly"
               ]
             },
+            "patch": {
+              "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
+              "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
+              "httpMethod": "PATCH",
+              "id": "chat.spaces.messages.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "allowMissing": {
+                  "description": "Optional. If `true` and the message is not found, a new message is created and `updateMask` is ignored. The specified message ID must be [client-assigned](https://developers.google.com/chat/api/guides/crudl/messages#name_a_created_message) or the request fails.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "name": {
+                  "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
+                  "location": "path",
+                  "pattern": "^spaces/[^/]+/messages/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. The field paths to update. Separate multiple values with commas. Currently supported field paths: - text - cards (Requires [service account authentication](/chat/api/guides/auth/service-accounts).) - cards_v2 ",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "Message"
+              },
+              "response": {
+                "$ref": "Message"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/chat.messages"
+              ]
+            },
             "update": {
               "description": "Updates a message. For example usage, see [Update a message](https://developers.google.com/chat/api/guides/crudl/messages#update_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` authorization scope.",
               "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}",
@@ -849,7 +888,7 @@
       }
     }
   },
-  "revision": "20221115",
+  "revision": "20221126",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {

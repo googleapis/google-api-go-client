@@ -5099,8 +5099,9 @@ type User struct {
 	// (https://support.google.com/a/answer/1285988).
 	IncludeInGlobalAddressList bool `json:"includeInGlobalAddressList,omitempty"`
 
-	// IpWhitelisted: If `true`, the user's IP address is whitelisted
-	// (https://support.google.com/a/answer/60752).
+	// IpWhitelisted: If `true`, the user's IP address is subject to a
+	// deprecated IP address `allowlist`
+	// (https://support.google.com/a/answer/60752) configuration.
 	IpWhitelisted bool `json:"ipWhitelisted,omitempty"`
 
 	// IsAdmin: Output only. Indicates a user with super admininistrator
@@ -11286,8 +11287,14 @@ type DomainAliasesGetCall struct {
 
 // Get: Retrieves a domain alias of the customer.
 //
-// - customer: Immutable ID of the Google Workspace account.
-// - domainAliasName: Name of domain alias to be retrieved.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
+//   - domainAliasName: Name of domain alias to be retrieved.
 func (r *DomainAliasesService) Get(customer string, domainAliasName string) *DomainAliasesGetCall {
 	c := &DomainAliasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -11405,7 +11412,7 @@ func (c *DomainAliasesGetCall) Do(opts ...googleapi.CallOption) (*DomainAlias, e
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11583,7 +11590,13 @@ type DomainAliasesListCall struct {
 
 // List: Lists the domain aliases of the customer.
 //
-// - customer: Immutable ID of the Google Workspace account.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *DomainAliasesService) List(customer string) *DomainAliasesListCall {
 	c := &DomainAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -11705,7 +11718,7 @@ func (c *DomainAliasesListCall) Do(opts ...googleapi.CallOption) (*DomainAliases
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -11856,8 +11869,14 @@ type DomainsGetCall struct {
 
 // Get: Retrieves a domain of the customer.
 //
-// - customer: Immutable ID of the Google Workspace account.
-// - domainName: Name of domain to be retrieved.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
+//   - domainName: Name of domain to be retrieved.
 func (r *DomainsService) Get(customer string, domainName string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -11975,7 +11994,7 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domains, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12153,7 +12172,13 @@ type DomainsListCall struct {
 
 // List: Lists the domains of the customer.
 //
-// - customer: Immutable ID of the Google Workspace account.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *DomainsService) List(customer string) *DomainsListCall {
 	c := &DomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -12268,7 +12293,7 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*Domains2, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -12681,12 +12706,11 @@ func (r *GroupsService) List() *GroupsListCall {
 
 // Customer sets the optional parameter "customer": The unique ID for
 // the customer's Google Workspace account. In case of a multi-domain
-// account, to fetch all groups for a customer, fill in this field
-// instead of `domain`. You can also use the `my_customer` alias to
-// represent your account's `customerId`. The `customerId` is also
-// returned as part of the Users
-// (/admin-sdk/directory/v1/reference/users) resource. Either the
-// `customer` or the `domain` parameter must be provided.
+// account, to fetch all groups for a customer, use this field instead
+// of `domain`. You can also use the `my_customer` alias to represent
+// your account's `customerId`. The `customerId` is also returned as
+// part of the Users (/admin-sdk/directory/v1/reference/users) resource.
+// You must provide either the `customer` or the `domain` parameter.
 func (c *GroupsListCall) Customer(customer string) *GroupsListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -12858,7 +12882,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill in this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. Either the `customer` or the `domain` parameter must be provided.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14241,7 +14265,10 @@ type MembersListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves a paginated list of all members in a group.
+// List: Retrieves a paginated list of all members in a group. This
+// method times out after 60 minutes. For more information, see
+// Troubleshoot error codes
+// (https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).
 //
 //   - groupKey: Identifies the group in the API request. The value can be
 //     the group's email address, group alias, or the unique group ID.
@@ -14380,7 +14407,7 @@ func (c *MembersListCall) Do(opts ...googleapi.CallOption) (*Members, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a paginated list of all members in a group.",
+	//   "description": "Retrieves a paginated list of all members in a group. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).",
 	//   "flatPath": "admin/directory/v1/groups/{groupKey}/members",
 	//   "httpMethod": "GET",
 	//   "id": "directory.members.list",
@@ -15225,7 +15252,9 @@ type MobiledevicesListCall struct {
 // an account. To retrieve a list that includes company-owned devices,
 // use the Cloud Identity Devices API
 // (https://cloud.google.com/identity/docs/concepts/overview-devices)
-// instead.
+// instead. This method times out after 60 minutes. For more
+// information, see Troubleshoot error codes
+// (https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).
 //
 //   - customerId: The unique ID for the customer's Google Workspace
 //     account. As an account administrator, you can also use the
@@ -15408,7 +15437,7 @@ func (c *MobiledevicesListCall) Do(opts ...googleapi.CallOption) (*MobileDevices
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a paginated list of all user-owned mobile devices for an account. To retrieve a list that includes company-owned devices, use the Cloud Identity [Devices API](https://cloud.google.com/identity/docs/concepts/overview-devices) instead.",
+	//   "description": "Retrieves a paginated list of all user-owned mobile devices for an account. To retrieve a list that includes company-owned devices, use the Cloud Identity [Devices API](https://cloud.google.com/identity/docs/concepts/overview-devices) instead. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).",
 	//   "flatPath": "admin/directory/v1/customer/{customerId}/devices/mobile",
 	//   "httpMethod": "GET",
 	//   "id": "directory.mobiledevices.list",
@@ -16474,7 +16503,13 @@ type PrivilegesListCall struct {
 
 // List: Retrieves a paginated list of all privileges for a customer.
 //
-// - customer: Immutable ID of the Google Workspace account.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *PrivilegesService) List(customer string) *PrivilegesListCall {
 	c := &PrivilegesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -16589,7 +16624,7 @@ func (c *PrivilegesListCall) Do(opts ...googleapi.CallOption) (*Privileges, erro
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19787,8 +19822,14 @@ type RoleAssignmentsGetCall struct {
 
 // Get: Retrieves a role assignment.
 //
-// - customer: Immutable ID of the Google Workspace account.
-// - roleAssignmentId: Immutable ID of the role assignment.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
+//   - roleAssignmentId: Immutable ID of the role assignment.
 func (r *RoleAssignmentsService) Get(customer string, roleAssignmentId string) *RoleAssignmentsGetCall {
 	c := &RoleAssignmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -19906,7 +19947,7 @@ func (c *RoleAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*RoleAssignme
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20084,7 +20125,13 @@ type RoleAssignmentsListCall struct {
 
 // List: Retrieves a paginated list of all roleAssignments.
 //
-// - customer: Immutable ID of the Google Workspace account.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall {
 	c := &RoleAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -20229,7 +20276,7 @@ func (c *RoleAssignmentsListCall) Do(opts ...googleapi.CallOption) (*RoleAssignm
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20419,8 +20466,14 @@ type RolesGetCall struct {
 
 // Get: Retrieves a role.
 //
-// - customer: Immutable ID of the Google Workspace account.
-// - roleId: Immutable ID of the role.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
+//   - roleId: Immutable ID of the role.
 func (r *RolesService) Get(customer string, roleId string) *RolesGetCall {
 	c := &RolesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -20538,7 +20591,7 @@ func (c *RolesGetCall) Do(opts ...googleapi.CallOption) (*Role, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20716,7 +20769,13 @@ type RolesListCall struct {
 
 // List: Retrieves a paginated list of all the roles in a domain.
 //
-// - customer: Immutable ID of the Google Workspace account.
+//   - customer: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *RolesService) List(customer string) *RolesListCall {
 	c := &RolesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -20845,7 +20904,7 @@ func (c *RolesListCall) Do(opts ...googleapi.CallOption) (*Roles, error) {
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21329,8 +21388,14 @@ type SchemasGetCall struct {
 
 // Get: Retrieves a schema.
 //
-// - customerId: Immutable ID of the Google Workspace account.
-// - schemaKey: Name or immutable ID of the schema.
+//   - customerId: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
+//   - schemaKey: Name or immutable ID of the schema.
 func (r *SchemasService) Get(customerId string, schemaKey string) *SchemasGetCall {
 	c := &SchemasGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -21448,7 +21513,7 @@ func (c *SchemasGetCall) Do(opts ...googleapi.CallOption) (*Schema, error) {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21626,7 +21691,13 @@ type SchemasListCall struct {
 
 // List: Retrieves all schemas for a customer.
 //
-// - customerId: Immutable ID of the Google Workspace account.
+//   - customerId: The unique ID for the customer's Google Workspace
+//     account. In case of a multi-domain account, to fetch all groups for
+//     a customer, use this field instead of `domain`. You can also use
+//     the `my_customer` alias to represent your account's `customerId`.
+//     The `customerId` is also returned as part of the Users
+//     (/admin-sdk/directory/v1/reference/users) resource. You must
+//     provide either the `customer` or the `domain` parameter.
 func (r *SchemasService) List(customerId string) *SchemasListCall {
 	c := &SchemasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -21741,7 +21812,7 @@ func (c *SchemasListCall) Do(opts ...googleapi.CallOption) (*Schemas, error) {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable ID of the Google Workspace account.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -23075,11 +23146,11 @@ func (c *UsersListCall) CustomFieldMask(customFieldMask string) *UsersListCall {
 
 // Customer sets the optional parameter "customer": The unique ID for
 // the customer's Google Workspace account. In case of a multi-domain
-// account, to fetch all groups for a customer, fill this field instead
-// of domain. You can also use the `my_customer` alias to represent your
-// account's `customerId`. The `customerId` is also returned as part of
-// the Users resource (/admin-sdk/directory/v1/reference/users). Either
-// the `customer` or the `domain` parameter must be provided.
+// account, to fetch all groups for a customer, use this field instead
+// of `domain`. You can also use the `my_customer` alias to represent
+// your account's `customerId`. The `customerId` is also returned as
+// part of the Users (/admin-sdk/directory/v1/reference/users) resource.
+// You must provide either the `customer` or the `domain` parameter.
 func (c *UsersListCall) Customer(customer string) *UsersListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -23307,7 +23378,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*Users, error) {
 	//       "type": "string"
 	//     },
 	//     "customer": {
-	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users). Either the `customer` or the `domain` parameter must be provided.",
+	//       "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -23946,9 +24017,14 @@ type UsersUpdateCall struct {
 }
 
 // Update: Updates a user. This method supports patch semantics, meaning
-// you only need to include the fields you wish to update. Fields that
-// are not present in the request will be preserved, and fields set to
-// `null` will be cleared.
+// that you only need to include the fields you wish to update. Fields
+// that are not present in the request will be preserved, and fields set
+// to `null` will be cleared. For repeating fields that contain arrays,
+// individual items in the array can't be patched piecemeal; they must
+// be supplied in the request body with the desired values for all
+// items. See the user accounts guide
+// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-users#update_user)
+// for more information.
 //
 //   - userKey: Identifies the user in the API request. The value can be
 //     the user's primary email address, alias email address, or unique
@@ -24051,7 +24127,7 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a user. This method supports patch semantics, meaning you only need to include the fields you wish to update. Fields that are not present in the request will be preserved, and fields set to `null` will be cleared.",
+	//   "description": "Updates a user. This method supports patch semantics, meaning that you only need to include the fields you wish to update. Fields that are not present in the request will be preserved, and fields set to `null` will be cleared. For repeating fields that contain arrays, individual items in the array can't be patched piecemeal; they must be supplied in the request body with the desired values for all items. See the [user accounts guide](https://developers.google.com/admin-sdk/directory/v1/guides/manage-users#update_user) for more information.",
 	//   "flatPath": "admin/directory/v1/users/{userKey}",
 	//   "httpMethod": "PUT",
 	//   "id": "directory.users.update",

@@ -222,7 +222,7 @@ type Assignment struct {
 	// BigQuery for model training. These jobs will not utilize idle slots
 	// from other reservations.
 	//   "BACKGROUND" - Background jobs that BigQuery runs for the customers
-	// in the background. This is a preview feature.
+	// in the background.
 	JobType string `json:"jobType,omitempty"`
 
 	// Name: Output only. Name of the resource. E.g.:

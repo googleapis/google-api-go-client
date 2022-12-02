@@ -2802,6 +2802,8 @@ type TestMatrix struct {
 	// unsupported
 	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
 	// executions.
+	//   "DEVICE_QUOTA_EXCEEDED" - Not enough device quota to run the
+	// executions in this matrix.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// OutcomeSummary: Output Only. The overall outcome of the test. Only

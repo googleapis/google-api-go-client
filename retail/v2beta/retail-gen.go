@@ -1582,9 +1582,9 @@ type GoogleCloudRetailV2alphaModel struct {
 	// Type: Required. The type of model e.g. `home-page`. Currently
 	// supported values: `recommended-for-you`, `others-you-may-like`,
 	// `frequently-bought-together`, `page-optimization`, `similar-items`,
-	// `buy-it-again`, and `recently-viewed`(readonly value). This field
-	// together with optimization_objective describe model metadata to use
-	// to control model training and serving. See
+	// `buy-it-again`, `on-sale-items`, and `recently-viewed`(readonly
+	// value). This field together with optimization_objective describe
+	// model metadata to use to control model training and serving. See
 	// https://cloud.google.com/retail/docs/models for more details on what
 	// the model metadata control and which combination of parameters are
 	// valid. For invalid combinations of parameters (e.g. type =
@@ -2782,8 +2782,8 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// enabled.
 	RecommendationsFilteringOption string `json:"recommendationsFilteringOption,omitempty"`
 
-	// RetrievableOption: If RETRIEVABLE_ENABLED, attribute values will be
-	// retrievabled in the search results.
+	// RetrievableOption: If RETRIEVABLE_ENABLED, attribute values are
+	// retrievable in the search results.
 	//
 	// Possible values:
 	//   "RETRIEVABLE_OPTION_UNSPECIFIED" - Value used when unset. Defaults
@@ -4703,9 +4703,9 @@ type GoogleCloudRetailV2betaModel struct {
 	// Type: Required. The type of model e.g. `home-page`. Currently
 	// supported values: `recommended-for-you`, `others-you-may-like`,
 	// `frequently-bought-together`, `page-optimization`, `similar-items`,
-	// `buy-it-again`, and `recently-viewed`(readonly value). This field
-	// together with optimization_objective describe model metadata to use
-	// to control model training and serving. See
+	// `buy-it-again`, `on-sale-items`, and `recently-viewed`(readonly
+	// value). This field together with optimization_objective describe
+	// model metadata to use to control model training and serving. See
 	// https://cloud.google.com/retail/docs/models for more details on what
 	// the model metadata control and which combination of parameters are
 	// valid. For invalid combinations of parameters (e.g. type =
@@ -5395,7 +5395,8 @@ type GoogleCloudRetailV2betaProduct struct {
 	// color_info The maximum number of paths is 30. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Note: Returning more fields in
 	// SearchResponse can increase response payload size and serving
-	// latency.
+	// latency. This field is deprecated. Use the retrievable site-wide
+	// control instead.
 	RetrievableFields string `json:"retrievableFields,omitempty"`
 
 	// Sizes: The size of the product. To represent different size systems

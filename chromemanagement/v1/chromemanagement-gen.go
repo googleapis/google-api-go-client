@@ -226,6 +226,7 @@ type CustomersReportsService struct {
 func NewCustomersTelemetryService(s *Service) *CustomersTelemetryService {
 	rs := &CustomersTelemetryService{s: s}
 	rs.Devices = NewCustomersTelemetryDevicesService(s)
+	rs.Events = NewCustomersTelemetryEventsService(s)
 	return rs
 }
 
@@ -233,6 +234,8 @@ type CustomersTelemetryService struct {
 	s *Service
 
 	Devices *CustomersTelemetryDevicesService
+
+	Events *CustomersTelemetryEventsService
 }
 
 func NewCustomersTelemetryDevicesService(s *Service) *CustomersTelemetryDevicesService {
@@ -241,6 +244,15 @@ func NewCustomersTelemetryDevicesService(s *Service) *CustomersTelemetryDevicesS
 }
 
 type CustomersTelemetryDevicesService struct {
+	s *Service
+}
+
+func NewCustomersTelemetryEventsService(s *Service) *CustomersTelemetryEventsService {
+	rs := &CustomersTelemetryEventsService{s: s}
+	return rs
+}
+
+type CustomersTelemetryEventsService struct {
 	s *Service
 }
 
@@ -1945,6 +1957,42 @@ func (s *GoogleChromeManagementV1ListTelemetryDevicesResponse) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1ListTelemetryEventsResponse: Response message
+// for listing telemetry events for a customer.
+type GoogleChromeManagementV1ListTelemetryEventsResponse struct {
+	// NextPageToken: Token to specify next page in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TelemetryEvents: Telemetry events returned in the response.
+	TelemetryEvents []*GoogleChromeManagementV1TelemetryEvent `json:"telemetryEvents,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ListTelemetryEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ListTelemetryEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1MemoryInfo: Memory information of a device. *
 // This field has both telemetry and device information: -
 // `totalRamBytes` - Device information - `availableRamBytes` -
@@ -2475,6 +2523,12 @@ func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent:
+// `TelemetryAudioSevereUnderrunEvent` is triggered when a audio devices
+// run out of buffer data for more than 5 seconds.
+type GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent struct {
+}
+
 // GoogleChromeManagementV1TelemetryDevice: Telemetry data collected
 // from a managed device.
 type GoogleChromeManagementV1TelemetryDevice struct {
@@ -2587,6 +2641,233 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 
 func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TelemetryDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryDeviceInfo: Information about a
+// device associated with telemetry data.
+type GoogleChromeManagementV1TelemetryDeviceInfo struct {
+	// DeviceId: Output only. The unique Directory API ID of the device.
+	// This value is the same as the Admin Console's Directory API ID in the
+	// ChromeOS Devices tab.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// OrgUnitId: Output only. Organization unit ID of the device.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryDeviceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryDeviceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryEvent: Telemetry data reported by a
+// managed device.
+type GoogleChromeManagementV1TelemetryEvent struct {
+	// AudioSevereUnderrunEvent: Output only. Payload for audio severe
+	// underrun event. Present only when the `event_type` field is
+	// `AUDIO_SEVERE_UNDERRUN`.
+	AudioSevereUnderrunEvent *GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent `json:"audioSevereUnderrunEvent,omitempty"`
+
+	// Device: Output only. Information about the device associated with the
+	// event.
+	Device *GoogleChromeManagementV1TelemetryDeviceInfo `json:"device,omitempty"`
+
+	// EventType: The event type of the current event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Event type unknown.
+	//   "AUDIO_SEVERE_UNDERRUN" - Triggered when a audio devices run out of
+	// buffer data for more than 5 seconds.
+	//   "NETWORK_CONNECTION_STATE_CHANGE" - Triggered immediately on any
+	// changes to a network connection.
+	//   "USB_ADDED" - Triggered when USB devices are added.
+	//   "USB_REMOVED" - Triggered when USB devices are removed.
+	//   "NETWORK_HTTPS_LATENCY_CHANGE" - Triggered when a new HTTPS latency
+	// problem was detected or the device has recovered form an existing
+	// HTTPS latency problem.
+	EventType string `json:"eventType,omitempty"`
+
+	// HttpsLatencyChangeEvent: Output only. Payload for HTTPS latency
+	// change event. Present only when `event_type` is
+	// `NETWORK_HTTPS_LATENCY_CHANGE`.
+	HttpsLatencyChangeEvent *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent `json:"httpsLatencyChangeEvent,omitempty"`
+
+	// Name: Output only. Resource name of the event.
+	Name string `json:"name,omitempty"`
+
+	// NetworkConnectionStateChangeEvent: Output only. Payload for network
+	// connection state change event. Present only when `event_type` is
+	// `NETWORK_CONNECTION_STATE_CHANGE`.
+	NetworkConnectionStateChangeEvent *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent `json:"networkConnectionStateChangeEvent,omitempty"`
+
+	// ReportTime: Timestamp that represents when the event was reported.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// User: Output only. Information about the user associated with the
+	// event.
+	User *GoogleChromeManagementV1TelemetryUserInfo `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AudioSevereUnderrunEvent") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioSevereUnderrunEvent")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent: Https
+// latency routine is run periodically and
+// `TelemetryHttpsLatencyChangeEvent` is triggered if a latency problem
+// was detected or if the device has recovered from a latency problem..
+type GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent struct {
+	// HttpsLatencyRoutineData: HTTPS latency routine data that triggered
+	// the event.
+	HttpsLatencyRoutineData *GoogleChromeManagementV1HttpsLatencyRoutineData `json:"httpsLatencyRoutineData,omitempty"`
+
+	// HttpsLatencyState: Current HTTPS latency state.
+	//
+	// Possible values:
+	//   "HTTPS_LATENCY_STATE_UNSPECIFIED" - HTTPS latency state is
+	// unspecified.
+	//   "RECOVERY" - HTTPS latency recovered from a problem.
+	//   "PROBLEM" - HTTPS latency problem.
+	HttpsLatencyState string `json:"httpsLatencyState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HttpsLatencyRoutineData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HttpsLatencyRoutineData")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent:
+// `TelemetryNetworkConnectionStateChangeEvent` is triggered on network
+// connection state changes.
+type GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent struct {
+	// ConnectionState: Current connection state of the network.
+	//
+	// Possible values:
+	//   "NETWORK_CONNECTION_STATE_UNSPECIFIED" - Network connection state
+	// unspecified.
+	//   "ONLINE" - The network is connected and internet connectivity is
+	// available.
+	//   "CONNECTED" - The network is connected and not in a detected portal
+	// state, but internet connectivity may not be available.
+	//   "PORTAL" - The network is connected but a portal state was
+	// detected. Internet connectivity may be limited.
+	//   "CONNECTING" - The network is in the process of connecting.
+	//   "NOT_CONNECTED" - The network is not connected.
+	ConnectionState string `json:"connectionState,omitempty"`
+
+	// Guid: Unique identifier of the network.
+	Guid string `json:"guid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryUserInfo: Information about a user
+// associated with telemetry data.
+type GoogleChromeManagementV1TelemetryUserInfo struct {
+	// Email: Output only. User's email.
+	Email string `json:"email,omitempty"`
+
+	// OrgUnitId: Output only. Organization unit ID of the user.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryUserInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryUserInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5137,6 +5418,227 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersTelemetryDevicesListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1ListTelemetryDevicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "chromemanagement.customers.telemetry.events.list":
+
+type CustomersTelemetryEventsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List telemetry events.
+//
+//   - parent: Customer id or "my_customer" to use the customer associated
+//     to the account making the request.
+func (r *CustomersTelemetryEventsService) List(parent string) *CustomersTelemetryEventsListCall {
+	c := &CustomersTelemetryEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Only include resources
+// that match the filter. Supported filter fields: * device_id * user_id
+// * device_org_unit_id * user_org_unit_id * timestamp * event_type
+func (c *CustomersTelemetryEventsListCall) Filter(filter string) *CustomersTelemetryEventsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. Default value is 100. Maximum value is 1000.
+func (c *CustomersTelemetryEventsListCall) PageSize(pageSize int64) *CustomersTelemetryEventsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// next page in the list.
+func (c *CustomersTelemetryEventsListCall) PageToken(pageToken string) *CustomersTelemetryEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. Read mask
+// to specify which fields to return.
+func (c *CustomersTelemetryEventsListCall) ReadMask(readMask string) *CustomersTelemetryEventsListCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersTelemetryEventsListCall) Fields(s ...googleapi.Field) *CustomersTelemetryEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersTelemetryEventsListCall) IfNoneMatch(entityTag string) *CustomersTelemetryEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersTelemetryEventsListCall) Context(ctx context.Context) *CustomersTelemetryEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersTelemetryEventsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersTelemetryEventsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/telemetry/events")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.telemetry.events.list" call.
+// Exactly one of *GoogleChromeManagementV1ListTelemetryEventsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleChromeManagementV1ListTelemetryEventsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1ListTelemetryEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1ListTelemetryEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List telemetry events.",
+	//   "flatPath": "v1/customers/{customersId}/telemetry/events",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.telemetry.events.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: * device_id * user_id * device_org_unit_id * user_org_unit_id * timestamp * event_type",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of results to return. Default value is 100. Maximum value is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to specify next page in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Customer id or \"my_customer\" to use the customer associated to the account making the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/telemetry/events",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1ListTelemetryEventsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersTelemetryEventsListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1ListTelemetryEventsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

@@ -1826,6 +1826,9 @@ type Finding struct {
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
 
+	// KernelRootkit: Kernel Rootkit signature.
+	KernelRootkit *KernelRootkit `json:"kernelRootkit,omitempty"`
+
 	// Kubernetes: Kubernetes resources associated with the finding.
 	Kubernetes *Kubernetes `json:"kubernetes,omitempty"`
 
@@ -3486,6 +3489,71 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KernelRootkit: Kernel mode rootkit signatures.
+type KernelRootkit struct {
+	// Name: Rootkit name when available.
+	Name string `json:"name,omitempty"`
+
+	// UnexpectedCodeModification: Flag indicating unexpected modifications
+	// of kernel code memory.
+	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
+
+	// UnexpectedFtraceHandler: Flag indicating presence of ftrace points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
+
+	// UnexpectedInterruptHandler: Flag indicating presence of interrupt
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
+
+	// UnexpectedKernelCodePages: Flag indicating presence of kernel code
+	// pages that are not in the expected kernel, module code regions.
+	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
+
+	// UnexpectedKprobeHandler: Flag indicating presence of kprobe points
+	// with callbacks pointing to regions that are not in the expected
+	// kernel or module code range.
+	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
+
+	// UnexpectedProcessesInRunqueue: Flag indicating unexpected process(es)
+	// in the scheduler run-queue, those that are in the run-queue, but not
+	// in the process task-list.
+	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
+
+	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
+	// modifications of kernel read-only data memory.
+	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
+
+	// UnexpectedSystemCallHandler: Flag indicating presence of system call
+	// handlers that are are not in the expected kernel, module code
+	// regions.
+	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
+	type NoMethod KernelRootkit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Kubernetes: Kubernetes related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
@@ -4192,7 +4260,8 @@ type NotificationConfig struct {
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
 	// Example:
 	// "organizations/{organization_id}/notificationConfigs/notify_public_buc
-	// ket".
+	// ket", "folders/{folder_id}/notificationConfigs/notify_public_bucket",
+	// or "projects/{project_id}/notificationConfigs/notify_public_bucket".
 	Name string `json:"name,omitempty"`
 
 	// PubsubTopic: The Pub/Sub topic to send notifications to. Its format
@@ -5358,7 +5427,7 @@ type FoldersAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
+//   - parent: Name of the parent to groupBy. Its format is
 //     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
@@ -5468,7 +5537,7 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5523,8 +5592,8 @@ type FoldersAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
+//   - parent: Name of the parent assets should belong to. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5796,7 +5865,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -7954,7 +8023,9 @@ type FoldersNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *FoldersNotificationConfigsService) Delete(name string) *FoldersNotificationConfigsDeleteCall {
 	c := &FoldersNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8056,7 +8127,7 @@ func (c *FoldersNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -8088,7 +8159,9 @@ type FoldersNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *FoldersNotificationConfigsService) Get(name string) *FoldersNotificationConfigsGetCall {
 	c := &FoldersNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8203,7 +8276,7 @@ func (c *FoldersNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*N
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -8234,9 +8307,9 @@ type FoldersNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the organization to list notification configs. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: Name of the parent to list notification configs. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *FoldersNotificationConfigsService) List(parent string) *FoldersNotificationConfigsListCall {
 	c := &FoldersNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8379,7 +8452,7 @@ func (c *FoldersNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -8436,7 +8509,9 @@ type FoldersNotificationConfigsPatchCall struct {
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
 //     "organizations/{organization_id}/notificationConfigs/notify_public_b
-//     ucket".
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
 func (r *FoldersNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *FoldersNotificationConfigsPatchCall {
 	c := &FoldersNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8552,7 +8627,7 @@ func (c *FoldersNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -10395,7 +10470,7 @@ type OrganizationsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
+//   - parent: Name of the parent to groupBy. Its format is
 //     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
@@ -10505,7 +10580,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -10560,8 +10635,8 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
+//   - parent: Name of the parent assets should belong to. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10833,7 +10908,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -13137,7 +13212,9 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13239,7 +13316,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -13271,7 +13348,9 @@ type OrganizationsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13386,7 +13465,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -13417,9 +13496,9 @@ type OrganizationsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the organization to list notification configs. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: Name of the parent to list notification configs. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13562,7 +13641,7 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -13619,7 +13698,9 @@ type OrganizationsNotificationConfigsPatchCall struct {
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
 //     "organizations/{organization_id}/notificationConfigs/notify_public_b
-//     ucket".
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13735,7 +13816,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -16951,7 +17032,7 @@ type ProjectsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the organization to groupBy. Its format is
+//   - parent: Name of the parent to groupBy. Its format is
 //     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
@@ -17061,7 +17142,7 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17116,8 +17197,8 @@ type ProjectsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the organization assets should belong to. Its
-//     format is "organizations/[organization_id], folders/[folder_id], or
+//   - parent: Name of the parent assets should belong to. Its format is
+//     "organizations/[organization_id], folders/[folder_id], or
 //     projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17389,7 +17470,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -19547,7 +19628,9 @@ type ProjectsNotificationConfigsDeleteCall struct {
 // Delete: Deletes a notification config.
 //
 //   - name: Name of the notification config to delete. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *ProjectsNotificationConfigsService) Delete(name string) *ProjectsNotificationConfigsDeleteCall {
 	c := &ProjectsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19649,7 +19732,7 @@ func (c *ProjectsNotificationConfigsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to delete. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -19681,7 +19764,9 @@ type ProjectsNotificationConfigsGetCall struct {
 // Get: Gets a notification config.
 //
 //   - name: Name of the notification config to get. Its format is
-//     "organizations/[organization_id]/notificationConfigs/[config_id]".
+//     "organizations/[organization_id]/notificationConfigs/[config_id]",
+//     "folders/[folder_id]/notificationConfigs/[config_id]", or
+//     "projects/[project_id]/notificationConfigs/[config_id]".
 func (r *ProjectsNotificationConfigsService) Get(name string) *ProjectsNotificationConfigsGetCall {
 	c := &ProjectsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -19796,7 +19881,7 @@ func (c *ProjectsNotificationConfigsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\".",
+	//       "description": "Required. Name of the notification config to get. Its format is \"organizations/[organization_id]/notificationConfigs/[config_id]\", \"folders/[folder_id]/notificationConfigs/[config_id]\", or \"projects/[project_id]/notificationConfigs/[config_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,
@@ -19827,9 +19912,9 @@ type ProjectsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the organization to list notification configs. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: Name of the parent to list notification configs. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *ProjectsNotificationConfigsService) List(parent string) *ProjectsNotificationConfigsListCall {
 	c := &ProjectsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19972,7 +20057,7 @@ func (c *ProjectsNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -20029,7 +20114,9 @@ type ProjectsNotificationConfigsPatchCall struct {
 //     https://cloud.google.com/apis/design/resource_names#relative_resource_name
 //     Example:
 //     "organizations/{organization_id}/notificationConfigs/notify_public_b
-//     ucket".
+//     ucket",
+//     "folders/{folder_id}/notificationConfigs/notify_public_bucket", or
+//     "projects/{project_id}/notificationConfigs/notify_public_bucket".
 func (r *ProjectsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *ProjectsNotificationConfigsPatchCall {
 	c := &ProjectsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20145,7 +20232,7 @@ func (c *ProjectsNotificationConfigsPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\".",
+	//       "description": "The relative resource name of this notification config. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/notificationConfigs/notify_public_bucket\", \"folders/{folder_id}/notificationConfigs/notify_public_bucket\", or \"projects/{project_id}/notificationConfigs/notify_public_bucket\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/notificationConfigs/[^/]+$",
 	//       "required": true,

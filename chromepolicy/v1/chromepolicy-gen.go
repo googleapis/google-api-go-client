@@ -1505,8 +1505,7 @@ type GoogleChromePolicyVersionsV1ResolveRequest struct {
 	PolicySchemaFilter string `json:"policySchemaFilter,omitempty"`
 
 	// PolicyTargetKey: Required. The key of the target resource on which
-	// the policies should be resolved. The target resource must point to an
-	// Org Unit.
+	// the policies should be resolved.
 	PolicyTargetKey *GoogleChromePolicyVersionsV1PolicyTargetKey `json:"policyTargetKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to

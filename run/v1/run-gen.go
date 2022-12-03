@@ -2664,9 +2664,7 @@ type ObjectMeta struct {
 	// required when creating top-level resources (Service, Job), must be
 	// unique within a Cloud Run project/region, and cannot be changed once
 	// created. More info:
-	// https://kubernetes.io/docs/user-guide/identifiers#names If ObjectMeta
-	// is part of a CreateServiceRequest, name must contain fewer than 50
-	// characters.
+	// https://kubernetes.io/docs/user-guide/identifiers#names
 	Name string `json:"name,omitempty"`
 
 	// Namespace: Required. Defines the space within each name must be
@@ -8560,7 +8558,8 @@ type NamespacesServicesDeleteCall struct {
 //
 //   - name: The fully qualified name of the service to delete. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -8710,7 +8709,7 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -8748,7 +8747,8 @@ type NamespacesServicesGetCall struct {
 //
 //   - name: The fully qualified name of the service to retrieve. It can
 //     be any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -8867,7 +8867,7 @@ func (c *NamespacesServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -9141,7 +9141,8 @@ type NamespacesServicesReplaceServiceCall struct {
 //
 //   - name: The fully qualified name of the service to replace. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -9266,7 +9267,7 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -12998,7 +12999,8 @@ type ProjectsLocationsServicesDeleteCall struct {
 //
 //   - name: The fully qualified name of the service to delete. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13148,7 +13150,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13186,7 +13188,8 @@ type ProjectsLocationsServicesGetCall struct {
 //
 //   - name: The fully qualified name of the service to retrieve. It can
 //     be any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13305,7 +13308,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -13754,7 +13757,8 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 //
 //   - name: The fully qualified name of the service to replace. It can be
 //     any of the following forms: *
-//     `namespaces/{project_id_or_number}/services/{service_name}` *
+//     `namespaces/{project_id_or_number}/services/{service_name}` (only
+//     when the `endpoint` is regional) *
 //     `projects/{project_id_or_number}/locations/{region}/services/{servic
 //     e_name}` *
 //     `projects/{project_id_or_number}/regions/{region}/services/{service_
@@ -13879,7 +13883,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
+	//       "description": "Required. The fully qualified name of the service to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/services/{service_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/services/{service_name}` * `projects/{project_id_or_number}/regions/{region}/services/{service_name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,

@@ -376,6 +376,9 @@ type GoogleCloudRunV2Condition struct {
 	//   "HEALTH_CHECK_SKIPPED" - A revision's container has no port
 	// specified since the revision is of a manually scaled service with 0
 	// instance count
+	//   "MIN_INSTANCES_WARMING" - A revision with min_instance_count > 0
+	// was created and is waiting for enough instances to begin a traffic
+	// migration.
 	RevisionReason string `json:"revisionReason,omitempty"`
 
 	// Severity: How to interpret failures of this condition, one of Error,
@@ -684,10 +687,7 @@ type GoogleCloudRunV2Execution struct {
 	// or break down billing charges by team, component, environment, state,
 	// etc. For more information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
-	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
-	// will populate some labels with 'run.googleapis.com' or
-	// 'serving.knative.dev' namespaces. Those labels are read-only, and
-	// user changes will not be preserved.
+	// or https://cloud.google.com/run/docs/configuring/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LaunchStage: Set the launch stage to a preview stage on write to
@@ -852,10 +852,19 @@ func (s *GoogleCloudRunV2ExecutionReference) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ExecutionTemplate: ExecutionTemplate describes the
 // data an execution should have when created from a template.
 type GoogleCloudRunV2ExecutionTemplate struct {
-	// Annotations: KRM-style annotations for the resource.
+	// Annotations: KRM-style annotations for the resource. Cloud Run API v2
+	// does not support annotations with `run.googleapis.com`,
+	// `cloud.googleapis.com`, `serving.knative.dev`, or
+	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
+	// system annotations in v1 now have a corresponding field in v2
+	// ExecutionTemplate.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Labels: KRM-style labels for the resource.
+	// Labels: KRM-style labels for the resource. Cloud Run API v2 does not
+	// support labels with `run.googleapis.com`, `cloud.googleapis.com`,
+	// `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and
+	// they will be rejected. All system labels in v1 now have a
+	// corresponding field in v2 ExecutionTemplate.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Parallelism: Specifies the maximum desired number of tasks the
@@ -1002,16 +1011,18 @@ func (s *GoogleCloudRunV2HTTPHeader) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRunV2Job: Job represents the configuration of a single
-// job. A job an immutable resource that references a container image
-// which is run to completion.
+// job, which references a container image that is run to completion.
 type GoogleCloudRunV2Job struct {
 	// Annotations: KRM-style annotations for the resource. Unstructured key
 	// value map that may be set by external tools to store and arbitrary
 	// metadata. They are not queryable and should be preserved when
-	// modifying objects. Cloud Run will populate some annotations using
-	// 'run.googleapis.com' or 'serving.knative.dev' namespaces. This field
-	// follows Kubernetes annotations' namespacing, limits, and rules. More
-	// info: https://kubernetes.io/docs/user-guide/annotations
+	// modifying objects. Cloud Run API v2 does not support annotations with
+	// `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`,
+	// or `autoscaling.knative.dev` namespaces, and they will be rejected.
+	// All system annotations in v1 now have a corresponding field in v2
+	// Job. This field follows Kubernetes annotations' namespacing, limits,
+	// and rules. More info:
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// BinaryAuthorization: Settings for the Binary Authorization feature.
@@ -1061,10 +1072,11 @@ type GoogleCloudRunV2Job struct {
 	// or break down billing charges by team, component, environment, state,
 	// etc. For more information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
-	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
-	// will populate some labels with 'run.googleapis.com' or
-	// 'serving.knative.dev' namespaces. Those labels are read-only, and
-	// user changes will not be preserved.
+	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run API
+	// v2 does not support labels with `run.googleapis.com`,
+	// `cloud.googleapis.com`, `serving.knative.dev`, or
+	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
+	// system labels in v1 now have a corresponding field in v2 Job.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifier: Output only. Email address of the last authenticated
@@ -1532,10 +1544,7 @@ type GoogleCloudRunV2Revision struct {
 	// or break down billing charges by team, component, environment, state,
 	// etc. For more information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
-	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
-	// will populate some labels with 'run.googleapis.com' or
-	// 'serving.knative.dev' namespaces. Those labels are read-only, and
-	// user changes will not be preserved.
+	// or https://cloud.google.com/run/docs/configuring/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LaunchStage: Set the launch stage to a preview stage on write to
@@ -1697,7 +1706,12 @@ func (s *GoogleCloudRunV2RevisionScaling) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionTemplate: RevisionTemplate describes the data
 // a revision should have when created from a template.
 type GoogleCloudRunV2RevisionTemplate struct {
-	// Annotations: KRM-style annotations for the resource.
+	// Annotations: KRM-style annotations for the resource. Cloud Run API v2
+	// does not support annotations with `run.googleapis.com`,
+	// `cloud.googleapis.com`, `serving.knative.dev`, or
+	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
+	// system annotations in v1 now have a corresponding field in v2
+	// RevisionTemplate.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// Containers: Holds the single container that defines the unit of
@@ -1718,7 +1732,11 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	//   "EXECUTION_ENVIRONMENT_GEN2" - Uses Second Generation environment.
 	ExecutionEnvironment string `json:"executionEnvironment,omitempty"`
 
-	// Labels: KRM-style labels for the resource.
+	// Labels: KRM-style labels for the resource. Cloud Run API v2 does not
+	// support labels with `run.googleapis.com`, `cloud.googleapis.com`,
+	// `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and
+	// they will be rejected. All system labels in v1 now have a
+	// corresponding field in v2 RevisionTemplate.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MaxInstanceRequestConcurrency: Sets the maximum number of requests
@@ -1909,9 +1927,12 @@ func (s *GoogleCloudRunV2SecretVolumeSource) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2Service struct {
 	// Annotations: Unstructured key value map that may be set by external
 	// tools to store and arbitrary metadata. They are not queryable and
-	// should be preserved when modifying objects. Cloud Run will populate
-	// some annotations using 'run.googleapis.com' or 'serving.knative.dev'
-	// namespaces. This field follows Kubernetes annotations' namespacing,
+	// should be preserved when modifying objects. Cloud Run API v2 does not
+	// support annotations with `run.googleapis.com`,
+	// `cloud.googleapis.com`, `serving.knative.dev`, or
+	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
+	// system annotations in v1 now have a corresponding field in v2
+	// Service. This field follows Kubernetes annotations' namespacing,
 	// limits, and rules. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1978,10 +1999,11 @@ type GoogleCloudRunV2Service struct {
 	// charges by team, component, environment, state, etc. For more
 	// information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
-	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
-	// will populate some labels with 'run.googleapis.com' or
-	// 'serving.knative.dev' namespaces. Those labels are read-only, and
-	// user changes will not be preserved.
+	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run API
+	// v2 does not support labels with `run.googleapis.com`,
+	// `cloud.googleapis.com`, `serving.knative.dev`, or
+	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
+	// system labels in v1 now have a corresponding field in v2 Service.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifier: Output only. Email address of the last authenticated
@@ -2236,10 +2258,7 @@ type GoogleCloudRunV2Task struct {
 	// or break down billing charges by team, component, environment, state,
 	// etc. For more information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
-	// or https://cloud.google.com/run/docs/configuring/labels Cloud Run
-	// will populate some labels with 'run.googleapis.com' or
-	// 'serving.knative.dev' namespaces. Those labels are read-only, and
-	// user changes will not be preserved.
+	// or https://cloud.google.com/run/docs/configuring/labels
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastAttemptResult: Output only. Result of the last attempt of this
@@ -6824,9 +6843,9 @@ type ProjectsLocationsServicesListCall struct {
 // List: Lists Services.
 //
 //   - parent: The location and project to list resources on. Location
-//     must be a valid GCP region, and cannot be the "-" wildcard. Format:
-//     projects/{project}/locations/{location}, where {project} can be
-//     project id or number.
+//     must be a valid Google Cloud region, and cannot be the "-"
+//     wildcard. Format: projects/{project}/locations/{location}, where
+//     {project} can be project id or number.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6975,7 +6994,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The location and project to list resources on. Location must be a valid GCP region, and cannot be the \"-\" wildcard. Format: projects/{project}/locations/{location}, where {project} can be project id or number.",
+	//       "description": "Required. The location and project to list resources on. Location must be a valid Google Cloud region, and cannot be the \"-\" wildcard. Format: projects/{project}/locations/{location}, where {project} can be project id or number.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

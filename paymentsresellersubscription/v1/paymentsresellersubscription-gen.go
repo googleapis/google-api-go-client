@@ -2605,7 +2605,8 @@ type PartnersSubscriptionsExtendCall struct {
 	header_                                                            http.Header
 }
 
-// Extend: Used by partners to extend a subscription service for their
+// Extend: [Deprecated] New partners should be on auto-extend by
+// default. Used by partners to extend a subscription service for their
 // customers on an ongoing basis for the subscription to remain active
 // and renewable. It should be called directly by the partner using
 // service accounts.
@@ -2714,7 +2715,7 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Used by partners to extend a subscription service for their customers on an ongoing basis for the subscription to remain active and renewable. It should be called directly by the partner using service accounts.",
+	//   "description": "[Deprecated] New partners should be on auto-extend by default. Used by partners to extend a subscription service for their customers on an ongoing basis for the subscription to remain active and renewable. It should be called directly by the partner using service accounts.",
 	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:extend",
 	//   "httpMethod": "POST",
 	//   "id": "paymentsresellersubscription.partners.subscriptions.extend",

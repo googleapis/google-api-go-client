@@ -4365,6 +4365,7 @@ type ParameterMetadata struct {
 	//   "PUBSUB_TOPIC" - The parameter specifies a Pub/Sub Topic.
 	//   "PUBSUB_SUBSCRIPTION" - The parameter specifies a Pub/Sub
 	// Subscription.
+	//   "BIGQUERY_TABLE" - The parameter specifies a BigQuery table.
 	ParamType string `json:"paramType,omitempty"`
 
 	// Regexes: Optional. Regexes that the parameter must match.

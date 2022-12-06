@@ -278,6 +278,38 @@ type ProjectsLocationsTargetProjectsService struct {
 	s *Service
 }
 
+// AccessKeyCredentials: Message describing AWS Credentials using access
+// key id and secret.
+type AccessKeyCredentials struct {
+	// AccessKeyId: AWS access key ID.
+	AccessKeyId string `json:"accessKeyId,omitempty"`
+
+	// SecretAccessKey: Input only. AWS secret access key.
+	SecretAccessKey string `json:"secretAccessKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessKeyId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessKeyCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessKeyCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdaptingOSStep: AdaptingOSStep contains specific step details.
 type AdaptingOSStep struct {
 }
@@ -459,6 +491,9 @@ func (s *AwsSecurityGroup) MarshalJSON() ([]byte, error) {
 // AwsSourceDetails: AwsSourceDetails message describes a specific
 // source details for the AWS source type.
 type AwsSourceDetails struct {
+	// AccessKeyCreds: AWS Credentials using access key id and secret.
+	AccessKeyCreds *AccessKeyCredentials `json:"accessKeyCreds,omitempty"`
+
 	// AccessKeyId: AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
 
@@ -473,6 +508,10 @@ type AwsSourceDetails struct {
 	// InventorySecurityGroupNames: AWS security group names to limit the
 	// scope of the source inventory.
 	InventorySecurityGroupNames []string `json:"inventorySecurityGroupNames,omitempty"`
+
+	// InventoryTagList: AWS resource tags to limit the scope of the source
+	// inventory.
+	InventoryTagList []*Tag `json:"inventoryTagList,omitempty"`
 
 	// InventoryTags: Deprecated: AWS resource tags to limit the scope of
 	// the source inventory. Use inventory_tag_list instead.
@@ -504,7 +543,7 @@ type AwsSourceDetails struct {
 	//   "ACTIVE" - The source exists and its credentials were verified.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
+	// ForceSendFields is a list of field names (e.g. "AccessKeyCreds") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -512,12 +551,13 @@ type AwsSourceDetails struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AccessKeyId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccessKeyCreds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2819,6 +2859,37 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Tag: Tag is an AWS tag representation.
+type Tag struct {
+	// Key: Key of tag.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value of tag.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tag) MarshalJSON() ([]byte, error) {
+	type NoMethod Tag
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

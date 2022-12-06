@@ -897,8 +897,7 @@ type DeviceClaim struct {
 	// that owns the Chrome OS device.
 	GoogleWorkspaceCustomerId string `json:"googleWorkspaceCustomerId,omitempty"`
 
-	// OwnerCompanyId: The ID of the Customer that purchased the Android
-	// device.
+	// OwnerCompanyId: The ID of the Customer that purchased the device.
 	OwnerCompanyId int64 `json:"ownerCompanyId,omitempty,string"`
 
 	// ResellerId: The ID of the reseller that claimed the device.
@@ -979,7 +978,7 @@ type DeviceIdentifier struct {
 	// Model: The device model's name. Allowed values are listed in Android
 	// models (/zero-touch/resources/manufacturer-names#model-names) and
 	// Chrome OS models
-	// (https://support.google.com/chrome/a/answer/10130175?hl=en#identify_compatible).
+	// (https://support.google.com/chrome/a/answer/10130175#identify_compatible).
 	Model string `json:"model,omitempty"`
 
 	// SerialNumber: The manufacturer's serial number for the device. This
@@ -1752,8 +1751,7 @@ func (s *PartnerUnclaim) MarshalJSON() ([]byte, error) {
 // PerDeviceStatusInBatch: Captures the processing status for each
 // device in the operation.
 type PerDeviceStatusInBatch struct {
-	// DeviceId: If processing succeeds, the device ID of the Android
-	// device.
+	// DeviceId: If processing succeeds, the device ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
 	// ErrorIdentifier: If processing fails, the error type.

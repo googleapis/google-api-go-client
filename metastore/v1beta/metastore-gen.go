@@ -242,6 +242,42 @@ type ProjectsLocationsServicesMetadataImportsService struct {
 	s *APIService
 }
 
+// AlterMetadataResourceLocationRequest: Request message for
+// DataprocMetastore.AlterMetadataResourceLocation.
+type AlterMetadataResourceLocationRequest struct {
+	// LocationUri: Required. The new location URI for the metadata
+	// resource.
+	LocationUri string `json:"locationUri,omitempty"`
+
+	// ResourceName: Required. The relative metadata resource name in the
+	// following format.databases/{database_id} or
+	// databases/{database_id}/tables/{table_id} or
+	// databases/{database_id}/tables/{table_id}/partitions/{partition_id}
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AlterMetadataResourceLocationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -394,9 +430,9 @@ type BackendMetastore struct {
 
 	// Name: The relative resource name of the metastore that is being
 	// federated. The formats of the relative resource names for the
-	// currently supported metastores are listed below: Dataplex:
-	// projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery:
-	// projects/{project_id} Dataproc Metastore:
+	// currently supported metastores are listed below: Dataplex
+	// projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery
+	// projects/{project_id} Dataproc Metastore
 	// projects/{project_id}/locations/{location}/services/{service_id}
 	Name string `json:"name,omitempty"`
 
@@ -1676,6 +1712,42 @@ func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveTableToDatabaseRequest: Request message for
+// DataprocMetastore.MoveTableToDatabase.
+type MoveTableToDatabaseRequest struct {
+	// DbName: Required. The name of the database where the table resides.
+	DbName string `json:"dbName,omitempty"`
+
+	// DestinationDbName: Required. The name of the database where the table
+	// should be moved.
+	DestinationDbName string `json:"destinationDbName,omitempty"`
+
+	// TableName: Required. The name of the table to be moved.
+	TableName string `json:"tableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DbName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DbName") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveTableToDatabaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NetworkConfig: Network configuration for the Dataproc Metastore
 // service.
 type NetworkConfig struct {
@@ -1928,6 +2000,69 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryMetadataRequest: Request message for
+// DataprocMetastore.QueryMetadata.
+type QueryMetadataRequest struct {
+	// Query: Required. A read-only SQL query to execute against the
+	// metadata database. The query cannot change or mutate the data.
+	Query string `json:"query,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Query") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryMetadataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryMetadataRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryMetadataResponse: Response message for
+// DataprocMetastore.QueryMetadata.
+type QueryMetadataResponse struct {
+	// ResultManifestUri: The manifest URI is link to a JSON instance in
+	// Cloud Storage. This instance manifests immediately along with
+	// QueryMetadataResponse. The content of the URI is not retriable until
+	// the long-running operation query against the metadata finishes.
+	ResultManifestUri string `json:"resultManifestUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultManifestUri")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultManifestUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryMetadataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryMetadataResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RemoveIamPolicyRequest: Request message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyRequest struct {
@@ -1936,7 +2071,7 @@ type RemoveIamPolicyRequest struct {
 // RemoveIamPolicyResponse: Response message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyResponse struct {
-	// Success: whether related policies are removed
+	// Success: True if the policy is successfully removed.
 	Success bool `json:"success,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2351,6 +2486,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // TelemetryConfig: Telemetry Configuration for the Dataproc Metastore
 // service.
 type TelemetryConfig struct {
+	// LogFormat: The output format of the Dataproc Metastore service's
+	// logs.
+	//
 	// Possible values:
 	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
 	//   "LEGACY" - Logging output uses the legacy textPayload format.
@@ -4661,6 +4799,154 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "metastore.projects.locations.services.alterLocation":
+
+type ProjectsLocationsServicesAlterLocationCall struct {
+	s                                    *APIService
+	service                              string
+	altermetadataresourcelocationrequest *AlterMetadataResourceLocationRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// AlterLocation: Alter metadata resource location. The metadata
+// resource can be a database, table, or partition. This functionality
+// only updates the parent directory for the respective metadata
+// resource and does not transfer any existing data to the new location.
+//
+//   - service: The relative resource name of the metastore service to
+//     mutate metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) AlterLocation(service string, altermetadataresourcelocationrequest *AlterMetadataResourceLocationRequest) *ProjectsLocationsServicesAlterLocationCall {
+	c := &ProjectsLocationsServicesAlterLocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.altermetadataresourcelocationrequest = altermetadataresourcelocationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesAlterLocationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterLocationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesAlterLocationCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterLocationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesAlterLocationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesAlterLocationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altermetadataresourcelocationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:alterLocation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.alterLocation" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Alter metadata resource location. The metadata resource can be a database, table, or partition. This functionality only updates the parent directory for the respective metadata resource and does not transfer any existing data to the new location.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterLocation",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.alterLocation",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:alterLocation",
+	//   "request": {
+	//     "$ref": "AlterMetadataResourceLocationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "metastore.projects.locations.services.create":
 
 type ProjectsLocationsServicesCreateCall struct {
@@ -5690,6 +5976,151 @@ func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
+// method id "metastore.projects.locations.services.moveTableToDatabase":
+
+type ProjectsLocationsServicesMoveTableToDatabaseCall struct {
+	s                          *APIService
+	service                    string
+	movetabletodatabaserequest *MoveTableToDatabaseRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// MoveTableToDatabase: Move a table to another database.
+//
+//   - service: The relative resource name of the metastore service to
+//     mutate metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) MoveTableToDatabase(service string, movetabletodatabaserequest *MoveTableToDatabaseRequest) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c := &ProjectsLocationsServicesMoveTableToDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.movetabletodatabaserequest = movetabletodatabaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Context(ctx context.Context) *ProjectsLocationsServicesMoveTableToDatabaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movetabletodatabaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:moveTableToDatabase")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.moveTableToDatabase" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Move a table to another database.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:moveTableToDatabase",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.moveTableToDatabase",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:moveTableToDatabase",
+	//   "request": {
+	//     "$ref": "MoveTableToDatabaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "metastore.projects.locations.services.patch":
 
 type ProjectsLocationsServicesPatchCall struct {
@@ -5860,6 +6291,151 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v1beta/{+name}",
 	//   "request": {
 	//     "$ref": "Service"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.queryMetadata":
+
+type ProjectsLocationsServicesQueryMetadataCall struct {
+	s                    *APIService
+	service              string
+	querymetadatarequest *QueryMetadataRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// QueryMetadata: Query DPMS metadata.
+//
+//   - service: The relative resource name of the metastore service to
+//     query metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) QueryMetadata(service string, querymetadatarequest *QueryMetadataRequest) *ProjectsLocationsServicesQueryMetadataCall {
+	c := &ProjectsLocationsServicesQueryMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.querymetadatarequest = querymetadatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesQueryMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Context(ctx context.Context) *ProjectsLocationsServicesQueryMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesQueryMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.querymetadatarequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:queryMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.queryMetadata" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Query DPMS metadata.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.queryMetadata",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to query metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:queryMetadata",
+	//   "request": {
+	//     "$ref": "QueryMetadataRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

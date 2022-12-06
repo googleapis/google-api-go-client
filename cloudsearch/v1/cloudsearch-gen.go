@@ -1614,6 +1614,8 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// logged to BIP (no user-facing action performed).
 	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
 	// but an exception occurred.
+	//   "SCAN_FAILURE_RULE_FETCH_FAILED" - Rule fetch was attempted but
+	// failed, so rule evaluation could not be performed.
 	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
 	// but the scanning timed out.
 	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
@@ -6242,16 +6244,6 @@ type CallInfo struct {
 	// clients should be aware that the information may be stale.
 	MaxJoinedDevices int64 `json:"maxJoinedDevices,omitempty"`
 
-	// MediaBackendInfo: Output only. Information about the media backend
-	// for the currently ongoing conference in the meeting space. The media
-	// backend information will only be filled in for clients that are
-	// supposed to present the information. The information should be
-	// displayed in a debug panel and is only intended for internal
-	// debugging purposes. If the string is empty nothing should be
-	// displayed about the media backend. Deprecated because media backend
-	// is always MEDIA_ROUTER since Dec 2018.
-	MediaBackendInfo string `json:"mediaBackendInfo,omitempty"`
-
 	// OrganizationName: Output only. The name or description of the
 	// organization or domain that the organizer belongs to. The expected
 	// use of this in clients is to present messages like "John Doe (outside
@@ -7137,6 +7129,7 @@ type CoActivity struct {
 	//   "CO_ACTIVITY_APP_KAHOOT" - Kahoot! educational software.
 	//   "CO_ACTIVITY_APP_GQUEUES" - GQueues task manager.
 	//   "CO_ACTIVITY_APP_YOU_TUBE_MUSIC" - YouTube Music
+	//   "CO_ACTIVITY_APP_SAMSUNG_NOTES" - Samsung Notes
 	CoActivityApp string `json:"coActivityApp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTitle") to
@@ -8645,6 +8638,8 @@ type DlpScanSummary struct {
 	// logged to BIP (no user-facing action performed).
 	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
 	// but an exception occurred.
+	//   "SCAN_FAILURE_RULE_FETCH_FAILED" - Rule fetch was attempted but
+	// failed, so rule evaluation could not be performed.
 	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
 	// but the scanning timed out.
 	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
@@ -9184,6 +9179,65 @@ func (s *DriveTimeSpanRestrict) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveTimeSpanRestrict
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DynamiteMessagesScoringInfo: This is the proto for holding message
+// level scoring information. This data is used for logging in query-api
+// server and for testing purposes.
+type DynamiteMessagesScoringInfo struct {
+	FinalScore float64 `json:"finalScore,omitempty"`
+
+	FreshnessScore float64 `json:"freshnessScore,omitempty"`
+
+	JoinedSpaceAffinityScore float64 `json:"joinedSpaceAffinityScore,omitempty"`
+
+	MessageAgeInDays float64 `json:"messageAgeInDays,omitempty"`
+
+	TopicalityScore float64 `json:"topicalityScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinalScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinalScore") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DynamiteMessagesScoringInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamiteMessagesScoringInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod DynamiteMessagesScoringInfo
+	var s1 struct {
+		FinalScore               gensupport.JSONFloat64 `json:"finalScore"`
+		FreshnessScore           gensupport.JSONFloat64 `json:"freshnessScore"`
+		JoinedSpaceAffinityScore gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
+		MessageAgeInDays         gensupport.JSONFloat64 `json:"messageAgeInDays"`
+		TopicalityScore          gensupport.JSONFloat64 `json:"topicalityScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FinalScore = float64(s1.FinalScore)
+	s.FreshnessScore = float64(s1.FreshnessScore)
+	s.JoinedSpaceAffinityScore = float64(s1.JoinedSpaceAffinityScore)
+	s.MessageAgeInDays = float64(s1.MessageAgeInDays)
+	s.TopicalityScore = float64(s1.TopicalityScore)
+	return nil
 }
 
 // DynamiteSpacesScoringInfo: This is the proto for holding space level
@@ -16124,10 +16178,21 @@ type Message struct {
 	//   "PERMISSION_UNSPECIFIED" - Default case, should never be used. If
 	// this data is encountered in the DB any request should throw an
 	// exception.
-	//   "PERMISSION_NO_ONE" - No one can mutate the entity.
-	//   "PERMISSION_CREATOR" - Only the creator of an entity can mutate it.
+	//   "PERMISSION_NO_ONE" - No one except for the message creator/origin
+	// pair can mutate. This permission checks both gaia id and the request
+	// origin. Request origin can be Chat API or Chat UI. Mutation is
+	// allowed iff both attributes of the request match the original message
+	// creation. Use case: this allows historical 1P apps lock down message
+	// edit permission i.e. In Chat UI, humans cannot edit their messages
+	// created via these 1P apps. Do not use this for additional use cases.
+	//   "PERMISSION_CREATOR" - The message creator can mutate regardless of
+	// request origin. Use case: for messages created by human via Chat UI
+	// or Chat API. These messages can be mutated by the same human user via
+	// Chat UI or via any app on Chat API.
 	//   "PERMISSION_MEMBER" - Every human member of a space or the creator
-	// can mutate the entity.
+	// can mutate the entity. This excludes app acting on behalf of human
+	// via Chat API. Use case: This is to enable humans to delete messages
+	// created by apps.
 	DeletableBy string `json:"deletableBy,omitempty"`
 
 	// DeleteTime: Time when the Message was deleted in microseconds. This
@@ -16163,6 +16228,8 @@ type Message struct {
 	// logged to BIP (no user-facing action performed).
 	//   "SCAN_FAILURE_EXCEPTION" - Rule fetch and evaluation were attempted
 	// but an exception occurred.
+	//   "SCAN_FAILURE_RULE_FETCH_FAILED" - Rule fetch was attempted but
+	// failed, so rule evaluation could not be performed.
 	//   "SCAN_FAILURE_TIMEOUT" - Rule fetch and evaluation were attempted
 	// but the scanning timed out.
 	//   "SCAN_FAILURE_ALL_RULES_FAILED" - Rule fetch completed and
@@ -16236,10 +16303,21 @@ type Message struct {
 	//   "PERMISSION_UNSPECIFIED" - Default case, should never be used. If
 	// this data is encountered in the DB any request should throw an
 	// exception.
-	//   "PERMISSION_NO_ONE" - No one can mutate the entity.
-	//   "PERMISSION_CREATOR" - Only the creator of an entity can mutate it.
+	//   "PERMISSION_NO_ONE" - No one except for the message creator/origin
+	// pair can mutate. This permission checks both gaia id and the request
+	// origin. Request origin can be Chat API or Chat UI. Mutation is
+	// allowed iff both attributes of the request match the original message
+	// creation. Use case: this allows historical 1P apps lock down message
+	// edit permission i.e. In Chat UI, humans cannot edit their messages
+	// created via these 1P apps. Do not use this for additional use cases.
+	//   "PERMISSION_CREATOR" - The message creator can mutate regardless of
+	// request origin. Use case: for messages created by human via Chat UI
+	// or Chat API. These messages can be mutated by the same human user via
+	// Chat UI or via any app on Chat API.
 	//   "PERMISSION_MEMBER" - Every human member of a space or the creator
-	// can mutate the entity.
+	// can mutate the entity. This excludes app acting on behalf of human
+	// via Chat API. Use case: This is to enable humans to delete messages
+	// created by apps.
 	EditableBy string `json:"editableBy,omitempty"`
 
 	// FallbackText: A plain-text description of the attachment, used when
@@ -16370,6 +16448,25 @@ type Message struct {
 
 	// RetentionSettings: The retention settings of the message.
 	RetentionSettings *AppsDynamiteSharedRetentionSettings `json:"retentionSettings,omitempty"`
+
+	// RichTextFormattingType: Used by clients to correctly log format type
+	// for message creation due to complexity with client side optimistic
+	// update (see go/content-metric-post-send-logging for details).
+	// Currently, only set by server in the message or topic creation path.
+	//
+	// Possible values:
+	//   "NONE"
+	//   "MARKDOWN" - The formatting was specified as *markdown characters*
+	// in message text.
+	//   "FORMAT_ANNOTATIONS" - The formatting was specified as {@link
+	// com.google.apps.dynamite.v1.shared.FormatMetadata} annotations.
+	//   "FORMAT_ANNOTATIONS_IGNORED" - The client sent the format
+	// annotations, but didn't set the accept_format_annotations field to
+	// true. This shouldn't happen, but there might be some old clients that
+	// end up here.
+	//   "FORMAT_ANNOTATIONS_IGNORED_WITH_MARKDOWN" - A combination of
+	// MARKDOWN and FORMAT_ANNOTATIONS_IGNORED.
+	RichTextFormattingType string `json:"richTextFormattingType,omitempty"`
 
 	// SecondaryMessageKey: A client-specified string that can be used to
 	// uniquely identify a message in a space, in lieu of `id.message_id`.
@@ -22401,6 +22498,9 @@ type SupportUrls struct {
 	// Configured by Pantheon, may be empty.
 	DeletionPolicyUrl string `json:"deletionPolicyUrl,omitempty"`
 
+	// GwmUrl: Link to GWM page of the app. May be empty.
+	GwmUrl string `json:"gwmUrl,omitempty"`
+
 	// PrivacyPolicyUrl: Link to the privacy policy webpage for the bot. May
 	// be empty.
 	PrivacyPolicyUrl string `json:"privacyPolicyUrl,omitempty"`
@@ -24187,20 +24287,6 @@ type UrlMetadata struct {
 	// IntImageWidth: Dimensions of the image: width.
 	IntImageWidth int64 `json:"intImageWidth,omitempty"`
 
-	// LinkType: NEXT TAG : 18
-	//
-	// Possible values:
-	//   "UNDEFINED"
-	//   "AUTO_DETECTED_PLAIN_TEXT" - Set by the server, when it detects a
-	// URL in the message text
-	//   "RICH_TEXT" - Set by the client, when the user adds a link via the
-	// rich-text editing (RTE) toolbar
-	//   "MARKDOWN" - Set by the server, when it detects a URL in
-	// markdown-syntax in the message text
-	//   "NO_ASSOCIATED_TEXT" - Set by the server when a URL annotation
-	// received from client has 0 length and 0 start index
-	LinkType string `json:"linkType,omitempty"`
-
 	// MimeType: Mime type of the content (Currently mapped from Page Render
 	// Service ItemType) Note that this is not necessarily the mime type of
 	// the http resource. For example a text/html from youtube or vimeo may
@@ -24226,8 +24312,11 @@ type UrlMetadata struct {
 
 	// Possible values:
 	//   "URL_SOURCE_UNKNOWN"
-	//   "USER_SUPPLIED_URL"
 	//   "SERVER_SUPPLIED_POLICY_VIOLATION"
+	//   "AUTO_DETECTED_PLAIN_TEXT" - Set by the server, when it detects a
+	// URL in the message text
+	//   "RICH_TEXT" - Set by the client, when the user adds a link as a
+	// custom hyperlink. Validated by the server and persisted in storage.
 	UrlSource string `json:"urlSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to

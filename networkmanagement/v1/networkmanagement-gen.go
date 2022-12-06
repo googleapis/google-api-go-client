@@ -277,6 +277,75 @@ func (s *AbortInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppEngineVersionEndpoint: Wrapper for app engine service version
+// attributes.
+type AppEngineVersionEndpoint struct {
+	// Uri: An App Engine (https://cloud.google.com/appengine) [service
+	// version](https://cloud.google.com/appengine/docs/admin-api/reference/r
+	// est/v1/apps.services.versions) name.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppEngineVersionEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod AppEngineVersionEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppEngineVersionInfo: For display only. Metadata associated with an
+// App Engine version.
+type AppEngineVersionInfo struct {
+	// DisplayName: Name of an App Engine version.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Environment: App Engine execution environment for a version.
+	Environment string `json:"environment,omitempty"`
+
+	// Runtime: Runtime of the App Engine version.
+	Runtime string `json:"runtime,omitempty"`
+
+	// Uri: URI of an App Engine version.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppEngineVersionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppEngineVersionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -520,6 +589,75 @@ type CloudFunctionInfo struct {
 
 func (s *CloudFunctionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudFunctionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudRunRevisionEndpoint: Wrapper for Cloud Run revision attributes.
+type CloudRunRevisionEndpoint struct {
+	// Uri: A Cloud Run (https://cloud.google.com/run)
+	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespa
+	// ces.revisions/get) URI. The format is:
+	// projects/{project}/locations/{location}/revisions/{revision}
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRunRevisionEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunRevisionEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudRunRevisionInfo: For display only. Metadata associated with a
+// Cloud Run revision.
+type CloudRunRevisionInfo struct {
+	// DisplayName: Name of a Cloud Run revision.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Location: Location in which this revision is deployed.
+	Location string `json:"location,omitempty"`
+
+	// ServiceUri: URI of Cloud Run service this revision belongs to.
+	ServiceUri string `json:"serviceUri,omitempty"`
+
+	// Uri: URI of a Cloud Run revision.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRunRevisionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunRevisionInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -817,6 +955,8 @@ type DropInfo struct {
 	//   "PSC_CONNECTION_NOT_ACCEPTED" - The Private Service Connect
 	// endpoint is in a project that is not approved to connect to the
 	// service.
+	//   "CLOUD_RUN_REVISION_NOT_READY" - Packet sent from a Cloud Run
+	// revision that is not ready.
 	Cause string `json:"cause,omitempty"`
 
 	// ResourceUri: URI of the resource that caused the drop.
@@ -858,8 +998,19 @@ type Empty struct {
 
 // Endpoint: Source or destination of the Connectivity Test.
 type Endpoint struct {
+	// AppEngineVersion: An App Engine (https://cloud.google.com/appengine)
+	// [service
+	// version](https://cloud.google.com/appengine/docs/admin-api/reference/r
+	// est/v1/apps.services.versions).
+	AppEngineVersion *AppEngineVersionEndpoint `json:"appEngineVersion,omitempty"`
+
 	// CloudFunction: A Cloud Function (https://cloud.google.com/functions).
 	CloudFunction *CloudFunctionEndpoint `json:"cloudFunction,omitempty"`
+
+	// CloudRunRevision: A Cloud Run (https://cloud.google.com/run)
+	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespa
+	// ces.revisions/get)
+	CloudRunRevision *CloudRunRevisionEndpoint `json:"cloudRunRevision,omitempty"`
 
 	// CloudSqlInstance: A Cloud SQL (https://cloud.google.com/sql) instance
 	// URI.
@@ -909,7 +1060,7 @@ type Endpoint struct {
 	// project.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudFunction") to
+	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -917,12 +1068,13 @@ type Endpoint struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudFunction") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppEngineVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2102,11 +2254,18 @@ type Step struct {
 	// Abort: Display information of the final state "abort" and reason.
 	Abort *AbortInfo `json:"abort,omitempty"`
 
+	// AppEngineVersion: Display information of an App Engine service
+	// version.
+	AppEngineVersion *AppEngineVersionInfo `json:"appEngineVersion,omitempty"`
+
 	// CausesDrop: This is a step that leads to the final state Drop.
 	CausesDrop bool `json:"causesDrop,omitempty"`
 
 	// CloudFunction: Display information of a Cloud Function.
 	CloudFunction *CloudFunctionInfo `json:"cloudFunction,omitempty"`
+
+	// CloudRunRevision: Display information of a Cloud Run revision.
+	CloudRunRevision *CloudRunRevisionInfo `json:"cloudRunRevision,omitempty"`
 
 	// CloudSqlInstance: Display information of a Cloud SQL instance.
 	CloudSqlInstance *CloudSQLInstanceInfo `json:"cloudSqlInstance,omitempty"`
@@ -2179,6 +2338,12 @@ type Step struct {
 	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating
 	// from a Cloud Function. A CloudFunctionInfo is populated with starting
 	// function information.
+	//   "START_FROM_APP_ENGINE_VERSION" - Initial state: packet originating
+	// from an App Engine service version. An AppEngineVersionInfo is
+	// populated with starting version information.
+	//   "START_FROM_CLOUD_RUN_REVISION" - Initial state: packet originating
+	// from a Cloud Run revision. A CloudRunRevisionInfo is populated with
+	// starting revision information.
 	//   "APPLY_INGRESS_FIREWALL_RULE" - Config checking state: verify
 	// ingress firewall rule.
 	//   "APPLY_EGRESS_FIREWALL_RULE" - Config checking state: verify egress

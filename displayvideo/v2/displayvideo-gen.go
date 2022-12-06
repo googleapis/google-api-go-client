@@ -1775,10 +1775,8 @@ type AssignedTargetingOption struct {
 	// targeting methods. An alias for the assignedTargetingOptionId. This
 	// value can be used in place of `assignedTargetingOptionId` when
 	// retrieving or deleting existing targeting. This field will only be
-	// supported for assigned targeting options of the following targeting
-	// types: * `TARGETING_TYPE_AGE_RANGE` *
-	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
-	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+	// supported for all assigned targeting options of the following
+	// targeting types: * `TARGETING_TYPE_AGE_RANGE` *
 	// `TARGETING_TYPE_DEVICE_TYPE` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
@@ -1787,6 +1785,10 @@ type AssignedTargetingOption struct {
 	// `TARGETING_TYPE_PARENTAL_STATUS` *
 	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
 	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_VIEWABILITY`
+	// This field is also supported for line item assigned targeting options
+	// of the following targeting types: *
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`
 	AssignedTargetingOptionIdAlias string `json:"assignedTargetingOptionIdAlias,omitempty"`
 
 	// AudienceGroupDetails: Audience targeting details. This field will be

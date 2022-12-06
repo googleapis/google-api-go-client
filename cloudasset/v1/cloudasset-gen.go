@@ -10041,10 +10041,10 @@ type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
 // appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations *
 // compute.trustedImageProjects * compute.skipDefaultNetworkCreation *
 // compute.requireOsLogin * compute.disableNestedVirtualization This RPC
-// only returns either: * resources of types supported by searchable
-// asset types
+// only returns either resources of types supported by searchable asset
+// types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
-// or * IAM policies.
+// or IAM policies.
 //
 //   - scope: The organization to scope the request. Only organization
 //     policies within the scope will be analyzed. The output assets will
@@ -10198,7 +10198,7 @@ func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes organization policies governed assets (GCP resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either: * resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or * IAM policies.",
+	//   "description": "Analyzes organization policies governed assets (GCP resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or IAM policies.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",

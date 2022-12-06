@@ -1856,7 +1856,8 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	TableConditionExpectation *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation `json:"tableConditionExpectation,omitempty"`
 
 	// Threshold: Optional. The minimum ratio of passing_rows / total_rows
-	// required to pass this rule. Default = 1.0
+	// required to pass this rule, with a range of 0.0, 1.00 indicates
+	// default value (i.e. 1.0)
 	Threshold float64 `json:"threshold,omitempty"`
 
 	// UniquenessExpectation: ColumnAggregate rule which evaluates whether
@@ -2265,6 +2266,9 @@ type GoogleCloudDataplexV1DataScan struct {
 	// specified, the fields under it will use their default values.
 	ExecutionSpec *GoogleCloudDataplexV1DataScanExecutionSpec `json:"executionSpec,omitempty"`
 
+	// ExecutionStatus: Output only. Status of the data scan execution.
+	ExecutionStatus *GoogleCloudDataplexV1DataScanExecutionStatus `json:"executionStatus,omitempty"`
+
 	// Labels: Optional. User-defined labels for the scan.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2514,6 +2518,39 @@ type GoogleCloudDataplexV1DataScanExecutionSpec struct {
 
 func (s *GoogleCloudDataplexV1DataScanExecutionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanExecutionSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanExecutionStatus: Status of the data scan
+// execution.
+type GoogleCloudDataplexV1DataScanExecutionStatus struct {
+	// LatestJobEndTime: The time when the latest DataScanJob ended.
+	LatestJobEndTime string `json:"latestJobEndTime,omitempty"`
+
+	// LatestJobStartTime: The time when the latest DataScanJob started.
+	LatestJobStartTime string `json:"latestJobStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatestJobEndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatestJobEndTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanExecutionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4706,6 +4743,9 @@ type GoogleCloudDataplexV1StorageFormat struct {
 	//   "UNKNOWN" - Data of an unknown format.
 	Format string `json:"format,omitempty"`
 
+	// Iceberg: Optional. Additional information about iceberg tables.
+	Iceberg *GoogleCloudDataplexV1StorageFormatIcebergOptions `json:"iceberg,omitempty"`
+
 	// Json: Optional. Additional information about CSV formatted data.
 	Json *GoogleCloudDataplexV1StorageFormatJsonOptions `json:"json,omitempty"`
 
@@ -4782,6 +4822,37 @@ type GoogleCloudDataplexV1StorageFormatCsvOptions struct {
 
 func (s *GoogleCloudDataplexV1StorageFormatCsvOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1StorageFormatCsvOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1StorageFormatIcebergOptions: Describes Iceberg
+// data format.
+type GoogleCloudDataplexV1StorageFormatIcebergOptions struct {
+	// MetadataLocation: Optional. The location of where the iceberg
+	// metadata is present, must be within the table path
+	MetadataLocation string `json:"metadataLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetadataLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetadataLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1StorageFormatIcebergOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1StorageFormatIcebergOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

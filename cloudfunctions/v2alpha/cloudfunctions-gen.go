@@ -1963,6 +1963,13 @@ type ServiceConfig struct {
 	// will be returned if the latest revision is serving 100% of traffic.
 	AllTrafficOnLatestRevision bool `json:"allTrafficOnLatestRevision,omitempty"`
 
+	// AvailableCpu: The number of CPUs used in a single container instance.
+	// Default value is calculated from available memory. Supports the same
+	// values as Cloud Run, see
+	// https://cloud.google.com/run/docs/reference/rest/v1/Container#resourcerequirements
+	// Example: "1" indicates 1 vCPU
+	AvailableCpu string `json:"availableCpu,omitempty"`
+
 	// AvailableMemory: The amount of memory available for a function.
 	// Defaults to 256M. Supported units are k, M, G, Mi, Gi. If no unit is
 	// supplied the value is interpreted as bytes. See
@@ -1997,6 +2004,10 @@ type ServiceConfig struct {
 	// more details.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 
+	// MaxInstanceRequestConcurrency: Sets the maximum number of concurrent
+	// requests that each instance can receive. Defaults to 1.
+	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
+
 	// MinInstanceCount: The limit on the minimum number of function
 	// instances that may coexist at a given time. Function instances are
 	// kept in idle state for a short period after they finished executing
@@ -2017,10 +2028,10 @@ type ServiceConfig struct {
 	// SecretVolumes: Secret volumes configuration.
 	SecretVolumes []*SecretVolume `json:"secretVolumes,omitempty"`
 
-	// SecurityLevel: Optional. Security level configure whether the
-	// function only accepts https. This configuration is only applicable to
-	// 1st Gen functions with Http trigger. By default https is optional for
-	// 1st Gen functions; 2nd Gen functions are https ONLY.
+	// SecurityLevel: Security level configure whether the function only
+	// accepts https. This configuration is only applicable to 1st Gen
+	// functions with Http trigger. By default https is optional for 1st Gen
+	// functions; 2nd Gen functions are https ONLY.
 	//
 	// Possible values:
 	//   "SECURITY_LEVEL_UNSPECIFIED" - Unspecified.

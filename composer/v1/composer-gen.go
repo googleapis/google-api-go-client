@@ -582,6 +582,11 @@ type EnvironmentConfig struct {
 	// Cloud Composer environment.
 	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
 
+	// RecoveryConfig: Optional. The Recovery settings configuration of an
+	// environment. This field is supported for Cloud Composer environments
+	// in versions composer-2.*.*-airflow-*.*.* and newer.
+	RecoveryConfig *RecoveryConfig `json:"recoveryConfig,omitempty"`
+
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
@@ -851,6 +856,54 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LoadSnapshotRequest: Request to load a snapshot into a Cloud Composer
+// environment.
+type LoadSnapshotRequest struct {
+	// SkipAirflowOverridesSetting: Whether or not to skip setting Airflow
+	// overrides when loading the environment's state.
+	SkipAirflowOverridesSetting bool `json:"skipAirflowOverridesSetting,omitempty"`
+
+	// SkipEnvironmentVariablesSetting: Whether or not to skip setting
+	// environment variables when loading the environment's state.
+	SkipEnvironmentVariablesSetting bool `json:"skipEnvironmentVariablesSetting,omitempty"`
+
+	// SkipGcsDataCopying: Whether or not to skip copying Cloud Storage data
+	// when loading the environment's state.
+	SkipGcsDataCopying bool `json:"skipGcsDataCopying,omitempty"`
+
+	// SkipPypiPackagesInstallation: Whether or not to skip installing Pypi
+	// packages when loading the environment's state.
+	SkipPypiPackagesInstallation bool `json:"skipPypiPackagesInstallation,omitempty"`
+
+	// SnapshotPath: A Cloud Storage path to a snapshot to load, e.g.:
+	// "gs://my-bucket/snapshots/project_location_environment_timestamp".
+	SnapshotPath string `json:"snapshotPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SkipAirflowOverridesSetting") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "SkipAirflowOverridesSetting") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoadSnapshotRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadSnapshotRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1360,6 +1413,68 @@ func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RecoveryConfig: The Recovery settings of an environment.
+type RecoveryConfig struct {
+	// ScheduledSnapshotsConfig: Optional. The configuration for scheduled
+	// snapshot creation mechanism.
+	ScheduledSnapshotsConfig *ScheduledSnapshotsConfig `json:"scheduledSnapshotsConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ScheduledSnapshotsConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ScheduledSnapshotsConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecoveryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RecoveryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SaveSnapshotRequest: Request to create a snapshot of a Cloud Composer
+// environment.
+type SaveSnapshotRequest struct {
+	// SnapshotLocation: Location in a Cloud Storage where the snapshot is
+	// going to be stored, e.g.: "gs://my-bucket/snapshots".
+	SnapshotLocation string `json:"snapshotLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SnapshotLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SnapshotLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SaveSnapshotRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SaveSnapshotRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SaveSnapshotResponse: Response to SaveSnapshotRequest.
 type SaveSnapshotResponse struct {
 	// SnapshotPath: The fully-resolved Cloud Storage path of the created
@@ -1387,6 +1502,48 @@ type SaveSnapshotResponse struct {
 
 func (s *SaveSnapshotResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SaveSnapshotResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScheduledSnapshotsConfig: The configuration for scheduled snapshot
+// creation mechanism.
+type ScheduledSnapshotsConfig struct {
+	// Enabled: Optional. Whether scheduled snapshots creation is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// SnapshotCreationSchedule: Optional. The cron expression representing
+	// the time when snapshots creation mechanism runs. This field is
+	// subject to additional validation around frequency of execution.
+	SnapshotCreationSchedule string `json:"snapshotCreationSchedule,omitempty"`
+
+	// SnapshotLocation: Optional. The Cloud Storage location for storing
+	// automatically created snapshots.
+	SnapshotLocation string `json:"snapshotLocation,omitempty"`
+
+	// TimeZone: Optional. Time zone that sets the context to interpret
+	// snapshot_creation_schedule.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduledSnapshotsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledSnapshotsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2431,6 +2588,153 @@ func (c *ProjectsLocationsEnvironmentsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+// method id "composer.projects.locations.environments.loadSnapshot":
+
+type ProjectsLocationsEnvironmentsLoadSnapshotCall struct {
+	s                   *Service
+	environment         string
+	loadsnapshotrequest *LoadSnapshotRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// LoadSnapshot: Loads a snapshot of a Cloud Composer environment. As a
+// result of this operation, a snapshot of environment's specified in
+// LoadSnapshotRequest is loaded into the environment.
+//
+//   - environment: The resource name of the target environment in the
+//     form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsService) LoadSnapshot(environment string, loadsnapshotrequest *LoadSnapshotRequest) *ProjectsLocationsEnvironmentsLoadSnapshotCall {
+	c := &ProjectsLocationsEnvironmentsLoadSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.environment = environment
+	c.loadsnapshotrequest = loadsnapshotrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsLoadSnapshotCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsLoadSnapshotCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.loadsnapshotrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+environment}:loadSnapshot")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"environment": c.environment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.loadSnapshot" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Loads a snapshot of a Cloud Composer environment. As a result of this operation, a snapshot of environment's specified in LoadSnapshotRequest is loaded into the environment.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}:loadSnapshot",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.loadSnapshot",
+	//   "parameterOrder": [
+	//     "environment"
+	//   ],
+	//   "parameters": {
+	//     "environment": {
+	//       "description": "The resource name of the target environment in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+environment}:loadSnapshot",
+	//   "request": {
+	//     "$ref": "LoadSnapshotRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "composer.projects.locations.environments.patch":
 
 type ProjectsLocationsEnvironmentsPatchCall struct {
@@ -2659,6 +2963,153 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Environment"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "composer.projects.locations.environments.saveSnapshot":
+
+type ProjectsLocationsEnvironmentsSaveSnapshotCall struct {
+	s                   *Service
+	environment         string
+	savesnapshotrequest *SaveSnapshotRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SaveSnapshot: Creates a snapshots of a Cloud Composer environment. As
+// a result of this operation, snapshot of environment's state is stored
+// in a location specified in the SaveSnapshotRequest.
+//
+//   - environment: The resource name of the source environment in the
+//     form:
+//     "projects/{projectId}/locations/{locationId}/environments/{environme
+//     ntId}".
+func (r *ProjectsLocationsEnvironmentsService) SaveSnapshot(environment string, savesnapshotrequest *SaveSnapshotRequest) *ProjectsLocationsEnvironmentsSaveSnapshotCall {
+	c := &ProjectsLocationsEnvironmentsSaveSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.environment = environment
+	c.savesnapshotrequest = savesnapshotrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsSaveSnapshotCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsSaveSnapshotCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savesnapshotrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+environment}:saveSnapshot")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"environment": c.environment,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.saveSnapshot" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a snapshots of a Cloud Composer environment. As a result of this operation, snapshot of environment's state is stored in a location specified in the SaveSnapshotRequest.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}:saveSnapshot",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.saveSnapshot",
+	//   "parameterOrder": [
+	//     "environment"
+	//   ],
+	//   "parameters": {
+	//     "environment": {
+	//       "description": "The resource name of the source environment in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+environment}:saveSnapshot",
+	//   "request": {
+	//     "$ref": "SaveSnapshotRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

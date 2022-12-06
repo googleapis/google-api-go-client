@@ -1179,6 +1179,73 @@
             }
           }
         },
+        "bigQueryLinks": {
+          "methods": {
+            "get": {
+              "description": "Lookup for a single BigQuery Link.",
+              "flatPath": "v1alpha/properties/{propertiesId}/bigQueryLinks/{bigQueryLinksId}",
+              "httpMethod": "GET",
+              "id": "analyticsadmin.properties.bigQueryLinks.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the BigQuery link to lookup. Format: properties/{property_id}/bigQueryLinks/{bigquery_link_id} Example: properties/123/bigQueryLinks/456",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+/bigQueryLinks/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+name}",
+              "response": {
+                "$ref": "GoogleAnalyticsAdminV1alphaBigQueryLink"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
+                "https://www.googleapis.com/auth/analytics.readonly"
+              ]
+            },
+            "list": {
+              "description": "Lists BigQuery Links on a property.",
+              "flatPath": "v1alpha/properties/{propertiesId}/bigQueryLinks",
+              "httpMethod": "GET",
+              "id": "analyticsadmin.properties.bigQueryLinks.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListBigQueryLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBigQueryLinks` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The name of the property to list BigQuery links under. Format: properties/{property_id} Example: properties/1234",
+                  "location": "path",
+                  "pattern": "^properties/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha/{+parent}/bigQueryLinks",
+              "response": {
+                "$ref": "GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
+                "https://www.googleapis.com/auth/analytics.readonly"
+              ]
+            }
+          }
+        },
         "conversionEvents": {
           "methods": {
             "create": {
@@ -2956,7 +3023,7 @@
       }
     }
   },
-  "revision": "20221201",
+  "revision": "20221205",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccessBetweenFilter": {
@@ -5078,6 +5145,24 @@
           "description": "List of Audiences.",
           "items": {
             "$ref": "GoogleAnalyticsAdminV1alphaAudience"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse": {
+      "description": "Response message for ListBigQueryLinks RPC",
+      "id": "GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse",
+      "properties": {
+        "bigqueryLinks": {
+          "description": "List of BigQueryLinks.",
+          "items": {
+            "$ref": "GoogleAnalyticsAdminV1alphaBigQueryLink"
           },
           "type": "array"
         },

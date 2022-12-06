@@ -338,9 +338,9 @@ type BackendMetastore struct {
 
 	// Name: The relative resource name of the metastore that is being
 	// federated. The formats of the relative resource names for the
-	// currently supported metastores are listed below: Dataplex:
-	// projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery:
-	// projects/{project_id} Dataproc Metastore:
+	// currently supported metastores are listed below: Dataplex
+	// projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery
+	// projects/{project_id} Dataproc Metastore
 	// projects/{project_id}/locations/{location}/services/{service_id}
 	Name string `json:"name,omitempty"`
 
@@ -2111,6 +2111,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // TelemetryConfig: Telemetry Configuration for the Dataproc Metastore
 // service.
 type TelemetryConfig struct {
+	// LogFormat: The output format of the Dataproc Metastore service's
+	// logs.
+	//
 	// Possible values:
 	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
 	//   "LEGACY" - Logging output uses the legacy textPayload format.

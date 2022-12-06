@@ -902,7 +902,8 @@ type CopyBackupEncryptionConfig struct {
 	// the backup will be using the same Cloud KMS key as the source backup.
 	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
 	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
-	// specified, `kms_key_name` must contain a valid Cloud KMS key.
+	// specified, either `kms_key_name` or `kms_key_names` must contain
+	// valid Cloud KMS key(s).
 	EncryptionType string `json:"encryptionType,omitempty"`
 
 	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect
@@ -1142,6 +1143,19 @@ type CreateDatabaseRequest struct {
 	// database: if there is an error in any statement, the database is not
 	// created.
 	ExtraStatements []string `json:"extraStatements,omitempty"`
+
+	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER
+	// PROTO BUNDLE statements in 'extra_statements' above. Contains a
+	// protobuf-serialized google.protobuf.FileDescriptorSet
+	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
+	// To generate it, install (https://grpc.io/docs/protoc-installation/)
+	// and run `protoc` with --include_imports and --descriptor_set_out. For
+	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// more details, see protobuffer self description
+	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateStatement") to
 	// unconditionally include in API requests. By default, fields with
@@ -2059,6 +2073,13 @@ func (s *FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
 
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
 type GetDatabaseDdlResponse struct {
+	// ProtoDescriptors: Proto descriptors stored in the database. Contains
+	// a protobuf-serialized google.protobuf.FileDescriptorSet
+	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
+	// For more details, see protobuffer self description
+	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
+
 	// Statements: A list of formatted DDL statements defining the schema of
 	// the database specified in the request.
 	Statements []string `json:"statements,omitempty"`
@@ -2067,7 +2088,7 @@ type GetDatabaseDdlResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Statements") to
+	// ForceSendFields is a list of field names (e.g. "ProtoDescriptors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2075,12 +2096,13 @@ type GetDatabaseDdlResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Statements") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ProtoDescriptors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5618,7 +5640,15 @@ type Type struct {
 	// duplicate keys, only the first key is preserved. - Members of a JSON
 	// object are not guaranteed to have their order preserved. - JSON array
 	// elements will have their order preserved.
+	//   "PROTO" - Encoded as a base64-encoded `string`, as described in RFC
+	// 4648, section 4.
+	//   "ENUM" - Encoded as `string`, in decimal format.
 	Code string `json:"code,omitempty"`
+
+	// ProtoTypeFqn: If code == PROTO or code == ENUM, then `proto_type_fqn`
+	// is the fully qualified name of the proto type representing the
+	// proto/enum definition.
+	ProtoTypeFqn string `json:"protoTypeFqn,omitempty"`
 
 	// StructType: If code == STRUCT, then `struct_type` provides type
 	// information for the struct's fields.
@@ -5751,6 +5781,19 @@ type UpdateDatabaseDdlRequest struct {
 	// with an underscore. If the named operation already exists,
 	// UpdateDatabaseDdl returns `ALREADY_EXISTS`.
 	OperationId string `json:"operationId,omitempty"`
+
+	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER
+	// PROTO BUNDLE statements. Contains a protobuf-serialized
+	// google.protobuf.FileDescriptorSet
+	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
+	// To generate it, install (https://grpc.io/docs/protoc-installation/)
+	// and run `protoc` with --include_imports and --descriptor_set_out. For
+	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// more details, see protobuffer self description
+	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
 
 	// Statements: Required. DDL statements to be applied to the database.
 	Statements []string `json:"statements,omitempty"`

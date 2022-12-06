@@ -191,6 +191,7 @@ type AccountsUserLinksService struct {
 func NewPropertiesService(s *Service) *PropertiesService {
 	rs := &PropertiesService{s: s}
 	rs.Audiences = NewPropertiesAudiencesService(s)
+	rs.BigQueryLinks = NewPropertiesBigQueryLinksService(s)
 	rs.ConversionEvents = NewPropertiesConversionEventsService(s)
 	rs.CustomDimensions = NewPropertiesCustomDimensionsService(s)
 	rs.CustomMetrics = NewPropertiesCustomMetricsService(s)
@@ -208,6 +209,8 @@ type PropertiesService struct {
 	s *Service
 
 	Audiences *PropertiesAudiencesService
+
+	BigQueryLinks *PropertiesBigQueryLinksService
 
 	ConversionEvents *PropertiesConversionEventsService
 
@@ -236,6 +239,15 @@ func NewPropertiesAudiencesService(s *Service) *PropertiesAudiencesService {
 }
 
 type PropertiesAudiencesService struct {
+	s *Service
+}
+
+func NewPropertiesBigQueryLinksService(s *Service) *PropertiesBigQueryLinksService {
+	rs := &PropertiesBigQueryLinksService{s: s}
+	return rs
+}
+
+type PropertiesBigQueryLinksService struct {
 	s *Service
 }
 
@@ -2415,6 +2427,10 @@ type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// linked Google Cloud project.
 	StreamingExportEnabled bool `json:"streamingExportEnabled,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3997,6 +4013,44 @@ type GoogleAnalyticsAdminV1alphaListAudiencesResponse struct {
 
 func (s *GoogleAnalyticsAdminV1alphaListAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1alphaListAudiencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse: Response
+// message for ListBigQueryLinks RPC
+type GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse struct {
+	// BigqueryLinks: List of BigQueryLinks.
+	BigqueryLinks []*GoogleAnalyticsAdminV1alphaBigQueryLink `json:"bigqueryLinks,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryLinks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryLinks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10950,6 +11004,358 @@ func (c *PropertiesAudiencesPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ]
 	// }
 
+}
+
+// method id "analyticsadmin.properties.bigQueryLinks.get":
+
+type PropertiesBigQueryLinksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Lookup for a single BigQuery Link.
+//
+//   - name: The name of the BigQuery link to lookup. Format:
+//     properties/{property_id}/bigQueryLinks/{bigquery_link_id} Example:
+//     properties/123/bigQueryLinks/456.
+func (r *PropertiesBigQueryLinksService) Get(name string) *PropertiesBigQueryLinksGetCall {
+	c := &PropertiesBigQueryLinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesBigQueryLinksGetCall) Fields(s ...googleapi.Field) *PropertiesBigQueryLinksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesBigQueryLinksGetCall) IfNoneMatch(entityTag string) *PropertiesBigQueryLinksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesBigQueryLinksGetCall) Context(ctx context.Context) *PropertiesBigQueryLinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesBigQueryLinksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesBigQueryLinksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.bigQueryLinks.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaBigQueryLink or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAnalyticsAdminV1alphaBigQueryLink.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesBigQueryLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaBigQueryLink, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaBigQueryLink{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lookup for a single BigQuery Link.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/bigQueryLinks/{bigQueryLinksId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.bigQueryLinks.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the BigQuery link to lookup. Format: properties/{property_id}/bigQueryLinks/{bigquery_link_id} Example: properties/123/bigQueryLinks/456",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/bigQueryLinks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaBigQueryLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.bigQueryLinks.list":
+
+type PropertiesBigQueryLinksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists BigQuery Links on a property.
+//
+//   - parent: The name of the property to list BigQuery links under.
+//     Format: properties/{property_id} Example: properties/1234.
+func (r *PropertiesBigQueryLinksService) List(parent string) *PropertiesBigQueryLinksListCall {
+	c := &PropertiesBigQueryLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. The service may return fewer than this value,
+// even if there are additional pages. If unspecified, at most 50
+// resources will be returned. The maximum value is 200; (higher values
+// will be coerced to the maximum)
+func (c *PropertiesBigQueryLinksListCall) PageSize(pageSize int64) *PropertiesBigQueryLinksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListBigQueryLinks` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListBigQueryLinks` must match the call that provided the
+// page token.
+func (c *PropertiesBigQueryLinksListCall) PageToken(pageToken string) *PropertiesBigQueryLinksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesBigQueryLinksListCall) Fields(s ...googleapi.Field) *PropertiesBigQueryLinksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesBigQueryLinksListCall) IfNoneMatch(entityTag string) *PropertiesBigQueryLinksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesBigQueryLinksListCall) Context(ctx context.Context) *PropertiesBigQueryLinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesBigQueryLinksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesBigQueryLinksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/bigQueryLinks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.bigQueryLinks.list" call.
+// Exactly one of *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesBigQueryLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists BigQuery Links on a property.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}/bigQueryLinks",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.bigQueryLinks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListBigQueryLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBigQueryLinks` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the property to list BigQuery links under. Format: properties/{property_id} Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/bigQueryLinks",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesBigQueryLinksListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "analyticsadmin.properties.conversionEvents.create":

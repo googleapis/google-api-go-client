@@ -1109,7 +1109,7 @@ type Node struct {
 	//   "REIMAGING" - TPU node is undergoing reimaging.
 	//   "DELETING" - TPU node is being deleted.
 	//   "REPAIRING" - TPU node is being repaired and may be unusable.
-	// Details can be found in the `help_description` field.
+	// Details can be found in the 'help_description' field.
 	//   "STOPPED" - TPU node is stopped.
 	//   "STOPPING" - TPU node is currently stopping.
 	//   "STARTING" - TPU node is currently starting.
@@ -1387,7 +1387,7 @@ type QueuedResourceState struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - State of the QueuedResource request is not
 	// known/set.
-	//   "CREATING" - The QueuedResource request has been received. We’re
+	//   "CREATING" - The QueuedResource request has been received. We're
 	// still working on determining if we will be able to honor this
 	// request.
 	//   "ACCEPTED" - The QueuedResource request has passed initial
@@ -1398,7 +1398,7 @@ type QueuedResourceState struct {
 	//   "FAILED" - The request could not be completed. This may be due to
 	// some late-discovered problem with the request itself, or due to
 	// unavailability of resources within the constraints of the request
-	// (e.g., the ‘valid until’ start timing constraint expired).
+	// (e.g., the 'valid until' start timing constraint expired).
 	//   "DELETING" - The QueuedResource is being deleted.
 	//   "ACTIVE" - The resources specified in the QueuedResource request
 	// have been provisioned and are ready for use by the end-user/consumer.

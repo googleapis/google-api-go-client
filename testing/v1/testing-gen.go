@@ -2802,8 +2802,15 @@ type TestMatrix struct {
 	// unsupported
 	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
 	// executions.
-	//   "DEVICE_QUOTA_EXCEEDED" - Not enough device quota to run the
-	// executions in this matrix.
+	//   "DEVICE_QUOTA_EXCEEDED" - Deprecated: Not enough device quota to
+	// run the executions in this matrix.
+	//   "TEST_QUOTA_EXCEEDED" - Not enough test quota to run the executions
+	// in this matrix.
+	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not
+	// activated. See:
+	// https://firebase.google.com/docs/test-lab/android/continuous#requirements
+	//   "UNKNOWN_PERMISSION_ERROR" - There was an unknown permission issue
+	// running this test.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// OutcomeSummary: Output Only. The overall outcome of the test. Only

@@ -1,5 +1,32 @@
 # Changes
 
+## [0.104.0](https://github.com/googleapis/google-api-go-client/compare/v0.103.0...v0.104.0) (2022-12-07)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1746](https://github.com/googleapis/google-api-go-client/issues/1746)) ([292129c](https://github.com/googleapis/google-api-go-client/commit/292129c681cb5e8f7dc66e499e477be5aec4a26e))
+* **all:** Auto-regenerate discovery clients ([#1751](https://github.com/googleapis/google-api-go-client/issues/1751)) ([a657f19](https://github.com/googleapis/google-api-go-client/commit/a657f191681814da2c048118f02e5a85e9c9436b))
+* **all:** Auto-regenerate discovery clients ([#1752](https://github.com/googleapis/google-api-go-client/issues/1752)) ([dd565a4](https://github.com/googleapis/google-api-go-client/commit/dd565a4a1b3867b4a1fe86ff9d8a633a6f3ba032))
+* **all:** Auto-regenerate discovery clients ([#1753](https://github.com/googleapis/google-api-go-client/issues/1753)) ([e18b504](https://github.com/googleapis/google-api-go-client/commit/e18b5044ca349e4d5b4a3b1cd807fed7e1e0fd39))
+* **all:** Auto-regenerate discovery clients ([#1755](https://github.com/googleapis/google-api-go-client/issues/1755)) ([caf7af0](https://github.com/googleapis/google-api-go-client/commit/caf7af030c55a39723c92c3d9ee66b7c6c1e5a04))
+* **all:** Auto-regenerate discovery clients ([#1760](https://github.com/googleapis/google-api-go-client/issues/1760)) ([97a9846](https://github.com/googleapis/google-api-go-client/commit/97a98461099acaeccf04f64531ef7f06696e64fd))
+* **all:** Auto-regenerate discovery clients ([#1766](https://github.com/googleapis/google-api-go-client/issues/1766)) ([3195ce1](https://github.com/googleapis/google-api-go-client/commit/3195ce1ad12642c558d76353328a0ad05173e608))
+* **all:** Auto-regenerate discovery clients ([#1767](https://github.com/googleapis/google-api-go-client/issues/1767)) ([2b596d9](https://github.com/googleapis/google-api-go-client/commit/2b596d9f5bf651ba950d60378880ef98bf9f439f))
+* **all:** Auto-regenerate discovery clients ([#1771](https://github.com/googleapis/google-api-go-client/issues/1771)) ([f819644](https://github.com/googleapis/google-api-go-client/commit/f8196440cbf05306c6f25dfe490e1a9069d44952))
+* **transport:** De-experiment google-c2p resolver ([#1757](https://github.com/googleapis/google-api-go-client/issues/1757)) ([8d8f0a7](https://github.com/googleapis/google-api-go-client/commit/8d8f0a70d0bd6ba4daaa08370d1420f759ff7f9d))
+
+
+### Bug Fixes
+
+* **idtoken:** Increase MaxIdleConnsPerHost to 100 in NewClient ([#1754](https://github.com/googleapis/google-api-go-client/issues/1754)) ([629e217](https://github.com/googleapis/google-api-go-client/commit/629e217f768c719d047c87c7389fbf757a45d0b9)), refs [#1744](https://github.com/googleapis/google-api-go-client/issues/1744)
+* **transport/grpc:** Separate resolution of creds and certs ([#1759](https://github.com/googleapis/google-api-go-client/issues/1759)) ([c213153](https://github.com/googleapis/google-api-go-client/commit/c213153d17a87e76a4f721076ddaed3ac8cb26c7))
+
+
+### Documentation
+
+* Document limitation of WithUserAgent ([#1747](https://github.com/googleapis/google-api-go-client/issues/1747)) ([567070f](https://github.com/googleapis/google-api-go-client/commit/567070f3835f9f4039ed121de7319f9cf5a5af6b))
+
 ## [0.103.0](https://github.com/googleapis/google-api-go-client/compare/v0.102.0...v0.103.0) (2022-11-08)
 
 

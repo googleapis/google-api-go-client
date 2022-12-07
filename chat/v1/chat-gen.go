@@ -94,7 +94,7 @@ const (
 	// Compose and send messages in Google Chat
 	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
 
-	// view messages and reactions in Google Chat
+	// View messages and reactions in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
 )
 
@@ -590,8 +590,6 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AttachmentDataRef: Developer Preview
-// (https://developers.google.com/workspace/preview).
 type AttachmentDataRef struct {
 	// ResourceName: The resource name of the attachment data. This is used
 	// with the media API to download the attachment data.

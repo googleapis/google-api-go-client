@@ -1374,7 +1374,7 @@ type BuildOptions struct {
 	// operating system and build utilities. Also note that this is the
 	// minimum disk size that will be allocated for the build -- the build
 	// may run with a larger disk than requested. At present, the maximum
-	// disk size is 1000GB; builds that request more than the maximum are
+	// disk size is 2000GB; builds that request more than the maximum are
 	// rejected with an error.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
@@ -2447,7 +2447,8 @@ type GitHubEnterpriseConfig struct {
 
 	// Name: Optional. The full resource name for the GitHubEnterpriseConfig
 	// For example:
-	// "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}"
+	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfi
+	// gs/{$config_id}"
 	Name string `json:"name,omitempty"`
 
 	// PeeredNetwork: Optional. The network to be used when reaching out to
@@ -2565,7 +2566,8 @@ type GitHubEventsConfig struct {
 	// EnterpriseConfigResourceName: Optional. The resource name of the
 	// github enterprise config that should be applied to this installation.
 	// For example:
-	// "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}"
+	// "projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfi
+	// gs/{$config_id}"
 	EnterpriseConfigResourceName string `json:"enterpriseConfigResourceName,omitempty"`
 
 	// InstallationId: The installationID that emits the GitHub event.
@@ -3494,6 +3496,17 @@ type NetworkConfig struct {
 	// options
 	// (https://cloud.google.com/build/docs/private-pools/set-up-private-pool-environment)
 	PeeredNetwork string `json:"peeredNetwork,omitempty"`
+
+	// PeeredNetworkIpRange: Immutable. Subnet IP range within the peered
+	// network. This is specified in CIDR notation. The IP and prefix size
+	// are both optional. If unspecified, the default value for IP is blank
+	// (will use an automatic value from the peered network), and the prefix
+	// size will default to 24 bits. e.g. `192.168.0.0/30` would specify a
+	// subnet mask of 192.168.0.0 with a prefix size of 30 bits.
+	// `192.168.0.0` would specify a subnet mask of 192.168.0.0 with a
+	// prefix size of 24 bits (the default prefix size). `/16` would specify
+	// a prefix size of 16 bits, with an unspecified IP.
+	PeeredNetworkIpRange string `json:"peeredNetworkIpRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EgressOption") to
 	// unconditionally include in API requests. By default, fields with
@@ -7157,7 +7170,8 @@ type ProjectsGithubEnterpriseConfigsDeleteCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Delete(name string) *ProjectsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7277,7 +7291,7 @@ func (c *ProjectsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -7315,7 +7329,8 @@ type ProjectsGithubEnterpriseConfigsGetCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Get(name string) *ProjectsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7448,7 +7463,7 @@ func (c *ProjectsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -7646,7 +7661,8 @@ type ProjectsGithubEnterpriseConfigsPatchCall struct {
 //
 //   - name: Optional. The full resource name for the
 //     GitHubEnterpriseConfig For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7763,7 +7779,7 @@ func (c *ProjectsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -11542,7 +11558,8 @@ type ProjectsLocationsGithubEnterpriseConfigsDeleteCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Delete(name string) *ProjectsLocationsGithubEnterpriseConfigsDeleteCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11662,7 +11679,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsDeleteCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -11700,7 +11717,8 @@ type ProjectsLocationsGithubEnterpriseConfigsGetCall struct {
 //
 //   - name: This field should contain the name of the enterprise config
 //     resource. For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Get(name string) *ProjectsLocationsGithubEnterpriseConfigsGetCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11833,7 +11851,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsGetCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -12031,7 +12049,8 @@ type ProjectsLocationsGithubEnterpriseConfigsPatchCall struct {
 //
 //   - name: Optional. The full resource name for the
 //     GitHubEnterpriseConfig For example:
-//     "projects/{$project_id}/githubEnterpriseConfigs/{$config_id}".
+//     "projects/{$project_id}/locations/{$location_id}/githubEnterpriseCon
+//     figs/{$config_id}".
 func (r *ProjectsLocationsGithubEnterpriseConfigsService) Patch(name string, githubenterpriseconfig *GitHubEnterpriseConfig) *ProjectsLocationsGithubEnterpriseConfigsPatchCall {
 	c := &ProjectsLocationsGithubEnterpriseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12148,7 +12167,7 @@ func (c *ProjectsLocationsGithubEnterpriseConfigsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+	//       "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
 	//       "required": true,
@@ -13346,9 +13365,10 @@ type ProjectsLocationsTriggersRunCall struct {
 
 // Run: Runs a `BuildTrigger` at a particular source revision. To run a
 // regional or global trigger, use the POST request that includes the
-// location endpoint in the path. The POST request that does not include
-// the location endpoint in the path can only be used when running
-// global triggers.
+// location endpoint in the path (ex.
+// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run).
+// The POST request that does not include the location endpoint in the
+// path can only be used when running global triggers.
 //
 //   - name: The name of the `Trigger` to run. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -13450,7 +13470,7 @@ func (c *ProjectsLocationsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.locations.triggers.run",
@@ -15366,9 +15386,10 @@ type ProjectsTriggersRunCall struct {
 
 // Run: Runs a `BuildTrigger` at a particular source revision. To run a
 // regional or global trigger, use the POST request that includes the
-// location endpoint in the path. The POST request that does not include
-// the location endpoint in the path can only be used when running
-// global triggers.
+// location endpoint in the path (ex.
+// v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run).
+// The POST request that does not include the location endpoint in the
+// path can only be used when running global triggers.
 //
 // - projectId: ID of the project.
 // - triggerId: ID of the trigger.
@@ -15480,7 +15501,7 @@ func (c *ProjectsTriggersRunCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path. The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
+	//   "description": "Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.",
 	//   "flatPath": "v1/projects/{projectId}/triggers/{triggerId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.triggers.run",

@@ -605,6 +605,15 @@ type Instance struct {
 	// creation. This field won't be populated in Get/List responses.
 	Volumes []*Volume `json:"volumes,omitempty"`
 
+	// WorkloadProfile: The workload profile for the instance.
+	//
+	// Possible values:
+	//   "WORKLOAD_PROFILE_UNSPECIFIED" - The workload profile is in an
+	// unknown state.
+	//   "WORKLOAD_PROFILE_GENERIC" - The workload profile is generic.
+	//   "WORKLOAD_PROFILE_HANA" - The workload profile is hana.
+	WorkloadProfile string `json:"workloadProfile,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2671,6 +2680,15 @@ type Volume struct {
 	//   "SSD" - The storage type for this volume is SSD.
 	//   "HDD" - This storage type for this volume is HDD.
 	StorageType string `json:"storageType,omitempty"`
+
+	// WorkloadProfile: The workload profile for the volume.
+	//
+	// Possible values:
+	//   "WORKLOAD_PROFILE_UNSPECIFIED" - The workload profile is in an
+	// unknown state.
+	//   "GENERIC" - The workload profile is generic.
+	//   "HANA" - The workload profile is hana.
+	WorkloadProfile string `json:"workloadProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

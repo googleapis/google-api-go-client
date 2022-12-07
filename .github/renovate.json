@@ -12,7 +12,9 @@
   "commitMessageAction": "update",
   "groupName": "all",
   "ignoreDeps": [
-    "golang.org/x/net"
+    "golang.org/x/net",
+    "golang.org/x/sys",
+    "golang.org/x/oauth2"
   ],
   "force": {
     "constraints": {

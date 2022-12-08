@@ -2342,7 +2342,7 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta1DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Placeholder. Styles for the Document.text.
+	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta1DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -2491,12 +2491,12 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective `structured_value` fields may
 	// also be populated. Also not all the types of `structured_value` will
-	// be normalized. For example, some processors may not generate float or
-	// int normalized text by default. Below are sample formats mapped to
-	// structured values. - Money/Currency type (`money_value`) is in the
-	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
-	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
-	// text format.
+	// be normalized. For example, some processors may not generate `float`
+	// or `integer` normalized text by default. Below are sample formats
+	// mapped to structured values. - Money/Currency type (`money_value`) is
+	// in the ISO 4217 text format. - Date type (`date_value`) is in the ISO
+	// 8601 text format. - Datetime type (`datetime_value`) is in the ISO
+	// 8601 text format.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
@@ -2718,8 +2718,8 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element. This field
-	// is skipped when its value is the default 0. See
+	// using `Document.pages` to locate the related page element. This field
+	// is skipped when its value is the default `0`. See
 	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
@@ -2962,7 +2962,8 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 
 	// ValueType: If the value is non-textual, this field represents the
 	// type. Current valid values are: - blank (this indicates the
-	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
+	// `field_value` is normal text) - `unfilled_checkbox` -
+	// `filled_checkbox`
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
@@ -4450,7 +4451,7 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta2DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Placeholder. Styles for the Document.text.
+	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta2DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -4599,12 +4600,12 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective `structured_value` fields may
 	// also be populated. Also not all the types of `structured_value` will
-	// be normalized. For example, some processors may not generate float or
-	// int normalized text by default. Below are sample formats mapped to
-	// structured values. - Money/Currency type (`money_value`) is in the
-	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
-	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
-	// text format.
+	// be normalized. For example, some processors may not generate `float`
+	// or `integer` normalized text by default. Below are sample formats
+	// mapped to structured values. - Money/Currency type (`money_value`) is
+	// in the ISO 4217 text format. - Date type (`date_value`) is in the ISO
+	// 8601 text format. - Datetime type (`datetime_value`) is in the ISO
+	// 8601 text format.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
@@ -4881,8 +4882,8 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element. This field
-	// is skipped when its value is the default 0. See
+	// using `Document.pages` to locate the related page element. This field
+	// is skipped when its value is the default `0`. See
 	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
@@ -5125,7 +5126,8 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 
 	// ValueType: If the value is non-textual, this field represents the
 	// type. Current valid values are: - blank (this indicates the
-	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
+	// `field_value` is normal text) - `unfilled_checkbox` -
+	// `filled_checkbox`
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
@@ -6663,6 +6665,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	// OutputConfig: The overall output config for batch process.
 	OutputConfig *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig `json:"outputConfig,omitempty"`
 
+	// ProcessOptions: Inference-time options for the process API
+	ProcessOptions *GoogleCloudDocumentaiV1beta3ProcessOptions `json:"processOptions,omitempty"`
+
 	// SkipHumanReview: Whether Human Review feature should be skipped for
 	// this request. Default to false.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
@@ -7034,7 +7039,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// other.
 	TextChanges []*GoogleCloudDocumentaiV1beta3DocumentTextChange `json:"textChanges,omitempty"`
 
-	// TextStyles: Placeholder. Styles for the Document.text.
+	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta3DocumentStyle `json:"textStyles,omitempty"`
 
 	// Uri: Optional. Currently supports Google Cloud Storage URI of the
@@ -7183,12 +7188,12 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective `structured_value` fields may
 	// also be populated. Also not all the types of `structured_value` will
-	// be normalized. For example, some processors may not generate float or
-	// int normalized text by default. Below are sample formats mapped to
-	// structured values. - Money/Currency type (`money_value`) is in the
-	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
-	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
-	// text format.
+	// be normalized. For example, some processors may not generate `float`
+	// or `integer` normalized text by default. Below are sample formats
+	// mapped to structured values. - Money/Currency type (`money_value`) is
+	// in the ISO 4217 text format. - Date type (`date_value`) is in the ISO
+	// 8601 text format. - Datetime type (`datetime_value`) is in the ISO
+	// 8601 text format.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
@@ -7305,6 +7310,10 @@ type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig struct {
 	// GcsUri: The Cloud Storage uri (a directory) of the output.
 	GcsUri string `json:"gcsUri,omitempty"`
 
+	// ShardingConfig: Specifies the sharding config for the output
+	// document.
+	ShardingConfig *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig `json:"shardingConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FieldMask") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -7324,6 +7333,39 @@ type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig struct {
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardin
+// gConfig: The sharding config for the output document.
+type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig struct {
+	// PagesOverlap: The number of overlapping pages between consecutive
+	// shards.
+	PagesOverlap int64 `json:"pagesOverlap,omitempty"`
+
+	// PagesPerShard: The number of pages per shard.
+	PagesPerShard int64 `json:"pagesPerShard,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PagesOverlap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PagesOverlap") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7475,8 +7517,8 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element. This field
-	// is skipped when its value is the default 0. See
+	// using `Document.pages` to locate the related page element. This field
+	// is skipped when its value is the default `0`. See
 	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
@@ -7719,7 +7761,8 @@ type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
 
 	// ValueType: If the value is non-textual, this field represents the
 	// type. Current valid values are: - blank (this indicates the
-	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
+	// `field_value` is normal text) - `unfilled_checkbox` -
+	// `filled_checkbox`
 	ValueType string `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
@@ -8555,13 +8598,13 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 
 	// Name: Name of the type. It must be unique within the schema file and
 	// cannot be a 'Common Type'. Besides that we use the following naming
-	// conventions: - *use `snake_casing`* - name matching is
-	// case-insensitive - Maximum 64 characters. - Must start with a letter.
-	// - Allowed characters: ASCII letters `[a-z0-9_-]`. (For backward
-	// compatibility internal infrastructure and tooling can handle any
-	// ascii character) - The `/` is sometimes used to denote a property of
-	// a type. For example `line_item/amount`. This convention is
-	// deprecated, but will still be honored for backward compatibility.
+	// conventions: - *use `snake_casing`* - name matching is case-sensitive
+	// - Maximum 64 characters. - Must start with a letter. - Allowed
+	// characters: ASCII letters `[a-z0-9_-]`. (For backward compatibility
+	// internal infrastructure and tooling can handle any ascii character) -
+	// The `/` is sometimes used to denote a property of a type. For example
+	// `line_item/amount`. This convention is deprecated, but will still be
+	// honored for backward compatibility.
 	Name string `json:"name,omitempty"`
 
 	// Properties: Describing the nested structure, or composition of an
@@ -9779,6 +9822,67 @@ func (s *GoogleCloudDocumentaiV1beta3NormalizedVertex) UnmarshalJSON(data []byte
 	return nil
 }
 
+// GoogleCloudDocumentaiV1beta3OcrConfig: Config for Document OCR.
+type GoogleCloudDocumentaiV1beta3OcrConfig struct {
+	// EnableNativePdfParsing: Enables special handling for PDFs with
+	// existing text information. Results in better text extraction quality
+	// in such PDF inputs.
+	EnableNativePdfParsing bool `json:"enableNativePdfParsing,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableNativePdfParsing") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnableNativePdfParsing")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3OcrConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessOptions: Options for Process API
+type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
+	// OcrConfig: Only applicable to "Document OCR Processor". Returns error
+	// if set on other processor types.
+	OcrConfig *GoogleCloudDocumentaiV1beta3OcrConfig `json:"ocrConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OcrConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OcrConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ProcessOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3ProcessRequest: Request message for the
 // process document method.
 type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
@@ -9794,6 +9898,9 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
+
+	// ProcessOptions: Inference-time options for the process API
+	ProcessOptions *GoogleCloudDocumentaiV1beta3ProcessOptions `json:"processOptions,omitempty"`
 
 	// RawDocument: A raw document content (bytes).
 	RawDocument *GoogleCloudDocumentaiV1beta3RawDocument `json:"rawDocument,omitempty"`
@@ -10008,6 +10115,10 @@ type GoogleCloudDocumentaiV1beta3ProcessorType struct {
 	// Name: The resource name of the processor type. Format:
 	// `projects/{project}/processorTypes/{processor_type}`
 	Name string `json:"name,omitempty"`
+
+	// SampleDocumentUris: A set of Cloud Storage URIs of sample documents
+	// for this processor.
+	SampleDocumentUris []string `json:"sampleDocumentUris,omitempty"`
 
 	// Type: The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`,
 	// etc.

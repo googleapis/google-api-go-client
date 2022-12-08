@@ -249,6 +249,72 @@ func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo: Information
+// about account verification, used for identity verification.
+type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
+	// Endpoints: Endpoints that can be used for identity verification.
+	Endpoints []*GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo `json:"endpoints,omitempty"`
+
+	// LanguageCode: Language code preference for the verification message,
+	// set as a IETF BCP 47 language code.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// LatestVerificationResult: Output only. Result of the latest account
+	// verification challenge.
+	//
+	// Possible values:
+	//   "RESULT_UNSPECIFIED" - No information about the latest account
+	// verification.
+	//   "SUCCESS_USER_VERIFIED" - The user was successfully verified. This
+	// means the account verification challenge was successfully completed.
+	//   "ERROR_USER_NOT_VERIFIED" - The user failed the verification
+	// challenge.
+	//   "ERROR_SITE_ONBOARDING_INCOMPLETE" - The site is not properly
+	// onboarded to use the account verification feature.
+	//   "ERROR_RECIPIENT_NOT_ALLOWED" - The recipient is not allowed for
+	// account verification. This can occur during integration but should
+	// not occur in production.
+	//   "ERROR_RECIPIENT_ABUSE_LIMIT_EXHAUSTED" - The recipient has already
+	// been sent too many verification codes in a short amount of time.
+	//   "ERROR_CRITICAL_INTERNAL" - The verification flow could not be
+	// completed due to a critical internal error.
+	//   "ERROR_CUSTOMER_QUOTA_EXHAUSTED" - The client has exceeded their
+	// two factor request quota for this period of time.
+	//   "ERROR_VERIFICATION_BYPASSED" - The request cannot be processed at
+	// the time because of an incident. This bypass can be restricted to a
+	// problematic destination email domain, a customer, or could affect the
+	// entire service.
+	//   "ERROR_VERDICT_MISMATCH" - The request parameters do not match with
+	// the token provided and cannot be processed.
+	LatestVerificationResult string `json:"latestVerificationResult,omitempty"`
+
+	// Username: Username of the account that is being verified. Deprecated.
+	// Customers should now provide the hashed account ID field in Event.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoints") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific
 // to keys that can be used by Android apps.
 type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
@@ -401,6 +467,11 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// when a hashed_account_id is provided.
 	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
 
+	// AccountVerification: Account verification information for identity
+	// verification. The assessment event must include a token and site key
+	// to use this feature.
+	AccountVerification *GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo `json:"accountVerification,omitempty"`
+
 	// Event: The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 
@@ -490,6 +561,48 @@ type GoogleCloudRecaptchaenterpriseV1ChallengeMetrics struct {
 
 func (s *GoogleCloudRecaptchaenterpriseV1ChallengeMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ChallengeMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo: Information
+// about a verification endpoint that can be used for 2FA.
+type GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo struct {
+	// EmailAddress: Email address for which to trigger a verification
+	// request.
+	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// LastVerificationTime: Output only. Timestamp of the last successful
+	// verification for the endpoint, if any.
+	LastVerificationTime string `json:"lastVerificationTime,omitempty"`
+
+	// PhoneNumber: Phone number for which to trigger a verification
+	// request. Should be given in E.164 format.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// RequestToken: Output only. Token to provide to the client to trigger
+	// endpoint verification. It must be used within 15 minutes.
+	RequestToken string `json:"requestToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1EndpointVerificationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -805,6 +918,39 @@ func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) 
 // GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest: The migrate key
 // request message.
 type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
+	// SkipBillingCheck: Optional. Whether or not to do billing check. A
+	// reCAPTCHA Enterprise or migrated key behaves differently than a
+	// reCAPTCHA (non-Enterprise version) key when you reach a quota limit
+	// (see
+	// https://cloud.google.com/recaptcha-enterprise/quotas#quota_limit). To
+	// avoid any disruption of your usage, we check that a billing account
+	// is present. If your usage of reCAPTCHA is under the free quota, you
+	// can safely skip the billing check and proceed with the migration. See
+	// https://cloud.google.com/recaptcha-enterprise/docs/billing-information.
+	SkipBillingCheck bool `json:"skipBillingCheck,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkipBillingCheck") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkipBillingCheck") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification:

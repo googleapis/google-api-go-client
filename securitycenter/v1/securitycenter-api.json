@@ -246,7 +246,7 @@
         "bigQueryExports": {
           "methods": {
             "create": {
-              "description": "Creates a big query export.",
+              "description": "Creates a BigQuery export.",
               "flatPath": "v1/folders/{foldersId}/bigQueryExports",
               "httpMethod": "POST",
               "id": "securitycenter.folders.bigQueryExports.create",
@@ -260,7 +260,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
                   "location": "path",
                   "pattern": "^folders/[^/]+$",
                   "required": true,
@@ -279,7 +279,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an existing big query export.",
+              "description": "Deletes an existing BigQuery export.",
               "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "DELETE",
               "id": "securitycenter.folders.bigQueryExports.delete",
@@ -288,7 +288,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -304,7 +304,7 @@
               ]
             },
             "get": {
-              "description": "Gets a big query export.",
+              "description": "Gets a BigQuery export.",
               "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "GET",
               "id": "securitycenter.folders.bigQueryExports.get",
@@ -313,7 +313,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -601,7 +601,7 @@
               ],
               "parameters": {
                 "configId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
                   "location": "query",
                   "type": "string"
                 },
@@ -924,7 +924,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+                      "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -952,7 +952,6 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -1024,7 +1023,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+                          "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
                           "location": "path",
                           "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
                           "required": true,
@@ -1286,7 +1285,7 @@
         "bigQueryExports": {
           "methods": {
             "create": {
-              "description": "Creates a big query export.",
+              "description": "Creates a BigQuery export.",
               "flatPath": "v1/organizations/{organizationsId}/bigQueryExports",
               "httpMethod": "POST",
               "id": "securitycenter.organizations.bigQueryExports.create",
@@ -1300,7 +1299,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
@@ -1319,7 +1318,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an existing big query export.",
+              "description": "Deletes an existing BigQuery export.",
               "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "DELETE",
               "id": "securitycenter.organizations.bigQueryExports.delete",
@@ -1328,7 +1327,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -1344,7 +1343,7 @@
               ]
             },
             "get": {
-              "description": "Gets a big query export.",
+              "description": "Gets a BigQuery export.",
               "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "GET",
               "id": "securitycenter.organizations.bigQueryExports.get",
@@ -1353,7 +1352,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -1641,7 +1640,7 @@
               ],
               "parameters": {
                 "configId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2288,7 +2287,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+                      "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -2316,7 +2315,6 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -2388,7 +2386,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+                          "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
                           "location": "path",
                           "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
                           "required": true,
@@ -2561,7 +2559,7 @@
         "bigQueryExports": {
           "methods": {
             "create": {
-              "description": "Creates a big query export.",
+              "description": "Creates a BigQuery export.",
               "flatPath": "v1/projects/{projectsId}/bigQueryExports",
               "httpMethod": "POST",
               "id": "securitycenter.projects.bigQueryExports.create",
@@ -2575,7 +2573,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+                  "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -2594,7 +2592,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an existing big query export.",
+              "description": "Deletes an existing BigQuery export.",
               "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "DELETE",
               "id": "securitycenter.projects.bigQueryExports.delete",
@@ -2603,7 +2601,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -2619,7 +2617,7 @@
               ]
             },
             "get": {
-              "description": "Gets a big query export.",
+              "description": "Gets a BigQuery export.",
               "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
               "httpMethod": "GET",
               "id": "securitycenter.projects.bigQueryExports.get",
@@ -2628,7 +2626,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+                  "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
                   "location": "path",
                   "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
                   "required": true,
@@ -2916,7 +2914,7 @@
               ],
               "parameters": {
                 "configId": {
-                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+                  "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
                   "location": "query",
                   "type": "string"
                 },
@@ -3239,7 +3237,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+                      "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -3267,7 +3265,6 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
                       "location": "path",
                       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
                       "required": true,
@@ -3339,7 +3336,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+                          "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
                           "location": "path",
                           "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
                           "required": true,
@@ -3372,7 +3369,7 @@
       }
     }
   },
-  "revision": "20221121",
+  "revision": "20221205",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -4329,7 +4326,7 @@
         },
         "vulnerability": {
           "$ref": "Vulnerability",
-          "description": "Represents vulnerability specific fields like cve, cvss scores etc. CVE stands for Common Vulnerabilities and Exposures (https://cve.mitre.org/about/)"
+          "description": "Represents vulnerability-specific fields like CVE and CVS scores. CVE stands for Common Vulnerabilities and Exposures (https://cve.mitre.org/about/)"
         }
       },
       "type": "object"
@@ -4556,7 +4553,7 @@
           "type": "string"
         },
         "name": {
-          "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+          "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
           "type": "string"
         },
         "status": {
@@ -5199,27 +5196,27 @@
           "type": "string"
         },
         "unexpectedCodeModification": {
-          "description": "Flag indicating unexpected modifications of kernel code memory.",
+          "description": "True when unexpected modifications of kernel read-only data memory are present.",
           "type": "boolean"
         },
         "unexpectedFtraceHandler": {
-          "description": "Flag indicating presence of ftrace points with callbacks pointing to regions that are not in the expected kernel or module code range.",
+          "description": "True when `ftrace` points are present with callbacks pointing to regions that are not in the expected kernel or module code range.",
           "type": "boolean"
         },
         "unexpectedInterruptHandler": {
-          "description": "Flag indicating presence of interrupt handlers that are are not in the expected kernel, module code regions.",
+          "description": "True when interrupt handlers that are are not in the expected kernel or module code regions are present.",
           "type": "boolean"
         },
         "unexpectedKernelCodePages": {
-          "description": "Flag indicating presence of kernel code pages that are not in the expected kernel, module code regions.",
+          "description": "True when kernel code pages that are not in the expected kernel or module code regions are present.",
           "type": "boolean"
         },
         "unexpectedKprobeHandler": {
-          "description": "Flag indicating presence of kprobe points with callbacks pointing to regions that are not in the expected kernel or module code range.",
+          "description": "True when `kprobe` points are present with callbacks pointing to regions that are not in the expected kernel or module code range.",
           "type": "boolean"
         },
         "unexpectedProcessesInRunqueue": {
-          "description": "Flag indicating unexpected process(es) in the scheduler run-queue, those that are in the run-queue, but not in the process task-list.",
+          "description": "True when unexpected processes in the scheduler run queue are present. Such processes are in the run queue, but not in the process task list.",
           "type": "boolean"
         },
         "unexpectedReadOnlyDataModification": {
@@ -5227,7 +5224,7 @@
           "type": "boolean"
         },
         "unexpectedSystemCallHandler": {
-          "description": "Flag indicating presence of system call handlers that are are not in the expected kernel, module code regions.",
+          "description": "True when system call handlers that are are not in the expected kernel or module code regions are present.",
           "type": "boolean"
         }
       },
@@ -6227,7 +6224,7 @@
       "type": "object"
     },
     "SetFindingStateRequest": {
-      "description": "Request message for updating a finding's state.",
+      "description": "Request message for updating a finding's state. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
       "id": "SetFindingStateRequest",
       "properties": {
         "startTime": {

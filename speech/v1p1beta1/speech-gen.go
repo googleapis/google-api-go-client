@@ -208,6 +208,34 @@ type SpeechService struct {
 	s *Service
 }
 
+type ABNFGrammar struct {
+	// AbnfStrings: All declarations and rules of an ABNF grammar broken up
+	// into multiple strings that will end up concatenated.
+	AbnfStrings []string `json:"abnfStrings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbnfStrings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbnfStrings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ABNFGrammar) MarshalJSON() ([]byte, error) {
+	type NoMethod ABNFGrammar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ClassItem: An item of the class.
 type ClassItem struct {
 	// Value: The class item's value.
@@ -1373,6 +1401,11 @@ func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 
 // SpeechAdaptation: Speech adaptation configuration.
 type SpeechAdaptation struct {
+	// AbnfGrammar: Augmented Backus-Naur form (ABNF) is a standardized
+	// grammar notation comprised by a set of derivation rules. See
+	// specifications: https://www.w3.org/TR/speech-grammar
+	AbnfGrammar *ABNFGrammar `json:"abnfGrammar,omitempty"`
+
 	// CustomClasses: A collection of custom classes. To specify the classes
 	// inline, leave the class' `name` blank and fill in the rest of its
 	// fields, giving it a unique `custom_class_id`. Refer to the inline
@@ -1388,7 +1421,7 @@ type SpeechAdaptation struct {
 	// fields. Any phrase set can use any custom class.
 	PhraseSets []*PhraseSet `json:"phraseSets,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomClasses") to
+	// ForceSendFields is a list of field names (e.g. "AbnfGrammar") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1396,7 +1429,7 @@ type SpeechAdaptation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomClasses") to include
+	// NullFields is a list of field names (e.g. "AbnfGrammar") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

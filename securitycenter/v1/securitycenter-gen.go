@@ -1956,8 +1956,8 @@ type Finding struct {
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
-	// Vulnerability: Represents vulnerability specific fields like cve,
-	// cvss scores etc. CVE stands for Common Vulnerabilities and Exposures
+	// Vulnerability: Represents vulnerability-specific fields like CVE and
+	// CVS scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
@@ -2354,10 +2354,10 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// external system.
 	ExternalUid string `json:"externalUid,omitempty"`
 
-	// Name: External System Name e.g. jira, demisto, etc. e.g.:
-	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
-	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
+	// Name: Full resource name of the external system, for example:
+	// "organizations/1234/sources/5678/findings/123456/externalSystems/jira"
+	// , "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+	// "projects/1234/sources/5678/findings/123456/externalSystems/jira"
 	Name string `json:"name,omitempty"`
 
 	// Status: Most recent status of the corresponding finding's
@@ -3494,41 +3494,39 @@ type KernelRootkit struct {
 	// Name: Rootkit name when available.
 	Name string `json:"name,omitempty"`
 
-	// UnexpectedCodeModification: Flag indicating unexpected modifications
-	// of kernel code memory.
+	// UnexpectedCodeModification: True when unexpected modifications of
+	// kernel read-only data memory are present.
 	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
 
-	// UnexpectedFtraceHandler: Flag indicating presence of ftrace points
-	// with callbacks pointing to regions that are not in the expected
-	// kernel or module code range.
+	// UnexpectedFtraceHandler: True when `ftrace` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
 	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
 
-	// UnexpectedInterruptHandler: Flag indicating presence of interrupt
-	// handlers that are are not in the expected kernel, module code
-	// regions.
+	// UnexpectedInterruptHandler: True when interrupt handlers that are are
+	// not in the expected kernel or module code regions are present.
 	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
 
-	// UnexpectedKernelCodePages: Flag indicating presence of kernel code
-	// pages that are not in the expected kernel, module code regions.
+	// UnexpectedKernelCodePages: True when kernel code pages that are not
+	// in the expected kernel or module code regions are present.
 	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
 
-	// UnexpectedKprobeHandler: Flag indicating presence of kprobe points
-	// with callbacks pointing to regions that are not in the expected
-	// kernel or module code range.
+	// UnexpectedKprobeHandler: True when `kprobe` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
 	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
 
-	// UnexpectedProcessesInRunqueue: Flag indicating unexpected process(es)
-	// in the scheduler run-queue, those that are in the run-queue, but not
-	// in the process task-list.
+	// UnexpectedProcessesInRunqueue: True when unexpected processes in the
+	// scheduler run queue are present. Such processes are in the run queue,
+	// but not in the process task list.
 	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
 
 	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
 	// modifications of kernel read-only data memory.
 	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
 
-	// UnexpectedSystemCallHandler: Flag indicating presence of system call
-	// handlers that are are not in the expected kernel, module code
-	// regions.
+	// UnexpectedSystemCallHandler: True when system call handlers that are
+	// are not in the expected kernel or module code regions are present.
 	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4996,7 +4994,13 @@ func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // SetFindingStateRequest: Request message for updating a finding's
-// state.
+// state. The relative resource name
+// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+// of the finding. Example:
+// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+// _id}",
+// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 type SetFindingStateRequest struct {
 	// StartTime: Required. The time at which the updated state takes
 	// effect.
@@ -6099,9 +6103,9 @@ type FoldersBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
+//   - parent: Resource name of the new BigQuery export's parent. Its
 //     format is "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
@@ -6214,7 +6218,7 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.folders.bigQueryExports.create",
@@ -6228,7 +6232,7 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -6259,9 +6263,9 @@ type FoldersBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: Name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -6357,7 +6361,7 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.folders.bigQueryExports.delete",
@@ -6366,7 +6370,7 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -6395,9 +6399,9 @@ type FoldersBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -6508,7 +6512,7 @@ func (c *FoldersBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/folders/{foldersId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.folders.bigQueryExports.get",
@@ -6517,7 +6521,7 @@ func (c *FoldersBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -7877,7 +7881,7 @@ func (r *FoldersNotificationConfigsService) Create(parent string, notificationco
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contains alphanumeric characters,
+// between 1 and 128 characters, and contain alphanumeric characters,
 // underscores or hyphens only.
 func (c *FoldersNotificationConfigsCreateCall) ConfigId(configId string) *FoldersNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
@@ -7984,7 +7988,7 @@ func (c *FoldersNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9530,9 +9534,9 @@ type FoldersSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
 //     ng_id}",
 //     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
@@ -9644,7 +9648,7 @@ func (c *FoldersSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*F
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -9678,11 +9682,7 @@ type FoldersSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+// - name: .
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9790,7 +9790,6 @@ func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -10002,10 +10001,11 @@ type FoldersSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *FoldersSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *FoldersSourcesFindingsExternalSystemsPatchCall {
 	c := &FoldersSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10123,7 +10123,7 @@ func (c *FoldersSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -11288,9 +11288,9 @@ type OrganizationsBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
+//   - parent: Resource name of the new BigQuery export's parent. Its
 //     format is "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
@@ -11403,7 +11403,7 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.bigQueryExports.create",
@@ -11417,7 +11417,7 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -11448,9 +11448,9 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: Name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -11546,7 +11546,7 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.organizations.bigQueryExports.delete",
@@ -11555,7 +11555,7 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -11584,9 +11584,9 @@ type OrganizationsBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -11697,7 +11697,7 @@ func (c *OrganizationsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/organizations/{organizationsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.organizations.bigQueryExports.get",
@@ -11706,7 +11706,7 @@ func (c *OrganizationsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -13066,7 +13066,7 @@ func (r *OrganizationsNotificationConfigsService) Create(parent string, notifica
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contains alphanumeric characters,
+// between 1 and 128 characters, and contain alphanumeric characters,
 // underscores or hyphens only.
 func (c *OrganizationsNotificationConfigsCreateCall) ConfigId(configId string) *OrganizationsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
@@ -13173,7 +13173,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16398,9 +16398,9 @@ type OrganizationsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
 //     ng_id}",
 //     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
@@ -16512,7 +16512,7 @@ func (c *OrganizationsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -16546,11 +16546,7 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+// - name: .
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16658,7 +16654,6 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -16870,10 +16865,11 @@ type OrganizationsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *OrganizationsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *OrganizationsSourcesFindingsExternalSystemsPatchCall {
 	c := &OrganizationsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16991,7 +16987,7 @@ func (c *OrganizationsSourcesFindingsExternalSystemsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,
@@ -17704,9 +17700,9 @@ type ProjectsBigQueryExportsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a big query export.
+// Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new big query export's parent. Its
+//   - parent: Resource name of the new BigQuery export's parent. Its
 //     format is "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
@@ -17819,7 +17815,7 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a big query export.",
+	//   "description": "Creates a BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.projects.bigQueryExports.create",
@@ -17833,7 +17829,7 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new big query export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17864,9 +17860,9 @@ type ProjectsBigQueryExportsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an existing big query export.
+// Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the big query export to delete. Its format is
+//   - name: Name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -17962,7 +17958,7 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing big query export.",
+	//   "description": "Deletes an existing BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "securitycenter.projects.bigQueryExports.delete",
@@ -17971,7 +17967,7 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -18000,9 +17996,9 @@ type ProjectsBigQueryExportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a big query export.
+// Get: Gets a BigQuery export.
 //
-//   - name: Name of the big query export to retrieve. Its format is
+//   - name: Name of the BigQuery export to retrieve. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -18113,7 +18109,7 @@ func (c *ProjectsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a big query export.",
+	//   "description": "Gets a BigQuery export.",
 	//   "flatPath": "v1/projects/{projectsId}/bigQueryExports/{bigQueryExportsId}",
 	//   "httpMethod": "GET",
 	//   "id": "securitycenter.projects.bigQueryExports.get",
@@ -18122,7 +18118,7 @@ func (c *ProjectsBigQueryExportsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the big query export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. Name of the BigQuery export to retrieve. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -19482,7 +19478,7 @@ func (r *ProjectsNotificationConfigsService) Create(parent string, notificationc
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contains alphanumeric characters,
+// between 1 and 128 characters, and contain alphanumeric characters,
 // underscores or hyphens only.
 func (c *ProjectsNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
@@ -19589,7 +19585,7 @@ func (c *ProjectsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contains alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21135,9 +21131,9 @@ type ProjectsSourcesFindingsSetMuteCall struct {
 
 // SetMute: Updates the mute state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
 //     "organizations/{organization_id}/sources/{source_id}/findings/{findi
 //     ng_id}",
 //     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
@@ -21249,7 +21245,7 @@ func (c *ProjectsSourcesFindingsSetMuteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -21283,11 +21279,7 @@ type ProjectsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-//   - name: The relative resource name of the finding. See:
-//     https://cloud.google.com/apis/design/resource_names#relative_resource_name
-//     Example:
-//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
-//     ng_id}".
+// - name: .
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21395,7 +21387,6 @@ func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -21607,10 +21598,11 @@ type ProjectsSourcesFindingsExternalSystemsPatchCall struct {
 
 // Patch: Updates external system. This is for a given finding.
 //
-//   - name: External System Name e.g. jira, demisto, etc. e.g.:
-//     `organizations/1234/sources/5678/findings/123456/externalSystems/jir
-//     a` `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-//     `projects/1234/sources/5678/findings/123456/externalSystems/jira`.
+//   - name: Full resource name of the external system, for example:
+//     "organizations/1234/sources/5678/findings/123456/externalSystems/jir
+//     a",
+//     "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+//     "projects/1234/sources/5678/findings/123456/externalSystems/jira".
 func (r *ProjectsSourcesFindingsExternalSystemsService) Patch(name string, googlecloudsecuritycenterv1externalsystem *GoogleCloudSecuritycenterV1ExternalSystem) *ProjectsSourcesFindingsExternalSystemsPatchCall {
 	c := &ProjectsSourcesFindingsExternalSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21728,7 +21720,7 @@ func (c *ProjectsSourcesFindingsExternalSystemsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "External System Name e.g. jira, demisto, etc. e.g.: `organizations/1234/sources/5678/findings/123456/externalSystems/jira` `folders/1234/sources/5678/findings/123456/externalSystems/jira` `projects/1234/sources/5678/findings/123456/externalSystems/jira`",
+	//       "description": "Full resource name of the external system, for example: \"organizations/1234/sources/5678/findings/123456/externalSystems/jira\", \"folders/1234/sources/5678/findings/123456/externalSystems/jira\", \"projects/1234/sources/5678/findings/123456/externalSystems/jira\"",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/externalSystems/[^/]+$",
 	//       "required": true,

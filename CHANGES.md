@@ -1,5 +1,15 @@
 # Changes
 
+## [0.105.0](https://github.com/googleapis/google-api-go-client/compare/v0.104.0...v0.105.0) (2022-12-14)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1773](https://github.com/googleapis/google-api-go-client/issues/1773)) ([37a2e41](https://github.com/googleapis/google-api-go-client/commit/37a2e41e92933254a8432f3b74ad1a16eae2c5ac))
+* **all:** Auto-regenerate discovery clients ([#1777](https://github.com/googleapis/google-api-go-client/issues/1777)) ([5b02761](https://github.com/googleapis/google-api-go-client/commit/5b02761e99fbb41602d107af92a8dec393250321))
+* **googleapi:** Add response headers to Error reported by CheckMediaResponse ([#1781](https://github.com/googleapis/google-api-go-client/issues/1781)) ([e4271df](https://github.com/googleapis/google-api-go-client/commit/e4271dfa222fea0fcf61fc5133c66e2e8d8f08b1))
+* Support set null map entries for non-simple map values ([#1782](https://github.com/googleapis/google-api-go-client/issues/1782)) ([c58bf4c](https://github.com/googleapis/google-api-go-client/commit/c58bf4cfef76fcd9a377452b5c3cb84d5f20ce98))
+
 ## [0.104.0](https://github.com/googleapis/google-api-go-client/compare/v0.103.0...v0.104.0) (2022-12-07)
 
 

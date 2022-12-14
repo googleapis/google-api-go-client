@@ -260,6 +260,11 @@ type GoogleCloudContactcenterinsightsV1Analysis struct {
 	// populated when the analysis finishes.
 	AnalysisResult *GoogleCloudContactcenterinsightsV1AnalysisResult `json:"analysisResult,omitempty"`
 
+	// AnnotatorSelector: To select the annotators to run and the phrase
+	// matchers to use (if any). If not specified, all annotators will be
+	// run.
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1AnnotatorSelector `json:"annotatorSelector,omitempty"`
+
 	// CreateTime: Output only. The time at which the analysis was created,
 	// which occurs when the long-running operation completes.
 	CreateTime string `json:"createTime,omitempty"`
@@ -412,6 +417,71 @@ type GoogleCloudContactcenterinsightsV1AnnotationBoundary struct {
 
 func (s *GoogleCloudContactcenterinsightsV1AnnotationBoundary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AnnotationBoundary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AnnotatorSelector: Selector of all
+// available annotators and phrase matchers to run.
+type GoogleCloudContactcenterinsightsV1AnnotatorSelector struct {
+	// IssueModels: The issue model to run. If not provided, the most
+	// recently deployed topic model will be used. The provided issue model
+	// will only be used for inference if the issue model is deployed and if
+	// run_issue_model_annotator is set to true. If more than one issue
+	// model is provided, only the first provided issue model will be used
+	// for inference.
+	IssueModels []string `json:"issueModels,omitempty"`
+
+	// PhraseMatchers: The list of phrase matchers to run. If not provided,
+	// all active phrase matchers will be used. If inactive phrase matchers
+	// are provided, they will not be used. Phrase matchers will be run only
+	// if run_phrase_matcher_annotator is set to true. Format:
+	// projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher
+	// }
+	PhraseMatchers []string `json:"phraseMatchers,omitempty"`
+
+	// RunEntityAnnotator: Whether to run the entity annotator.
+	RunEntityAnnotator bool `json:"runEntityAnnotator,omitempty"`
+
+	// RunIntentAnnotator: Whether to run the intent annotator.
+	RunIntentAnnotator bool `json:"runIntentAnnotator,omitempty"`
+
+	// RunInterruptionAnnotator: Whether to run the interruption annotator.
+	RunInterruptionAnnotator bool `json:"runInterruptionAnnotator,omitempty"`
+
+	// RunIssueModelAnnotator: Whether to run the issue model annotator. A
+	// model should have already been deployed for this to take effect.
+	RunIssueModelAnnotator bool `json:"runIssueModelAnnotator,omitempty"`
+
+	// RunPhraseMatcherAnnotator: Whether to run the active phrase matcher
+	// annotator(s).
+	RunPhraseMatcherAnnotator bool `json:"runPhraseMatcherAnnotator,omitempty"`
+
+	// RunSentimentAnnotator: Whether to run the sentiment annotator.
+	RunSentimentAnnotator bool `json:"runSentimentAnnotator,omitempty"`
+
+	// RunSilenceAnnotator: Whether to run the silence annotator.
+	RunSilenceAnnotator bool `json:"runSilenceAnnotator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueModels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueModels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1AnnotatorSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AnnotatorSelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -581,6 +651,11 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	// AnalysisPercentage: Required. Percentage of selected conversation to
 	// analyze, between [0, 100].
 	AnalysisPercentage float64 `json:"analysisPercentage,omitempty"`
+
+	// AnnotatorSelector: To select the annotators to run and the phrase
+	// matchers to use (if any). If not specified, all annotators will be
+	// run.
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1AnnotatorSelector `json:"annotatorSelector,omitempty"`
 
 	// Filter: Required. Filter used to select the subset of conversations
 	// to analyze.
@@ -1361,6 +1436,10 @@ func (s *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegme
 // GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata:
 // Metadata for a create analysis operation.
 type GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata struct {
+	// AnnotatorSelector: Output only. The annotator selector used for the
+	// analysis (if any).
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1AnnotatorSelector `json:"annotatorSelector,omitempty"`
+
 	// Conversation: Output only. The Conversation that this Analysis
 	// Operation belongs to.
 	Conversation string `json:"conversation,omitempty"`
@@ -1371,20 +1450,21 @@ type GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata struct {
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Conversation") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AnnotatorSelector")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Conversation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatorSelector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2515,6 +2595,9 @@ type GoogleCloudContactcenterinsightsV1IssueModel struct {
 	// issue model.
 	InputDataConfig *GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig `json:"inputDataConfig,omitempty"`
 
+	// IssueCount: Output only. Number of issues in this issue model.
+	IssueCount int64 `json:"issueCount,omitempty,string"`
+
 	// Name: Immutable. The resource name of the issue model. Format:
 	// projects/{project}/locations/{location}/issueModels/{issue_model}
 	Name string `json:"name,omitempty"`
@@ -3360,27 +3443,31 @@ func (s *GoogleCloudContactcenterinsightsV1Settings) MarshalJSON() ([]byte, erro
 // GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig: Default
 // configuration when creating Analyses in Insights.
 type GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig struct {
+	// AnnotatorSelector: To select the annotators to run and the phrase
+	// matchers to use (if any). If not specified, all annotators will be
+	// run.
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1AnnotatorSelector `json:"annotatorSelector,omitempty"`
+
 	// RuntimeIntegrationAnalysisPercentage: Percentage of conversations
 	// created using Dialogflow runtime integration to analyze
 	// automatically, between [0, 100].
 	RuntimeIntegrationAnalysisPercentage float64 `json:"runtimeIntegrationAnalysisPercentage,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "RuntimeIntegrationAnalysisPercentage") to unconditionally include in
-	// API requests. By default, fields with empty or default values are
-	// omitted from API requests. However, any non-pointer, non-interface
-	// field appearing in ForceSendFields will be sent to the server
-	// regardless of whether the field is empty or not. This may be used to
-	// include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnnotatorSelector")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "RuntimeIntegrationAnalysisPercentage") to include in API requests
-	// with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. However, any field with an empty value
-	// appearing in NullFields will be sent to the server as null. It is an
-	// error if a field in this list has a non-empty value. This may be used
-	// to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatorSelector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3638,6 +3725,71 @@ func (s *GoogleCloudContactcenterinsightsV1View) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector: Selector
+// of all available annotators and phrase matchers to run.
+type GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector struct {
+	// IssueModels: The issue model to run. If not provided, the most
+	// recently deployed topic model will be used. The provided issue model
+	// will only be used for inference if the issue model is deployed and if
+	// run_issue_model_annotator is set to true. If more than one issue
+	// model is provided, only the first provided issue model will be used
+	// for inference.
+	IssueModels []string `json:"issueModels,omitempty"`
+
+	// PhraseMatchers: The list of phrase matchers to run. If not provided,
+	// all active phrase matchers will be used. If inactive phrase matchers
+	// are provided, they will not be used. Phrase matchers will be run only
+	// if run_phrase_matcher_annotator is set to true. Format:
+	// projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher
+	// }
+	PhraseMatchers []string `json:"phraseMatchers,omitempty"`
+
+	// RunEntityAnnotator: Whether to run the entity annotator.
+	RunEntityAnnotator bool `json:"runEntityAnnotator,omitempty"`
+
+	// RunIntentAnnotator: Whether to run the intent annotator.
+	RunIntentAnnotator bool `json:"runIntentAnnotator,omitempty"`
+
+	// RunInterruptionAnnotator: Whether to run the interruption annotator.
+	RunInterruptionAnnotator bool `json:"runInterruptionAnnotator,omitempty"`
+
+	// RunIssueModelAnnotator: Whether to run the issue model annotator. A
+	// model should have already been deployed for this to take effect.
+	RunIssueModelAnnotator bool `json:"runIssueModelAnnotator,omitempty"`
+
+	// RunPhraseMatcherAnnotator: Whether to run the active phrase matcher
+	// annotator(s).
+	RunPhraseMatcherAnnotator bool `json:"runPhraseMatcherAnnotator,omitempty"`
+
+	// RunSentimentAnnotator: Whether to run the sentiment annotator.
+	RunSentimentAnnotator bool `json:"runSentimentAnnotator,omitempty"`
+
+	// RunSilenceAnnotator: Whether to run the silence annotator.
+	RunSilenceAnnotator bool `json:"runSilenceAnnotator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueModels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IssueModels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetada
 // ta: The metadata for a bulk analyze conversations operation.
 type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata struct {
@@ -3694,6 +3846,11 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	// AnalysisPercentage: Required. Percentage of selected conversation to
 	// analyze, between [0, 100].
 	AnalysisPercentage float64 `json:"analysisPercentage,omitempty"`
+
+	// AnnotatorSelector: To select the annotators to run and the phrase
+	// matchers to use (if any). If not specified, all annotators will be
+	// run.
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector `json:"annotatorSelector,omitempty"`
 
 	// Filter: Required. Filter used to select the subset of conversations
 	// to analyze.
@@ -3776,6 +3933,10 @@ func (s *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRespons
 // GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadat
 // a: Metadata for a create analysis operation.
 type GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata struct {
+	// AnnotatorSelector: Output only. The annotator selector used for the
+	// analysis (if any).
+	AnnotatorSelector *GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector `json:"annotatorSelector,omitempty"`
+
 	// Conversation: Output only. The Conversation that this Analysis
 	// Operation belongs to.
 	Conversation string `json:"conversation,omitempty"`
@@ -3786,20 +3947,21 @@ type GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata str
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Conversation") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AnnotatorSelector")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Conversation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnnotatorSelector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4342,6 +4504,9 @@ type GoogleCloudContactcenterinsightsV1alpha1IssueModel struct {
 	// InputDataConfig: Configs for the input data that used to create the
 	// issue model.
 	InputDataConfig *GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig `json:"inputDataConfig,omitempty"`
+
+	// IssueCount: Output only. Number of issues in this issue model.
+	IssueCount int64 `json:"issueCount,omitempty,string"`
 
 	// Name: Immutable. The resource name of the issue model. Format:
 	// projects/{project}/locations/{location}/issueModels/{issue_model}

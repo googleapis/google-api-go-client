@@ -1476,8 +1476,10 @@ type GeocodingSummary struct {
 	// for a user to meet a taxi, ridesharing vehicle, or general driver.
 	//   "typeRegulatedArea" - An area controlled in some way by an
 	// authoritative source, such as a government-designated COVID
-	// containment zone. Features of this type should have one or more gcids
-	// corresponding to their specific regulation.
+	// containment zone or an area under government sanctions. Features of
+	// this type should have one or more gcids corresponding to their
+	// specific regulation, and client handling of these features may vary
+	// based on the type of regulation.
 	//   "typeLogicalBorder" - A grouping of TYPE_BORDER features ("border
 	// segments"), which together represent a border between two features of
 	// the same type.

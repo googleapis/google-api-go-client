@@ -220,6 +220,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.MonitoredResourceDescriptors = NewProjectsMonitoredResourceDescriptorsService(s)
 	rs.NotificationChannelDescriptors = NewProjectsNotificationChannelDescriptorsService(s)
 	rs.NotificationChannels = NewProjectsNotificationChannelsService(s)
+	rs.Snoozes = NewProjectsSnoozesService(s)
 	rs.TimeSeries = NewProjectsTimeSeriesService(s)
 	rs.UptimeCheckConfigs = NewProjectsUptimeCheckConfigsService(s)
 	return rs
@@ -241,6 +242,8 @@ type ProjectsService struct {
 	NotificationChannelDescriptors *ProjectsNotificationChannelDescriptorsService
 
 	NotificationChannels *ProjectsNotificationChannelsService
+
+	Snoozes *ProjectsSnoozesService
 
 	TimeSeries *ProjectsTimeSeriesService
 
@@ -319,6 +322,15 @@ func NewProjectsNotificationChannelsService(s *Service) *ProjectsNotificationCha
 }
 
 type ProjectsNotificationChannelsService struct {
+	s *Service
+}
+
+func NewProjectsSnoozesService(s *Service) *ProjectsSnoozesService {
+	rs := &ProjectsSnoozesService{s: s}
+	return rs
+}
+
+type ProjectsSnoozesService struct {
 	s *Service
 }
 
@@ -1602,6 +1614,40 @@ func (s *CreateTimeSeriesSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Criteria: Criteria specific to the AlertPolicys that this Snooze
+// applies to. The Snooze will suppress alerts that come from one of the
+// AlertPolicys whose names are supplied.
+type Criteria struct {
+	// Policies: The specific AlertPolicy names for the alert that should be
+	// snoozed. The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID] There is a
+	// limit of 10 policies per snooze. This limit is checked during snooze
+	// creation.
+	Policies []string `json:"policies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Policies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Policies") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Criteria) MarshalJSON() ([]byte, error) {
+	type NoMethod Criteria
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Custom: Use a custom service to designate a service that you want to
 // monitor when none of the other service types (like App Engine, Cloud
 // Run, or a GKE type) matches your intended service.
@@ -2098,6 +2144,40 @@ type Field struct {
 
 func (s *Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ForecastOptions: Options used when forecasting the time series and
+// testing the predicted value against the threshold.
+type ForecastOptions struct {
+	// ForecastHorizon: Required. The length of time into the future to
+	// forecast whether a time series will violate the threshold. If the
+	// predicted value is found to violate the threshold, and the violation
+	// is observed in all forecasts made for the configured duration, then
+	// the time series is considered to be failing.
+	ForecastHorizon string `json:"forecastHorizon,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ForecastHorizon") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ForecastHorizon") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ForecastOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ForecastOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3250,6 +3330,44 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSnoozesResponse: The results of a successful ListSnoozes call,
+// containing the matching Snoozes.
+type ListSnoozesResponse struct {
+	// NextPageToken: Page token for repeated calls to ListSnoozes, to fetch
+	// additional pages of results. If this is empty or missing, there are
+	// no more pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Snoozes: Snoozes matching this list call.
+	Snoozes []*Snooze `json:"snoozes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSnoozesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSnoozesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListTimeSeriesResponse: The ListTimeSeries response.
 type ListTimeSeriesResponse struct {
 	// ExecutionErrors: Query execution errors that may have caused the time
@@ -3971,6 +4089,13 @@ type MetricThreshold struct {
 	// resource type. Optionally, it can specify resource labels and metric
 	// labels. This field must not exceed 2048 Unicode characters in length.
 	Filter string `json:"filter,omitempty"`
+
+	// ForecastOptions: When this field is present, the MetricThreshold
+	// condition forecasts whether the time series is predicted to violate
+	// the threshold within the forecast_horizion. When this field is not
+	// set, the MetricThreshold tests the current value of the timeseries
+	// against the threshold.
+	ForecastOptions *ForecastOptions `json:"forecastOptions,omitempty"`
 
 	// ThresholdValue: A value against which to compare the time series.
 	ThresholdValue float64 `json:"thresholdValue,omitempty"`
@@ -5305,6 +5430,57 @@ func (s *ServiceLevelObjective) UnmarshalJSON(data []byte) error {
 	}
 	s.Goal = float64(s1.Goal)
 	return nil
+}
+
+// Snooze: A Snooze will prevent any alerts from being opened, and close
+// any that are already open. The Snooze will work on alerts that match
+// the criteria defined in the Snooze. The Snooze will be active from
+// interval.start_time through interval.end_time.
+type Snooze struct {
+	// Criteria: Required. This defines the criteria for applying the
+	// Snooze. See Criteria for more information.
+	Criteria *Criteria `json:"criteria,omitempty"`
+
+	// DisplayName: Required. A display name for the Snooze. This can be, at
+	// most, 512 unicode characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Interval: Required. The Snooze will be active from
+	// interval.start_time through interval.end_time. interval.start_time
+	// cannot be in the past. There is a 15 second clock skew to account for
+	// the time it takes for a request to reach the API from the UI.
+	Interval *TimeInterval `json:"interval,omitempty"`
+
+	// Name: Required. The name of the Snooze. The format is:
+	// projects/[PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] The ID of the
+	// Snooze will be generated by the system.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Criteria") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Criteria") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Snooze) MarshalJSON() ([]byte, error) {
+	type NoMethod Snooze
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SourceContext: SourceContext represents information about the source
@@ -13256,6 +13432,691 @@ func (c *ProjectsNotificationChannelsVerifyCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "NotificationChannel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.snoozes.create":
+
+type ProjectsSnoozesCreateCall struct {
+	s          *Service
+	parent     string
+	snooze     *Snooze
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a Snooze that will prevent alerts, which match the
+// provided criteria, from being opened. The Snooze applies for a
+// specific time interval.
+//
+//   - parent: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//     a Snooze should be created. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
+func (r *ProjectsSnoozesService) Create(parent string, snooze *Snooze) *ProjectsSnoozesCreateCall {
+	c := &ProjectsSnoozesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.snooze = snooze
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSnoozesCreateCall) Fields(s ...googleapi.Field) *ProjectsSnoozesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSnoozesCreateCall) Context(ctx context.Context) *ProjectsSnoozesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSnoozesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSnoozesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.snooze)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/snoozes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.snoozes.create" call.
+// Exactly one of *Snooze or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Snooze.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSnoozesCreateCall) Do(opts ...googleapi.CallOption) (*Snooze, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Snooze{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Snooze that will prevent alerts, which match the provided criteria, from being opened. The Snooze applies for a specific time interval.",
+	//   "flatPath": "v3/projects/{projectsId}/snoozes",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.snoozes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which a Snooze should be created. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/snoozes",
+	//   "request": {
+	//     "$ref": "Snooze"
+	//   },
+	//   "response": {
+	//     "$ref": "Snooze"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.snoozes.get":
+
+type ProjectsSnoozesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves a Snooze by name.
+//
+//   - name: The ID of the Snooze to retrieve. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID].
+func (r *ProjectsSnoozesService) Get(name string) *ProjectsSnoozesGetCall {
+	c := &ProjectsSnoozesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSnoozesGetCall) Fields(s ...googleapi.Field) *ProjectsSnoozesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSnoozesGetCall) IfNoneMatch(entityTag string) *ProjectsSnoozesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSnoozesGetCall) Context(ctx context.Context) *ProjectsSnoozesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSnoozesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSnoozesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.snoozes.get" call.
+// Exactly one of *Snooze or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Snooze.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSnoozesGetCall) Do(opts ...googleapi.CallOption) (*Snooze, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Snooze{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a Snooze by name.",
+	//   "flatPath": "v3/projects/{projectsId}/snoozes/{snoozesId}",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.snoozes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The ID of the Snooze to retrieve. The format is: projects/[PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/snoozes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "response": {
+	//     "$ref": "Snooze"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.snoozes.list":
+
+type ProjectsSnoozesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Snoozes associated with a project. Can optionally
+// pass in filter, which specifies predicates to match Snoozes.
+//
+//   - parent: The project
+//     (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//     Snoozes should be listed. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER].
+func (r *ProjectsSnoozesService) List(parent string) *ProjectsSnoozesListCall {
+	c := &ProjectsSnoozesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional filter to
+// restrict results to the given criteria. The following fields are
+// supported. interval.start_time interval.end_timeFor example: ```
+// interval.start_time > "2022-03-11T00:00:00-08:00" AND
+// interval.end_time < "2022-03-12T00:00:00-08:00" ```
+func (c *ProjectsSnoozesListCall) Filter(filter string) *ProjectsSnoozesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return for a single query. The server may further
+// constrain the maximum number of results returned in a single page.
+// The value should be in the range 1, 1000. If the value given is
+// outside this range, the server will decide the number of results to
+// be returned.
+func (c *ProjectsSnoozesListCall) PageSize(pageSize int64) *ProjectsSnoozesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token from a previous call to ListSnoozesRequest to get the
+// next page of results.
+func (c *ProjectsSnoozesListCall) PageToken(pageToken string) *ProjectsSnoozesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSnoozesListCall) Fields(s ...googleapi.Field) *ProjectsSnoozesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSnoozesListCall) IfNoneMatch(entityTag string) *ProjectsSnoozesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSnoozesListCall) Context(ctx context.Context) *ProjectsSnoozesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSnoozesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSnoozesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/snoozes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.snoozes.list" call.
+// Exactly one of *ListSnoozesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSnoozesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSnoozesListCall) Do(opts ...googleapi.CallOption) (*ListSnoozesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSnoozesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the Snoozes associated with a project. Can optionally pass in filter, which specifies predicates to match Snoozes.",
+	//   "flatPath": "v3/projects/{projectsId}/snoozes",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.projects.snoozes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Optional filter to restrict results to the given criteria. The following fields are supported. interval.start_time interval.end_timeFor example: ``` interval.start_time \u003e \"2022-03-11T00:00:00-08:00\" AND interval.end_time \u003c \"2022-03-12T00:00:00-08:00\" ``` ",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return for a single query. The server may further constrain the maximum number of results returned in a single page. The value should be in the range 1, 1000. If the value given is outside this range, the server will decide the number of results to be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token from a previous call to ListSnoozesRequest to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose Snoozes should be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+parent}/snoozes",
+	//   "response": {
+	//     "$ref": "ListSnoozesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSnoozesListCall) Pages(ctx context.Context, f func(*ListSnoozesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "monitoring.projects.snoozes.patch":
+
+type ProjectsSnoozesPatchCall struct {
+	s          *Service
+	name       string
+	snooze     *Snooze
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a Snooze, identified by its name, with the parameters
+// in the given Snooze object.
+//
+//   - name: The name of the Snooze. The format is:
+//     projects/[PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] The ID of the
+//     Snooze will be generated by the system.
+func (r *ProjectsSnoozesService) Patch(name string, snooze *Snooze) *ProjectsSnoozesPatchCall {
+	c := &ProjectsSnoozesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.snooze = snooze
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// fields to update.For each field listed in update_mask: If the Snooze
+// object supplied in the UpdateSnoozeRequest has a value for that
+// field, the value of the field in the existing Snooze will be set to
+// the value of the field in the supplied Snooze. If the field does not
+// have a value in the supplied Snooze, the field in the existing Snooze
+// is set to its default value.Fields not listed retain their existing
+// value.The following are the field names that are accepted in
+// update_mask: display_name interval.start_time interval.end_timeThat
+// said, the start time and end time of the Snooze determines which
+// fields can legally be updated. Before attempting an update, users
+// should consult the documentation for UpdateSnoozeRequest, which talks
+// about which fields can be updated.
+func (c *ProjectsSnoozesPatchCall) UpdateMask(updateMask string) *ProjectsSnoozesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSnoozesPatchCall) Fields(s ...googleapi.Field) *ProjectsSnoozesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSnoozesPatchCall) Context(ctx context.Context) *ProjectsSnoozesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSnoozesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSnoozesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.snooze)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.snoozes.patch" call.
+// Exactly one of *Snooze or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Snooze.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSnoozesPatchCall) Do(opts ...googleapi.CallOption) (*Snooze, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Snooze{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Snooze, identified by its name, with the parameters in the given Snooze object.",
+	//   "flatPath": "v3/projects/{projectsId}/snoozes/{snoozesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "monitoring.projects.snoozes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Snooze. The format is: projects/[PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] The ID of the Snooze will be generated by the system.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/snoozes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The fields to update.For each field listed in update_mask: If the Snooze object supplied in the UpdateSnoozeRequest has a value for that field, the value of the field in the existing Snooze will be set to the value of the field in the supplied Snooze. If the field does not have a value in the supplied Snooze, the field in the existing Snooze is set to its default value.Fields not listed retain their existing value.The following are the field names that are accepted in update_mask: display_name interval.start_time interval.end_timeThat said, the start time and end time of the Snooze determines which fields can legally be updated. Before attempting an update, users should consult the documentation for UpdateSnoozeRequest, which talks about which fields can be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}",
+	//   "request": {
+	//     "$ref": "Snooze"
+	//   },
+	//   "response": {
+	//     "$ref": "Snooze"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

@@ -2020,7 +2020,7 @@ type Scorecard struct {
 	// following four thresholds: { value: 90, category: 'DANGER', trigger:
 	// 'ABOVE', }, { value: 70, category: 'WARNING', trigger: 'ABOVE', }, {
 	// value: 10, category: 'DANGER', trigger: 'BELOW', }, { value: 20,
-	// category: 'WARNING', trigger: 'BELOW', }Then: values less than or
+	// category: 'WARNING', trigger: 'BELOW', } Then: values less than or
 	// equal to 10 would put the scorecard in a DANGER state, values greater
 	// than 10 but less than or equal to 20 a WARNING state, values strictly
 	// between 20 and 70 an OK state, values greater than or equal to 70 but

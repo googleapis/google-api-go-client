@@ -715,6 +715,53 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EventStream: Specifies the Event-driven transfer options.
+// Event-driven transfers listen to an event stream to transfer updated
+// files.
+type EventStream struct {
+	// EventStreamExpirationTime: Specifies the data and time at which
+	// Storage Transfer Service stops listening for events from this stream.
+	// After this time, any transfers in progress will complete, but no new
+	// transfers are initiated.
+	EventStreamExpirationTime string `json:"eventStreamExpirationTime,omitempty"`
+
+	// EventStreamStartTime: Specifies the date and time that Storage
+	// Transfer Service starts listening for events from this stream. If no
+	// start time is specified or start time is in the past, Storage
+	// Transfer Service starts listening immediately.
+	EventStreamStartTime string `json:"eventStreamStartTime,omitempty"`
+
+	// Name: Required. Specifies a unique name of the resource such as AWS
+	// SQS ARN in the form 'arn:aws:sqs:region:account_id:queue_name', or
+	// Pub/Sub subscription resource name in the form
+	// 'projects/{project}/subscriptions/{sub}'.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EventStreamExpirationTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EventStreamExpirationTime") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventStream) MarshalJSON() ([]byte, error) {
+	type NoMethod EventStream
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GcsData: In a GcsData resource, an object's name is the Cloud Storage
 // object's name and its "last modification time" refers to the object's
 // `updated` property of Cloud Storage objects, which changes when the
@@ -1828,6 +1875,11 @@ type TransferJob struct {
 	// length is 1024 bytes when Unicode-encoded.
 	Description string `json:"description,omitempty"`
 
+	// EventStream: Specifies the event stream for the transfer job for
+	// event-driven transfers. When EventStream is specified, the Schedule
+	// fields are ignored.
+	EventStream *EventStream `json:"eventStream,omitempty"`
+
 	// LastModificationTime: Output only. The time that the transfer job was
 	// last modified.
 	LastModificationTime string `json:"lastModificationTime,omitempty"`
@@ -1984,6 +2036,8 @@ type TransferOperation struct {
 	//   "ABORTED" - Aborted by the user.
 	//   "QUEUED" - Temporarily delayed by the system. No user action is
 	// required.
+	//   "SUSPENDING" - The operation is suspending and draining the ongoing
+	// work to completion.
 	Status string `json:"status,omitempty"`
 
 	// TransferJobName: The name of the transfer job that triggers this

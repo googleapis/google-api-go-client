@@ -1623,8 +1623,8 @@ type Finding struct {
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
-	// Vulnerability: Represents vulnerability specific fields like cve,
-	// cvss scores etc. CVE stands for Common Vulnerabilities and Exposures
+	// Vulnerability: Represents vulnerability-specific fields like CVE and
+	// CVS scores. CVE stands for Common Vulnerabilities and Exposures
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
@@ -2013,10 +2013,10 @@ type GoogleCloudSecuritycenterV1ExternalSystem struct {
 	// external system.
 	ExternalUid string `json:"externalUid,omitempty"`
 
-	// Name: External System Name e.g. jira, demisto, etc. e.g.:
-	// `organizations/1234/sources/5678/findings/123456/externalSystems/jira`
-	//  `folders/1234/sources/5678/findings/123456/externalSystems/jira`
-	// `projects/1234/sources/5678/findings/123456/externalSystems/jira`
+	// Name: Full resource name of the external system, for example:
+	// "organizations/1234/sources/5678/findings/123456/externalSystems/jira"
+	// , "folders/1234/sources/5678/findings/123456/externalSystems/jira",
+	// "projects/1234/sources/5678/findings/123456/externalSystems/jira"
 	Name string `json:"name,omitempty"`
 
 	// Status: Most recent status of the corresponding finding's
@@ -3185,41 +3185,39 @@ type KernelRootkit struct {
 	// Name: Rootkit name when available.
 	Name string `json:"name,omitempty"`
 
-	// UnexpectedCodeModification: Flag indicating unexpected modifications
-	// of kernel code memory.
+	// UnexpectedCodeModification: True when unexpected modifications of
+	// kernel read-only data memory are present.
 	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
 
-	// UnexpectedFtraceHandler: Flag indicating presence of ftrace points
-	// with callbacks pointing to regions that are not in the expected
-	// kernel or module code range.
+	// UnexpectedFtraceHandler: True when `ftrace` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
 	UnexpectedFtraceHandler bool `json:"unexpectedFtraceHandler,omitempty"`
 
-	// UnexpectedInterruptHandler: Flag indicating presence of interrupt
-	// handlers that are are not in the expected kernel, module code
-	// regions.
+	// UnexpectedInterruptHandler: True when interrupt handlers that are are
+	// not in the expected kernel or module code regions are present.
 	UnexpectedInterruptHandler bool `json:"unexpectedInterruptHandler,omitempty"`
 
-	// UnexpectedKernelCodePages: Flag indicating presence of kernel code
-	// pages that are not in the expected kernel, module code regions.
+	// UnexpectedKernelCodePages: True when kernel code pages that are not
+	// in the expected kernel or module code regions are present.
 	UnexpectedKernelCodePages bool `json:"unexpectedKernelCodePages,omitempty"`
 
-	// UnexpectedKprobeHandler: Flag indicating presence of kprobe points
-	// with callbacks pointing to regions that are not in the expected
-	// kernel or module code range.
+	// UnexpectedKprobeHandler: True when `kprobe` points are present with
+	// callbacks pointing to regions that are not in the expected kernel or
+	// module code range.
 	UnexpectedKprobeHandler bool `json:"unexpectedKprobeHandler,omitempty"`
 
-	// UnexpectedProcessesInRunqueue: Flag indicating unexpected process(es)
-	// in the scheduler run-queue, those that are in the run-queue, but not
-	// in the process task-list.
+	// UnexpectedProcessesInRunqueue: True when unexpected processes in the
+	// scheduler run queue are present. Such processes are in the run queue,
+	// but not in the process task list.
 	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
 
 	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
 	// modifications of kernel read-only data memory.
 	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
 
-	// UnexpectedSystemCallHandler: Flag indicating presence of system call
-	// handlers that are are not in the expected kernel, module code
-	// regions.
+	// UnexpectedSystemCallHandler: True when system call handlers that are
+	// are not in the expected kernel or module code regions are present.
 	UnexpectedSystemCallHandler bool `json:"unexpectedSystemCallHandler,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

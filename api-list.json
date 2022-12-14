@@ -5964,6 +5964,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "workloadmanager:v1",
+      "name": "workloadmanager",
+      "version": "v1",
+      "title": "Workload Manager API",
+      "description": "",
+      "discoveryRestUrl": "https://workloadmanager.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://g3doc.corp.google.com/company/teams/compute-fe/index.md?cl=head",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "workstations:v1beta",
+      "name": "workstations",
+      "version": "v1beta",
+      "title": "Cloud Workstations API",
+      "description": "",
+      "discoveryRestUrl": "https://workstations.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/workstations",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "youtube:v3",
       "name": "youtube",
       "version": "v3",

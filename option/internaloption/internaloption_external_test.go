@@ -45,7 +45,7 @@ func NewFoo(ctx context.Context, opts ...option.ClientOption) (*Foo, error) {
 			fooOpt.ApplyOpt(&conf)
 		}
 	}
-	// Pass options to internals for dailing. All client specific options will
+	// Pass options to internals for dialing. All client-specific options will
 	// be no-ops.
 	return &Foo{i: conf.i}, nil
 }

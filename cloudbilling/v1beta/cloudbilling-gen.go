@@ -170,6 +170,311 @@ type V1betaService struct {
 	s *Service
 }
 
+// CacheFillRegions: Specifies the regions for Cache Fill.
+type CacheFillRegions struct {
+	// DestinationRegion: The destination region for cache fill.
+	//
+	// Possible values:
+	//   "CACHE_FILL_DESTINATION_REGION_UNSPECIFIED" - Not specified.
+	//   "CACHE_FILL_DESTINATION_REGION_ASIA_PACIFIC" - Asia Pacific.
+	//   "CACHE_FILL_DESTINATION_REGION_EUROPE" - Europe
+	//   "CACHE_FILL_DESTINATION_REGION_NORTH_AMERICA" - North America.
+	//   "CACHE_FILL_DESTINATION_REGION_OCEANIA" - Oceania.
+	//   "CACHE_FILL_DESTINATION_REGION_SOUTH_AMERICA" - South America.
+	//   "CACHE_FILL_DESTINATION_REGION_CHINA" - China.
+	//   "CACHE_FILL_DESTINATION_REGION_OTHERS" - Others.
+	DestinationRegion string `json:"destinationRegion,omitempty"`
+
+	// SourceRegion: The source region for cache fill.
+	//
+	// Possible values:
+	//   "CACHE_FILL_SOURCE_REGION_UNSPECIFIED" - Not specified.
+	//   "CACHE_FILL_REGION_ASIA_PACIFIC" - Asia Pacific.
+	//   "CACHE_FILL_SOURCE_REGION_EUROPE" - Europe
+	//   "CACHE_FILL_SOURCE_REGION_NORTH_AMERICA" - North America.
+	//   "CACHE_FILL_SOURCE_REGION_OCEANIA" - Oceania.
+	//   "CACHE_FILL_SOURCE_REGION_SOUTH_AMERICA" - South America.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationRegion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CacheFillRegions) MarshalJSON() ([]byte, error) {
+	type NoMethod CacheFillRegions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudCdnEgressWorkload: Specifies usage for Cloud CDN egress.
+type CloudCdnEgressWorkload struct {
+	// CacheEgressDestination: The destination for the cache egress charges.
+	//
+	// Possible values:
+	//   "CACHE_EGRESS_DESTINATION_UNSPECIFIED" - Unspecified.
+	//   "CACHE_EGRESS_DESTINATION_ASIA_PACIFIC" - Asia Pacific.
+	//   "CACHE_EGRESS_DESTINATION_CHINA" - China.
+	//   "CACHE_EGRESS_DESTINATION_EUROPE" - Europe.
+	//   "CACHE_EGRESS_DESTINATION_NORTH_AMERICA" - North America.
+	//   "CACHE_EGRESS_DESTINATION_OCEANIA" - Oceania including Australia,
+	// New Zealand, and surrounding Pacific Ocean islands such as Papua New
+	// Guinea and Fiji. This region excludes Hawaii.
+	//   "CACHE_EGRESS_DESTINATION_LATIN_AMERICA" - Latin America (Including
+	// the Caribbean, South America and Central America.)
+	//   "CACHE_EGRESS_DESTINATION_OTHER_DESTINATIONS" - All other
+	// destinations (including Africa and Antarctica)
+	CacheEgressDestination string `json:"cacheEgressDestination,omitempty"`
+
+	// CacheEgressRate: Cache egress usage. The rate of data cache egressed
+	// in the destination. For example : units such as "GiBy/s" or "TBy/mo".
+	CacheEgressRate *Usage `json:"cacheEgressRate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CacheEgressDestination") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CacheEgressDestination")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudCdnEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudCdnEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudCdnWorkload: Specifies usage for Cloud CDN resources.
+type CloudCdnWorkload struct {
+	// CacheFillOriginService: The source service for the cache fill.
+	//
+	// Possible values:
+	//   "CACHE_FILL_ORIGIN_SERVICE_UNSPECIFIED" - Not specified.
+	//   "CACHE_FILL_ORIGIN_SERVICE_GOOGLE_CLOUD_STORAGE_BUCKET" - Origin
+	// service is Google Cloud Storage.
+	//   "CACHE_FILL_ORIGIN_SERVICE_BACKEND_SERVICE" - Origin service is
+	// backend service, such as Compute VMs, external backend, etc.
+	CacheFillOriginService string `json:"cacheFillOriginService,omitempty"`
+
+	// CacheFillRate: Cache fill usage. The rate of data transferred between
+	// cache fill regions. For example: units such as "GiBy/s" or "TBy/mo".
+	CacheFillRate *Usage `json:"cacheFillRate,omitempty"`
+
+	// CacheFillRegions: The regions where data is transferred from Google
+	// data locations into Google global cache servers. The SKU prices for
+	// cache fill across services are the same.
+	CacheFillRegions *CacheFillRegions `json:"cacheFillRegions,omitempty"`
+
+	// CacheLookUpRate: Cache look up requests. This is specified to
+	// indicate the number of requests. For example: units such as "1/s".
+	CacheLookUpRate *Usage `json:"cacheLookUpRate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CacheFillOriginService") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CacheFillOriginService")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudCdnWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudCdnWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudInterconnectEgressWorkload: The interconnect egress only
+// includes the Interconnect Egress. Please use the standard egress
+// traffic interface to specify your standard egress usage.
+type CloudInterconnectEgressWorkload struct {
+	// EgressRate: Data egress usage. This usage applies when you move or
+	// copy data from one Google Cloud service to another service. Expected
+	// units such as "GiBy/s, By/s, etc."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// InterconnectConnectionLocation: Locations in the Interconnect
+	// connection location table
+	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing).
+	// This is the interconnect egress charges.
+	//
+	// Possible values:
+	//   "INTERCONNECT_CONNECTION_LOCATION_UNSPECIFIED" - Unspecified.
+	//   "INTERCONNECT_CONNECTION_LOCATION_ASIA" - Asia.
+	//   "INTERCONNECT_CONNECTION_LOCATION_EUROPE" - Europe.
+	//   "INTERCONNECT_CONNECTION_LOCATION_NORTH_AMERICA" - North America.
+	//   "INTERCONNECT_CONNECTION_LOCATION_SOUTH_AMERICA" - South America.
+	//   "INTERCONNECT_CONNECTION_LOCATION_AUSTRALIA" - Australia.
+	InterconnectConnectionLocation string `json:"interconnectConnectionLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressRate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressRate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudInterconnectEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudInterconnectEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudInterconnectWorkload: Specifies usage for Cloud Interconnect
+// resources.
+type CloudInterconnectWorkload struct {
+	// InterconnectAttachments: VLAN attachment used for interconnect.
+	InterconnectAttachments []*VlanAttachment `json:"interconnectAttachments,omitempty"`
+
+	// InterconnectType: Vlan attachment type.
+	//
+	// Possible values:
+	//   "INTERCONNECT_TYPE_UNSPECIFIED" - Unspecified.
+	//   "INTERCONNECT_TYPE_DEDICATED" - Type is dedicated.
+	//   "INTERCONNECT_TYPE_PARTNER" - Type is partner.
+	InterconnectType string `json:"interconnectType,omitempty"`
+
+	// LinkType: Interconnect circuit link type.
+	//
+	// Possible values:
+	//   "LINK_TYPE_UNSPECIFIED" - Unspecified.
+	//   "LINK_TYPE_ETHERNET_10G_LR" - Link type is 10 gbps.
+	//   "LINK_TYPE_ETHERNET_100G_LR" - Link type is 100 gbps.
+	LinkType string `json:"linkType,omitempty"`
+
+	// ProvisionedLinkCount: Interconnect usage. This is specified as a
+	// unitless quantity which indicates the number of circuit provisioned
+	// in interconnect.
+	ProvisionedLinkCount *Usage `json:"provisionedLinkCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "InterconnectAttachments") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InterconnectAttachments")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudInterconnectWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudInterconnectWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudStorageEgressWorkload: Specification of a network type. Network
+// egress within Google Cloud applies when you move or copy data from
+// one Cloud Storage bucket to another or when another Google Cloud
+// service accesses data in your Cloud Storage bucket.This includes the
+// network egress within Google Cloud and the general network usage.
+type CloudStorageEgressWorkload struct {
+	// DestinationContinent: Where the data is sent to.
+	//
+	// Possible values:
+	//   "DESTINATION_CONTINENT_UNSPECIFIED" - Not specified.
+	//   "DESTINATION_CONTINENT_ASIA_PACIFIC" - Asia Pacific.
+	//   "DESTINATION_CONTINENT_AUTRALIA" - Australia.
+	//   "DESTINATION_CONTINENT_EUROPE" - Europe.
+	//   "DESTINATION_CONTINENT_NORTH_AMERICA" - North America.
+	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America
+	DestinationContinent string `json:"destinationContinent,omitempty"`
+
+	// EgressRate: Egress usage rate. This usage applies when you move or
+	// copy data from one Cloud Storage bucket to another or when another
+	// Google Cloud service accesses data in your Cloud Storage bucket.
+	// Expected units such as "GiBy/s, By/s, ..."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// SourceContinent: Where the data comes from.
+	//
+	// Possible values:
+	//   "SOURCE_CONTINENT_UNSPECIFIED" - Not specified.
+	//   "SOURCE_CONTINENT_ASIA_PACIFIC" - Asia Pacific.
+	//   "SOURCE_CONTINENT_AUSTRALIA" - Australia.
+	//   "SOURCE_CONTINENT_EUROPE" - Europe.
+	//   "SOURCE_CONTINENT_NORTH_AMERICA" - North America.
+	//   "SOURCE_CONTINENT_SOUTH_AMERICA" - South America.
+	SourceContinent string `json:"sourceContinent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationContinent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationContinent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudStorageEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudStorageEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudStorageWorkload: Specifies usage of Cloud Storage resources.
 type CloudStorageWorkload struct {
 	// DataRetrieval: Data retrieval usage. A retrieval cost applies when
@@ -241,8 +546,8 @@ func (s *CloudStorageWorkload) MarshalJSON() ([]byte, error) {
 // commitment and any discounts.
 type Commitment struct {
 	// Name: Required. A name for this commitment. All commitments in a
-	// CostScenario must have unique names. Each name must be a maximum of
-	// 32 characters.
+	// CostScenario must have unique names. Each name may be at most 128
+	// characters long.
 	Name string `json:"name,omitempty"`
 
 	// VmResourceBasedCud: A resource-based committed use discount (CUD).
@@ -972,6 +1277,62 @@ func (s *PredefinedMachineType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PremiumTierEgressWorkload: Specify Premium Tier Internet egress
+// networking.
+type PremiumTierEgressWorkload struct {
+	// DestinationContinent: Where the data is sent to.
+	//
+	// Possible values:
+	//   "DESTINATION_CONTINENT_UNSPECIFIED" - Not specified.
+	//   "DESTINATION_CONTINENT_ASIA_PACIFIC" - Asia Pacific.
+	//   "DESTINATION_CONTINENT_AFRICA" - Africa.
+	//   "DESTINATION_CONTINENT_NORTH_AMERICA" - North America.
+	//   "DESTINATION_CONTINENT_AUTRALIA" - Australia.
+	//   "DESTINATION_CONTINENT_CENTRAL_AMERICA" - Central America.
+	//   "DESTINATION_CONTINENT_CHINA" - China.
+	//   "DESTINATION_CONTINENT_EASTERN_EUROPE" - Eastern Europe.
+	//   "DESTINATION_CONTINENT_WESTERN_EUROPE" - Western Europe.
+	//   "DESTINATION_CONTINENT_EMEA" - Other regions in Europe, Middle East
+	// and Africa.
+	//   "DESTINATION_CONTINENT_INDIA" - India
+	//   "DESTINATION_CONTINENT_MIDDLE_EAST" - Middle East.
+	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America.
+	DestinationContinent string `json:"destinationContinent,omitempty"`
+
+	// EgressRate: Premium Tier egress usage. Expected units such as
+	// "GiBy/s, By/s, etc."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// SourceRegion: Which region
+	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
+	// comes from.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationContinent") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationContinent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PremiumTierEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod PremiumTierEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Price: The price of a SKU at a point int time.
 type Price struct {
 	// EffectiveTime: The timestamp within the estimation time frame when
@@ -1143,7 +1504,10 @@ type ScenarioConfig struct {
 	// usage for this duration. Duration must be at least 1 hour (3,600
 	// seconds) and at most 10 years (315,360,000 seconds). The calculations
 	// for years and months are based on a 730-hour (2,628,000-second)
-	// month.
+	// month. For durations longer than one month (2,628,000 seconds), the
+	// duration is rounded up to the next month, so the estimate shows you
+	// the costs for full months. For example, a duration of 3,232,800
+	// seconds (roughly 5 weeks) is rounded up to 2 months.
 	EstimateDuration string `json:"estimateDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EstimateDuration") to
@@ -1302,6 +1666,41 @@ func (s *SkuCostEstimate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// StandardTierEgressWorkload: Specify Standard Tier Internet egress
+// networking.
+type StandardTierEgressWorkload struct {
+	// EgressRate: Standard tier egress usage. Expected units such as
+	// "GiBy/s, By/s, etc."
+	EgressRate *Usage `json:"egressRate,omitempty"`
+
+	// SourceRegion: Which region
+	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
+	// comes from.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressRate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressRate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StandardTierEgressWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod StandardTierEgressWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Usage: An amount of usage over a time frame.
 type Usage struct {
 	// UsageRateTimeline: A timeline of usage rates over the estimate
@@ -1344,26 +1743,27 @@ func (s *Usage) MarshalJSON() ([]byte, error) {
 // the estimate time frame. The effective time on all entries must be an
 // integer number of hours.
 type UsageRateTimeline struct {
-	// Unit: The unit for the usage rate in each timeline entry. The
-	// supported units are a subset of The Unified Code for Units of Measure
-	// (https://ucum.org/ucum.html) standard: * **Time units (TIME-UNIT)** *
-	// `s` second * `min` minute * `h` hour * `d` day * `wk` week * `mo`
-	// month * `yr` year * `ms` millisecond * `us` microsecond * `ns`
-	// nanosecond * **Basic storage units (BASIC-STORAGE-UNIT)** * `bit` bit
-	// * `By` byte * **Count units (COUNT-UNIT)** * `count` count *
-	// **Prefixes (PREFIX)** * `k` kilo (10^3) * `M` mega (10^6) * `G` giga
-	// (10^9) * `T` tera (10^12) * `P` peta (10^15) * `Ki` kibi (2^10) *
-	// `Mi` mebi (2^20) * `Gi` gibi (2^30) * `Ti` tebi (2^40) * `Pi` pebi
-	// (2^50) **Grammar** The grammar also includes these connectors: * `/`
-	// division or ratio (as an infix operator). For example: `kBy/{email}`
-	// or `MiBy/10ms`. * `.` multiplication or composition (as an infix
-	// operator). For example: `GBy.d` or `k{watt}.h`. The grammar for a
-	// unit is as follows: ``` Expression = Component { "." Component } {
-	// "/" Component } ; Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation
-	// ] | Annotation | "1" ; UNIT = TIME-UNIT | STORAGE-UNIT | DATA-UNIT |
-	// COUNT-UNIT Annotation = "{" NAME "}" ; ``` Examples: * Request per
-	// second: `1/s` or `{requests}/s` * GibiBytes: `GiBy` * GibiBytes *
-	// seconds: `GiBy.s`
+	// Unit: The unit for the usage rate in each timeline entry. If you
+	// provide an incorrect unit for an instance, the correct unit is
+	// provided in the error message. The supported units are a subset of
+	// The Unified Code for Units of Measure (https://ucum.org/ucum.html)
+	// standard: * **Time units (TIME-UNIT)** * `s` second * `min` minute *
+	// `h` hour * `d` day * `wk` week * `mo` month * `yr` year * `ms`
+	// millisecond * `us` microsecond * `ns` nanosecond * **Basic storage
+	// units (BASIC-STORAGE-UNIT)** * `bit` bit * `By` byte * **Count units
+	// (COUNT-UNIT)** * `count` count * **Prefixes (PREFIX)** * `k` kilo
+	// (10^3) * `M` mega (10^6) * `G` giga (10^9) * `T` tera (10^12) * `P`
+	// peta (10^15) * `Ki` kibi (2^10) * `Mi` mebi (2^20) * `Gi` gibi (2^30)
+	// * `Ti` tebi (2^40) * `Pi` pebi (2^50) **Grammar** The grammar also
+	// includes these connectors: * `/` division or ratio (as an infix
+	// operator). For example: `kBy/{email}` or `MiBy/10ms`. * `.`
+	// multiplication or composition (as an infix operator). For example:
+	// `GBy.d` or `k{watt}.h`. The grammar for a unit is as follows: ```
+	// Expression = Component { "." Component } { "/" Component } ;
+	// Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ] | Annotation |
+	// "1" ; UNIT = TIME-UNIT | STORAGE-UNIT | DATA-UNIT | COUNT-UNIT
+	// Annotation = "{" NAME "}" ; ``` Examples: * Request per second: `1/s`
+	// or `{requests}/s` * GibiBytes: `GiBy` * GibiBytes * seconds: `GiBy.s`
 	Unit string `json:"unit,omitempty"`
 
 	// UsageRateTimelineEntries: The timeline entries. Each entry has a
@@ -1445,6 +1845,56 @@ func (s *UsageRateTimelineEntry) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// VlanAttachment: VLAN attachment for cloud interconnect.
+type VlanAttachment struct {
+	// Bandwidth: Capacities in the pricing table
+	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing)
+	// Examples of capacity are: 50/100/200/300/400/500-Mbps,
+	// 1/2/5/10/20/50-Gbps.
+	//
+	// Possible values:
+	//   "BANDWIDTH_UNSPECIFIED" - Unspecified.
+	//   "BANDWIDTH_BPS_50M" - 50 Mbit/s
+	//   "BANDWIDTH_BPS_100M" - 100 Mbit/s
+	//   "BANDWIDTH_BPS_200M" - 200 Mbit/s
+	//   "BANDWIDTH_BPS_300M" - 300 Mbit/s
+	//   "BANDWIDTH_BPS_400M" - 400 Mbit/s
+	//   "BANDWIDTH_BPS_500M" - 500 Mbit/s
+	//   "BANDWIDTH_BPS_1G" - 1 Gbit/s
+	//   "BANDWIDTH_BPS_2G" - 2 Gbit/s
+	//   "BANDWIDTH_BPS_5G" - 5 Gbit/s
+	//   "BANDWIDTH_BPS_10G" - 10 Gbit/s
+	//   "BANDWIDTH_BPS_20G" - 20 Gbit/s
+	//   "BANDWIDTH_BPS_50G" - 50 Gbit/s
+	Bandwidth string `json:"bandwidth,omitempty"`
+
+	// VlanCount: VLAN usage. This is specified as a unitless quantity which
+	// indicates the number of VLAN attachment used in interconnect.
+	VlanCount *Usage `json:"vlanCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bandwidth") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bandwidth") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VlanAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod VlanAttachment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VmResourceBasedCud: Specifies a resource-based committed use discount
 // (CUD).
 type VmResourceBasedCud struct {
@@ -1522,6 +1972,22 @@ func (s *VmResourceBasedCud) UnmarshalJSON(data []byte) error {
 // specific product configuration parameters of the product usage
 // amounts along each dimension in which the product is billed.
 type Workload struct {
+	// CloudCdnEgressWorkload: Usage on Google Cloud CDN Egress.
+	CloudCdnEgressWorkload *CloudCdnEgressWorkload `json:"cloudCdnEgressWorkload,omitempty"`
+
+	// CloudCdnWorkload: Usage on Google Cloud CDN.
+	CloudCdnWorkload *CloudCdnWorkload `json:"cloudCdnWorkload,omitempty"`
+
+	// CloudInterconnectEgressWorkload: Usage on Google Cloud Interconnect
+	// Egress.
+	CloudInterconnectEgressWorkload *CloudInterconnectEgressWorkload `json:"cloudInterconnectEgressWorkload,omitempty"`
+
+	// CloudInterconnectWorkload: Usage on Google Cloud Interconnect.
+	CloudInterconnectWorkload *CloudInterconnectWorkload `json:"cloudInterconnectWorkload,omitempty"`
+
+	// CloudStorageEgressWorkload: Usage on a cloud storage egress.
+	CloudStorageEgressWorkload *CloudStorageEgressWorkload `json:"cloudStorageEgressWorkload,omitempty"`
+
 	// CloudStorageWorkload: Usage on Google Cloud Storage.
 	CloudStorageWorkload *CloudStorageWorkload `json:"cloudStorageWorkload,omitempty"`
 
@@ -1529,12 +1995,18 @@ type Workload struct {
 	ComputeVmWorkload *ComputeVmWorkload `json:"computeVmWorkload,omitempty"`
 
 	// Name: Required. A name for this workload. All workloads in a
-	// `CostScenario` must have a unique `name`. Each `name` must be a
-	// maximum of 32 characters.
+	// `CostScenario` must have a unique `name`. Each `name` may be at most
+	// 128 characters long.
 	Name string `json:"name,omitempty"`
 
+	// PremiumTierEgressWorkload: Usage on Premium Tier Internet Egress.
+	PremiumTierEgressWorkload *PremiumTierEgressWorkload `json:"premiumTierEgressWorkload,omitempty"`
+
+	// StandardTierEgressWorkload: Usage on Standard Tier Internet Egress.
+	StandardTierEgressWorkload *StandardTierEgressWorkload `json:"standardTierEgressWorkload,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
-	// "CloudStorageWorkload") to unconditionally include in API requests.
+	// "CloudCdnEgressWorkload") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -1542,10 +2014,10 @@ type Workload struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudStorageWorkload") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "CloudCdnEgressWorkload")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.

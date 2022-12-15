@@ -2169,10 +2169,10 @@ func (s *GoogleCloudRetailV2alphaConditionTimeRange) MarshalJSON() ([]byte, erro
 // be linked to a ServingConfig and affect search or recommendation
 // results at serving time.
 type GoogleCloudRetailV2alphaControl struct {
-	// AssociatedServingConfigIds: Output only. List of serving
-	// configuration ids that are associated with this control in the same
-	// Catalog. Note the association is managed via the ServingConfig, this
-	// is an output only denormalized view.
+	// AssociatedServingConfigIds: Output only. List of serving config ids
+	// that are associated with this control in the same Catalog. Note the
+	// association is managed via the ServingConfig, this is an output only
+	// denormalized view.
 	AssociatedServingConfigIds []string `json:"associatedServingConfigIds,omitempty"`
 
 	// DisplayName: Required. The human readable control display name. Used
@@ -3650,8 +3650,8 @@ func (s *GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRetailV2alphaModelPageOptimizationConfig: The
 // PageOptimizationConfig for model training. This determines how many
-// panels to optimize for, and which serving configurations to consider
-// for each panel. The purpose of this model is to optimize which
+// panels to optimize for, and which serving configs to consider for
+// each panel. The purpose of this model is to optimize which
 // ServingConfig to show on which panels in way that optimizes the
 // visitors shopping journey.
 type GoogleCloudRetailV2alphaModelPageOptimizationConfig struct {
@@ -15491,10 +15491,9 @@ type ProjectsLocationsCatalogsPlacementsPredictCall struct {
 //     `placements` is a legacy resource. The ID of the Recommendations AI
 //     serving config or placement. Before you can request predictions
 //     from your model, you must create at least one serving config or
-//     placement for it. For more information, see [Managing serving
-//     configurations]
-//     (https://cloud.google.com/retail/docs/manage-configs). The full
-//     list of available serving configs can be seen at
+//     placement for it. For more information, see [Manage serving
+//     configs] (https://cloud.google.com/retail/docs/manage-configs). The
+//     full list of available serving configs can be seen at
 //     https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsPlacementsService) Predict(placement string, googlecloudretailv2alphapredictrequest *GoogleCloudRetailV2alphaPredictRequest) *ProjectsLocationsCatalogsPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15604,7 +15603,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: `{placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*}` or `{placement=projects/*/locations/global/catalogs/default_catalog/placements/*}`. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "description": "Required. Full resource name of the format: `{placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*}` or `{placement=projects/*/locations/global/catalogs/default_catalog/placements/*}`. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Manage serving configs] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -15646,9 +15645,8 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 //     /default_serving_config` or the name of the legacy placement
 //     resource, such as
 //     `projects/*/locations/global/catalogs/default_catalog/placements/def
-//     ault_search`. This field is used to identify the serving
-//     configuration name and the set of models that will be used to make
-//     the search.
+//     ault_search`. This field is used to identify the serving config
+//     name and the set of models that will be used to make the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2alphasearchrequest *GoogleCloudRetailV2alphaSearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
 	c := &ProjectsLocationsCatalogsPlacementsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -15757,7 +15755,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -16774,10 +16772,9 @@ type ProjectsLocationsCatalogsServingConfigsPredictCall struct {
 //     `placements` is a legacy resource. The ID of the Recommendations AI
 //     serving config or placement. Before you can request predictions
 //     from your model, you must create at least one serving config or
-//     placement for it. For more information, see [Managing serving
-//     configurations]
-//     (https://cloud.google.com/retail/docs/manage-configs). The full
-//     list of available serving configs can be seen at
+//     placement for it. For more information, see [Manage serving
+//     configs] (https://cloud.google.com/retail/docs/manage-configs). The
+//     full list of available serving configs can be seen at
 //     https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Predict(placement string, googlecloudretailv2alphapredictrequest *GoogleCloudRetailV2alphaPredictRequest) *ProjectsLocationsCatalogsServingConfigsPredictCall {
 	c := &ProjectsLocationsCatalogsServingConfigsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -16887,7 +16884,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. Full resource name of the format: `{placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*}` or `{placement=projects/*/locations/global/catalogs/default_catalog/placements/*}`. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Managing serving configurations] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
+	//       "description": "Required. Full resource name of the format: `{placement=projects/*/locations/global/catalogs/default_catalog/servingConfigs/*}` or `{placement=projects/*/locations/global/catalogs/default_catalog/placements/*}`. We recommend using the `servingConfigs` resource. `placements` is a legacy resource. The ID of the Recommendations AI serving config or placement. Before you can request predictions from your model, you must create at least one serving config or placement for it. For more information, see [Manage serving configs] (https://cloud.google.com/retail/docs/manage-configs). The full list of available serving configs can be seen at https://console.cloud.google.com/ai/retail/catalogs/default_catalog/configs",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,
@@ -17076,9 +17073,8 @@ type ProjectsLocationsCatalogsServingConfigsSearchCall struct {
 //     /default_serving_config` or the name of the legacy placement
 //     resource, such as
 //     `projects/*/locations/global/catalogs/default_catalog/placements/def
-//     ault_search`. This field is used to identify the serving
-//     configuration name and the set of models that will be used to make
-//     the search.
+//     ault_search`. This field is used to identify the serving config
+//     name and the set of models that will be used to make the search.
 func (r *ProjectsLocationsCatalogsServingConfigsService) Search(placement string, googlecloudretailv2alphasearchrequest *GoogleCloudRetailV2alphaSearchRequest) *ProjectsLocationsCatalogsServingConfigsSearchCall {
 	c := &ProjectsLocationsCatalogsServingConfigsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -17187,7 +17183,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
+	//       "description": "Required. The resource name of the Retail Search serving config, such as `projects/*/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config` or the name of the legacy placement resource, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving config name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/servingConfigs/[^/]+$",
 	//       "required": true,
@@ -17914,6 +17910,16 @@ func (r *ProjectsLocationsCatalogsUserEventsService) Write(parent string, google
 	return c
 }
 
+// WriteAsync sets the optional parameter "writeAsync": If set to true,
+// the user event will be written asynchronously after validation, and
+// the API will respond without waiting for the write. Therefore, silent
+// failures can occur even if the API returns success. In case of silent
+// failures, error messages can be found in Stackdriver logs.
+func (c *ProjectsLocationsCatalogsUserEventsWriteCall) WriteAsync(writeAsync bool) *ProjectsLocationsCatalogsUserEventsWriteCall {
+	c.urlParams_.Set("writeAsync", fmt.Sprint(writeAsync))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18020,6 +18026,11 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Do(opts ...googleapi.Call
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "writeAsync": {
+	//       "description": "If set to true, the user event will be written asynchronously after validation, and the API will respond without waiting for the write. Therefore, silent failures can occur even if the API returns success. In case of silent failures, error messages can be found in Stackdriver logs.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v2alpha/{+parent}/userEvents:write",

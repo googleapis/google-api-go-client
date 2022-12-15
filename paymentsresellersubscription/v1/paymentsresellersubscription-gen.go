@@ -1274,7 +1274,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	// line item is pending a prorated charge at the end of the free trial
 	// period, as indicated by `line_item_free_trial_end_time`.
 	//   "LINE_ITEM_STATE_DEACTIVATING" - The line item is being
-	// deactivated.
+	// deactivated, and a prorated refund in being processed.
+	//   "LINE_ITEM_STATE_WAITING_TO_DEACTIVATE" - The line item is
+	// scheduled to be deactivated at the end of the current cycle.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to

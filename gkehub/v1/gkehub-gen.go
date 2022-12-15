@@ -574,7 +574,8 @@ func (s *CommonFeatureState) MarshalJSON() ([]byte, error) {
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
 	// AllowVerticalScale: Set to true to allow the vertical scaling.
-	// Defaults to false which disallows vertical scaling.
+	// Defaults to false which disallows vertical scaling. This field is
+	// deprecated.
 	AllowVerticalScale bool `json:"allowVerticalScale,omitempty"`
 
 	// Enabled: Enables the installation of ConfigSync. If set to true,
@@ -2823,6 +2824,10 @@ func (s *MembershipEndpoint) MarshalJSON() ([]byte, error) {
 type MembershipFeatureSpec struct {
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
+
+	// FleetInherited: True if value of `feature_spec` was inherited from a
+	// fleet-level default.
+	FleetInherited bool `json:"fleetInherited,omitempty"`
 
 	// Fleetobservability: Fleet observability membership spec
 	Fleetobservability *FleetObservabilityMembershipSpec `json:"fleetobservability,omitempty"`

@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//	chatService, err := chat.NewService(ctx, option.WithScopes(chat.ChatMessagesReadonlyScope))
+//	chatService, err := chat.NewService(ctx, option.WithScopes(chat.ChatSpacesReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -96,6 +96,13 @@ const (
 
 	// View messages and reactions in Google Chat
 	ChatMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.messages.readonly"
+
+	// Create conversations and spaces and view or update metadata
+	// (including history settings) in Google Chat
+	ChatSpacesScope = "https://www.googleapis.com/auth/chat.spaces"
+
+	// View chat and spaces in Google Chat
+	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 )
 
 // NewService creates a new Service.
@@ -105,6 +112,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages",
 		"https://www.googleapis.com/auth/chat.messages.create",
 		"https://www.googleapis.com/auth/chat.messages.readonly",
+		"https://www.googleapis.com/auth/chat.spaces",
+		"https://www.googleapis.com/auth/chat.spaces.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -5825,7 +5834,11 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Space"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.spaces",
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//   ]
 	// }
 
 }
@@ -5995,7 +6008,11 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//   "path": "v1/spaces",
 	//   "response": {
 	//     "$ref": "ListSpacesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.spaces",
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//   ]
 	// }
 
 }
@@ -6641,6 +6658,10 @@ type SpacesMessagesCreateCall struct {
 // access to certain features. User authentication
 // (https://developers.google.com/chat/api/guides/auth/users) requires
 // the `chat.messages` or `chat.messages.create` authorization scope.
+// Because Chat provides authentication for webhooks
+// (https://developers.google.com/chat/how-tos/webhooks) as part of the
+// URL that's generated when a webhook is registered, webhooks can
+// create messages without a service account or user authentication.
 //
 //   - parent: The resource name of the space in which to create a
 //     message. Format: spaces/{space}.
@@ -6794,7 +6815,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a message. For example usage, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope.",
+	//   "description": "Creates a message. For example usage, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope. Because Chat provides authentication for [webhooks](https://developers.google.com/chat/how-tos/webhooks) as part of the URL that's generated when a webhook is registered, webhooks can create messages without a service account or user authentication.",
 	//   "flatPath": "v1/spaces/{spacesId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.create",

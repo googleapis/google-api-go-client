@@ -2322,6 +2322,7 @@ func (s *Route) MarshalJSON() ([]byte, error) {
 // SingleTargetDataset: A single target dataset to which all data will
 // be streamed.
 type SingleTargetDataset struct {
+	// DatasetId: The dataset ID of the target dataset.
 	DatasetId string `json:"datasetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to
@@ -5162,6 +5163,13 @@ func (r *ProjectsLocationsPrivateConnectionsService) Create(parent string, priva
 	return c
 }
 
+// Force sets the optional parameter "force": If set to true, will skip
+// validations.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) Force(force bool) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // PrivateConnectionId sets the optional parameter
 // "privateConnectionId": Required. The private connectivity identifier.
 func (c *ProjectsLocationsPrivateConnectionsCreateCall) PrivateConnectionId(privateConnectionId string) *ProjectsLocationsPrivateConnectionsCreateCall {
@@ -5285,6 +5293,11 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.Cal
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. If set to true, will skip validations.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The parent that owns the collection of PrivateConnections.",
 	//       "location": "path",

@@ -574,12 +574,12 @@ type CreateImageRequest struct {
 	// ElementProperties: The element properties for the image. When the
 	// aspect ratio of the provided size does not match the image aspect
 	// ratio, the image is scaled and centered with respect to the size in
-	// order to maintain aspect ratio. The provided transform is applied
+	// order to maintain the aspect ratio. The provided transform is applied
 	// after this operation. The PageElementProperties.size property is
 	// optional. If you don't specify the size, the default size of the
 	// image is used. The PageElementProperties.transform property is
 	// optional. If you don't specify a transform, the image will be placed
-	// at the top left corner of the page.
+	// at the top-left corner of the page.
 	ElementProperties *PageElementProperties `json:"elementProperties,omitempty"`
 
 	// ObjectId: A user-supplied object ID. If you specify an ID, it must be
@@ -593,10 +593,10 @@ type CreateImageRequest struct {
 
 	// Url: The image URL. The image is fetched once at insertion time and a
 	// copy is stored for display inside the presentation. Images must be
-	// less than 50MB in size, cannot exceed 25 megapixels, and must be in
-	// one of PNG, JPEG, or GIF format. The provided URL can be at most 2 kB
-	// in length. The URL itself is saved with the image, and exposed via
-	// the Image.source_url field.
+	// less than 50 MB in size, can't exceed 25 megapixels, and must be in
+	// one of PNG, JPEG, or GIF formats. The provided URL can be up to 2 KB
+	// in length. The URL is saved with the image, and exposed through the
+	// Image.source_url field.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ElementProperties")

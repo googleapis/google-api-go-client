@@ -1068,9 +1068,9 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Contact: Representa a single contact's email address
+// Contact: The email address of a contact.
 type Contact struct {
-	// Email: An email address e.g. "person123@company.com"
+	// Email: An email address. For example, "person123@company.com".
 	Email string `json:"email,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -2214,8 +2214,8 @@ type GoogleCloudSecuritycenterV1Binding struct {
 	// Role: The Role or ClusterRole referenced by the binding.
 	Role *Role `json:"role,omitempty"`
 
-	// Subjects: Represents the subjects(s) bound to the role. Not always
-	// available for PATCH requests.
+	// Subjects: Represents one or more subjects that are bound to the role.
+	// Not always available for PATCH requests.
 	Subjects []*Subject `json:"subjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3447,16 +3447,18 @@ func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Indicator: Represents what's commonly known as an Indicator of
-// compromise (IoC) in computer forensics. This is an artifact observed
+// Indicator: Represents what's commonly known as an _indicator of
+// compromise_ (IoC) in computer forensics. This is an artifact observed
 // on a network or in an operating system that, with high confidence,
-// indicates a computer intrusion. Reference:
-// https://en.wikipedia.org/wiki/Indicator_of_compromise
+// indicates a computer intrusion. For more information, see Indicator
+// of compromise
+// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 type Indicator struct {
 	// Domains: List of domains associated to the Finding.
 	Domains []string `json:"domains,omitempty"`
 
-	// IpAddresses: List of ip addresses associated to the Finding.
+	// IpAddresses: The list of IP addresses that are associated with the
+	// finding.
 	IpAddresses []string `json:"ipAddresses,omitempty"`
 
 	// Signatures: The list of matched signatures indicating that the given
@@ -3495,7 +3497,7 @@ type KernelRootkit struct {
 	Name string `json:"name,omitempty"`
 
 	// UnexpectedCodeModification: True when unexpected modifications of
-	// kernel read-only data memory are present.
+	// kernel code memory are present.
 	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
 
 	// UnexpectedFtraceHandler: True when `ftrace` points are present with
@@ -3521,8 +3523,8 @@ type KernelRootkit struct {
 	// but not in the process task list.
 	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
 
-	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
-	// modifications of kernel read-only data memory.
+	// UnexpectedReadOnlyDataModification: True when unexpected
+	// modifications of kernel read-only data memory are present.
 	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
 
 	// UnexpectedSystemCallHandler: True when system call handlers that are
@@ -3552,7 +3554,7 @@ func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Kubernetes: Kubernetes related attributes.
+// Kubernetes: Kubernetes-related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
 	// (i.e. privilege checks) relevant to the finding.
@@ -4994,13 +4996,7 @@ func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 }
 
 // SetFindingStateRequest: Request message for updating a finding's
-// state. The relative resource name
-// (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
-// of the finding. Example:
-// "organizations/{organization_id}/sources/{source_id}/findings/{finding
-// _id}",
-// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
-// "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
+// state.
 type SetFindingStateRequest struct {
 	// StartTime: Required. The time at which the updated state takes
 	// effect.
@@ -5431,9 +5427,9 @@ type FoldersAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the parent to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5541,7 +5537,7 @@ func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsR
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -5596,9 +5592,9 @@ type FoldersAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the parent assets should belong to. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent that the listed assets belong to.
+//     Its format is "organizations/[organization_id],
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5869,7 +5865,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -6105,9 +6101,9 @@ type FoldersBigQueryExportsCreateCall struct {
 
 // Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new BigQuery export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *FoldersBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *FoldersBigQueryExportsCreateCall {
 	c := &FoldersBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6232,7 +6228,7 @@ func (c *FoldersBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -6265,7 +6261,7 @@ type FoldersBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the BigQuery export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -6370,7 +6366,7 @@ func (c *FoldersBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*Em
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -7881,8 +7877,8 @@ func (r *FoldersNotificationConfigsService) Create(parent string, notificationco
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contain alphanumeric characters,
-// underscores or hyphens only.
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
 func (c *FoldersNotificationConfigsCreateCall) ConfigId(configId string) *FoldersNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -7988,7 +7984,7 @@ func (c *FoldersNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8311,9 +8307,9 @@ type FoldersNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the parent to list notification configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *FoldersNotificationConfigsService) List(parent string) *FoldersNotificationConfigsListCall {
 	c := &FoldersNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8456,7 +8452,7 @@ func (c *FoldersNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -8672,8 +8668,8 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8816,7 +8812,7 @@ func (c *FoldersSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -9682,7 +9678,13 @@ type FoldersSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: .
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9790,6 +9792,7 @@ func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -10470,9 +10473,9 @@ type OrganizationsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the parent to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10580,7 +10583,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -10635,9 +10638,9 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the parent assets should belong to. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent that the listed assets belong to.
+//     Its format is "organizations/[organization_id],
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10908,7 +10911,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -11290,9 +11293,9 @@ type OrganizationsBigQueryExportsCreateCall struct {
 
 // Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new BigQuery export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *OrganizationsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *OrganizationsBigQueryExportsCreateCall {
 	c := &OrganizationsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11417,7 +11420,7 @@ func (c *OrganizationsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -11450,7 +11453,7 @@ type OrganizationsBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the BigQuery export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -11555,7 +11558,7 @@ func (c *OrganizationsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -13066,8 +13069,8 @@ func (r *OrganizationsNotificationConfigsService) Create(parent string, notifica
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contain alphanumeric characters,
-// underscores or hyphens only.
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
 func (c *OrganizationsNotificationConfigsCreateCall) ConfigId(configId string) *OrganizationsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -13173,7 +13176,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13496,9 +13499,9 @@ type OrganizationsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the parent to list notification configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13641,7 +13644,7 @@ func (c *OrganizationsNotificationConfigsListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -14929,8 +14932,8 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15073,7 +15076,7 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -16546,7 +16549,13 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: .
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16654,6 +16663,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,
@@ -17028,9 +17038,9 @@ type ProjectsAssetsGroupCall struct {
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
 //
-//   - parent: Name of the parent to groupBy. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent to group the assets by. Its format
+//     is "organizations/[organization_id]", "folders/[folder_id]", or
+//     "projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17138,7 +17148,7 @@ func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssets
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the parent to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent to group the assets by. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17193,9 +17203,9 @@ type ProjectsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: Name of the parent assets should belong to. Its format is
-//     "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//   - parent: The name of the parent that the listed assets belong to.
+//     Its format is "organizations/[organization_id],
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17466,7 +17476,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17702,9 +17712,9 @@ type ProjectsBigQueryExportsCreateCall struct {
 
 // Create: Creates a BigQuery export.
 //
-//   - parent: Resource name of the new BigQuery export's parent. Its
-//     format is "organizations/[organization_id]", "folders/[folder_id]",
-//     or "projects/[project_id]".
+//   - parent: The name of the parent resource of the new BigQuery export.
+//     Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *ProjectsBigQueryExportsService) Create(parent string, googlecloudsecuritycenterv1bigqueryexport *GoogleCloudSecuritycenterV1BigQueryExport) *ProjectsBigQueryExportsCreateCall {
 	c := &ProjectsBigQueryExportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17829,7 +17839,7 @@ func (c *ProjectsBigQueryExportsCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the new BigQuery export's parent. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource of the new BigQuery export. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17862,7 +17872,7 @@ type ProjectsBigQueryExportsDeleteCall struct {
 
 // Delete: Deletes an existing BigQuery export.
 //
-//   - name: Name of the BigQuery export to delete. Its format is
+//   - name: The name of the BigQuery export to delete. Its format is
 //     organizations/{organization}/bigQueryExports/{export_id},
 //     folders/{folder}/bigQueryExports/{export_id}, or
 //     projects/{project}/bigQueryExports/{export_id}.
@@ -17967,7 +17977,7 @@ func (c *ProjectsBigQueryExportsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
+	//       "description": "Required. The name of the BigQuery export to delete. Its format is organizations/{organization}/bigQueryExports/{export_id}, folders/{folder}/bigQueryExports/{export_id}, or projects/{project}/bigQueryExports/{export_id}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/bigQueryExports/[^/]+$",
 	//       "required": true,
@@ -19478,8 +19488,8 @@ func (r *ProjectsNotificationConfigsService) Create(parent string, notificationc
 
 // ConfigId sets the optional parameter "configId": Required. Unique
 // identifier provided by the client within the parent scope. It must be
-// between 1 and 128 characters, and contain alphanumeric characters,
-// underscores or hyphens only.
+// between 1 and 128 characters and contain alphanumeric characters,
+// underscores, or hyphens only.
 func (c *ProjectsNotificationConfigsCreateCall) ConfigId(configId string) *ProjectsNotificationConfigsCreateCall {
 	c.urlParams_.Set("configId", configId)
 	return c
@@ -19585,7 +19595,7 @@ func (c *ProjectsNotificationConfigsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "configId": {
-	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters, and contain alphanumeric characters, underscores or hyphens only.",
+	//       "description": "Required. Unique identifier provided by the client within the parent scope. It must be between 1 and 128 characters and contain alphanumeric characters, underscores, or hyphens only.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19908,9 +19918,9 @@ type ProjectsNotificationConfigsListCall struct {
 
 // List: Lists notification configs.
 //
-//   - parent: Name of the parent to list notification configs. Its format
-//     is "organizations/[organization_id]", "folders/[folder_id]", or
-//     "projects/[project_id]".
+//   - parent: The name of the parent in which to list the notification
+//     configurations. Its format is "organizations/[organization_id]",
+//     "folders/[folder_id]", or "projects/[project_id]".
 func (r *ProjectsNotificationConfigsService) List(parent string) *ProjectsNotificationConfigsListCall {
 	c := &ProjectsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20053,7 +20063,7 @@ func (c *ProjectsNotificationConfigsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent to list notification configs. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent in which to list the notification configurations. Its format is \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -20269,8 +20279,8 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], folders/[folder_id], or
-//     projects/[project_id]".
+//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20413,7 +20423,7 @@ func (c *ProjectsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSources
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -21279,7 +21289,13 @@ type ProjectsSourcesFindingsSetStateCall struct {
 
 // SetState: Updates the state of a finding.
 //
-// - name: .
+//   - name: The relative resource name
+//     (https://cloud.google.com/apis/design/resource_names#relative_resource_name)
+//     of the finding. Example:
+//     "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//     ng_id}",
+//     "folders/{folder_id}/sources/{source_id}/findings/{finding_id}",
+//     "projects/{project_id}/sources/{source_id}/findings/{finding_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21387,6 +21403,7 @@ func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Required. The [relative resource name](https://cloud.google.com/apis/design/resource_names#relative_resource_name) of the finding. Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\", \"folders/{folder_id}/sources/{source_id}/findings/{finding_id}\", \"projects/{project_id}/sources/{source_id}/findings/{finding_id}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
 	//       "required": true,

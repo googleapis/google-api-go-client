@@ -5544,7 +5544,7 @@ type ListRoutinesResponse struct {
 	// Routines: Routines in the requested dataset. Unless read_mask is set
 	// in the request, only the following fields are populated: etag,
 	// project_id, dataset_id, routine_id, routine_type, creation_time,
-	// last_modified_time, and language.
+	// last_modified_time, language, and remote_function_options.
 	Routines []*Routine `json:"routines,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5644,6 +5644,10 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 type MaterializedViewDefinition struct {
+	// AllowNonIncrementalDefinition: [Optional] Allow non incremental
+	// materialized view definition. The default value is "false".
+	AllowNonIncrementalDefinition bool `json:"allow_non_incremental_definition,omitempty"`
+
 	// EnableRefresh: [Optional] [TrustedTester] Enable automatic refresh of
 	// the materialized view when the base table is updated. The default
 	// value is "true".
@@ -5666,20 +5670,22 @@ type MaterializedViewDefinition struct {
 	// is "1800000" (30 minutes).
 	RefreshIntervalMs int64 `json:"refreshIntervalMs,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "EnableRefresh") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowNonIncrementalDefinition") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnableRefresh") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AllowNonIncrementalDefinition") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7031,7 +7037,8 @@ type Routine struct {
 	// stores the path of the imported JAVASCRIPT libraries.
 	ImportedLibraries []string `json:"importedLibraries,omitempty"`
 
-	// Language: Optional. Defaults to "SQL".
+	// Language: Optional. Defaults to "SQL" if remote_function_options
+	// field is absent, not set otherwise.
 	//
 	// Possible values:
 	//   "LANGUAGE_UNSPECIFIED"
@@ -7051,7 +7058,7 @@ type Routine struct {
 	// "TABLE_VALUED_FUNCTION". If absent, the return table type is inferred
 	// from definition_body at query time in each query that references this
 	// routine. If present, then the columns in the evaluated table result
-	// will be cast to match the column types specificed in return table
+	// will be cast to match the column types specified in return table
 	// type, at query time.
 	ReturnTableType *StandardSqlTableType `json:"returnTableType,omitempty"`
 

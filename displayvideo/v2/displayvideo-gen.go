@@ -973,7 +973,8 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
 	// BillingProfileId: The ID of a billing profile assigned to the
-	// advertiser.
+	// advertiser. This field will default to the default billing profile ID
+	// of the advertiser's parent partner if a value is not provided.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -1769,15 +1770,11 @@ type AssignedTargetingOption struct {
 	AssignedTargetingOptionId string `json:"assignedTargetingOptionId,omitempty"`
 
 	// AssignedTargetingOptionIdAlias: Output only. An alias for the
-	// assigned targeting option id field. This field is only supported for
-	// targeting types with enum targeting enabled. This value can be used
-	// in place of the assignedTargetingOptionId required for GET and DELETE
-	// targeting methods. An alias for the assignedTargetingOptionId. This
-	// value can be used in place of `assignedTargetingOptionId` when
-	// retrieving or deleting existing targeting. This field will only be
-	// supported for all assigned targeting options of the following
-	// targeting types: * `TARGETING_TYPE_AGE_RANGE` *
-	// `TARGETING_TYPE_DEVICE_TYPE` *
+	// assigned_targeting_option_id. This value can be used in place of
+	// `assignedTargetingOptionId` when retrieving or deleting existing
+	// targeting. This field will only be supported for all assigned
+	// targeting options of the following targeting types: *
+	// `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_DEVICE_TYPE` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *

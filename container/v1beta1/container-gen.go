@@ -1680,6 +1680,18 @@ type ClusterUpdate struct {
 	// DesiredShieldedNodes: Configuration for Shielded Nodes.
 	DesiredShieldedNodes *ShieldedNodes `json:"desiredShieldedNodes,omitempty"`
 
+	// DesiredStackType: The desired stack type of the cluster. If a stack
+	// type is provided and does not match the current stack type of the
+	// cluster, update will attempt to change the stack type to the new
+	// type.
+	//
+	// Possible values:
+	//   "STACK_TYPE_UNSPECIFIED" - By default, the clusters will be IPV4
+	// only
+	//   "IPV4" - The value used if the cluster is a IPV4 only
+	//   "IPV4_IPV6" - The value used if the cluster is a dual stack cluster
+	DesiredStackType string `json:"desiredStackType,omitempty"`
+
 	// DesiredTpuConfig: The desired Cloud TPU configuration.
 	DesiredTpuConfig *TpuConfig `json:"desiredTpuConfig,omitempty"`
 

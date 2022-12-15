@@ -612,8 +612,8 @@ type Consumer struct {
 	// all hosts in a subnet in the same region and same network. There must
 	// be at least one IP address available in the subnet's primary range.
 	// The subnet is specified in the following
-	// form:`projects/{project_number}/regions/{region_id}/subnetworks/{subne
-	// twork_id}
+	// form:projects/{project_number}/regions/{region_id}/subnetworks/{subnet
+	// work_id}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndpointUri") to
@@ -2066,6 +2066,31 @@ func (s *QueryMetadataResponse) MarshalJSON() ([]byte, error) {
 // RemoveIamPolicyRequest: Request message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyRequest struct {
+	// Asynchronous: Optional. Removes IAM policy attached to database or
+	// table asynchronously when it is set. The default is false.
+	Asynchronous bool `json:"asynchronous,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Asynchronous") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Asynchronous") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveIamPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // RemoveIamPolicyResponse: Response message for

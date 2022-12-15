@@ -962,7 +962,11 @@ type H264CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -1012,7 +1016,11 @@ type H264CodecSettings struct {
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowOpenGop") to
@@ -1111,7 +1119,11 @@ type H265CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -1165,7 +1177,11 @@ type H265CodecSettings struct {
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowOpenGop") to
@@ -1971,14 +1987,22 @@ type SpriteSheet struct {
 	// an even integer. To preserve the source aspect ratio, set the
 	// SpriteSheet.sprite_height_pixels field or the
 	// SpriteSheet.sprite_width_pixels field, but not both (the API will
-	// automatically calculate the missing field).
+	// automatically calculate the missing field). For portrait videos that
+	// contain horizontal ASR and rotation metadata, provide the height, in
+	// pixels, per the horizontal ASR. The API calculates the width per the
+	// horizontal ASR. The API detects any rotation metadata and swaps the
+	// requested height and width for the output.
 	SpriteHeightPixels int64 `json:"spriteHeightPixels,omitempty"`
 
 	// SpriteWidthPixels: Required. The width of sprite in pixels. Must be
 	// an even integer. To preserve the source aspect ratio, set the
 	// SpriteSheet.sprite_width_pixels field or the
 	// SpriteSheet.sprite_height_pixels field, but not both (the API will
-	// automatically calculate the missing field).
+	// automatically calculate the missing field). For portrait videos that
+	// contain horizontal ASR and rotation metadata, provide the width, in
+	// pixels, per the horizontal ASR. The API calculates the height per the
+	// horizontal ASR. The API detects any rotation metadata and swaps the
+	// requested height and width for the output.
 	SpriteWidthPixels int64 `json:"spriteWidthPixels,omitempty"`
 
 	// StartTimeOffset: Start time in seconds, relative to the output file
@@ -2196,7 +2220,11 @@ type Vp9CodecSettings struct {
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
-	// input height is used.
+	// input height is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the height, in pixels, per the
+	// horizontal ASR. The API calculates the width per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
@@ -2222,7 +2250,11 @@ type Vp9CodecSettings struct {
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
 	// specified height and input aspect ratio. If both are omitted, the
-	// input width is used.
+	// input width is used. For portrait videos that contain horizontal ASR
+	// and rotation metadata, provide the width, in pixels, per the
+	// horizontal ASR. The API calculates the height per the horizontal ASR.
+	// The API detects any rotation metadata and swaps the requested height
+	// and width for the output.
 	WidthPixels int64 `json:"widthPixels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BitrateBps") to

@@ -641,8 +641,8 @@ func (s *AlertMetadata) MarshalJSON() ([]byte, error) {
 // ApnsCertificateExpirationInfo: The explanation message associated
 // with ApnsCertificationExpiring and ApnsCertificationExpired alerts.
 type ApnsCertificateExpirationInfo struct {
-	// AppleId: The Apple ID used for the certificate, may be blank if
-	// admins did not enter it.
+	// AppleId: The Apple ID used for the certificate may be blank if admins
+	// didn't enter it.
 	AppleId string `json:"appleId,omitempty"`
 
 	// ExpirationTime: The expiration date of the APNS Certificate.
@@ -2509,6 +2509,94 @@ func (s *SuspiciousActivitySecurityDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TransferError: Details for an invalid transfer or forward.
+type TransferError struct {
+	// Email: User's email address. This may be unavailable if the entity
+	// was deleted.
+	Email string `json:"email,omitempty"`
+
+	// EntityType: Type of entity being transferred to. For ring group
+	// members, this should always be USER.
+	//
+	// Possible values:
+	//   "TRANSFER_ENTITY_TYPE_UNSPECIFIED" - Entity type wasn't set.
+	//   "TRANSFER_AUTO_ATTENDANT" - Transfer to auto attendant.
+	//   "TRANSFER_RING_GROUP" - Transfer to ring group.
+	//   "TRANSFER_USER" - Transfer to user.
+	EntityType string `json:"entityType,omitempty"`
+
+	// Id: Ring group or auto attendant ID. Not set for users.
+	Id string `json:"id,omitempty"`
+
+	// InvalidReason: Reason for the error.
+	//
+	// Possible values:
+	//   "TRANSFER_INVALID_REASON_UNSPECIFIED" - Reason wasn't specified.
+	//   "TRANSFER_TARGET_DELETED" - The transfer target can't be
+	// found—most likely it was deleted.
+	//   "UNLICENSED" - The user's Google Voice license was removed.
+	//   "SUSPENDED" - The user's Google Workspace account was suspended.
+	//   "NO_PHONE_NUMBER" - The transfer target no longer has a phone
+	// number. This reason should become deprecated once we support
+	// numberless transfer.
+	InvalidReason string `json:"invalidReason,omitempty"`
+
+	// Name: User's full name, or the ring group / auto attendant name. This
+	// may be unavailable if the entity was deleted.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransferError) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TransferMisconfiguration: Error related to transferring or forwarding
+// a phone call.
+type TransferMisconfiguration struct {
+	// Errors: Details for each invalid transfer or forward.
+	Errors []*TransferError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransferMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UndeleteAlertRequest: A request to undelete a specific alert that was
 // marked for deletion.
 type UndeleteAlertRequest struct {
@@ -2629,6 +2717,123 @@ type UserDefinedDetectorInfo struct {
 
 func (s *UserDefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefinedDetectorInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VoiceMisconfiguration: An alert triggered when Google Voice
+// configuration becomes invalid, generally due to an external entity
+// being modified or deleted.
+type VoiceMisconfiguration struct {
+	// EntityName: Name of the entity whose configuration is now invalid.
+	EntityName string `json:"entityName,omitempty"`
+
+	// EntityType: Type of the entity whose configuration is now invalid.
+	//
+	// Possible values:
+	//   "ENTITY_TYPE_UNSPECIFIED" - Entity type wasn't set.
+	//   "AUTO_ATTENDANT" - Invalid auto attendant.
+	//   "RING_GROUP" - Invalid ring group.
+	EntityType string `json:"entityType,omitempty"`
+
+	// FixUri: Link that the admin can follow to fix the issue.
+	FixUri string `json:"fixUri,omitempty"`
+
+	// MembersMisconfiguration: Issue(s) with members of a ring group.
+	MembersMisconfiguration *TransferMisconfiguration `json:"membersMisconfiguration,omitempty"`
+
+	// TransferMisconfiguration: Issue(s) with transferring or forwarding to
+	// an external entity.
+	TransferMisconfiguration *TransferMisconfiguration `json:"transferMisconfiguration,omitempty"`
+
+	// VoicemailMisconfiguration: Issue(s) with sending to voicemail.
+	VoicemailMisconfiguration *VoicemailMisconfiguration `json:"voicemailMisconfiguration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoiceMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod VoiceMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VoicemailMisconfiguration: Issue(s) with sending to voicemail.
+type VoicemailMisconfiguration struct {
+	// Errors: Issue(s) with voicemail recipients.
+	Errors []*VoicemailRecipientError `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoicemailMisconfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod VoicemailMisconfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VoicemailRecipientError: Issue(s) with a voicemail recipient.
+type VoicemailRecipientError struct {
+	// Email: Email address of the invalid recipient. This may be
+	// unavailable if the recipient was deleted.
+	Email string `json:"email,omitempty"`
+
+	// InvalidReason: Reason for the error.
+	//
+	// Possible values:
+	//   "EMAIL_INVALID_REASON_UNSPECIFIED" - Reason wasn't specified.
+	//   "OUT_OF_QUOTA" - User can't receive emails due to insufficient
+	// quota.
+	//   "RECIPIENT_DELETED" - All recipients were deleted.
+	InvalidReason string `json:"invalidReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VoicemailRecipientError) MarshalJSON() ([]byte, error) {
+	type NoMethod VoicemailRecipientError
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

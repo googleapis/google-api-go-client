@@ -37,6 +37,7 @@ golint ./... 2>&1 | ( \
   grep -v "exported method MarshalStyle.JSONReader should have comment or be unexported" | \
   grep -v "UnmarshalJSON should have comment or be unexported" | \
   grep -v "MarshalJSON should have comment or be unexported" | \
+  grep -v ".Apply should have comment or be unexported" | \
   grep -vE "\.pb\.go:" || true) | tee /dev/stderr | (! read)
 
 staticcheck -go 1.9 ./... 2>&1 | ( \

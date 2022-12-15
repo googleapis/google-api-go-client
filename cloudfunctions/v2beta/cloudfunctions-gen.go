@@ -658,7 +658,7 @@ type Function struct {
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
 
-	// Environment: Describe whether the function is gen1 or gen2.
+	// Environment: Describe whether the function is 1st Gen or 2nd Gen.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified

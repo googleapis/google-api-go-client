@@ -918,8 +918,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) 
 // GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest: The migrate key
 // request message.
 type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
-	// SkipBillingCheck: Optional. Whether or not to do billing check. A
-	// reCAPTCHA Enterprise or migrated key behaves differently than a
+	// SkipBillingCheck: Optional. If true, skips the billing check. A
+	// reCAPTCHA Enterprise key or migrated key behaves differently than a
 	// reCAPTCHA (non-Enterprise version) key when you reach a quota limit
 	// (see
 	// https://cloud.google.com/recaptcha-enterprise/quotas#quota_limit). To

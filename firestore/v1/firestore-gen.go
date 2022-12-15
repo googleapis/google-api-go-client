@@ -1507,13 +1507,6 @@ type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
 	// collections.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 
-	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred usage for databases that don't use namespaces. An empty
-	// string element represents the default namespace. This should be used
-	// if the database has data in non-default namespaces, but doesn't want
-	// to include them. Each namespace in this list must be unique.
-	NamespaceIds []string `json:"namespaceIds,omitempty"`
-
 	// OutputUriPrefix: The output URI. Currently only supports Google Cloud
 	// Storage URIs of the form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where
 	// `BUCKET_NAME` is the name of the Google Cloud Storage bucket and
@@ -1789,13 +1782,6 @@ type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
 	// has completed successfully. See:
 	// google.firestore.admin.v1.ExportDocumentsResponse.output_uri_prefix.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
-
-	// NamespaceIds: An empty list represents all namespaces. This is the
-	// preferred usage for databases that don't use namespaces. An empty
-	// string element represents the default namespace. This should be used
-	// if the database has data in non-default namespaces, but doesn't want
-	// to include them. Each namespace in this list must be unique.
-	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
 	// unconditionally include in API requests. By default, fields with
@@ -2586,7 +2572,8 @@ type ListDocumentsResponse struct {
 	// Documents: The Documents found.
 	Documents []*Document `json:"documents,omitempty"`
 
-	// NextPageToken: The next page token.
+	// NextPageToken: A token to retrieve the next page of documents. If
+	// this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4112,6 +4099,180 @@ func (c *ProjectsDatabasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//   "request": {
 	//     "$ref": "GoogleFirestoreAdminV1Database"
 	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.delete":
+
+type ProjectsDatabasesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a database.
+//
+//   - name: A name of the form
+//     `projects/{project_id}/databases/{database_id}`.
+func (r *ProjectsDatabasesService) Delete(name string) *ProjectsDatabasesDeleteCall {
+	c := &ProjectsDatabasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true and the Database is not found, the request will succeed but no
+// action will be taken.
+func (c *ProjectsDatabasesDeleteCall) AllowMissing(allowMissing bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the
+// Database. If an etag is provided and does not match the current etag
+// of the database, deletion will be blocked and a FAILED_PRECONDITION
+// error will be returned.
+func (c *ProjectsDatabasesDeleteCall) Etag(etag string) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validate the request and preview the response, but do not actually
+// delete the database.
+func (c *ProjectsDatabasesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesDeleteCall) Context(ctx context.Context) *ProjectsDatabasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a database.",
+	//   "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "firestore.projects.databases.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true and the Database is not found, the request will succeed but no action will be taken.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "The current etag of the Database. If an etag is provided and does not match the current etag of the database, deletion will be blocked and a FAILED_PRECONDITION error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "If set, validate the request and preview the response, but do not actually delete the database.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
 	//   },
@@ -7210,8 +7371,10 @@ type ProjectsDatabasesDocumentsListCall struct {
 
 // List: Lists documents.
 //
-//   - collectionId: The collection ID, relative to `parent`, to list. For
-//     example: `chatrooms` or `messages`.
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
 //   - parent: The parent resource name. In the format:
 //     `projects/{project_id}/databases/{database_id}/documents` or
 //     `projects/{project_id}/databases/{database_id}/documents/{document_p
@@ -7234,48 +7397,54 @@ func (c *ProjectsDatabasesDocumentsListCall) MaskFieldPaths(maskFieldPaths ...st
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to sort
-// results by. For example: `priority desc, name`.
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
 func (c *ProjectsDatabasesDocumentsListCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of documents to return.
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
 func (c *ProjectsDatabasesDocumentsListCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous List request, if
-// any.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
 func (c *ProjectsDatabasesDocumentsListCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Reads documents as
-// they were at the given time. This may not be older than 270 seconds.
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This may not be older than 270 seconds.
 func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
 }
 
 // ShowMissing sets the optional parameter "showMissing": If the list
-// should show missing documents. A missing document is a document that
-// does not exist but has sub-documents. These documents will be
-// returned with a key but will not have fields, Document.create_time,
-// or Document.update_time set. Requests with `show_missing` may not
-// specify `where` or `order_by`.
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
 func (c *ProjectsDatabasesDocumentsListCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
 	return c
 }
 
-// Transaction sets the optional parameter "transaction": Reads
-// documents in a transaction.
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
 func (c *ProjectsDatabasesDocumentsListCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("transaction", transaction)
 	return c
@@ -7391,7 +7560,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "collectionId": {
-	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`.",
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7403,18 +7572,18 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of documents to return.",
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7426,18 +7595,18 @@ func (c *ProjectsDatabasesDocumentsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showMissing": {
-	//       "description": "If the list should show missing documents. A missing document is a document that does not exist but has sub-documents. These documents will be returned with a key but will not have fields, Document.create_time, or Document.update_time set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "transaction": {
-	//       "description": "Reads documents in a transaction.",
+	//       "description": "Perform the read as part of an already active transaction.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
@@ -7659,8 +7828,10 @@ type ProjectsDatabasesDocumentsListDocumentsCall struct {
 
 // ListDocuments: Lists documents.
 //
-//   - collectionId: The collection ID, relative to `parent`, to list. For
-//     example: `chatrooms` or `messages`.
+//   - collectionId: Optional. The collection ID, relative to `parent`, to
+//     list. For example: `chatrooms` or `messages`. This is optional, and
+//     when not provided, Firestore will list documents from all
+//     collections under the provided `parent`.
 //   - parent: The parent resource name. In the format:
 //     `projects/{project_id}/databases/{database_id}/documents` or
 //     `projects/{project_id}/databases/{database_id}/documents/{document_p
@@ -7683,48 +7854,54 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) MaskFieldPaths(maskFieldPa
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to sort
-// results by. For example: `priority desc, name`.
+// OrderBy sets the optional parameter "orderBy": The optional ordering
+// of the documents to return. For example: `priority desc, __name__
+// desc`. This mirrors the `ORDER BY` used in Firestore queries but in a
+// string representation. When absent, documents are ordered based on
+// `__name__ ASC`.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) OrderBy(orderBy string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of documents to return.
+// of documents to return in a single response. Firestore may return
+// fewer than this value.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// `next_page_token` value returned from a previous List request, if
-// any.
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDocuments` response. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// (with the exception of `page_size`) must match the values set in the
+// request that generated the page token.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadTime sets the optional parameter "readTime": Reads documents as
-// they were at the given time. This may not be older than 270 seconds.
+// ReadTime sets the optional parameter "readTime": Perform the read at
+// the provided time. This may not be older than 270 seconds.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("readTime", readTime)
 	return c
 }
 
 // ShowMissing sets the optional parameter "showMissing": If the list
-// should show missing documents. A missing document is a document that
-// does not exist but has sub-documents. These documents will be
-// returned with a key but will not have fields, Document.create_time,
-// or Document.update_time set. Requests with `show_missing` may not
-// specify `where` or `order_by`.
+// should show missing documents. A document is missing if it does not
+// exist, but there are sub-documents nested underneath it. When true,
+// such missing documents will be returned with a key but will not have
+// fields, `create_time`, or `update_time` set. Requests with
+// `show_missing` may not specify `where` or `order_by`.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) ShowMissing(showMissing bool) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("showMissing", fmt.Sprint(showMissing))
 	return c
 }
 
-// Transaction sets the optional parameter "transaction": Reads
-// documents in a transaction.
+// Transaction sets the optional parameter "transaction": Perform the
+// read as part of an already active transaction.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) Transaction(transaction string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("transaction", transaction)
 	return c
@@ -7840,7 +8017,7 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "collectionId": {
-	//       "description": "Required. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`.",
+	//       "description": "Optional. The collection ID, relative to `parent`, to list. For example: `chatrooms` or `messages`. This is optional, and when not provided, Firestore will list documents from all collections under the provided `parent`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -7852,18 +8029,18 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The order to sort results by. For example: `priority desc, name`.",
+	//       "description": "Optional. The optional ordering of the documents to return. For example: `priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore queries but in a string representation. When absent, documents are ordered based on `__name__ ASC`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of documents to return.",
+	//       "description": "Optional. The maximum number of documents to return in a single response. Firestore may return fewer than this value.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The `next_page_token` value returned from a previous List request, if any.",
+	//       "description": "Optional. A page token, received from a previous `ListDocuments` response. Provide this to retrieve the subsequent page. When paginating, all other parameters (with the exception of `page_size`) must match the values set in the request that generated the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7875,18 +8052,18 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "readTime": {
-	//       "description": "Reads documents as they were at the given time. This may not be older than 270 seconds.",
+	//       "description": "Perform the read at the provided time. This may not be older than 270 seconds.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "showMissing": {
-	//       "description": "If the list should show missing documents. A missing document is a document that does not exist but has sub-documents. These documents will be returned with a key but will not have fields, Document.create_time, or Document.update_time set. Requests with `show_missing` may not specify `where` or `order_by`.",
+	//       "description": "If the list should show missing documents. A document is missing if it does not exist, but there are sub-documents nested underneath it. When true, such missing documents will be returned with a key but will not have fields, `create_time`, or `update_time` set. Requests with `show_missing` may not specify `where` or `order_by`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "transaction": {
-	//       "description": "Reads documents in a transaction.",
+	//       "description": "Perform the read as part of an already active transaction.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"

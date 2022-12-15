@@ -525,8 +525,8 @@ type Consumer struct {
 	// all hosts in a subnet in the same region and same network. There must
 	// be at least one IP address available in the subnet's primary range.
 	// The subnet is specified in the following
-	// form:`projects/{project_number}/regions/{region_id}/subnetworks/{subne
-	// twork_id}
+	// form:projects/{project_number}/regions/{region_id}/subnetworks/{subnet
+	// work_id}
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndpointUri") to

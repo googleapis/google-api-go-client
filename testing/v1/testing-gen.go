@@ -2802,8 +2802,6 @@ type TestMatrix struct {
 	// unsupported
 	//   "MATRIX_TOO_LARGE" - The matrix expanded to contain too many
 	// executions.
-	//   "DEVICE_QUOTA_EXCEEDED" - Deprecated: Not enough device quota to
-	// run the executions in this matrix.
 	//   "TEST_QUOTA_EXCEEDED" - Not enough test quota to run the executions
 	// in this matrix.
 	//   "SERVICE_NOT_ACTIVATED" - A required cloud service api is not

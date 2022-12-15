@@ -246,10 +246,22 @@ type ProjectsRegionsAutoscalingPoliciesService struct {
 
 func NewProjectsRegionsClustersService(s *Service) *ProjectsRegionsClustersService {
 	rs := &ProjectsRegionsClustersService{s: s}
+	rs.NodeGroups = NewProjectsRegionsClustersNodeGroupsService(s)
 	return rs
 }
 
 type ProjectsRegionsClustersService struct {
+	s *Service
+
+	NodeGroups *ProjectsRegionsClustersNodeGroupsService
+}
+
+func NewProjectsRegionsClustersNodeGroupsService(s *Service) *ProjectsRegionsClustersNodeGroupsService {
+	rs := &ProjectsRegionsClustersNodeGroupsService{s: s}
+	return rs
+}
+
+type ProjectsRegionsClustersNodeGroupsService struct {
 	s *Service
 }
 
@@ -422,6 +434,41 @@ type AutoscalingPolicy struct {
 
 func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuxiliaryNodeGroup: Node group identification and configuration
+// information.
+type AuxiliaryNodeGroup struct {
+	// NodeGroup: Required. Node group configuration.
+	NodeGroup *NodeGroup `json:"nodeGroup,omitempty"`
+
+	// NodeGroupId: Optional. A node group ID. Generated if not
+	// specified.The ID must contain only letters (a-z, A-Z), numbers (0-9),
+	// underscores (_), and hyphens (-). Cannot begin or end with underscore
+	// or hyphen. Must consist of from 3 to 33 characters.
+	NodeGroupId string `json:"nodeGroupId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NodeGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NodeGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuxiliaryNodeGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AuxiliaryNodeGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -913,6 +960,9 @@ type ClusterConfig struct {
 	// associated with the cluster. Cluster does not autoscale if this field
 	// is unset.
 	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
+
+	// AuxiliaryNodeGroups: Optional. The node group settings.
+	AuxiliaryNodeGroups []*AuxiliaryNodeGroup `json:"auxiliaryNodeGroups,omitempty"`
 
 	// ConfigBucket: Optional. A Cloud Storage bucket used to stage job
 	// dependencies, config files, and job driver console output. If you do
@@ -1443,6 +1493,38 @@ func (s *DiskConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DriverSchedulingConfig: Driver scheduling configuration.
+type DriverSchedulingConfig struct {
+	// MemoryMb: Required. The amount of memory in MB the driver is
+	// requesting.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// Vcores: Required. The number of vCPUs the driver is requesting.
+	Vcores int64 `json:"vcores,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MemoryMb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MemoryMb") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriverSchedulingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DriverSchedulingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1560,7 +1642,7 @@ type ExecutionConfig struct {
 	// terminated. Minimum value is 10 minutes; maximum value is 14 days
 	// (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
-	// Defaults to 10 minutes if not set.
+	// Defaults to 4 hours if not set.
 	IdleTtl string `json:"idleTtl,omitempty"`
 
 	// KmsKey: Optional. The Cloud KMS key to use for encryption.
@@ -2621,6 +2703,9 @@ type Job struct {
 	// of the stdout of the job's driver program.
 	DriverOutputResourceUri string `json:"driverOutputResourceUri,omitempty"`
 
+	// DriverSchedulingConfig: Optional. Driver scheduling configuration.
+	DriverSchedulingConfig *DriverSchedulingConfig `json:"driverSchedulingConfig,omitempty"`
+
 	// HadoopJob: Optional. Job is a Hadoop job.
 	HadoopJob *HadoopJob `json:"hadoopJob,omitempty"`
 
@@ -2829,20 +2914,18 @@ type JobScheduling struct {
 	// MaxFailuresPerHour: Optional. Maximum number of times per hour a
 	// driver may be restarted as a result of driver exiting with non-zero
 	// code before job is reported failed.A job may be reported as thrashing
-	// if driver exits with non-zero code 4 times within 10 minute
-	// window.Maximum value is 10.Note: Currently, this restartable job
-	// option is not supported in Dataproc workflow template
-	// (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template)
-	// jobs.
+	// if the driver exits with a non-zero code four times within a
+	// 10-minute window.Maximum value is 10.Note: This restartable job
+	// option is not supported in Dataproc workflow templates
+	// (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template).
 	MaxFailuresPerHour int64 `json:"maxFailuresPerHour,omitempty"`
 
-	// MaxFailuresTotal: Optional. Maximum number of times in total a driver
-	// may be restarted as a result of driver exiting with non-zero code
-	// before job is reported failed. Maximum value is 240.Note: Currently,
-	// this restartable job option is not supported in Dataproc workflow
-	// template
-	// (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template)
-	// jobs.
+	// MaxFailuresTotal: Optional. Maximum total number of times a driver
+	// may be restarted as a result of the driver exiting with a non-zero
+	// code. After the maximum number is reached, the job will be reported
+	// as failed.Maximum value is 240.Note: Currently, this restartable job
+	// option is not supported in Dataproc workflow templates
+	// (https://cloud.google.com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template).
 	MaxFailuresTotal int64 `json:"maxFailuresTotal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxFailuresPerHour")
@@ -3642,8 +3725,61 @@ func (s *NamespacedGkeDeploymentTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeGroup: Dataproc Node Group. The Dataproc NodeGroup resource is
+// not related to the Dataproc NodeGroupAffinity resource.
+type NodeGroup struct {
+	// Labels: Optional. Node group labels. Label keys must consist of from
+	// 1 to 63 characters and conform to RFC 1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty. If
+	// specified, they must consist of from 1 to 63 characters and conform
+	// to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). The node group
+	// must have no more than 32 labelsn.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: The Node group resource name (https://aip.dev/122).
+	Name string `json:"name,omitempty"`
+
+	// NodeGroupConfig: Optional. The node group instance group
+	// configuration.
+	NodeGroupConfig *InstanceGroupConfig `json:"nodeGroupConfig,omitempty"`
+
+	// Roles: Required. Node group roles.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Required unspecified role.
+	//   "DRIVER" - Job drivers run on the node pool.
+	Roles []string `json:"roles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeGroupAffinity: Node Group Affinity for clusters using sole-tenant
-// node groups.
+// node groups. The Dataproc NodeGroupAffinity resource is not related
+// to the Dataproc NodeGroup resource.
 type NodeGroupAffinity struct {
 	// NodeGroupUri: Required. The URI of a sole-tenant node group resource
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups)
@@ -4523,6 +4659,62 @@ func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResizeNodeGroupRequest: A request to resize a node group.
+type ResizeNodeGroupRequest struct {
+	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
+	// decomissioning. Graceful decommissioning
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/scaling-clusters#graceful_decommissioning)
+	// allows the removal of nodes from the Compute Engine node group
+	// without interrupting jobs in progress. This timeout specifies how
+	// long to wait for jobs in progress to finish before forcefully
+	// removing nodes (and potentially interrupting jobs). Default timeout
+	// is 0 (for forceful decommission), and the maximum allowed timeout is
+	// 1 day. (see JSON representation of Duration
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only
+	// supported on Dataproc image versions 1.2 and higher.
+	GracefulDecommissionTimeout string `json:"gracefulDecommissionTimeout,omitempty"`
+
+	// RequestId: Optional. A unique ID used to identify the request. If the
+	// server receives two ResizeNodeGroupRequest
+	// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.ResizeNodeGroupRequests)
+	// with the same ID, the second request is ignored and the first
+	// google.longrunning.Operation created and stored in the backend is
+	// returned.Recommendation: Set this value to a UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID
+	// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+	// and hyphens (-). The maximum length is 40 characters.
+	RequestId string `json:"requestId,omitempty"`
+
+	// Size: Required. The number of running instances for the node group to
+	// maintain. The group adds or removes instances to maintain the number
+	// of instances specified by this parameter.
+	Size int64 `json:"size,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "GracefulDecommissionTimeout") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "GracefulDecommissionTimeout") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResizeNodeGroupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResizeNodeGroupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RuntimeConfig: Runtime configuration for a workload.
 type RuntimeConfig struct {
 	// ContainerImage: Optional. Optional custom container image for the job
@@ -4567,6 +4759,10 @@ type RuntimeInfo struct {
 	// calculated after workload finishes (see Dataproc Serverless pricing
 	// (https://cloud.google.com/dataproc-serverless/pricing)).
 	ApproximateUsage *UsageMetrics `json:"approximateUsage,omitempty"`
+
+	// CurrentUsage: Output only. Snapshot of current workload resource
+	// usage.
+	CurrentUsage *UsageSnapshot `json:"currentUsage,omitempty"`
 
 	// DiagnosticOutputUri: Output only. A URI pointing to the location of
 	// the diagnostics tarball.
@@ -5694,6 +5890,45 @@ type UsageMetrics struct {
 
 func (s *UsageMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsageSnapshot: The usage snaphot represents the resources consumed by
+// a workload at a specified time.
+type UsageSnapshot struct {
+	// MilliDcu: Optional. Milli (one-thousandth) Dataproc Compute Units
+	// (DCUs) (see Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing)).
+	MilliDcu int64 `json:"milliDcu,omitempty,string"`
+
+	// ShuffleStorageGb: Optional. Shuffle Storage in gigabytes (GB). (see
+	// Dataproc Serverless pricing
+	// (https://cloud.google.com/dataproc-serverless/pricing))
+	ShuffleStorageGb int64 `json:"shuffleStorageGb,omitempty,string"`
+
+	// SnapshotTime: Optional. The timestamp of the usage snapshot.
+	SnapshotTime string `json:"snapshotTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MilliDcu") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MilliDcu") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsageSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod UsageSnapshot
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13809,6 +14044,300 @@ func (c *ProjectsRegionsClustersTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.regions.clusters.nodeGroups.get":
+
+type ProjectsRegionsClustersNodeGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the resource representation for a node group in a cluster.
+//
+//   - name: The name of the node group to retrieve. Format:
+//     projects/{project}/regions/{region}/clusters/{cluster}/nodeGroups/{n
+//     odeGroup}.
+func (r *ProjectsRegionsClustersNodeGroupsService) Get(name string) *ProjectsRegionsClustersNodeGroupsGetCall {
+	c := &ProjectsRegionsClustersNodeGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersNodeGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsRegionsClustersNodeGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) Context(ctx context.Context) *ProjectsRegionsClustersNodeGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.regions.clusters.nodeGroups.get" call.
+// Exactly one of *NodeGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *NodeGroup.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsRegionsClustersNodeGroupsGetCall) Do(opts ...googleapi.CallOption) (*NodeGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &NodeGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the resource representation for a node group in a cluster.",
+	//   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}/nodeGroups/{nodeGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dataproc.projects.regions.clusters.nodeGroups.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the node group to retrieve. Format: projects/{project}/regions/{region}/clusters/{cluster}/nodeGroups/{nodeGroup}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+/nodeGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "NodeGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataproc.projects.regions.clusters.nodeGroups.resize":
+
+type ProjectsRegionsClustersNodeGroupsResizeCall struct {
+	s                      *Service
+	name                   string
+	resizenodegrouprequest *ResizeNodeGroupRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Resize: Resizes a node group in a cluster. The returned
+// Operation.metadata is NodeGroupOperationMetadata
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#nodegroupoperationmetadata).
+//
+//   - name: The name of the node group to resize. Format:
+//     projects/{project}/regions/{region}/clusters/{cluster}/nodeGroups/{n
+//     odeGroup}.
+func (r *ProjectsRegionsClustersNodeGroupsService) Resize(name string, resizenodegrouprequest *ResizeNodeGroupRequest) *ProjectsRegionsClustersNodeGroupsResizeCall {
+	c := &ProjectsRegionsClustersNodeGroupsResizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resizenodegrouprequest = resizenodegrouprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRegionsClustersNodeGroupsResizeCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersNodeGroupsResizeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRegionsClustersNodeGroupsResizeCall) Context(ctx context.Context) *ProjectsRegionsClustersNodeGroupsResizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersNodeGroupsResizeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegionsClustersNodeGroupsResizeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resizenodegrouprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resize")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.regions.clusters.nodeGroups.resize" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsRegionsClustersNodeGroupsResizeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Resizes a node group in a cluster. The returned Operation.metadata is NodeGroupOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#nodegroupoperationmetadata).",
+	//   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}/nodeGroups/{nodeGroupsId}:resize",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.regions.clusters.nodeGroups.resize",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the node group to resize. Format: projects/{project}/regions/{region}/clusters/{cluster}/nodeGroups/{nodeGroup}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+/nodeGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:resize",
+	//   "request": {
+	//     "$ref": "ResizeNodeGroupRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

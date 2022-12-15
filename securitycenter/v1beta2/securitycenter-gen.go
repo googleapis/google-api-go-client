@@ -727,9 +727,9 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Contact: Representa a single contact's email address
+// Contact: The email address of a contact.
 type Contact struct {
-	// Email: An email address e.g. "person123@company.com"
+	// Email: An email address. For example, "person123@company.com".
 	Email string `json:"email,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -1886,8 +1886,8 @@ type GoogleCloudSecuritycenterV1Binding struct {
 	// Role: The Role or ClusterRole referenced by the binding.
 	Role *Role `json:"role,omitempty"`
 
-	// Subjects: Represents the subjects(s) bound to the role. Not always
-	// available for PATCH requests.
+	// Subjects: Represents one or more subjects that are bound to the role.
+	// Not always available for PATCH requests.
 	Subjects []*Subject `json:"subjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2735,16 +2735,18 @@ func (s *IamBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Indicator: Represents what's commonly known as an Indicator of
-// compromise (IoC) in computer forensics. This is an artifact observed
+// Indicator: Represents what's commonly known as an _indicator of
+// compromise_ (IoC) in computer forensics. This is an artifact observed
 // on a network or in an operating system that, with high confidence,
-// indicates a computer intrusion. Reference:
-// https://en.wikipedia.org/wiki/Indicator_of_compromise
+// indicates a computer intrusion. For more information, see Indicator
+// of compromise
+// (https://en.wikipedia.org/wiki/Indicator_of_compromise).
 type Indicator struct {
 	// Domains: List of domains associated to the Finding.
 	Domains []string `json:"domains,omitempty"`
 
-	// IpAddresses: List of ip addresses associated to the Finding.
+	// IpAddresses: The list of IP addresses that are associated with the
+	// finding.
 	IpAddresses []string `json:"ipAddresses,omitempty"`
 
 	// Signatures: The list of matched signatures indicating that the given
@@ -2783,7 +2785,7 @@ type KernelRootkit struct {
 	Name string `json:"name,omitempty"`
 
 	// UnexpectedCodeModification: True when unexpected modifications of
-	// kernel read-only data memory are present.
+	// kernel code memory are present.
 	UnexpectedCodeModification bool `json:"unexpectedCodeModification,omitempty"`
 
 	// UnexpectedFtraceHandler: True when `ftrace` points are present with
@@ -2809,8 +2811,8 @@ type KernelRootkit struct {
 	// but not in the process task list.
 	UnexpectedProcessesInRunqueue bool `json:"unexpectedProcessesInRunqueue,omitempty"`
 
-	// UnexpectedReadOnlyDataModification: Flag indicating unexpected
-	// modifications of kernel read-only data memory.
+	// UnexpectedReadOnlyDataModification: True when unexpected
+	// modifications of kernel read-only data memory are present.
 	UnexpectedReadOnlyDataModification bool `json:"unexpectedReadOnlyDataModification,omitempty"`
 
 	// UnexpectedSystemCallHandler: True when system call handlers that are
@@ -2840,7 +2842,7 @@ func (s *KernelRootkit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Kubernetes: Kubernetes related attributes.
+// Kubernetes: Kubernetes-related attributes.
 type Kubernetes struct {
 	// AccessReviews: Provides information on any Kubernetes access reviews
 	// (i.e. privilege checks) relevant to the finding.

@@ -958,6 +958,53 @@ func (s *GoogleCloudChannelV1CommitmentSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1ConditionalOverride: Specifies the override to
+// conditionally apply.
+type GoogleCloudChannelV1ConditionalOverride struct {
+	// Adjustment: Required. Information about the applied override's
+	// adjustment.
+	Adjustment *GoogleCloudChannelV1RepricingAdjustment `json:"adjustment,omitempty"`
+
+	// RebillingBasis: Required. The RebillingBasis to use for the applied
+	// override. Shows the relative cost based on your repricing costs.
+	//
+	// Possible values:
+	//   "REBILLING_BASIS_UNSPECIFIED" - Not used.
+	//   "COST_AT_LIST" - Use the list cost, also known as the MSRP.
+	//   "DIRECT_CUSTOMER_COST" - Pass through all discounts except the
+	// Reseller Program Discount. If this is the default cost base and no
+	// adjustments are specified, the output cost will be exactly what the
+	// customer would see if they viewed the bill in the Google Cloud
+	// Console.
+	RebillingBasis string `json:"rebillingBasis,omitempty"`
+
+	// RepricingCondition: Required. Specifies the condition which, if met,
+	// will apply the override.
+	RepricingCondition *GoogleCloudChannelV1RepricingCondition `json:"repricingCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Adjustment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Adjustment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1ConditionalOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1ConditionalOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1Constraints: Represents the constraints for
 // buying the Offer.
 type GoogleCloudChannelV1Constraints struct {
@@ -3471,6 +3518,36 @@ func (s *GoogleCloudChannelV1RepricingAdjustment) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudChannelV1RepricingCondition: Represents the various
+// repricing conditions you can use for a conditional override.
+type GoogleCloudChannelV1RepricingCondition struct {
+	// SkuGroupCondition: SKU Group condition for override.
+	SkuGroupCondition *GoogleCloudChannelV1SkuGroupCondition `json:"skuGroupCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkuGroupCondition")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkuGroupCondition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1RepricingCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1RepricingCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudChannelV1RepricingConfig: Configuration for repricing a
 // Google bill over a period of time.
 type GoogleCloudChannelV1RepricingConfig struct {
@@ -3481,6 +3558,12 @@ type GoogleCloudChannelV1RepricingConfig struct {
 	// channel partner level. This is the only supported value for
 	// ChannelPartnerRepricingConfig.
 	ChannelPartnerGranularity *GoogleCloudChannelV1RepricingConfigChannelPartnerGranularity `json:"channelPartnerGranularity,omitempty"`
+
+	// ConditionalOverrides: The conditional overrides to apply for this
+	// configuration. If you list multiple overrides, only the first valid
+	// override is used. If you don't list any overrides, the API uses the
+	// normal adjustment and rebilling basis.
+	ConditionalOverrides []*GoogleCloudChannelV1ConditionalOverride `json:"conditionalOverrides,omitempty"`
 
 	// EffectiveInvoiceMonth: Required. The YearMonth when these adjustments
 	// activate. The Day field needs to be "0" since we only accept
@@ -3708,6 +3791,38 @@ type GoogleCloudChannelV1Sku struct {
 
 func (s *GoogleCloudChannelV1Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1Sku
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1SkuGroupCondition: A condition that applies the
+// override if a line item SKU is found in the SKU group.
+type GoogleCloudChannelV1SkuGroupCondition struct {
+	// SkuGroup: Specifies a SKU group
+	// (https://cloud.google.com/skus/sku-groups). Resource name of SKU
+	// group. Format: accounts/{account}/skuGroups/{sku_group}. Example:
+	// "accounts/C01234/skuGroups/3d50fd57-3157-4577-a5a9-a219b8490041".
+	SkuGroup string `json:"skuGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkuGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkuGroup") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudChannelV1SkuGroupCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1SkuGroupCondition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

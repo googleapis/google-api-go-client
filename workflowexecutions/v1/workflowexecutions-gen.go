@@ -242,6 +242,9 @@ type Execution struct {
 	// steps within workflows.
 	CallLogLevel string `json:"callLogLevel,omitempty"`
 
+	// Duration: Output only. Measures the duration of the execution.
+	Duration string `json:"duration,omitempty"`
+
 	// EndTime: Output only. Marks the end of execution, successful or not.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -1082,8 +1085,8 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *Projects
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
 //	"BASIC" - Includes only basic metadata about the execution.
 //
-// Following fields are returned: name, start_time, end_time, state and
-// workflow_revision_id.
+// Following fields are returned: name, start_time, end_time, duration,
+// state and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsGetCall {
@@ -1214,7 +1217,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Do(opts ...googleapi.CallO
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, duration, state and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",
@@ -1287,8 +1290,8 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) PageToken(pageToken strin
 //	"EXECUTION_VIEW_UNSPECIFIED" - The default / unset value.
 //	"BASIC" - Includes only basic metadata about the execution.
 //
-// Following fields are returned: name, start_time, end_time, state and
-// workflow_revision_id.
+// Following fields are returned: name, start_time, end_time, duration,
+// state and workflow_revision_id.
 //
 //	"FULL" - Includes all data.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsListCall {
@@ -1430,7 +1433,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//       ],
 	//       "enumDescriptions": [
 	//         "The default / unset value.",
-	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, state and workflow_revision_id.",
+	//         "Includes only basic metadata about the execution. Following fields are returned: name, start_time, end_time, duration, state and workflow_revision_id.",
 	//         "Includes all data."
 	//       ],
 	//       "location": "query",

@@ -730,6 +730,74 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExportConfig: Configuration for a Pub/Sub Lite subscription that
+// writes messages to a destination. User subscriber clients must not
+// connect to this subscription.
+type ExportConfig struct {
+	// CurrentState: Output only. The current state of the export, which may
+	// be different to the desired state due to errors. This field is output
+	// only.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Messages are being exported.
+	//   "PAUSED" - Exporting messages is suspended.
+	//   "PERMISSION_DENIED" - Messages cannot be exported due to permission
+	// denied errors. Output only.
+	//   "NOT_FOUND" - Messages cannot be exported due to missing resources.
+	// Output only.
+	CurrentState string `json:"currentState,omitempty"`
+
+	// DeadLetterTopic: Optional. The name of an optional Pub/Sub Lite topic
+	// to publish messages that can not be exported to the destination. For
+	// example, the message can not be published to the Pub/Sub service
+	// because it does not satisfy the constraints documented at
+	// https://cloud.google.com/pubsub/docs/publisher. Structured like:
+	// projects/{project_number}/locations/{location}/topics/{topic_id}.
+	// Must be within the same project and location as the subscription. The
+	// topic may be changed or removed.
+	DeadLetterTopic string `json:"deadLetterTopic,omitempty"`
+
+	// DesiredState: The desired state of this export. Setting this to
+	// values other than `ACTIVE` and `PAUSED` will result in an error.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Messages are being exported.
+	//   "PAUSED" - Exporting messages is suspended.
+	//   "PERMISSION_DENIED" - Messages cannot be exported due to permission
+	// denied errors. Output only.
+	//   "NOT_FOUND" - Messages cannot be exported due to missing resources.
+	// Output only.
+	DesiredState string `json:"desiredState,omitempty"`
+
+	// PubsubConfig: Messages are automatically written from the Pub/Sub
+	// Lite topic associated with this subscription to a Pub/Sub topic.
+	PubsubConfig *PubSubConfig `json:"pubsubConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1171,6 +1239,36 @@ func (s *PartitionCursor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PubSubConfig: Configuration for exporting to a Pub/Sub topic.
+type PubSubConfig struct {
+	// Topic: The name of the Pub/Sub topic. Structured like:
+	// projects/{project_number}/topics/{topic_id}. The topic may be
+	// changed.
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Topic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Topic") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PubSubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PubSubConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Reservation: Metadata about a reservation resource.
 type Reservation struct {
 	// Name: The name of the reservation. Structured like:
@@ -1376,6 +1474,11 @@ type Subscription struct {
 	// DeliveryConfig: The settings for this subscription's message
 	// delivery.
 	DeliveryConfig *DeliveryConfig `json:"deliveryConfig,omitempty"`
+
+	// ExportConfig: If present, messages are automatically written from the
+	// Pub/Sub Lite topic associated with this subscription to a
+	// destination.
+	ExportConfig *ExportConfig `json:"exportConfig,omitempty"`
 
 	// Name: The name of the subscription. Structured like:
 	// projects/{project_number}/locations/{location}/subscriptions/{subscrip

@@ -4366,6 +4366,8 @@ type ParameterMetadata struct {
 	//   "PUBSUB_SUBSCRIPTION" - The parameter specifies a Pub/Sub
 	// Subscription.
 	//   "BIGQUERY_TABLE" - The parameter specifies a BigQuery table.
+	//   "JAVASCRIPT_UDF_FILE" - The parameter specifies a JavaScript UDF in
+	// Cloud Storage.
 	ParamType string `json:"paramType,omitempty"`
 
 	// Regexes: Optional. Regexes that the parameter must match.
@@ -7808,6 +7810,10 @@ type WorkerMessage struct {
 	// WorkerShutdownNotice: Shutdown notice by workers.
 	WorkerShutdownNotice *WorkerShutdownNotice `json:"workerShutdownNotice,omitempty"`
 
+	// WorkerThreadScalingReport: Thread scaling information reported by
+	// workers.
+	WorkerThreadScalingReport *WorkerThreadScalingReport `json:"workerThreadScalingReport,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -7899,6 +7905,10 @@ type WorkerMessageResponse struct {
 	// WorkerShutdownNoticeResponse: Service's response to shutdown notice
 	// (currently empty).
 	WorkerShutdownNoticeResponse *WorkerShutdownNoticeResponse `json:"workerShutdownNoticeResponse,omitempty"`
+
+	// WorkerThreadScalingReportResponse: Service's thread scaling
+	// recommendation for workers.
+	WorkerThreadScalingReportResponse *WorkerThreadScalingReportResponse `json:"workerThreadScalingReportResponse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "WorkerHealthReportResponse") to unconditionally include in API
@@ -8170,6 +8180,67 @@ func (s *WorkerShutdownNotice) MarshalJSON() ([]byte, error) {
 // WorkerShutdownNoticeResponse: Service-side response to WorkerMessage
 // issuing shutdown notice.
 type WorkerShutdownNoticeResponse struct {
+}
+
+// WorkerThreadScalingReport: Contains information about the thread
+// scaling information of a worker.
+type WorkerThreadScalingReport struct {
+	// CurrentThreadCount: Current number of active threads in a worker.
+	CurrentThreadCount int64 `json:"currentThreadCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentThreadCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentThreadCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerThreadScalingReport) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerThreadScalingReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkerThreadScalingReportResponse: Contains the thread scaling
+// recommendation for a worker from the backend.
+type WorkerThreadScalingReportResponse struct {
+	// RecommendedThreadCount: Recommended number of threads for a worker.
+	RecommendedThreadCount int64 `json:"recommendedThreadCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecommendedThreadCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecommendedThreadCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerThreadScalingReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerThreadScalingReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // WriteInstruction: An instruction that writes records. Takes one

@@ -905,7 +905,10 @@ type Container struct {
 	// references are not supported in Cloud Run.
 	Command []string `json:"command,omitempty"`
 
-	// Env: List of environment variables to set in the container.
+	// Env: List of environment variables to set in the container. EnvVar
+	// with duplicate names are generally allowed; if referencing a secret,
+	// the name must be unique for the container. For non-secret EnvVar
+	// names, the Container will only get the last-declared one.
 	Env []*EnvVar `json:"env,omitempty"`
 
 	// EnvFrom: Not supported by Cloud Run.
@@ -927,8 +930,8 @@ type Container struct {
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
-	// Name: Name of the container specified as a DNS_LABEL. Currently
-	// unused in Cloud Run. More info:
+	// Name: Name of the container specified as a DNS_LABEL (RFC 1123). More
+	// info:
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 	Name string `json:"name,omitempty"`
 

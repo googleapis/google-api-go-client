@@ -5,6 +5,9 @@
         "https://www.googleapis.com/auth/chat.memberships": {
           "description": "View, add, and remove members from conversations in Google Chat"
         },
+        "https://www.googleapis.com/auth/chat.memberships.readonly": {
+          "description": "View members in Google Chat conversations."
+        },
         "https://www.googleapis.com/auth/chat.messages": {
           "description": "View, compose, send, update, and delete messages, and add, view, and delete reactions to messages."
         },
@@ -638,7 +641,8 @@
                 "$ref": "Membership"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/chat.memberships"
+                "https://www.googleapis.com/auth/chat.memberships",
+                "https://www.googleapis.com/auth/chat.memberships.readonly"
               ]
             },
             "list": {
@@ -674,7 +678,8 @@
                 "$ref": "ListMembershipsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/chat.memberships"
+                "https://www.googleapis.com/auth/chat.memberships",
+                "https://www.googleapis.com/auth/chat.memberships.readonly"
               ]
             }
           }
@@ -902,7 +907,7 @@
       }
     }
   },
-  "revision": "20221208",
+  "revision": "20221213",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -2888,7 +2893,7 @@
       "id": "Space",
       "properties": {
         "displayName": {
-          "description": "The space's display name. For direct messages between humans, this field might be empty.",
+          "description": "The space's display name. Required when [creating a space](https://developers.google.com/chat/api/reference/rest/v1/spaces/create). For direct messages, this field may be empty.",
           "type": "string"
         },
         "name": {

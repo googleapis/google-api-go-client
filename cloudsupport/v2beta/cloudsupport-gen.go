@@ -2574,10 +2574,8 @@ type CasesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Update the specified case. Only a subset of fields
-// (display_name, description, time_zone, subscriber_email_addresses,
-// related_resources, severity, priority, primary_contact, and labels)
-// can be updated.
+// Patch: Update the specified case. Only a subset of fields can be
+// updated.
 //
 // - name: The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
@@ -2692,7 +2690,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the specified case. Only a subset of fields (display_name, description, time_zone, subscriber_email_addresses, related_resources, severity, priority, primary_contact, and labels) can be updated.",
+	//   "description": "Update the specified case. Only a subset of fields can be updated.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudsupport.cases.patch",

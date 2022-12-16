@@ -1143,6 +1143,40 @@ func (s *ConfigurationVariables) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateEnrollmentTokenResponse: Response message for create enrollment
+// token.
+type CreateEnrollmentTokenResponse struct {
+	// EnrollmentToken: Enrollment token.
+	EnrollmentToken string `json:"enrollmentToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EnrollmentToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnrollmentToken") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateEnrollmentTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateEnrollmentTokenResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Device: A Devices resource represents a mobile device managed by the
 // EMM and belonging to a specific enterprise user.
 type Device struct {
@@ -5351,6 +5385,171 @@ func (c *EnterprisesCompleteSignupCall) Do(opts ...googleapi.CallOption) (*Enter
 
 }
 
+// method id "androidenterprise.enterprises.createEnrollmentToken":
+
+type EnterprisesCreateEnrollmentTokenCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CreateEnrollmentToken: Returns a token for device enrollment. The DPC
+// can encode this token within the QR/NFC/zero-touch enrollment payload
+// or fetch it before calling the on-device API to authenticate the
+// user. The token can be generated for each device or reused across
+// multiple devices.
+//
+// - enterpriseId: The ID of the enterprise.
+func (r *EnterprisesService) CreateEnrollmentToken(enterpriseId string) *EnterprisesCreateEnrollmentTokenCall {
+	c := &EnterprisesCreateEnrollmentTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// DeviceType sets the optional parameter "deviceType": Whether it’s a
+// dedicated device or a knowledge worker device.
+//
+// Possible values:
+//
+//	"unknown" - This value is unused
+//	"dedicatedDevice" - This device is a dedicated device.
+//	"knowledgeWorker" - This device is required to have an
+//
+// authenticated user.
+func (c *EnterprisesCreateEnrollmentTokenCall) DeviceType(deviceType string) *EnterprisesCreateEnrollmentTokenCall {
+	c.urlParams_.Set("deviceType", deviceType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesCreateEnrollmentTokenCall) Fields(s ...googleapi.Field) *EnterprisesCreateEnrollmentTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesCreateEnrollmentTokenCall) Context(ctx context.Context) *EnterprisesCreateEnrollmentTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesCreateEnrollmentTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesCreateEnrollmentTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.enterprises.createEnrollmentToken" call.
+// Exactly one of *CreateEnrollmentTokenResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *CreateEnrollmentTokenResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesCreateEnrollmentTokenCall) Do(opts ...googleapi.CallOption) (*CreateEnrollmentTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CreateEnrollmentTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a token for device enrollment. The DPC can encode this token within the QR/NFC/zero-touch enrollment payload or fetch it before calling the on-device API to authenticate the user. The token can be generated for each device or reused across multiple devices.",
+	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.createEnrollmentToken",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "deviceType": {
+	//       "description": "Whether it’s a dedicated device or a knowledge worker device.",
+	//       "enum": [
+	//         "unknown",
+	//         "dedicatedDevice",
+	//         "knowledgeWorker"
+	//       ],
+	//       "enumDescriptions": [
+	//         "This value is unused",
+	//         "This device is a dedicated device.",
+	//         "This device is required to have an authenticated user."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidenterprise/v1/enterprises/{enterpriseId}/createEnrollmentToken",
+	//   "response": {
+	//     "$ref": "CreateEnrollmentTokenResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.enterprises.createWebToken":
 
 type EnterprisesCreateWebTokenCall struct {
@@ -6424,7 +6623,7 @@ func (r *EnterprisesService) PullNotificationSet() *EnterprisesPullNotificationS
 // mode for pulling notifications. Specifying waitForNotifications will
 // cause the request to block and wait until one or more notifications
 // are present, or return an empty notification list if no notifications
-// are present after some time. Speciying returnImmediately will cause
+// are present after some time. Specifying returnImmediately will cause
 // the request to immediately return the pending notifications, or an
 // empty list if no notifications are present. If omitted, defaults to
 // waitForNotifications.
@@ -6533,7 +6732,7 @@ func (c *EnterprisesPullNotificationSetCall) Do(opts ...googleapi.CallOption) (*
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "requestMode": {
-	//       "description": "The request mode for pulling notifications. Specifying waitForNotifications will cause the request to block and wait until one or more notifications are present, or return an empty notification list if no notifications are present after some time. Speciying returnImmediately will cause the request to immediately return the pending notifications, or an empty list if no notifications are present. If omitted, defaults to waitForNotifications.",
+	//       "description": "The request mode for pulling notifications. Specifying waitForNotifications will cause the request to block and wait until one or more notifications are present, or return an empty notification list if no notifications are present after some time. Specifying returnImmediately will cause the request to immediately return the pending notifications, or an empty list if no notifications are present. If omitted, defaults to waitForNotifications.",
 	//       "enum": [
 	//         "waitForNotifications",
 	//         "returnImmediately"

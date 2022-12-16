@@ -3469,6 +3469,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/application-integration",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "integrations:v1",
+      "name": "integrations",
+      "version": "v1",
+      "title": "Application Integration API",
+      "description": "",
+      "discoveryRestUrl": "https://integrations.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/application-integration",
       "preferred": true
     },
     {

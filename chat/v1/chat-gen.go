@@ -87,6 +87,9 @@ const (
 	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
+	// View members in Google Chat conversations.
+	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
+
 	// View, compose, send, update, and delete messages, and add, view, and
 	// delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
@@ -109,6 +112,7 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/chat.memberships",
+		"https://www.googleapis.com/auth/chat.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.messages",
 		"https://www.googleapis.com/auth/chat.messages.create",
 		"https://www.googleapis.com/auth/chat.messages.readonly",
@@ -3719,8 +3723,9 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat app.
 type Space struct {
-	// DisplayName: The space's display name. For direct messages between
-	// humans, this field might be empty.
+	// DisplayName: The space's display name. Required when creating a space
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces/create).
+	// For direct messages, this field may be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space. Format: spaces/{space}
@@ -6415,7 +6420,8 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//     "$ref": "Membership"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.memberships"
+	//     "https://www.googleapis.com/auth/chat.memberships",
+	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
 	// }
 
@@ -6607,7 +6613,8 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//     "$ref": "ListMembershipsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/chat.memberships"
+	//     "https://www.googleapis.com/auth/chat.memberships",
+	//     "https://www.googleapis.com/auth/chat.memberships.readonly"
 	//   ]
 	// }
 

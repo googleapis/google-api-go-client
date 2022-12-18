@@ -14052,6 +14052,186 @@ func (c *ProjectsRegionsClustersTestIamPermissionsCall) Do(opts ...googleapi.Cal
 
 }
 
+// method id "dataproc.projects.regions.clusters.nodeGroups.create":
+
+type ProjectsRegionsClustersNodeGroupsCreateCall struct {
+	s          *Service
+	parent     string
+	nodegroup  *NodeGroup
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a node group in a cluster. The returned
+// Operation.metadata is NodeGroupOperationMetadata
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#nodegroupoperationmetadata).
+//
+//   - parent: The parent resource where this node group will be created.
+//     Format: projects/{project}/regions/{region}/clusters/{cluster}.
+func (r *ProjectsRegionsClustersNodeGroupsService) Create(parent string, nodegroup *NodeGroup) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c := &ProjectsRegionsClustersNodeGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.nodegroup = nodegroup
+	return c
+}
+
+// NodeGroupId sets the optional parameter "nodeGroupId": An optional
+// node group ID. Generated if not specified.The ID must contain only
+// letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-).
+// Cannot begin or end with underscore or hyphen. Must consist of from 3
+// to 33 characters.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) NodeGroupId(nodeGroupId string) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c.urlParams_.Set("nodeGroupId", nodeGroupId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique ID used
+// to identify the request. If the server receives two
+// CreateNodeGroupRequest
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateNodeGroupRequests)
+// with the same ID, the second request is ignored and the first
+// google.longrunning.Operation created and stored in the backend is
+// returned.Recommendation: Set this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID
+// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+// and hyphens (-). The maximum length is 40 characters.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) RequestId(requestId string) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) Context(ctx context.Context) *ProjectsRegionsClustersNodeGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.nodegroup)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/nodeGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.regions.clusters.nodeGroups.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsRegionsClustersNodeGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a node group in a cluster. The returned Operation.metadata is NodeGroupOperationMetadata (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#nodegroupoperationmetadata).",
+	//   "flatPath": "v1/projects/{projectsId}/regions/{regionsId}/clusters/{clustersId}/nodeGroups",
+	//   "httpMethod": "POST",
+	//   "id": "dataproc.projects.regions.clusters.nodeGroups.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "nodeGroupId": {
+	//       "description": "Optional. An optional node group ID. Generated if not specified.The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of from 3 to 33 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource where this node group will be created. Format: projects/{project}/regions/{region}/clusters/{cluster}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/regions/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique ID used to identify the request. If the server receives two CreateNodeGroupRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateNodeGroupRequests) with the same ID, the second request is ignored and the first google.longrunning.Operation created and stored in the backend is returned.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The ID must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/nodeGroups",
+	//   "request": {
+	//     "$ref": "NodeGroup"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dataproc.projects.regions.clusters.nodeGroups.get":
 
 type ProjectsRegionsClustersNodeGroupsGetCall struct {

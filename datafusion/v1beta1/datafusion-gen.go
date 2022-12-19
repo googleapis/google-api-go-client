@@ -228,7 +228,22 @@ type Accelerator struct {
 	//   "HEALTHCARE" - Cloud Healthcare accelerator for CDF. This
 	// accelerator is to enable Cloud Healthcare specific CDF plugins
 	// developed by Healthcare team.
+	//   "CCAI_INSIGHTS" - Contact Center AI Insights This accelerator is
+	// used to enable import and export pipelines custom built to streamline
+	// CCAI Insights processing.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
+
+	// State: The state of the accelerator.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value, do not use.
+	//   "ENABLED" - Indicates that the accelerator is enabled and available
+	// to use.
+	//   "DISABLED" - Indicates that the accelerator is disabled and not
+	// available to use.
+	//   "UNKNOWN" - Indicates that accelerator state is currently unknown.
+	// Requests for enable, disable could be retried while in this state.
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
 	// unconditionally include in API requests. By default, fields with
@@ -700,6 +715,9 @@ type Instance struct {
 
 	// EnableStackdriverMonitoring: Option to enable Stackdriver Monitoring.
 	EnableStackdriverMonitoring bool `json:"enableStackdriverMonitoring,omitempty"`
+
+	// EnableZoneSeparation: Option to enable zone separation.
+	EnableZoneSeparation bool `json:"enableZoneSeparation,omitempty"`
 
 	// EventPublishConfig: Option to enable and pass metadata for event
 	// publishing.
@@ -1235,6 +1253,12 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // OperationMetadata: Represents the metadata of a long-running
 // operation.
 type OperationMetadata struct {
+	// AdditionalStatus: Map to hold any additional status info for the
+	// operation If there is an accelerator being enabled/disabled/deleted,
+	// this will be populated with accelerator name as key and status as
+	// ENABLING, DISABLING or DELETING
+	AdditionalStatus map[string]string `json:"additionalStatus,omitempty"`
+
 	// ApiVersion: API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
@@ -1259,7 +1283,7 @@ type OperationMetadata struct {
 	// Verb: Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// ForceSendFields is a list of field names (e.g. "AdditionalStatus") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1267,12 +1291,13 @@ type OperationMetadata struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdditionalStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

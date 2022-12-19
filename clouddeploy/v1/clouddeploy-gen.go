@@ -592,15 +592,14 @@ func (s *CloudRunMetadata) MarshalJSON() ([]byte, error) {
 
 // Config: Service-wide configuration.
 type Config struct {
-	// DefaultSkaffoldVersion: Output only. Default Skaffold version that is
-	// assigned when a Release is created without specifying a Skaffold
-	// version.
+	// DefaultSkaffoldVersion: Default Skaffold version that is assigned
+	// when a Release is created without specifying a Skaffold version.
 	DefaultSkaffoldVersion string `json:"defaultSkaffoldVersion,omitempty"`
 
 	// Name: Name of the configuration.
 	Name string `json:"name,omitempty"`
 
-	// SupportedVersions: Output only. All supported versions of Skaffold.
+	// SupportedVersions: All supported versions of Skaffold.
 	SupportedVersions []*SkaffoldVersion `json:"supportedVersions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1846,9 +1845,13 @@ type PipelineCondition struct {
 	// PipelineReadyCondition: Details around the Pipeline's overall status.
 	PipelineReadyCondition *PipelineReadyCondition `json:"pipelineReadyCondition,omitempty"`
 
-	// TargetsPresentCondition: Detalis around targets enumerated in the
+	// TargetsPresentCondition: Details around targets enumerated in the
 	// pipeline.
 	TargetsPresentCondition *TargetsPresentCondition `json:"targetsPresentCondition,omitempty"`
+
+	// TargetsTypeCondition: Details on the whether the targets enumerated
+	// in the pipeline are of the same type.
+	TargetsTypeCondition *TargetsTypeCondition `json:"targetsTypeCondition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PipelineReadyCondition") to unconditionally include in API requests.
@@ -2572,7 +2575,8 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // SkaffoldVersion: Details of a supported Skaffold version.
 type SkaffoldVersion struct {
 	// SupportEndDate: Date when this version is expected to no longer be
-	// supported.
+	// supported. For a more precise time, use the `support_expiration_time`
+	// field.
 	SupportEndDate *Date `json:"supportEndDate,omitempty"`
 
 	// Version: Release version number. For example, "1.20.3".
@@ -2984,7 +2988,7 @@ func (s *TargetRender) MarshalJSON() ([]byte, error) {
 // on any Targets defined in the Delivery Pipeline that do not actually
 // exist.
 type TargetsPresentCondition struct {
-	// MissingTargets: The list of Target names that are missing. For
+	// MissingTargets: The list of Target names that do not exist. For
 	// example,
 	// projects/{project_id}/locations/{location_name}/targets/{target_name}.
 	MissingTargets []string `json:"missingTargets,omitempty"`
@@ -3015,6 +3019,41 @@ type TargetsPresentCondition struct {
 
 func (s *TargetsPresentCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetsPresentCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetsTypeCondition: TargetsTypeCondition contains information on
+// whether the Targets defined in the Delivery Pipeline are of the same
+// type.
+type TargetsTypeCondition struct {
+	// ErrorDetails: Human readable error message.
+	ErrorDetails string `json:"errorDetails,omitempty"`
+
+	// Status: True if the targets are all a comparable type. For example
+	// this is true if all targets are GKE clusters. This is false if some
+	// targets are Cloud Run targets and others are GKE clusters.
+	Status bool `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorDetails") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetsTypeCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetsTypeCondition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

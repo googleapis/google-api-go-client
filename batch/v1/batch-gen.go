@@ -333,8 +333,7 @@ func (s *AgentInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AgentMetadata: AgentMetadata never changes for a single instance of
-// VM agent.
+// AgentMetadata: VM Agent Metadata.
 type AgentMetadata struct {
 	// CreationTime: When the VM agent started. Use agent_startup_time
 	// instead.
@@ -355,6 +354,10 @@ type AgentMetadata struct {
 
 	// InstanceId: GCP instance ID (go/instance-id).
 	InstanceId uint64 `json:"instanceId,omitempty,string"`
+
+	// InstancePreemptionNoticeReceived: If the GCP instance has received
+	// preemption notice.
+	InstancePreemptionNoticeReceived bool `json:"instancePreemptionNoticeReceived,omitempty"`
 
 	// OsRelease: parsed contents of /etc/os-release
 	OsRelease map[string]string `json:"osRelease,omitempty"`
@@ -964,23 +967,33 @@ type Empty struct {
 // Environment: An Environment describes a collection of environment
 // variables to set when executing Tasks.
 type Environment struct {
+	// EncryptedVariables: An encrypted JSON dictionary where the key/value
+	// pairs correspond to environment variable names and their values.
+	EncryptedVariables *KMSEnvMap `json:"encryptedVariables,omitempty"`
+
+	// SecretVariables: A map of environment variable names to Secret
+	// Manager secret names. The VM will access the named secrets to set the
+	// value of each environment variable.
+	SecretVariables map[string]string `json:"secretVariables,omitempty"`
+
 	// Variables: A map of environment variable names to values.
 	Variables map[string]string `json:"variables,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Variables") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "EncryptedVariables")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Variables") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncryptedVariables") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1379,6 +1392,38 @@ type JobStatus struct {
 
 func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type KMSEnvMap struct {
+	// CipherText: The value of the cipherText response from the `encrypt`
+	// method.
+	CipherText string `json:"cipherText,omitempty"`
+
+	// KeyName: The name of the KMS key that will be used to decrypt the
+	// cipher text.
+	KeyName string `json:"keyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CipherText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CipherText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KMSEnvMap) MarshalJSON() ([]byte, error) {
+	type NoMethod KMSEnvMap
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2136,6 +2181,9 @@ func (s *ReportAgentStateRequest) MarshalJSON() ([]byte, error) {
 
 // ReportAgentStateResponse: Response to ReportAgentStateRequest.
 type ReportAgentStateResponse struct {
+	// DefaultReportInterval: Default report interval override
+	DefaultReportInterval string `json:"defaultReportInterval,omitempty"`
+
 	// MinReportInterval: Minimum report interval override
 	MinReportInterval string `json:"minReportInterval,omitempty"`
 
@@ -2146,15 +2194,16 @@ type ReportAgentStateResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "MinReportInterval")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultReportInterval") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MinReportInterval") to
+	// NullFields is a list of field names (e.g. "DefaultReportInterval") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

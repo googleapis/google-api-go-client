@@ -66,6 +66,12 @@ var (
 	errNoDoc       = errors.New("could not read discovery doc")
 )
 
+// skipAPIGeneration is a set of APIs to not generate when generating all clients.
+var skipAPIGeneration = map[string]bool{
+	"sql:v1beta4":     true,
+	"integrations:v1": true,
+}
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -120,11 +126,6 @@ type compileError struct {
 
 func (e *compileError) Error() string {
 	return fmt.Sprintf("API %s failed to compile:\n%v", e.api.ID, e.output)
-}
-
-// skipAPIGeneration is a set of APIs to not generate when generating all clients.
-var skipAPIGeneration = map[string]bool{
-	"sql:v1beta4": true,
 }
 
 func main() {

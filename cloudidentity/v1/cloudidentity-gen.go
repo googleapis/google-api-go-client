@@ -1442,7 +1442,7 @@ type GoogleAppsCloudidentityDevicesV1ListEndpointAppsMetadata struct {
 // Response containing resource names of the DeviceUsers associated with
 // the caller's credentials.
 type GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse struct {
-	// Customer: The obfuscated customer Id that may be passed back to other
+	// Customer: The customer resource name that may be passed back to other
 	// Devices API methods such as List, Get, etc.
 	Customer string `json:"customer,omitempty"`
 
@@ -1686,9 +1686,11 @@ type Group struct {
 
 	// Parent: Required. Immutable. The resource name of the entity under
 	// which this `Group` resides in the Cloud Identity resource hierarchy.
-	// Must be of the form `identitysources/{identity_source}` for external-
-	// identity-mapped groups or `customers/{customer}` for Google Groups.
-	// The `customer` must begin with "C" (for example, 'C046psxkn').
+	// Must be of the form `identitysources/{identity_source}` for external
+	// identity-mapped groups (https://support.google.com/a/answer/9039510)
+	// or `customers/{customer_id}` for Google Groups. The `customer_id`
+	// must begin with "C" (for example, 'C046psxkn'). [Find your customer
+	// ID.] (https://support.google.com/cloudidentity/answer/10070793)
 	Parent string `json:"parent,omitempty"`
 
 	// UpdateTime: Output only. The time when the `Group` was last updated.
@@ -7315,8 +7317,10 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 // Parent sets the optional parameter "parent": Required. The parent
 // resource under which to list all `Group` resources. Must be of the
 // form `identitysources/{identity_source}` for external-
-// identity-mapped groups or `customers/{customer}` for Google Groups.
-// The `customer` must begin with "C" (for example, 'C046psxkn').
+// identity-mapped groups or `customers/{customer_id}` for Google
+// Groups. The `customer_id` must begin with "C" (for example,
+// 'C046psxkn'). [Find your customer ID.]
+// (https://support.google.com/cloudidentity/answer/10070793)
 func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -7449,7 +7453,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source}` for external- identity-mapped groups or `customers/{customer}` for Google Groups. The `customer` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7869,9 +7873,11 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 // query. Must be specified in Common Expression Language
 // (https://opensource.google/projects/cel). May only contain equality
 // operators on the parent and inclusion operators on labels (e.g.,
-// `parent == 'customers/{customer}' &&
+// `parent == 'customers/{customer_id}' &&
 // 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
-// The `customer` must begin with "C" (for example, 'C046psxkn').
+// The `customer_id` must begin with "C" (for example, 'C046psxkn').
+// [Find your customer ID.]
+// (https://support.google.com/cloudidentity/answer/10070793)
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -8004,7 +8010,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

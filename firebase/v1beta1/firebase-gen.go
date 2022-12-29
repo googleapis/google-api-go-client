@@ -494,6 +494,14 @@ type AndroidApp struct {
 	// DisplayName: The user-assigned display name for the `AndroidApp`.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and it may be sent with update requests to ensure the
+	// client has an up-to-date value before proceeding. Learn more about
+	// `etag` in Google's AIP-154 standard
+	// (https://google.aip.dev/154#declarative-friendly-resources). This
+	// etag is strongly validated.
+	Etag string `json:"etag,omitempty"`
+
 	// Name: The resource name of the AndroidApp, in the format: projects/
 	// PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
 	// parent Project's `ProjectNumber`
@@ -802,18 +810,20 @@ func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 // has the same underlying GCP identifiers (`projectNumber` and
 // `projectId`). This allows for easy interop with Google APIs.
 type FirebaseProject struct {
-	// Annotations: Set of user-defined annotations for the FirebaseProject
-	// as per AIP-128 (https://google.aip.dev/128#annotations). These
-	// annotations are intended solely for developers and client-side tools
-	// Firebase services will not mutate this annotation set.
+	// Annotations: A set of user-defined annotations for the
+	// FirebaseProject. Learn more about annotations in Google's AIP-128
+	// standard (https://google.aip.dev/128#annotations). These annotations
+	// are intended solely for developers and client-side tools. Firebase
+	// services will not mutate this annotations set.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// DisplayName: The user-assigned display name of the Project.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Etag: This checksum is computed by the server based on the value of
-	// other fields, and may be sent on update requests to ensure the client
-	// has an up-to-date value before proceeding. AIP-154
+	// other fields, and it may be sent with update requests to ensure the
+	// client has an up-to-date value before proceeding. Learn more about
+	// `etag` in Google's AIP-154 standard
 	// (https://google.aip.dev/154#declarative-friendly-resources). This
 	// etag is strongly validated.
 	Etag string `json:"etag,omitempty"`
@@ -915,6 +925,14 @@ type IosApp struct {
 
 	// DisplayName: The user-assigned display name for the `IosApp`.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and it may be sent with update requests to ensure the
+	// client has an up-to-date value before proceeding. Learn more about
+	// `etag` in Google's AIP-154 standard
+	// (https://google.aip.dev/154#declarative-friendly-resources). This
+	// etag is strongly validated.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the IosApp, in the format:
 	// projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER: the
@@ -1499,8 +1517,9 @@ type RemoveAndroidAppRequest struct {
 	// will succeed but no action will be taken on the server.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
-	// Etag: Checksum provided in the AndroidApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the AndroidApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Immediate: Determines whether to _immediately_ delete the App. If set
@@ -1542,8 +1561,9 @@ type RemoveIosAppRequest struct {
 	// will succeed but no action will be taken on the server.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
-	// Etag: Checksum provided in the IosApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the IosApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Immediate: Determines whether to _immediately_ delete the App. If set
@@ -1585,8 +1605,9 @@ type RemoveWebAppRequest struct {
 	// will succeed but no action will be taken on the server.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
-	// Etag: Checksum provided in the WebApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the WebApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// Immediate: Determines whether to _immediately_ delete the App. If set
@@ -1857,8 +1878,9 @@ func (s *StreamMapping) MarshalJSON() ([]byte, error) {
 }
 
 type UndeleteAndroidAppRequest struct {
-	// Etag: Checksum provided in the AndroidApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the AndroidApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -1889,8 +1911,9 @@ func (s *UndeleteAndroidAppRequest) MarshalJSON() ([]byte, error) {
 }
 
 type UndeleteIosAppRequest struct {
-	// Etag: Checksum provided in the IosApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the IosApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -1921,8 +1944,9 @@ func (s *UndeleteIosAppRequest) MarshalJSON() ([]byte, error) {
 }
 
 type UndeleteWebAppRequest struct {
-	// Etag: Checksum provided in the WebApp entity, which if provided
-	// ensures the client has an up-to-date value before proceeding.
+	// Etag: Checksum provided in the WebApp resource. If provided, this
+	// checksum ensures that the client has an up-to-date value before
+	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -1983,6 +2007,14 @@ type WebApp struct {
 
 	// DisplayName: The user-assigned display name for the `WebApp`.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and it may be sent with update requests to ensure the
+	// client has an up-to-date value before proceeding. Learn more about
+	// `etag` in Google's AIP-154 standard
+	// (https://google.aip.dev/154#declarative-friendly-resources). This
+	// etag is strongly validated.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the WebApp, in the format:
 	// projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the
@@ -3858,26 +3890,29 @@ func (r *ProjectsService) SearchApps(parent string) *ProjectsSearchAppsCall {
 }
 
 // Filter sets the optional parameter "filter": A query string
-// compatible with Google's AIP-160 (https://google.aip.dev/160)
-// standard. Use any of the following fields in a query: * `app_id`
-// (../projects.apps#FirebaseAppInfo.FIELDS.app_id) * `namespace`
-// (../projects.apps#FirebaseAppInfo.FIELDS.namespace) * `platform`
-// (../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support
-// the following "virtual" fields (fields which are not actually part of
-// the returned resource object, but can be queried as if they are
-// pre-populated with specific values): * `sha1_hash` or `sha1_hashes`:
-// This field is considered to be a repeated `string` field, populated
-// with the list of all SHA-1 certificate fingerprints registered with
-// the app. This list is empty if the app is not an Android app. *
-// `sha256_hash` or `sha256_hashes`: This field is considered to be a
-// repeated `string` field, populated with the list of all SHA-256
-// certificate fingerprints registered with the app. This list is empty
-// if the app is not an Android app. * `app_store_id`: This field is
-// considered to be a singular `string` field, populated with the Apple
-// App Store ID registered with the app. This field is empty if the app
-// is not an iOS app. * `team_id`: This field is considered to be a
-// singular `string` field, populated with the Apple team ID registered
-// with the app. This field is empty if the app is not an iOS app.
+// compatible with Google's AIP-160 standard
+// (https://google.aip.dev/160). Use any of the following fields in a
+// query: * `app_id`
+// (../projects/searchApps#FirebaseAppInfo.FIELDS.app_id) * `namespace`
+// (../projects/searchApps#FirebaseAppInfo.FIELDS.namespace) *
+// `platform` (../projects/searchApps#FirebaseAppInfo.FIELDS.platform)
+// This query also supports the following "virtual" fields. These are
+// fields which are not actually part of the returned resource object,
+// but they can be queried as if they are pre-populated with specific
+// values. * `sha1_hash` or `sha1_hashes`: This field is considered to
+// be a _repeated_ `string` field, populated with the list of all SHA-1
+// certificate fingerprints registered with the AndroidApp. This list is
+// empty if the App is not an `AndroidApp`. * `sha256_hash` or
+// `sha256_hashes`: This field is considered to be a _repeated_ `string`
+// field, populated with the list of all SHA-256 certificate
+// fingerprints registered with the AndroidApp. This list is empty if
+// the App is not an `AndroidApp`. * `app_store_id`: This field is
+// considered to be a _singular_ `string` field, populated with the
+// Apple App Store ID registered with the IosApp. This field is empty if
+// the App is not an `IosApp`. * `team_id`: This field is considered to
+// be a _singular_ `string` field, populated with the Apple team ID
+// registered with the IosApp. This field is empty if the App is not an
+// `IosApp`.
 func (c *ProjectsSearchAppsCall) Filter(filter string) *ProjectsSearchAppsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4017,7 +4052,7 @@ func (c *ProjectsSearchAppsCall) Do(opts ...googleapi.CallOption) (*SearchFireba
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A query string compatible with Google's [AIP-160](https://google.aip.dev/160) standard. Use any of the following fields in a query: * [`app_id`](../projects.apps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects.apps#FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support the following \"virtual\" fields (fields which are not actually part of the returned resource object, but can be queried as if they are pre-populated with specific values): * `sha1_hash` or `sha1_hashes`: This field is considered to be a repeated `string` field, populated with the list of all SHA-1 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `sha256_hash` or `sha256_hashes`: This field is considered to be a repeated `string` field, populated with the list of all SHA-256 certificate fingerprints registered with the app. This list is empty if the app is not an Android app. * `app_store_id`: This field is considered to be a singular `string` field, populated with the Apple App Store ID registered with the app. This field is empty if the app is not an iOS app. * `team_id`: This field is considered to be a singular `string` field, populated with the Apple team ID registered with the app. This field is empty if the app is not an iOS app.",
+	//       "description": "A query string compatible with Google's [AIP-160 standard](https://google.aip.dev/160). Use any of the following fields in a query: * [`app_id`](../projects/searchApps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects/searchApps#FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects/searchApps#FirebaseAppInfo.FIELDS.platform) This query also supports the following \"virtual\" fields. These are fields which are not actually part of the returned resource object, but they can be queried as if they are pre-populated with specific values. * `sha1_hash` or `sha1_hashes`: This field is considered to be a _repeated_ `string` field, populated with the list of all SHA-1 certificate fingerprints registered with the AndroidApp. This list is empty if the App is not an `AndroidApp`. * `sha256_hash` or `sha256_hashes`: This field is considered to be a _repeated_ `string` field, populated with the list of all SHA-256 certificate fingerprints registered with the AndroidApp. This list is empty if the App is not an `AndroidApp`. * `app_store_id`: This field is considered to be a _singular_ `string` field, populated with the Apple App Store ID registered with the IosApp. This field is empty if the App is not an `IosApp`. * `team_id`: This field is considered to be a _singular_ `string` field, populated with the Apple team ID registered with the IosApp. This field is empty if the App is not an `IosApp`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -511,10 +511,10 @@ type AddSubnetworkRequest struct {
 	Description string `json:"description,omitempty"`
 
 	// IpPrefixLength: Required. The prefix length of the subnet's IP
-	// address range. Use CIDR range notation, such as `30` to provision a
-	// subnet with an `x.x.x.x/30` CIDR range. The IP address range is drawn
+	// address range. Use CIDR range notation, such as `29` to provision a
+	// subnet with an `x.x.x.x/29` CIDR range. The IP address range is drawn
 	// from a pool of available ranges in the service consumer's allocated
-	// range.
+	// range. GCE disallows subnets with prefix_length > 29
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
 	// OutsideAllocationPublicIpRange: Optional. Enable outside allocation
@@ -4463,9 +4463,10 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 // RangeReservation: Represents a range reservation.
 type RangeReservation struct {
 	// IpPrefixLength: Required. The size of the desired subnet. Use usual
-	// CIDR range notation. For example, '30' to find unused x.x.x.x/30 CIDR
+	// CIDR range notation. For example, '29' to find unused x.x.x.x/29 CIDR
 	// range. The goal is to determine if one of the allocated ranges has
-	// enough free space for a subnet of the requested size.
+	// enough free space for a subnet of the requested size. GCE disallows
+	// subnets with prefix_length > 29
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
 	// RequestedRanges: Optional. The name of one or more allocated IP
@@ -4478,9 +4479,10 @@ type RangeReservation struct {
 
 	// SecondaryRangeIpPrefixLengths: Optional. The size of the desired
 	// secondary ranges for the subnet. Use usual CIDR range notation. For
-	// example, '30' to find unused x.x.x.x/30 CIDR range. The goal is to
+	// example, '29' to find unused x.x.x.x/29 CIDR range. The goal is to
 	// determine that the allocated ranges have enough free space for all
-	// the requested secondary ranges.
+	// the requested secondary ranges. GCE disallows subnets with
+	// prefix_length > 29
 	SecondaryRangeIpPrefixLengths []int64 `json:"secondaryRangeIpPrefixLengths,omitempty"`
 
 	// SubnetworkCandidates: Optional. List of subnetwork candidates to

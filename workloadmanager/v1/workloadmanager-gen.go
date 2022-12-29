@@ -6,7 +6,7 @@
 
 // Package workloadmanager provides access to the Workload Manager API.
 //
-// For product documentation, see: https://g3doc.corp.google.com/company/teams/compute-fe/index.md?cl=head
+// For product documentation, see: https://cloud.google.com/workload-manager/docs
 //
 // # Creating a client
 //
@@ -152,6 +152,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Evaluations = NewProjectsLocationsEvaluationsService(s)
+	rs.Insights = NewProjectsLocationsInsightsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -160,6 +161,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Evaluations *ProjectsLocationsEvaluationsService
+
+	Insights *ProjectsLocationsInsightsService
 
 	Operations *ProjectsLocationsOperationsService
 }
@@ -170,6 +173,15 @@ func NewProjectsLocationsEvaluationsService(s *Service) *ProjectsLocationsEvalua
 }
 
 type ProjectsLocationsEvaluationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInsightsService(s *Service) *ProjectsLocationsInsightsService {
+	rs := &ProjectsLocationsInsightsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInsightsService struct {
 	s *Service
 }
 
@@ -283,6 +295,43 @@ type GceInstanceFilter struct {
 
 func (s *GceInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstanceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Insight: A presentation of host resource usage where the workload
+// runs.
+type Insight struct {
+	// SapDiscovery: The insights data for sap system discovery. This is a
+	// copy of SAP System proto and should get updated whenever that one
+	// changes.
+	SapDiscovery *SapDiscovery `json:"sapDiscovery,omitempty"`
+
+	// SapValidation: The insights data for the sap workload validation.
+	SapValidation *SapValidation `json:"sapValidation,omitempty"`
+
+	// SentTime: Output only. [Output only] Create time stamp
+	SentTime string `json:"sentTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SapDiscovery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SapDiscovery") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Insight) MarshalJSON() ([]byte, error) {
+	type NoMethod Insight
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -642,6 +691,250 @@ func (s *ResourceStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SapDiscovery: The schema of SAP system discovery data.
+type SapDiscovery struct {
+	// ApplicationLayer: An SAP system may run without an application layer.
+	ApplicationLayer *SapDiscoveryComponent `json:"applicationLayer,omitempty"`
+
+	// DatabaseLayer: An SAP System must have a database.
+	DatabaseLayer *SapDiscoveryComponent `json:"databaseLayer,omitempty"`
+
+	// Metadata: The metadata for SAP system discovery data.
+	Metadata *SapDiscoveryMetadata `json:"metadata,omitempty"`
+
+	// SystemId: A combination of database SID, database instance URI and
+	// tenant DB name to make a unique identifier per-system.
+	SystemId string `json:"systemId,omitempty"`
+
+	// UpdateTime: Unix timestamp this system has been updated last.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationLayer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationLayer") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscovery) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscovery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryComponent: Message describing the system component.
+type SapDiscoveryComponent struct {
+	// ApplicationType: The component is a SAP application.
+	ApplicationType string `json:"applicationType,omitempty"`
+
+	// DatabaseType: The component is a SAP database.
+	DatabaseType string `json:"databaseType,omitempty"`
+
+	// HostProject: Pantheon Project in which the resources reside.
+	HostProject string `json:"hostProject,omitempty"`
+
+	// Resources: The resources in a component.
+	Resources []*SapDiscoveryResource `json:"resources,omitempty"`
+
+	// Sid: The sap identifier, used by the SAP software and helps
+	// differentiate systems for customers.
+	Sid string `json:"sid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryMetadata: Message describing SAP discovery system
+// metadata
+type SapDiscoveryMetadata struct {
+	// CustomerRegion: Customer region string for customer's use. Does not
+	// represent GCP region.
+	CustomerRegion string `json:"customerRegion,omitempty"`
+
+	// DefinedSystem: Customer defined, something like "E-commerce pre prod"
+	DefinedSystem string `json:"definedSystem,omitempty"`
+
+	// EnvironmentType: Should be "prod", "QA", "dev", "staging", etc.
+	EnvironmentType string `json:"environmentType,omitempty"`
+
+	// SapProduct: This sap product name
+	SapProduct string `json:"sapProduct,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomerRegion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomerRegion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryResource: Message describing a resource.
+type SapDiscoveryResource struct {
+	// RelatedResources: A list of resource URIs related to this resource.
+	RelatedResources []string `json:"relatedResources,omitempty"`
+
+	// ResourceKind: ComputeInstance, ComputeDisk, VPC, Bare Metal server,
+	// etc.
+	ResourceKind string `json:"resourceKind,omitempty"`
+
+	// ResourceType: The type of this resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Undefined resource type.
+	//   "COMPUTE" - This is a compute resource.
+	//   "STORAGE" - This a storage resource.
+	//   "NETWORK" - This is a network resource.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceUri: URI of the resource, includes project, location, and
+	// name.
+	ResourceUri string `json:"resourceUri,omitempty"`
+
+	// UpdateTime: Unix timestamp of when this resource last had its
+	// discovery data updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RelatedResources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RelatedResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapValidation: A presentation of SAP workload insight. The schema of
+// SAP workloads validation related data.
+type SapValidation struct {
+	// ValidationDetails: A list of SAP validation metrics data.
+	ValidationDetails []*SapValidationValidationDetail `json:"validationDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ValidationDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ValidationDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod SapValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapValidationValidationDetail: Message describing the SAP validation
+// metrics.
+type SapValidationValidationDetail struct {
+	// Details: The pairs of metrics data: field name & field value.
+	Details map[string]string `json:"details,omitempty"`
+
+	// SapValidationType: The SAP system that the validation data is from.
+	//
+	// Possible values:
+	//   "SAP_VALIDATION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "SYSTEM" - The SAP system named SYSTEM.
+	//   "COROSYNC" - The SAP system named COROSYNC.
+	//   "PACEMAKER" - The SAP system named PACEMAKER.
+	//   "HANA" - The SAP system named HANA.
+	//   "NETWEAVER" - The SAP system named NETWEAVER.
+	SapValidationType string `json:"sapValidationType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapValidationValidationDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod SapValidationValidationDetail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -684,6 +977,55 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WriteInsightRequest: Request for sending the data insights.
+type WriteInsightRequest struct {
+	// Insight: Required. The metrics data details.
+	Insight *Insight `json:"insight,omitempty"`
+
+	// RequestId: Optional. An optional request ID to identify requests.
+	// Specify a unique request ID so that if you must retry your request,
+	// the server will know to ignore the request if it has already been
+	// completed. The server will guarantee that for at least 60 minutes
+	// since the first request. For example, consider a situation where you
+	// make an initial request and t he request times out. If you make the
+	// request again with the same request ID, the server can check if
+	// original operation with the same request ID was received, and if so,
+	// will ignore the second request. This prevents clients from
+	// accidentally creating duplicate commitments. The request ID must be a
+	// valid UUID with the exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Insight") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Insight") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WriteInsightRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WriteInsightRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WriteInsightResponse: The response for write insights request.
+type WriteInsightResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // method id "workloadmanager.projects.locations.get":
@@ -1581,6 +1923,150 @@ func (c *ProjectsLocationsEvaluationsListCall) Pages(ctx context.Context, f func
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "workloadmanager.projects.locations.insights.writeInsight":
+
+type ProjectsLocationsInsightsWriteInsightCall struct {
+	s                   *Service
+	location            string
+	writeinsightrequest *WriteInsightRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// WriteInsight: Write the data insights to workload manager data
+// warehouse.
+//
+//   - location: The GCP location. The format is:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsInsightsService) WriteInsight(location string, writeinsightrequest *WriteInsightRequest) *ProjectsLocationsInsightsWriteInsightCall {
+	c := &ProjectsLocationsInsightsWriteInsightCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.location = location
+	c.writeinsightrequest = writeinsightrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInsightsWriteInsightCall) Fields(s ...googleapi.Field) *ProjectsLocationsInsightsWriteInsightCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInsightsWriteInsightCall) Context(ctx context.Context) *ProjectsLocationsInsightsWriteInsightCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInsightsWriteInsightCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInsightsWriteInsightCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writeinsightrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+location}/insights:writeInsight")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workloadmanager.projects.locations.insights.writeInsight" call.
+// Exactly one of *WriteInsightResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *WriteInsightResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInsightsWriteInsightCall) Do(opts ...googleapi.CallOption) (*WriteInsightResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WriteInsightResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Write the data insights to workload manager data warehouse.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/insights:writeInsight",
+	//   "httpMethod": "POST",
+	//   "id": "workloadmanager.projects.locations.insights.writeInsight",
+	//   "parameterOrder": [
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Required. The GCP location. The format is: projects/{project}/locations/{location}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+location}/insights:writeInsight",
+	//   "request": {
+	//     "$ref": "WriteInsightRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "WriteInsightResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "workloadmanager.projects.locations.operations.cancel":

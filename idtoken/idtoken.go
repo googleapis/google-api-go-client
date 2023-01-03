@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -158,7 +157,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 		}
 		ts, err := impersonate.IDTokenSource(ctx, config)
 		if err != nil {
-			log.Println(err)
+			return nil, err
 		}
 		return ts, nil
 	default:

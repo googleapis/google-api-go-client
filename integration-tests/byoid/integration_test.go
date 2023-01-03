@@ -443,8 +443,8 @@ func TestConfigurableTokenLifetime(t *testing.T) {
 		}
 
 		now := time.Now()
-		expiryMax := now.Add(tokenLifetimeSeconds * time.Second)
-		expiryMin := expiryMax.Add(-safetyBuffer * time.Second)
+		expiryMax := now.Add((safetyBuffer + tokenLifetimeSeconds) * time.Second)
+		expiryMin := now.Add((tokenLifetimeSeconds - safetyBuffer) * time.Second)
 		if token.Expiry.Before(expiryMin) || token.Expiry.After(expiryMax) {
 			t.Fatalf("Expiry time not set correctly.  Got %v, want %v", token.Expiry, expiryMax)
 		}

@@ -221,16 +221,16 @@ type Accelerator struct {
 	// CCAI Insights processing.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 
-	// State: The state of the accelerator
+	// State: The state of the accelerator.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value, do not use
+	//   "STATE_UNSPECIFIED" - Default value, do not use.
 	//   "ENABLED" - Indicates that the accelerator is enabled and available
-	// to use
+	// to use.
 	//   "DISABLED" - Indicates that the accelerator is disabled and not
-	// available to use
+	// available to use.
 	//   "UNKNOWN" - Indicates that accelerator state is currently unknown.
-	// Requests for enable, disable could be retried while in this state
+	// Requests for enable, disable could be retried while in this state.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
@@ -670,6 +670,9 @@ type Instance struct {
 
 	// EnableStackdriverMonitoring: Option to enable Stackdriver Monitoring.
 	EnableStackdriverMonitoring bool `json:"enableStackdriverMonitoring,omitempty"`
+
+	// EnableZoneSeparation: Option to enable granular zone separation.
+	EnableZoneSeparation bool `json:"enableZoneSeparation,omitempty"`
 
 	// EventPublishConfig: Option to enable and pass metadata for event
 	// publishing.

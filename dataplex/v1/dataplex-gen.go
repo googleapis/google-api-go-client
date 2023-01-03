@@ -1030,6 +1030,17 @@ type GoogleCloudDataplexV1AssetResourceSpec struct {
 	// projects/{project_number}/datasets/{dataset_id}
 	Name string `json:"name,omitempty"`
 
+	// ReadAccessMode: Optional. Determines how read permissions are handled
+	// for each asset and their associated tables. Only available to storage
+	// buckets assets.
+	//
+	// Possible values:
+	//   "ACCESS_MODE_UNSPECIFIED" - Access mode unspecified.
+	//   "DIRECT" - Default. Data is accessed directly using storage APIs.
+	//   "MANAGED" - Data is accessed through a managed interface using
+	// BigQuery APIs.
+	ReadAccessMode string `json:"readAccessMode,omitempty"`
+
 	// Type: Required. Immutable. Type of resource.
 	//
 	// Possible values:
@@ -2891,6 +2902,10 @@ func (s *GoogleCloudDataplexV1DiscoveryEventPartitionDetails) MarshalJSON() ([]b
 // GoogleCloudDataplexV1Entity: Represents tables and fileset metadata
 // contained within a zone.
 type GoogleCloudDataplexV1Entity struct {
+	// Access: Output only. Identifies the access mechanism to the entity.
+	// Not user settable.
+	Access *GoogleCloudDataplexV1StorageAccess `json:"access,omitempty"`
+
 	// Asset: Required. Immutable. The ID of the asset associated with the
 	// storage location containing the entity data. The entity must be with
 	// in the same zone with the asset.
@@ -2979,7 +2994,7 @@ type GoogleCloudDataplexV1Entity struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Asset") to
+	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2987,7 +3002,7 @@ type GoogleCloudDataplexV1Entity struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// NullFields is a list of field names (e.g. "Access") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4296,6 +4311,40 @@ func (s *GoogleCloudDataplexV1RunDataScanResponse) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDataplexV1RunTaskRequest struct {
+}
+
+type GoogleCloudDataplexV1RunTaskResponse struct {
+	// Job: Jobs created by RunTask API.
+	Job *GoogleCloudDataplexV1Job `json:"job,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Job") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Job") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1RunTaskResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RunTaskResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1ScannedData: The data scanned during processing
 // (e.g. in incremental DataScan)
 type GoogleCloudDataplexV1ScannedData struct {
@@ -4703,6 +4752,42 @@ type GoogleCloudDataplexV1SessionEventQueryDetail struct {
 
 func (s *GoogleCloudDataplexV1SessionEventQueryDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1SessionEventQueryDetail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1StorageAccess: Describes the access mechanism of
+// the data within its storage location.
+type GoogleCloudDataplexV1StorageAccess struct {
+	// Read: Output only. Describes the read access mechanism of the data.
+	// Not user settable.
+	//
+	// Possible values:
+	//   "ACCESS_MODE_UNSPECIFIED" - Access mode unspecified.
+	//   "DIRECT" - Default. Data is accessed directly using storage APIs.
+	//   "MANAGED" - Data is accessed through a managed interface using
+	// BigQuery APIs.
+	Read string `json:"read,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Read") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Read") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1StorageAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1StorageAccess
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16776,6 +16861,151 @@ func (c *ProjectsLocationsLakesTasksPatchCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataplex.projects.locations.lakes.tasks.run":
+
+type ProjectsLocationsLakesTasksRunCall struct {
+	s                                   *Service
+	name                                string
+	googleclouddataplexv1runtaskrequest *GoogleCloudDataplexV1RunTaskRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Run: Run an on demand execution of a Task.
+//
+//   - name: The resource name of the task:
+//     projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ta
+//     sks/{task_id}.
+func (r *ProjectsLocationsLakesTasksService) Run(name string, googleclouddataplexv1runtaskrequest *GoogleCloudDataplexV1RunTaskRequest) *ProjectsLocationsLakesTasksRunCall {
+	c := &ProjectsLocationsLakesTasksRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1runtaskrequest = googleclouddataplexv1runtaskrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsLakesTasksRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsLakesTasksRunCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsLakesTasksRunCall) Context(ctx context.Context) *ProjectsLocationsLakesTasksRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsLakesTasksRunCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsLakesTasksRunCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddataplexv1runtaskrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:run")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.lakes.tasks.run" call.
+// Exactly one of *GoogleCloudDataplexV1RunTaskResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDataplexV1RunTaskResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsLakesTasksRunCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1RunTaskResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1RunTaskResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run an on demand execution of a Task.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/lakes/{lakesId}/tasks/{tasksId}:run",
+	//   "httpMethod": "POST",
+	//   "id": "dataplex.projects.locations.lakes.tasks.run",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/lakes/[^/]+/tasks/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:run",
+	//   "request": {
+	//     "$ref": "GoogleCloudDataplexV1RunTaskRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDataplexV1RunTaskResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

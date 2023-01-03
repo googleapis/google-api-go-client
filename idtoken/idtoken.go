@@ -29,6 +29,14 @@ import (
 // ClientOption is for configuring a Google API client or transport.
 type ClientOption = option.ClientOption
 
+type credentialsType int
+
+const (
+	unknownCredType credentialsType = iota
+	serviceAccount
+	impersonatedServiceAccount
+)
+
 // NewClient creates a HTTP Client that automatically adds an ID token to each
 // request via an Authorization header. The token will have the audience
 // provided and be configured with the supplied options. The parameter audience
@@ -71,7 +79,6 @@ func NewClient(ctx context.Context, audience string, opts ...ClientOption) (*htt
 // provided and configured with the supplied options. The parameter audience may
 // not be empty.
 func NewTokenSource(ctx context.Context, audience string, opts ...ClientOption) (oauth2.TokenSource, error) {
-	option.WithScopes()
 	if audience == "" {
 		return nil, fmt.Errorf("idtoken: must supply a non-empty audience")
 	}
@@ -112,7 +119,8 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 	if err != nil {
 		return nil, err
 	}
-	if allowedType == "service_account" {
+	switch allowedType {
+	case serviceAccount:
 		cfg, err := google.JWTConfigFromJSON(data, ds.GetScopes()...)
 		if err != nil {
 			return nil, err
@@ -132,8 +140,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			return nil, err
 		}
 		return oauth2.ReuseTokenSource(tok, ts), nil
-	} else {
-		// if allowedType is "impersonated_service_account":
+	case impersonatedServiceAccount:
 		type url struct {
 			ServiceAccountImpersonationURL string `json:"service_account_impersonation_url"`
 		}
@@ -154,26 +161,37 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 			log.Println(err)
 		}
 		return ts, nil
+	default:
+		return nil, fmt.Errorf("idtoken: unsupported credentials type")
 	}
 }
 
-// isOfAllowedType returns the credentials type as a string, and an error.
+// getAllowedType returns the credentials type of type credentialsType, and an error.
 // allowed types are "service_account" and "impersonated_service_account"
-func getAllowedType(data []byte) (string, error) {
+func getAllowedType(data []byte) (credentialsType, error) {
+	var t credentialsType
 	if len(data) == 0 {
-		return "", fmt.Errorf("idtoken: credential provided is 0 bytes")
+		return t, fmt.Errorf("idtoken: credential provided is 0 bytes")
 	}
 	var f struct {
 		Type string `json:"type"`
 	}
-	// if not service account return an error
 	if err := json.Unmarshal(data, &f); err != nil {
-		return "", err
+		return t, err
 	}
-	if f.Type != "service_account" && f.Type != "impersonated_service_account" {
-		return "", fmt.Errorf("idtoken: credential must be service_account or impersonated_service_account, found %q", f.Type)
+	t = parseCredType(f.Type)
+	return t, nil
+}
+
+func parseCredType(typeString string) credentialsType {
+	switch typeString {
+	case "service_account":
+		return serviceAccount
+	case "impersonated_service_account":
+		return impersonatedServiceAccount
+	default:
+		return unknownCredType
 	}
-	return f.Type, nil
 }
 
 // WithCustomClaims optionally specifies custom private claims for an ID token.

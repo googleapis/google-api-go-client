@@ -143,11 +143,11 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 		type url struct {
 			ServiceAccountImpersonationURL string `json:"service_account_impersonation_url"`
 		}
-		var accountUrl *url
-		if err := json.Unmarshal(data, &accountUrl); err != nil {
+		var accountURL *url
+		if err := json.Unmarshal(data, &accountURL); err != nil {
 			return nil, err
 		}
-		account := filepath.Base(accountUrl.ServiceAccountImpersonationURL)
+		account := filepath.Base(accountURL.ServiceAccountImpersonationURL)
 		account = strings.Split(account, ":")[0]
 
 		config := impersonate.IDTokenConfig{

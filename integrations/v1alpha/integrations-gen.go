@@ -3929,6 +3929,8 @@ func (s *EnterpriseCrmEventbusProtoSuspensionResolutionInfo) MarshalJSON() ([]by
 type EnterpriseCrmEventbusProtoSuspensionResolutionInfoAudit struct {
 	ResolvedBy string `json:"resolvedBy,omitempty"`
 
+	ResolvedByCpi string `json:"resolvedByCpi,omitempty"`
+
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResolvedBy") to
@@ -6712,7 +6714,7 @@ type GoogleCloudConnectorsV1Connection struct {
 	// projects/{project}/locations/{location}/connections/{connection}
 	Name string `json:"name,omitempty"`
 
-	// NodeConfig: Optional. Configuration for the connection.
+	// NodeConfig: Optional. Node configuration for the connection.
 	NodeConfig *GoogleCloudConnectorsV1NodeConfig `json:"nodeConfig,omitempty"`
 
 	// ServiceAccount: Optional. Service account needed for runtime plane to
@@ -6903,7 +6905,8 @@ func (s *GoogleCloudConnectorsV1LockConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudConnectorsV1NodeConfig: Configuration for the connection.
+// GoogleCloudConnectorsV1NodeConfig: Node configuration for the
+// connection.
 type GoogleCloudConnectorsV1NodeConfig struct {
 	// MaxNodeCount: Maximum number of nodes in the runtime nodes.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`

@@ -3695,7 +3695,7 @@ type GoogleCloudContactcenterinsightsV1View struct {
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Value: String with specific view properties.
+	// Value: String with specific view properties, must be non-empty.
 	Value string `json:"value,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

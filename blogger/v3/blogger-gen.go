@@ -3916,6 +3916,13 @@ func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	return c
 }
 
+// UseTrash sets the optional parameter "useTrash": Move to Trash if
+// possible
+func (c *PagesDeleteCall) UseTrash(useTrash bool) *PagesDeleteCall {
+	c.urlParams_.Set("useTrash", fmt.Sprint(useTrash))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3996,6 +4003,11 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "useTrash": {
+	//       "description": "Move to Trash if possible",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v3/blogs/{blogId}/pages/{pageId}",
@@ -5735,6 +5747,13 @@ func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	return c
 }
 
+// UseTrash sets the optional parameter "useTrash": Move to Trash if
+// possible
+func (c *PostsDeleteCall) UseTrash(useTrash bool) *PostsDeleteCall {
+	c.urlParams_.Set("useTrash", fmt.Sprint(useTrash))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5815,6 +5834,11 @@ func (c *PostsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "useTrash": {
+	//       "description": "Move to Trash if possible",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v3/blogs/{blogId}/posts/{postId}",
@@ -6473,6 +6497,22 @@ func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
 	return c
 }
 
+// SortOption sets the optional parameter "sortOption": Sort direction
+// applied to post list.
+//
+// Possible values:
+//
+//	"SORT_OPTION_UNSPECIFIED" - The unspecified sort option.
+//	"DESCENDING" (default) - The option to sort posts in descending
+//
+// order in time.
+//
+//	"ASCENDING" - The option to sort posts in ascending order in time.
+func (c *PostsListCall) SortOption(sortOption string) *PostsListCall {
+	c.urlParams_.Set("sortOption", sortOption)
+	return c
+}
+
 // StartDate sets the optional parameter "startDate":
 func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 	c.urlParams_.Set("startDate", startDate)
@@ -6655,6 +6695,22 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOption": {
+	//       "default": "DESCENDING",
+	//       "description": "Sort direction applied to post list.",
+	//       "enum": [
+	//         "SORT_OPTION_UNSPECIFIED",
+	//         "DESCENDING",
+	//         "ASCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The unspecified sort option.",
+	//         "The option to sort posts in descending order in time.",
+	//         "The option to sort posts in ascending order in time."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },

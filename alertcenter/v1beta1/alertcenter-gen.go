@@ -2085,6 +2085,8 @@ type RuleViolationInfo struct {
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Chrome actions Delete web protect
+	// evidence file
 	SuppressedActionTypes []string `json:"suppressedActionTypes,omitempty"`
 
 	// Trigger: Trigger of the rule.
@@ -2108,6 +2110,8 @@ type RuleViolationInfo struct {
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Chrome actions Delete web protect
+	// evidence file
 	TriggeredActionTypes []string `json:"triggeredActionTypes,omitempty"`
 
 	// TriggeringUserEmail: Email of the user who caused the violation.

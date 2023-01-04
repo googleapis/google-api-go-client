@@ -3308,7 +3308,7 @@
       }
     }
   },
-  "revision": "20221122",
+  "revision": "20221220",
   "rootUrl": "https://integrations.googleapis.com/",
   "schemas": {
     "CrmlogErrorCode": {
@@ -5810,6 +5810,9 @@
         "resolvedBy": {
           "type": "string"
         },
+        "resolvedByCpi": {
+          "type": "string"
+        },
         "timestamp": {
           "format": "google-datetime",
           "type": "string"
@@ -8042,7 +8045,7 @@
         },
         "nodeConfig": {
           "$ref": "GoogleCloudConnectorsV1NodeConfig",
-          "description": "Optional. Configuration for the connection."
+          "description": "Optional. Node configuration for the connection."
         },
         "serviceAccount": {
           "description": "Optional. Service account needed for runtime plane to access GCP resources.",
@@ -8161,7 +8164,7 @@
       "type": "object"
     },
     "GoogleCloudConnectorsV1NodeConfig": {
-      "description": "Configuration for the connection.",
+      "description": "Node configuration for the connection.",
       "id": "GoogleCloudConnectorsV1NodeConfig",
       "properties": {
         "maxNodeCount": {

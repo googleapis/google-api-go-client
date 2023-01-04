@@ -398,6 +398,35 @@ func (s *AndroidAttributes) MarshalJSON() ([]byte, error) {
 // ApproveDeviceUserRequest: Request message for approving the device to
 // access user data.
 type ApproveDeviceUserRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApproveDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ApproveDeviceUserRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ApproveDeviceUserResponse: Response message for approving the device
@@ -432,6 +461,35 @@ func (s *ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
 // BlockDeviceUserRequest: Request message for blocking account on
 // device.
 type BlockDeviceUserRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BlockDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BlockDeviceUserRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // BlockDeviceUserResponse: Response message for blocking the device
@@ -471,6 +529,35 @@ type CancelUserInvitationRequest struct {
 // CancelWipeDeviceRequest: Request message for cancelling an unfinished
 // device wipe.
 type CancelWipeDeviceRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelWipeDeviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelWipeDeviceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CancelWipeDeviceResponse: Response message for cancelling an
@@ -506,6 +593,35 @@ func (s *CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
 // CancelWipeDeviceUserRequest: Request message for cancelling an
 // unfinished user account wipe.
 type CancelWipeDeviceUserRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelWipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelWipeDeviceUserRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // CancelWipeDeviceUserResponse: Response message for cancelling an
@@ -778,6 +894,14 @@ func (s *ClientState) MarshalJSON() ([]byte, error) {
 // CreateDeviceRequest: Request message for creating a Company Owned
 // device.
 type CreateDeviceRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
 	// Device: Required. The device to be created. The name field within
 	// this device is ignored in the create method. A new name is created by
 	// the method, and returned within the response. Only the fields
@@ -786,7 +910,7 @@ type CreateDeviceRequest struct {
 	// and `serial_number` fields are required.
 	Device *Device `json:"device,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Device") to
+	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -794,8 +918,8 @@ type CreateDeviceRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Device") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2229,10 +2353,11 @@ type Group struct {
 
 	// Parent: Required. Immutable. The resource name of the entity under
 	// which this `Group` resides in the Cloud Identity resource hierarchy.
-	// Must be of the form `identitysources/{identity_source_id}` for
-	// external- identity-mapped groups or `customers/{customer_id}` for
-	// Google Groups. The `customer_id` must begin with "C" (for example,
-	// 'C046psxkn').
+	// Must be of the form `identitysources/{identity_source}` for external
+	// identity-mapped groups (https://support.google.com/a/answer/9039510)
+	// or `customers/{customer_id}` for Google Groups. The `customer_id`
+	// must begin with "C" (for example, 'C046psxkn'). [Find your customer
+	// ID.] (https://support.google.com/cloudidentity/answer/10070793)
 	Parent string `json:"parent,omitempty"`
 
 	// PosixGroups: Optional. The POSIX groups associated with the `Group`.
@@ -2978,8 +3103,8 @@ func (s *LookupMembershipNameResponse) MarshalJSON() ([]byte, error) {
 // LookupSelfDeviceUsersResponse: Response containing resource names of
 // the DeviceUsers associated with the caller's credentials.
 type LookupSelfDeviceUsersResponse struct {
-	// Customer: The obfuscated customer Id that may be passed back to other
-	// Devices API methods such as List, Get, etc.
+	// Customer: The customer Id that may be passed back to other Devices
+	// API methods such as List, Get, etc.
 	Customer string `json:"customer,omitempty"`
 
 	// Names: Resource names
@@ -4170,6 +4295,14 @@ func (s *UserInvitation) MarshalJSON() ([]byte, error) {
 
 // WipeDeviceRequest: Request message for wiping all data on the device.
 type WipeDeviceRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
 	// RemoveResetLock: Optional. Specifies if a user is able to factory
 	// reset a device after a Device Wipe. On iOS, this is called
 	// "Activation Lock", while on Android, this is known as "Factory Reset
@@ -4178,7 +4311,7 @@ type WipeDeviceRequest struct {
 	// setting is untouched on the device.
 	RemoveResetLock bool `json:"removeResetLock,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RemoveResetLock") to
+	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4186,13 +4319,12 @@ type WipeDeviceRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RemoveResetLock") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4235,6 +4367,35 @@ func (s *WipeDeviceResponse) MarshalJSON() ([]byte, error) {
 // WipeDeviceUserRequest: Request message for starting an account wipe
 // on device.
 type WipeDeviceUserRequest struct {
+	// Customer: Optional. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WipeDeviceUserRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // WipeDeviceUserResponse: Response message for wiping the user's
@@ -5375,6 +5536,17 @@ func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
 	return c
 }
 
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeleteCall) Customer(customer string) *DevicesDeleteCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5469,6 +5641,11 @@ func (c *DevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
 	//       "location": "path",
@@ -5508,6 +5685,15 @@ type DevicesGetCall struct {
 func (r *DevicesService) Get(name string) *DevicesGetCall {
 	c := &DevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the Customer
+// in format: `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesGetCall) Customer(customer string) *DevicesGetCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -5618,6 +5804,11 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, error) {
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Customer in format: `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
 	//       "location": "path",
@@ -5651,6 +5842,14 @@ type DevicesListCall struct {
 // List: Lists/Searches devices.
 func (r *DevicesService) List() *DevicesListCall {
 	c := &DevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the
+// customer.
+func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -5816,6 +6015,11 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*ListDevicesResponse
 	//   "id": "cloudidentity.devices.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "filter": {
 	//       "description": "Optional. Additional restrictions when fetching list of devices. For a list of search fields, refer to [Mobile device search fields](https://developers.google.com/admin-sdk/directory/v1/search-operators). Multiple search fields are separated by the space character.",
 	//       "location": "query",
@@ -6496,6 +6700,17 @@ func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDelet
 	return c
 }
 
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersDeleteCall) Customer(customer string) *DevicesDeviceUsersDeleteCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6590,6 +6805,11 @@ func (c *DevicesDeviceUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
 	//       "location": "path",
@@ -6630,6 +6850,17 @@ type DevicesDeviceUsersGetCall struct {
 func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall {
 	c := &DevicesDeviceUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersGetCall) Customer(customer string) *DevicesDeviceUsersGetCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -6740,6 +6971,11 @@ func (c *DevicesDeviceUsersGetCall) Do(opts ...googleapi.CallOption) (*DeviceUse
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
 	//       "location": "path",
@@ -6779,6 +7015,17 @@ type DevicesDeviceUsersListCall struct {
 func (r *DevicesDeviceUsersService) List(parent string) *DevicesDeviceUsersListCall {
 	c := &DevicesDeviceUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Customer sets the optional parameter "customer": Resource name
+// (https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersListCall) Customer(customer string) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("customer", customer)
 	return c
 }
 
@@ -6925,6 +7172,11 @@ func (c *DevicesDeviceUsersListCall) Do(opts ...googleapi.CallOption) (*ListDevi
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "customer": {
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "filter": {
 	//       "description": "Optional. Additional restrictions when fetching list of devices. For a list of search fields, refer to [Mobile device search fields](https://developers.google.com/admin-sdk/directory/v1/search-operators). Multiple search fields are separated by the space character.",
 	//       "location": "query",
@@ -8396,7 +8648,8 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 // form `identitysources/{identity_source_id}` for external-
 // identity-mapped groups or `customers/{customer_id}` for Google
 // Groups. The `customer_id` must begin with "C" (for example,
-// 'C046psxkn').
+// 'C046psxkn'). [Find your customer ID.]
+// (https://support.google.com/cloudidentity/answer/10070793)
 func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -8529,7 +8782,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8925,6 +9178,17 @@ func (r *GroupsService) Search() *GroupsSearchCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The ordering of groups
+// for the display name or email in the search groups response. The
+// syntax for this field can be found at
+// https://cloud.google.com/apis/design/design_patterns#sorting_order.
+// Example: Sort by the ascending name: order_by="display_name" Sort by
+// the descending group key email: order_by="group_key desc"
+func (c *GroupsSearchCall) OrderBy(orderBy string) *GroupsSearchCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return. Note that the number of results returned may be
 // less than this value even if there are more available results. To
@@ -8947,12 +9211,21 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 }
 
 // Query sets the optional parameter "query": Required. The search
-// query. Must be specified in Common Expression Language
-// (https://opensource.google/projects/cel). May only contain equality
-// operators on the parent and inclusion operators on labels (e.g.,
-// `parent == 'customers/{customer_id}' &&
-// 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
+// query. * Must be specified in Common Expression Language
+// (https://opensource.google/projects/cel). * Must contain equality
+// operators on the parent, e.g. `parent == 'customers/{customer_id}'`.
 // The `customer_id` must begin with "C" (for example, 'C046psxkn').
+// [Find your customer ID.]
+// (https://support.google.com/cloudidentity/answer/10070793) * Can
+// contain optional inclusion operators on `labels` such as
+// `cloudidentity.googleapis.com/groups.discussion_forum' in labels`). *
+// Can contain an optional equality operator on `domain_name` or
+// `startsWith/contains/equality` operator on `group_key`, e.g.
+// `domain_name == 'abc.com'`, `group_key.startsWith('dev')`,
+// `group_key.contains('dev'), group_key == 'dev@abc.com'` * Can contain
+// an optional `startsWith/contains/equality` operator on
+// `display_name`, such as `display_name.startsWith('dev')` ,
+// `display_name.contains('dev')`, `display_name == 'dev'`
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -9072,6 +9345,11 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//   "id": "cloudidentity.groups.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "The ordering of groups for the display name or email in the search groups response. The syntax for this field can be found at https://cloud.google.com/apis/design/design_patterns#sorting_order. Example: Sort by the ascending name: order_by=\"display_name\" Sort by the descending group key email: order_by=\"group_key desc\"",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of results to return. Note that the number of results returned may be less than this value even if there are more available results. To fetch all results, clients must continue calling this method repeatedly until the response no longer contains a `next_page_token`. If unspecified, defaults to 200 for `GroupView.BASIC` and to 50 for `GroupView.FULL`. Must not be greater than 1000 for `GroupView.BASIC` or 500 for `GroupView.FULL`.",
 	//       "format": "int32",
@@ -9084,7 +9362,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name` or `startsWith/contains/equality` operator on `group_key`, e.g. `domain_name == 'abc.com'`, `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@abc.com'` * Can contain an optional `startsWith/contains/equality` operator on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

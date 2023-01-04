@@ -3949,6 +3949,7 @@ type CoursesPatchCall struct {
 // `INVALID_ARGUMENT` if invalid fields are specified in the update mask
 // or if no update mask is supplied. * `FAILED_PRECONDITION` for the
 // following request errors: * CourseNotModifiable * InactiveCourseOwner
+// * IneligibleOwner
 //
 //   - id: Identifier of the course to update. This identifier can be
 //     either the Classroom-assigned identifier or an alias.
@@ -4064,7 +4065,7 @@ func (c *CoursesPatchCall) Do(opts ...googleapi.CallOption) (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable * InactiveCourseOwner",
+	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable * InactiveCourseOwner * IneligibleOwner",
 	//   "flatPath": "v1/courses/{id}",
 	//   "httpMethod": "PATCH",
 	//   "id": "classroom.courses.patch",
@@ -11586,10 +11587,11 @@ type InvitationsCreateCall struct {
 // make changes. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting user is not permitted to create
 // invitations for this course or for access errors. * `NOT_FOUND` if
-// the course or the user does not exist. * `FAILED_PRECONDITION` if the
-// requested user's account is disabled or if the user already has this
-// role or a role with greater permissions. * `ALREADY_EXISTS` if an
-// invitation for the specified user and course already exists.
+// the course or the user does not exist. * `FAILED_PRECONDITION`: * if
+// the requested user's account is disabled. * if the user already has
+// this role or a role with greater permissions. * for the following
+// request errors: * IneligibleOwner * `ALREADY_EXISTS` if an invitation
+// for the specified user and course already exists.
 func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCall {
 	c := &InvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.invitation = invitation
@@ -11684,7 +11686,7 @@ func (c *InvitationsCreateCall) Do(opts ...googleapi.CallOption) (*Invitation, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for access errors. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled or if the user already has this role or a role with greater permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
+	//   "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for access errors. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION`: * if the requested user's account is disabled. * if the user already has this role or a role with greater permissions. * for the following request errors: * IneligibleOwner * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
 	//   "flatPath": "v1/invitations",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.invitations.create",

@@ -733,7 +733,7 @@ type ComputeEngineTargetDetails struct {
 	// NetworkTags: A map of network tags to associate with the VM.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
-	// Project: The GCP target project ID or project name.
+	// Project: The Google Cloud target project ID or project name.
 	Project string `json:"project,omitempty"`
 
 	// SecureBoot: Defines whether the instance has Secure Boot enabled.
@@ -1006,9 +1006,9 @@ func (s *CycleStep) MarshalJSON() ([]byte, error) {
 }
 
 // DatacenterConnector: DatacenterConnector message describes a
-// connector between the Source and GCP, which is installed on a vmware
-// datacenter (an OVA vm installed by the user) to connect the
-// Datacenter to GCP and support vm migration data transfer.
+// connector between the Source and Google Cloud, which is installed on
+// a vmware datacenter (an OVA vm installed by the user) to connect the
+// Datacenter to Google Cloud and support vm migration data transfer.
 type DatacenterConnector struct {
 	// ApplianceInfrastructureVersion: Output only. Appliance OVA version.
 	// This is the OVA which is manually installed by the user and contains
@@ -1026,7 +1026,7 @@ type DatacenterConnector struct {
 	AvailableVersions *AvailableUpdates `json:"availableVersions,omitempty"`
 
 	// Bucket: Output only. The communication channel between the datacenter
-	// connector and GCP.
+	// connector and Google Cloud.
 	Bucket string `json:"bucket,omitempty"`
 
 	// CreateTime: Output only. The time the connector was created (as an

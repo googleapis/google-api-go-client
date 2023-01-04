@@ -2463,8 +2463,7 @@ type OSPolicyResourceExecResourceExec struct {
 	// non-compliant. Output file size is limited to 100K bytes.
 	OutputFilePath string `json:"outputFilePath,omitempty"`
 
-	// Script: An inline script. The size of the script is limited to 1024
-	// characters.
+	// Script: An inline script. The size of the script is limited to 32KiB.
 	Script string `json:"script,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -2603,7 +2602,7 @@ func (s *OSPolicyResourceFileRemote) MarshalJSON() ([]byte, error) {
 // file.
 type OSPolicyResourceFileResource struct {
 	// Content: A a file with this content. The size of the content is
-	// limited to 1024 characters.
+	// limited to 32KiB.
 	Content string `json:"content,omitempty"`
 
 	// File: A remote or local source.

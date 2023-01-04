@@ -3852,7 +3852,7 @@ func (s *GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1DeploymentConfig: NEXT ID: 9
+// GoogleCloudApigeeV1DeploymentConfig: NEXT ID: 11
 type GoogleCloudApigeeV1DeploymentConfig struct {
 	// Attributes: Additional key-value metadata for the deployment.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -3860,6 +3860,14 @@ type GoogleCloudApigeeV1DeploymentConfig struct {
 	// BasePath: Base path where the application will be hosted. Defaults to
 	// "/".
 	BasePath string `json:"basePath,omitempty"`
+
+	// DeploymentGroups: The list of deployment groups in which this proxy
+	// should be deployed. Not currently populated for shared flows.
+	DeploymentGroups []string `json:"deploymentGroups,omitempty"`
+
+	// Endpoints: A mapping from basepaths to proxy endpoint names in this
+	// proxy. Not populated for shared flows.
+	Endpoints map[string]string `json:"endpoints,omitempty"`
 
 	// Location: Location of the API proxy bundle as a URI.
 	Location string `json:"location,omitempty"`
@@ -3900,6 +3908,45 @@ type GoogleCloudApigeeV1DeploymentConfig struct {
 
 func (s *GoogleCloudApigeeV1DeploymentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1DeploymentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1DeploymentGroupConfig: DeploymentGroupConfig
+// represents a deployment group that should be present in a particular
+// environment.
+type GoogleCloudApigeeV1DeploymentGroupConfig struct {
+	// Name: Name of the deployment group in the following format:
+	// `organizations/{org}/environments/{env}/deploymentGroups/{group}`.
+	Name string `json:"name,omitempty"`
+
+	// RevisionId: Revision number which can be used by the runtime to
+	// detect if the deployment group has changed between two versions.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+
+	// Uid: Unique ID. The ID will only change if the deployment group is
+	// deleted and recreated.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1DeploymentGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1DeploymentGroupConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4402,6 +4449,42 @@ func (s *GoogleCloudApigeeV1EndpointAttachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1EndpointChainingRule: EndpointChainingRule
+// specifies the proxies contained in a particular deployment group, so
+// that other deployment groups can find them in chaining calls.
+type GoogleCloudApigeeV1EndpointChainingRule struct {
+	// DeploymentGroup: The deployment group to target for cross-shard
+	// chaining calls to these proxies.
+	DeploymentGroup string `json:"deploymentGroup,omitempty"`
+
+	// ProxyIds: List of proxy ids which may be found in the given
+	// deployment group.
+	ProxyIds []string `json:"proxyIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentGroup") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1EndpointChainingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EndpointChainingRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1EntityMetadata: Metadata common to many entities
 // in this API.
 type GoogleCloudApigeeV1EntityMetadata struct {
@@ -4566,8 +4649,17 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 	// environment.
 	DebugMask *GoogleCloudApigeeV1DebugMask `json:"debugMask,omitempty"`
 
+	// DeploymentGroups: List of deployment groups in the environment.
+	DeploymentGroups []*GoogleCloudApigeeV1DeploymentGroupConfig `json:"deploymentGroups,omitempty"`
+
 	// Deployments: List of deployments in the environment.
 	Deployments []*GoogleCloudApigeeV1DeploymentConfig `json:"deployments,omitempty"`
+
+	// EnvScopedRevisionId: Revision ID for environment-scoped resources
+	// (e.g. target servers, keystores) in this config. This ID will
+	// increment any time a resource not scoped to a deployment group
+	// changes.
+	EnvScopedRevisionId int64 `json:"envScopedRevisionId,omitempty,string"`
 
 	// FeatureFlags: Feature flags inherited from the organization and
 	// environment.
@@ -4758,8 +4850,18 @@ func (s *GoogleCloudApigeeV1EnvironmentGroupAttachment) MarshalJSON() ([]byte, e
 // a revisioned snapshot of an EnvironmentGroup and its associated
 // routing rules.
 type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
+	// EndpointChainingRules: A list of proxies in each deployment group for
+	// proxy chaining calls.
+	EndpointChainingRules []*GoogleCloudApigeeV1EndpointChainingRule `json:"endpointChainingRules,omitempty"`
+
 	// Hostnames: Host names for the environment group.
 	Hostnames []string `json:"hostnames,omitempty"`
+
+	// Location: When this message appears in the top-level IngressConfig,
+	// this field will be populated in lieu of the inlined routing_rules and
+	// hostnames fields. Some URL for downloading the full
+	// EnvironmentGroupConfig for this group.
+	Location string `json:"location,omitempty"`
 
 	// Name: Name of the environment group in the following format:
 	// `organizations/{org}/envgroups/{envgroup}`.
@@ -4779,20 +4881,26 @@ type GoogleCloudApigeeV1EnvironmentGroupConfig struct {
 	// change if the environment group is deleted and recreated.
 	Uid string `json:"uid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Hostnames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointChainingRules") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Hostnames") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndpointChainingRules") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -9063,6 +9171,12 @@ type GoogleCloudApigeeV1RoutingRule struct {
 	// consisting of a single `*` character will match any string.
 	Basepath string `json:"basepath,omitempty"`
 
+	// DeploymentGroup: Name of a deployment group in an environment bound
+	// to the environment group in the following format:
+	// `organizations/{org}/environment/{env}/deploymentGroups/{group}` Only
+	// one of environment or deployment_group will be set.
+	DeploymentGroup string `json:"deploymentGroup,omitempty"`
+
 	// EnvGroupRevision: The env group config revision_id when this rule was
 	// added or last updated. This value is set when the rule is created and
 	// will only update if the the environment_id changes. It is used to
@@ -9072,8 +9186,13 @@ type GoogleCloudApigeeV1RoutingRule struct {
 	EnvGroupRevision int64 `json:"envGroupRevision,omitempty,string"`
 
 	// Environment: Name of an environment bound to the environment group in
-	// the following format: `organizations/{org}/environments/{env}`.
+	// the following format: `organizations/{org}/environments/{env}`. Only
+	// one of environment or deployment_group will be set.
 	Environment string `json:"environment,omitempty"`
+
+	// OtherTargets: Conflicting targets, which will be resource names
+	// specifying either deployment groups or environments.
+	OtherTargets []string `json:"otherTargets,omitempty"`
 
 	// Receiver: The resource name of the proxy revision that is receiving
 	// this basepath in the following format:
@@ -10581,7 +10700,7 @@ func (s *GoogleCloudApigeeV1SyncAuthorization) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudApigeeV1TargetServer: TargetServer configuration.
-// TargetServers are used to decouple a proxy's TargetEndpoint
+// TargetServers are used to decouple a proxy TargetEndpoint
 // HTTPTargetConnections from concrete URLs for backend services.
 type GoogleCloudApigeeV1TargetServer struct {
 	// Description: Optional. A human-readable description of this
@@ -28012,6 +28131,196 @@ func (c *OrganizationsEnvgroupsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudApigeeV1EnvironmentGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "apigee.organizations.envgroups.getDeployedIngressConfig":
+
+type OrganizationsEnvgroupsGetDeployedIngressConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDeployedIngressConfig: Gets the deployed ingress configuration for
+// an environment group.
+//
+//   - name: Name of the deployed configuration for the environment group
+//     in the following format:
+//     'organizations/{org}/envgroups/{envgroup}/deployedIngressConfig'.
+func (r *OrganizationsEnvgroupsService) GetDeployedIngressConfig(name string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c := &OrganizationsEnvgroupsGetDeployedIngressConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": When set to FULL, additional
+// details about the specific deployments receiving traffic will be
+// included in the IngressConfig response's RoutingRules.
+//
+// Possible values:
+//
+//	"INGRESS_CONFIG_VIEW_UNSPECIFIED" - The default/unset value. The
+//
+// API will default to the BASIC view.
+//
+//	"BASIC" - Include all ingress config data necessary for the runtime
+//
+// to configure ingress, but no more. Routing rules will include only
+// basepath and destination environment. This the default value.
+//
+//	"FULL" - Include all ingress config data, including internal debug
+//
+// info for each routing rule such as the proxy claiming a particular
+// basepath and when the routing rule first appeared in the env group.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) View(view string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Fields(s ...googleapi.Field) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) IfNoneMatch(entityTag string) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Context(ctx context.Context) *OrganizationsEnvgroupsGetDeployedIngressConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.envgroups.getDeployedIngressConfig" call.
+// Exactly one of *GoogleCloudApigeeV1EnvironmentGroupConfig or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1EnvironmentGroupConfig.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsEnvgroupsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1EnvironmentGroupConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1EnvironmentGroupConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the deployed ingress configuration for an environment group.",
+	//   "flatPath": "v1/organizations/{organizationsId}/envgroups/{envgroupsId}/deployedIngressConfig",
+	//   "httpMethod": "GET",
+	//   "id": "apigee.organizations.envgroups.getDeployedIngressConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the deployed configuration for the environment group in the following format: 'organizations/{org}/envgroups/{envgroup}/deployedIngressConfig'.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/envgroups/[^/]+/deployedIngressConfig$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "When set to FULL, additional details about the specific deployments receiving traffic will be included in the IngressConfig response's RoutingRules.",
+	//       "enum": [
+	//         "INGRESS_CONFIG_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default/unset value. The API will default to the BASIC view.",
+	//         "Include all ingress config data necessary for the runtime to configure ingress, but no more. Routing rules will include only basepath and destination environment. This the default value.",
+	//         "Include all ingress config data, including internal debug info for each routing rule such as the proxy claiming a particular basepath and when the routing rule first appeared in the env group."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1EnvironmentGroupConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

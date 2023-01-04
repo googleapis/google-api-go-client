@@ -1936,7 +1936,10 @@ func (s *SystemEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Target: Information about the target of activity.
+// Target: Information about the target of activity. For more
+// information on how activity history is shared with users, see
+// Activity history visibility
+// (https://developers.google.com/drive/activity/v2#activityhistory).
 type Target struct {
 	// Drive: The target is a shared drive.
 	Drive *Drive `json:"drive,omitempty"`

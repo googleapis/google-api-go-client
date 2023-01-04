@@ -9771,7 +9771,7 @@ type UsersSettingsCseIdentitiesPatchCall struct {
 // Patch: Associates a different key pair with an existing client-side
 // encryption identity. The updated key pair must validate against
 // Google's S/MIME certificate profiles
-// (https://support.google.com/a/answer/7300887?hl=en). Beta
+// (https://support.google.com/a/answer/7300887). Beta
 // (https://workspace.google.com/terms/service-terms/index.html).
 //
 //   - emailAddress: The email address of the client-side encryption
@@ -9878,7 +9878,7 @@ func (c *UsersSettingsCseIdentitiesPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887?hl=en). [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887). [Beta](https://workspace.google.com/terms/service-terms/index.html).",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}",
 	//   "httpMethod": "PATCH",
 	//   "id": "gmail.users.settings.cse.identities.patch",

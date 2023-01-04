@@ -1,5 +1,22 @@
 # Changes
 
+## [0.106.0](https://github.com/googleapis/google-api-go-client/compare/v0.105.0...v0.106.0) (2023-01-04)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1784](https://github.com/googleapis/google-api-go-client/issues/1784)) ([a7f08e2](https://github.com/googleapis/google-api-go-client/commit/a7f08e2d1f5d4590ae0c6d66077f012bd18b5464))
+* **all:** Auto-regenerate discovery clients ([#1788](https://github.com/googleapis/google-api-go-client/issues/1788)) ([9fb35f5](https://github.com/googleapis/google-api-go-client/commit/9fb35f5f5db837dc8aba5b742b63e1a837621f75))
+* **all:** Auto-regenerate discovery clients ([#1790](https://github.com/googleapis/google-api-go-client/issues/1790)) ([7bd17b3](https://github.com/googleapis/google-api-go-client/commit/7bd17b38d39db0700ee20e5078cd4b7c8c3d3acb))
+* **all:** Auto-regenerate discovery clients ([#1794](https://github.com/googleapis/google-api-go-client/issues/1794)) ([3944e86](https://github.com/googleapis/google-api-go-client/commit/3944e86684b39e05e27a17e66ed54873433c6ad4))
+* **idtoken:** Add support for impersonated_service_account creds type ([#1792](https://github.com/googleapis/google-api-go-client/issues/1792)) ([f6dec99](https://github.com/googleapis/google-api-go-client/commit/f6dec99d014cc508d0374b666f2c325534a30bea)), refs [#873](https://github.com/googleapis/google-api-go-client/issues/873)
+* **option/internaloption:** Add new EmbeddableAdapter option ([#1787](https://github.com/googleapis/google-api-go-client/issues/1787)) ([1569e5b](https://github.com/googleapis/google-api-go-client/commit/1569e5b294ad150050319c108bfbcade2180351b))
+
+
+### Bug Fixes
+
+* **idtoken:** Configure validator constructor to use no authentication ([#1789](https://github.com/googleapis/google-api-go-client/issues/1789)) ([b35900a](https://github.com/googleapis/google-api-go-client/commit/b35900aff148bb8446ca7e15ed0beb50d749d6c7)), refs [#1682](https://github.com/googleapis/google-api-go-client/issues/1682)
+
 ## [0.105.0](https://github.com/googleapis/google-api-go-client/compare/v0.104.0...v0.105.0) (2022-12-14)
 
 

@@ -269,8 +269,10 @@ func (s *GoogleCloudRunV2BinaryAuthorization) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2CloudSqlInstance: Represents a specific Cloud SQL
-// instance.
+// GoogleCloudRunV2CloudSqlInstance: Represents a set of Cloud SQL
+// instances. Each one will be available under /cloudsql/[instance].
+// Visit https://cloud.google.com/sql/docs/mysql/connect-run for more
+// information on how to connect Cloud SQL and Cloud Run.
 type GoogleCloudRunV2CloudSqlInstance struct {
 	// Instances: The Cloud SQL instance connection names, as can be found
 	// in https://console.cloud.google.com/sql/instances. Visit
@@ -476,7 +478,7 @@ type GoogleCloudRunV2Container struct {
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	LivenessProbe *GoogleCloudRunV2Probe `json:"livenessProbe,omitempty"`
 
-	// Name: Name of the container specified as a DNS_LABEL.
+	// Name: Name of the container specified as a DNS_LABEL (RFC 1123).
 	Name string `json:"name,omitempty"`
 
 	// Ports: List of ports to expose from the container. Only a single port
@@ -1514,6 +1516,21 @@ type GoogleCloudRunV2Revision struct {
 	// (CMEK) to use to encrypt this container image. For more information,
 	// go to https://cloud.google.com/run/docs/securing/using-cmek
 	EncryptionKey string `json:"encryptionKey,omitempty"`
+
+	// EncryptionKeyRevocationAction: The action to take if the encryption
+	// key is revoked.
+	//
+	// Possible values:
+	//   "ENCRYPTION_KEY_REVOCATION_ACTION_UNSPECIFIED" - Unspecified
+	//   "PREVENT_NEW" - Prevents the creation of new instances.
+	//   "SHUTDOWN" - Shuts down existing instances, and prevents creation
+	// of new ones.
+	EncryptionKeyRevocationAction string `json:"encryptionKeyRevocationAction,omitempty"`
+
+	// EncryptionKeyShutdownDuration: If encryption_key_revocation_action is
+	// SHUTDOWN, the duration before shutting down all instances. The
+	// minimum increment is 1 hour.
+	EncryptionKeyShutdownDuration string `json:"encryptionKeyShutdownDuration,omitempty"`
 
 	// Etag: Output only. A system-generated fingerprint for this version of
 	// the resource. May be used to detect modification conflict during

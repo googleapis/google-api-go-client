@@ -89,9 +89,11 @@ func (r *Reader) Read(p []byte) (int, error) {
 		if backoffDelay > backoffMax {
 			backoffDelay = backoffMax
 		}
+		t := time.NewTimer(backoffDelay)
 		select {
-		case <-time.After(backoffDelay):
+		case <-t.C:
 		case <-r.ctx.Done():
+			t.Stop()
 			if err := r.ctx.Err(); err != nil {
 				r.err = err
 			}

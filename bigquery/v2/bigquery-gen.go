@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7583,8 +7583,10 @@ type SparkOptions struct {
 	// (https://spark.apache.org/docs/latest/index.html).
 	JarUris []string `json:"jarUris,omitempty"`
 
-	// MainFileUri: The main file URI of the Spark application. Exactly one
-	// of the definition_body field and the main_file_uri field must be set.
+	// MainFileUri: The main file/jar URI of the Spark application. Exactly
+	// one of the definition_body field and the main_file_uri field must be
+	// set for Python. Exactly one of main_class and main_file_uri field
+	// should be set for Java/Scala language type.
 	MainFileUri string `json:"mainFileUri,omitempty"`
 
 	// Properties: Configuration properties as a set of key/value pairs,

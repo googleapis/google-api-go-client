@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -176,6 +176,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.EntryGroups = NewProjectsLocationsEntryGroupsService(s)
+	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.TagTemplates = NewProjectsLocationsTagTemplatesService(s)
 	rs.Taxonomies = NewProjectsLocationsTaxonomiesService(s)
 	return rs
@@ -185,6 +186,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	EntryGroups *ProjectsLocationsEntryGroupsService
+
+	Operations *ProjectsLocationsOperationsService
 
 	TagTemplates *ProjectsLocationsTagTemplatesService
 
@@ -233,6 +236,15 @@ func NewProjectsLocationsEntryGroupsTagsService(s *Service) *ProjectsLocationsEn
 }
 
 type ProjectsLocationsEntryGroupsTagsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
@@ -751,6 +763,9 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// dots (.). The maximum size is 64 bytes.
 	Column string `json:"column,omitempty"`
 
+	// DefaultValue: Optional. Default value for the column.
+	DefaultValue string `json:"defaultValue,omitempty"`
+
 	// Description: Optional. Description of the column. Default value is an
 	// empty string. The description must be a UTF-8 string with the maximum
 	// size of 2000 bytes.
@@ -760,11 +775,28 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// family. Applies to systems like Cloud Bigtable.
 	GcRule string `json:"gcRule,omitempty"`
 
+	// HighestIndexingType: Optional. Most important inclusion of this
+	// column.
+	//
+	// Possible values:
+	//   "INDEXING_TYPE_UNSPECIFIED" - Unspecified.
+	//   "INDEXING_TYPE_NONE" - Column not a part of an index.
+	//   "INDEXING_TYPE_NON_UNIQUE" - Column Part of non unique index.
+	//   "INDEXING_TYPE_UNIQUE" - Column part of unique index.
+	//   "INDEXING_TYPE_PRIMARY_KEY" - Column part of the primary key.
+	HighestIndexingType string `json:"highestIndexingType,omitempty"`
+
+	// LookerColumnSpec: Looker specific column info of this column.
+	LookerColumnSpec *GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec `json:"lookerColumnSpec,omitempty"`
+
 	// Mode: Optional. A column's mode indicates whether values in this
 	// column are required, nullable, or repeated. Only `NULLABLE`,
 	// `REQUIRED`, and `REPEATED` values are supported. Default mode is
 	// `NULLABLE`.
 	Mode string `json:"mode,omitempty"`
+
+	// OrdinalPosition: Optional. Ordinal position
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
 
 	// Subcolumns: Optional. Schema of sub-columns. A column can have zero
 	// or more sub-columns.
@@ -793,6 +825,72 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 
 func (s *GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec: Column info
+// specific to Looker System.
+type GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec struct {
+	// Type: Looker specific column type of this column.
+	//
+	// Possible values:
+	//   "LOOKER_COLUMN_TYPE_UNSPECIFIED" - Unspecified.
+	//   "DIMENSION" - Dimension.
+	//   "DIMENSION_GROUP" - Dimension group - parent for Dimension.
+	//   "FILTER" - Filter.
+	//   "MEASURE" - Measure.
+	//   "PAREMETER" - Parameter.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaLookerColumnSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1CommonUsageStats: Common statistics on the
+// entry's usage. They can be set on any system.
+type GoogleCloudDatacatalogV1CommonUsageStats struct {
+	// ViewCount: View count in source system.
+	ViewCount int64 `json:"viewCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ViewCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ViewCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1CommonUsageStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1CommonUsageStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -974,6 +1072,10 @@ func (s *GoogleCloudDatacatalogV1DataSourceConnectionSpec) MarshalJSON() ([]byte
 // GoogleCloudDatacatalogV1DatabaseTableSpec: Specification that applies
 // to a table resource. Valid only for entries with the `TABLE` type.
 type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
+	// DatabaseViewSpec: Spec what aplies to tables that are actually views.
+	// Not set for "real" tables.
+	DatabaseViewSpec *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec `json:"databaseViewSpec,omitempty"`
+
 	// DataplexTable: Output only. Fields specific to a Dataplex table and
 	// present only in the Dataplex table entries.
 	DataplexTable *GoogleCloudDatacatalogV1DataplexTableSpec `json:"dataplexTable,omitempty"`
@@ -986,7 +1088,7 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	//   "EXTERNAL" - External table.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataplexTable") to
+	// ForceSendFields is a list of field names (e.g. "DatabaseViewSpec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -994,17 +1096,58 @@ type GoogleCloudDatacatalogV1DatabaseTableSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataplexTable") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DatabaseViewSpec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudDatacatalogV1DatabaseTableSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec:
+// Specification that applies to database view.
+type GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec struct {
+	// BaseTable: Name of a singular table this view reflects one to one.
+	BaseTable string `json:"baseTable,omitempty"`
+
+	// SqlQuery: SQL query used to generate this view.
+	SqlQuery string `json:"sqlQuery,omitempty"`
+
+	// ViewType: Type of this view.
+	//
+	// Possible values:
+	//   "VIEW_TYPE_UNSPECIFIED" - Default unknown view type.
+	//   "STANDARD_VIEW" - Standard view.
+	//   "MATERIALIZED_VIEW" - Materialized view.
+	ViewType string `json:"viewType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseTable") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1DatabaseTableSpecDatabaseViewSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1036,6 +1179,8 @@ type GoogleCloudDatacatalogV1DataplexExternalTable struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SQL" - Cloud Sql
+	//   "LOOKER" - Looker
 	System string `json:"system,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataCatalogEntry") to
@@ -1202,7 +1347,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	DataSourceConnectionSpec *GoogleCloudDatacatalogV1DataSourceConnectionSpec `json:"dataSourceConnectionSpec,omitempty"`
 
 	// DatabaseTableSpec: Specification that applies to a table resource.
-	// Valid only for entries with the `TABLE` type.
+	// Valid only for entries with the `TABLE` or `EXPLORE` type.
 	DatabaseTableSpec *GoogleCloudDatacatalogV1DatabaseTableSpec `json:"databaseTableSpec,omitempty"`
 
 	// Description: Entry description that can consist of several sentences
@@ -1213,9 +1358,7 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// Default value is an empty string.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Display name of an entry. The name must contain only
-	// Unicode letters, numbers (0-9), underscores (_), dashes (-), spaces (
-	// ), and can't start or end with spaces. The maximum size is 200 bytes
+	// DisplayName: Display name of an entry. The maximum size is 500 bytes
 	// when encoded in UTF-8. Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -1250,6 +1393,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SQL" - Cloud Sql
+	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// Labels: Cloud labels attached to the entry. In Data Catalog, you can
@@ -1271,6 +1416,10 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// underscores (_), periods (.), colons (:), slashes (/), dashes (-),
 	// and hashes (#). The maximum size is 200 bytes when encoded in UTF-8.
 	LinkedResource string `json:"linkedResource,omitempty"`
+
+	// LookerSystemSpec: Specification that applies to Looker sysstem. Only
+	// settable when `user_specified_system` is equal to `LOOKER`
+	LookerSystemSpec *GoogleCloudDatacatalogV1LookerSystemSpec `json:"lookerSystemSpec,omitempty"`
 
 	// Name: Output only. The resource name of an entry in URL format. Note:
 	// The entry itself and its child resources might not be stored in the
@@ -1295,6 +1444,11 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// `user_specified_system`, this field is optional and defaults to an
 	// empty timestamp.
 	SourceSystemTimestamps *GoogleCloudDatacatalogV1SystemTimestamps `json:"sourceSystemTimestamps,omitempty"`
+
+	// SqlDatabaseSystemSpec: Specification that applies to a relational
+	// database system. Only settable when `user_specified_system` is equal
+	// to `SQL_DATABASE`
+	SqlDatabaseSystemSpec *GoogleCloudDatacatalogV1SqlDatabaseSystemSpec `json:"sqlDatabaseSystemSpec,omitempty"`
 
 	// Type: The type of the entry. Only used for entries with types listed
 	// in the `EntryType` enum. Currently, only `FILESET` enum value is
@@ -1321,6 +1475,13 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "LAKE" - A Dataplex lake.
 	//   "ZONE" - A Dataplex zone.
 	//   "SERVICE" - A service, for example, a Dataproc Metastore service.
+	//   "DATABASE_SCHEMA" - Schema within a relational database.
+	//   "DASHBOARD" - A Dashboard, for example from Looker.
+	//   "EXPLORE" - A Looker Explore. For more information, see [Looker
+	// Explore API]
+	// (https://developers.looker.com/api/explorer/4.0/methods/LookmlModel/lookml_model_explore).
+	//   "LOOK" - A Looker Look. For more information, see [Looker Look API]
+	// (https://developers.looker.com/api/explorer/4.0/methods/Look).
 	Type string `json:"type,omitempty"`
 
 	// UsageSignal: Resource usage statistics.
@@ -1718,6 +1879,114 @@ func (s *GoogleCloudDatacatalogV1GcsFilesetSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1ImportEntriesMetadata: Metadata message for
+// long-running operation returned by the ImportEntries.
+type GoogleCloudDatacatalogV1ImportEntriesMetadata struct {
+	// Errors: Partial errors that are encountered during the ImportEntries
+	// operation. There is no guarantee that all the encountered errors are
+	// reported. However, if no errors are reported, it means that no errors
+	// were encountered.
+	Errors []*Status `json:"errors,omitempty"`
+
+	// State: State of the import operation.
+	//
+	// Possible values:
+	//   "IMPORT_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "IMPORT_QUEUED" - The dump with entries has been queued for import.
+	//   "IMPORT_IN_PROGRESS" - The import of entries is in progress.
+	//   "IMPORT_DONE" - The import of entries has been finished.
+	//   "IMPORT_OBSOLETE" - The import of entries has been abandoned in
+	// favor of a newer request.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ImportEntriesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ImportEntriesMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ImportEntriesRequest: Request message for
+// ImportEntries method.
+type GoogleCloudDatacatalogV1ImportEntriesRequest struct {
+	// GcsBucketPath: Path to a Cloud Storage bucket that contains a dump
+	// ready for ingestion.
+	GcsBucketPath string `json:"gcsBucketPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsBucketPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsBucketPath") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ImportEntriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ImportEntriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ImportEntriesResponse: Response message for
+// long-running operation returned by the ImportEntries.
+type GoogleCloudDatacatalogV1ImportEntriesResponse struct {
+	// DeletedEntriesCount: Number of entries deleted as a result of import
+	// operation.
+	DeletedEntriesCount int64 `json:"deletedEntriesCount,omitempty,string"`
+
+	// UpsertedEntriesCount: Cumulative number of entries created and
+	// entries updated as a result of import operation.
+	UpsertedEntriesCount int64 `json:"upsertedEntriesCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletedEntriesCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeletedEntriesCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ImportEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ImportEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1ImportTaxonomiesRequest: Request message for
 // ImportTaxonomies.
 type GoogleCloudDatacatalogV1ImportTaxonomiesRequest struct {
@@ -1994,6 +2263,56 @@ type GoogleCloudDatacatalogV1ListTaxonomiesResponse struct {
 
 func (s *GoogleCloudDatacatalogV1ListTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ListTaxonomiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1LookerSystemSpec: Specification that applies
+// to entries that are part `LOOKER` system (user_specified_type)
+type GoogleCloudDatacatalogV1LookerSystemSpec struct {
+	// ParentInstanceDisplayName: Name of the parent Looker Instance. Empty
+	// if it does not exist.
+	ParentInstanceDisplayName string `json:"parentInstanceDisplayName,omitempty"`
+
+	// ParentInstanceId: ID of the parent Looker Instance. Empty if it does
+	// not exist. Example value: `someinstance.looker.com`
+	ParentInstanceId string `json:"parentInstanceId,omitempty"`
+
+	// ParentModelDisplayName: Name of the parent Model. Empty if it does
+	// not exist.
+	ParentModelDisplayName string `json:"parentModelDisplayName,omitempty"`
+
+	// ParentModelId: ID of the parent Model. Empty if it does not exist.
+	ParentModelId string `json:"parentModelId,omitempty"`
+
+	// ParentViewDisplayName: Name of the parent View. Empty if it does not
+	// exist.
+	ParentViewDisplayName string `json:"parentViewDisplayName,omitempty"`
+
+	// ParentViewId: ID of the parent View. Empty if it does not exist.
+	ParentViewId string `json:"parentViewId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ParentInstanceDisplayName") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ParentInstanceDisplayName") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1LookerSystemSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2715,6 +3034,8 @@ type GoogleCloudDatacatalogV1SearchCatalogResult struct {
 	//   "CLOUD_PUBSUB" - Cloud Pub/Sub.
 	//   "DATAPROC_METASTORE" - Dataproc Metastore.
 	//   "DATAPLEX" - Dataplex.
+	//   "CLOUD_SQL" - Cloud Sql
+	//   "LOOKER" - Looker
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// LinkedResource: The full name of the Google Cloud resource the entry
@@ -2868,6 +3189,47 @@ type GoogleCloudDatacatalogV1SerializedTaxonomy struct {
 
 func (s *GoogleCloudDatacatalogV1SerializedTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1SerializedTaxonomy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1SqlDatabaseSystemSpec: Specification that
+// applies to entries that are part `SQL_DATABASE` system
+// (user_specified_type)
+type GoogleCloudDatacatalogV1SqlDatabaseSystemSpec struct {
+	// DatabaseVersion: Version of the database engine.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+
+	// InstanceHost: Host of the SQL database enum InstanceHost { UNDEFINED
+	// = 0; SELF_HOSTED = 1; CLOUD_SQL = 2; AMAZON_RDS = 3; AZURE_SQL = 4; }
+	// Host of the enclousing database instance.
+	InstanceHost string `json:"instanceHost,omitempty"`
+
+	// SqlEngine: SQL Database Engine. enum SqlEngine { UNDEFINED = 0;
+	// MY_SQL = 1; POSTGRE_SQL = 2; SQL_SERVER = 3; } Engine of the
+	// enclosing database instance.
+	SqlEngine string `json:"sqlEngine,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1SqlDatabaseSystemSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SqlDatabaseSystemSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3379,6 +3741,14 @@ type GoogleCloudDatacatalogV1UnstarEntryResponse struct {
 // daily. In rare cases, an update may fail but will be performed again
 // on the next day.
 type GoogleCloudDatacatalogV1UsageSignal struct {
+	// CommonUsageWithinTimeRange: Common usage statistics over each of the
+	// predefined time ranges. Supported time ranges are `{"24H", "7D",
+	// "30D", "Lifetime"}`.
+	CommonUsageWithinTimeRange map[string]GoogleCloudDatacatalogV1CommonUsageStats `json:"commonUsageWithinTimeRange,omitempty"`
+
+	// FavoriteCount: Favorite count in the source system.
+	FavoriteCount int64 `json:"favoriteCount,omitempty,string"`
+
 	// UpdateTime: The end timestamp of the duration of usage statistics.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -3387,20 +3757,22 @@ type GoogleCloudDatacatalogV1UsageSignal struct {
 	// `{"24H", "7D", "30D"}`.
 	UsageWithinTimeRange map[string]GoogleCloudDatacatalogV1UsageStats `json:"usageWithinTimeRange,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UpdateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonUsageWithinTimeRange") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UpdateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "CommonUsageWithinTimeRange") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3502,6 +3874,105 @@ type GoogleCloudDatacatalogV1ViewSpec struct {
 
 func (s *GoogleCloudDatacatalogV1ViewSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ViewSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListOperationsResponse: The response message for
+// Operations.ListOperations.
+type ListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: A list of operations that matches the specified filter in
+	// the request.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Operation: This resource represents a long-running operation that is
+// the result of a network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
+	// `operations/{unique_id}`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3639,6 +4110,50 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5954,6 +6469,155 @@ func (c *ProjectsLocationsEntryGroupsEntriesGetIamPolicyCall) Do(opts ...googlea
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.entryGroups.entries.import":
+
+type ProjectsLocationsEntryGroupsEntriesImportCall struct {
+	s                                            *Service
+	parent                                       string
+	googleclouddatacatalogv1importentriesrequest *GoogleCloudDatacatalogV1ImportEntriesRequest
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
+}
+
+// Import: Imports entries from some source (e.g. dump in a Cloud
+// Storage bucket) to the Data Catalog. Dump here is a snapshot of the
+// third-party system state, that needs to be ingested in the Data
+// Catalog. Import of entries is a sync operation that reconciles state
+// of the third-party system and Data Catalog. ImportEntries is a
+// long-running operation done in the background, so this method returns
+// long-running operation resource. The resource can be queried with
+// Operations.GetOperation which contains metadata and response.
+//
+// - parent: Target entry group for ingested entries.
+func (r *ProjectsLocationsEntryGroupsEntriesService) Import(parent string, googleclouddatacatalogv1importentriesrequest *GoogleCloudDatacatalogV1ImportEntriesRequest) *ProjectsLocationsEntryGroupsEntriesImportCall {
+	c := &ProjectsLocationsEntryGroupsEntriesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddatacatalogv1importentriesrequest = googleclouddatacatalogv1importentriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEntryGroupsEntriesImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsEntriesImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEntryGroupsEntriesImportCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsEntriesImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEntryGroupsEntriesImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsEntriesImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1importentriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/entries:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.entryGroups.entries.import" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsEntriesImportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports entries from some source (e.g. dump in a Cloud Storage bucket) to the Data Catalog. Dump here is a snapshot of the third-party system state, that needs to be ingested in the Data Catalog. Import of entries is a sync operation that reconciles state of the third-party system and Data Catalog. ImportEntries is a long-running operation done in the background, so this method returns long-running operation resource. The resource can be queried with Operations.GetOperation which contains metadata and response.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries:import",
+	//   "httpMethod": "POST",
+	//   "id": "datacatalog.projects.locations.entryGroups.entries.import",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Target entry group for ingested entries.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/entries:import",
+	//   "request": {
+	//     "$ref": "GoogleCloudDatacatalogV1ImportEntriesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8363,6 +9027,643 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ]
 	// }
 
+}
+
+// method id "datacatalog.projects.locations.operations.cancel":
+
+type ProjectsLocationsOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
+	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.operations.cancel" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "datacatalog.projects.locations.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.operations.delete":
+
+type ProjectsLocationsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that
+// the client is no longer interested in the operation result. It does
+// not cancel the operation. If the server doesn't support this method,
+// it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
+	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.operations.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datacatalog.projects.locations.operations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can
+// use this method to poll the operation result at intervals as
+// recommended by the API service.
+//
+// - name: The name of the operation resource.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "datacatalog.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datacatalog.projects.locations.operations.list":
+
+type ProjectsLocationsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
+	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "datacatalog.projects.locations.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/operations",
+	//   "response": {
+	//     "$ref": "ListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "datacatalog.projects.locations.tagTemplates.create":

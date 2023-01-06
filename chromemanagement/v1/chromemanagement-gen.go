@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -837,6 +837,14 @@ type GoogleChromeManagementV1ChromeAppInfo struct {
 	// for their app. Version-specific field that will only be set when the
 	// requested app version is found.
 	SupportEnabled bool `json:"supportEnabled,omitempty"`
+
+	// Type: Output only. Types of an item in the Chrome Web Store
+	//
+	// Possible values:
+	//   "ITEM_TYPE_UNSPECIFIED" - Unspecified ItemType.
+	//   "EXTENSION" - Chrome Extensions.
+	//   "OTHERS" - Any other type than extension.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogleOwned") to
 	// unconditionally include in API requests. By default, fields with
@@ -2714,13 +2722,13 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	// Name: Output only. Resource name of the event.
 	Name string `json:"name,omitempty"`
 
-	// NetworkConnectionStateChangeEvent: Output only. Payload for network
-	// connection state change event. Present only when `event_type` is
-	// `NETWORK_CONNECTION_STATE_CHANGE`.
-	NetworkConnectionStateChangeEvent *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent `json:"networkConnectionStateChangeEvent,omitempty"`
-
 	// ReportTime: Timestamp that represents when the event was reported.
 	ReportTime string `json:"reportTime,omitempty"`
+
+	// UsbPeripheralsEvent: Output only. Payload for usb peripherals event.
+	// Present only when the `event_type` field is either `USB_ADDED` or
+	// `USB_REMOVED`.
+	UsbPeripheralsEvent *GoogleChromeManagementV1TelemetryUsbPeripheralsEvent `json:"usbPeripheralsEvent,omitempty"`
 
 	// User: Output only. Information about the user associated with the
 	// event.
@@ -2794,37 +2802,23 @@ func (s *GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent:
-// `TelemetryNetworkConnectionStateChangeEvent` is triggered on network
-// connection state changes.
-type GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent struct {
-	// ConnectionState: Current connection state of the network.
-	//
-	// Possible values:
-	//   "NETWORK_CONNECTION_STATE_UNSPECIFIED" - Network connection state
-	// unspecified.
-	//   "ONLINE" - The network is connected and internet connectivity is
-	// available.
-	//   "CONNECTED" - The network is connected and not in a detected portal
-	// state, but internet connectivity may not be available.
-	//   "PORTAL" - The network is connected but a portal state was
-	// detected. Internet connectivity may be limited.
-	//   "CONNECTING" - The network is in the process of connecting.
-	//   "NOT_CONNECTED" - The network is not connected.
-	ConnectionState string `json:"connectionState,omitempty"`
+// GoogleChromeManagementV1TelemetryUsbPeripheralsEvent:
+// `TelemetryUsbPeripheralsEvent` is triggered USB devices are either
+// added or removed.
+type GoogleChromeManagementV1TelemetryUsbPeripheralsEvent struct {
+	// UsbPeripheralReport: List of usb devices that were either added or
+	// removed.
+	UsbPeripheralReport []*GoogleChromeManagementV1UsbPeripheralReport `json:"usbPeripheralReport,omitempty"`
 
-	// Guid: Unique identifier of the network.
-	Guid string `json:"guid,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConnectionState") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "UsbPeripheralReport")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConnectionState") to
+	// NullFields is a list of field names (e.g. "UsbPeripheralReport") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2834,8 +2828,8 @@ type GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleChromeManagementV1TelemetryNetworkConnectionStateChangeEvent
+func (s *GoogleChromeManagementV1TelemetryUsbPeripheralsEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryUsbPeripheralsEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2994,6 +2988,59 @@ type GoogleChromeManagementV1TotalMemoryEncryptionInfo struct {
 
 func (s *GoogleChromeManagementV1TotalMemoryEncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1TotalMemoryEncryptionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1UsbPeripheralReport: USB connected peripheral
+// report.
+type GoogleChromeManagementV1UsbPeripheralReport struct {
+	// Categories: Output only. Categories the device belongs to
+	// https://www.usb.org/defined-class-codes
+	Categories []string `json:"categories,omitempty"`
+
+	// ClassId: Output only. Class ID
+	// https://www.usb.org/defined-class-codes
+	ClassId int64 `json:"classId,omitempty"`
+
+	// FirmwareVersion: Output only. Firmware version
+	FirmwareVersion string `json:"firmwareVersion,omitempty"`
+
+	// Name: Output only. Device name, model name, or product name
+	Name string `json:"name,omitempty"`
+
+	// Pid: Output only. Product ID
+	Pid int64 `json:"pid,omitempty"`
+
+	// SubclassId: Output only. Subclass ID
+	// https://www.usb.org/defined-class-codes
+	SubclassId int64 `json:"subclassId,omitempty"`
+
+	// Vendor: Output only. Vendor name
+	Vendor string `json:"vendor,omitempty"`
+
+	// Vid: Output only. Vendor ID
+	Vid int64 `json:"vid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Categories") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1UsbPeripheralReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1UsbPeripheralReport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

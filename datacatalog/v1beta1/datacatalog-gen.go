@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -505,6 +505,84 @@ type GetPolicyOptions struct {
 
 func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ImportEntriesMetadata: Metadata message for
+// long-running operation returned by the ImportEntries.
+type GoogleCloudDatacatalogV1ImportEntriesMetadata struct {
+	// Errors: Partial errors that are encountered during the ImportEntries
+	// operation. There is no guarantee that all the encountered errors are
+	// reported. However, if no errors are reported, it means that no errors
+	// were encountered.
+	Errors []*Status `json:"errors,omitempty"`
+
+	// State: State of the import operation.
+	//
+	// Possible values:
+	//   "IMPORT_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "IMPORT_QUEUED" - The dump with entries has been queued for import.
+	//   "IMPORT_IN_PROGRESS" - The import of entries is in progress.
+	//   "IMPORT_DONE" - The import of entries has been finished.
+	//   "IMPORT_OBSOLETE" - The import of entries has been abandoned in
+	// favor of a newer request.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ImportEntriesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ImportEntriesMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ImportEntriesResponse: Response message for
+// long-running operation returned by the ImportEntries.
+type GoogleCloudDatacatalogV1ImportEntriesResponse struct {
+	// DeletedEntriesCount: Number of entries deleted as a result of import
+	// operation.
+	DeletedEntriesCount int64 `json:"deletedEntriesCount,omitempty,string"`
+
+	// UpsertedEntriesCount: Cumulative number of entries created and
+	// entries updated as a result of import operation.
+	UpsertedEntriesCount int64 `json:"upsertedEntriesCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletedEntriesCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeletedEntriesCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ImportEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ImportEntriesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2473,6 +2551,50 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

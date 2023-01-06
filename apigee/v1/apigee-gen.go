@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6794,8 +6794,8 @@ func (s *GoogleCloudApigeeV1ListOfDevelopersResponse) MarshalJSON() ([]byte, err
 }
 
 type GoogleCloudApigeeV1ListOrganizationsResponse struct {
-	// Organizations: List of Apigee organizations and associated GCP
-	// projects.
+	// Organizations: List of Apigee organizations and associated Google
+	// Cloud projects.
 	Organizations []*GoogleCloudApigeeV1OrganizationProjectMapping `json:"organizations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7632,8 +7632,8 @@ type GoogleCloudApigeeV1Organization struct {
 	AddonsConfig *GoogleCloudApigeeV1AddonsConfig `json:"addonsConfig,omitempty"`
 
 	// AnalyticsRegion: Required. DEPRECATED: This field will be deprecated
-	// once Apigee supports DRZ. Primary GCP region for analytics data
-	// storage. For valid values, see Create an Apigee organization
+	// once Apigee supports DRZ. Primary Google Cloud region for analytics
+	// data storage. For valid values, see Create an Apigee organization
 	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
@@ -7807,7 +7807,8 @@ type GoogleCloudApigeeV1OrganizationProjectMapping struct {
 	// Organization: Name of the Apigee organization.
 	Organization string `json:"organization,omitempty"`
 
-	// ProjectId: GCP project associated with the Apigee organization
+	// ProjectId: Google Cloud project associated with the Apigee
+	// organization
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ProjectIds: DEPRECATED: Use `project_id`. An Apigee Organization is
@@ -12222,9 +12223,9 @@ func (r *OrganizationsService) Create(googlecloudapigeev1organization *GoogleClo
 }
 
 // Parent sets the optional parameter "parent": Required. Name of the
-// GCP project in which to associate the Apigee organization. Pass the
-// information as a query parameter using the following structure in
-// your request: `projects/`
+// Google Cloud project in which to associate the Apigee organization.
+// Pass the information as a query parameter using the following
+// structure in your request: `projects/`
 func (c *OrganizationsCreateCall) Parent(parent string) *OrganizationsCreateCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -12325,7 +12326,7 @@ func (c *OrganizationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the GCP project in which to associate the Apigee organization. Pass the information as a query parameter using the following structure in your request: `projects/`",
+	//       "description": "Required. Name of the Google Cloud project in which to associate the Apigee organization. Pass the information as a query parameter using the following structure in your request: `projects/`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13314,8 +13315,9 @@ type OrganizationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Apigee organizations and associated GCP projects that
-// you have permission to access. See Understanding organizations
+// List: Lists the Apigee organizations and associated Google Cloud
+// projects that you have permission to access. See Understanding
+// organizations
 // (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 //
 //   - parent: Use the following structure in your request:
@@ -13427,7 +13429,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Apigee organizations and associated GCP projects that you have permission to access. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
+	//   "description": "Lists the Apigee organizations and associated Google Cloud projects that you have permission to access. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
 	//   "flatPath": "v1/organizations",
 	//   "httpMethod": "GET",
 	//   "id": "apigee.organizations.list",

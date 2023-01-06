@@ -1334,7 +1334,7 @@
       }
     }
   },
-  "revision": "20221208",
+  "revision": "20221213",
   "rootUrl": "https://clouddeploy.googleapis.com/",
   "schemas": {
     "AbandonReleaseRequest": {
@@ -1676,13 +1676,15 @@
             "FAILURE_CAUSE_UNSPECIFIED",
             "CLOUD_BUILD_UNAVAILABLE",
             "EXECUTION_FAILED",
-            "DEADLINE_EXCEEDED"
+            "DEADLINE_EXCEEDED",
+            "CLOUD_BUILD_REQUEST_FAILED"
           ],
           "enumDescriptions": [
             "No reason for failure is specified.",
             "Cloud Build is not available, either because it is not enabled or because Google Cloud Deploy has insufficient permissions. See [Required permission](/deploy/docs/cloud-deploy-service-account#required_permissions).",
             "The deploy operation did not complete successfully; check Cloud Build logs.",
-            "The deploy build did not complete within the alloted time."
+            "The deploy build did not complete within the alloted time.",
+            "Cloud Build failed to fulfill Google Cloud Deploy's request. See failure_message for additional details."
           ],
           "readOnly": true,
           "type": "string"
@@ -2652,7 +2654,8 @@
             "DEADLINE_EXCEEDED",
             "RELEASE_FAILED",
             "RELEASE_ABANDONED",
-            "VERIFICATION_CONFIG_NOT_FOUND"
+            "VERIFICATION_CONFIG_NOT_FOUND",
+            "CLOUD_BUILD_REQUEST_FAILED"
           ],
           "enumDescriptions": [
             "No reason for failure is specified.",
@@ -2661,7 +2664,8 @@
             "Deployment did not complete within the alloted time.",
             "Release is in a failed state.",
             "Release is abandoned.",
-            "No skaffold verify configuration was found."
+            "No skaffold verify configuration was found.",
+            "Cloud Build failed to fulfill Google Cloud Deploy's request. See failure_message for additional details."
           ],
           "readOnly": true,
           "type": "string"
@@ -3052,12 +3056,14 @@
           "enum": [
             "FAILURE_CAUSE_UNSPECIFIED",
             "CLOUD_BUILD_UNAVAILABLE",
-            "EXECUTION_FAILED"
+            "EXECUTION_FAILED",
+            "CLOUD_BUILD_REQUEST_FAILED"
           ],
           "enumDescriptions": [
             "No reason for failure is specified.",
             "Cloud Build is not available, either because it is not enabled or because Google Cloud Deploy has insufficient permissions. See [required permission](/deploy/docs/cloud-deploy-service-account#required_permissions).",
-            "The render operation did not complete successfully; check Cloud Build logs."
+            "The render operation did not complete successfully; check Cloud Build logs.",
+            "Cloud Build failed to fulfill Google Cloud Deploy's request. See failure_message for additional details."
           ],
           "readOnly": true,
           "type": "string"
@@ -3190,14 +3196,16 @@
             "CLOUD_BUILD_UNAVAILABLE",
             "EXECUTION_FAILED",
             "DEADLINE_EXCEEDED",
-            "VERIFICATION_CONFIG_NOT_FOUND"
+            "VERIFICATION_CONFIG_NOT_FOUND",
+            "CLOUD_BUILD_REQUEST_FAILED"
           ],
           "enumDescriptions": [
             "No reason for failure is specified.",
             "Cloud Build is not available, either because it is not enabled or because Google Cloud Deploy has insufficient permissions. See [required permission](/deploy/docs/cloud-deploy-service-account#required_permissions).",
             "The verify operation did not complete successfully; check Cloud Build logs.",
             "The verify build did not complete within the alloted time.",
-            "No Skaffold verify configuration was found."
+            "No Skaffold verify configuration was found.",
+            "Cloud Build failed to fulfill Google Cloud Deploy's request. See failure_message for additional details."
           ],
           "readOnly": true,
           "type": "string"

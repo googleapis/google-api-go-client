@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7588,6 +7588,10 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -7702,6 +7706,10 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -7815,6 +7823,10 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8930,6 +8942,10 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -9801,6 +9817,10 @@ type InventorySource struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1561,6 +1561,26 @@ type ChromeOsDevice struct {
 	// (Read-only)
 	CpuStatusReports []*ChromeOsDeviceCpuStatusReports `json:"cpuStatusReports,omitempty"`
 
+	// DeprovisionReason: (Read-only) Deprovision reason.
+	//
+	// Possible values:
+	//   "deprovisionReasonUnspecified" - The deprovision reason is unknown.
+	//   "deprovisionReasonSameModelReplacement" - Same model replacement.
+	//   "deprovisionReasonUpgrade" - Device upgrade.
+	//   "deprovisionReasonDomainMove" - Domain move.
+	//   "deprovisionReasonServiceExpiration" - Service expiration.
+	//   "deprovisionReasonOther" - Other.
+	//   "deprovisionReasonDifferentModelReplacement" - Different model
+	// replacement.
+	//   "deprovisionReasonRetiringDevice" - Retiring device.
+	//   "deprovisionReasonUpgradeTransfer" - Transferring perpetual upgrade
+	// to a new device.
+	//   "deprovisionReasonNotRequired" - No reason required, i.e. licenses
+	// returned to customer's license pool.
+	//   "deprovisionReasonRepairCenter" - Deprovisioned by a RMA (service
+	// center) caller.
+	DeprovisionReason string `json:"deprovisionReason,omitempty"`
+
 	// DeviceFiles: A list of device files to download (Read-only)
 	DeviceFiles []*ChromeOsDeviceDeviceFiles `json:"deviceFiles,omitempty"`
 
@@ -1603,6 +1623,10 @@ type ChromeOsDevice struct {
 	// Kind: The type of resource. For the Chromeosdevices resource, the
 	// value is `admin#directory#chromeosdevice`.
 	Kind string `json:"kind,omitempty"`
+
+	// LastDeprovisionTimestamp: (Read-only) Date and time for the last
+	// deprovision of the device.
+	LastDeprovisionTimestamp string `json:"lastDeprovisionTimestamp,omitempty"`
 
 	// LastEnrollmentTime: Date and time the device was last enrolled
 	// (Read-only)
@@ -2570,6 +2594,8 @@ type DirectoryChromeosdevicesCommand struct {
 	// will revert the device back to a factory state with no enrollment
 	// unless the device is subject to forced or auto enrollment. Use with
 	// caution, as this is an irreversible action!
+	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop
+	// session.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2603,6 +2629,12 @@ func (s *DirectoryChromeosdevicesCommand) MarshalJSON() ([]byte, error) {
 // DirectoryChromeosdevicesCommandResult: The result of executing a
 // command.
 type DirectoryChromeosdevicesCommandResult struct {
+	// CommandResultPayload: The payload for the command result. The
+	// following commands respond with a payload: -
+	// DEVICE_START_CRD_SESSION: Payload is a stringified JSON object in the
+	// form: { "url": url }. The URL provides a link to the CRD session.
+	CommandResultPayload string `json:"commandResultPayload,omitempty"`
+
 	// ErrorMessage: The error message with a short explanation as to why
 	// the command failed. Only present if the command failed.
 	ErrorMessage string `json:"errorMessage,omitempty"`
@@ -2621,20 +2653,22 @@ type DirectoryChromeosdevicesCommandResult struct {
 	//   "SUCCESS" - The command was successfully executed.
 	Result string `json:"result,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CommandResultPayload") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ErrorMessage") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CommandResultPayload") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2666,12 +2700,20 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	// will revert the device back to a factory state with no enrollment
 	// unless the device is subject to forced or auto enrollment. Use with
 	// caution, as this is an irreversible action!
+	//   "DEVICE_START_CRD_SESSION" - Starts a Chrome Remote Desktop
+	// session.
 	CommandType string `json:"commandType,omitempty"`
 
 	// Payload: The payload for the command, provide it only if command
 	// supports it. The following commands support adding payload: -
 	// SET_VOLUME: Payload is a stringified JSON object in the form: {
 	// "volume": 50 }. The volume has to be an integer in the range [0,100].
+	// - DEVICE_START_CRD_SESSION: Payload is optionally a stringified JSON
+	// object in the form: { "ackedUserPresence": true }. ackedUserPresence
+	// is a boolean. If a device is being used, ackedUserPresence must be
+	// set to true to acknowledge that you want to start a CRD session
+	// anyways. It is false by default, so a CRD command will fail if used
+	// on an active device without this field.
 	Payload string `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommandType") to
@@ -3181,7 +3223,15 @@ func (s *Features) MarshalJSON() ([]byte, error) {
 // Group: Google Groups provide your users the ability to send messages
 // to groups of people using the group's email address. For more
 // information about common tasks, see the Developer's Guide
-// (/admin-sdk/directory/v1/guides/manage-groups).
+// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-groups).
+// For information about other types of groups, see the Cloud Identity
+// Groups API documentation
+// (https://cloud.google.com/identity/docs/groups). Note: The user
+// calling the API (or being impersonated by a service account) must
+// have an assigned role
+// (https://developers.google.com/admin-sdk/directory/v1/guides/manage-roles)
+// that includes Admin API Groups permissions, such as Super Admin or
+// Groups Admin.
 type Group struct {
 	// AdminCreated: Read-only. Value is `true` if this group was created by
 	// an administrator rather than a user.

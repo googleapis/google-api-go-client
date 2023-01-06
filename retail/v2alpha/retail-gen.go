@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1565,11 +1565,11 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	// ExactSearchableOption: If EXACT_SEARCHABLE_ENABLED, attribute values
 	// will be exact searchable. This property only applies to textual
 	// custom attributes and requires indexable set to enabled to enable
-	// exact-searchable.
+	// exact-searchable. If unset, the server behavior defaults to
+	// EXACT_SEARCHABLE_DISABLED.
 	//
 	// Possible values:
 	//   "EXACT_SEARCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
-	// Defaults to EXACT_SEARCHABLE_DISABLED.
 	//   "EXACT_SEARCHABLE_ENABLED" - Exact searchable option enabled for an
 	// attribute.
 	//   "EXACT_SEARCHABLE_DISABLED" - Exact searchable option disabled for
@@ -1608,7 +1608,9 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	// indexable, the attribute name can contain only alpha-numeric
 	// characters and underscores. For example, an attribute named
 	// `attributes.abc_xyz` can be indexed, but an attribute named
-	// `attributes.abc-xyz` cannot be indexed.
+	// `attributes.abc-xyz` cannot be indexed. For attributes whoes key
+	// start with `attributes.`, we refer them as custom attributes.
+	// Otherwise they are built-in attributes such as `color` and `brands`.
 	Key string `json:"key,omitempty"`
 
 	// RecommendationsFilteringOption: When
@@ -1629,11 +1631,11 @@ type GoogleCloudRetailV2alphaCatalogAttribute struct {
 	RecommendationsFilteringOption string `json:"recommendationsFilteringOption,omitempty"`
 
 	// RetrievableOption: If RETRIEVABLE_ENABLED, attribute values are
-	// retrievable in the search results.
+	// retrievable in the search results. If unset, the server behavior
+	// defaults to RETRIEVABLE_DISABLED.
 	//
 	// Possible values:
-	//   "RETRIEVABLE_OPTION_UNSPECIFIED" - Value used when unset. Defaults
-	// to RETRIEVABLE_DISABLED.
+	//   "RETRIEVABLE_OPTION_UNSPECIFIED" - Value used when unset.
 	//   "RETRIEVABLE_ENABLED" - Retrievable option enabled for an
 	// attribute.
 	//   "RETRIEVABLE_DISABLED" - Retrievable option disabled for an
@@ -6796,7 +6798,8 @@ type GoogleCloudRetailV2alphaServingConfig struct {
 	DiversityLevel string `json:"diversityLevel,omitempty"`
 
 	// DiversityType: What kind of diversity to use - data driven or rule
-	// based.
+	// based. If unset, the server behavior defaults to
+	// RULE_BASED_DIVERSITY.
 	//
 	// Possible values:
 	//   "DIVERSITY_TYPE_UNSPECIFIED" - Default value.
@@ -6881,7 +6884,7 @@ type GoogleCloudRetailV2alphaServingConfig struct {
 	// recommendation probability to be ordered by price, with the
 	// highest-priced items first. This setting could result in a decrease
 	// in click-through and conversion rates. Allowed values are: *
-	// `no-price-reranking` * `low-price-raranking` *
+	// `no-price-reranking` * `low-price-reranking` *
 	// `medium-price-reranking` * `high-price-reranking` If not specified,
 	// we choose default based on model type. Default value:
 	// `no-price-reranking`. Can only be set if solution_types is
@@ -17259,7 +17262,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Ets(ets int64) *Project
 
 // PrebuiltRule sets the optional parameter "prebuiltRule": The prebuilt
 // rule name that can convert a specific type of raw_json. For example:
-// "default_schema/v1.0"
+// "ga4_bq" rule for the GA4 user event schema.
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) PrebuiltRule(prebuiltRule string) *ProjectsLocationsCatalogsUserEventsCollectCall {
 	c.urlParams_.Set("prebuiltRule", prebuiltRule)
 	return c
@@ -17412,7 +17415,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "prebuiltRule": {
-	//       "description": "The prebuilt rule name that can convert a specific type of raw_json. For example: \"default_schema/v1.0\"",
+	//       "description": "The prebuilt rule name that can convert a specific type of raw_json. For example: \"ga4_bq\" rule for the GA4 user event schema.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

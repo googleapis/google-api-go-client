@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -868,6 +868,8 @@ type DeployJobRun struct {
 	// successfully; check Cloud Build logs.
 	//   "DEADLINE_EXCEEDED" - The deploy build did not complete within the
 	// alloted time.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Google
+	// Cloud Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the deploy
@@ -2353,6 +2355,8 @@ type Rollout struct {
 	//   "RELEASE_ABANDONED" - Release is abandoned.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - No skaffold verify configuration
 	// was found.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Google
+	// Cloud Deploy's request. See failure_message for additional details.
 	DeployFailureCause string `json:"deployFailureCause,omitempty"`
 
 	// DeployStartTime: Output only. Time at which the `Rollout` started
@@ -2939,6 +2943,8 @@ type TargetRender struct {
 	// ions).
 	//   "EXECUTION_FAILED" - The render operation did not complete
 	// successfully; check Cloud Build logs.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Google
+	// Cloud Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the render
@@ -3161,6 +3167,8 @@ type VerifyJobRun struct {
 	// alloted time.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration
 	// was found.
+	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Google
+	// Cloud Deploy's request. See failure_message for additional details.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the verify

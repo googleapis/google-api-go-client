@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -468,7 +468,7 @@ type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesResponse struct {
 }
 
 // GoogleCloudAssuredworkloadsV1Violation: Workload monitoring
-// Violation.
+// Violation. Next Id: 22
 type GoogleCloudAssuredworkloadsV1Violation struct {
 	// Acknowledged: A boolean that indicates if the violation is
 	// acknowledged

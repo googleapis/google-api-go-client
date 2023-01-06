@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7801,6 +7801,10 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -7933,6 +7937,10 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -8047,6 +8055,10 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -8160,6 +8172,10 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -9312,6 +9328,10 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -10183,6 +10203,10 @@ type InventorySource struct {
 	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	//   "EXCHANGE_VISTAR" - Vistar.
 	//   "EXCHANGE_DAX" - DAX.
+	//   "EXCHANGE_JCD" - JCD.
+	//   "EXCHANGE_PLACE_EXCHANGE" - Place Exchange.
+	//   "EXCHANGE_APPLOVIN" - AppLovin.
+	//   "EXCHANGE_CONNATIX" - Connatix.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that
@@ -16465,6 +16489,95 @@ func (s *UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VideoAdSequenceSettings: Settings related to VideoAdSequence.
+type VideoAdSequenceSettings struct {
+	// MinimumDuration: The minimum time interval before the same user sees
+	// this sequence again.
+	//
+	// Possible values:
+	//   "VIDEO_AD_SEQUENCE_MINIMUM_DURATION_UNSPECIFIED" - Unspecified or
+	// unknown.
+	//   "VIDEO_AD_SEQUENCE_MINIMUM_DURATION_WEEK" - 7 days.
+	//   "VIDEO_AD_SEQUENCE_MINIMUM_DURATION_MONTH" - 30 days.
+	MinimumDuration string `json:"minimumDuration,omitempty"`
+
+	// Steps: The steps of which the sequence consists.
+	Steps []*VideoAdSequenceStep `json:"steps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinimumDuration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinimumDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoAdSequenceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoAdSequenceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VideoAdSequenceStep: The detail of a single step in a
+// VideoAdSequence.
+type VideoAdSequenceStep struct {
+	// AdGroupId: The ID of the corresponding ad group of the step.
+	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+
+	// InteractionType: The interaction on the previous step that will lead
+	// the viewer to this step. The first step does not have
+	// interaction_type.
+	//
+	// Possible values:
+	//   "INTERACTION_TYPE_UNSPECIFIED" - Unspecified or unknown
+	//   "INTERACTION_TYPE_PAID_VIEW" - A paid view.
+	//   "INTERACTION_TYPE_SKIP" - Skipped by the viewer.
+	//   "INTERACTION_TYPE_IMPRESSION" - A (viewed) ad impression.
+	//   "INTERACTION_TYPE_ENGAGED_IMPRESSION" - An ad impression that was
+	// not immediately skipped by the viewer, but didn't reach the billable
+	// event either.
+	InteractionType string `json:"interactionType,omitempty"`
+
+	// PreviousStepId: The ID of the previous step. The first step does not
+	// have previous step.
+	PreviousStepId int64 `json:"previousStepId,omitempty,string"`
+
+	// StepId: The ID of the step.
+	StepId int64 `json:"stepId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoAdSequenceStep) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoAdSequenceStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VideoPlayerSizeAssignedTargetingOptionDetails: Video player size
 // targeting option details. This will be populated in the
 // video_player_size_details field when targeting_type is
@@ -16806,6 +16919,9 @@ type YoutubeAndPartnersSettings struct {
 	// ThirdPartyMeasurementSettings: The third-party measurement settings
 	// of the line item.
 	ThirdPartyMeasurementSettings *YoutubeAndPartnersThirdPartyMeasurementSettings `json:"thirdPartyMeasurementSettings,omitempty"`
+
+	// VideoAdSequenceSettings: The settings related to VideoAdSequence.
+	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 
 	// ViewFrequencyCap: The view frequency cap settings of the line item.
 	// The max_views field in this settings object must be used if assigning

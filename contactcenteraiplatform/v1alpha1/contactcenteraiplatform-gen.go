@@ -753,154 +753,6 @@ func (s *URIs) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// method id "contactcenteraiplatform.projects.queryContactCenterQuota":
-
-type ProjectsQueryContactCenterQuotaCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// QueryContactCenterQuota: Queries the contact center quota, an
-// aggregation over all the projects, that belongs to the billing
-// account, which the input project belongs to.
-//
-// - parent: Parent project resource id.
-func (r *ProjectsService) QueryContactCenterQuota(parent string) *ProjectsQueryContactCenterQuotaCall {
-	c := &ProjectsQueryContactCenterQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsQueryContactCenterQuotaCall) Fields(s ...googleapi.Field) *ProjectsQueryContactCenterQuotaCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsQueryContactCenterQuotaCall) IfNoneMatch(entityTag string) *ProjectsQueryContactCenterQuotaCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsQueryContactCenterQuotaCall) Context(ctx context.Context) *ProjectsQueryContactCenterQuotaCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsQueryContactCenterQuotaCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsQueryContactCenterQuotaCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}:queryContactCenterQuota")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenteraiplatform.projects.queryContactCenterQuota" call.
-// Exactly one of *ContactCenterQuota or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ContactCenterQuota.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsQueryContactCenterQuotaCall) Do(opts ...googleapi.CallOption) (*ContactCenterQuota, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ContactCenterQuota{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}:queryContactCenterQuota",
-	//   "httpMethod": "GET",
-	//   "id": "contactcenteraiplatform.projects.queryContactCenterQuota",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent project resource id.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}:queryContactCenterQuota",
-	//   "response": {
-	//     "$ref": "ContactCenterQuota"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "contactcenteraiplatform.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -1261,7 +1113,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 type ProjectsLocationsQueryContactCenterQuotaCall struct {
 	s            *Service
 	parent       string
-	locationsId  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -1272,12 +1123,10 @@ type ProjectsLocationsQueryContactCenterQuotaCall struct {
 // aggregation over all the projects, that belongs to the billing
 // account, which the input project belongs to.
 //
-// - locationsId: .
 // - parent: Parent project resource id.
-func (r *ProjectsLocationsService) QueryContactCenterQuota(parent string, locationsId string) *ProjectsLocationsQueryContactCenterQuotaCall {
+func (r *ProjectsLocationsService) QueryContactCenterQuota(parent string) *ProjectsLocationsQueryContactCenterQuotaCall {
 	c := &ProjectsLocationsQueryContactCenterQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.locationsId = locationsId
 	return c
 }
 
@@ -1329,7 +1178,7 @@ func (c *ProjectsLocationsQueryContactCenterQuotaCall) doRequest(alt string) (*h
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/locations/{locationsId}:queryContactCenterQuota")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}:queryContactCenterQuota")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1337,8 +1186,7 @@ func (c *ProjectsLocationsQueryContactCenterQuotaCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent":      c.parent,
-		"locationsId": c.locationsId,
+		"parent": c.parent,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -1386,24 +1234,18 @@ func (c *ProjectsLocationsQueryContactCenterQuotaCall) Do(opts ...googleapi.Call
 	//   "httpMethod": "GET",
 	//   "id": "contactcenteraiplatform.projects.locations.queryContactCenterQuota",
 	//   "parameterOrder": [
-	//     "parent",
-	//     "locationsId"
+	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "locationsId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "Required. Parent project resource id.",
 	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1alpha1/{+parent}/locations/{locationsId}:queryContactCenterQuota",
+	//   "path": "v1alpha1/{+parent}:queryContactCenterQuota",
 	//   "response": {
 	//     "$ref": "ContactCenterQuota"
 	//   },

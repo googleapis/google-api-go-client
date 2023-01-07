@@ -693,6 +693,37 @@ func (s *GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1FieldConstraints: Information about any
+// range constraints.
+type GoogleChromePolicyVersionsV1FieldConstraints struct {
+	// NumericRangeConstraint: The allowed range for numeric fields.
+	NumericRangeConstraint *GoogleChromePolicyVersionsV1NumericRangeConstraint `json:"numericRangeConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "NumericRangeConstraint") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumericRangeConstraint")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1FieldConstraints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1FieldConstraints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyVersionsV1InheritOrgUnitPolicyRequest: Request
 // parameters for inheriting policy value of a specific org unit target
 // from the policy value of its parent org unit.
@@ -955,6 +986,38 @@ func (s *GoogleChromePolicyVersionsV1NetworkSetting) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1NumericRangeConstraint: A constraint on
+// upper and/or lower bounds, with at least one being set.
+type GoogleChromePolicyVersionsV1NumericRangeConstraint struct {
+	// Maximum: Maximum value.
+	Maximum int64 `json:"maximum,omitempty,string"`
+
+	// Minimum: Minimum value.
+	Minimum int64 `json:"minimum,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Maximum") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Maximum") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1NumericRangeConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1NumericRangeConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromePolicyVersionsV1PolicyModificationFieldError: Error
 // information for a modification request of a specific field on a
 // specific policy.
@@ -1124,6 +1187,10 @@ type GoogleChromePolicyVersionsV1PolicySchemaFieldDescription struct {
 	// Field: Output only. The name of the field for associated with this
 	// description.
 	Field string `json:"field,omitempty"`
+
+	// FieldConstraints: Output only. Information on any input constraints
+	// associated on the values for the field.
+	FieldConstraints *GoogleChromePolicyVersionsV1FieldConstraints `json:"fieldConstraints,omitempty"`
 
 	// FieldDependencies: Output only. Provides a list of fields and values.
 	// At least one of the fields must have the corresponding value in order

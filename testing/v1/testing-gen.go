@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1982,7 +1982,7 @@ type ManualSharding struct {
 	// specify at least one shard if this field is present. When you select
 	// one or more physical devices, the number of repeated
 	// test_targets_for_shard must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// virtual devices, it must be <= 100. When you select only x86 virtual
 	// devices, it must be <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
@@ -3253,7 +3253,7 @@ type UniformSharding struct {
 	// always be a positive number that is no greater than the total number
 	// of test cases. When you select one or more physical devices, the
 	// number of shards must be <= 50. When you select one or more ARM
-	// virtual devices, it must be <= 50. When you select only x86 virtual
+	// virtual devices, it must be <= 100. When you select only x86 virtual
 	// devices, it must be <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 

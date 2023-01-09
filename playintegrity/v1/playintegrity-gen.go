@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -409,9 +409,12 @@ func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
 
 // RequestDetails: Contains the integrity request information.
 type RequestDetails struct {
-	// Nonce: Required. Nonce that was provided in the request (which is
-	// base64 web-safe no-wrap).
+	// Nonce: Nonce that was provided in the request (which is base64
+	// web-safe no-wrap).
 	Nonce string `json:"nonce,omitempty"`
+
+	// RequestHash: Request hash that was provided in the request.
+	RequestHash string `json:"requestHash,omitempty"`
 
 	// RequestPackageName: Required. Application package name this
 	// attestation was requested for. Note: This field makes no guarantees

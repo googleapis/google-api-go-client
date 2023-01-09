@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -274,7 +274,13 @@ type BigQueryConfig struct {
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "ACTIVE" - The subscription can actively send messages to BigQuery
 	//   "PERMISSION_DENIED" - Cannot write to the BigQuery table because of
-	// permission denied errors.
+	// permission denied errors. This can happen if - Pub/Sub SA has not
+	// been granted the [appropriate BigQuery IAM
+	// permissions](https://cloud.google.com/pubsub/docs/create-subscription#
+	// assign_bigquery_service_account) - bigquery.googleapis.com API is not
+	// enabled for the project
+	// ([instructions](https://cloud.google.com/service-usage/docs/enable-dis
+	// able))
 	//   "NOT_FOUND" - Cannot write to the BigQuery table because it does
 	// not exist.
 	//   "SCHEMA_MISMATCH" - Cannot write to the BigQuery table due to a

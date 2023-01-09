@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -573,6 +573,36 @@ type GoogleCloudDialogflowCxV3ContinuousTestResult struct {
 
 func (s *GoogleCloudDialogflowCxV3ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3ContinuousTestResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ConversationSignals: This message is used to
+// hold all the Conversation Signals data, which will be converted to
+// JSON and exported to BigQuery.
+type GoogleCloudDialogflowCxV3ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowCxV3TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ConversationSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3316,6 +3346,64 @@ func (s *GoogleCloudDialogflowCxV3TransitionRoute) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3TurnSignals: Collection of all signals that
+// were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowCxV3TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3TurnSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata: Metadata
 // for UpdateDocument operation.
 type GoogleCloudDialogflowCxV3UpdateDocumentOperationMetadata struct {
@@ -4441,6 +4529,36 @@ type GoogleCloudDialogflowCxV3beta1ContinuousTestResult struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ContinuousTestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ContinuousTestResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ConversationSignals: This message is
+// used to hold all the Conversation Signals data, which will be
+// converted to JSON and exported to BigQuery.
+type GoogleCloudDialogflowCxV3beta1ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowCxV3beta1TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ConversationSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10754,6 +10872,64 @@ type GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverageTransitio
 
 func (s *GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverageTransition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1TransitionRouteGroupCoverageCoverageTransition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1TurnSignals: Collection of all signals
+// that were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowCxV3beta1TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18945,6 +19121,36 @@ func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV3alpha1ConversationSignals: This message is
+// used to hold all the Conversation Signals data, which will be
+// converted to JSON and exported to BigQuery.
+type GoogleCloudDialogflowV3alpha1ConversationSignals struct {
+	// TurnSignals: Required. Turn signals for the current turn.
+	TurnSignals *GoogleCloudDialogflowV3alpha1TurnSignals `json:"turnSignals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TurnSignals") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TurnSignals") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV3alpha1ConversationSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV3alpha1ConversationSignals
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata:
 // Metadata for CreateDocument operation.
 type GoogleCloudDialogflowV3alpha1CreateDocumentOperationMetadata struct {
@@ -19126,6 +19332,68 @@ type GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata struct {
 
 func (s *GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV3alpha1ReloadDocumentOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV3alpha1TurnSignals: Collection of all signals
+// that were extracted for a single turn of the conversation.
+type GoogleCloudDialogflowV3alpha1TurnSignals struct {
+	// AgentEscalated: Whether agent responded with LiveAgentHandoff
+	// fulfillment.
+	AgentEscalated bool `json:"agentEscalated,omitempty"`
+
+	// DtmfUsed: Whether user was using DTMF input.
+	DtmfUsed bool `json:"dtmfUsed,omitempty"`
+
+	// FailureReasons: Failure reasons of the turn.
+	//
+	// Possible values:
+	//   "FAILURE_REASON_UNSPECIFIED" - Failure reason is not assigned.
+	//   "FAILED_INTENT" - Whether NLU failed to recognize user intent.
+	//   "FAILED_WEBHOOK" - Whether webhook failed during the turn.
+	FailureReasons []string `json:"failureReasons,omitempty"`
+
+	// NoMatch: Whether NLU predicted NO_MATCH.
+	NoMatch bool `json:"noMatch,omitempty"`
+
+	// NoUserInput: Whether user provided no input.
+	NoUserInput bool `json:"noUserInput,omitempty"`
+
+	// ReachedEndPage: Whether turn resulted in End Session page.
+	ReachedEndPage bool `json:"reachedEndPage,omitempty"`
+
+	// TriggeredAbandonmentEvent: Whether agent has triggered the event
+	// corresponding to user abandoning the conversation.
+	TriggeredAbandonmentEvent bool `json:"triggeredAbandonmentEvent,omitempty"`
+
+	// UserEscalated: Whether user was specifically asking for a live agent.
+	UserEscalated bool `json:"userEscalated,omitempty"`
+
+	// WebhookStatuses: Human-readable statuses of the webhooks triggered
+	// during this turn.
+	WebhookStatuses []string `json:"webhookStatuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentEscalated") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentEscalated") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV3alpha1TurnSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV3alpha1TurnSignals
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

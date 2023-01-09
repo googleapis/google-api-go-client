@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -165,6 +165,7 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs := &ProjectsLocationsRepositoriesService{s: s}
 	rs.CompilationResults = NewProjectsLocationsRepositoriesCompilationResultsService(s)
 	rs.ReleaseConfigs = NewProjectsLocationsRepositoriesReleaseConfigsService(s)
+	rs.WorkflowConfigs = NewProjectsLocationsRepositoriesWorkflowConfigsService(s)
 	rs.WorkflowInvocations = NewProjectsLocationsRepositoriesWorkflowInvocationsService(s)
 	rs.Workspaces = NewProjectsLocationsRepositoriesWorkspacesService(s)
 	return rs
@@ -176,6 +177,8 @@ type ProjectsLocationsRepositoriesService struct {
 	CompilationResults *ProjectsLocationsRepositoriesCompilationResultsService
 
 	ReleaseConfigs *ProjectsLocationsRepositoriesReleaseConfigsService
+
+	WorkflowConfigs *ProjectsLocationsRepositoriesWorkflowConfigsService
 
 	WorkflowInvocations *ProjectsLocationsRepositoriesWorkflowInvocationsService
 
@@ -197,6 +200,15 @@ func NewProjectsLocationsRepositoriesReleaseConfigsService(s *Service) *Projects
 }
 
 type ProjectsLocationsRepositoriesReleaseConfigsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesWorkflowConfigsService(s *Service) *ProjectsLocationsRepositoriesWorkflowConfigsService {
+	rs := &ProjectsLocationsRepositoriesWorkflowConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesWorkflowConfigsService struct {
 	s *Service
 }
 
@@ -536,7 +548,8 @@ type CompilationResult struct {
 	ReleaseConfig string `json:"releaseConfig,omitempty"`
 
 	// ResolvedGitCommitSha: Output only. The fully resolved Git commit SHA
-	// of the code that was compiled.
+	// of the code that was compiled. Not set for compilation results whose
+	// source is a workspace.
 	ResolvedGitCommitSha string `json:"resolvedGitCommitSha,omitempty"`
 
 	// Workspace: Immutable. The name of the workspace to compile. Must be
@@ -991,25 +1004,25 @@ func (s *Interval) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InvocationConfig: Includes various configuration options for this
+// InvocationConfig: Includes various configuration options for a
 // workflow invocation. If both `included_targets` and `included_tags`
 // are unset, all actions will be included.
 type InvocationConfig struct {
-	// FullyRefreshIncrementalTablesEnabled: Immutable. When set to true,
-	// any incremental tables will be fully refreshed.
+	// FullyRefreshIncrementalTablesEnabled: Optional. When set to true, any
+	// incremental tables will be fully refreshed.
 	FullyRefreshIncrementalTablesEnabled bool `json:"fullyRefreshIncrementalTablesEnabled,omitempty"`
 
-	// IncludedTags: Immutable. The set of tags to include.
+	// IncludedTags: Optional. The set of tags to include.
 	IncludedTags []string `json:"includedTags,omitempty"`
 
-	// IncludedTargets: Immutable. The set of action identifiers to include.
+	// IncludedTargets: Optional. The set of action identifiers to include.
 	IncludedTargets []*Target `json:"includedTargets,omitempty"`
 
-	// TransitiveDependenciesIncluded: Immutable. When set to true,
+	// TransitiveDependenciesIncluded: Optional. When set to true,
 	// transitive dependencies of included actions will be executed.
 	TransitiveDependenciesIncluded bool `json:"transitiveDependenciesIncluded,omitempty"`
 
-	// TransitiveDependentsIncluded: Immutable. When set to true, transitive
+	// TransitiveDependentsIncluded: Optional. When set to true, transitive
 	// dependents of included actions will be executed.
 	TransitiveDependentsIncluded bool `json:"transitiveDependentsIncluded,omitempty"`
 
@@ -1193,6 +1206,46 @@ type ListRepositoriesResponse struct {
 
 func (s *ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRepositoriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListWorkflowConfigsResponse: `ListWorkflowConfigs` response message.
+type ListWorkflowConfigsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations which could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// WorkflowConfigs: List of workflow configs.
+	WorkflowConfigs []*WorkflowConfig `json:"workflowConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListWorkflowConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWorkflowConfigsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1879,7 +1932,7 @@ func (s *RelationDescriptor) MarshalJSON() ([]byte, error) {
 
 // ReleaseConfig: Represents a Dataform release configuration.
 type ReleaseConfig struct {
-	// CodeCompilationConfig: Immutable. If set, fields of
+	// CodeCompilationConfig: Optional. If set, fields of
 	// `code_compilation_config` override the default compilation settings
 	// that are specified in dataform.json.
 	CodeCompilationConfig *CodeCompilationConfig `json:"codeCompilationConfig,omitempty"`
@@ -1910,6 +1963,13 @@ type ReleaseConfig struct {
 	// created using this release config. Must be in the format
 	// `projects/*/locations/*/repositories/*/compilationResults/*`.
 	ReleaseCompilationResult string `json:"releaseCompilationResult,omitempty"`
+
+	// TimeZone: Optional. Specifies the time zone to be used when
+	// interpreting cron_schedule. Must be a time zone name from the time
+	// zone database
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If
+	// left unspecified, the default is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2076,6 +2136,44 @@ func (s *ResetWorkspaceChangesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScheduledExecutionRecord: A record of an attempt to create a workflow
+// invocation for this workflow config.
+type ScheduledExecutionRecord struct {
+	// ErrorStatus: The error status encountered upon this attempt to create
+	// the workflow invocation, if the attempt was unsuccessful.
+	ErrorStatus *Status `json:"errorStatus,omitempty"`
+
+	// ExecutionTime: The timestamp of this execution attempt.
+	ExecutionTime string `json:"executionTime,omitempty"`
+
+	// WorkflowInvocation: The name of the created workflow invocation, if
+	// one was successfully created. Must be in the format
+	// `projects/*/locations/*/repositories/*/workflowInvocations/*`.
+	WorkflowInvocation string `json:"workflowInvocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorStatus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduledExecutionRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledExecutionRecord
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ScheduledReleaseRecord: A record of an attempt to create a
 // compilation result for this release config.
 type ScheduledReleaseRecord struct {
@@ -2230,6 +2328,63 @@ type UncommittedFileChange struct {
 
 func (s *UncommittedFileChange) MarshalJSON() ([]byte, error) {
 	type NoMethod UncommittedFileChange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkflowConfig: Represents a Dataform workflow configuration.
+type WorkflowConfig struct {
+	// CronSchedule: Optional. Optional schedule (in cron format) for
+	// automatic execution of this workflow config.
+	CronSchedule string `json:"cronSchedule,omitempty"`
+
+	// InvocationConfig: Optional. If left unset, a default InvocationConfig
+	// will be used.
+	InvocationConfig *InvocationConfig `json:"invocationConfig,omitempty"`
+
+	// Name: Output only. The workflow config's name.
+	Name string `json:"name,omitempty"`
+
+	// RecentScheduledExecutionRecords: Output only. Records of the 10 most
+	// recent scheduled execution attempts. Updated whenever automatic
+	// creation of a compilation result is triggered by cron_schedule.
+	RecentScheduledExecutionRecords []*ScheduledExecutionRecord `json:"recentScheduledExecutionRecords,omitempty"`
+
+	// ReleaseConfig: Required. The name of the release config whose
+	// release_compilation_result should be executed. Must be in the format
+	// `projects/*/locations/*/repositories/*/releaseConfigs/*`.
+	ReleaseConfig string `json:"releaseConfig,omitempty"`
+
+	// TimeZone: Optional. Specifies the time zone to be used when
+	// interpreting cron_schedule. Must be a time zone name from the time
+	// zone database
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If
+	// left unspecified, the default is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CronSchedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CronSchedule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkflowConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkflowConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5249,6 +5404,794 @@ func (c *ProjectsLocationsRepositoriesReleaseConfigsPatchCall) Do(opts ...google
 	//   },
 	//   "response": {
 	//     "$ref": "ReleaseConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataform.projects.locations.repositories.workflowConfigs.create":
+
+type ProjectsLocationsRepositoriesWorkflowConfigsCreateCall struct {
+	s              *Service
+	parent         string
+	workflowconfig *WorkflowConfig
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new WorkflowConfig in a given Repository.
+//
+//   - parent: The repository in which to create the workflow config. Must
+//     be in the format `projects/*/locations/*/repositories/*`.
+func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Create(parent string, workflowconfig *WorkflowConfig) *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall {
+	c := &ProjectsLocationsRepositoriesWorkflowConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.workflowconfig = workflowconfig
+	return c
+}
+
+// WorkflowConfigId sets the optional parameter "workflowConfigId":
+// Required. The ID to use for the workflow config, which will become
+// the final component of the workflow config's resource name.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) WorkflowConfigId(workflowConfigId string) *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall {
+	c.urlParams_.Set("workflowConfigId", workflowConfigId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.workflowconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/workflowConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workflowConfigs.create" call.
+// Exactly one of *WorkflowConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *WorkflowConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsCreateCall) Do(opts ...googleapi.CallOption) (*WorkflowConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WorkflowConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new WorkflowConfig in a given Repository.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/workflowConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "dataform.projects.locations.repositories.workflowConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The repository in which to create the workflow config. Must be in the format `projects/*/locations/*/repositories/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "workflowConfigId": {
+	//       "description": "Required. The ID to use for the workflow config, which will become the final component of the workflow config's resource name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/workflowConfigs",
+	//   "request": {
+	//     "$ref": "WorkflowConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "WorkflowConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataform.projects.locations.repositories.workflowConfigs.delete":
+
+type ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single WorkflowConfig.
+//
+// - name: The workflow config's name.
+func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Delete(name string) *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall {
+	c := &ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workflowConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single WorkflowConfig.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/workflowConfigs/{workflowConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dataform.projects.locations.repositories.workflowConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The workflow config's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/workflowConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataform.projects.locations.repositories.workflowConfigs.get":
+
+type ProjectsLocationsRepositoriesWorkflowConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Fetches a single WorkflowConfig.
+//
+// - name: The workflow config's name.
+func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Get(name string) *ProjectsLocationsRepositoriesWorkflowConfigsGetCall {
+	c := &ProjectsLocationsRepositoriesWorkflowConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkflowConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesWorkflowConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkflowConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workflowConfigs.get" call.
+// Exactly one of *WorkflowConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *WorkflowConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsGetCall) Do(opts ...googleapi.CallOption) (*WorkflowConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WorkflowConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches a single WorkflowConfig.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/workflowConfigs/{workflowConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dataform.projects.locations.repositories.workflowConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The workflow config's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/workflowConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "response": {
+	//     "$ref": "WorkflowConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dataform.projects.locations.repositories.workflowConfigs.list":
+
+type ProjectsLocationsRepositoriesWorkflowConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists WorkflowConfigs in a given Repository.
+//
+//   - parent: The repository in which to list workflow configs. Must be
+//     in the format `projects/*/locations/*/repositories/*`.
+func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) List(parent string) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c := &ProjectsLocationsRepositoriesWorkflowConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// workflow configs to return. The server may return fewer items than
+// requested. If unspecified, the server will pick an appropriate
+// default.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListWorkflowConfigs` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListWorkflowConfigs` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/workflowConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workflowConfigs.list" call.
+// Exactly one of *ListWorkflowConfigsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWorkflowConfigsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) Do(opts ...googleapi.CallOption) (*ListWorkflowConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWorkflowConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists WorkflowConfigs in a given Repository.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/workflowConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "dataform.projects.locations.repositories.workflowConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of workflow configs to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous `ListWorkflowConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWorkflowConfigs` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The repository in which to list workflow configs. Must be in the format `projects/*/locations/*/repositories/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/workflowConfigs",
+	//   "response": {
+	//     "$ref": "ListWorkflowConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) Pages(ctx context.Context, f func(*ListWorkflowConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dataform.projects.locations.repositories.workflowConfigs.patch":
+
+type ProjectsLocationsRepositoriesWorkflowConfigsPatchCall struct {
+	s              *Service
+	name           string
+	workflowconfig *WorkflowConfig
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates a single WorkflowConfig.
+//
+// - name: Output only. The workflow config's name.
+func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Patch(name string, workflowconfig *WorkflowConfig) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {
+	c := &ProjectsLocationsRepositoriesWorkflowConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.workflowconfig = workflowconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Specifies the
+// fields to be updated in the workflow config. If left unset, all
+// fields will be updated.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.workflowconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workflowConfigs.patch" call.
+// Exactly one of *WorkflowConfig or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *WorkflowConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) Do(opts ...googleapi.CallOption) (*WorkflowConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WorkflowConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a single WorkflowConfig.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/workflowConfigs/{workflowConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dataform.projects.locations.repositories.workflowConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The workflow config's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/workflowConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Specifies the fields to be updated in the workflow config. If left unset, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "WorkflowConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "WorkflowConfig"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

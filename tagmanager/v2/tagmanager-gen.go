@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -633,6 +633,7 @@ type BuiltInVariable struct {
 	//   "serverPageLocationUrl"
 	//   "serverPageLocationPath"
 	//   "serverPageLocationHostname"
+	//   "visitorRegion"
 	Type string `json:"type,omitempty"`
 
 	// WorkspaceId: GTM Workspace ID.
@@ -10069,6 +10070,7 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent stri
 //	"serverPageLocationUrl"
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
+//	"visitorRegion"
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -10290,7 +10292,8 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Do(opts ...goog
 	//         "queryString",
 	//         "serverPageLocationUrl",
 	//         "serverPageLocationPath",
-	//         "serverPageLocationHostname"
+	//         "serverPageLocationHostname",
+	//         "visitorRegion"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -10326,6 +10329,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Do(opts ...goog
 	//         "",
 	//         "For web or mobile.",
 	//         "For web or mobile.",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -10562,6 +10566,7 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string
 //	"serverPageLocationUrl"
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
+//	"visitorRegion"
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -10758,7 +10763,8 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Do(opts ...goog
 	//         "queryString",
 	//         "serverPageLocationUrl",
 	//         "serverPageLocationPath",
-	//         "serverPageLocationHostname"
+	//         "serverPageLocationHostname",
+	//         "visitorRegion"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -10794,6 +10800,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Do(opts ...goog
 	//         "",
 	//         "For web or mobile.",
 	//         "For web or mobile.",
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -11211,6 +11218,7 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string
 //	"serverPageLocationUrl"
 //	"serverPageLocationPath"
 //	"serverPageLocationHostname"
+//	"visitorRegion"
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Type(type_ string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -11432,7 +11440,8 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Do(opts ...goog
 	//         "queryString",
 	//         "serverPageLocationUrl",
 	//         "serverPageLocationPath",
-	//         "serverPageLocationHostname"
+	//         "serverPageLocationHostname",
+	//         "visitorRegion"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -11468,6 +11477,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Do(opts ...goog
 	//         "",
 	//         "For web or mobile.",
 	//         "For web or mobile.",
+	//         "",
 	//         "",
 	//         "",
 	//         "",

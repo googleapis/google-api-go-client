@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -15292,7 +15292,7 @@ func (s *RepricingProductReportBuyboxWinningProductStats) MarshalJSON() ([]byte,
 
 // RepricingRule: Represents a repricing rule. A repricing rule is used
 // by shopping serving to adjust transactable offer prices if conditions
-// are met. Next ID: 24
+// are met.
 type RepricingRule struct {
 	// CogsBasedRule: The rule definition for TYPE_COGS_BASED. Required when
 	// the rule type is TYPE_COGS_BASED.

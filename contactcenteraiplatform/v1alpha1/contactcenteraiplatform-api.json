@@ -106,33 +106,6 @@
   "protocol": "rest",
   "resources": {
     "projects": {
-      "methods": {
-        "queryContactCenterQuota": {
-          "description": "Queries the contact center quota, an aggregation over all the projects, that belongs to the billing account, which the input project belongs to.",
-          "flatPath": "v1alpha1/projects/{projectsId}:queryContactCenterQuota",
-          "httpMethod": "GET",
-          "id": "contactcenteraiplatform.projects.queryContactCenterQuota",
-          "parameterOrder": [
-            "parent"
-          ],
-          "parameters": {
-            "parent": {
-              "description": "Required. Parent project resource id.",
-              "location": "path",
-              "pattern": "^projects/[^/]+$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1alpha1/{+parent}:queryContactCenterQuota",
-          "response": {
-            "$ref": "ContactCenterQuota"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        }
-      },
       "resources": {
         "locations": {
           "methods": {
@@ -208,24 +181,18 @@
               "httpMethod": "GET",
               "id": "contactcenteraiplatform.projects.locations.queryContactCenterQuota",
               "parameterOrder": [
-                "parent",
-                "locationsId"
+                "parent"
               ],
               "parameters": {
-                "locationsId": {
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                },
                 "parent": {
                   "description": "Required. Parent project resource id.",
                   "location": "path",
-                  "pattern": "^projects/[^/]+$",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
                   "type": "string"
                 }
               },
-              "path": "v1alpha1/{+parent}/locations/{locationsId}:queryContactCenterQuota",
+              "path": "v1alpha1/{+parent}:queryContactCenterQuota",
               "response": {
                 "$ref": "ContactCenterQuota"
               },
@@ -545,7 +512,7 @@
       }
     }
   },
-  "revision": "20230103",
+  "revision": "20230105",
   "rootUrl": "https://contactcenteraiplatform.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

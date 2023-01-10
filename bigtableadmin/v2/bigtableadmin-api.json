@@ -1966,7 +1966,7 @@
       }
     }
   },
-  "revision": "20221022",
+  "revision": "20221229",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -3397,7 +3397,7 @@
           "type": "object"
         },
         "deletionProtection": {
-          "description": "Set to true to make the table protected against data loss. i.e. deleting the following resources through Admin APIs are prohibited: - The table. - The column families in the table. - The instance containing the table. Note one can still delete the data stored in the table through Data APIs.",
+          "description": "Set to true to make the table protected against data loss. i.e. deleting the following resources through Admin APIs are prohibited: * The table. * The column families in the table. * The instance containing the table. Note one can still delete the data stored in the table through Data APIs.",
           "type": "boolean"
         },
         "granularity": {

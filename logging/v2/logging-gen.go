@@ -1486,14 +1486,11 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
-	// Filter: Optional. A filter that chooses which log entries to return.
-	// See Advanced Logs Queries
-	// (https://cloud.google.com/logging/docs/view/advanced-queries). Only
-	// log entries that match the filter are returned. An empty filter
-	// matches all log entries in the resources listed in resource_names.
-	// Referencing a parent resource that is not listed in resource_names
-	// will cause the filter to return no results. The maximum length of the
-	// filter is 20000 characters.
+	// Filter: Optional. Only log entries that match the filter are
+	// returned. An empty filter matches all log entries in the resources
+	// listed in resource_names. Referencing a parent resource that is not
+	// listed in resource_names will cause the filter to return no results.
+	// The maximum length of a filter is 20,000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// OrderBy: Optional. How the results should be sorted. Presently, the
@@ -3653,14 +3650,11 @@ type TailLogEntriesRequest struct {
 	// milliseconds. Defaults to 2000 milliseconds.
 	BufferWindow string `json:"bufferWindow,omitempty"`
 
-	// Filter: Optional. A filter that chooses which log entries to return.
-	// See Advanced Logs Filters
-	// (https://cloud.google.com/logging/docs/view/advanced_filters). Only
-	// log entries that match the filter are returned. An empty filter
-	// matches all log entries in the resources listed in resource_names.
-	// Referencing a parent resource that is not in resource_names will
-	// cause the filter to return no results. The maximum length of the
-	// filter is 20000 characters.
+	// Filter: Optional. Only log entries that match the filter are
+	// returned. An empty filter matches all log entries in the resources
+	// listed in resource_names. Referencing a parent resource that is not
+	// listed in resource_names will cause the filter to return no results.
+	// The maximum length of a filter is 20,000 characters.
 	Filter string `json:"filter,omitempty"`
 
 	// ResourceNames: Required. Name of a parent resource from which to

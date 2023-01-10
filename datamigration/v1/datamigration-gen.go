@@ -871,7 +871,7 @@ func (s *ColumnEntity) MarshalJSON() ([]byte, error) {
 // CommitConversionWorkspaceRequest: Request message for
 // 'CommitConversionWorkspace' request.
 type CommitConversionWorkspaceRequest struct {
-	// CommitName: Optional name of the commit.
+	// CommitName: Optional. Optional name of the commit.
 	CommitName string `json:"commitName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommitName") to
@@ -6726,7 +6726,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeConversionWorkspaceRevisio
 	//   ],
 	//   "parameters": {
 	//     "commitId": {
-	//       "description": "Optional filter to request a specific commit id",
+	//       "description": "Optional. Optional filter to request a specific commit id",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

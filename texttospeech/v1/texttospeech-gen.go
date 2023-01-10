@@ -373,6 +373,54 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata: Metadata for
+// response returned by the `SynthesizeLongAudio` method.
+type GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata struct {
+	// ProgressPercentage: The progress of the most recent processing update
+	// in percentage, ie. 70.0%.
+	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
+
+	// StartTime: Time when the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata
+	var s1 struct {
+		ProgressPercentage gensupport.JSONFloat64 `json:"progressPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProgressPercentage = float64(s1.ProgressPercentage)
+	return nil
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -584,6 +632,54 @@ func (s *SynthesisInput) MarshalJSON() ([]byte, error) {
 	type NoMethod SynthesisInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SynthesizeLongAudioMetadata: Metadata for response returned by the
+// `SynthesizeLongAudio` method.
+type SynthesizeLongAudioMetadata struct {
+	// ProgressPercentage: The progress of the most recent processing update
+	// in percentage, ie. 70.0%.
+	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
+
+	// StartTime: Time when the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SynthesizeLongAudioMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SynthesizeLongAudioMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SynthesizeLongAudioMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod SynthesizeLongAudioMetadata
+	var s1 struct {
+		ProgressPercentage gensupport.JSONFloat64 `json:"progressPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProgressPercentage = float64(s1.ProgressPercentage)
+	return nil
 }
 
 // SynthesizeLongAudioRequest: The top-level message sent by the client

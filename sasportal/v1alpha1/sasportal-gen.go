@@ -413,7 +413,7 @@ type SasPortalChannelWithScore struct {
 	// FrequencyRange: The frequency range of the channel.
 	FrequencyRange *SasPortalFrequencyRange `json:"frequencyRange,omitempty"`
 
-	// Score: The channel score, normalized to be in [0,100].
+	// Score: The channel score, normalized to be in the range [0,100].
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FrequencyRange") to
@@ -532,7 +532,8 @@ type SasPortalDeployment struct {
 	// DisplayName: The deployment's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Frns: Output only. The FRNs copied from its direct parent.
+	// Frns: Output only. The FCC Registration Numbers (FRNs) copied from
+	// its direct parent.
 	Frns []string `json:"frns,omitempty"`
 
 	// Name: Output only. Resource name.
@@ -587,8 +588,8 @@ type SasPortalDevice struct {
 	// FccId: The FCC identifier of the device.
 	FccId string `json:"fccId,omitempty"`
 
-	// GrantRangeAllowlists: Only ranges within the allowlists are available
-	// for new grants.
+	// GrantRangeAllowlists: Only ranges that are within the allowlists are
+	// available for new grants.
 	GrantRangeAllowlists []*SasPortalFrequencyRange `json:"grantRangeAllowlists,omitempty"`
 
 	// Grants: Output only. Grants held by the device.
@@ -854,21 +855,23 @@ func (s *SasPortalDeviceGrant) UnmarshalJSON(data []byte) error {
 // and registration requests.
 type SasPortalDeviceMetadata struct {
 	// AntennaModel: If populated, the Antenna Model Pattern to use. Format
-	// is: RecordCreatorId:PatternId
+	// is: `RecordCreatorId:PatternId`
 	AntennaModel string `json:"antennaModel,omitempty"`
 
-	// CommonChannelGroup: CCG. A group of CBSDs in the same ICG requesting
-	// a common primary channel assignment. See CBRSA-TS-2001 V3.0.0 for
-	// more details.
+	// CommonChannelGroup: Common Channel Group (CCG). A group of CBSDs in
+	// the same ICG requesting a common primary channel assignment. For more
+	// details, see CBRSA-TS-2001 V3.0.0
+	// (https://ongoalliance.org/wp-content/uploads/2020/02/CBRSA-TS-2001-V3.0.0_Approved-for-publication.pdf).
 	CommonChannelGroup string `json:"commonChannelGroup,omitempty"`
 
-	// InterferenceCoordinationGroup: ICG. A group of CBSDs that manage
-	// their own interference with the group. See CBRSA-TS-2001 V3.0.0 for
-	// more details.
+	// InterferenceCoordinationGroup: Interference Coordination Group (ICG).
+	// A group of CBSDs that manage their own interference with the group.
+	// For more details, see CBRSA-TS-2001 V3.0.0
+	// (https://ongoalliance.org/wp-content/uploads/2020/02/CBRSA-TS-2001-V3.0.0_Approved-for-publication.pdf).
 	InterferenceCoordinationGroup string `json:"interferenceCoordinationGroup,omitempty"`
 
-	// NrqzValidated: Output only. Whether a CPI has validated to have
-	// coordinated with the National Quiet Zone office.
+	// NrqzValidated: Output only. Set to `true` if a CPI has validated that
+	// they have coordinated with the National Quiet Zone office.
 	NrqzValidated bool `json:"nrqzValidated,omitempty"`
 
 	// NrqzValidation: Output only. National Radio Quiet Zone validation
@@ -1124,6 +1127,9 @@ type SasPortalInstallationParams struct {
 	// with a value between -127 and +128 (dBi) inclusive.
 	AntennaGain int64 `json:"antennaGain,omitempty"`
 
+	// AntennaGainNewField: As above, but as a DoubleValue.
+	AntennaGainNewField float64 `json:"antennaGainNewField,omitempty"`
+
 	// AntennaModel: If an external antenna is used, the antenna model is
 	// optionally provided in this field. The string has a maximum length of
 	// 128 octets.
@@ -1138,6 +1144,9 @@ type SasPortalInstallationParams struct {
 	// MHz) inclusive. If not included, SAS interprets it as maximum
 	// allowable EIRP in units of dBm/10MHz for device category.
 	EirpCapability int64 `json:"eirpCapability,omitempty"`
+
+	// EirpCapabilityNewField: As above, but as a DoubleValue.
+	EirpCapabilityNewField float64 `json:"eirpCapabilityNewField,omitempty"`
 
 	// Height: Device antenna height in meters. When the `heightType`
 	// parameter value is "AGL", the antenna height should be given relative
@@ -1210,17 +1219,21 @@ func (s *SasPortalInstallationParams) MarshalJSON() ([]byte, error) {
 func (s *SasPortalInstallationParams) UnmarshalJSON(data []byte) error {
 	type NoMethod SasPortalInstallationParams
 	var s1 struct {
-		Height             gensupport.JSONFloat64 `json:"height"`
-		HorizontalAccuracy gensupport.JSONFloat64 `json:"horizontalAccuracy"`
-		Latitude           gensupport.JSONFloat64 `json:"latitude"`
-		Longitude          gensupport.JSONFloat64 `json:"longitude"`
-		VerticalAccuracy   gensupport.JSONFloat64 `json:"verticalAccuracy"`
+		AntennaGainNewField    gensupport.JSONFloat64 `json:"antennaGainNewField"`
+		EirpCapabilityNewField gensupport.JSONFloat64 `json:"eirpCapabilityNewField"`
+		Height                 gensupport.JSONFloat64 `json:"height"`
+		HorizontalAccuracy     gensupport.JSONFloat64 `json:"horizontalAccuracy"`
+		Latitude               gensupport.JSONFloat64 `json:"latitude"`
+		Longitude              gensupport.JSONFloat64 `json:"longitude"`
+		VerticalAccuracy       gensupport.JSONFloat64 `json:"verticalAccuracy"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.AntennaGainNewField = float64(s1.AntennaGainNewField)
+	s.EirpCapabilityNewField = float64(s1.EirpCapabilityNewField)
 	s.Height = float64(s1.Height)
 	s.HorizontalAccuracy = float64(s1.HorizontalAccuracy)
 	s.Latitude = float64(s1.Latitude)
@@ -1506,16 +1519,16 @@ func (s *SasPortalNode) MarshalJSON() ([]byte, error) {
 // SasPortalNrqzValidation: Information about National Radio Quiet Zone
 // validation.
 type SasPortalNrqzValidation struct {
-	// CaseId: Validation case id.
+	// CaseId: Validation case ID.
 	CaseId string `json:"caseId,omitempty"`
 
 	// CpiId: CPI who signed the validation.
 	CpiId string `json:"cpiId,omitempty"`
 
-	// Latitude: Device latitude associated with the validation.
+	// Latitude: Device latitude that's associated with the validation.
 	Latitude float64 `json:"latitude,omitempty"`
 
-	// Longitude: Device longitude associated with the validation.
+	// Longitude: Device longitude that's associated with the validation.
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// State: State of the NRQZ validation info.
@@ -1672,8 +1685,8 @@ func (s *SasPortalPolicy) MarshalJSON() ([]byte, error) {
 
 // SasPortalSetPolicyRequest: Request message for `SetPolicy` method.
 type SasPortalSetPolicyRequest struct {
-	// DisableNotification: Optional. Set the field as true when we would
-	// like to disable the onboarding notification.
+	// DisableNotification: Optional. Set the field as `true` to disable the
+	// onboarding notification.
 	DisableNotification bool `json:"disableNotification,omitempty"`
 
 	// Policy: Required. The policy to be applied to the `resource`.

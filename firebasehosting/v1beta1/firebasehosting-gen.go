@@ -1499,7 +1499,7 @@ func (s *ServingConfig) MarshalJSON() ([]byte, error) {
 // Site: A `Site` represents a Firebase Hosting site.
 type Site struct {
 	// AppId: Optional. The ID of a Web App
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
 	// associated with the Hosting site.
 	AppId string `json:"appId,omitempty"`
 
@@ -1512,9 +1512,9 @@ type Site struct {
 	// Name: Output only. The fully-qualified resource name of the Hosting
 	// site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
 	// PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
 	// ***(recommended)*** or its `ProjectId`
-	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+	// (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
 	// Learn more about using project identifiers in Google's AIP 2510
 	// standard (https://google.aip.dev/cloud/2510).
 	Name string `json:"name,omitempty"`
@@ -2759,9 +2759,9 @@ type ProjectsSitesPatchCall struct {
 //   - name: Output only. The fully-qualified resource name of the Hosting
 //     site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
 //     PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
-//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
 //     ***(recommended)*** or its `ProjectId`
-//     (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+//     (https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
 //     Learn more about using project identifiers in Google's AIP 2510
 //     standard (https://google.aip.dev/cloud/2510).
 func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
@@ -2878,7 +2878,7 @@ func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
+	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,

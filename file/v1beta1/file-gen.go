@@ -1013,6 +1013,18 @@ type Instance struct {
 	// version, only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
 
+	// Protocol: Immutable. The protocol indicates the access protocol for
+	// all shares in the instance. This field is immutable and it cannot be
+	// changed after the instance has been created. Default value: `NFS_V3`.
+	//
+	// Possible values:
+	//   "FILE_PROTOCOL_UNSPECIFIED" - FILE_PROTOCOL_UNSPECIFIED serves a
+	// "not set" default value when a FileProtocol is a separate field in a
+	// message.
+	//   "NFS_V3" - NFS 3.0.
+	//   "NFS_V4_1" - NFS 4.1.
+	Protocol string `json:"protocol,omitempty"`
+
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 

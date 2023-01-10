@@ -6469,6 +6469,40 @@ func (s *Step) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Straggler: Information for a straggler.
+type Straggler struct {
+	// BatchStraggler: Batch straggler identification and debugging
+	// information.
+	BatchStraggler *StragglerInfo `json:"batchStraggler,omitempty"`
+
+	// StreamingStraggler: Streaming straggler identification and debugging
+	// information.
+	StreamingStraggler *StreamingStragglerInfo `json:"streamingStraggler,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchStraggler") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatchStraggler") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Straggler) MarshalJSON() ([]byte, error) {
+	type NoMethod Straggler
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StragglerDebuggingInfo: Information useful for debugging a straggler.
 // Each type will provide specialized debugging information relevant for
 // a particular cause. The StragglerDebuggingInfo will be 1:1 mapping to
@@ -6536,6 +6570,9 @@ func (s *StragglerInfo) MarshalJSON() ([]byte, error) {
 
 // StragglerSummary: Summarized straggler identification details.
 type StragglerSummary struct {
+	// RecentStragglers: The most recent stragglers.
+	RecentStragglers []*Straggler `json:"recentStragglers,omitempty"`
+
 	// StragglerCauseCount: Aggregated counts of straggler causes, keyed by
 	// the string representation of the StragglerCause enum.
 	StragglerCauseCount map[string]string `json:"stragglerCauseCount,omitempty"`
@@ -6543,15 +6580,15 @@ type StragglerSummary struct {
 	// TotalStragglerCount: The total count of stragglers.
 	TotalStragglerCount int64 `json:"totalStragglerCount,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "StragglerCauseCount")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "RecentStragglers") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "StragglerCauseCount") to
+	// NullFields is a list of field names (e.g. "RecentStragglers") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -6925,6 +6962,50 @@ type StreamingStageLocation struct {
 
 func (s *StreamingStageLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamingStageLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StreamingStragglerInfo: Information useful for streaming straggler
+// identification and debugging.
+type StreamingStragglerInfo struct {
+	// DataWatermarkLag: The event-time watermark lag at the time of the
+	// straggler detection.
+	DataWatermarkLag string `json:"dataWatermarkLag,omitempty"`
+
+	// EndTime: End time of this straggler.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Start time of this straggler.
+	StartTime string `json:"startTime,omitempty"`
+
+	// SystemWatermarkLag: The system watermark lag at the time of the
+	// straggler detection.
+	SystemWatermarkLag string `json:"systemWatermarkLag,omitempty"`
+
+	// WorkerName: Name of the worker where the straggler was detected.
+	WorkerName string `json:"workerName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataWatermarkLag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataWatermarkLag") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingStragglerInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingStragglerInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

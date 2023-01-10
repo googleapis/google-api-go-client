@@ -821,8 +821,7 @@ type GoogleCloudDataplexV1AssetDiscoverySpec struct {
 	// in the cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or
 	// TZ=${IANA_TIME_ZONE}". The ${IANA_TIME_ZONE} may only be a valid
 	// string from IANA time zone database. For example,
-	// "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * *
-	// *".
+	// CRON_TZ=America/New_York 1 * * * *, or TZ=America/New_York 1 * * * *.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CsvOptions") to
@@ -1335,14 +1334,13 @@ func (s *GoogleCloudDataplexV1ContentSqlScript) MarshalJSON() ([]byte, error) {
 // output of DataProfileScan. Each field of the table will have field
 // type specific profile result.
 type GoogleCloudDataplexV1DataProfileResult struct {
-	// Profile: This represents the profile information per field.
+	// Profile: The profile information per field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfile `json:"profile,omitempty"`
 
-	// RowCount: The count of all rows in the sampled data. Return 0, if
-	// zero rows.
+	// RowCount: The count of rows scanned.
 	RowCount int64 `json:"rowCount,omitempty,string"`
 
-	// ScannedData: The data scanned for this profile.
+	// ScannedData: The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Profile") to
@@ -1368,11 +1366,11 @@ func (s *GoogleCloudDataplexV1DataProfileResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataProfileResultProfile: Profile information
-// describing the structure and layout of the data and contains the
-// profile info.
+// GoogleCloudDataplexV1DataProfileResultProfile: Contains name, type,
+// mode and field type specific profile information.
 type GoogleCloudDataplexV1DataProfileResultProfile struct {
-	// Fields: The sequence of fields describing data in table entities.
+	// Fields: List of fields with structural and profile information for
+	// each field.
 	Fields []*GoogleCloudDataplexV1DataProfileResultProfileField `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -1398,18 +1396,18 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfile) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataProfileResultProfileField: Represents a
-// column field within a table schema.
+// GoogleCloudDataplexV1DataProfileResultProfileField: A field within a
+// table.
 type GoogleCloudDataplexV1DataProfileResultProfileField struct {
-	// Mode: The mode of the field. Its value will be: REQUIRED, if it is a
-	// required field. NULLABLE, if it is an optional field. REPEATED, if it
-	// is a repeated field.
+	// Mode: The mode of the field. Possible values include: REQUIRED, if it
+	// is a required field. NULLABLE, if it is an optional field. REPEATED,
+	// if it is a repeated field.
 	Mode string `json:"mode,omitempty"`
 
 	// Name: The name of the field.
 	Name string `json:"name,omitempty"`
 
-	// Profile: The profile information for the corresponding field.
+	// Profile: Profile information for the corresponding field.
 	Profile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo `json:"profile,omitempty"`
 
 	// Type: The field data type. Possible values include: STRING BYTE INT64
@@ -1440,31 +1438,31 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileField) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo:
-// ProfileInfo defines the profile information for each schema field
-// type.
+// GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo: The
+// profile information for each field type.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo struct {
-	// DistinctRatio: The ratio of rows that are distinct against the rows
-	// in the sampled data.
+	// DistinctRatio: Ratio of rows with distinct values against total
+	// scanned rows. Not available for complex non-groupable field type
+	// RECORD and fields with REPEATABLE mode.
 	DistinctRatio float64 `json:"distinctRatio,omitempty"`
 
-	// DoubleProfile: The corresponding double field profile.
+	// DoubleProfile: Double type field information.
 	DoubleProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo `json:"doubleProfile,omitempty"`
 
-	// IntegerProfile: The corresponding integer field profile.
+	// IntegerProfile: Integer type field information.
 	IntegerProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo `json:"integerProfile,omitempty"`
 
-	// NullRatio: The ratio of null rows against the rows in the sampled
-	// data.
+	// NullRatio: Ratio of rows with null value against total scanned rows.
 	NullRatio float64 `json:"nullRatio,omitempty"`
 
-	// StringProfile: The corresponding string field profile.
+	// StringProfile: String type field information.
 	StringProfile *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo `json:"stringProfile,omitempty"`
 
-	// TopNValues: The array of top N values of the field in the sampled
-	// data. Currently N is set as 10 or equal to distinct values in the
-	// field, whichever is smaller. This will be optional for complex
-	// non-groupable data-types such as JSON, ARRAY, JSON, STRUCT.
+	// TopNValues: The list of top N non-null values and number of times
+	// they occur in the scanned data. N is 10 or equal to the number of
+	// distinct values in the field, whichever is smaller. Not available for
+	// complex non-groupable field type RECORD and fields with REPEATABLE
+	// mode.
 	TopNValues []*GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue `json:"topNValues,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctRatio") to
@@ -1507,22 +1505,21 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfo) Unmarsha
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFie
-// ldInfo: DoubleFieldInfo defines output for any double type field.
+// ldInfo: The profile information for a double type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInfo struct {
-	// Average: The average of non-null values of double field in the
-	// sampled data. Return NaN, if the field has a NaN. Optional if zero
-	// non-null rows.
+	// Average: Average of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Average float64 `json:"average,omitempty"`
 
-	// Max: The maximum value of a double field in the sampled data. Return
-	// NaN, if the field has a NaN. Optional if zero non-null rows.
+	// Max: Maximum of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Max float64 `json:"max,omitempty"`
 
-	// Min: The minimum value of a double field in the sampled data. Return
-	// NaN, if the field has a NaN. Optional if zero non-null rows.
+	// Min: Minimum of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Min float64 `json:"min,omitempty"`
 
-	// Quartiles: A quartile divide the numebr of data points into four
+	// Quartiles: A quartile divides the number of data points into four
 	// parts, or quarters, of more-or-less equal size. Three main quartiles
 	// used are: The first quartile (Q1) splits off the lowest 25% of data
 	// from the highest 75%. It is also known as the lower or 25th empirical
@@ -1530,14 +1527,13 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFieldInf
 	// (Q2) is the median of a data set. So, 50% of the data lies below this
 	// point. The third quartile (Q3) splits off the highest 25% of data
 	// from the lowest 75%. It is known as the upper or 75th empirical
-	// quartile, as 75% of the data lies below this point. So, here the
-	// quartiles is provided as an ordered list of quartile values,
-	// occurring in order Q1, median, Q3.
+	// quartile, as 75% of the data lies below this point. Here, the
+	// quartiles is provided as an ordered list of quartile values for the
+	// scanned data, occurring in order Q1, median, Q3.
 	Quartiles []float64 `json:"quartiles,omitempty"`
 
-	// StandardDeviation: The standard deviation of non-null of double field
-	// in the sampled data. Return NaN, if the field has a NaN. Optional if
-	// zero non-null rows.
+	// StandardDeviation: Standard deviation of non-null values in the
+	// scanned data. NaN, if the field has a NaN.
 	StandardDeviation float64 `json:"standardDeviation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Average") to
@@ -1584,22 +1580,21 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoDoubleFiel
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFi
-// eldInfo: IntegerFieldInfo defines output for any integer type field.
+// eldInfo: The profile information for an integer type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldInfo struct {
-	// Average: The average of non-null values of integer field in the
-	// sampled data. Return NaN, if the field has a NaN. Optional if zero
-	// non-null rows.
+	// Average: Average of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Average float64 `json:"average,omitempty"`
 
-	// Max: The maximum value of an integer field in the sampled data.
-	// Return NaN, if the field has a NaN. Optional if zero non-null rows.
+	// Max: Maximum of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Max int64 `json:"max,omitempty,string"`
 
-	// Min: The minimum value of an integer field in the sampled data.
-	// Return NaN, if the field has a NaN. Optional if zero non-null rows.
+	// Min: Minimum of non-null values in the scanned data. NaN, if the
+	// field has a NaN.
 	Min int64 `json:"min,omitempty,string"`
 
-	// Quartiles: A quartile divide the number of data points into four
+	// Quartiles: A quartile divides the number of data points into four
 	// parts, or quarters, of more-or-less equal size. Three main quartiles
 	// used are: The first quartile (Q1) splits off the lowest 25% of data
 	// from the highest 75%. It is also known as the lower or 25th empirical
@@ -1607,14 +1602,13 @@ type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFieldIn
 	// (Q2) is the median of a data set. So, 50% of the data lies below this
 	// point. The third quartile (Q3) splits off the highest 25% of data
 	// from the lowest 75%. It is known as the upper or 75th empirical
-	// quartile, as 75% of the data lies below this point. So, here the
-	// quartiles is provided as an ordered list of quartile values,
-	// occurring in order Q1, median, Q3.
+	// quartile, as 75% of the data lies below this point. Here, the
+	// quartiles is provided as an ordered list of quartile values for the
+	// scanned data, occurring in order Q1, median, Q3.
 	Quartiles googleapi.Int64s `json:"quartiles,omitempty"`
 
-	// StandardDeviation: The standard deviation of non-null of integer
-	// field in the sampled data. Return NaN, if the field has a NaN.
-	// Optional if zero non-null rows.
+	// StandardDeviation: Standard deviation of non-null values in the
+	// scanned data. NaN, if the field has a NaN.
 	StandardDeviation float64 `json:"standardDeviation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Average") to
@@ -1657,19 +1651,15 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoIntegerFie
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFie
-// ldInfo: StringFieldInfo defines output info for any string type
-// field.
+// ldInfo: The profile information for a string type field.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFieldInfo struct {
-	// AverageLength: The average length of a string field in the sampled
-	// data. Optional if zero non-null rows.
+	// AverageLength: Average length of non-null values in the scanned data.
 	AverageLength float64 `json:"averageLength,omitempty"`
 
-	// MaxLength: The maximum length of a string field in the sampled data.
-	// Optional if zero non-null rows.
+	// MaxLength: Maximum length of non-null values in the scanned data.
 	MaxLength int64 `json:"maxLength,omitempty,string"`
 
-	// MinLength: The minimum length of the string field in the sampled
-	// data. Optional if zero non-null rows.
+	// MinLength: Minimum length of non-null values in the scanned data.
 	MinLength int64 `json:"minLength,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "AverageLength") to
@@ -1710,14 +1700,12 @@ func (s *GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoStringFiel
 }
 
 // GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue
-// : The TopNValue defines the structure of output of top N values of a
-// field.
+// : Top N non-null values in the scanned data.
 type GoogleCloudDataplexV1DataProfileResultProfileFieldProfileInfoTopNValue struct {
-	// Count: The frequency count of the corresponding value in the field.
+	// Count: Count of the corresponding value in the scanned data.
 	Count int64 `json:"count,omitempty,string"`
 
-	// Value: The value is the string value of the actual value from the
-	// field.
+	// Value: String value of a top N non-null value.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -1750,7 +1738,7 @@ type GoogleCloudDataplexV1DataProfileSpec struct {
 
 // GoogleCloudDataplexV1DataQualityDimensionResult:
 // DataQualityDimensionResult provides a more detailed, per-dimension
-// level view of the results.
+// view of the results.
 type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	// Passed: Whether the dimension passed or failed.
 	Passed bool `json:"passed,omitempty"`
@@ -1781,7 +1769,7 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte,
 // GoogleCloudDataplexV1DataQualityResult: The output of a
 // DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
-	// Dimensions: A list of results at the dimension-level.
+	// Dimensions: A list of results at the dimension level.
 	Dimensions []*GoogleCloudDataplexV1DataQualityDimensionResult `json:"dimensions,omitempty"`
 
 	// Passed: Overall data quality result -- true if all rules passed.
@@ -1827,14 +1815,14 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	Column string `json:"column,omitempty"`
 
 	// Dimension: Required. The dimension a rule belongs to. Results are
-	// also aggregated at the dimension-level. Supported dimensions are
+	// also aggregated at the dimension level. Supported dimensions are
 	// "COMPLETENESS", "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS",
 	// "INTEGRITY"
 	Dimension string `json:"dimension,omitempty"`
 
 	// IgnoreNull: Optional. Rows with null values will automatically fail a
 	// rule, unless ignore_null is true. In that case, such null rows are
-	// trivially considered passing. Only applicable to ColumnMap rules.
+	// trivially considered passing.Only applicable to ColumnMap rules.
 	IgnoreNull bool `json:"ignoreNull,omitempty"`
 
 	// NonNullExpectation: ColumnMap rule which evaluates whether each
@@ -1867,8 +1855,8 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	TableConditionExpectation *GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation `json:"tableConditionExpectation,omitempty"`
 
 	// Threshold: Optional. The minimum ratio of passing_rows / total_rows
-	// required to pass this rule, with a range of 0.0, 1.00 indicates
-	// default value (i.e. 1.0)
+	// required to pass this rule, with a range of 0.0, 1.0.0 indicates
+	// default value (i.e. 1.0).
 	Threshold float64 `json:"threshold,omitempty"`
 
 	// UniquenessExpectation: ColumnAggregate rule which evaluates whether
@@ -1931,12 +1919,12 @@ type GoogleCloudDataplexV1DataQualityRuleRangeExpectation struct {
 	MinValue string `json:"minValue,omitempty"`
 
 	// StrictMaxEnabled: Optional. Whether each value needs to be strictly
-	// lesser than ('<') the maximum, or if equality is allowed. Only
+	// lesser than ('<') the maximum, or if equality is allowed.Only
 	// relevant if a max_value has been defined. Default = false.
 	StrictMaxEnabled bool `json:"strictMaxEnabled,omitempty"`
 
 	// StrictMinEnabled: Optional. Whether each value needs to be strictly
-	// greater than ('>') the minimum, or if equality is allowed. Only
+	// greater than ('>') the minimum, or if equality is allowed.Only
 	// relevant if a min_value has been defined. Default = false.
 	StrictMinEnabled bool `json:"strictMinEnabled,omitempty"`
 
@@ -1966,6 +1954,7 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRangeExpectation) MarshalJSON() ([]
 // GoogleCloudDataplexV1DataQualityRuleRegexExpectation: Evaluates
 // whether each column value matches a specified regex.
 type GoogleCloudDataplexV1DataQualityRuleRegexExpectation struct {
+	// Regex: A regular expression the column value is expected to match.
 	Regex string `json:"regex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Regex") to
@@ -1992,13 +1981,13 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]
 }
 
 // GoogleCloudDataplexV1DataQualityRuleResult: DataQualityRuleResult
-// provides a more detailed, per-rule level view of the results.
+// provides a more detailed, per-rule view of the results.
 type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	// EvaluatedCount: The number of rows a rule was evaluated against. This
-	// field is only valid for ColumnMap type rules. Evaluated count can be
-	// configured to either (1) include all rows (default) - with null rows
-	// automatically failing rule evaluation OR (2) exclude null rows from
-	// the evaluated_count, by setting ignore_nulls = true
+	// field is only valid for ColumnMap type rules.Evaluated count can be
+	// configured to either include all rows (default) - with null rows
+	// automatically failing rule evaluation, or exclude null rows from the
+	// evaluated_count, by setting ignore_nulls = true.
 	EvaluatedCount int64 `json:"evaluatedCount,omitempty,string"`
 
 	// FailingRowsQuery: The query to find rows that did not pass this rule.
@@ -2062,11 +2051,12 @@ func (s *GoogleCloudDataplexV1DataQualityRuleResult) UnmarshalJSON(data []byte) 
 }
 
 // GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation:
-// Evaluates whether each row passes the specified condition. The SQL
+// Evaluates whether each row passes the specified condition.The SQL
 // expression needs to use BigQuery standard SQL syntax and should
-// produce a boolean per row as the result. Example: col1 >= 0 AND col2
-// < 10
+// produce a boolean value per row as the result.Example: col1 >= 0 AND
+// col2 < 10
 type GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation struct {
+	// SqlExpression: The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SqlExpression") to
@@ -2095,6 +2085,7 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRowConditionExpectation) MarshalJSO
 // GoogleCloudDataplexV1DataQualityRuleSetExpectation: Evaluates whether
 // each column value is contained by a specified set.
 type GoogleCloudDataplexV1DataQualityRuleSetExpectation struct {
+	// Values: Expected values for the column value.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -2125,12 +2116,12 @@ func (s *GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]by
 // specified range.
 type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
 	// MaxValue: The maximum column statistic value allowed for a row to
-	// pass this validation. At least one of min_value and max_value need to
+	// pass this validation.At least one of min_value and max_value need to
 	// be provided.
 	MaxValue string `json:"maxValue,omitempty"`
 
 	// MinValue: The minimum column statistic value allowed for a row to
-	// pass this validation. At least one of min_value and max_value need to
+	// pass this validation.At least one of min_value and max_value need to
 	// be provided.
 	MinValue string `json:"minValue,omitempty"`
 
@@ -2142,12 +2133,12 @@ type GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation struct {
 	Statistic string `json:"statistic,omitempty"`
 
 	// StrictMaxEnabled: Whether column statistic needs to be strictly
-	// lesser than ('<') the maximum, or if equality is allowed. Only
+	// lesser than ('<') the maximum, or if equality is allowed.Only
 	// relevant if a max_value has been defined. Default = false.
 	StrictMaxEnabled bool `json:"strictMaxEnabled,omitempty"`
 
 	// StrictMinEnabled: Whether column statistic needs to be strictly
-	// greater than ('>') the minimum, or if equality is allowed. Only
+	// greater than ('>') the minimum, or if equality is allowed.Only
 	// relevant if a min_value has been defined. Default = false.
 	StrictMinEnabled bool `json:"strictMinEnabled,omitempty"`
 
@@ -2175,10 +2166,11 @@ func (s *GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation) MarshalJ
 }
 
 // GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation:
-// Evaluates whether the provided expression is true. The SQL expression
+// Evaluates whether the provided expression is true.The SQL expression
 // needs to use BigQuery standard SQL syntax and should produce a scalar
-// boolean result. Example: MIN(col1) >= 0
+// boolean result.Example: MIN(col1) >= 0
 type GoogleCloudDataplexV1DataQualityRuleTableConditionExpectation struct {
+	// SqlExpression: The SQL expression.
 	SqlExpression string `json:"sqlExpression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SqlExpression") to
@@ -2240,12 +2232,12 @@ func (s *GoogleCloudDataplexV1DataQualitySpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which
-// provides the insights for the related data source. For examples: -
-// Data Quality: generates queries based on the rules and run against
-// the data to get data quality check results. - Data Profile: analyzes
-// the data in table(s) and generates insights about the structure,
-// content and relationships (such as null percent, cardinality,
-// min/max/mean, etc).
+// provides the insights for the related data source.For example: Data
+// Quality: generates queries based on the rules and runs against the
+// data to get data quality check results. Data Profile: analyzes the
+// data in table(s) and generates insights about the structure, content
+// and relationships (such as null percent, cardinality, min/max/mean,
+// etc).
 type GoogleCloudDataplexV1DataScan struct {
 	// CreateTime: Output only. The time when the scan was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2265,16 +2257,16 @@ type GoogleCloudDataplexV1DataScan struct {
 	// DataQualitySpec: DataQualityScan related setting.
 	DataQualitySpec *GoogleCloudDataplexV1DataQualitySpec `json:"dataQualitySpec,omitempty"`
 
-	// Description: Optional. Description of the scan. * Must be between
+	// Description: Optional. Description of the scan. Must be between
 	// 1-1024 characters.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Optional. User friendly display name. * Must be between
+	// DisplayName: Optional. User friendly display name. Must be between
 	// 1-256 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// ExecutionSpec: Optional. DataScan execution settings. If not
-	// specified, the fields under it will use their default values.
+	// ExecutionSpec: Optional. DataScan execution settings.If not
+	// specified, the fields in it will use their default values.
 	ExecutionSpec *GoogleCloudDataplexV1DataScanExecutionSpec `json:"executionSpec,omitempty"`
 
 	// ExecutionStatus: Output only. Status of the data scan execution.
@@ -2285,8 +2277,8 @@ type GoogleCloudDataplexV1DataScan struct {
 
 	// Name: Output only. The relative resource name of the scan, of the
 	// form:
-	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}.
-	// where {project} refers to a project_id or project_number and
+	// projects/{project}/locations/{location_id}/dataScans/{datascan_id},
+	// where project refers to a project_id or project_number and
 	// location_id refers to a GCP region.
 	Name string `json:"name,omitempty"`
 
@@ -2303,9 +2295,9 @@ type GoogleCloudDataplexV1DataScan struct {
 	// Type: Output only. The type of DataScan.
 	//
 	// Possible values:
-	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan Type is unspecified.
-	//   "DATA_QUALITY" - Data Quality Scan.
-	//   "DATA_PROFILE" - Data Profile Scan.
+	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
+	//   "DATA_QUALITY" - Data Quality scan.
+	//   "DATA_PROFILE" - Data Profile scan.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System generated globally unique ID for the scan.
@@ -2501,12 +2493,13 @@ func (s *GoogleCloudDataplexV1DataScanEventDataQualityResult) MarshalJSON() ([]b
 // GoogleCloudDataplexV1DataScanExecutionSpec: DataScan execution
 // settings.
 type GoogleCloudDataplexV1DataScanExecutionSpec struct {
-	// Field: Immutable. The unnested field (Date or Timestamp) that
-	// contains values that monotonically increase over time.
+	// Field: Immutable. The unnested field (of type Date or Timestamp) that
+	// contains values which monotonically increase over time.If not
+	// specified, a data scan will run for all data in the table.
 	Field string `json:"field,omitempty"`
 
 	// Trigger: Optional. Spec related to how often and when a scan should
-	// be triggered. If not specified, the default is OnDemand, which means
+	// be triggered.If not specified, the default is OnDemand, which means
 	// the scan will not run until the user calls RunDataScan API.
 	Trigger *GoogleCloudDataplexV1Trigger `json:"trigger,omitempty"`
 
@@ -2567,7 +2560,7 @@ func (s *GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, er
 }
 
 // GoogleCloudDataplexV1DataScanJob: A DataScanJob represents an
-// instance of a data scan.
+// instance of DataScan execution.
 type GoogleCloudDataplexV1DataScanJob struct {
 	// DataProfileResult: Output only. The result of the data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
@@ -2590,7 +2583,7 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// Name: Output only. The relative resource name of the DataScanJob, of
 	// the form:
 	// projects/{project}/locations/{location_id}/dataScans/{datascan_id}/job
-	// s/{job_id}. where {project} refers to a project_id or project_number
+	// s/{job_id}, where project refers to a project_id or project_number
 	// and location_id refers to a GCP region.
 	Name string `json:"name,omitempty"`
 
@@ -2613,9 +2606,9 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// Type: Output only. The type of the parent DataScan.
 	//
 	// Possible values:
-	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan Type is unspecified.
-	//   "DATA_QUALITY" - Data Quality Scan.
-	//   "DATA_PROFILE" - Data Profile Scan.
+	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
+	//   "DATA_QUALITY" - Data Quality scan.
+	//   "DATA_PROFILE" - Data Profile scan.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System generated globally unique ID for the
@@ -2652,8 +2645,8 @@ func (s *GoogleCloudDataplexV1DataScanJob) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDataplexV1DataSource: The data source for DataScan.
 type GoogleCloudDataplexV1DataSource struct {
-	// Entity: Immutable. The dataplex entity that contains the data for
-	// DataScan, of the form:
+	// Entity: Immutable. The Dataplex entity that represents the data
+	// source (e.g. BigQuery table) for DataScan, of the form:
 	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zone
 	// s/{zone_id}/entities/{entity_id}.
 	Entity string `json:"entity,omitempty"`
@@ -2986,6 +2979,11 @@ type GoogleCloudDataplexV1Entity struct {
 	//   "TABLE" - Structured and semi-structured data.
 	//   "FILESET" - Unstructured data.
 	Type string `json:"type,omitempty"`
+
+	// Uid: Output only. System generated unique ID for the Entity. This ID
+	// will be different if the Entity is deleted and re-created with the
+	// same name.
+	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The time when the entity was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3802,7 +3800,7 @@ func (s *GoogleCloudDataplexV1ListContentResponse) MarshalJSON() ([]byte, error)
 // GoogleCloudDataplexV1ListDataScanJobsResponse: List DataScanJobs
 // response.
 type GoogleCloudDataplexV1ListDataScanJobsResponse struct {
-	// DataScanJobs: DataScanJobs (metadata only) under a given dataScan.
+	// DataScanJobs: DataScanJobs (BASIC view only) under a given dataScan.
 	DataScanJobs []*GoogleCloudDataplexV1DataScanJob `json:"dataScanJobs,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -3838,7 +3836,8 @@ func (s *GoogleCloudDataplexV1ListDataScanJobsResponse) MarshalJSON() ([]byte, e
 
 // GoogleCloudDataplexV1ListDataScansResponse: List dataScans response.
 type GoogleCloudDataplexV1ListDataScansResponse struct {
-	// DataScans: DataScans (metadata only) under the given parent location.
+	// DataScans: DataScans (BASIC view only) under the given parent
+	// location.
 	DataScans []*GoogleCloudDataplexV1DataScan `json:"dataScans,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results, or empty
@@ -4281,7 +4280,7 @@ type GoogleCloudDataplexV1RunDataScanRequest struct {
 
 // GoogleCloudDataplexV1RunDataScanResponse: Run DataScan Response.
 type GoogleCloudDataplexV1RunDataScanResponse struct {
-	// Job: DataScanJob created by RunDataScan API.
+	// Job: DataScanJob created by RunDataScan request.
 	Job *GoogleCloudDataplexV1DataScanJob `json:"job,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4378,14 +4377,14 @@ func (s *GoogleCloudDataplexV1ScannedData) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1ScannedDataIncrementalField: A data range
 // denoted by a pair of start/end values of a field.
 type GoogleCloudDataplexV1ScannedDataIncrementalField struct {
-	// End: Value that marks the end of the range
+	// End: Value that marks the end of the range.
 	End string `json:"end,omitempty"`
 
 	// Field: The field that contains values which monotonically increases
-	// over time (e.g. timestamp).
+	// over time (e.g. a timestamp column).
 	Field string `json:"field,omitempty"`
 
-	// Start: Value that marks the start of the range
+	// Start: Value that marks the start of the range.
 	Start string `json:"start,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "End") to
@@ -5428,8 +5427,8 @@ type GoogleCloudDataplexV1TaskTriggerSpec struct {
 	// To explicitly set a timezone to the cron tab, apply a prefix in the
 	// cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or "TZ=${IANA_TIME_ZONE}". The
 	// ${IANA_TIME_ZONE} may only be a valid string from IANA time zone
-	// database. For example, "CRON_TZ=America/New_York 1 * * * *", or
-	// "TZ=America/New_York 1 * * * *". This field is required for RECURRING
+	// database. For example, CRON_TZ=America/New_York 1 * * * *, or
+	// TZ=America/New_York 1 * * * *. This field is required for RECURRING
 	// tasks.
 	Schedule string `json:"schedule,omitempty"`
 
@@ -5472,7 +5471,7 @@ func (s *GoogleCloudDataplexV1TaskTriggerSpec) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1Trigger: DataScan scheduling and trigger
 // settings.
 type GoogleCloudDataplexV1Trigger struct {
-	// OnDemand: The scan runs one-time shortly after DataScan Creation.
+	// OnDemand: The scan runs once via RunDataScan API.
 	OnDemand *GoogleCloudDataplexV1TriggerOnDemand `json:"onDemand,omitempty"`
 
 	// Schedule: The scan is scheduled to run periodically.
@@ -5501,7 +5500,7 @@ func (s *GoogleCloudDataplexV1Trigger) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1TriggerOnDemand: The scan runs one-time via
+// GoogleCloudDataplexV1TriggerOnDemand: The scan runs once via
 // RunDataScan API.
 type GoogleCloudDataplexV1TriggerOnDemand struct {
 }
@@ -5509,13 +5508,15 @@ type GoogleCloudDataplexV1TriggerOnDemand struct {
 // GoogleCloudDataplexV1TriggerSchedule: The scan is scheduled to run
 // periodically.
 type GoogleCloudDataplexV1TriggerSchedule struct {
-	// Cron: Required. Cron schedule (https://en.wikipedia.org/wiki/Cron)
-	// for running scans periodically. To explicitly set a timezone to the
+	// Cron: Required. Cron (https://en.wikipedia.org/wiki/Cron) schedule
+	// for running scans periodically.To explicitly set a timezone in the
 	// cron tab, apply a prefix in the cron tab: "CRON_TZ=${IANA_TIME_ZONE}"
 	// or "TZ=${IANA_TIME_ZONE}". The ${IANA_TIME_ZONE} may only be a valid
-	// string from IANA time zone database. For example,
-	// "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * *
-	// *". This field is required for Schedule scans.
+	// string from IANA time zone database (wikipedia
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)).
+	// For example, CRON_TZ=America/New_York 1 * * * *, or
+	// TZ=America/New_York 1 * * * *.This field is required for Schedule
+	// scans.
 	Cron string `json:"cron,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cron") to
@@ -5671,8 +5672,7 @@ type GoogleCloudDataplexV1ZoneDiscoverySpec struct {
 	// in the cron tab: "CRON_TZ=${IANA_TIME_ZONE}" or
 	// TZ=${IANA_TIME_ZONE}". The ${IANA_TIME_ZONE} may only be a valid
 	// string from IANA time zone database. For example,
-	// "CRON_TZ=America/New_York 1 * * * *", or "TZ=America/New_York 1 * * *
-	// *".
+	// CRON_TZ=America/New_York 1 * * * *, or TZ=America/New_York 1 * * * *.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CsvOptions") to
@@ -7338,11 +7338,11 @@ type ProjectsLocationsDataScansCreateCall struct {
 	header_                       http.Header
 }
 
-// Create: Creates a dataScan resource.
+// Create: Creates a DataScan resource.
 //
 //   - parent: The resource name of the parent location:
-//     projects/{project}/locations/{location_id} where {project} refers
-//     to a project_id or project_number and location_id refers to a GCP
+//     projects/{project}/locations/{location_id} where project refers to
+//     a project_id or project_number and location_id refers to a GCP
 //     region.
 func (r *ProjectsLocationsDataScansService) Create(parent string, googleclouddataplexv1datascan *GoogleCloudDataplexV1DataScan) *ProjectsLocationsDataScansCreateCall {
 	c := &ProjectsLocationsDataScansCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7352,10 +7352,10 @@ func (r *ProjectsLocationsDataScansService) Create(parent string, googleclouddat
 }
 
 // DataScanId sets the optional parameter "dataScanId": Required.
-// DataScan identifier. * Must contain only lowercase letters, numbers
-// and hyphens. * Must start with a letter. * Must end with a number or
-// a letter. * Must be between 1-63 characters. * Must be unique within
-// the customer project / location.
+// DataScan identifier. Must contain only lowercase letters, numbers and
+// hyphens. Must start with a letter. Must end with a number or a
+// letter. Must be between 1-63 characters. Must be unique within the
+// customer project / location.
 func (c *ProjectsLocationsDataScansCreateCall) DataScanId(dataScanId string) *ProjectsLocationsDataScansCreateCall {
 	c.urlParams_.Set("dataScanId", dataScanId)
 	return c
@@ -7452,7 +7452,7 @@ func (c *ProjectsLocationsDataScansCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a dataScan resource.",
+	//   "description": "Creates a DataScan resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans",
 	//   "httpMethod": "POST",
 	//   "id": "dataplex.projects.locations.dataScans.create",
@@ -7461,12 +7461,12 @@ func (c *ProjectsLocationsDataScansCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dataScanId": {
-	//       "description": "Required. DataScan identifier. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must end with a number or a letter. * Must be between 1-63 characters. * Must be unique within the customer project / location.",
+	//       "description": "Required. DataScan identifier. Must contain only lowercase letters, numbers and hyphens. Must start with a letter. Must end with a number or a letter. Must be between 1-63 characters. Must be unique within the customer project / location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7497,11 +7497,11 @@ type ProjectsLocationsDataScansDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete the dataScan resource.
+// Delete: Deletes a DataScan resource.
 //
 //   - name: The resource name of the dataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}
-//     where {project} refers to a project_id or project_number and
+//     where project refers to a project_id or project_number and
 //     location_id refers to a GCP region.
 func (r *ProjectsLocationsDataScansService) Delete(name string) *ProjectsLocationsDataScansDeleteCall {
 	c := &ProjectsLocationsDataScansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7595,7 +7595,7 @@ func (c *ProjectsLocationsDataScansDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete the dataScan resource.",
+	//   "description": "Deletes a DataScan resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dataplex.projects.locations.dataScans.delete",
@@ -7604,7 +7604,7 @@ func (c *ProjectsLocationsDataScansDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
 	//       "required": true,
@@ -7633,11 +7633,11 @@ type ProjectsLocationsDataScansGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get dataScan resource.
+// Get: Gets a DataScan resource.
 //
 //   - name: The resource name of the dataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}
-//     where {project} refers to a project_id or project_number and
+//     where project refers to a project_id or project_number and
 //     location_id refers to a GCP region.
 func (r *ProjectsLocationsDataScansService) Get(name string) *ProjectsLocationsDataScansGetCall {
 	c := &ProjectsLocationsDataScansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7645,8 +7645,8 @@ func (r *ProjectsLocationsDataScansService) Get(name string) *ProjectsLocationsD
 	return c
 }
 
-// View sets the optional parameter "view": Used to select the subset of
-// DataScan information to return. Defaults to BASIC.
+// View sets the optional parameter "view": Select the DataScan view to
+// return. Defaults to BASIC.
 //
 // Possible values:
 //
@@ -7760,7 +7760,7 @@ func (c *ProjectsLocationsDataScansGetCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Get dataScan resource.",
+	//   "description": "Gets a DataScan resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.dataScans.get",
@@ -7769,14 +7769,14 @@ func (c *ProjectsLocationsDataScansGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the dataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Optional. Used to select the subset of DataScan information to return. Defaults to BASIC.",
+	//       "description": "Optional. Select the DataScan view to return. Defaults to BASIC.",
 	//       "enum": [
 	//         "DATA_SCAN_VIEW_UNSPECIFIED",
 	//         "BASIC",
@@ -7988,11 +7988,12 @@ type ProjectsLocationsDataScansListCall struct {
 	header_      http.Header
 }
 
-// List: Lists dataScans.
+// List: Lists DataScans.
 //
-//   - parent: projects/{project}/locations/{location_id} where {project}
-//     refers to a project_id or project_number and location_id refers to
-//     a GCP region.
+//   - parent: The resource name of the parent location:
+//     projects/{project}/locations/{location_id} where project refers to
+//     a project_id or project_number and location_id refers to a GCP
+//     region.
 func (r *ProjectsLocationsDataScansService) List(parent string) *ProjectsLocationsDataScansListCall {
 	c := &ProjectsLocationsDataScansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8132,7 +8133,7 @@ func (c *ProjectsLocationsDataScansListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists dataScans.",
+	//   "description": "Lists DataScans.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.dataScans.list",
@@ -8162,7 +8163,7 @@ func (c *ProjectsLocationsDataScansListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. projects/{project}/locations/{location_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the parent location: projects/{project}/locations/{location_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -8212,12 +8213,12 @@ type ProjectsLocationsDataScansPatchCall struct {
 	header_                       http.Header
 }
 
-// Patch: Update the dataScan resource.
+// Patch: Updates a DataScan resource.
 //
 //   - name: Output only. The relative resource name of the scan, of the
 //     form:
-//     projects/{project}/locations/{location_id}/dataScans/{datascan_id}.
-//     where {project} refers to a project_id or project_number and
+//     projects/{project}/locations/{location_id}/dataScans/{datascan_id},
+//     where project refers to a project_id or project_number and
 //     location_id refers to a GCP region.
 func (r *ProjectsLocationsDataScansService) Patch(name string, googleclouddataplexv1datascan *GoogleCloudDataplexV1DataScan) *ProjectsLocationsDataScansPatchCall {
 	c := &ProjectsLocationsDataScansPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8324,7 +8325,7 @@ func (c *ProjectsLocationsDataScansPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the dataScan resource.",
+	//   "description": "Updates a DataScan resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dataplex.projects.locations.dataScans.patch",
@@ -8333,7 +8334,7 @@ func (c *ProjectsLocationsDataScansPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}. where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Output only. The relative resource name of the scan, of the form: projects/{project}/locations/{location_id}/dataScans/{datascan_id}, where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
 	//       "required": true,
@@ -8371,12 +8372,12 @@ type ProjectsLocationsDataScansRunCall struct {
 	header_                                 http.Header
 }
 
-// Run: Run an on demand execution of a DataScan.
+// Run: Runs an on-demand execution of a DataScan
 //
 //   - name: The resource name of the DataScan:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}.
-//     where {project} refers to a project_id or project_number and
-//     location_id refers to a GCP region. Only on-demand DataScans are
+//     where project refers to a project_id or project_number and
+//     location_id refers to a GCP region.Only OnDemand data scans are
 //     allowed.
 func (r *ProjectsLocationsDataScansService) Run(name string, googleclouddataplexv1rundatascanrequest *GoogleCloudDataplexV1RunDataScanRequest) *ProjectsLocationsDataScansRunCall {
 	c := &ProjectsLocationsDataScansRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8478,7 +8479,7 @@ func (c *ProjectsLocationsDataScansRunCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Run an on demand execution of a DataScan.",
+	//   "description": "Runs an on-demand execution of a DataScan",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "dataplex.projects.locations.dataScans.run",
@@ -8487,7 +8488,7 @@ func (c *ProjectsLocationsDataScansRunCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the DataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}. where {project} refers to a project_id or project_number and location_id refers to a GCP region. Only on-demand DataScans are allowed.",
+	//       "description": "Required. The resource name of the DataScan: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}. where project refers to a project_id or project_number and location_id refers to a GCP region.Only OnDemand data scans are allowed.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
 	//       "required": true,
@@ -8817,11 +8818,11 @@ type ProjectsLocationsDataScansJobsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get DataScanJob resource.
+// Get: Gets a DataScanJob resource.
 //
 //   - name: The resource name of the DataScanJob:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/
-//     dataScanJobs/{data_scan_job_id} where {project} refers to a
+//     dataScanJobs/{data_scan_job_id} where project refers to a
 //     project_id or project_number and location_id refers to a GCP
 //     region.
 func (r *ProjectsLocationsDataScansJobsService) Get(name string) *ProjectsLocationsDataScansJobsGetCall {
@@ -8830,8 +8831,8 @@ func (r *ProjectsLocationsDataScansJobsService) Get(name string) *ProjectsLocati
 	return c
 }
 
-// View sets the optional parameter "view": Used to select the subset of
-// DataScan information to return. Defaults to BASIC.
+// View sets the optional parameter "view": Select the DataScanJob view
+// to return. Defaults to BASIC.
 //
 // Possible values:
 //
@@ -8945,7 +8946,7 @@ func (c *ProjectsLocationsDataScansJobsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Get DataScanJob resource.",
+	//   "description": "Gets a DataScanJob resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}/jobs/{jobsId}",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.dataScans.jobs.get",
@@ -8954,14 +8955,14 @@ func (c *ProjectsLocationsDataScansJobsGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/dataScanJobs/{data_scan_job_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the DataScanJob: projects/{project}/locations/{location_id}/dataScans/{data_scan_id}/dataScanJobs/{data_scan_job_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+/jobs/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Optional. Used to select the subset of DataScan information to return. Defaults to BASIC.",
+	//       "description": "Optional. Select the DataScanJob view to return. Defaults to BASIC.",
 	//       "enum": [
 	//         "DATA_SCAN_JOB_VIEW_UNSPECIFIED",
 	//         "BASIC",
@@ -8998,11 +8999,11 @@ type ProjectsLocationsDataScansJobsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists DataScanJobs under the given dataScan.
+// List: Lists DataScanJobs under the given DataScan.
 //
 //   - parent: The resource name of the parent environment:
 //     projects/{project}/locations/{location_id}/dataScans/{data_scan_id}
-//     where {project} refers to a project_id or project_number and
+//     where project refers to a project_id or project_number and
 //     location_id refers to a GCP region.
 func (r *ProjectsLocationsDataScansJobsService) List(parent string) *ProjectsLocationsDataScansJobsListCall {
 	c := &ProjectsLocationsDataScansJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9130,7 +9131,7 @@ func (c *ProjectsLocationsDataScansJobsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists DataScanJobs under the given dataScan.",
+	//   "description": "Lists DataScanJobs under the given DataScan.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dataScans/{dataScansId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "dataplex.projects.locations.dataScans.jobs.list",
@@ -9150,7 +9151,7 @@ func (c *ProjectsLocationsDataScansJobsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the parent environment: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where {project} refers to a project_id or project_number and location_id refers to a GCP region.",
+	//       "description": "Required. The resource name of the parent environment: projects/{project}/locations/{location_id}/dataScans/{data_scan_id} where project refers to a project_id or project_number and location_id refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataScans/[^/]+$",
 	//       "required": true,

@@ -304,6 +304,12 @@ func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
 
 // BatchTranslateDocumentRequest: The BatchTranslateDocument request.
 type BatchTranslateDocumentRequest struct {
+	// CustomizedAttribution: Optional. This flag is to support user
+	// customized attribution. If not provided, the default is `Machine
+	// Translated by Google`. Customized attribution should follow rules in
+	// https://cloud.google.com/translate/attribution#attribution_and_logos
+	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
+
 	// FormatConversions: Optional.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
 
@@ -344,15 +350,16 @@ type BatchTranslateDocumentRequest struct {
 	// here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FormatConversions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomizedAttribution") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FormatConversions") to
+	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1257,7 +1264,7 @@ type OutputConfig struct {
 	// file updating.
 	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
 	// The format of translations_file (for target language code 'trg') is:
-	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
+	// `gs://translation_test/a_b_c_'trg'_translations.[extension]` If the
 	// input file extension is tsv, the output has the following columns:
 	// Column 1: ID of the request provided in the input, if it's not
 	// provided in the input, then the input row number is used (0-based).
@@ -1444,6 +1451,11 @@ type TranslateDocumentRequest struct {
 	// be returned through a byte-stream and its output mime type will be
 	// the same as the input file's mime type.
 	DocumentOutputConfig *DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
+
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
+	// server to remove the shadow text on background image for native pdf
+	// translation.
+	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
 
 	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
 	// be within the same region (have the same location-id) as the model,

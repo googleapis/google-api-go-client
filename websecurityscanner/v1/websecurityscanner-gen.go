@@ -1198,6 +1198,8 @@ type ScanRunErrorTrace struct {
 	// errors from the web site pages. When available,
 	// most_common_http_error_code field indicates the most common HTTP
 	// error code encountered during the scan.
+	//   "STARTING_URLS_CRAWL_HTTP_ERRORS" - Indicates that some of the
+	// starting web urls returned HTTP errors during the scan.
 	Code string `json:"code,omitempty"`
 
 	// MostCommonHttpErrorCode: Output only. If the scan encounters

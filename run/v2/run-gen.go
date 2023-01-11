@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -644,6 +644,10 @@ type GoogleCloudRunV2Execution struct {
 	// Annotations: KRM-style annotations for the resource.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
+	// CancelledCount: Output only. The number of tasks which reached phase
+	// Cancelled.
+	CancelledCount int64 `json:"cancelledCount,omitempty"`
+
 	// CompletionTime: Output only. Represents time when the execution was
 	// completed. It is not guaranteed to be set in happens-before order
 	// across separate operations.
@@ -733,6 +737,10 @@ type GoogleCloudRunV2Execution struct {
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
 	LaunchStage string `json:"launchStage,omitempty"`
 
+	// LogUri: Output only. URI where logs for this execution can be found
+	// in Cloud Console.
+	LogUri string `json:"logUri,omitempty"`
+
 	// Name: Output only. The unique name of this Execution.
 	Name string `json:"name,omitempty"`
 
@@ -755,6 +763,10 @@ type GoogleCloudRunV2Execution struct {
 	// `Job.reconciling` for additional information on reconciliation
 	// process in Cloud Run.
 	Reconciling bool `json:"reconciling,omitempty"`
+
+	// RetriedCount: Output only. The number of tasks which have retried at
+	// least once.
+	RetriedCount int64 `json:"retriedCount,omitempty"`
 
 	// RunningCount: Output only. The number of actively running tasks.
 	RunningCount int64 `json:"runningCount,omitempty"`
@@ -2281,6 +2293,10 @@ type GoogleCloudRunV2Task struct {
 	// LastAttemptResult: Output only. Result of the last attempt of this
 	// Task.
 	LastAttemptResult *GoogleCloudRunV2TaskAttemptResult `json:"lastAttemptResult,omitempty"`
+
+	// LogUri: Output only. URI where logs for this execution can be found
+	// in Cloud Console.
+	LogUri string `json:"logUri,omitempty"`
 
 	// MaxRetries: Number of retries allowed per Task, before marking this
 	// Task failed.

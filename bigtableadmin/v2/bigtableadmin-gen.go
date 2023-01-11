@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3111,7 +3111,7 @@ type Table struct {
 
 	// DeletionProtection: Set to true to make the table protected against
 	// data loss. i.e. deleting the following resources through Admin APIs
-	// are prohibited: - The table. - The column families in the table. -
+	// are prohibited: * The table. * The column families in the table. *
 	// The instance containing the table. Note one can still delete the data
 	// stored in the table through Data APIs.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`

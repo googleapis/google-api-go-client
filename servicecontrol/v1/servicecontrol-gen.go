@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2177,8 +2177,6 @@ type QuotaProperties struct {
 	// returns error.
 	//   "CHECK" - Does not change any available quota. Only checks if there
 	// is enough quota. No lock is placed on the checked tokens neither.
-	//   "RELEASE" - DEPRECATED: Increases available quota by the operation
-	// cost specified for the operation.
 	QuotaMode string `json:"quotaMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "QuotaMode") to

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2442,8 +2442,7 @@ type Person struct {
 	Residences []*Residence `json:"residences,omitempty"`
 
 	// ResourceName: The resource name for the person, assigned by the
-	// server. An ASCII string with a max length of 27 characters, in the
-	// form of `people/{person_id}`.
+	// server. An ASCII string in the form of `people/{person_id}`.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SipAddresses: The person's SIP addresses.
@@ -7356,8 +7355,7 @@ type PeopleUpdateContactCall struct {
 // failures.
 //
 //   - resourceName: The resource name for the person, assigned by the
-//     server. An ASCII string with a max length of 27 characters, in the
-//     form of `people/{person_id}`.
+//     server. An ASCII string in the form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7520,7 +7518,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "resourceName": {
-	//       "description": "The resource name for the person, assigned by the server. An ASCII string with a max length of 27 characters, in the form of `people/{person_id}`.",
+	//       "description": "The resource name for the person, assigned by the server. An ASCII string in the form of `people/{person_id}`.",
 	//       "location": "path",
 	//       "pattern": "^people/[^/]+$",
 	//       "required": true,

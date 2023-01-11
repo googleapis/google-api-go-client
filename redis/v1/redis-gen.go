@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1162,7 +1162,7 @@ type PersistenceConfig struct {
 	//   "ONE_HOUR" - Snapshot every 1 hour.
 	//   "SIX_HOURS" - Snapshot every 6 hours.
 	//   "TWELVE_HOURS" - Snapshot every 12 hours.
-	//   "TWENTY_FOUR_HOURS" - Snapshot every 24 horus.
+	//   "TWENTY_FOUR_HOURS" - Snapshot every 24 hours.
 	RdbSnapshotPeriod string `json:"rdbSnapshotPeriod,omitempty"`
 
 	// RdbSnapshotStartTime: Optional. Date and time that the first snapshot

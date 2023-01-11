@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC.
+// Copyright 2023 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -503,8 +503,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceConfidentialInstanceConfig: A set of Confidential Google Compute
-// Engine Instance option.
+// GceConfidentialInstanceConfig: A set of Compute Engine Confidential
+// VM instance options.
 type GceConfidentialInstanceConfig struct {
 	// EnableConfidentialCompute: Whether the instance has confidential
 	// compute enabled.
@@ -535,23 +535,23 @@ func (s *GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceInstance: A runtime using a Google Compute Engine Instance.
+// GceInstance: A runtime using a Compute Engine instance.
 type GceInstance struct {
 	// BootDiskSizeGb: Size of the boot disk in GB.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
-	// ConfidentialInstanceConfig: A set of Confidential Google Compute
-	// Engine Instance option.
+	// ConfidentialInstanceConfig: A set of Compute Engine Confidential VM
+	// instance options.
 	ConfidentialInstanceConfig *GceConfidentialInstanceConfig `json:"confidentialInstanceConfig,omitempty"`
 
 	// DisablePublicIpAddresses: Whether instances have no public IP
 	// address.
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
 
-	// MachineType: The name of a Google Compute Engine machine type.
+	// MachineType: The name of a Compute Engine machine type.
 	MachineType string `json:"machineType,omitempty"`
 
-	// PoolSize: Number of instances to pool for faster Workstation starup.
+	// PoolSize: Number of instances to pool for faster workstation starup.
 	PoolSize int64 `json:"poolSize,omitempty"`
 
 	// ServiceAccount: Email address of the service account that will be
@@ -561,12 +561,12 @@ type GceInstance struct {
 	// image must be publicly accessible.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// ShieldedInstanceConfig: A set of Shielded Google Compute Engine
-	// Instance options.
+	// ShieldedInstanceConfig: A set of Compute Engine Shielded instance
+	// options.
 	ShieldedInstanceConfig *GceShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
 
-	// Tags: Network tags to add to the Google Compute Engine machines
-	// backing the Workstations.
+	// Tags: Network tags to add to the Compute Engine machines backing the
+	// Workstations.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
@@ -600,17 +600,17 @@ type GceRegionalPersistentDisk struct {
 	DiskType string `json:"diskType,omitempty"`
 
 	// FsType: Type of file system that the disk should be formatted with.
-	// The Workstation image must support this file system type. Must be
+	// The workstation image must support this file system type. Must be
 	// empty if source_snapshot is set.
 	FsType string `json:"fsType,omitempty"`
 
-	// ReclaimPolicy: What should happen to the disk after the Workstation
+	// ReclaimPolicy: What should happen to the disk after the workstation
 	// is deleted. Defaults to DELETE.
 	//
 	// Possible values:
 	//   "RECLAIM_POLICY_UNSPECIFIED" - Do not use.
 	//   "DELETE" - The persistent disk will be deleted with the
-	// Workstation.
+	// workstation.
 	//   "RETAIN" - The persistent disk will be remain after the workstation
 	// is deleted, and the administrator must manually delete the disk.
 	ReclaimPolicy string `json:"reclaimPolicy,omitempty"`
@@ -642,8 +642,8 @@ func (s *GceRegionalPersistentDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceShieldedInstanceConfig: A set of Shielded Google Compute Engine
-// Instance options.
+// GceShieldedInstanceConfig: A set of Compute Engine Shielded instance
+// options.
 type GceShieldedInstanceConfig struct {
 	// EnableIntegrityMonitoring: Whether the instance has integrity
 	// monitoring enabled.
@@ -754,10 +754,9 @@ func (s *GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Host: The system will attempt to keep enough computational resources
-// on standby Runtime host for a Workstation.
+// Host: Runtime host for a workstation.
 type Host struct {
-	// GceInstance: Specifies a Google Compute Engine Instance as the host.
+	// GceInstance: Specifies a Compute Engine instance as the host.
 	GceInstance *GceInstance `json:"gceInstance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GceInstance") to
@@ -1133,14 +1132,14 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PersistentDirectory: A directory persisted across Workstation
+// PersistentDirectory: A directory to persist across workstation
 // sessions.
 type PersistentDirectory struct {
 	// GcePd: A PersistentDirectory backed by a Compute Engine persistent
 	// disk.
 	GcePd *GceRegionalPersistentDisk `json:"gcePd,omitempty"`
 
-	// MountPath: Location of this directory in the running Workstation.
+	// MountPath: Location of this directory in the running workstation.
 	MountPath string `json:"mountPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcePd") to
@@ -1278,7 +1277,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // PrivateClusterConfig: Configuration options for private clusters.
 type PrivateClusterConfig struct {
-	// ClusterHostname: Output only. Hostname for the Workstation Cluster.
+	// ClusterHostname: Output only. Hostname for the workstation cluster.
 	// This field will be populated only when private endpoint is enabled.
 	// To access workstations in the cluster, create a new DNS zone mapping
 	// this domain name to an internal IP address and a forwarding rule
@@ -1289,7 +1288,7 @@ type PrivateClusterConfig struct {
 	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
 
 	// ServiceAttachmentUri: Output only. Service attachment URI for the
-	// Workstation Cluster. The service attachemnt is created when private
+	// workstation cluster. The service attachemnt is created when private
 	// endpoint is enabled. To access workstations in the cluster, configure
 	// access to the managed service using (Private Service
 	// Connect)[https://cloud.google.com/vpc/docs/configure-private-service-c
@@ -1615,8 +1614,8 @@ func (s *Workstation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkstationCluster: A grouping of WorkstationConfigs and their
-// associated Workstations in a region.
+// WorkstationCluster: A grouping of workstation configurations and the
+// associated workstations in that region.
 type WorkstationCluster struct {
 	// Annotations: Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1699,8 +1698,8 @@ func (s *WorkstationCluster) MarshalJSON() ([]byte, error) {
 }
 
 // WorkstationConfig: A set of configuration options describing how a
-// workstation will be run. WorkstationConfigs are intended to be shared
-// across multiple workstations.
+// workstation will be run. Workstation configurations are intended to
+// be shared across multiple workstations.
 type WorkstationConfig struct {
 	// Annotations: Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1709,8 +1708,8 @@ type WorkstationConfig struct {
 	// resource state.
 	Conditions []*Status `json:"conditions,omitempty"`
 
-	// Container: Container that will be run for each Workstation using this
-	// config when that Workstation is started.
+	// Container: Container that will be run for each workstation using this
+	// configuration when that workstation is started.
 	Container *Container `json:"container,omitempty"`
 
 	// CreateTime: Output only. Time when this resource was created.
@@ -1732,7 +1731,7 @@ type WorkstationConfig struct {
 	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Host: Runtime host for the Workstation.
+	// Host: Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
 
 	// IdleTimeout: How long to wait before automatically stopping an
@@ -1744,7 +1743,7 @@ type WorkstationConfig struct {
 	// Name: Full name of this resource.
 	Name string `json:"name,omitempty"`
 
-	// PersistentDirectories: Directories to persist across Workstation
+	// PersistentDirectories: Directories to persist across workstation
 	// sessions.
 	PersistentDirectories []*PersistentDirectory `json:"persistentDirectories,omitempty"`
 
@@ -2452,7 +2451,7 @@ type ProjectsLocationsWorkstationClustersCreateCall struct {
 	header_            http.Header
 }
 
-// Create: Creates a new WorkstationCluster.
+// Create: Creates a new workstation cluster.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersService) Create(parent string, workstationcluster *WorkstationCluster) *ProjectsLocationsWorkstationClustersCreateCall {
@@ -2568,7 +2567,7 @@ func (c *ProjectsLocationsWorkstationClustersCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new WorkstationCluster.",
+	//   "description": "Creates a new workstation cluster.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters",
 	//   "httpMethod": "POST",
 	//   "id": "workstations.projects.locations.workstationClusters.create",
@@ -2618,7 +2617,7 @@ type ProjectsLocationsWorkstationClustersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified WorkstationCluster.
+// Delete: Deletes the specified workstation cluster.
 //
 // - name: Name of the cluster to delete.
 func (r *ProjectsLocationsWorkstationClustersService) Delete(name string) *ProjectsLocationsWorkstationClustersDeleteCall {
@@ -2635,10 +2634,10 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Etag(etag string) *Proj
 	return c
 }
 
-// Force sets the optional parameter "force": If set, any
-// WorkstationConfigs and Workstations in the cluster will also be
-// deleted. Otherwise, the request will work only if the cluster has no
-// configs or workstations.
+// Force sets the optional parameter "force": If set, any workstation
+// configurations and workstations in the cluster will also be deleted.
+// Otherwise, the request will work only if the cluster has no
+// configurations or workstations.
 func (c *ProjectsLocationsWorkstationClustersDeleteCall) Force(force bool) *ProjectsLocationsWorkstationClustersDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -2738,7 +2737,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified WorkstationCluster.",
+	//   "description": "Deletes the specified workstation cluster.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "workstations.projects.locations.workstationClusters.delete",
@@ -2752,7 +2751,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "force": {
-	//       "description": "If set, any WorkstationConfigs and Workstations in the cluster will also be deleted. Otherwise, the request will work only if the cluster has no configs or workstations.",
+	//       "description": "If set, any workstation configurations and workstations in the cluster will also be deleted. Otherwise, the request will work only if the cluster has no configurations or workstations.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2791,7 +2790,7 @@ type ProjectsLocationsWorkstationClustersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the requested WorkstationCluster.
+// Get: Returns the requested workstation cluster.
 //
 // - name: Name of the requested resource.
 func (r *ProjectsLocationsWorkstationClustersService) Get(name string) *ProjectsLocationsWorkstationClustersGetCall {
@@ -2899,7 +2898,7 @@ func (c *ProjectsLocationsWorkstationClustersGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the requested WorkstationCluster.",
+	//   "description": "Returns the requested workstation cluster.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.get",
@@ -2937,7 +2936,7 @@ type ProjectsLocationsWorkstationClustersListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all WorkstationClusters in the specified location.
+// List: Returns all workstation clusters in the specified location.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersService) List(parent string) *ProjectsLocationsWorkstationClustersListCall {
@@ -3059,7 +3058,7 @@ func (c *ProjectsLocationsWorkstationClustersListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all WorkstationClusters in the specified location.",
+	//   "description": "Returns all workstation clusters in the specified location.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.list",
@@ -3129,7 +3128,7 @@ type ProjectsLocationsWorkstationClustersPatchCall struct {
 	header_            http.Header
 }
 
-// Patch: Updates an existing WorkstationCluster.
+// Patch: Updates an existing workstation cluster.
 //
 // - name: Full name of this resource.
 func (r *ProjectsLocationsWorkstationClustersService) Patch(name string, workstationcluster *WorkstationCluster) *ProjectsLocationsWorkstationClustersPatchCall {
@@ -3253,7 +3252,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing WorkstationCluster.",
+	//   "description": "Updates an existing workstation cluster.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "workstations.projects.locations.workstationClusters.patch",
@@ -3310,7 +3309,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall struct {
 	header_           http.Header
 }
 
-// Create: Creates a new WorkstationConfig.
+// Create: Creates a new workstation configuration.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Create(parent string, workstationconfig *WorkstationConfig) *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall {
@@ -3426,7 +3425,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new WorkstationConfig.",
+	//   "description": "Creates a new workstation configuration.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs",
 	//   "httpMethod": "POST",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.create",
@@ -3476,7 +3475,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified WorkstationConfig.
+// Delete: Deletes the specified workstation configuration.
 //
 // - name: Name of the config to delete.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Delete(name string) *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall {
@@ -3595,7 +3594,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified WorkstationConfig.",
+	//   "description": "Deletes the specified workstation configuration.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.delete",
@@ -3648,7 +3647,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the requested WorkstationConfig.
+// Get: Returns the requested workstation configuration.
 //
 // - name: Name of the requested resource.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Get(name string) *ProjectsLocationsWorkstationClustersWorkstationConfigsGetCall {
@@ -3756,7 +3755,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsGetCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the requested WorkstationConfig.",
+	//   "description": "Returns the requested workstation configuration.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.get",
@@ -3969,7 +3968,8 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all WorkstationConfigs in the specified cluster.
+// List: Returns all workstation configurations in the specified
+// cluster.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) List(parent string) *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall {
@@ -4091,7 +4091,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all WorkstationConfigs in the specified cluster.",
+	//   "description": "Returns all workstation configurations in the specified cluster.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.list",
@@ -4161,8 +4161,8 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsListUsableCall struct
 	header_      http.Header
 }
 
-// ListUsable: Returns all WorkstationConfigs in the specified cluster
-// on which the caller has the "workstations.workstation.create"
+// ListUsable: Returns all workstation configurations in the specified
+// cluster on which the caller has the "workstations.workstation.create"
 // permission.
 //
 // - parent: Parent resource name.
@@ -4286,7 +4286,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListUsableCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all WorkstationConfigs in the specified cluster on which the caller has the \"workstations.workstation.create\" permission.",
+	//   "description": "Returns all workstation configurations in the specified cluster on which the caller has the \"workstations.workstation.create\" permission.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs:listUsable",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.listUsable",
@@ -4356,7 +4356,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall struct {
 	header_           http.Header
 }
 
-// Patch: Updates an existing WorkstationConfig.
+// Patch: Updates an existing workstation configuration.
 //
 // - name: Full name of this resource.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsService) Patch(name string, workstationconfig *WorkstationConfig) *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall {
@@ -4480,7 +4480,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing WorkstationConfig.",
+	//   "description": "Updates an existing workstation configuration.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.patch",
@@ -4834,7 +4834,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreateCal
 	header_     http.Header
 }
 
-// Create: Creates a new Workstation.
+// Create: Creates a new workstation.
 //
 // - parent: Parent resource name.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Create(parent string, workstation *Workstation) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreateCall {
@@ -4950,7 +4950,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreat
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Workstation.",
+	//   "description": "Creates a new workstation.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations",
 	//   "httpMethod": "POST",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.create",
@@ -5000,7 +5000,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCal
 	header_    http.Header
 }
 
-// Delete: Deletes the specified Workstation.
+// Delete: Deletes the specified workstation.
 //
 // - name: Name of the workstation to delete.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Delete(name string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDeleteCall {
@@ -5111,7 +5111,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified Workstation.",
+	//   "description": "Deletes the specified workstation.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations/{workstationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.delete",
@@ -5303,7 +5303,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGetCall s
 	header_      http.Header
 }
 
-// Get: Returns the requested Workstation.
+// Get: Returns the requested workstation.
 //
 // - name: Name of the requested resource.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Get(name string) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGetCall {
@@ -5411,7 +5411,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGetCa
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the requested Workstation.",
+	//   "description": "Returns the requested workstation.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations/{workstationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.get",
@@ -6009,7 +6009,7 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall
 	header_     http.Header
 }
 
-// Patch: Updates an existing Workstation.
+// Patch: Updates an existing workstation.
 //
 // - name: Full name of this resource.
 func (r *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService) Patch(name string, workstation *Workstation) *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatchCall {
@@ -6133,7 +6133,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing Workstation.",
+	//   "description": "Updates an existing workstation.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/workstationClusters/{workstationClustersId}/workstationConfigs/{workstationConfigsId}/workstations/{workstationsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.patch",

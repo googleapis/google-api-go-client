@@ -1605,6 +1605,35 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PathOverride: PathOverride. Path message defines path override for
+// HTTP targets.
+type PathOverride struct {
+	// Path: The URI path (e.g., a/b/c). Default is Empty string.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod PathOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PauseQueueRequest: Request message for PauseQueue.
 type PauseQueueRequest struct {
 }
@@ -1765,6 +1794,36 @@ type PullTarget struct {
 
 // PurgeQueueRequest: Request message for PurgeQueue.
 type PurgeQueueRequest struct {
+}
+
+// QueryOverride: QueryOverride. Query message defines query override
+// for HTTP targets.
+type QueryOverride struct {
+	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456).
+	// Default is Empty string.
+	QueryParams string `json:"queryParams,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryParams") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryParams") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Queue: A queue is a container of related tasks. Queues are configured
@@ -2546,27 +2605,32 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // the queue will be partially or fully overridden depending on the
 // configured values.
 type UriOverride struct {
-	// Host: Host override. When specified, the host part of url will be
-	// overridden. For example, if the original Uri is
-	// "https://www.google.com", and host is set to "example.net", the
-	// overridden Uri will be "https://example.net".
+	// Host: Host override. When specified, will replace the host part of
+	// the task URL. For example, if the task URL is
+	// "https://www.google.com", and host value is set to "example.net", the
+	// overridden URI will be changed to "https://example.net". Host value
+	// cannot be an empty string.
 	Host string `json:"host,omitempty"`
 
-	// Path: Uri path. Will be used as the path for the current Uri
-	// (replaces any existing path of the task url).
-	Path string `json:"path,omitempty"`
+	// PathOverride: URI path. When specified, will replace the existing
+	// path of the task URL. Setting the path value to an empty string
+	// clears the URI path segment.
+	PathOverride *PathOverride `json:"pathOverride,omitempty"`
 
-	// Port: Port override. When specified, the port part of Uri will be
-	// replaced by the provided value. For instance, for a Uri
-	// http://www.google.com/foo and port=123 the overridden Uri becomes
-	// http://www.google.com:123/foo.
+	// Port: Port override. When specified, will replace the port part of
+	// the task URI. For instance, for a URI http://www.google.com/foo and
+	// port=123, the overridden URI becomes http://www.google.com:123/foo.
+	// Note that the port value must be a positive integer. Setting the port
+	// to 0 (Zero) clears the URI port.
 	Port int64 `json:"port,omitempty,string"`
 
-	// Query: Uri Query. Will replace the query part of the task uri.
-	Query string `json:"query,omitempty"`
+	// QueryOverride: URI Query. When specified, will replace the query part
+	// of the task URI. Setting the query value to an empty string clears
+	// the URI query segment.
+	QueryOverride *QueryOverride `json:"queryOverride,omitempty"`
 
-	// Scheme: Scheme override. When specified, the Uri scheme is replaced
-	// by the provided value.
+	// Scheme: Scheme override. When specified, the task URI scheme is
+	// replaced by the provided value (HTTP or HTTPS).
 	//
 	// Possible values:
 	//   "SCHEME_UNSPECIFIED" - Scheme unspecified. Defaults to HTTPS.
@@ -2576,8 +2640,9 @@ type UriOverride struct {
 	// will change to https://www.google.ca.
 	Scheme string `json:"scheme,omitempty"`
 
-	// UriOverrideEnforceMode: Uri Override Enforce Mode Determines the
-	// Target UriOverride mode.
+	// UriOverrideEnforceMode: URI Override Enforce Mode When specified,
+	// determines the Target UriOverride mode. If not specified, it defaults
+	// to ALWAYS.
 	//
 	// Possible values:
 	//   "URI_OVERRIDE_ENFORCE_MODE_UNSPECIFIED" - OverrideMode Unspecified.

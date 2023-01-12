@@ -2421,6 +2421,11 @@ type WorkflowInvocation struct {
 	// actions are still running.
 	State string `json:"state,omitempty"`
 
+	// WorkflowConfig: Immutable. The name of the workflow config to invoke.
+	// Must be in the format
+	// `projects/*/locations/*/repositories/*/workflowConfigs/*`.
+	WorkflowConfig string `json:"workflowConfig,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

@@ -1391,11 +1391,13 @@ type IngressSource struct {
 
 	// Resource: A Google Cloud resource that is allowed to ingress the
 	// perimeter. Requests from these resources will be allowed to access
-	// perimeter data. Currently only projects are allowed. Format:
-	// `projects/{project_number}` The project may be in any Google Cloud
-	// organization, not just the organization that the perimeter is defined
-	// in. `*` is not allowed, the case of allowing all Google Cloud
-	// resources only is not supported.
+	// perimeter data. Currently only projects and VPCs are allowed. Project
+	// format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `. The project may be in any Google Cloud organization, not just the
+	// organization that the perimeter is defined in. `*` is not allowed,
+	// the case of allowing all Google Cloud resources only is not
+	// supported.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -2204,8 +2206,10 @@ type ServicePerimeterConfig struct {
 	IngressPolicies []*IngressPolicy `json:"ingressPolicies,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
-	// service perimeter. Currently only projects are allowed. Format:
-	// `projects/{project_number}`
+	// service perimeter. Currently only projects and VPCs are allowed.
+	// Project format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `.
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: Google Cloud services that are subject to the

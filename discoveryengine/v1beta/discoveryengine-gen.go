@@ -347,6 +347,243 @@ func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineLoggingErrorContext: A description of the
+// context in which an error occurred.
+type GoogleCloudDiscoveryengineLoggingErrorContext struct {
+	// HttpRequest: The HTTP request which was processed when the error was
+	// triggered.
+	HttpRequest *GoogleCloudDiscoveryengineLoggingHttpRequestContext `json:"httpRequest,omitempty"`
+
+	// ReportLocation: The location in the source code where the decision
+	// was made to report the error, usually the place where it was logged.
+	ReportLocation *GoogleCloudDiscoveryengineLoggingSourceLocation `json:"reportLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HttpRequest") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingErrorContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingErrorContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineLoggingErrorLog: An error log which is
+// reported to the Error Reporting system.
+type GoogleCloudDiscoveryengineLoggingErrorLog struct {
+	// Context: A description of the context in which the error occurred.
+	Context *GoogleCloudDiscoveryengineLoggingErrorContext `json:"context,omitempty"`
+
+	// ImportPayload: The error payload that is populated on LRO import
+	// APIs.
+	ImportPayload *GoogleCloudDiscoveryengineLoggingImportErrorContext `json:"importPayload,omitempty"`
+
+	// Message: A message describing the error.
+	Message string `json:"message,omitempty"`
+
+	// RequestPayload: The API request payload, represented as a protocol
+	// buffer. Most API request types are supported. For example:
+	// "type.googleapis.com/google.cloud.discoveryengine.v1alpha.DocumentServ
+	// ice.CreateDocumentRequest"
+	// "type.googleapis.com/google.cloud.discoveryengine.v1alpha.UserEventSer
+	// vice.WriteUserEventRequest"
+	RequestPayload googleapi.RawMessage `json:"requestPayload,omitempty"`
+
+	// ResponsePayload: The API response payload, represented as a protocol
+	// buffer. This is used to log some "soft errors", where the response is
+	// valid but we consider there are some quality issues like unjoined
+	// events. The following API responses are supported and no PII is
+	// included:
+	// "google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend"
+	//
+	// "google.cloud.discoveryengine.v1alpha.UserEventService.WriteUserEvent"
+	//
+	// "google.cloud.discoveryengine.v1alpha.UserEventService.CollectUserEven
+	// t"
+	ResponsePayload googleapi.RawMessage `json:"responsePayload,omitempty"`
+
+	// ServiceContext: The service context in which this error has occurred.
+	ServiceContext *GoogleCloudDiscoveryengineLoggingServiceContext `json:"serviceContext,omitempty"`
+
+	// Status: The RPC status associated with the error log.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Context") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingErrorLog) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingErrorLog
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineLoggingHttpRequestContext: HTTP request
+// data that is related to a reported error.
+type GoogleCloudDiscoveryengineLoggingHttpRequestContext struct {
+	// ResponseStatusCode: The HTTP response status code for the request.
+	ResponseStatusCode int64 `json:"responseStatusCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResponseStatusCode")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResponseStatusCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingHttpRequestContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingHttpRequestContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineLoggingImportErrorContext: The error
+// payload that is populated on LRO import APIs. Including:
+// "google.cloud.discoveryengine.v1alpha.DocumentService.ImportDocuments"
+//
+// "google.cloud.discoveryengine.v1alpha.UserEventService.ImportUserEvent
+// s"
+type GoogleCloudDiscoveryengineLoggingImportErrorContext struct {
+	// Document: The detailed content which caused the error on importing a
+	// document.
+	Document string `json:"document,omitempty"`
+
+	// GcsPath: Google Cloud Storage file path of the import source. Can be
+	// set for batch operation error.
+	GcsPath string `json:"gcsPath,omitempty"`
+
+	// LineNumber: Line number of the content in file. Should be empty for
+	// permission or batch operation error.
+	LineNumber string `json:"lineNumber,omitempty"`
+
+	// Operation: The operation resource name of the LRO.
+	Operation string `json:"operation,omitempty"`
+
+	// UserEvent: The detailed content which caused the error on importing a
+	// user event.
+	UserEvent string `json:"userEvent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingImportErrorContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingImportErrorContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineLoggingServiceContext: Describes a running
+// service that sends errors.
+type GoogleCloudDiscoveryengineLoggingServiceContext struct {
+	// Service: An identifier of the service. For example,
+	// "discoveryengine.googleapis.com".
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Service") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Service") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingServiceContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingServiceContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineLoggingSourceLocation: Indicates a location
+// in the source code of the service for which errors are reported.
+type GoogleCloudDiscoveryengineLoggingSourceLocation struct {
+	// FunctionName: Human-readable name of a function or method. For
+	// example, "
+	// google.cloud.discoveryengine.v1alpha.RecommendationService.Recommend".
+	FunctionName string `json:"functionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FunctionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FunctionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineLoggingSourceLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaImportDocumentsMetadata: Metadata
 // related to the progress of the ImportDocuments operation. This will
 // be returned by the google.longrunning.Operation.metadata field.

@@ -14520,6 +14520,9 @@ type Promotion struct {
 	// identify the promotion.
 	PromotionId string `json:"promotionId,omitempty"`
 
+	// PromotionStatus: Output only. The current status of the promotion.
+	PromotionStatus *PromotionPromotionStatus `json:"promotionStatus,omitempty"`
+
 	// PromotionUrl: URL to the page on the merchant's site where the
 	// promotion shows. Local Inventory ads promotions throw an error if no
 	// promo url is included. URL is used to confirm that the promotion is
@@ -14585,6 +14588,123 @@ type Promotion struct {
 
 func (s *Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod Promotion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PromotionPromotionStatus: The status of the promotion.
+type PromotionPromotionStatus struct {
+	// CreationDate: Date on which the promotion has been created in ISO
+	// 8601 (http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and
+	// offset, for example "2020-01-02T09:00:00+01:00" or
+	// "2020-01-02T09:00:00Z"
+	CreationDate string `json:"creationDate,omitempty"`
+
+	// DestinationStatuses: The intended destinations for the promotion.
+	DestinationStatuses []*PromotionPromotionStatusDestinationStatus `json:"destinationStatuses,omitempty"`
+
+	// LastUpdateDate: Date on which the promotion status has been last
+	// updated in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format:
+	// Date, time, and offset, for example "2020-01-02T09:00:00+01:00" or
+	// "2020-01-02T09:00:00Z"
+	LastUpdateDate string `json:"lastUpdateDate,omitempty"`
+
+	// PromotionIssue: A list of issues associated with the promotion.
+	PromotionIssue []*PromotionPromotionStatusPromotionIssue `json:"promotionIssue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationDate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PromotionPromotionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PromotionPromotionStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PromotionPromotionStatusDestinationStatus: The destination status of
+// the promotion.
+type PromotionPromotionStatusDestinationStatus struct {
+	// Destination: The name of the destination.
+	Destination string `json:"destination,omitempty"`
+
+	// Status: The status for the specified destination.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unknown promotion state.
+	//   "IN_REVIEW" - The promotion is under review.
+	//   "REJECTED" - The promotion is disapproved
+	//   "LIVE" - The promotion is approved and active.
+	//   "STOPPED" - The promotion is stopped by merchant.
+	//   "EXPIRED" - The promotion is no longer active.
+	//   "PENDING" - The promotion is not stopped, and all reviews are
+	// approved, but the active date is in the future.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PromotionPromotionStatusDestinationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PromotionPromotionStatusDestinationStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PromotionPromotionStatusPromotionIssue: The issue associated with the
+// promotion.
+type PromotionPromotionStatusPromotionIssue struct {
+	// Code: Code of the issue.
+	Code string `json:"code,omitempty"`
+
+	// Detail: Explanation of the issue.
+	Detail string `json:"detail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PromotionPromotionStatusPromotionIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod PromotionPromotionStatusPromotionIssue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

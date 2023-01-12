@@ -5953,7 +5953,7 @@
       }
     }
   },
-  "revision": "20221228",
+  "revision": "20230104",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -14349,6 +14349,11 @@
           "description": "Required. The user provided promotion ID to uniquely identify the promotion.",
           "type": "string"
         },
+        "promotionStatus": {
+          "$ref": "PromotionPromotionStatus",
+          "description": "Output only. The current status of the promotion.",
+          "readOnly": true
+        },
         "promotionUrl": {
           "description": "URL to the page on the merchant's site where the promotion shows. Local Inventory ads promotions throw an error if no promo url is included. URL is used to confirm that the promotion is valid and can be redeemed.",
           "type": "string"
@@ -14407,6 +14412,83 @@
         },
         "targetCountry": {
           "description": "Required. The target country used as part of the unique identifier. Can be `AU`, `CA`, `DE`, `FR`, `GB`, `IN` or `US`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PromotionPromotionStatus": {
+      "description": "The status of the promotion.",
+      "id": "PromotionPromotionStatus",
+      "properties": {
+        "creationDate": {
+          "description": "Date on which the promotion has been created in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and offset, for example \"2020-01-02T09:00:00+01:00\" or \"2020-01-02T09:00:00Z\"",
+          "type": "string"
+        },
+        "destinationStatuses": {
+          "description": "The intended destinations for the promotion.",
+          "items": {
+            "$ref": "PromotionPromotionStatusDestinationStatus"
+          },
+          "type": "array"
+        },
+        "lastUpdateDate": {
+          "description": "Date on which the promotion status has been last updated in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and offset, for example \"2020-01-02T09:00:00+01:00\" or \"2020-01-02T09:00:00Z\"",
+          "type": "string"
+        },
+        "promotionIssue": {
+          "description": "A list of issues associated with the promotion.",
+          "items": {
+            "$ref": "PromotionPromotionStatusPromotionIssue"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PromotionPromotionStatusDestinationStatus": {
+      "description": "The destination status of the promotion.",
+      "id": "PromotionPromotionStatusDestinationStatus",
+      "properties": {
+        "destination": {
+          "description": "The name of the destination.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status for the specified destination.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "IN_REVIEW",
+            "REJECTED",
+            "LIVE",
+            "STOPPED",
+            "EXPIRED",
+            "PENDING"
+          ],
+          "enumDescriptions": [
+            "Unknown promotion state.",
+            "The promotion is under review.",
+            "The promotion is disapproved",
+            "The promotion is approved and active.",
+            "The promotion is stopped by merchant.",
+            "The promotion is no longer active.",
+            "The promotion is not stopped, and all reviews are approved, but the active date is in the future."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PromotionPromotionStatusPromotionIssue": {
+      "description": "The issue associated with the promotion.",
+      "id": "PromotionPromotionStatusPromotionIssue",
+      "properties": {
+        "code": {
+          "description": "Code of the issue.",
+          "type": "string"
+        },
+        "detail": {
+          "description": "Explanation of the issue.",
           "type": "string"
         }
       },

@@ -2340,6 +2340,8 @@ type PackageData struct {
 	//   "MAVEN" - Java packages from Maven.
 	//   "GO" - Go third-party packages.
 	//   "GO_STDLIB" - Go toolchain + standard library packages.
+	//   "PYPI" - Python packages.
+	//   "NPM" - NPM packages.
 	PackageType string `json:"packageType,omitempty"`
 
 	// PatchedCve: CVEs that this package is no longer vulnerable to

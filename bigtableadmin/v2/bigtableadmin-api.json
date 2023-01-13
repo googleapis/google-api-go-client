@@ -1966,7 +1966,7 @@
       }
     }
   },
-  "revision": "20221229",
+  "revision": "20230101",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -2758,7 +2758,7 @@
       "id": "Instance",
       "properties": {
         "createTime": {
-          "description": "Output only. A server-assigned timestamp representing when this Instance was created. For instances created before this field was added (August 2021), this value is `seconds: 0, nanos: 1`.",
+          "description": "Output only. A commit timestamp representing when this Instance was created. For instances created before this field was added (August 2021), this value is `seconds: 0, nanos: 1`.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"

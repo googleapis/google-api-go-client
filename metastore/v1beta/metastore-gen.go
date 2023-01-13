@@ -278,6 +278,11 @@ func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AlterMetadataResourceLocationResponse: Response message for
+// DataprocMetastore.AlterMetadataResourceLocation.
+type AlterMetadataResourceLocationResponse struct {
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -1746,6 +1751,11 @@ func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveTableToDatabaseRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MoveTableToDatabaseResponse: Response message for
+// DataprocMetastore.MoveTableToDatabase.
+type MoveTableToDatabaseResponse struct {
 }
 
 // NetworkConfig: Network configuration for the Dataproc Metastore

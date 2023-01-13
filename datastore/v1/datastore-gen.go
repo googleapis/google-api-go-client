@@ -727,6 +727,11 @@ func (s *Entity) MarshalJSON() ([]byte, error) {
 
 // EntityResult: The result of fetching an entity from Datastore.
 type EntityResult struct {
+	// CreateTime: The time at which the entity was created. This field is
+	// set for `FULL` entity results. If this entity is missing, this field
+	// will not be set.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Cursor: A cursor that points to the position after the result entity.
 	// Set only when the `EntityResult` is part of a `QueryResultBatch`
 	// message.
@@ -747,7 +752,7 @@ type EntityResult struct {
 	// entity, and it is always set except for eventually consistent reads.
 	Version int64 `json:"version,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Cursor") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -755,8 +760,8 @@ type EntityResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Cursor") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2291,6 +2296,10 @@ type MutationResult struct {
 	// Always false when a conflict detection strategy field is not set in
 	// the mutation.
 	ConflictDetected bool `json:"conflictDetected,omitempty"`
+
+	// CreateTime: The create time of the entity. This field will not be set
+	// after a 'delete'.
+	CreateTime string `json:"createTime,omitempty"`
 
 	// Key: The automatically allocated key. Set only when the mutation
 	// allocated a key.

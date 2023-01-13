@@ -534,10 +534,11 @@ type AndroidApp struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The App is active.
-	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
-	// deletes an App after it has been in the `DELETED` state for more than
-	// 30 days. Up until this time, you can restore the App by calling
-	// `Undelete` ([Android](projects.androidApps/undelete) |
+	//   "DELETED" - The App has been soft-deleted. After an App has been in
+	// the `DELETED` state for more than 30 days, it is considered expired
+	// and will be permanently deleted. Up until this time, you can restore
+	// the App by calling `Undelete`
+	// ([Android](projects.androidApps/undelete) |
 	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
@@ -768,10 +769,11 @@ type FirebaseAppInfo struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The App is active.
-	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
-	// deletes an App after it has been in the `DELETED` state for more than
-	// 30 days. Up until this time, you can restore the App by calling
-	// `Undelete` ([Android](projects.androidApps/undelete) |
+	//   "DELETED" - The App has been soft-deleted. After an App has been in
+	// the `DELETED` state for more than 30 days, it is considered expired
+	// and will be permanently deleted. Up until this time, you can restore
+	// the App by calling `Undelete`
+	// ([Android](projects.androidApps/undelete) |
 	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
@@ -956,10 +958,11 @@ type IosApp struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The App is active.
-	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
-	// deletes an App after it has been in the `DELETED` state for more than
-	// 30 days. Up until this time, you can restore the App by calling
-	// `Undelete` ([Android](projects.androidApps/undelete) |
+	//   "DELETED" - The App has been soft-deleted. After an App has been in
+	// the `DELETED` state for more than 30 days, it is considered expired
+	// and will be permanently deleted. Up until this time, you can restore
+	// the App by calling `Undelete`
+	// ([Android](projects.androidApps/undelete) |
 	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 
@@ -1522,11 +1525,12 @@ type RemoveAndroidAppRequest struct {
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Immediate: Determines whether to _immediately_ delete the App. If set
-	// to true, the App is immediately deleted from the Project and cannot
-	// be restored to the Project. If not set, defaults to false, which
-	// means that the App may be restored to the Project within 30 days
-	// using UndeleteAndroidApp.
+	// Immediate: Determines whether to _immediately_ delete the AndroidApp.
+	// If set to true, the App is immediately deleted from the Project and
+	// cannot be restored to the Project. If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30
+	// days, the App may be restored to the Project using
+	// UndeleteAndroidApp.
 	Immediate bool `json:"immediate,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -1566,11 +1570,11 @@ type RemoveIosAppRequest struct {
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Immediate: Determines whether to _immediately_ delete the App. If set
-	// to true, the App is immediately deleted from the Project and cannot
-	// be restored to the Project. If not set, defaults to false, which
-	// means that the App may be restored to the Project within 30 days
-	// using UndeleteIosApp
+	// Immediate: Determines whether to _immediately_ delete the IosApp. If
+	// set to true, the App is immediately deleted from the Project and
+	// cannot be restored to the Project. If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30
+	// days, the App may be restored to the Project using UndeleteIosApp
 	Immediate bool `json:"immediate,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -1610,11 +1614,11 @@ type RemoveWebAppRequest struct {
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// Immediate: Determines whether to _immediately_ delete the App. If set
-	// to true, the App is immediately deleted from the Project and cannot
-	// be restored to the Project. If not set, defaults to false, which
-	// means that the App may be restored to the Project within 30 days
-	// using UndeleteWebApp
+	// Immediate: Determines whether to _immediately_ delete the WebApp. If
+	// set to true, the App is immediately deleted from the Project and
+	// cannot be restored to the Project. If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30
+	// days, the App may be restored to the Project using UndeleteWebApp
 	Immediate bool `json:"immediate,omitempty"`
 
 	// ValidateOnly: If set to true, the request is only validated. The App
@@ -2038,10 +2042,11 @@ type WebApp struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ACTIVE" - The App is active.
-	//   "DELETED" - The App has been soft-deleted. Firebase permanantely
-	// deletes an App after it has been in the `DELETED` state for more than
-	// 30 days. Up until this time, you can restore the App by calling
-	// `Undelete` ([Android](projects.androidApps/undelete) |
+	//   "DELETED" - The App has been soft-deleted. After an App has been in
+	// the `DELETED` state for more than 30 days, it is considered expired
+	// and will be permanently deleted. Up until this time, you can restore
+	// the App by calling `Undelete`
+	// ([Android](projects.androidApps/undelete) |
 	// [iOS](projects.iosApps/undelete) | [web](projects.webApps/undelete)).
 	State string `json:"state,omitempty"`
 

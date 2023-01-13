@@ -679,32 +679,32 @@ func (s *Hub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InternalRange: The InternalRange resource for IPAM operations within
+// InternalRange: The internal range resource for IPAM operations within
 // a VPC network. Used to represent a private address range along with
-// behavioral characterstics of that range (it's usage and peering
+// behavioral characterstics of that range (its usage and peering
 // behavior). Networking resources can link to this range if they are
-// created as belonging to it. Next id: 14
+// created as belonging to it.
 type InternalRange struct {
-	// CreateTime: Time when the InternalRange was created.
+	// CreateTime: Time when the internal range was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
 
-	// IpCidrRange: IP range that this InternalRange defines.
+	// IpCidrRange: IP range that this internal range defines.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Immutable. The name of a InternalRange. Format:
+	// Name: Immutable. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range
 	// } See: https://google.aip.dev/122#fields-representing-resource-names
 	Name string `json:"name,omitempty"`
 
 	// Network: The URL or resource ID of the network in which to reserve
-	// the Internal Range. The network cannot be deleted if there are any
-	// reserved Internal Ranges referring to it. Legacy network is not
+	// the internal range. The network cannot be deleted if there are any
+	// reserved internal ranges referring to it. Legacy networks are not
 	// supported. This can only be specified for a global internal address.
 	// Example: - URL:
 	// /compute/v1/projects/{project}/global/networks/{resourceId} - ID:
@@ -712,44 +712,44 @@ type InternalRange struct {
 	Network string `json:"network,omitempty"`
 
 	// Overlaps: Optional. Types of resources that are allowed to overlap
-	// with the current InternalRange.
+	// with the current internal range.
 	//
 	// Possible values:
 	//   "OVERLAP_UNSPECIFIED" - No overlap overrides.
 	//   "OVERLAP_ROUTE_RANGE" - Allow creation of static routes more
-	// specific that the current InternalRange.
+	// specific than the current internal range.
 	Overlaps []string `json:"overlaps,omitempty"`
 
-	// Peering: The type of peering set for this InternalRange.
+	// Peering: The type of peering set for this internal range.
 	//
 	// Possible values:
 	//   "PEERING_UNSPECIFIED" - If Peering is left unspecified in
 	// CreateInternalRange or UpdateInternalRange, it will be defaulted to
 	// FOR_SELF.
 	//   "FOR_SELF" - This is the default behavior and represents the case
-	// that this InternalRange is intended to be used in the VPC on which it
-	// is created and is accessible from it’s peers. This implies that
-	// peers or peer-of-peer’s cannot use this range.
-	//   "FOR_PEER" - This behavior can be set when the Internal Range is
+	// that this internal range is intended to be used in the VPC in which
+	// it is created and is accessible from its peers. This implies that
+	// peers or peers-of-peers cannot use this range.
+	//   "FOR_PEER" - This behavior can be set when the internal range is
 	// being reserved for usage by the peers. This means that no resource
 	// within the VPC in which it is being created can use this to associate
-	// with a GCP resource, but one of the peer’s can. This represents
-	// "donating" a range for peers to use.
-	//   "NOT_SHARED" - This behavior can be set when the Internal Range is
-	// being reserved for usage by the VPC on which it is created but not
+	// with a VPC resource, but one of the peers can. This represents
+	// donating a range for peers to use.
+	//   "NOT_SHARED" - This behavior can be set when the internal range is
+	// being reserved for usage by the VPC in which it is created but not
 	// shared with the peers. In a sense it is local to the VPC. This can be
-	// used to create Internal Ranges for various purposes like
-	// HTTP_INTERNAL_LOAD_BALANCER or for interconnect routes that are not
-	// shared with peers. This also implies that peer’s cannot use this
-	// range in a way that is visible to this VPC, but can re-use this range
-	// as long as it is NOT_SHARED from the peer VPC too.
+	// used to create internal ranges for various purposes like
+	// HTTP_INTERNAL_LOAD_BALANCER or for Interconnect routes that are not
+	// shared with peers. This also implies that peers cannot use this range
+	// in a way that is visible to this VPC, but can re-use this range as
+	// long as it is NOT_SHARED from the peer VPC, too.
 	Peering string `json:"peering,omitempty"`
 
-	// PrefixLength: An alternate to ip_cidr_range. Can be set when trying
+	// PrefixLength: An alternative to ip_cidr_range. Can be set when trying
 	// to create a reservation that automatically finds a free range of the
-	// given size. If both ip_cidr_range and prefix_length are set, it's an
-	// error if the range sizes don't match. Can also be used during updates
-	// to change the range size.
+	// given size. If both ip_cidr_range and prefix_length are set, there is
+	// an error if the range sizes do not match. Can also be used during
+	// updates to change the range size.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
 
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a
@@ -759,32 +759,32 @@ type InternalRange struct {
 	// "192.168.0.0/16" or non-rfc-1918 address spaces used in the VPC.
 	TargetCidrRange []string `json:"targetCidrRange,omitempty"`
 
-	// UpdateTime: Time when the InternalRange was updated.
+	// UpdateTime: Time when the internal range was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// Usage: The type of usage set for this InternalRange.
+	// Usage: The type of usage set for this internal range.
 	//
 	// Possible values:
 	//   "USAGE_UNSPECIFIED" - Unspecified usage is allowed in calls which
 	// identify the resource by other fields and do not need Usage set to
-	// complete. These are i.e.: GetInternalRange and DeleteInternalRange.
+	// complete. These are, i.e.: GetInternalRange and DeleteInternalRange.
 	// Usage needs to be specified explicitly in CreateInternalRange or
 	// UpdateInternalRange calls.
-	//   "FOR_VPC" - A GCP resource can use the reserved CIDR block by
-	// associating it with the Internal Range resource if usage is set to
+	//   "FOR_VPC" - A VPC resource can use the reserved CIDR block by
+	// associating it with the internal range resource if usage is set to
 	// FOR_VPC.
 	//   "EXTERNAL_TO_VPC" - Ranges created with EXTERNAL_TO_VPC cannot be
-	// associated with GCP resources and are meant to block out address
-	// ranges for various use cases, like for example, usage on-prem, with
-	// dynamic route announcements via interconnect.
+	// associated with VPC resources and are meant to block out address
+	// ranges for various use cases such as usage on-premises, with dynamic
+	// route announcements via Interconnect.
 	Usage string `json:"usage,omitempty"`
 
 	// Users: Output only. The list of resources that refer to this internal
-	// range. Resources that use the InternalRange for their range
+	// range. Resources that use the internal range for their range
 	// allocation are referred to as users of the range. Other resources
 	// mark themselves as users while doing so by creating a reference to
-	// this InternalRange. Having a user, based on this reference, prevents
-	// deletion of the InternalRange referred to. Can be empty.
+	// this internal range. Having a user, based on this reference, prevents
+	// deletion of the internal range that is referred to. Can be empty.
 	Users []string `json:"users,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -857,7 +857,7 @@ func (s *ListHubsResponse) MarshalJSON() ([]byte, error) {
 // ListInternalRangesResponse: Response for
 // InternalRange.ListInternalRanges
 type ListInternalRangesResponse struct {
-	// InternalRanges: InternalRanges to be returned.
+	// InternalRanges: Internal range to be returned.
 	InternalRanges []*InternalRange `json:"internalRanges,omitempty"`
 
 	// NextPageToken: The next pagination token in the List response. It
@@ -3116,7 +3116,7 @@ type ProjectsLocationsInternalRangesCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Creates a new InternalRange in a given project and location.
+// Create: Creates a new internal range in a given project and location.
 //
 // - parent: The parent resource's name of the InternalRange.
 func (r *ProjectsLocationsInternalRangesService) Create(parent string, internalrange *InternalRange) *ProjectsLocationsInternalRangesCreateCall {
@@ -3142,9 +3142,9 @@ func (c *ProjectsLocationsInternalRangesCreateCall) InternalRangeId(internalRang
 // that for at least 60 minutes since the first request. For example,
 // consider a situation where you make an initial request and t he
 // request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
+// request ID, the server can check if the original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
@@ -3244,7 +3244,7 @@ func (c *ProjectsLocationsInternalRangesCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new InternalRange in a given project and location.",
+	//   "description": "Creates a new internal range in a given project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/internalRanges",
 	//   "httpMethod": "POST",
 	//   "id": "networkconnectivity.projects.locations.internalRanges.create",
@@ -3265,7 +3265,7 @@ func (c *ProjectsLocationsInternalRangesCreateCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3294,7 +3294,7 @@ type ProjectsLocationsInternalRangesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single InternalRange.
+// Delete: Deletes a single internal range.
 //
 // - name: The name of the InternalRange to delete.
 func (r *ProjectsLocationsInternalRangesService) Delete(name string) *ProjectsLocationsInternalRangesDeleteCall {
@@ -3310,9 +3310,9 @@ func (r *ProjectsLocationsInternalRangesService) Delete(name string) *ProjectsLo
 // that for at least 60 minutes after the first request. For example,
 // consider a situation where you make an initial request and t he
 // request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
+// request ID, the server can check if the original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
@@ -3407,7 +3407,7 @@ func (c *ProjectsLocationsInternalRangesDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a single InternalRange.",
+	//   "description": "Deletes a single internal range.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/internalRanges/{internalRangesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "networkconnectivity.projects.locations.internalRanges.delete",
@@ -3423,7 +3423,7 @@ func (c *ProjectsLocationsInternalRangesDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3450,7 +3450,7 @@ type ProjectsLocationsInternalRangesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single InternalRange.
+// Get: Gets details of a single internal range.
 //
 // - name: Name of the InternalRange to get.
 func (r *ProjectsLocationsInternalRangesService) Get(name string) *ProjectsLocationsInternalRangesGetCall {
@@ -3558,7 +3558,7 @@ func (c *ProjectsLocationsInternalRangesGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets details of a single InternalRange.",
+	//   "description": "Gets details of a single internal range.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/internalRanges/{internalRangesId}",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.internalRanges.get",
@@ -3771,7 +3771,7 @@ type ProjectsLocationsInternalRangesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InternalRanges in a given project and location.
+// List: Lists internal ranges in a given project and location.
 //
 // - parent: The parent resource's name.
 func (r *ProjectsLocationsInternalRangesService) List(parent string) *ProjectsLocationsInternalRangesListCall {
@@ -3906,7 +3906,7 @@ func (c *ProjectsLocationsInternalRangesListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists InternalRanges in a given project and location.",
+	//   "description": "Lists internal ranges in a given project and location.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/internalRanges",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.internalRanges.list",
@@ -3986,9 +3986,9 @@ type ProjectsLocationsInternalRangesPatchCall struct {
 	header_       http.Header
 }
 
-// Patch: Updates the parameters of a single InternalRange.
+// Patch: Updates the parameters of a single internal range.
 //
-//   - name: Immutable. The name of a InternalRange. Format:
+//   - name: Immutable. The name of an internal range. Format:
 //     projects/{project}/locations/{location}/internalRanges/{internal_ran
 //     ge} See:
 //     https://google.aip.dev/122#fields-representing-resource-names.
@@ -4006,9 +4006,9 @@ func (r *ProjectsLocationsInternalRangesService) Patch(name string, internalrang
 // that for at least 60 minutes since the first request. For example,
 // consider a situation where you make an initial request and t he
 // request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate
+// request ID, the server can check if the original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
 // commitments. The request ID must be a valid UUID with the exception
 // that zero UUID is not supported
 // (00000000-0000-0000-0000-000000000000).
@@ -4018,7 +4018,7 @@ func (c *ProjectsLocationsInternalRangesPatchCall) RequestId(requestId string) *
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask is
-// used to specify the fields to be overwritten in the InternalRange
+// used to specify the fields to be overwritten in the internal range
 // resource by the update. The fields specified in the update_mask are
 // relative to the resource, not the full request. A field will be
 // overwritten if it is in the mask. If the user does not provide a mask
@@ -4119,7 +4119,7 @@ func (c *ProjectsLocationsInternalRangesPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the parameters of a single InternalRange.",
+	//   "description": "Updates the parameters of a single internal range.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/internalRanges/{internalRangesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "networkconnectivity.projects.locations.internalRanges.patch",
@@ -4128,19 +4128,19 @@ func (c *ProjectsLocationsInternalRangesPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The name of a InternalRange. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names",
+	//       "description": "Immutable. The name of an internal range. Format: projects/{project}/locations/{location}/internalRanges/{internal_range} See: https://google.aip.dev/122#fields-representing-resource-names",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/internalRanges/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. Field mask is used to specify the fields to be overwritten in the InternalRange resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Optional. Field mask is used to specify the fields to be overwritten in the internal range resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

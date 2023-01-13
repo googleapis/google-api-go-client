@@ -1284,7 +1284,8 @@ type PrivateClusterConfig struct {
 	// mapping that address to the service attachment.
 	ClusterHostname string `json:"clusterHostname,omitempty"`
 
-	// EnablePrivateEndpoint: Whether Workstations endpoint is private.
+	// EnablePrivateEndpoint: Immutable. Whether Workstations endpoint is
+	// private.
 	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
 
 	// ServiceAttachmentUri: Output only. Service attachment URI for the
@@ -1559,6 +1560,10 @@ type Workstation struct {
 	// in the format "{port}-{host}".
 	Host string `json:"host,omitempty"`
 
+	// Labels: Client-specified labels that are applied to the resource and
+	// that are also propagated to the underlying Compute Engine resources.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: Full name of this resource.
 	Name string `json:"name,omitempty"`
 
@@ -1643,11 +1648,15 @@ type WorkstationCluster struct {
 	// before proceeding.
 	Etag string `json:"etag,omitempty"`
 
+	// Labels: Client-specified labels that are applied to the resource and
+	// that are also propagated to the underlying Compute Engine resources.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: Full name of this resource.
 	Name string `json:"name,omitempty"`
 
-	// Network: Name of the Compute Engine network in which instances
-	// associated with this cluster will be created.
+	// Network: Immutable. Name of the Compute Engine network in which
+	// instances associated with this cluster will be created.
 	Network string `json:"network,omitempty"`
 
 	// PrivateClusterConfig: Configuration for private cluster.
@@ -1657,9 +1666,9 @@ type WorkstationCluster struct {
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
 
-	// Subnetwork: Name of the Compute Engine subnetwork in which instances
-	// associated with this cluster will be created. Must be part of the
-	// subnetwork specified for this cluster.
+	// Subnetwork: Immutable. Name of the Compute Engine subnetwork in which
+	// instances associated with this cluster will be created. Must be part
+	// of the subnetwork specified for this cluster.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Uid: Output only. A system-assigned unique identified for this
@@ -1739,6 +1748,10 @@ type WorkstationConfig struct {
 	// indicates that this instance should never time out due to idleness.
 	// Defaults to 20 minutes.
 	IdleTimeout string `json:"idleTimeout,omitempty"`
+
+	// Labels: Client-specified labels that are applied to the resource and
+	// that are also propagated to the underlying Compute Engine resources.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Full name of this resource.
 	Name string `json:"name,omitempty"`

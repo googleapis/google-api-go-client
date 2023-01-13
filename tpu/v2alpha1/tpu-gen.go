@@ -1166,7 +1166,7 @@ type NodeSpec struct {
 	Node *Node `json:"node,omitempty"`
 
 	// NodeId: The unqualified resource name. Should follow the
-	// ^[A-Za-z0-9_.~+%-]+$ regex format. This is only specified when
+	// `^[A-Za-z0-9_.~+%-]+$` regex format. This is only specified when
 	// requesting a single node. In case of multi-node requests,
 	// multi_node_params must be populated instead. It's an error to specify
 	// both node_id and multi_node_params.
@@ -3879,7 +3879,7 @@ func (c *ProjectsLocationsNodesStartCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -4022,7 +4022,7 @@ func (c *ProjectsLocationsNodesStopCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,

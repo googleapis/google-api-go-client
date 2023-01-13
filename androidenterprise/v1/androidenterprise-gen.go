@@ -1398,6 +1398,10 @@ type Enterprise struct {
 	// enterprises created via the EMM-initiated flow.
 	Administrator []*Administrator `json:"administrator,omitempty"`
 
+	// GoogleAuthenticationSettings: Output only. Settings for
+	// Google-provided user authentication.
+	GoogleAuthenticationSettings *GoogleAuthenticationSettings `json:"googleAuthenticationSettings,omitempty"`
+
 	// Id: The unique ID for the enterprise.
 	Id string `json:"id,omitempty"`
 
@@ -1655,6 +1659,52 @@ type EntitlementsListResponse struct {
 
 func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EntitlementsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAuthenticationSettings: Contains settings for Google-provided
+// user authentication.
+type GoogleAuthenticationSettings struct {
+	// DedicatedDevicesAllowed: Whether dedicated devices are allowed.
+	//
+	// Possible values:
+	//   "dedicatedDevicesAllowedUnspecified" - This value is unused.
+	//   "disallowed" - Dedicated devices are not allowed.
+	//   "allowed" - Dedicated devices are allowed.
+	DedicatedDevicesAllowed string `json:"dedicatedDevicesAllowed,omitempty"`
+
+	// GoogleAuthenticationRequired: Whether Google authentication is
+	// required.
+	//
+	// Possible values:
+	//   "googleAuthenticationRequiredUnspecified" - This value is unused.
+	//   "notRequired" - Google authentication is not required.
+	//   "required" - User is required to be successfully authenticated by
+	// Google.
+	GoogleAuthenticationRequired string `json:"googleAuthenticationRequired,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DedicatedDevicesAllowed") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DedicatedDevicesAllowed")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAuthenticationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAuthenticationSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

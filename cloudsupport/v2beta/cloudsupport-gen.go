@@ -2585,14 +2585,14 @@ func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A field that
-// represents attributes of a case object that should be updated as part
-// of this request. Supported values are severity, display_name, and
+// UpdateMask sets the optional parameter "updateMask": A list of
+// attributes of the case object that should be updated as part of this
+// request. Supported values are severity, display_name, and
 // subscriber_email_addresses. If no fields are specified, all supported
-// fields will be updated. WARNING: If you do not provide a field mask
-// then you may accidentally clear some fields. For example, if you
-// leave field mask empty and do not provide a value for
-// subscriber_email_addresses then subscriber_email_addresses will be
+// fields are updated. WARNING: If you do not provide a field mask, then
+// you may accidentally clear some fields. For example, if you leave
+// field mask empty and do not provide a value for
+// subscriber_email_addresses, then subscriber_email_addresses is
 // updated to empty.
 func (c *CasesPatchCall) UpdateMask(updateMask string) *CasesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -2706,7 +2706,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A field that represents attributes of a case object that should be updated as part of this request. Supported values are severity, display_name, and subscriber_email_addresses. If no fields are specified, all supported fields will be updated. WARNING: If you do not provide a field mask then you may accidentally clear some fields. For example, if you leave field mask empty and do not provide a value for subscriber_email_addresses then subscriber_email_addresses will be updated to empty.",
+	//       "description": "A list of attributes of the case object that should be updated as part of this request. Supported values are severity, display_name, and subscriber_email_addresses. If no fields are specified, all supported fields are updated. WARNING: If you do not provide a field mask, then you may accidentally clear some fields. For example, if you leave field mask empty and do not provide a value for subscriber_email_addresses, then subscriber_email_addresses is updated to empty.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -267,6 +267,19 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 // App: Describes an AdMob app for a specific platform (For example:
 // Android or iOS).
 type App struct {
+	// AppApprovalState: Output only. The approval state for the app.
+	//
+	// Possible values:
+	//   "APP_APPROVAL_STATE_UNSPECIFIED" - Default value for an unset
+	// field. Do not use.
+	//   "ACTION_REQUIRED" - The app requires additional user action to be
+	// approved. Please refer to
+	// https://support.google.com/admob/answer/10564477 for details and next
+	// steps.
+	//   "IN_REVIEW" - The app is pending review.
+	//   "APPROVED" - The app is approved and can serve ads.
+	AppApprovalState string `json:"appApprovalState,omitempty"`
+
 	// AppId: The externally visible ID of the app which can be used to
 	// integrate with the AdMob SDK. This is a read only property. Example:
 	// ca-app-pub-9876543210987654~0123456789
@@ -292,7 +305,7 @@ type App struct {
 	// "ANDROID".
 	Platform string `json:"platform,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// ForceSendFields is a list of field names (e.g. "AppApprovalState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -300,12 +313,13 @@ type App struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AppId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppApprovalState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

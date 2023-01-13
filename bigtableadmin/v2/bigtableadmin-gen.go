@@ -1886,9 +1886,9 @@ func (s *HotTablet) UnmarshalJSON(data []byte) error {
 // serve them. All tables in an instance are served from all Clusters in
 // the instance.
 type Instance struct {
-	// CreateTime: Output only. A server-assigned timestamp representing
-	// when this Instance was created. For instances created before this
-	// field was added (August 2021), this value is `seconds: 0, nanos: 1`.
+	// CreateTime: Output only. A commit timestamp representing when this
+	// Instance was created. For instances created before this field was
+	// added (August 2021), this value is `seconds: 0, nanos: 1`.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: Required. The descriptive name for this instance as it

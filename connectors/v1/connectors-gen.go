@@ -738,7 +738,7 @@ type Connection struct {
 	// projects/{project}/locations/{location}/connections/{connection}
 	Name string `json:"name,omitempty"`
 
-	// NodeConfig: Optional. Configuration for the connection.
+	// NodeConfig: Optional. Node configuration for the connection.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// ServiceAccount: Optional. Service account needed for runtime plane to
@@ -1941,7 +1941,7 @@ func (s *LockConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NodeConfig: Configuration for the connection.
+// NodeConfig: Node configuration for the connection.
 type NodeConfig struct {
 	// MaxNodeCount: Maximum number of nodes in the runtime nodes.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`

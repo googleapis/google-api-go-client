@@ -5229,6 +5229,13 @@ type GoogleCloudDialogflowCxV3QueryParameters struct {
 	// performed.
 	AnalyzeQueryTextSentiment bool `json:"analyzeQueryTextSentiment,omitempty"`
 
+	// Channel: The channel which this query is for. If specified, only the
+	// ResponseMessage associated with the channel will be returned. If no
+	// ResponseMessage is associated with the channel, it falls back to the
+	// ResponseMessage with unspecified channel. If unspecified, the
+	// ResponseMessage with unspecified channel will be returned.
+	Channel string `json:"channel,omitempty"`
+
 	// CurrentPage: The unique identifier of the page to override the
 	// current page in the session. Format:
 	// `projects//locations//agents//flows//pages/`. If `current_page` is
@@ -5534,6 +5541,11 @@ func (s *GoogleCloudDialogflowCxV3ResourceName) MarshalJSON() ([]byte, error) {
 // more sophisticated user experience scenarios, where the text
 // displayed to the user may differ from what is heard.
 type GoogleCloudDialogflowCxV3ResponseMessage struct {
+	// Channel: The channel which the response is associated with. Clients
+	// can specify the channel via QueryParameters.channel, and only
+	// associated channel response will be returned.
+	Channel string `json:"channel,omitempty"`
+
 	// ConversationSuccess: Indicates that the conversation succeeded.
 	ConversationSuccess *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
 
@@ -5575,21 +5587,20 @@ type GoogleCloudDialogflowCxV3ResponseMessage struct {
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversationSuccess") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -10357,6 +10368,11 @@ func (s *GoogleCloudDialogflowCxV3beta1ReloadDocumentOperationMetadata) MarshalJ
 // more sophisticated user experience scenarios, where the text
 // displayed to the user may differ from what is heard.
 type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
+	// Channel: The channel which the response is associated with. Clients
+	// can specify the channel via QueryParameters.channel, and only
+	// associated channel response will be returned.
+	Channel string `json:"channel,omitempty"`
+
 	// ConversationSuccess: Indicates that the conversation succeeded.
 	ConversationSuccess *GoogleCloudDialogflowCxV3beta1ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
 
@@ -10398,21 +10414,20 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessage struct {
 	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowCxV3beta1ResponseMessageText `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConversationSuccess") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

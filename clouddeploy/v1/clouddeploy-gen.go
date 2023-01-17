@@ -2579,8 +2579,7 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // SkaffoldVersion: Details of a supported Skaffold version.
 type SkaffoldVersion struct {
 	// SupportEndDate: Date when this version is expected to no longer be
-	// supported. For a more precise time, use the `support_expiration_time`
-	// field.
+	// supported.
 	SupportEndDate *Date `json:"supportEndDate,omitempty"`
 
 	// Version: Release version number. For example, "1.20.3".

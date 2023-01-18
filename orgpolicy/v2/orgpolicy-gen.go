@@ -624,6 +624,11 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// Alternate: Deprecated.
 	Alternate *GoogleCloudOrgpolicyV2AlternatePolicySpec `json:"alternate,omitempty"`
 
+	// DryRunSpec: dry-run policy. Audit-only policy, can be used to monitor
+	// how the policy would have impacted the existing and future resources
+	// if it's enforced.
+	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
+
 	// Name: Immutable. The resource name of the Policy. Must be one of the
 	// following forms, where constraint_name is the name of the constraint
 	// which this Policy configures: *
@@ -1920,6 +1925,15 @@ func (r *FoldersPoliciesService) Patch(name string, googlecloudorgpolicyv2policy
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Field mask used
+// to specify the fields to be overwritten in the policy by the set. The
+// fields specified in the update_mask are relative to the policy, not
+// the full request.
+func (c *FoldersPoliciesPatchCall) UpdateMask(updateMask string) *FoldersPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2024,6 +2038,12 @@ func (c *FoldersPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -3842,6 +3862,15 @@ func (r *OrganizationsPoliciesService) Patch(name string, googlecloudorgpolicyv2
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Field mask used
+// to specify the fields to be overwritten in the policy by the set. The
+// fields specified in the update_mask are relative to the policy, not
+// the full request.
+func (c *OrganizationsPoliciesPatchCall) UpdateMask(updateMask string) *OrganizationsPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3946,6 +3975,12 @@ func (c *OrganizationsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -4982,6 +5017,15 @@ func (r *ProjectsPoliciesService) Patch(name string, googlecloudorgpolicyv2polic
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": Field mask used
+// to specify the fields to be overwritten in the policy by the set. The
+// fields specified in the update_mask are relative to the policy, not
+// the full request.
+func (c *ProjectsPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5086,6 +5130,12 @@ func (c *ProjectsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -2217,11 +2217,12 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
-	//   "VERY_UNLIKELY" - Few matching elements.
-	//   "UNLIKELY"
-	//   "POSSIBLE" - Some matching elements.
-	//   "LIKELY"
-	//   "VERY_LIKELY" - Many matching elements.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
 	Likelihood string `json:"likelihood,omitempty"`
 
 	// Regex: Regular expression based CustomInfoType.
@@ -3801,11 +3802,12 @@ type GooglePrivacyDlpV2Finding struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
-	//   "VERY_UNLIKELY" - Few matching elements.
-	//   "UNLIKELY"
-	//   "POSSIBLE" - Some matching elements.
-	//   "LIKELY"
-	//   "VERY_LIKELY" - Many matching elements.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
 	Likelihood string `json:"likelihood,omitempty"`
 
 	// Location: Where the content was found.
@@ -4845,11 +4847,12 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
-	//   "VERY_UNLIKELY" - Few matching elements.
-	//   "UNLIKELY"
-	//   "POSSIBLE" - Some matching elements.
-	//   "LIKELY"
-	//   "VERY_LIKELY" - Many matching elements.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
 	MinLikelihood string `json:"minLikelihood,omitempty"`
 
 	// RuleSet: Set of rules to apply to the findings for this
@@ -5958,11 +5961,12 @@ type GooglePrivacyDlpV2LikelihoodAdjustment struct {
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
-	//   "VERY_UNLIKELY" - Few matching elements.
-	//   "UNLIKELY"
-	//   "POSSIBLE" - Some matching elements.
-	//   "LIKELY"
-	//   "VERY_LIKELY" - Many matching elements.
+	//   "VERY_UNLIKELY" - Highest chance of a false positive.
+	//   "UNLIKELY" - High chance of a false positive.
+	//   "POSSIBLE" - Some matching signals. The default value.
+	//   "LIKELY" - Low chance of a false positive.
+	//   "VERY_LIKELY" - Confidence level is high. Lowest chance of a false
+	// positive.
 	FixedLikelihood string `json:"fixedLikelihood,omitempty"`
 
 	// RelativeLikelihood: Increase or decrease the likelihood by the

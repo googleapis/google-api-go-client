@@ -5953,7 +5953,7 @@
       }
     }
   },
-  "revision": "20230104",
+  "revision": "20230112",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5966,7 +5966,7 @@
           "type": "string"
         },
         "adsLinks": {
-          "description": "Linked Ads accounts that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected either in the Ads interface or through the AdWords API. To delete an active link, or to cancel a link request, remove it from the list.",
+          "description": "Linked Ads accounts that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected either in the Ads interface or through the Google Ads API. To delete an active link, or to cancel a link request, remove it from the list.",
           "items": {
             "$ref": "AccountAdsLink"
           },
@@ -12738,7 +12738,7 @@
       "type": "object"
     },
     "Product": {
-      "description": " Required product attributes are primarily defined by the products data specification. See the Products Data Specification Help Center article for information. Product data. After inserting, updating, or deleting a product, it may take several minutes before changes take effect.",
+      "description": " Required product attributes are primarily defined by the product data specification. See the Product Data Specification Help Center article for information. Product data. After inserting, updating, or deleting a product, it may take several minutes before changes take effect.",
       "id": "Product",
       "properties": {
         "additionalImageLinks": {
@@ -12936,6 +12936,13 @@
           "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#product`\"",
           "type": "string"
         },
+        "lifestyleImageLinks": {
+          "description": "Additional URLs of lifestyle images of the item, used to explicitly identify images that showcase your item in a real-world context. See the Help Center article for more information.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "link": {
           "description": "URL directly linking to your item's page on your website.",
           "type": "string"
@@ -13034,7 +13041,7 @@
           "description": "The length of the product in the units provided. The value must be between 0 (exclusive) and 3000 (inclusive)."
         },
         "productTypes": {
-          "description": "Categories of the item (formatted as in products data specification).",
+          "description": "Categories of the item (formatted as in product data specification).",
           "items": {
             "type": "string"
           },
@@ -13060,7 +13067,7 @@
           "description": "Advertised sale price of the item."
         },
         "salePriceEffectiveDate": {
-          "description": "Date range during which the item is on sale (see products data specification ).",
+          "description": "Date range during which the item is on sale (see product data specification ).",
           "type": "string"
         },
         "sellOnGoogleQuantity": {
@@ -13367,7 +13374,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "The numeric ID of a location that the shipping rate applies to as defined in the AdWords API.",
+          "description": "The numeric ID of a location that the shipping rate applies to as defined in the Google Ads API.",
           "format": "int64",
           "type": "string"
         },
@@ -13596,7 +13603,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "The numeric ID of a location that the tax rate applies to as defined in the AdWords API.",
+          "description": "The numeric ID of a location that the tax rate applies to as defined in the Google Ads API.",
           "format": "int64",
           "type": "string"
         },

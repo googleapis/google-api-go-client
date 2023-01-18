@@ -557,6 +557,13 @@ type AddSubnetworkRequest struct {
 	// call fails.
 	RequestedRanges []string `json:"requestedRanges,omitempty"`
 
+	// Role: Optional. Defines the role field of the subnet, e.g. 'ACTIVE'.
+	// For information about the roles that can be set using this field, see
+	// subnetwork
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/subnetworks)
+	// in the Compute API documentation.
+	Role string `json:"role,omitempty"`
+
 	// SecondaryIpRangeSpecs: Optional. A list of secondary IP ranges to be
 	// created within the new subnetwork.
 	SecondaryIpRangeSpecs []*SecondaryIpRangeSpec `json:"secondaryIpRangeSpecs,omitempty"`

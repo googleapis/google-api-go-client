@@ -280,10 +280,22 @@ type ProjectsLocationsIntegrationsService struct {
 
 func NewProjectsLocationsIntegrationsExecutionsService(s *Service) *ProjectsLocationsIntegrationsExecutionsService {
 	rs := &ProjectsLocationsIntegrationsExecutionsService{s: s}
+	rs.Suspensions = NewProjectsLocationsIntegrationsExecutionsSuspensionsService(s)
 	return rs
 }
 
 type ProjectsLocationsIntegrationsExecutionsService struct {
+	s *Service
+
+	Suspensions *ProjectsLocationsIntegrationsExecutionsSuspensionsService
+}
+
+func NewProjectsLocationsIntegrationsExecutionsSuspensionsService(s *Service) *ProjectsLocationsIntegrationsExecutionsSuspensionsService {
+	rs := &ProjectsLocationsIntegrationsExecutionsSuspensionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsIntegrationsExecutionsSuspensionsService struct {
 	s *Service
 }
 
@@ -14736,6 +14748,527 @@ func (c *ProjectsLocationsIntegrationsExecutionsListCall) Pages(ctx context.Cont
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "integrations.projects.locations.integrations.executions.suspensions.lift":
+
+type ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall struct {
+	s                                                   *Service
+	name                                                string
+	googlecloudintegrationsv1alphaliftsuspensionrequest *GoogleCloudIntegrationsV1alphaLiftSuspensionRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Lift: * Lifts suspension for advanced suspension task. Fetch
+// corresponding suspension with provided suspension Id, resolve
+// suspension, and set up suspension result for the Suspension Task.
+//
+//   - name: The resource that the suspension belongs to.
+//     "projects/{project}/locations/{location}/products/{product}/integrat
+//     ions/{integration}/executions/{execution}/suspensions/{suspenion}"
+//     format.
+func (r *ProjectsLocationsIntegrationsExecutionsSuspensionsService) Lift(name string, googlecloudintegrationsv1alphaliftsuspensionrequest *GoogleCloudIntegrationsV1alphaLiftSuspensionRequest) *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall {
+	c := &ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudintegrationsv1alphaliftsuspensionrequest = googlecloudintegrationsv1alphaliftsuspensionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaliftsuspensionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:lift")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.executions.suspensions.lift" call.
+// Exactly one of *GoogleCloudIntegrationsV1alphaLiftSuspensionResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudIntegrationsV1alphaLiftSuspensionResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsLiftCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaLiftSuspensionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaLiftSuspensionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "* Lifts suspension for advanced suspension task. Fetch corresponding suspension with provided suspension Id, resolve suspension, and set up suspension result for the Suspension Task.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/executions/{executionsId}/suspensions/{suspensionsId}:lift",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.integrations.executions.suspensions.lift",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource that the suspension belongs to. \"projects/{project}/locations/{location}/products/{product}/integrations/{integration}/executions/{execution}/suspensions/{suspenion}\" format.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/executions/[^/]+/suspensions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:lift",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaLiftSuspensionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaLiftSuspensionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.integrations.executions.suspensions.list":
+
+type ProjectsLocationsIntegrationsExecutionsSuspensionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: * Lists suspensions associated with a specific execution. Only
+// those with permissions to resolve the relevant suspensions will be
+// able to view them.
+//
+//   - parent:
+//     projects/{gcp_project_id}/locations/{location}/products/{product}/in
+//     tegrations/{integration_name}/executions/{execution_name}.
+func (r *ProjectsLocationsIntegrationsExecutionsSuspensionsService) List(parent string) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c := &ProjectsLocationsIntegrationsExecutionsSuspensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Standard filter field.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Filter(filter string) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field name to order
+// by.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) OrderBy(orderBy string) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// entries in the response.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) PageSize(pageSize int64) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to retrieve
+// a specific page.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) PageToken(pageToken string) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/suspensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.executions.suspensions.list" call.
+// Exactly one of *GoogleCloudIntegrationsV1alphaListSuspensionsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudIntegrationsV1alphaListSuspensionsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaListSuspensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaListSuspensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "* Lists suspensions associated with a specific execution. Only those with permissions to resolve the relevant suspensions will be able to view them.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/executions/{executionsId}/suspensions",
+	//   "httpMethod": "GET",
+	//   "id": "integrations.projects.locations.integrations.executions.suspensions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Standard filter field.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field name to order by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of entries in the response.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to retrieve a specific page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. projects/{gcp_project_id}/locations/{location}/products/{product}/integrations/{integration_name}/executions/{execution_name}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/suspensions",
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaListSuspensionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsListCall) Pages(ctx context.Context, f func(*GoogleCloudIntegrationsV1alphaListSuspensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "integrations.projects.locations.integrations.executions.suspensions.resolve":
+
+type ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall struct {
+	s                                                      *Service
+	name                                                   string
+	googlecloudintegrationsv1alpharesolvesuspensionrequest *GoogleCloudIntegrationsV1alphaResolveSuspensionRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Resolve: * Resolves (lifts/rejects) any number of suspensions. If the
+// integration is already running, only the status of the suspension is
+// updated. Otherwise, the suspended integration will begin execution
+// again.
+//
+//   - name:
+//     projects/{gcp_project_id}/locations/{location}/products/{product}/in
+//     tegrations/{integration_name}/executions/{execution_name}/suspension
+//     s/{suspension_id}.
+func (r *ProjectsLocationsIntegrationsExecutionsSuspensionsService) Resolve(name string, googlecloudintegrationsv1alpharesolvesuspensionrequest *GoogleCloudIntegrationsV1alphaResolveSuspensionRequest) *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall {
+	c := &ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudintegrationsv1alpharesolvesuspensionrequest = googlecloudintegrationsv1alpharesolvesuspensionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alpharesolvesuspensionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:resolve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.executions.suspensions.resolve" call.
+// Exactly one of
+// *GoogleCloudIntegrationsV1alphaResolveSuspensionResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIntegrationsV1alphaResolveSuspensionResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaResolveSuspensionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaResolveSuspensionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "* Resolves (lifts/rejects) any number of suspensions. If the integration is already running, only the status of the suspension is updated. Otherwise, the suspended integration will begin execution again.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/executions/{executionsId}/suspensions/{suspensionsId}:resolve",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.integrations.executions.suspensions.resolve",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. projects/{gcp_project_id}/locations/{location}/products/{product}/integrations/{integration_name}/executions/{execution_name}/suspensions/{suspension_id}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/executions/[^/]+/suspensions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:resolve",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaResolveSuspensionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaResolveSuspensionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "integrations.projects.locations.integrations.versions.archive":

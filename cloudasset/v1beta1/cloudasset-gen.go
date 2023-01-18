@@ -207,7 +207,7 @@ type ProjectsOperationsService struct {
 }
 
 // AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
-// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+// longrunning operation for the AnalyzeIamPolicyLongrunning RPC.
 type AnalyzeIamPolicyLongrunningMetadata struct {
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -244,8 +244,8 @@ type AnalyzeIamPolicyLongrunningResponse struct {
 // Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type Asset struct {
@@ -263,15 +263,15 @@ type Asset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: A representation of the Cloud IAM policy set on a Google
-	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
-	// any given resource. In addition, Cloud IAM policies inherit their
-	// granted access scope from any policies set on parent resources in the
-	// resource hierarchy. Therefore, the effectively policy is the union of
-	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
-	// for more information.
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -639,15 +639,15 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
-	// Uri: The uri of the Cloud Storage object. It's the same uri that is
+	// Uri: The URI of the Cloud Storage object. It's the same URI that is
 	// used by gsutil. For example: "gs://bucket_name/object_name". See
 	// Viewing and Editing Object Metadata
 	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for
 	// more information.
 	Uri string `json:"uri,omitempty"`
 
-	// UriPrefix: The uri prefix of all generated Cloud Storage objects. For
-	// example: "gs://bucket_name/object_name_prefix". Each object uri is in
+	// UriPrefix: The URI prefix of all generated Cloud Storage objects. For
+	// example: "gs://bucket_name/object_name_prefix". Each object URI is in
 	// format: "gs://bucket_name/object_name_prefix// and only contains
 	// assets for that type. starts from 0. For example:
 	// "gs://bucket_name/object_name_prefix/google.compute.disk/0" is the
@@ -683,8 +683,8 @@ func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 // can be any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1Asset struct {
@@ -712,15 +712,15 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: A representation of the Cloud IAM policy set on a Google
-	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
-	// any given resource. In addition, Cloud IAM policies inherit their
-	// granted access scope from any policies set on parent resources in the
-	// resource hierarchy. Therefore, the effectively policy is the union of
-	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
-	// for more information.
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -779,8 +779,8 @@ func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
 // any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1RelatedAsset struct {
@@ -932,7 +932,7 @@ type GoogleCloudAssetV1p7beta1Resource struct {
 	// Resource Names
 	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
 	// for more information. For Google Cloud assets, this value is the
-	// parent resource defined in the Cloud IAM policy hierarchy
+	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
@@ -1880,11 +1880,13 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 
 	// Resource: A Google Cloud resource that is allowed to ingress the
 	// perimeter. Requests from these resources will be allowed to access
-	// perimeter data. Currently only projects are allowed. Format:
-	// `projects/{project_number}` The project may be in any Google Cloud
-	// organization, not just the organization that the perimeter is defined
-	// in. `*` is not allowed, the case of allowing all Google Cloud
-	// resources only is not supported.
+	// perimeter data. Currently only projects and VPCs are allowed. Project
+	// format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `. The project may be in any Google Cloud organization, not just the
+	// organization that the perimeter is defined in. `*` is not allowed,
+	// the case of allowing all Google Cloud resources only is not
+	// supported.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -2152,8 +2154,10 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
-	// service perimeter. Currently only projects are allowed. Format:
-	// `projects/{project_number}`
+	// service perimeter. Currently only projects and VPCs are allowed.
+	// Project format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `.
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: Google Cloud services that are subject to the
@@ -2447,7 +2451,7 @@ type Resource struct {
 	// Resource Names
 	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
 	// for more information. For Google Cloud assets, this value is the
-	// parent resource defined in the Cloud IAM policy hierarchy
+	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For

@@ -636,8 +636,8 @@ type Account struct {
 	// AdsLinks: Linked Ads accounts that are active or pending approval. To
 	// create a new link request, add a new link with status `active` to the
 	// list. It will remain in a `pending` state until approved or rejected
-	// either in the Ads interface or through the AdWords API. To delete an
-	// active link, or to cancel a link request, remove it from the list.
+	// either in the Ads interface or through the Google Ads API. To delete
+	// an active link, or to cancel a link request, remove it from the list.
 	AdsLinks []*AccountAdsLink `json:"adsLinks,omitempty"`
 
 	// AdultContent: Indicates whether the merchant sells adult content.
@@ -12352,7 +12352,7 @@ func (s *PriceInsights) UnmarshalJSON(data []byte) error {
 }
 
 // Product:  Required product attributes are primarily defined by the
-// products data specification. See the Products Data Specification Help
+// product data specification. See the Product Data Specification Help
 // Center article for information. Product data. After inserting,
 // updating, or deleting a product, it may take several minutes before
 // changes take effect.
@@ -12537,6 +12537,11 @@ type Product struct {
 	// string "content#product"
 	Kind string `json:"kind,omitempty"`
 
+	// LifestyleImageLinks: Additional URLs of lifestyle images of the item,
+	// used to explicitly identify images that showcase your item in a
+	// real-world context. See the Help Center article for more information.
+	LifestyleImageLinks []string `json:"lifestyleImageLinks,omitempty"`
+
 	// Link: URL directly linking to your item's page on your website.
 	Link string `json:"link,omitempty"`
 
@@ -12622,7 +12627,7 @@ type Product struct {
 	// value must be between 0 (exclusive) and 3000 (inclusive).
 	ProductLength *ProductDimension `json:"productLength,omitempty"`
 
-	// ProductTypes: Categories of the item (formatted as in products data
+	// ProductTypes: Categories of the item (formatted as in product data
 	// specification).
 	ProductTypes []string `json:"productTypes,omitempty"`
 
@@ -12641,7 +12646,7 @@ type Product struct {
 	SalePrice *Price `json:"salePrice,omitempty"`
 
 	// SalePriceEffectiveDate: Date range during which the item is on sale
-	// (see products data specification ).
+	// (see product data specification ).
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
 	// SellOnGoogleQuantity: The quantity of the product that is available
@@ -13127,7 +13132,7 @@ type ProductShipping struct {
 	LocationGroupName string `json:"locationGroupName,omitempty"`
 
 	// LocationId: The numeric ID of a location that the shipping rate
-	// applies to as defined in the AdWords API.
+	// applies to as defined in the Google Ads API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
 	// MaxHandlingTime: Maximum handling time (inclusive) between when the
@@ -13487,7 +13492,7 @@ type ProductTax struct {
 	Country string `json:"country,omitempty"`
 
 	// LocationId: The numeric ID of a location that the tax rate applies to
-	// as defined in the AdWords API.
+	// as defined in the Google Ads API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
 	// PostalCode: The postal code range that the tax rate applies to,

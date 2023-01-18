@@ -997,7 +997,7 @@
       "name": "cloudasset",
       "version": "v1p1beta1",
       "title": "Cloud Asset API",
-      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "description": "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1012,7 +1012,7 @@
       "name": "cloudasset",
       "version": "v1p5beta1",
       "title": "Cloud Asset API",
-      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "description": "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p5beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1027,7 +1027,7 @@
       "name": "cloudasset",
       "version": "v1p7beta1",
       "title": "Cloud Asset API",
-      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "description": "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p7beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1042,7 +1042,7 @@
       "name": "cloudasset",
       "version": "v1beta1",
       "title": "Cloud Asset API",
-      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "description": "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1057,7 +1057,7 @@
       "name": "cloudasset",
       "version": "v1",
       "title": "Cloud Asset API",
-      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "description": "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3548,18 +3548,18 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "language:v1beta1",
-      "name": "language",
-      "version": "v1beta1",
-      "title": "Cloud Natural Language API",
-      "description": "Provides natural language understanding technologies, such as sentiment analysis, entity recognition, entity sentiment analysis, and other text annotations, to developers.",
-      "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta1",
+      "id": "kmsinventory:v1",
+      "name": "kmsinventory",
+      "version": "v1",
+      "title": "KMS Inventory API",
+      "description": "",
+      "discoveryRestUrl": "https://kmsinventory.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/natural-language/",
-      "preferred": false
+      "documentationLink": "https://cloud.google.com/kms/",
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

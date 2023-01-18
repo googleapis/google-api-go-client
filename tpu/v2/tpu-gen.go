@@ -3254,7 +3254,7 @@ func (c *ProjectsLocationsNodesStartCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -3397,7 +3397,7 @@ func (c *ProjectsLocationsNodesStopCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,

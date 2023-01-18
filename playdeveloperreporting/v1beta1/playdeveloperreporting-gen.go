@@ -78,8 +78,20 @@ const apiVersion = "v1beta1"
 const basePath = "https://playdeveloperreporting.googleapis.com/"
 const mtlsBasePath = "https://playdeveloperreporting.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See metrics and data about the apps in your Google Play Developer
+	// account
+	PlaydeveloperreportingScope = "https://www.googleapis.com/auth/playdeveloperreporting"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/playdeveloperreporting",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -1834,7 +1846,10 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 	//   "path": "v1beta1/{+parent}/anomalies",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2000,7 +2015,10 @@ func (c *VitalsAnrrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeve
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1AnrRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2142,7 +2160,10 @@ func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2308,7 +2329,10 @@ func (c *VitalsCrashrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1CrashRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2450,7 +2474,10 @@ func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlay
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2618,7 +2645,10 @@ func (c *VitalsExcessivewakeuprateGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2761,7 +2791,10 @@ func (c *VitalsExcessivewakeuprateQueryCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2931,7 +2964,10 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Do(opts ...googleapi.CallOpti
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -3074,7 +3110,10 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }

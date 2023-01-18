@@ -522,14 +522,17 @@ type Access struct {
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
-	// UserAgentFamily: What kind of user agent is associated, e.g.
+	// UserAgentFamily: What kind of user agent is associated, for example
 	// operating system shells, embedded or stand-alone applications, etc.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// UserName: A string representing a username. This is likely not an IAM
-	// principal. For instance, this may be the system user name if the
-	// finding is VM-related, or this may be some type of application login
-	// user name, depending on the type of finding.
+	// UserName: A string that represents the username of a user, user
+	// account, or other entity involved in the access event. What the
+	// entity is and what its role in the access event is depends on the
+	// finding that this field appears in. The entity is likely not an IAM
+	// principal, but could be a user that is logged into an operating
+	// system, if the finding is VM-related, or a user that is logged into
+	// some type of application that is involved in the access event.
 	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
@@ -5592,9 +5595,11 @@ type FoldersAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: The name of the parent that the listed assets belong to.
-//     Its format is "organizations/[organization_id],
-//     "folders/[folder_id]", or "projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5865,7 +5870,7 @@ func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRes
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -8668,7 +8673,7 @@ type FoldersSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8812,7 +8817,7 @@ func (c *FoldersSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -10638,9 +10643,11 @@ type OrganizationsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: The name of the parent that the listed assets belong to.
-//     Its format is "organizations/[organization_id],
-//     "folders/[folder_id]", or "projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10911,7 +10918,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -14932,7 +14939,7 @@ type OrganizationsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15076,7 +15083,7 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -17203,9 +17210,11 @@ type ProjectsAssetsListCall struct {
 
 // List: Lists an organization's assets.
 //
-//   - parent: The name of the parent that the listed assets belong to.
-//     Its format is "organizations/[organization_id],
-//     "folders/[folder_id]", or "projects/[project_id]".
+//   - parent: The name of the parent resource that contains the assets.
+//     The value that you can specify on parent depends on the method in
+//     which you specify parent. You can specify one of the following
+//     values: "organizations/[organization_id]", "folders/[folder_id]",
+//     or "projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -17476,7 +17485,7 @@ func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsRe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the parent that the listed assets belong to. Its format is \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. The name of the parent resource that contains the assets. The value that you can specify on parent depends on the method in which you specify parent. You can specify one of the following values: \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -20279,7 +20288,7 @@ type ProjectsSourcesListCall struct {
 // List: Lists all sources belonging to an organization.
 //
 //   - parent: Resource name of the parent of sources to list. Its format
-//     should be "organizations/[organization_id], "folders/[folder_id]",
+//     should be "organizations/[organization_id]", "folders/[folder_id]",
 //     or "projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -20423,7 +20432,7 @@ func (c *ProjectsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSources
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], \"folders/[folder_id]\", or \"projects/[project_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\", \"folders/[folder_id]\", or \"projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

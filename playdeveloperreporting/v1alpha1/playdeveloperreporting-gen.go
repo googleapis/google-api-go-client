@@ -78,8 +78,20 @@ const apiVersion = "v1alpha1"
 const basePath = "https://playdeveloperreporting.googleapis.com/"
 const mtlsBasePath = "https://playdeveloperreporting.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See metrics and data about the apps in your Google Play Developer
+	// account
+	PlaydeveloperreportingScope = "https://www.googleapis.com/auth/playdeveloperreporting"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/playdeveloperreporting",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -2281,7 +2293,10 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 	//   "path": "v1alpha1/{+parent}/anomalies",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1ListAnomaliesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2447,7 +2462,10 @@ func (c *VitalsAnrrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeve
 	//   "path": "v1alpha1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1AnrRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2589,7 +2607,10 @@ func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2756,7 +2777,10 @@ func (c *VitalsCrashrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 	//   "path": "v1alpha1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1CrashRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -2898,7 +2922,10 @@ func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlay
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -3066,7 +3093,10 @@ func (c *VitalsErrorsCountsGetCall) Do(opts ...googleapi.CallOption) (*GooglePla
 	//   "path": "v1alpha1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -3208,7 +3238,10 @@ func (c *VitalsErrorsCountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -3727,7 +3760,10 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v1alpha1/{+parent}/errorIssues:search",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1SearchErrorIssuesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -4249,7 +4285,10 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1alpha1/{+parent}/errorReports:search",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1SearchErrorReportsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -4417,7 +4456,10 @@ func (c *VitalsExcessivewakeuprateGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//   "path": "v1alpha1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1ExcessiveWakeupRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -4560,7 +4602,10 @@ func (c *VitalsExcessivewakeuprateQueryCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -4730,7 +4775,10 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Do(opts ...googleapi.CallOpti
 	//   "path": "v1alpha1/{+name}",
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1StuckBackgroundWakelockRateMetricSet"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }
@@ -4873,7 +4921,10 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricSetResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/playdeveloperreporting"
+	//   ]
 	// }
 
 }

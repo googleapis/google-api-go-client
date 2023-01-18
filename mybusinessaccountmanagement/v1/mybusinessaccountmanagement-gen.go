@@ -219,7 +219,7 @@ type Account struct {
 
 	// PrimaryOwner: Required. Input only. The resource name of the account
 	// which will be the primary owner of the account being created. It
-	// should be of the form `accounts/{account_id}/`.
+	// should be of the form `accounts/{account_id}`.
 	PrimaryOwner string `json:"primaryOwner,omitempty"`
 
 	// Role: Output only. Specifies the AccountRole of this account.

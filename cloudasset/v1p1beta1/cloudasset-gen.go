@@ -159,7 +159,7 @@ type ResourcesService struct {
 }
 
 // AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
-// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+// longrunning operation for the AnalyzeIamPolicyLongrunning RPC.
 type AnalyzeIamPolicyLongrunningMetadata struct {
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -465,8 +465,8 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // can be any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1Asset struct {
@@ -494,15 +494,15 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
-	// IamPolicy: A representation of the Cloud IAM policy set on a Google
-	// Cloud resource. There can be a maximum of one Cloud IAM policy set on
-	// any given resource. In addition, Cloud IAM policies inherit their
-	// granted access scope from any policies set on parent resources in the
-	// resource hierarchy. Therefore, the effectively policy is the union of
-	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic (https://cloud.google.com/iam/help/allow-policies/inheritance)
-	// for more information.
+	// IamPolicy: A representation of the IAM policy set on a Google Cloud
+	// resource. There can be a maximum of one IAM policy set on any given
+	// resource. In addition, IAM policies inherit their granted access
+	// scope from any policies set on parent resources in the resource
+	// hierarchy. Therefore, the effectively policy is the union of both the
+	// policy set on this resource and each policy set on all of the
+	// resource's ancestry resource levels in the hierarchy. See this topic
+	// (https://cloud.google.com/iam/help/allow-policies/inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
@@ -561,8 +561,8 @@ func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
 // any resource in the Google Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
 // a resource outside the Google Cloud resource hierarchy (such as
-// Google Kubernetes Engine clusters and objects), or a policy (e.g.
-// Cloud IAM policy). See Supported asset types
+// Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+// policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type GoogleCloudAssetV1p7beta1RelatedAsset struct {
@@ -714,7 +714,7 @@ type GoogleCloudAssetV1p7beta1Resource struct {
 	// Resource Names
 	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
 	// for more information. For Google Cloud assets, this value is the
-	// parent resource defined in the Cloud IAM policy hierarchy
+	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
@@ -1662,11 +1662,13 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 
 	// Resource: A Google Cloud resource that is allowed to ingress the
 	// perimeter. Requests from these resources will be allowed to access
-	// perimeter data. Currently only projects are allowed. Format:
-	// `projects/{project_number}` The project may be in any Google Cloud
-	// organization, not just the organization that the perimeter is defined
-	// in. `*` is not allowed, the case of allowing all Google Cloud
-	// resources only is not supported.
+	// perimeter data. Currently only projects and VPCs are allowed. Project
+	// format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `. The project may be in any Google Cloud organization, not just the
+	// organization that the perimeter is defined in. `*` is not allowed,
+	// the case of allowing all Google Cloud resources only is not
+	// supported.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -1934,8 +1936,10 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
-	// service perimeter. Currently only projects are allowed. Format:
-	// `projects/{project_number}`
+	// service perimeter. Currently only projects and VPCs are allowed.
+	// Project format: `projects/{project_number}` VPC format:
+	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}
+	// `.
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: Google Cloud services that are subject to the
@@ -2201,7 +2205,7 @@ type SearchAllIamPoliciesResponse struct {
 	// again, using this value as the `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Results: A list of IamPolicy that match the search query. Related
+	// Results: A list of IAM policies that match the search query. Related
 	// information such as the associated resource is returned along with
 	// the policy.
 	Results []*IamPolicySearchResult `json:"results,omitempty"`
@@ -2290,7 +2294,7 @@ type StandardResourceMetadata struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Labels associated with this resource. See Labelling and
-	// grouping GCP resources
+	// grouping Google Cloud resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2307,8 +2311,8 @@ type StandardResourceMetadata struct {
 	Name string `json:"name,omitempty"`
 
 	// NetworkTags: Network tags associated with this resource. Like labels,
-	// network tags are a type of annotations used to group GCP resources.
-	// See Labelling GCP resources
+	// network tags are a type of annotations used to group Google Cloud
+	// resources. See Labelling Google Cloud resources
 	// (lhttps://cloud.google.com/blog/products/gcp/labelling-and-grouping-yo
 	// ur-google-cloud-platform-resources) for more information.
 	NetworkTags []string `json:"networkTags,omitempty"`
@@ -2354,18 +2358,18 @@ type IamPoliciesSearchAllCall struct {
 }
 
 // SearchAll: Searches all the IAM policies within a given accessible
-// CRM scope (project/folder/organization). This RPC gives callers
-// especially administrators the ability to search all the IAM policies
-// within a scope, even if they don't have `.getIamPolicy` permission of
-// all the IAM policies. Callers should have
+// Resource Manager scope (project/folder/organization). This RPC gives
+// callers especially administrators the ability to search all the IAM
+// policies within a scope, even if they don't have `.getIamPolicy`
+// permission of all the IAM policies. Callers should have
 // `cloud.assets.SearchAllIamPolicies` permission on the requested
 // scope, otherwise the request will be rejected.
 //
 //   - scope: The relative name of an asset. The search is limited to the
 //     resources within the `scope`. The allowed value must be: *
-//     Organization number (such as "organizations/123") * Folder
-//     number(such as "folders/1234") * Project number (such as
-//     "projects/12345") * Project id (such as "projects/abc").
+//     Organization number (such as "organizations/123") * Folder number
+//     (such as "folders/1234") * Project number (such as
+//     "projects/12345") * Project ID (such as "projects/abc").
 func (r *IamPoliciesService) SearchAll(scope string) *IamPoliciesSearchAllCall {
 	c := &IamPoliciesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -2500,7 +2504,7 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the IAM policies within a given accessible CRM scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the IAM policies within a scope, even if they don't have `.getIamPolicy` permission of all the IAM policies. Callers should have `cloud.assets.SearchAllIamPolicies` permission on the requested scope, otherwise the request will be rejected.",
+	//   "description": "Searches all the IAM policies within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the IAM policies within a scope, even if they don't have `.getIamPolicy` permission of all the IAM policies. Callers should have `cloud.assets.SearchAllIamPolicies` permission on the requested scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/iamPolicies:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.iamPolicies.searchAll",
@@ -2525,7 +2529,7 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources within the `scope`. The allowed value must be: * Organization number (such as \"organizations/123\") * Folder number(such as \"folders/1234\") * Project number (such as \"projects/12345\") * Project id (such as \"projects/abc\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources within the `scope`. The allowed value must be: * Organization number (such as \"organizations/123\") * Folder number (such as \"folders/1234\") * Project number (such as \"projects/12345\") * Project ID (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -2575,19 +2579,19 @@ type ResourcesSearchAllCall struct {
 	header_      http.Header
 }
 
-// SearchAll: Searches all the resources within a given accessible CRM
-// scope (project/folder/organization). This RPC gives callers
-// especially administrators the ability to search all the resources
-// within a scope, even if they don't have `.get` permission of all the
-// resources. Callers should have `cloud.assets.SearchAllResources`
-// permission on the requested scope, otherwise the request will be
-// rejected.
+// SearchAll: Searches all the resources within a given accessible
+// Resource Manager scope (project/folder/organization). This RPC gives
+// callers especially administrators the ability to search all the
+// resources within a scope, even if they don't have `.get` permission
+// of all the resources. Callers should have
+// `cloud.assets.SearchAllResources` permission on the requested scope,
+// otherwise the request will be rejected.
 //
 //   - scope: The relative name of an asset. The search is limited to the
 //     resources within the `scope`. The allowed value must be: *
-//     Organization number (such as "organizations/123") * Folder
-//     number(such as "folders/1234") * Project number (such as
-//     "projects/12345") * Project id (such as "projects/abc").
+//     Organization number (such as "organizations/123") * Folder number
+//     (such as "folders/1234") * Project number (such as
+//     "projects/12345") * Project ID (such as "projects/abc").
 func (r *ResourcesService) SearchAll(scope string) *ResourcesSearchAllCall {
 	c := &ResourcesSearchAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scope = scope
@@ -2738,7 +2742,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the resources within a given accessible CRM scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don't have `.get` permission of all the resources. Callers should have `cloud.assets.SearchAllResources` permission on the requested scope, otherwise the request will be rejected.",
+	//   "description": "Searches all the resources within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don't have `.get` permission of all the resources. Callers should have `cloud.assets.SearchAllResources` permission on the requested scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/resources:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.resources.searchAll",
@@ -2774,7 +2778,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of an asset. The search is limited to the resources within the `scope`. The allowed value must be: * Organization number (such as \"organizations/123\") * Folder number(such as \"folders/1234\") * Project number (such as \"projects/12345\") * Project id (such as \"projects/abc\")",
+	//       "description": "Required. The relative name of an asset. The search is limited to the resources within the `scope`. The allowed value must be: * Organization number (such as \"organizations/123\") * Folder number (such as \"folders/1234\") * Project number (such as \"projects/12345\") * Project ID (such as \"projects/abc\")",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

@@ -791,6 +791,44 @@ func (s *Measurement3d) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NoOverlapGpsFailureDetails: Details related to
+// PhotoSequenceProcessingFailureReason#NO_OVERLAP_GPS.
+type NoOverlapGpsFailureDetails struct {
+	// GpsEndTime: Time of last recorded GPS point.
+	GpsEndTime string `json:"gpsEndTime,omitempty"`
+
+	// GpsStartTime: Time of first recorded GPS point.
+	GpsStartTime string `json:"gpsStartTime,omitempty"`
+
+	// VideoEndTime: End time of video.
+	VideoEndTime string `json:"videoEndTime,omitempty"`
+
+	// VideoStartTime: Start time of video.
+	VideoStartTime string `json:"videoStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GpsEndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GpsEndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NoOverlapGpsFailureDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NoOverlapGpsFailureDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NotOutdoorsFailureDetails: Details related to
 // ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor
 // frames found, the first frame is recorded here.
@@ -1358,6 +1396,9 @@ type ProcessingFailureDetails struct {
 
 	// InsufficientGpsDetails: See InsufficientGpsFailureDetails.
 	InsufficientGpsDetails *InsufficientGpsFailureDetails `json:"insufficientGpsDetails,omitempty"`
+
+	// NoOverlapGpsDetails: See NoOverlapGpsFailureDetails.
+	NoOverlapGpsDetails *NoOverlapGpsFailureDetails `json:"noOverlapGpsDetails,omitempty"`
 
 	// NotOutdoorsDetails: See NotOutdoorsFailureDetails.
 	NotOutdoorsDetails *NotOutdoorsFailureDetails `json:"notOutdoorsDetails,omitempty"`

@@ -1121,8 +1121,9 @@ type DeprecatedEvent struct {
 	Space *Space `json:"space,omitempty"`
 
 	// ThreadKey: The Chat app-defined key for the thread related to the
-	// event. See the thread_key field of the `spaces.message.create`
-	// request for more information.
+	// event. See `spaces.messages.thread.threadKey`
+	// (/chat/api/reference/rest/v1/spaces.messages#Thread.FIELDS.thread_key)
+	//  for more information.
 	ThreadKey string `json:"threadKey,omitempty"`
 
 	// Token: A secret value that legacy Chat apps can use to verify if a
@@ -2692,10 +2693,10 @@ type GoogleAppsCardV1TextInput struct {
 	// coming soon.
 	AutoCompleteAction *GoogleAppsCardV1Action `json:"autoCompleteAction,omitempty"`
 
-	// HintText: Text that appears inside the text input field meant to
+	// HintText: Text that appears below the text input field meant to
 	// assist users by prompting them to enter a certain value. This text is
-	// not visible after users begin typing. Required if `label` is
-	// unspecified. Otherwise, optional.
+	// always visible. Required if `label` is unspecified. Otherwise,
+	// optional.
 	HintText string `json:"hintText,omitempty"`
 
 	// InitialSuggestions: Suggested values that users can enter. These
@@ -4668,9 +4669,7 @@ type SpacesMembersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Developer Preview
-// (https://developers.google.com/workspace/preview): Returns a
-// membership. Requires authentication
+// Get: Returns a membership. Requires authentication
 // (https://developers.google.com/chat/api/guides/auth/). Fully supports
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
@@ -4790,7 +4789,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	}
 	return ret, nil
 	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Returns a membership. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
+	//   "description": "Returns a membership. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.get",
@@ -4829,9 +4828,7 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Developer Preview
-// (https://developers.google.com/workspace/preview): Lists memberships
-// in a space. Requires authentication
+// List: Lists memberships in a space. Requires authentication
 // (https://developers.google.com/chat/api/guides/auth/). Fully supports
 // service account authentication
 // (https://developers.google.com/chat/api/guides/auth/service-accounts).
@@ -4972,7 +4969,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "[Developer Preview](https://developers.google.com/workspace/preview): Lists memberships in a space. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
+	//   "description": "Lists memberships in a space. Requires [authentication](https://developers.google.com/chat/api/guides/auth/). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.memberships` or `chat.memberships.readonly` authorization scope.",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",

@@ -3368,21 +3368,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "ideahub:v1beta",
-      "name": "ideahub",
-      "version": "v1beta",
-      "title": "Idea Hub API",
-      "description": "This is an invitation-only API.",
-      "discoveryRestUrl": "https://ideahub.googleapis.com/$discovery/rest?version=v1beta",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://console.cloud.google.com/apis/library/ideahub.googleapis.com",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "identitytoolkit:v1",
       "name": "identitytoolkit",
       "version": "v1",
@@ -3560,6 +3545,21 @@
       },
       "documentationLink": "https://cloud.google.com/kms/",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "language:v1beta1",
+      "name": "language",
+      "version": "v1beta1",
+      "title": "Cloud Natural Language API",
+      "description": "Provides natural language understanding technologies, such as sentiment analysis, entity recognition, entity sentiment analysis, and other text annotations, to developers.",
+      "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/natural-language/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -4880,6 +4880,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/apps-script/api/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "searchads360:v0",
+      "name": "searchads360",
+      "version": "v0",
+      "title": "Search Ads 360 Reporting API",
+      "description": "The Search Ads 360 API allows developers to automate downloading reports from Search Ads 360.",
+      "discoveryRestUrl": "https://searchads360.googleapis.com/$discovery/rest?version=v0",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/search-ads/reporting",
       "preferred": true
     },
     {

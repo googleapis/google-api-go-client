@@ -1303,6 +1303,10 @@ func (s *GoogleCloudIdentitytoolkitV1GetProjectConfigResponse) MarshalJSON() ([]
 type GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse struct {
 	Kind string `json:"kind,omitempty"`
 
+	// ProducerProjectNumber: The producer project number used to generate
+	// PIA tokens
+	ProducerProjectNumber string `json:"producerProjectNumber,omitempty"`
+
 	// RecaptchaSiteKey: The reCAPTCHA v2 site key used to invoke the
 	// reCAPTCHA service. Always present.
 	RecaptchaSiteKey string `json:"recaptchaSiteKey,omitempty"`

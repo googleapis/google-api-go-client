@@ -216,7 +216,7 @@ func (s *AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Device: Third-party device definition. Next ID = 14
+// Device: Third-party device definition.
 type Device struct {
 	// Attributes: Attributes for the traits supported by the device.
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`

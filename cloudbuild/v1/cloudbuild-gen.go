@@ -1253,7 +1253,7 @@ type Build struct {
 	// Timeout: Amount of time that this build should be allowed to run, to
 	// second granularity. If this amount of time elapses, work on the build
 	// will cease and the build status will be `TIMEOUT`. `timeout` starts
-	// ticking from `startTime`. Default time is ten minutes.
+	// ticking from `startTime`. Default time is 60 minutes.
 	Timeout string `json:"timeout,omitempty"`
 
 	// Timing: Output only. Stores timing information for phases of the
@@ -2387,6 +2387,7 @@ type GitFileSource struct {
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
+	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Revision: The branch, tag, arbitrary ref, or SHA version of the repo
@@ -2935,6 +2936,7 @@ type GitRepoSource struct {
 	//   "GITHUB" - A GitHub-hosted repo not necessarily on "github.com"
 	// (i.e. GitHub Enterprise).
 	//   "BITBUCKET_SERVER" - A Bitbucket Server-hosted repo.
+	//   "GITLAB" - A GitLab-hosted repo.
 	RepoType string `json:"repoType,omitempty"`
 
 	// Uri: The URI of the repo. Either uri or repository can be specified
@@ -2962,36 +2964,6 @@ type GitRepoSource struct {
 
 func (s *GitRepoSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GitRepoSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// HTTPDelivery: HTTPDelivery is the delivery configuration for an HTTP
-// notification.
-type HTTPDelivery struct {
-	// Uri: The URI to which JSON-containing HTTP POST requests should be
-	// sent.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *HTTPDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod HTTPDelivery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3526,222 +3498,6 @@ type NetworkConfig struct {
 
 func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Notification: Notification is the container which holds the data that
-// is relevant to this particular notification.
-type Notification struct {
-	// Filter: The filter string to use for notification filtering.
-	// Currently, this is assumed to be a CEL program. See
-	// https://opensource.google/projects/cel for more.
-	Filter string `json:"filter,omitempty"`
-
-	// HttpDelivery: Configuration for HTTP delivery.
-	HttpDelivery *HTTPDelivery `json:"httpDelivery,omitempty"`
-
-	// SlackDelivery: Configuration for Slack delivery.
-	SlackDelivery *SlackDelivery `json:"slackDelivery,omitempty"`
-
-	// SmtpDelivery: Configuration for SMTP (email) delivery.
-	SmtpDelivery *SMTPDelivery `json:"smtpDelivery,omitempty"`
-
-	// StructDelivery: Escape hatch for users to supply custom delivery
-	// configs.
-	StructDelivery googleapi.RawMessage `json:"structDelivery,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Notification) MarshalJSON() ([]byte, error) {
-	type NoMethod Notification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierConfig: NotifierConfig is the top-level configuration
-// message.
-type NotifierConfig struct {
-	// ApiVersion: The API version of this configuration format.
-	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Kind: The type of notifier to use (e.g. SMTPNotifier).
-	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata for referring to/handling/deploying this notifier.
-	Metadata *NotifierMetadata `json:"metadata,omitempty"`
-
-	// Spec: The actual configuration for this notifier.
-	Spec *NotifierSpec `json:"spec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierMetadata: NotifierMetadata contains the data which can be
-// used to reference or describe this notifier.
-type NotifierMetadata struct {
-	// Name: The human-readable and user-given name for the notifier. For
-	// example: "repo-merge-email-notifier".
-	Name string `json:"name,omitempty"`
-
-	// Notifier: The string representing the name and version of notifier to
-	// deploy. Expected to be of the form of "/:". For example:
-	// "gcr.io/my-project/notifiers/smtp:1.2.34".
-	Notifier string `json:"notifier,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSecret: NotifierSecret is the container that maps a secret
-// name (reference) to its Google Cloud Secret Manager resource path.
-type NotifierSecret struct {
-	// Name: Name is the local name of the secret, such as the verbatim
-	// string "my-smtp-password".
-	Name string `json:"name,omitempty"`
-
-	// Value: Value is interpreted to be a resource path for fetching the
-	// actual (versioned) secret data for this secret. For example, this
-	// would be a Google Cloud Secret Manager secret version resource path
-	// like: "projects/my-project/secrets/my-secret/versions/latest".
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierSecret) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSecret
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSecretRef: NotifierSecretRef contains the reference to a
-// secret stored in the corresponding NotifierSpec.
-type NotifierSecretRef struct {
-	// SecretRef: The value of `secret_ref` should be a `name` that is
-	// registered in a `Secret` in the `secrets` list of the `Spec`.
-	SecretRef string `json:"secretRef,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SecretRef") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SecretRef") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierSecretRef) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSecretRef
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NotifierSpec: NotifierSpec is the configuration container for
-// notifications.
-type NotifierSpec struct {
-	// Notification: The configuration of this particular notifier.
-	Notification *Notification `json:"notification,omitempty"`
-
-	// Secrets: Configurations for secret resources used by this particular
-	// notifier.
-	Secrets []*NotifierSecret `json:"secrets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Notification") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Notification") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NotifierSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod NotifierSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4448,53 +4204,6 @@ func (s *RunBuildTriggerRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SMTPDelivery: SMTPDelivery is the delivery configuration for an SMTP
-// (email) notification.
-type SMTPDelivery struct {
-	// FromAddress: This is the SMTP account/email that appears in the
-	// `From:` of the email. If empty, it is assumed to be sender.
-	FromAddress string `json:"fromAddress,omitempty"`
-
-	// Password: The SMTP sender's password.
-	Password *NotifierSecretRef `json:"password,omitempty"`
-
-	// Port: The SMTP port of the server.
-	Port string `json:"port,omitempty"`
-
-	// RecipientAddresses: This is the list of addresses to which we send
-	// the email (i.e. in the `To:` of the email).
-	RecipientAddresses []string `json:"recipientAddresses,omitempty"`
-
-	// SenderAddress: This is the SMTP account/email that is used to send
-	// the message.
-	SenderAddress string `json:"senderAddress,omitempty"`
-
-	// Server: The address of the SMTP server.
-	Server string `json:"server,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FromAddress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FromAddress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SMTPDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod SMTPDelivery
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Secret: Pairs a set of secret environment variables containing
 // encrypted values with the Cloud KMS key to use to decrypt the value.
 // Note: Use `kmsKeyName` with `available_secrets` instead of using
@@ -4629,37 +4338,6 @@ type ServiceDirectoryConfig struct {
 
 func (s *ServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceDirectoryConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SlackDelivery: SlackDelivery is the delivery configuration for
-// delivering Slack messages via webhooks. See Slack webhook
-// documentation at: https://api.slack.com/messaging/webhooks.
-type SlackDelivery struct {
-	// WebhookUri: The secret reference for the Slack webhook URI for
-	// sending messages to a channel.
-	WebhookUri *NotifierSecretRef `json:"webhookUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "WebhookUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "WebhookUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SlackDelivery) MarshalJSON() ([]byte, error) {
-	type NoMethod SlackDelivery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5255,7 +4933,7 @@ type WorkerConfig struct {
 	// DiskSizeGb: Size of the disk attached to the worker, in GB. See
 	// Worker pool config file
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).
-	// Specify a value of up to 1000. If `0` is specified, Cloud Build will
+	// Specify a value of up to 2000. If `0` is specified, Cloud Build will
 	// use a standard disk size.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 

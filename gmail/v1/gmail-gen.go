@@ -493,12 +493,10 @@ func (s *BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CseIdentity: Beta
-// (https://workspace.google.com/terms/service-terms/index.html). The
-// client-side encryption (CSE) configuration for the email address of
-// an authenticated user. Gmail uses CSE configurations to save drafts
-// of client-side encrypted email messages, and to sign and send
-// encrypted email messages.
+// CseIdentity: The client-side encryption (CSE) configuration for the
+// email address of an authenticated user. Gmail uses CSE configurations
+// to save drafts of client-side encrypted email messages, and to sign
+// and send encrypted email messages.
 type CseIdentity struct {
 	// EmailAddress: The email address for the sending identity. The email
 	// address must be the primary email address of the authenticated user.
@@ -535,14 +533,12 @@ func (s *CseIdentity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CseKeyPair: Beta
-// (https://workspace.google.com/terms/service-terms/index.html). A
-// client-side encryption S/MIME key pair, which is comprised of a
-// public key, its certificate chain, and metadata for its paired
-// private key. Gmail uses the key pair to complete the following tasks:
-// - Sign outgoing client-side encrypted messages. - Save and reopen
-// drafts of client-side encrypted messages. - Save and reopen sent
-// messages. - Decrypt incoming or archived S/MIME messages.
+// CseKeyPair: A client-side encryption S/MIME key pair, which is
+// comprised of a public key, its certificate chain, and metadata for
+// its paired private key. Gmail uses the key pair to complete the
+// following tasks: - Sign outgoing client-side encrypted messages. -
+// Save and reopen drafts of client-side encrypted messages. - Save and
+// reopen sent messages. - Decrypt incoming or archived S/MIME messages.
 type CseKeyPair struct {
 	// DisableTime: Output only. If a key pair is set to `DISABLED`, the
 	// time that the key pair's state changed from `ENABLED` to `DISABLED`.
@@ -9133,8 +9129,7 @@ type UsersSettingsCseIdentitiesCreateCall struct {
 // that's authorized to send mail from the user account. Google
 // publishes the S/MIME certificate to a shared domain-wide directory so
 // that people within a Google Workspace organization can encrypt and
-// send mail to the identity. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// send mail to the identity.
 //
 //   - userId: The requester's primary email address. To indicate the
 //     authenticated user, you can use the special value `me`.
@@ -9236,7 +9231,7 @@ func (c *UsersSettingsCseIdentitiesCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and configures a client-side encryption identity that's authorized to send mail from the user account. Google publishes the S/MIME certificate to a shared domain-wide directory so that people within a Google Workspace organization can encrypt and send mail to the identity. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Creates and configures a client-side encryption identity that's authorized to send mail from the user account. Google publishes the S/MIME certificate to a shared domain-wide directory so that people within a Google Workspace organization can encrypt and send mail to the identity.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.cse.identities.create",
@@ -9282,8 +9277,7 @@ type UsersSettingsCseIdentitiesDeleteCall struct {
 // user can no longer use the identity to send encrypted messages. You
 // cannot restore the identity after you delete it. Instead, use the
 // CreateCseIdentity method to create another identity with the same
-// configuration. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// configuration.
 //
 //   - cseEmailAddress: The primary email address associated with the
 //     client-side encryption identity configuration that's removed.
@@ -9358,7 +9352,7 @@ func (c *UsersSettingsCseIdentitiesDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return nil
 	// {
-	//   "description": "Deletes a client-side encryption identity. The authenticated user can no longer use the identity to send encrypted messages. You cannot restore the identity after you delete it. Instead, use the CreateCseIdentity method to create another identity with the same configuration. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Deletes a client-side encryption identity. The authenticated user can no longer use the identity to send encrypted messages. You cannot restore the identity after you delete it. Instead, use the CreateCseIdentity method to create another identity with the same configuration.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
 	//   "httpMethod": "DELETE",
 	//   "id": "gmail.users.settings.cse.identities.delete",
@@ -9402,8 +9396,7 @@ type UsersSettingsCseIdentitiesGetCall struct {
 	header_         http.Header
 }
 
-// Get: Retrieves a client-side encryption identity configuration. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// Get: Retrieves a client-side encryption identity configuration.
 //
 //   - cseEmailAddress: The primary email address associated with the
 //     client-side encryption identity configuration that's retrieved.
@@ -9516,7 +9509,7 @@ func (c *UsersSettingsCseIdentitiesGetCall) Do(opts ...googleapi.CallOption) (*C
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a client-side encryption identity configuration. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Retrieves a client-side encryption identity configuration.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
 	//   "httpMethod": "GET",
 	//   "id": "gmail.users.settings.cse.identities.get",
@@ -9566,8 +9559,7 @@ type UsersSettingsCseIdentitiesListCall struct {
 }
 
 // List: Lists the client-side encrypted identities for an authenticated
-// user. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// user.
 //
 //   - userId: The requester's primary email address. To indicate the
 //     authenticated user, you can use the special value `me`.
@@ -9692,7 +9684,7 @@ func (c *UsersSettingsCseIdentitiesListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the client-side encrypted identities for an authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Lists the client-side encrypted identities for an authenticated user.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities",
 	//   "httpMethod": "GET",
 	//   "id": "gmail.users.settings.cse.identities.list",
@@ -9771,8 +9763,7 @@ type UsersSettingsCseIdentitiesPatchCall struct {
 // Patch: Associates a different key pair with an existing client-side
 // encryption identity. The updated key pair must validate against
 // Google's S/MIME certificate profiles
-// (https://support.google.com/a/answer/7300887). Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// (https://support.google.com/a/answer/7300887).
 //
 //   - emailAddress: The email address of the client-side encryption
 //     identity to update.
@@ -9878,7 +9869,7 @@ func (c *UsersSettingsCseIdentitiesPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887). [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887).",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}",
 	//   "httpMethod": "PATCH",
 	//   "id": "gmail.users.settings.cse.identities.patch",
@@ -9929,8 +9920,7 @@ type UsersSettingsCseKeypairsCreateCall struct {
 
 // Create: Creates and uploads a client-side encryption S/MIME public
 // key certificate chain and private key metadata for the authenticated
-// user. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// user.
 //
 //   - userId: The requester's primary email address. To indicate the
 //     authenticated user, you can use the special value `me`.
@@ -10032,7 +10022,7 @@ func (c *UsersSettingsCseKeypairsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and uploads a client-side encryption S/MIME public key certificate chain and private key metadata for the authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Creates and uploads a client-side encryption S/MIME public key certificate chain and private key metadata for the authenticated user.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.cse.keypairs.create",
@@ -10080,8 +10070,7 @@ type UsersSettingsCseKeypairsDisableCall struct {
 // CSE message texts or sign outgoing CSE mail. To regain access, use
 // the EnableCseKeyPair to turn on the key pair. After 30 days, you can
 // permanently delete the key pair by using the ObliterateCseKeyPair
-// method. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// method.
 //
 //   - keyPairId: The identifier of the key pair to turn off.
 //   - userId: The requester's primary email address. To indicate the
@@ -10186,7 +10175,7 @@ func (c *UsersSettingsCseKeypairsDisableCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Turns off a client-side encryption key pair. The authenticated user can no longer use the key pair to decrypt incoming CSE message texts or sign outgoing CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair. After 30 days, you can permanently delete the key pair by using the ObliterateCseKeyPair method. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Turns off a client-side encryption key pair. The authenticated user can no longer use the key pair to decrypt incoming CSE message texts or sign outgoing CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair. After 30 days, you can permanently delete the key pair by using the ObliterateCseKeyPair method.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.cse.keypairs.disable",
@@ -10238,8 +10227,7 @@ type UsersSettingsCseKeypairsEnableCall struct {
 
 // Enable: Turns on a client-side encryption key pair that was turned
 // off. The key pair becomes active again for any associated client-side
-// encryption identities. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// encryption identities.
 //
 //   - keyPairId: The identifier of the key pair to turn on.
 //   - userId: The requester's primary email address. To indicate the
@@ -10344,7 +10332,7 @@ func (c *UsersSettingsCseKeypairsEnableCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Turns on a client-side encryption key pair that was turned off. The key pair becomes active again for any associated client-side encryption identities. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Turns on a client-side encryption key pair that was turned off. The key pair becomes active again for any associated client-side encryption identities.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.cse.keypairs.enable",
@@ -10394,8 +10382,7 @@ type UsersSettingsCseKeypairsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves an existing client-side encryption key pair. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// Get: Retrieves an existing client-side encryption key pair.
 //
 //   - keyPairId: The identifier of the key pair to retrieve.
 //   - userId: The requester's primary email address. To indicate the
@@ -10507,7 +10494,7 @@ func (c *UsersSettingsCseKeypairsGetCall) Do(opts ...googleapi.CallOption) (*Cse
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an existing client-side encryption key pair. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Retrieves an existing client-side encryption key pair.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}",
 	//   "httpMethod": "GET",
 	//   "id": "gmail.users.settings.cse.keypairs.get",
@@ -10557,8 +10544,7 @@ type UsersSettingsCseKeypairsListCall struct {
 }
 
 // List: Lists client-side encryption key pairs for an authenticated
-// user. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// user.
 //
 //   - userId: The requester's primary email address. To indicate the
 //     authenticated user, you can use the special value `me`.
@@ -10683,7 +10669,7 @@ func (c *UsersSettingsCseKeypairsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists client-side encryption key pairs for an authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Lists client-side encryption key pairs for an authenticated user.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs",
 	//   "httpMethod": "GET",
 	//   "id": "gmail.users.settings.cse.keypairs.list",
@@ -10765,8 +10751,7 @@ type UsersSettingsCseKeypairsObliterateCall struct {
 // DisableCseKeyPair method. Gmail can't restore or decrypt any messages
 // that were encrypted by an obliterated key. Authenticated users and
 // Google Workspace administrators lose access to reading the encrypted
-// messages. Beta
-// (https://workspace.google.com/terms/service-terms/index.html).
+// messages.
 //
 //   - keyPairId: The identifier of the key pair to obliterate.
 //   - userId: The requester's primary email address. To indicate the
@@ -10846,7 +10831,7 @@ func (c *UsersSettingsCseKeypairsObliterateCall) Do(opts ...googleapi.CallOption
 	}
 	return nil
 	// {
-	//   "description": "Deletes a client-side encryption key pair permanently and immediately. You can only permanently delete key pairs that have been turned off for more than 30 days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't restore or decrypt any messages that were encrypted by an obliterated key. Authenticated users and Google Workspace administrators lose access to reading the encrypted messages. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+	//   "description": "Deletes a client-side encryption key pair permanently and immediately. You can only permanently delete key pairs that have been turned off for more than 30 days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't restore or decrypt any messages that were encrypted by an obliterated key. Authenticated users and Google Workspace administrators lose access to reading the encrypted messages.",
 	//   "flatPath": "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.settings.cse.keypairs.obliterate",

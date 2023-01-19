@@ -2620,6 +2620,11 @@ type Volume struct {
 	//   "UPDATING" - The storage volume is being updated.
 	State string `json:"state,omitempty"`
 
+	// StorageAggregatePool: Input only. Name of the storage aggregate pool
+	// to allocate the volume in. Can be used only for
+	// VOLUME_PERFORMANCE_TIER_ASSIGNED volumes.
+	StorageAggregatePool string `json:"storageAggregatePool,omitempty"`
+
 	// StorageType: The storage type for this volume.
 	//
 	// Possible values:
@@ -2714,6 +2719,11 @@ type VolumeConfig struct {
 
 	// SnapshotsEnabled: Whether snapshots should be enabled.
 	SnapshotsEnabled bool `json:"snapshotsEnabled,omitempty"`
+
+	// StorageAggregatePool: Input only. Name of the storage aggregate pool
+	// to allocate the volume in. Can be used only for
+	// VOLUME_PERFORMANCE_TIER_ASSIGNED volumes.
+	StorageAggregatePool string `json:"storageAggregatePool,omitempty"`
 
 	// Type: The type of this Volume.
 	//

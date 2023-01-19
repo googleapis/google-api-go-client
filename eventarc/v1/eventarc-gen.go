@@ -1878,9 +1878,9 @@ type Trigger struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Transport: Optional. To deliver messages, Eventarc might use other
-	// GCP products as a transport intermediary. This field contains a
-	// reference to that transport intermediary. This information can be
-	// used for debugging purposes.
+	// Google Cloud products as a transport intermediary. This field
+	// contains a reference to that transport intermediary. This information
+	// can be used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
 	// Uid: Output only. Server-assigned unique identifier for the trigger.

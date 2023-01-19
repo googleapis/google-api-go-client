@@ -1642,7 +1642,10 @@ type ExecutionConfig struct {
 	// terminated. Minimum value is 10 minutes; maximum value is 14 days
 	// (see JSON representation of Duration
 	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).
-	// Defaults to 4 hours if not set.
+	// Defaults to 4 hours if not set. If both ttl and idle_ttl are
+	// specified, the conditions are treated as and OR: the workload will be
+	// terminated when it has been idle for idle_ttl or when the ttl has
+	// passed, whichever comes first.
 	IdleTtl string `json:"idleTtl,omitempty"`
 
 	// KmsKey: Optional. The Cloud KMS key to use for encryption.
@@ -3662,6 +3665,7 @@ type Metric struct {
 	//   "YARN" - YARN metric source.
 	//   "SPARK_HISTORY_SERVER" - Spark History Server metric source.
 	//   "HIVESERVER2" - Hiveserver2 metric source.
+	//   "HIVEMETASTORE" - hivemetastore metric source
 	MetricSource string `json:"metricSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MetricOverrides") to
@@ -4562,7 +4566,7 @@ type RepairClusterRequest struct {
 	ClusterUuid string `json:"clusterUuid,omitempty"`
 
 	// GracefulDecommissionTimeout: Optional. Timeout for graceful YARN
-	// decomissioning. Graceful decommissioning facilitates the removal of
+	// decommissioning. Graceful decommissioning facilitates the removal of
 	// cluster nodes without interrupting jobs in progress. The timeout
 	// specifies the amount of time to wait for jobs finish before
 	// forcefully removing nodes. The default timeout is 0 for forceful
@@ -13061,7 +13065,7 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 
 // GracefulDecommissionTimeout sets the optional parameter
 // "gracefulDecommissionTimeout": Timeout for graceful YARN
-// decomissioning. Graceful decommissioning allows removing nodes from
+// decommissioning. Graceful decommissioning allows removing nodes from
 // the cluster without interrupting jobs in progress. Timeout specifies
 // how long to wait for jobs in progress to finish before forcefully
 // removing nodes (and potentially interrupting jobs). Default timeout
@@ -13220,7 +13224,7 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "gracefulDecommissionTimeout": {
-	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day. (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only supported on Dataproc image versions 1.2 and higher.",
+	//       "description": "Optional. Timeout for graceful YARN decommissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day. (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only supported on Dataproc image versions 1.2 and higher.",
 	//       "format": "google-duration",
 	//       "location": "query",
 	//       "type": "string"

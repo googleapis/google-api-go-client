@@ -1044,7 +1044,7 @@ func (s *EnvironmentDimensionValueEntry) MarshalJSON() ([]byte, error) {
 // of device configurations - a jenkins job with a build step followed
 // by a test step The maximum size of an execution message is 1 MiB. An
 // Execution can be updated until its state is set to COMPLETE at which
-// point it becomes immutable.
+// point it becomes immutable. Next tag: 16
 type Execution struct {
 	// CompletionTime: The time when the Execution status transitioned to
 	// COMPLETE. This value will be set automatically when state transitions

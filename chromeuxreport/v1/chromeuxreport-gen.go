@@ -341,9 +341,9 @@ type Metric struct {
 	// will add up to ~1.
 	Histogram []*Bin `json:"histogram,omitempty"`
 
-	// Percentiles: Common useful percentiles of the Metric. The value type
-	// for the percentiles will be the same as the value types given for the
-	// Histogram bins.
+	// Percentiles: Commonly useful percentiles of the Metric. The value
+	// type for the percentiles will be the same as the value types given
+	// for the Histogram bins.
 	Percentiles *Percentiles `json:"percentiles,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Histogram") to
@@ -529,7 +529,8 @@ type Record struct {
 	// record defined in the key field. Metrics are keyed on the metric
 	// name. Allowed key values: ["first_contentful_paint",
 	// "first_input_delay", "largest_contentful_paint",
-	// "cumulative_layout_shift"]
+	// "cumulative_layout_shift", "experimental_time_to_first_byte",
+	// "experimental_interaction_to_next_paint"]
 	Metrics map[string]Metric `json:"metrics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CollectionPeriod") to

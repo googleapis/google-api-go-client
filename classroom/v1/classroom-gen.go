@@ -3146,7 +3146,9 @@ type TurnInStudentSubmissionRequest struct {
 
 // UserProfile: Global information for a user.
 type UserProfile struct {
-	// EmailAddress: Email address of the user. Read-only.
+	// EmailAddress: Email address of the user. Must request
+	// `https://www.googleapis.com/auth/classroom.profile.emails` scope for
+	// this field to be populated in a response body. Read-only.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
 	// Id: Identifier of the user. Read-only.
@@ -3158,13 +3160,15 @@ type UserProfile struct {
 	// Permissions: Global permissions of the user. Read-only.
 	Permissions []*GlobalPermission `json:"permissions,omitempty"`
 
-	// PhotoUrl: URL of user's profile photo. Read-only.
+	// PhotoUrl: URL of user's profile photo. Must request
+	// `https://www.googleapis.com/auth/classroom.profile.photos` scope for
+	// this field to be populated in a response body. Read-only.
 	PhotoUrl string `json:"photoUrl,omitempty"`
 
-	// VerifiedTeacher: Represents whether a G Suite for Education user's
-	// domain administrator has explicitly verified them as being a teacher.
-	// If the user is not a member of a G Suite for Education domain, than
-	// this field is always false. Read-only
+	// VerifiedTeacher: Represents whether a Google Workspace for Education
+	// user's domain administrator has explicitly verified them as being a
+	// teacher. This field is always false if the user is not a member of a
+	// Google Workspace for Education domain. Read-only
 	VerifiedTeacher bool `json:"verifiedTeacher,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

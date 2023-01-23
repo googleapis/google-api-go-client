@@ -2762,9 +2762,10 @@ type GoogleCloudRetailV2betaCatalogAttribute struct {
 	// indexable, the attribute name can contain only alpha-numeric
 	// characters and underscores. For example, an attribute named
 	// `attributes.abc_xyz` can be indexed, but an attribute named
-	// `attributes.abc-xyz` cannot be indexed. For attributes whoes key
-	// start with `attributes.`, we refer them as custom attributes.
-	// Otherwise they are built-in attributes such as `color` and `brands`.
+	// `attributes.abc-xyz` cannot be indexed. If the attribute key starts
+	// with `attributes.`, then the attribute is a custom attribute.
+	// Attributes such as `brands`, `patterns`, and `title` are built-in and
+	// called system attributes.
 	Key string `json:"key,omitempty"`
 
 	// RecommendationsFilteringOption: When

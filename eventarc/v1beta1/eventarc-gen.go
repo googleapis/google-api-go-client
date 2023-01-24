@@ -373,9 +373,9 @@ type CloudRunService struct {
 	// Region: Required. The region the Cloud Run service is deployed in.
 	Region string `json:"region,omitempty"`
 
-	// Service: Required. The name of the Cloud run service being addressed
-	// (see
-	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services).
+	// Service: Required. The name of the Cloud run service being addressed.
+	// See
+	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services.
 	// Only services located in the same project of the trigger object can
 	// be addressed.
 	Service string `json:"service,omitempty"`
@@ -1188,9 +1188,9 @@ type Trigger struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Transport: Output only. In order to deliver messages, Eventarc may
-	// use other GCP products as transport intermediary. This field contains
-	// a reference to that transport intermediary. This information can be
-	// used for debugging purposes.
+	// use other Google Cloud products as transport intermediary. This field
+	// contains a reference to that transport intermediary. This information
+	// can be used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
 	// UpdateTime: Output only. The last-modified time.

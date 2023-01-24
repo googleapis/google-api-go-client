@@ -2404,6 +2404,8 @@ type GoogleCloudDialogflowCxV3ExportAgentRequest struct {
 	// Possible values:
 	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format.
 	//   "BLOB" - Agent content will be exported as raw bytes.
+	//   "JSON_PACKAGE" - Agent content will be exported in JSON Package
+	// format.
 	DataFormat string `json:"dataFormat,omitempty"`
 
 	// Environment: Optional. Environment name. If not set, draft

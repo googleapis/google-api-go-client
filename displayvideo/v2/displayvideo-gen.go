@@ -210,6 +210,8 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs.ManualTriggers = NewAdvertisersManualTriggersService(s)
 	rs.NegativeKeywordLists = NewAdvertisersNegativeKeywordListsService(s)
 	rs.TargetingTypes = NewAdvertisersTargetingTypesService(s)
+	rs.YoutubeAdGroupAds = NewAdvertisersYoutubeAdGroupAdsService(s)
+	rs.YoutubeAdGroups = NewAdvertisersYoutubeAdGroupsService(s)
 	return rs
 }
 
@@ -237,6 +239,10 @@ type AdvertisersService struct {
 	NegativeKeywordLists *AdvertisersNegativeKeywordListsService
 
 	TargetingTypes *AdvertisersTargetingTypesService
+
+	YoutubeAdGroupAds *AdvertisersYoutubeAdGroupAdsService
+
+	YoutubeAdGroups *AdvertisersYoutubeAdGroupsService
 }
 
 func NewAdvertisersAssetsService(s *Service) *AdvertisersAssetsService {
@@ -455,6 +461,48 @@ func NewAdvertisersTargetingTypesAssignedTargetingOptionsService(s *Service) *Ad
 }
 
 type AdvertisersTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersYoutubeAdGroupAdsService(s *Service) *AdvertisersYoutubeAdGroupAdsService {
+	rs := &AdvertisersYoutubeAdGroupAdsService{s: s}
+	return rs
+}
+
+type AdvertisersYoutubeAdGroupAdsService struct {
+	s *Service
+}
+
+func NewAdvertisersYoutubeAdGroupsService(s *Service) *AdvertisersYoutubeAdGroupsService {
+	rs := &AdvertisersYoutubeAdGroupsService{s: s}
+	rs.TargetingTypes = NewAdvertisersYoutubeAdGroupsTargetingTypesService(s)
+	return rs
+}
+
+type AdvertisersYoutubeAdGroupsService struct {
+	s *Service
+
+	TargetingTypes *AdvertisersYoutubeAdGroupsTargetingTypesService
+}
+
+func NewAdvertisersYoutubeAdGroupsTargetingTypesService(s *Service) *AdvertisersYoutubeAdGroupsTargetingTypesService {
+	rs := &AdvertisersYoutubeAdGroupsTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewAdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type AdvertisersYoutubeAdGroupsTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewAdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService(s *Service) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService {
+	rs := &AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService struct {
 	s *Service
 }
 
@@ -781,6 +829,49 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 
 func (s *ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveViewVideoViewabilityMetricConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AdUrl: Additional URLs related to the ad, including beacons.
+type AdUrl struct {
+	// Type: The type of the AD url.
+	//
+	// Possible values:
+	//   "AD_URL_TYPE_UNSPECIFIED" - Unknown or unspecified.
+	//   "AD_URL_TYPE_BEACON_IMPRESSION" - A 1x1 tracking pixel to ping when
+	// an impression of a creative is delivered.
+	//   "AD_URL_TYPE_BEACON_EXPANDABLE_DCM_IMPRESSION" - Expandable DCM
+	// impression beacon. At serving time, it is expanded to several
+	// beacons.
+	//   "AD_URL_TYPE_BEACON_CLICK" - Tracking url to ping when the click
+	// event is triggered.
+	//   "AD_URL_TYPE_BEACON_SKIP" - Tracking url to ping when the skip
+	// event is triggered.
+	Type string `json:"type,omitempty"`
+
+	// Url: The url value of the ad url.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod AdUrl
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1992,6 +2083,11 @@ type AssignedTargetingOption struct {
 	// override them.
 	SensitiveCategoryExclusionDetails *SensitiveCategoryAssignedTargetingOptionDetails `json:"sensitiveCategoryExclusionDetails,omitempty"`
 
+	// SessionPositionDetails: Session position details. This field will be
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_SESSION_POSITION`.
+	SessionPositionDetails *SessionPositionAssignedTargetingOptionDetails `json:"sessionPositionDetails,omitempty"`
+
 	// SubExchangeDetails: Sub-exchange details. This field will be
 	// populated when the targeting_type is `TARGETING_TYPE_SUB_EXCHANGE`.
 	SubExchangeDetails *SubExchangeAssignedTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
@@ -2097,6 +2193,13 @@ type AssignedTargetingOption struct {
 	// audio content type.
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
+	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
+	// video.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
+	// channel.
+	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
+	// certain position of a session. Only supported for the AdGroup of
+	// YouTube Programmatic Reservation line item.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
@@ -2122,6 +2225,15 @@ type AssignedTargetingOption struct {
 	// when the targeting_type is `TARGETING_TYPE_VIEWABILITY`. You can only
 	// target one viewability option per resource.
 	ViewabilityDetails *ViewabilityAssignedTargetingOptionDetails `json:"viewabilityDetails,omitempty"`
+
+	// YoutubeChannelDetails: YouTube channel details. This field will be
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+	YoutubeChannelDetails *YoutubeChannelAssignedTargetingOptionDetails `json:"youtubeChannelDetails,omitempty"`
+
+	// YoutubeVideoDetails: YouTube video details. This field will be
+	// populated when the targeting_type is `TARGETING_TYPE_YOUTUBE_VIDEO`.
+	YoutubeVideoDetails *YoutubeVideoAssignedTargetingOptionDetails `json:"youtubeVideoDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2304,6 +2416,45 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 
 func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AudienceGroupAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AudioAd: The details for audio ad.
+type AudioAd struct {
+	// DisplayUrl: The webpage address that appears with the ad.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	// FinalUrl: The URL address of the webpage that people reach after they
+	// click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+
+	// TrackingUrl: The URL address which is loaded in background for
+	// tracking purpose.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// Video: The YouTube video of the ad.
+	Video *YoutubeVideoDetails `json:"video,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AudioAd) MarshalJSON() ([]byte, error) {
+	type NoMethod AudioAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3377,6 +3528,46 @@ func (s *BulkEditSitesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BulkListAdGroupAssignedTargetingOptionsResponse struct {
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent call to
+	// `BulkListAdGroupAssignedTargetingOptions` to fetch the next page of
+	// results. This token will be absent if there are no more
+	// youtube_ad_group_assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// YoutubeAdGroupAssignedTargetingOptions: The list of wrapper objects,
+	// each providing an assigned targeting option and the youtube ad group
+	// it is assigned to. This list will be absent if empty.
+	YoutubeAdGroupAssignedTargetingOptions []*YoutubeAdGroupAssignedTargetingOption `json:"youtubeAdGroupAssignedTargetingOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkListAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkListAdGroupAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
 	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
@@ -3626,6 +3817,36 @@ type BulkUpdateLineItemsResponse struct {
 
 func (s *BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkUpdateLineItemsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BumperAd: Ad details for BumperAd.
+type BumperAd struct {
+	// CommonInStreamAttribute: Common attributes data model.
+	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonInStreamAttribute") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonInStreamAttribute")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BumperAd) MarshalJSON() ([]byte, error) {
+	type NoMethod BumperAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4521,6 +4742,56 @@ func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommonInStreamAttribute: The common attributes for InStreamAd,
+// NonSkippableAd and BumperAd.
+type CommonInStreamAttribute struct {
+	// ActionButtonLabel: The text on the call-to-action button.
+	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
+
+	// ActionHeadline: The headline of the call-to-action banner.
+	ActionHeadline string `json:"actionHeadline,omitempty"`
+
+	// CompanionBanner: The image which shows next to the video Ad.
+	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
+
+	// DisplayUrl: The webpage address that appears with the ad.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+
+	// FinalUrl: The URL address of the webpage that people reach after they
+	// click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+
+	// TrackingUrl: The URL address which is loaded in background for
+	// tracking purpose.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// Video: The YouTube video of the ad.
+	Video *YoutubeVideoDetails `json:"video,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionButtonLabel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionButtonLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonInStreamAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonInStreamAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContactInfo: Contact information defining a Customer Match audience
 // member.
 type ContactInfo struct {
@@ -5333,6 +5604,13 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// audio content type.
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
+	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
+	// video.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
+	// channel.
+	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
+	// certain position of a session. Only supported for the AdGroup of
+	// YouTube Programmatic Reservation line item.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6243,6 +6521,45 @@ func (s *CustomBiddingScriptRef) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CustomLabel: The key and value of a custom label.
+type CustomLabel struct {
+	// Key: The key of the label.
+	//
+	// Possible values:
+	//   "CUSTOM_LABEL_KEY_UNSPECIFIED" - Not specified or unknown.
+	//   "CUSTOM_LABEL_KEY_0" - index 0.
+	//   "CUSTOM_LABEL_KEY_1" - index 1.
+	//   "CUSTOM_LABEL_KEY_2" - index 2.
+	//   "CUSTOM_LABEL_KEY_3" - index 3.
+	//   "CUSTOM_LABEL_KEY_4" - index 4.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the label.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CustomList: Describes a custom list entity, such as a custom affinity
 // or custom intent audience list.
 type CustomList struct {
@@ -6598,6 +6915,13 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// audio content type.
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
+	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
+	// video.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
+	// channel.
+	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
+	// certain position of a session. Only supported for the AdGroup of
+	// YouTube Programmatic Reservation line item.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6928,6 +7252,34 @@ type Dimensions struct {
 
 func (s *Dimensions) MarshalJSON() ([]byte, error) {
 	type NoMethod Dimensions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DisplayVideoSourceAd: The ad of which source is DV360 creative.
+type DisplayVideoSourceAd struct {
+	// CreativeId: The ID of the source creative.
+	CreativeId int64 `json:"creativeId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CreativeId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreativeId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisplayVideoSourceAd) MarshalJSON() ([]byte, error) {
+	type NoMethod DisplayVideoSourceAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8857,6 +9209,11 @@ type GenerateDefaultLineItemRequest struct {
 	// Connected TV default YouTube video ads. Only include in-stream
 	// ad-format. Line items of this type and their targeting cannot be
 	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_TARGET_FREQUENCY" - The goal
+	// of this line item type is to show the YouTube ads target number of
+	// times to the same person in a certain period of time. Line items of
+	// this type and their targeting cannot be created or updated using the
+	// API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -9631,6 +9988,74 @@ type IdFilter struct {
 
 func (s *IdFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod IdFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImageAsset: The meta data of an image asset.
+type ImageAsset struct {
+	// FileSize: File size of the image asset in bytes.
+	FileSize int64 `json:"fileSize,omitempty,string"`
+
+	// FullSize: Metadata for this image at its original size.
+	FullSize *Dimensions `json:"fullSize,omitempty"`
+
+	// MimeType: MIME type of the image asset.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InStreamAd: Ad details for InStreamAd
+type InStreamAd struct {
+	// CommonInStreamAttribute: Common attributes data model.
+	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
+
+	// CustomParameters: The custom parameters to pass custom values to
+	// tracking url template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonInStreamAttribute") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonInStreamAttribute")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InStreamAd) MarshalJSON() ([]byte, error) {
+	type NoMethod InStreamAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11090,6 +11515,11 @@ type LineItem struct {
 	// Connected TV default YouTube video ads. Only include in-stream
 	// ad-format. Line items of this type and their targeting cannot be
 	// created or updated using the API.
+	//   "LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_TARGET_FREQUENCY" - The goal
+	// of this line item type is to show the YouTube ads target number of
+	// times to the same person in a certain period of time. Line items of
+	// this type and their targeting cannot be created or updated using the
+	// API.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -12566,6 +12996,125 @@ func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListYoutubeAdGroupAdsResponse: Response message for
+// YoutubeAdGroupAdService.ListYoutubeAdGroupAds.
+type ListYoutubeAdGroupAdsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListYoutubeAdGroupAds` method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// YoutubeAdGroupAds: The list of ad group ads. This list will be absent
+	// if empty.
+	YoutubeAdGroupAds []*YoutubeAdGroupAd `json:"youtubeAdGroupAds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListYoutubeAdGroupAdsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListYoutubeAdGroupAdsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListYoutubeAdGroupAssignedTargetingOptionsResponse: Response message
+// for ListYoutubeAdGroupAssignedTargetingOptions.
+type ListYoutubeAdGroupAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// ListYoutubeAdGroupAssignedTargetingOptionsRequest to fetch the next
+	// page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListYoutubeAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListYoutubeAdGroupAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListYoutubeAdGroupsResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListYoutubeAdGroups` method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// YoutubeAdGroups: The list of ad groups. This list will be absent if
+	// empty.
+	YoutubeAdGroups []*YoutubeAdGroup `json:"youtubeAdGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListYoutubeAdGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListYoutubeAdGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LocationList: A list of locations used for targeting.
 type LocationList struct {
 	// AdvertiserId: Required. Immutable. The unique ID of the advertiser
@@ -12748,6 +13297,80 @@ type ManualTrigger struct {
 
 func (s *ManualTrigger) MarshalJSON() ([]byte, error) {
 	type NoMethod ManualTrigger
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MastheadAd: The details for masthead ad.
+type MastheadAd struct {
+	// AutoplayVideoDuration: Video will autoplay for certain period of
+	// time.
+	AutoplayVideoDuration string `json:"autoplayVideoDuration,omitempty"`
+
+	// AutoplayVideoStartMillisecond: Video will start to play after certain
+	// period of time in millisecond.
+	AutoplayVideoStartMillisecond int64 `json:"autoplayVideoStartMillisecond,omitempty,string"`
+
+	// CallToActionButtonLabel: The text on the call-to-action button.
+	CallToActionButtonLabel string `json:"callToActionButtonLabel,omitempty"`
+
+	// CallToActionFinalUrl: The destination URL for the call-to-action
+	// button.
+	CallToActionFinalUrl string `json:"callToActionFinalUrl,omitempty"`
+
+	// CallToActionTrackingUrl: The tracking URL for the call-to-action
+	// button.
+	CallToActionTrackingUrl string `json:"callToActionTrackingUrl,omitempty"`
+
+	// CompanionYoutubeVideos: The videos (up to 2) that appear next to the
+	// Masthead ad on desktop.
+	CompanionYoutubeVideos []*YoutubeVideoDetails `json:"companionYoutubeVideos,omitempty"`
+
+	// Description: The description of the ad.
+	Description string `json:"description,omitempty"`
+
+	// Headline: The headline of the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// ShowChannelArt: Whether to show a background or banner that appears
+	// at the top of a YouTube page.
+	ShowChannelArt bool `json:"showChannelArt,omitempty"`
+
+	// Video: The YouTube video of the ad.
+	Video *YoutubeVideoDetails `json:"video,omitempty"`
+
+	// VideoAspectRatio: Aspect ratio of the autoplaying YouTube video on
+	// the Masthead.
+	//
+	// Possible values:
+	//   "VIDEO_ASPECT_RATIO_UNSPECIFIED" - Not specified or unknown.
+	//   "VIDEO_ASPECT_RATIO_WIDESCREEN" - The video is stretched and the
+	// top and bottom are cropped.
+	//   "VIDEO_ASPECT_RATIO_FIXED_16_9" - The video uses a fixed 16:9
+	// aspect ratio.
+	VideoAspectRatio string `json:"videoAspectRatio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoplayVideoDuration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoplayVideoDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MastheadAd) MarshalJSON() ([]byte, error) {
+	type NoMethod MastheadAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13195,6 +13818,40 @@ type NegativeKeywordListAssignedTargetingOptionDetails struct {
 
 func (s *NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NegativeKeywordListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NonSkippableAd: Ad details for NonSkippableAd
+type NonSkippableAd struct {
+	// CommonInStreamAttribute: Common attributes data model.
+	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
+
+	// CustomParameters: The custom parameters to pass custom values to
+	// tracking url template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonInStreamAttribute") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonInStreamAttribute")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NonSkippableAd) MarshalJSON() ([]byte, error) {
+	type NoMethod NonSkippableAd
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14600,6 +15257,84 @@ func (s *PrismaCpeCode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProductFeedData: The details of product feed.
+type ProductFeedData struct {
+	// IsFeedDisabled: True if opt out of showing products.
+	IsFeedDisabled bool `json:"isFeedDisabled,omitempty"`
+
+	// ProductMatchDimensions: A list of dimensions which are used to match
+	// products.
+	ProductMatchDimensions []*ProductMatchDimension `json:"productMatchDimensions,omitempty"`
+
+	// ProductMatchType: The type of the way to select the products.
+	//
+	// Possible values:
+	//   "PRODUCT_MATCH_TYPE_UNSPECIFIED" - Not specified or unknown.
+	//   "PRODUCT_MATCH_TYPE_ALL_PRODUCTS" - All the products are matched.
+	//   "PRODUCT_MATCH_TYPE_SPECIFIC_PRODUCTS" - Specific products are
+	// selected.
+	//   "PRODUCT_MATCH_TYPE_CUSTOM_LABEL" - Match products by their custom
+	// labels.
+	ProductMatchType string `json:"productMatchType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsFeedDisabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsFeedDisabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductFeedData) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductFeedData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductMatchDimension: The dimension which are used to match
+// products.
+type ProductMatchDimension struct {
+	// CustomLabel: The custom label to match all the products with the
+	// label.
+	CustomLabel *CustomLabel `json:"customLabel,omitempty"`
+
+	// ProductOfferId: The ID of the product offer to match the product with
+	// the same offer ID.
+	ProductOfferId string `json:"productOfferId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomLabel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductMatchDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductMatchDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting
 // details for proximity location list. This will be populated in the
 // details field of an AssignedTargetingOption when targeting_type is
@@ -15453,6 +16188,44 @@ func (s *SensitiveCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SessionPositionAssignedTargetingOptionDetails: Details for session
+// position assigned targeting option. This will be populated in the
+// session_position_details field when targeting_type is
+// `TARGETING_TYPE_SESSION_POSITION`.
+type SessionPositionAssignedTargetingOptionDetails struct {
+	// SessionPosition: The position where the ad will show in a session.
+	//
+	// Possible values:
+	//   "SESSION_POSITION_UNSPECIFIED" - This is a placeholder, does not
+	// indicate any positions.
+	//   "SESSION_POSITION_FIRST_IMPRESSION" - The first impression of the
+	// session.
+	SessionPosition string `json:"sessionPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SessionPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SessionPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SessionPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Site: A single site. Sites are apps or websites belonging to a
 // channel.
 type Site struct {
@@ -15594,6 +16367,62 @@ type SubExchangeTargetingOptionDetails struct {
 
 func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubExchangeTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetFrequency: Setting that controls the average number of times
+// the ads will show to the same person over a certain period of time.
+type TargetFrequency struct {
+	// TargetCount: The target number of times, on average, the ads will be
+	// shown to the same person in the timespan dictated by time_unit and
+	// time_unit_count.
+	TargetCount int64 `json:"targetCount,omitempty,string"`
+
+	// TimeUnit: The unit of time in which the target frequency will be
+	// applied. The following time unit is applicable: * `TIME_UNIT_WEEKS`
+	//
+	// Possible values:
+	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is
+	// unknown in this version.
+	//   "TIME_UNIT_LIFETIME" - The frequency cap will be applied to the
+	// whole life time of the line item.
+	//   "TIME_UNIT_MONTHS" - The frequency cap will be applied to a number
+	// of months.
+	//   "TIME_UNIT_WEEKS" - The frequency cap will be applied to a number
+	// of weeks.
+	//   "TIME_UNIT_DAYS" - The frequency cap will be applied to a number of
+	// days.
+	//   "TIME_UNIT_HOURS" - The frequency cap will be applied to a number
+	// of hours.
+	//   "TIME_UNIT_MINUTES" - The frequency cap will be applied to a number
+	// of minutes.
+	TimeUnit string `json:"timeUnit,omitempty"`
+
+	// TimeUnitCount: The number of time_unit the target frequency will
+	// last. The following restrictions apply based on the value of
+	// time_unit: * `TIME_UNIT_WEEKS` - must be 1
+	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetFrequency) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetFrequency
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -15868,6 +16697,13 @@ type TargetingOption struct {
 	// audio content type.
 	//   "TARGETING_TYPE_CONTENT_GENRE" - Target ads to a specific content
 	// genre.
+	//   "TARGETING_TYPE_YOUTUBE_VIDEO" - Target ads to a specific YouTube
+	// video.
+	//   "TARGETING_TYPE_YOUTUBE_CHANNEL" - Target ads to a specific YouTube
+	// channel.
+	//   "TARGETING_TYPE_SESSION_POSITION" - Target ads to a serve it in a
+	// certain position of a session. Only supported for the AdGroup of
+	// YouTube Programmatic Reservation line item.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -16578,6 +17414,125 @@ func (s *VideoAdSequenceStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VideoDiscoveryAd: The details for video discovery ad.
+type VideoDiscoveryAd struct {
+	// Description1: First text line for the ad.
+	Description1 string `json:"description1,omitempty"`
+
+	// Description2: Second text line for the ad.
+	Description2 string `json:"description2,omitempty"`
+
+	// Headline: The headline of the video discovery ad.
+	Headline string `json:"headline,omitempty"`
+
+	// Thumbnail: Thumbnail image to use in the ad.
+	//
+	// Possible values:
+	//   "THUMBNAIL_UNSPECIFIED" - Unknown or unspecified.
+	//   "THUMBNAIL_DEFAULT" - The default thumbnail, can be auto-generated
+	// or user-uploaded.
+	//   "THUMBNAIL_1" - Thumbnail 1, generated from the video.
+	//   "THUMBNAIL_2" - Thumbnail 2, generated from the video.
+	//   "THUMBNAIL_3" - Thumbnail 3, generated from the video.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Video: The YouTube video which the ad wants to promote.
+	Video *YoutubeVideoDetails `json:"video,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description1") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description1") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoDiscoveryAd
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VideoPerformanceAd: The details for video performance ad.
+type VideoPerformanceAd struct {
+	// ActionButtonLabels: The list of text assets which show on the
+	// call-to-action button.
+	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
+
+	// CompanionBanners: The list of companion banners of this ad.
+	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
+
+	// CustomParameters: The custom parameters to pass custom values to
+	// tracking url template.
+	CustomParameters map[string]string `json:"customParameters,omitempty"`
+
+	// Descriptions: The list of descriptions which show on the
+	// call-to-action banner.
+	Descriptions []string `json:"descriptions,omitempty"`
+
+	// DisplayUrlBreadcrumb1: The first piece after the domain in the
+	// display url.
+	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
+
+	// DisplayUrlBreadcrumb2: The second piece after the domain in the
+	// display url.
+	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
+
+	// Domain: The domain of the display url
+	Domain string `json:"domain,omitempty"`
+
+	// FinalUrl: The URL address of the webpage that people reach after they
+	// click the ad.
+	FinalUrl string `json:"finalUrl,omitempty"`
+
+	// Headlines: The list of headlines which show on the call-to-action
+	// banner.
+	Headlines []string `json:"headlines,omitempty"`
+
+	// LongHeadlines: The list of lone headlines which show on the
+	// call-to-action banner.
+	LongHeadlines []string `json:"longHeadlines,omitempty"`
+
+	// TrackingUrl: The URL address which is loaded in background for
+	// tracking purpose.
+	TrackingUrl string `json:"trackingUrl,omitempty"`
+
+	// Videos: The list of YouTube video assets in this ad.
+	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionButtonLabels")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionButtonLabels") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoPerformanceAd) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPerformanceAd
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // VideoPlayerSizeAssignedTargetingOptionDetails: Video player size
 // targeting option details. This will be populated in the
 // video_player_size_details field when targeting_type is
@@ -16785,9 +17740,275 @@ func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// YoutubeAdGroup: A single YouTube ad group associated with a YouTube
+// and Partners line item.
+type YoutubeAdGroup struct {
+	// AdGroupFormat: The format of the ad group.
+	//
+	// Possible values:
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_UNSPECIFIED" - Format value
+	// is not specified or is unknown in this version.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM" - In-stream ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_VIDEO_DISCOVERY" - In-feed
+	// ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_BUMPER" - Bumper ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_NON_SKIPPABLE_IN_STREAM" -
+	// Non-skippable in-stream ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_AUDIO" - Non-skippable
+	// in-stream audio ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_ACTION" - [Responsive ads for
+	// video action campaigns]
+	// (https://support.google.com/displayvideo/answer/9065351).
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_REACH" - [Effective reach ad
+	// groups] (https://support.google.com/displayvideo/answer/9173684),
+	// including in-stream and bumper ads.
+	//   "YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_MASTHEAD" - Video Masthead
+	// that is surfaced on the top slot on the YouTube homepage.
+	AdGroupFormat string `json:"adGroupFormat,omitempty"`
+
+	// AdGroupId: The unique ID of the ad group. Assigned by the system.
+	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+
+	// AdvertiserId: The unique ID of the advertiser the ad group belongs
+	// to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// BiddingStrategy: The bidding strategy of the ad group.
+	BiddingStrategy *YoutubeAndPartnersBiddingStrategy `json:"biddingStrategy,omitempty"`
+
+	// DisplayName: The display name of the ad group. Must be UTF-8 encoded
+	// with a maximum size of 255 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Controls whether or not the ad group can spend its
+	// budget and bid on inventory. If the ad group's parent line item is
+	// not active, the ad group can't spend its budget even if its own
+	// status is `ENTITY_STATUS_ACTIVE`.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// LineItemId: The unique ID of the line item that the ad group belongs
+	// to.
+	LineItemId int64 `json:"lineItemId,omitempty,string"`
+
+	// Name: The resource name of the ad group.
+	Name string `json:"name,omitempty"`
+
+	// ProductFeedData: The data to represent the product feed in this ad
+	// group.
+	ProductFeedData *ProductFeedData `json:"productFeedData,omitempty"`
+
+	// TargetingExpansion: The targeting expansion
+	// (https://support.google.com/displayvideo/answer/10191558) settings of
+	// the ad group. This config is only applicable when eligible audience
+	// list targeting is assigned to the ad group.
+	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
+
+	// YoutubeAdIds: The IDs of the YouTubeAds associated with the ad group.
+	YoutubeAdIds googleapi.Int64s `json:"youtubeAdIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupFormat") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeAdGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAdGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAdGroupAd: A single YouTube ad group ad associated with a
+// YouTube ad group.
+type YoutubeAdGroupAd struct {
+	// AdGroupAdId: The unique ID of the ad group ad. Assigned by the
+	// system.
+	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
+
+	// AdGroupId: The unique ID of the ad group that the ad group ad belongs
+	// to.
+	AdGroupId int64 `json:"adGroupId,omitempty,string"`
+
+	// AdUrls: The list of ad urls.
+	AdUrls []*AdUrl `json:"adUrls,omitempty"`
+
+	// AdvertiserId: The unique ID of the advertiser the ad group ad belongs
+	// to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AudioAd: Audio ad for reach purpose. details
+	// (https://support.google.com/displayvideo/answer/6274216)
+	AudioAd *AudioAd `json:"audioAd,omitempty"`
+
+	// BumperAd: Non-skippable short video ad for reach purpose and video
+	// length equal to or less than 6 seconds. details
+	// (https://support.google.com/displayvideo/answer/6274216)
+	BumperAd *BumperAd `json:"bumperAd,omitempty"`
+
+	// DisplayName: The display name of the ad group ad. Must be UTF-8
+	// encoded with a maximum size of 255 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DisplayVideoSourceAd: The ad sourcing DV360 creative.
+	DisplayVideoSourceAd *DisplayVideoSourceAd `json:"displayVideoSourceAd,omitempty"`
+
+	// EntityStatus: The entity status of the ad group ad.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// InStreamAd: Skippable in-stream ad after 5 seconds for brand
+	// awareness or reach marketing objectives. details
+	// (https://support.google.com/displayvideo/answer/6274216)
+	InStreamAd *InStreamAd `json:"inStreamAd,omitempty"`
+
+	// MastheadAd: The ad which shows on YouTube homepage. details
+	// (https://support.google.com/google-ads/answer/9709826)
+	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
+
+	// Name: The resource name of the ad group ad.
+	Name string `json:"name,omitempty"`
+
+	// NonSkippableAd: Non-skippable short in-stream ad for reach marketing
+	// objectives, and video length is between 6 and 15 seconds. details
+	// (https://support.google.com/displayvideo/answer/6274216)
+	NonSkippableAd *NonSkippableAd `json:"nonSkippableAd,omitempty"`
+
+	// VideoDiscoverAd: An ad which shows in places of discovery to promote
+	// a video. details
+	// (https://support.google.com/displayvideo/answer/6274216)
+	VideoDiscoverAd *VideoDiscoveryAd `json:"videoDiscoverAd,omitempty"`
+
+	// VideoPerformanceAd: The ad to drive actions to the business, service
+	// or product. details
+	// (https://support.google.com/google-ads/answer/10147229)
+	VideoPerformanceAd *VideoPerformanceAd `json:"videoPerformanceAd,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdGroupAdId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupAdId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeAdGroupAd) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAdGroupAd
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeAdGroupAssignedTargetingOption: Wrapper object associating an
+// assigned_targeting_option resource and the youtube ad group it is
+// assigned to.
+type YoutubeAdGroupAssignedTargetingOption struct {
+	// AssignedTargetingOption: The assigned targeting option resource.
+	AssignedTargetingOption *AssignedTargetingOption `json:"assignedTargetingOption,omitempty"`
+
+	// YoutubeAdGroupId: The ID of the youtube ad group the assigned
+	// targeting option is assigned to.
+	YoutubeAdGroupId int64 `json:"youtubeAdGroupId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOption") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOption")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeAdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeAdGroupAssignedTargetingOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // YoutubeAndPartnersBiddingStrategy: Settings that control the bid
 // strategy for YouTube and Partners resources.
 type YoutubeAndPartnersBiddingStrategy struct {
+	// AdGroupEffectiveTargetCpaSource: Output only. Source of the effective
+	// targetCpa value for AdGroup.
+	//
+	// Possible values:
+	//   "BIDDING_SOURCE_UNSPECIFIED" - Bidding source is not specified or
+	// unknown.
+	//   "BIDDING_SOURCE_LINE_ITEM" - Bidding value is inherited from the
+	// line item.
+	//   "BIDDING_SOURCE_AD_GROUP" - Bidding value is defined on the ad
+	// group.
+	AdGroupEffectiveTargetCpaSource string `json:"adGroupEffectiveTargetCpaSource,omitempty"`
+
+	// AdGroupEffectiveTargetCpaValue: Output only. The effective targetCpa
+	// for AdGroup, in micros of advertiser's currency.
+	AdGroupEffectiveTargetCpaValue int64 `json:"adGroupEffectiveTargetCpaValue,omitempty,string"`
+
 	// Type: The type of the bidding strategy.
 	//
 	// Possible values:
@@ -16821,20 +18042,22 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// an applicable strategy, the value of this field will be 0.
 	Value int64 `json:"value,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdGroupEffectiveTargetCpaSource") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AdGroupEffectiveTargetCpaSource") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -16915,6 +18138,21 @@ type YoutubeAndPartnersSettings struct {
 	// InventorySourceSettings: Settings that control what YouTube and
 	// Partners inventories the line item will target.
 	InventorySourceSettings *YoutubeAndPartnersInventorySourceConfig `json:"inventorySourceSettings,omitempty"`
+
+	// LeadFormId: The ID of the form to generate leads.
+	LeadFormId int64 `json:"leadFormId,omitempty,string"`
+
+	// LinkedMerchantId: The ID of the merchant which is linked to the line
+	// item for product feed.
+	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
+
+	// RelatedVideoIds: The IDs of the videos appear below the primary video
+	// ad when the ad is playing in the YouTube app on mobile devices.
+	RelatedVideoIds []string `json:"relatedVideoIds,omitempty"`
+
+	// TargetFrequency: The average number of times you want ads from this
+	// line item to show to the same person over a certain period of time.
+	TargetFrequency *TargetFrequency `json:"targetFrequency,omitempty"`
 
 	// ThirdPartyMeasurementSettings: The third-party measurement settings
 	// of the line item.
@@ -17002,6 +18240,111 @@ type YoutubeAndPartnersThirdPartyMeasurementSettings struct {
 
 func (s *YoutubeAndPartnersThirdPartyMeasurementSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeAndPartnersThirdPartyMeasurementSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeChannelAssignedTargetingOptionDetails: Details for YouTube
+// channel assigned targeting option. This will be populated in the
+// youtube_channel_details field when targeting_type is
+// `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+type YoutubeChannelAssignedTargetingOptionDetails struct {
+	// ChannelId: The YouTube uploader channel id or the channel code of a
+	// YouTube channel.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeChannelAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeVideoAssignedTargetingOptionDetails: Details for YouTube video
+// assigned targeting option. This will be populated in the
+// youtube_video_details field when targeting_type is
+// `TARGETING_TYPE_YOUTUBE_VIDEO`.
+type YoutubeVideoAssignedTargetingOptionDetails struct {
+	// Negative: Indicates if this option is being negatively targeted.
+	Negative bool `json:"negative,omitempty"`
+
+	// VideoId: YouTube video id as it appears on the YouTube watch page.
+	VideoId string `json:"videoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Negative") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Negative") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeVideoAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// YoutubeVideoDetails: Details of the YouTube video.
+type YoutubeVideoDetails struct {
+	// Id: The ID which can be searched on YouTube webpage.
+	Id string `json:"id,omitempty"`
+
+	// UnavailableReason: The reason why the video data is not available.
+	//
+	// Possible values:
+	//   "VIDEO_UNAVAILABLE_REASON_UNSPECIFIED" - Unknown or unspecified.
+	//   "VIDEO_UNAVAILABLE_REASON_PRIVATE" - The video is private.
+	//   "VIDEO_UNAVAILABLE_REASON_DELETED" - The video is deleted.
+	UnavailableReason string `json:"unavailableReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *YoutubeVideoDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod YoutubeVideoDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19950,7 +21293,10 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -19998,7 +21344,10 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20305,7 +21654,10 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20353,7 +21705,10 @@ func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24318,7 +25673,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -24366,7 +25724,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsCreateC
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24611,7 +25972,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -24659,7 +26023,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsDeleteC
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24896,7 +26263,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -24944,7 +26314,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25236,7 +26609,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25284,7 +26660,10 @@ func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCal
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -27684,7 +29063,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -27732,7 +29114,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -27960,7 +29345,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28008,7 +29396,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28244,7 +29635,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28292,7 +29686,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28583,7 +29980,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -28631,7 +30031,10 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33024,7 +34427,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33072,7 +34478,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33285,7 +34694,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33333,7 +34745,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33558,7 +34973,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33606,7 +35024,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33883,7 +35304,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33931,7 +35355,10 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33954,6 +35381,1727 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListAdvertiserAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroupAds.get":
+
+type AdvertisersYoutubeAdGroupAdsGetCall struct {
+	s                  *Service
+	advertiserId       int64
+	youtubeAdGroupAdId int64
+	urlParams_         gensupport.URLParams
+	ifNoneMatch_       string
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Get: Gets a YouTube ad group ad.
+//
+// - advertiserId: The ID of the advertiser this ad group ad belongs to.
+// - youtubeAdGroupAdId: The ID of the ad group ad to fetch.
+func (r *AdvertisersYoutubeAdGroupAdsService) Get(advertiserId int64, youtubeAdGroupAdId int64) *AdvertisersYoutubeAdGroupAdsGetCall {
+	c := &AdvertisersYoutubeAdGroupAdsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.youtubeAdGroupAdId = youtubeAdGroupAdId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupAdsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupAdsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupAdsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroupAds/{+youtubeAdGroupAdId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":       strconv.FormatInt(c.advertiserId, 10),
+		"youtubeAdGroupAdId": strconv.FormatInt(c.youtubeAdGroupAdId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroupAds.get" call.
+// Exactly one of *YoutubeAdGroupAd or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *YoutubeAdGroupAd.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersYoutubeAdGroupAdsGetCall) Do(opts ...googleapi.CallOption) (*YoutubeAdGroupAd, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &YoutubeAdGroupAd{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a YouTube ad group ad.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroupAds/{youtubeAdGroupAdsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroupAds.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "youtubeAdGroupAdId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this ad group ad belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "youtubeAdGroupAdId": {
+	//       "description": "Required. The ID of the ad group ad to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroupAds/{+youtubeAdGroupAdId}",
+	//   "response": {
+	//     "$ref": "YoutubeAdGroupAd"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroupAds.list":
+
+type AdvertisersYoutubeAdGroupAdsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists YouTube ad group ads.
+//
+// - advertiserId: The ID of the advertiser the ad groups belongs to.
+func (r *AdvertisersYoutubeAdGroupAdsService) List(advertiserId int64) *AdvertisersYoutubeAdGroupAdsListCall {
+	c := &AdvertisersYoutubeAdGroupAdsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// custom YouTube ad group ad fields. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by `AND` and `OR`. Only the restrictions for * the
+// same field can be combined by `OR`. A sequence of restrictions *
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// properties: - `adGroupId` - `displayName` - `entityStatus` -
+// `adGroupAdId` Examples: * All ad group ads under an ad group:
+// `adGroupId="1234" and its * entityStatus is `ENTITY_STATUS_ACTIVE`
+// or `ENTITY_STATUS_PAUSED`: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// entityStatus="ENTITY_STATUS_PAUSED") AND adGroupId="12345" The
+// length of this field should be no more than 500 characters.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) OrderBy(orderBy string) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) PageSize(pageSize int64) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListYoutubeAdGroupAds` method. If not specified, the first page
+// of results will be returned.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) PageToken(pageToken string) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupAdsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupAdsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroupAds")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroupAds.list" call.
+// Exactly one of *ListYoutubeAdGroupAdsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListYoutubeAdGroupAdsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Do(opts ...googleapi.CallOption) (*ListYoutubeAdGroupAdsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListYoutubeAdGroupAdsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists YouTube ad group ads.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroupAds",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroupAds.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the ad groups belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by custom YouTube ad group ad fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. Only the restrictions for * the same field can be combined by `OR`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported properties: - `adGroupId` - `displayName` - `entityStatus` - `adGroupAdId` Examples: * All ad group ads under an ad group: `adGroupId=\"1234\"` and its * entityStatus is `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupId=\"12345\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListYoutubeAdGroupAds` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroupAds",
+	//   "response": {
+	//     "$ref": "ListYoutubeAdGroupAdsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersYoutubeAdGroupAdsListCall) Pages(ctx context.Context, f func(*ListYoutubeAdGroupAdsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroups.bulkListAdGroupAssignedTargetingOptions":
+
+type AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BulkListAdGroupAssignedTargetingOptions: Lists assigned targeting
+// options for multiple YouTube ad groups across targeting types.
+//
+// - advertiserId: The ID of the advertiser the line items belongs to.
+func (r *AdvertisersYoutubeAdGroupsService) BulkListAdGroupAssignedTargetingOptions(advertiserId int64) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c := &AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR` on the same field. * A
+// restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
+// Examples: * AssignedTargetingOptions of targeting type
+// TARGETING_TYPE_YOUTUBE_VIDEO or TARGETING_TYPE_YOUTUBE_CHANNEL
+// `targetingType="TARGETING_TYPE_YOUTUBE_VIDEO" OR
+// targetingType="TARGETING_TYPE_YOUTUBE_CHANNEL" The length of this
+// field should be no more than 500 characters.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `youtubeAdGroupId` (default) *
+// `assignedTargetingOption.targetingType` The default sorting order is
+// ascending. To specify descending order for a field, a suffix "desc"
+// should be added to the field name. Example: `targetingType desc`.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The size must be an integer between `1` and `5000`. If unspecified,
+// the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
+// invalid value is specified.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that lets
+// the client fetch the next page of results. Typically, this is the
+// value of next_page_token returned from the previous call to the
+// `BulkListAdGroupAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// YoutubeAdGroupIds sets the optional parameter "youtubeAdGroupIds":
+// Required. The IDs of the youtube ad groups to list assigned targeting
+// options for.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) YoutubeAdGroupIds(youtubeAdGroupIds ...int64) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	var youtubeAdGroupIds_ []string
+	for _, v := range youtubeAdGroupIds {
+		youtubeAdGroupIds_ = append(youtubeAdGroupIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("youtubeAdGroupIds", youtubeAdGroupIds_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroups:bulkListAdGroupAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroups.bulkListAdGroupAssignedTargetingOptions" call.
+// Exactly one of *BulkListAdGroupAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkListAdGroupAssignedTargetingOptionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkListAdGroupAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BulkListAdGroupAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists assigned targeting options for multiple YouTube ad groups across targeting types.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups:bulkListAdGroupAssignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroups.bulkListAdGroupAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the line items belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_YOUTUBE_VIDEO or TARGETING_TYPE_YOUTUBE_CHANNEL `targetingType=\"TARGETING_TYPE_YOUTUBE_VIDEO\" OR targetingType=\"TARGETING_TYPE_YOUTUBE_CHANNEL\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `youtubeAdGroupId` (default) * `assignedTargetingOption.targetingType` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingType desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token that lets the client fetch the next page of results. Typically, this is the value of next_page_token returned from the previous call to the `BulkListAdGroupAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "youtubeAdGroupIds": {
+	//       "description": "Required. The IDs of the youtube ad groups to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroups:bulkListAdGroupAssignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "BulkListAdGroupAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersYoutubeAdGroupsBulkListAdGroupAssignedTargetingOptionsCall) Pages(ctx context.Context, f func(*BulkListAdGroupAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroups.get":
+
+type AdvertisersYoutubeAdGroupsGetCall struct {
+	s                *Service
+	advertiserId     int64
+	youtubeAdGroupId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Get: Gets a YouTube ad group.
+//
+// - advertiserId: The ID of the advertiser this ad group belongs to.
+// - youtubeAdGroupId: The ID of the ad group to fetch.
+func (r *AdvertisersYoutubeAdGroupsService) Get(advertiserId int64, youtubeAdGroupId int64) *AdvertisersYoutubeAdGroupsGetCall {
+	c := &AdvertisersYoutubeAdGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.youtubeAdGroupId = youtubeAdGroupId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupsGetCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupsGetCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupsGetCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"youtubeAdGroupId": strconv.FormatInt(c.youtubeAdGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroups.get" call.
+// Exactly one of *YoutubeAdGroup or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *YoutubeAdGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersYoutubeAdGroupsGetCall) Do(opts ...googleapi.CallOption) (*YoutubeAdGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &YoutubeAdGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a YouTube ad group.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups/{youtubeAdGroupsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroups.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "youtubeAdGroupId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this ad group belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "youtubeAdGroupId": {
+	//       "description": "Required. The ID of the ad group to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}",
+	//   "response": {
+	//     "$ref": "YoutubeAdGroup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroups.list":
+
+type AdvertisersYoutubeAdGroupsListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists YouTube ad groups.
+//
+// - advertiserId: The ID of the advertiser the ad groups belongs to.
+func (r *AdvertisersYoutubeAdGroupsService) List(advertiserId int64) *AdvertisersYoutubeAdGroupsListCall {
+	c := &AdvertisersYoutubeAdGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// custom YouTube ad group fields. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by `AND` and `OR`. Only the restrictions for * the
+// same field can be combined by `OR`. A sequence of restrictions *
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// properties: - `adGroupId` - `displayName` - `entityStatus` -
+// `lineItemId` - `adGroupFormat` Examples: * All ad groups under an
+// line item: `lineItemId="1234" * All `ENTITY_STATUS_ACTIVE` or
+// `ENTITY_STATUS_PAUSED` and
+// `YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM` ad groups under an
+// advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// entityStatus="ENTITY_STATUS_PAUSED") AND
+// adGroupFormat="YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM" The
+// length of this field should be no more than 500 characters.
+func (c *AdvertisersYoutubeAdGroupsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
+func (c *AdvertisersYoutubeAdGroupsListCall) OrderBy(orderBy string) *AdvertisersYoutubeAdGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `200`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersYoutubeAdGroupsListCall) PageSize(pageSize int64) *AdvertisersYoutubeAdGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListYoutubeAdGroups` method. If not specified, the first page of
+// results will be returned.
+func (c *AdvertisersYoutubeAdGroupsListCall) PageToken(pageToken string) *AdvertisersYoutubeAdGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupsListCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupsListCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupsListCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroups.list" call.
+// Exactly one of *ListYoutubeAdGroupsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListYoutubeAdGroupsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersYoutubeAdGroupsListCall) Do(opts ...googleapi.CallOption) (*ListYoutubeAdGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListYoutubeAdGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists YouTube ad groups.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroups.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the ad groups belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by custom YouTube ad group fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. Only the restrictions for * the same field can be combined by `OR`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported properties: - `adGroupId` - `displayName` - `entityStatus` - `lineItemId` - `adGroupFormat` Examples: * All ad groups under an line item: `lineItemId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM` ad groups under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND adGroupFormat=\"YOUTUBE_AND_PARTNERS_AD_GROUP_FORMAT_IN_STREAM\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListYoutubeAdGroups` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroups",
+	//   "response": {
+	//     "$ref": "ListYoutubeAdGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersYoutubeAdGroupsListCall) Pages(ctx context.Context, f func(*ListYoutubeAdGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.get":
+
+type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	advertiserId              int64
+	youtubeAdGroupId          int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to a YouTube ad group.
+// Inherited targeting is not included.
+//
+//   - advertiserId: The ID of the advertiser the ad group belongs to.
+//   - assignedTargetingOptionId: An identifier unique to the targeting
+//     type in this line item that identifies the assigned targeting
+//     option being requested.
+//   - targetingType: Identifies the type of this assigned targeting
+//     option. Supported targeting types include: *
+//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` *
+//     `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP`
+//   - `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
+//   - youtubeAdGroupId: The ID of the ad group the assigned targeting
+//     option belongs to.
+func (r *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, youtubeAdGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.youtubeAdGroupId = youtubeAdGroupId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"youtubeAdGroupId":          strconv.FormatInt(c.youtubeAdGroupId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to a YouTube ad group. Inherited targeting is not included.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups/{youtubeAdGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "youtubeAdGroupId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the ad group belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this line item that identifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types include: * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID",
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory.",
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "youtubeAdGroupId": {
+	//       "description": "Required. The ID of the ad group the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.list":
+
+type AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall struct {
+	s                *Service
+	advertiserId     int64
+	youtubeAdGroupId int64
+	targetingType    string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Lists the targeting options assigned to a YouTube ad group.
+// Inherited targeting is not included.
+//
+//   - advertiserId: The ID of the advertiser the ad group belongs to.
+//   - targetingType: Identifies the type of assigned targeting options to
+//     list. Supported targeting types include: * `TARGETING_TYPE_GENDER`
+//   - `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP`
+//   - `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` *
+//     `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
+//   - youtubeAdGroupId: The ID of the ad group to list assigned targeting
+//     options for.
+func (r *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, youtubeAdGroupId int64, targetingType string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c := &AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.youtubeAdGroupId = youtubeAdGroupId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
+// AssignedTargetingOptions with ID 1 or 2
+// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" The
+// length of this field should be no more than 500 characters.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `5000`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListYoutubeAdGroupAssignedTargetingOptions` method. If not
+// specified, the first page of results will be returned.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"youtubeAdGroupId": strconv.FormatInt(c.youtubeAdGroupId, 10),
+		"targetingType":    c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListYoutubeAdGroupAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListYoutubeAdGroupAssignedTargetingOptionsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListYoutubeAdGroupAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListYoutubeAdGroupAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to a YouTube ad group. Inherited targeting is not included.",
+	//   "flatPath": "v2/advertisers/{advertisersId}/youtubeAdGroups/{youtubeAdGroupsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.youtubeAdGroups.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "youtubeAdGroupId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the ad group belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `5000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListYoutubeAdGroupAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types include: * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_URL` * `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_CONTENT_DURATION",
+	//         "TARGETING_TYPE_CONTENT_STREAM_TYPE",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID",
+	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific video content duration.",
+	//         "Target ads to a specific video content stream type.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory.",
+	//         "Target ads to a specific audio content type.",
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "youtubeAdGroupId": {
+	//       "description": "Required. The ID of the ad group to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/advertisers/{+advertiserId}/youtubeAdGroups/{+youtubeAdGroupId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListYoutubeAdGroupAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersYoutubeAdGroupsTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListYoutubeAdGroupAssignedTargetingOptionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -44130,7 +47278,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -44178,7 +47329,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -44388,7 +47542,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -44436,7 +47593,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -44658,7 +47818,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -44706,7 +47869,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -44980,7 +48146,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -45028,7 +48197,10 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -45570,7 +48742,10 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -45618,7 +48793,10 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -45915,7 +49093,10 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -45963,7 +49144,10 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -46174,7 +49358,10 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
 	//         "TARGETING_TYPE_OMID",
 	//         "TARGETING_TYPE_AUDIO_CONTENT_TYPE",
-	//         "TARGETING_TYPE_CONTENT_GENRE"
+	//         "TARGETING_TYPE_CONTENT_GENRE",
+	//         "TARGETING_TYPE_YOUTUBE_VIDEO",
+	//         "TARGETING_TYPE_YOUTUBE_CHANNEL",
+	//         "TARGETING_TYPE_SESSION_POSITION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -46222,7 +49409,10 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Target ads to a specific native content position.",
 	//         "Target ads in an Open Measurement enabled inventory.",
 	//         "Target ads to a specific audio content type.",
-	//         "Target ads to a specific content genre."
+	//         "Target ads to a specific content genre.",
+	//         "Target ads to a specific YouTube video.",
+	//         "Target ads to a specific YouTube channel.",
+	//         "Target ads to a serve it in a certain position of a session. Only supported for the AdGroup of YouTube Programmatic Reservation line item."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",

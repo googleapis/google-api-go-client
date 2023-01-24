@@ -2082,7 +2082,8 @@ type PropertyFilter struct {
 	// `value`. Requires: * No other `NOT_EQUAL` or `NOT_IN` is in the same
 	// query. * That `property` comes first in the `order_by`.
 	//   "HAS_ANCESTOR" - Limit the result set to the given entity and its
-	// descendants. Requires: * That `value` is an entity key.
+	// descendants. Requires: * That `value` is an entity key. * No other
+	// `HAS_ANCESTOR` is in the same query.
 	//   "NOT_IN" - The value of the `property` is not in the given array.
 	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
 	// values. * No other `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query.

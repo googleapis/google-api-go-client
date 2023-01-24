@@ -3690,6 +3690,11 @@ type GoogleCloudDatacatalogV1Taxonomy struct {
 	// PolicyTagCount: Output only. Number of policy tags in this taxonomy.
 	PolicyTagCount int64 `json:"policyTagCount,omitempty"`
 
+	// Service: Output only. Identity of the service which owns the
+	// Taxonomy. This field is only populated when the taxonomy is created
+	// by a GCP service. Currently only 'DATAPLEX' is supported.
+	Service *GoogleCloudDatacatalogV1TaxonomyService `json:"service,omitempty"`
+
 	// TaxonomyTimestamps: Output only. Creation and modification timestamps
 	// of this taxonomy.
 	TaxonomyTimestamps *GoogleCloudDatacatalogV1SystemTimestamps `json:"taxonomyTimestamps,omitempty"`
@@ -3719,6 +3724,43 @@ type GoogleCloudDatacatalogV1Taxonomy struct {
 
 func (s *GoogleCloudDatacatalogV1Taxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1Taxonomy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1TaxonomyService: The source system of the
+// Taxonomy.
+type GoogleCloudDatacatalogV1TaxonomyService struct {
+	// Identity: P4SA Identity of the service.
+	Identity string `json:"identity,omitempty"`
+
+	// Name: The GCP service name.
+	//
+	// Possible values:
+	//   "MANAGING_SYSTEM_UNSPECIFIED" - Default value
+	//   "MANAGING_SYSTEM_DATAPLEX" - Dataplex.
+	//   "MANAGING_SYSTEM_OTHER" - Other
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identity") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1TaxonomyService) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1TaxonomyService
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12446,6 +12488,13 @@ func (r *ProjectsLocationsTaxonomiesService) List(parent string) *ProjectsLocati
 	return c
 }
 
+// Filter sets the optional parameter "filter": Supported field for
+// filter is 'service' and value is 'dataplex'. Eg: service=dataplex.
+func (c *ProjectsLocationsTaxonomiesListCall) Filter(filter string) *ProjectsLocationsTaxonomiesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return. Must be a value between 1 and 1000 inclusively.
 // If not set, defaults to 50.
@@ -12572,6 +12621,11 @@ func (c *ProjectsLocationsTaxonomiesListCall) Do(opts ...googleapi.CallOption) (
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Supported field for filter is 'service' and value is 'dataplex'. Eg: service=dataplex.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of items to return. Must be a value between 1 and 1000 inclusively. If not set, defaults to 50.",
 	//       "format": "int32",

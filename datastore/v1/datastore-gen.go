@@ -531,6 +531,12 @@ type CommitRequest struct {
 	// `NON_TRANSACTIONAL`, no two mutations may affect a single entity.
 	Mutations []*Mutation `json:"mutations,omitempty"`
 
+	// SingleUseTransaction: Options for beginning a new transaction for
+	// this request. The transaction is committed when the request
+	// completes. If specified, TransactionOptions.mode must be
+	// TransactionOptions.ReadWrite.
+	SingleUseTransaction *TransactionOptions `json:"singleUseTransaction,omitempty"`
+
 	// Transaction: The identifier of the transaction associated with the
 	// commit. A transaction identifier is returned by a call to
 	// Datastore.BeginTransaction.
@@ -2211,6 +2217,11 @@ type LookupResponse struct {
 	// missing.
 	ReadTime string `json:"readTime,omitempty"`
 
+	// Transaction: The identifier of the transaction that was started as
+	// part of this Lookup request. Set only when
+	// ReadOptions.begin_transaction was set in LookupRequest.read_options.
+	Transaction string `json:"transaction,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2488,7 +2499,8 @@ type PropertyFilter struct {
 	// `value`. Requires: * No other `NOT_EQUAL` or `NOT_IN` is in the same
 	// query. * That `property` comes first in the `order_by`.
 	//   "HAS_ANCESTOR" - Limit the result set to the given entity and its
-	// descendants. Requires: * That `value` is an entity key.
+	// descendants. Requires: * That `value` is an entity key. * No other
+	// `HAS_ANCESTOR` is in the same query.
 	//   "NOT_IN" - The value of the `property` is not in the given array.
 	// Requires: * That `value` is a non-empty `ArrayValue` with at most 10
 	// values. * No other `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query.
@@ -2773,6 +2785,12 @@ func (s *ReadOnly) MarshalJSON() ([]byte, error) {
 
 // ReadOptions: The options shared by read requests.
 type ReadOptions struct {
+	// NewTransaction: Options for beginning a new transaction for this
+	// request. The new transaction identifier will be returned in the
+	// corresponding response as either LookupResponse.transaction or
+	// RunQueryResponse.transaction.
+	NewTransaction *TransactionOptions `json:"newTransaction,omitempty"`
+
 	// ReadConsistency: The non-transactional read consistency to use.
 	//
 	// Possible values:
@@ -2792,7 +2810,7 @@ type ReadOptions struct {
 	// Datastore.BeginTransaction.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ReadConsistency") to
+	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2800,7 +2818,7 @@ type ReadOptions struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ReadConsistency") to
+	// NullFields is a list of field names (e.g. "NewTransaction") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2987,6 +3005,12 @@ type RunAggregationQueryResponse struct {
 	// set.
 	Query *AggregationQuery `json:"query,omitempty"`
 
+	// Transaction: The identifier of the transaction that was started as
+	// part of this RunAggregationQuery request. Set only when
+	// ReadOptions.begin_transaction was set in
+	// RunAggregationQueryRequest.read_options.
+	Transaction string `json:"transaction,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -3068,6 +3092,12 @@ type RunQueryResponse struct {
 	// Query: The parsed form of the `GqlQuery` from the request, if it was
 	// set.
 	Query *Query `json:"query,omitempty"`
+
+	// Transaction: The identifier of the transaction that was started as
+	// part of this RunQuery request. Set only when
+	// ReadOptions.begin_transaction was set in
+	// RunQueryRequest.read_options.
+	Transaction string `json:"transaction,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

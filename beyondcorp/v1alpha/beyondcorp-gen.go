@@ -3171,6 +3171,7 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "ACTIVE" - Represents an active subscription.
 	//   "INACTIVE" - Represents an upcomming subscription.
+	//   "COMPLETED" - Represents a completed subscription.
 	State string `json:"state,omitempty"`
 
 	// Type: Required. Type of subscription.

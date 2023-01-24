@@ -1478,11 +1478,14 @@ type GoogleCloudChannelV1Entitlement struct {
 
 	// Parameters: Extended entitlement parameters. When creating an
 	// entitlement, valid parameter names and values are defined in the
-	// Offer.parameter_definitions. The response may include the following
-	// output-only Parameters: - assigned_units: The number of licenses
-	// assigned to users. - max_units: The maximum assignable units for a
-	// flexible offer. - num_units: The total commitment for
-	// commitment-based offers.
+	// Offer.parameter_definitions. For Google Workspace, the following
+	// Parameters may be accepted as input: - max_units: The maximum
+	// assignable units for a flexible offer OR - num_units: The total
+	// commitment for commitment-based offers The response may additionally
+	// include the following output-only Parameters: - assigned_units: The
+	// number of licenses assigned to users. For GCP billing accounts, the
+	// following Parameter may be accepted as input: - display_name: The
+	// display name of the billing account.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the
@@ -4657,11 +4660,14 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 
 	// Parameters: Extended entitlement parameters. When creating an
 	// entitlement, valid parameter names and values are defined in the
-	// Offer.parameter_definitions. The response may include the following
-	// output-only Parameters: - assigned_units: The number of licenses
-	// assigned to users. - max_units: The maximum assignable units for a
-	// flexible offer. - num_units: The total commitment for
-	// commitment-based offers.
+	// Offer.parameter_definitions. For Google Workspace, the following
+	// Parameters may be accepted as input: - max_units: The maximum
+	// assignable units for a flexible offer OR - num_units: The total
+	// commitment for commitment-based offers The response may additionally
+	// include the following output-only Parameters: - assigned_units: The
+	// number of licenses assigned to users. For GCP billing accounts, the
+	// following Parameter may be accepted as input: - display_name: The
+	// display name of the billing account.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
 
 	// ProvisionedService: Output only. Service provisioning details for the

@@ -436,8 +436,8 @@ type Alert struct {
 	// CreateTime: Output only. The time this alert was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Data: Optional. The data associated with this alert, for example
@@ -527,8 +527,8 @@ type AlertFeedback struct {
 	// CreateTime: Output only. The time this feedback was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Email: Output only. The email of the user that provided the feedback.
@@ -582,8 +582,8 @@ type AlertMetadata struct {
 	// Assignee: The email address of the user assigned to the alert.
 	Assignee string `json:"assignee,omitempty"`
 
-	// CustomerId: Output only. The unique identifier of the Google account
-	// of the customer.
+	// CustomerId: Output only. The unique identifier of the Google
+	// Workspace account of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Etag: Optional. `etag` is used for optimistic concurrency control as
@@ -873,11 +873,15 @@ func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 // BatchDeleteAlertsRequest: A request to perform batch delete on
 // alerts.
 type BatchDeleteAlertsRequest struct {
-	// AlertId: Required. list of alert IDs.
+	// AlertId: Required. The list of alert IDs to delete.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alerts are associated with.
+	// account of the customer the alerts are associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertId") to
@@ -906,7 +910,7 @@ func (s *BatchDeleteAlertsRequest) MarshalJSON() ([]byte, error) {
 // BatchDeleteAlertsResponse: Response to batch delete operation on
 // alerts.
 type BatchDeleteAlertsResponse struct {
-	// FailedAlertStatus: The status details for each failed alert_id.
+	// FailedAlertStatus: The status details for each failed `alert_id`.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
 	// SuccessAlertIds: The successful list of alert IDs.
@@ -943,11 +947,15 @@ func (s *BatchDeleteAlertsResponse) MarshalJSON() ([]byte, error) {
 // BatchUndeleteAlertsRequest: A request to perform batch undelete on
 // alerts.
 type BatchUndeleteAlertsRequest struct {
-	// AlertId: Required. list of alert IDs.
+	// AlertId: Required. The list of alert IDs to undelete.
 	AlertId []string `json:"alertId,omitempty"`
 
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alerts are associated with.
+	// account of the customer the alerts are associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AlertId") to
@@ -976,7 +984,7 @@ func (s *BatchUndeleteAlertsRequest) MarshalJSON() ([]byte, error) {
 // BatchUndeleteAlertsResponse: Response to batch undelete operation on
 // alerts.
 type BatchUndeleteAlertsResponse struct {
-	// FailedAlertStatus: The status details for each failed alert_id.
+	// FailedAlertStatus: The status details for each failed `alert_id`.
 	FailedAlertStatus map[string]Status `json:"failedAlertStatus,omitempty"`
 
 	// SuccessAlertIds: The successful list of alert IDs.
@@ -2082,11 +2090,10 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
-	//   "DELETE_WEBPROTECT_EVIDENCE" - Chrome actions Delete web protect
-	// evidence file
 	SuppressedActionTypes []string `json:"suppressedActionTypes,omitempty"`
 
 	// Trigger: Trigger of the rule.
@@ -2107,11 +2114,10 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
-	//   "DELETE_WEBPROTECT_EVIDENCE" - Chrome actions Delete web protect
-	// evidence file
 	TriggeredActionTypes []string `json:"triggeredActionTypes,omitempty"`
 
 	// TriggeringUserEmail: Email of the user who caused the violation.
@@ -2605,8 +2611,11 @@ func (s *TransferMisconfiguration) MarshalJSON() ([]byte, error) {
 // marked for deletion.
 type UndeleteAlertRequest struct {
 	// CustomerId: Optional. The unique identifier of the Google Workspace
-	// organization account of the customer the alert is associated with.
-	// Inferred from the caller identity if not provided.
+	// account of the customer the alert is associated with. The
+	// `customer_id` must have the initial "C" stripped (for example,
+	// `046psxkn`). Inferred from the caller identity if not provided. Find
+	// your customer ID
+	// (https://support.google.com/cloudidentity/answer/10070793).
 	CustomerId string `json:"customerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
@@ -3116,9 +3125,11 @@ func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsDeleteCall) CustomerId(customerId string) *AlertsDeleteCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3225,7 +3236,7 @@ func (c *AlertsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3263,9 +3274,11 @@ func (r *AlertsService) Get(alertId string) *AlertsGetCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsGetCall) CustomerId(customerId string) *AlertsGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3385,7 +3398,7 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3423,9 +3436,11 @@ func (r *AlertsService) GetMetadata(alertId string) *AlertsGetMetadataCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert metadata is associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// metadata is associated with. The `customer_id` must have the initial
+// "C" stripped (for example, `046psxkn`). Inferred from the caller
+// identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsGetMetadataCall) CustomerId(customerId string) *AlertsGetMetadataCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3545,7 +3560,7 @@ func (c *AlertsGetMetadataCall) Do(opts ...googleapi.CallOption) (*AlertMetadata
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert metadata is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert metadata is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3578,9 +3593,11 @@ func (r *AlertsService) List() *AlertsListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alerts are associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alerts
+// are associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3727,7 +3744,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alerts are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alerts are associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3956,9 +3973,11 @@ func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedb
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert is associated with. Inferred from the caller
-// identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsFeedbackCreateCall) CustomerId(customerId string) *AlertsFeedbackCreateCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4070,7 +4089,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert is associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4112,9 +4131,11 @@ func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert feedback are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// is associated with. The `customer_id` must have the initial "C"
+// stripped (for example, `046psxkn`). Inferred from the caller identity
+// if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4244,7 +4265,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert feedback are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4282,9 +4303,11 @@ func (r *V1beta1Service) GetSettings() *V1beta1GetSettingsCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert settings are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// settings are associated with. The `customer_id` must/ have the
+// initial "C" stripped (for example, `046psxkn`). Inferred from the
+// caller identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *V1beta1GetSettingsCall) CustomerId(customerId string) *V1beta1GetSettingsCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4393,7 +4416,7 @@ func (c *V1beta1GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert settings are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert settings are associated with. The `customer_id` must/ have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4427,9 +4450,11 @@ func (r *V1beta1Service) UpdateSettings(settings *Settings) *V1beta1UpdateSettin
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google Workspace organization account of the
-// customer the alert settings are associated with. Inferred from the
-// caller identity if not provided.
+// identifier of the Google Workspace account of the customer the alert
+// settings are associated with. The `customer_id` must have the initial
+// "C" stripped (for example, `046psxkn`). Inferred from the caller
+// identity if not provided. Find your customer ID
+// (https://support.google.com/cloudidentity/answer/10070793).
 func (c *V1beta1UpdateSettingsCall) CustomerId(customerId string) *V1beta1UpdateSettingsCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -4530,7 +4555,7 @@ func (c *V1beta1UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google Workspace organization account of the customer the alert settings are associated with. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the Google Workspace account of the customer the alert settings are associated with. The `customer_id` must have the initial \"C\" stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

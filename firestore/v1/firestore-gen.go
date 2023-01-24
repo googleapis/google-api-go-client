@@ -1447,6 +1447,9 @@ type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 	// operation still in progress.
 	EndTime string `json:"endTime,omitempty"`
 
+	// NamespaceIds: Which namespace ids are being exported.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
+
 	// OperationState: The state of the export operation.
 	//
 	// Possible values:
@@ -1465,7 +1468,7 @@ type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
 	// called google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
 
-	// OutputUriPrefix: Where the entities are being exported to.
+	// OutputUriPrefix: Where the documents are being exported to.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
 
 	// ProgressBytes: The progress, in bytes, of this operation.
@@ -1726,6 +1729,9 @@ type GoogleFirestoreAdminV1ImportDocumentsMetadata struct {
 
 	// InputUriPrefix: The location of the documents being imported.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// NamespaceIds: Which namespace ids are being imported.
+	NamespaceIds []string `json:"namespaceIds,omitempty"`
 
 	// OperationState: The state of the import operation.
 	//
@@ -4161,6 +4167,14 @@ func (c *ProjectsDatabasesDeleteCall) Etag(etag string) *ProjectsDatabasesDelete
 	return c
 }
 
+// FreeId sets the optional parameter "freeId": If set, will free the
+// database_id associated with this database. uid will be used as the
+// resource id to identify this deleted database.
+func (c *ProjectsDatabasesDeleteCall) FreeId(freeId bool) *ProjectsDatabasesDeleteCall {
+	c.urlParams_.Set("freeId", fmt.Sprint(freeId))
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": If set,
 // validate the request and preview the response, but do not actually
 // delete the database.
@@ -4272,6 +4286,11 @@ func (c *ProjectsDatabasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleL
 	//       "description": "The current etag of the Database. If an etag is provided and does not match the current etag of the database, deletion will be blocked and a FAILED_PRECONDITION error will be returned.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "freeId": {
+	//       "description": "If set, will free the database_id associated with this database. uid will be used as the resource id to identify this deleted database.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "name": {
 	//       "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",

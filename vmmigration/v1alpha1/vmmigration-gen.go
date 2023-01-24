@@ -2138,8 +2138,8 @@ type MigratingVm struct {
 	// source).
 	CreateTime string `json:"createTime,omitempty"`
 
-	// CurrentSyncInfo: Output only. The percentage progress of the current
-	// running replication cycle.
+	// CurrentSyncInfo: Output only. Details of the current running
+	// replication cycle.
 	CurrentSyncInfo *ReplicationCycle `json:"currentSyncInfo,omitempty"`
 
 	// Description: The description attached to the migrating VM by the

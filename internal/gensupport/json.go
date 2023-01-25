@@ -5,11 +5,17 @@
 package gensupport
 
 import (
-	"encoding/json"
 	"fmt"
 	"reflect"
 	"strings"
+	jsoniter "github.com/json-iterator/go"
 )
+
+var jsoniterFast = jsoniter.Config{
+       EscapeHTML:             false,
+       SortMapKeys:            false,
+       ValidateJsonRawMessage: false,
+}.Froze()
 
 // MarshalJSON returns a JSON encoding of schema containing only selected fields.
 // A field is selected if any of the following is true:
@@ -20,7 +26,7 @@ import (
 // The JSON key for each selected field is taken from the field's json: struct tag.
 func MarshalJSON(schema interface{}, forceSendFields, nullFields []string) ([]byte, error) {
 	if len(forceSendFields) == 0 && len(nullFields) == 0 {
-		return json.Marshal(schema)
+		return jsoniterFast.Marshal(schema)
 	}
 
 	mustInclude := make(map[string]bool)
@@ -46,7 +52,7 @@ func MarshalJSON(schema interface{}, forceSendFields, nullFields []string) ([]by
 	if err != nil {
 		return nil, err
 	}
-	return json.Marshal(dataMap)
+	return jsoniterFast.Marshal(dataMap)
 }
 
 func schemaToMap(schema interface{}, mustInclude, useNull map[string]bool, useNullMaps map[string]map[string]bool) (map[string]interface{}, error) {

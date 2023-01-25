@@ -1106,86 +1106,6 @@ func (s *AppId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedAction: An action that describes the behavior when
-// the form is submitted. For example, an Apps Script can be invoked to
-// handle the form.
-type AppsDynamiteSharedAction struct {
-	// Function: Apps Script function to invoke when the containing element
-	// is clicked/activated.
-	Function string `json:"function,omitempty"`
-
-	// Possible values:
-	//   "INTERACTION_UNSPECIFIED" - Default value if interaction is not
-	// specified.
-	//   "OPEN_DIALOG" - A dialog opens by clicking the button.
-	Interaction string `json:"interaction,omitempty"`
-
-	// Possible values:
-	//   "SPINNER" - Displays a spinner to indicate that content is loading.
-	//   "NONE" - Nothing is displayed.
-	LoadIndicator string `json:"loadIndicator,omitempty"`
-
-	// Parameters: List of action parameters.
-	Parameters []*AppsDynamiteSharedActionActionParameter `json:"parameters,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Function") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Function") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedAction) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedActionActionParameter: List of string parameters to
-// supply when the action method is invoked. For example, consider three
-// snooze buttons: snooze now, snooze 1 day, snooze next week. You might
-// use action method = snooze(), passing the snooze type and snooze time
-// in the list of string parameters.
-type AppsDynamiteSharedActionActionParameter struct {
-	// Key: The name of the parameter for the action script.
-	Key string `json:"key,omitempty"`
-
-	// Value: The value of the parameter.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedActionActionParameter) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedActionActionParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedActivityFeedAnnotationData: Next Id: 7
 type AppsDynamiteSharedActivityFeedAnnotationData struct {
 	// ActivityFeedMessageCreateTime: Timestamp of when the Activity Feed
@@ -1684,6 +1604,10 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// GroupId: GroupId to which this attachment is uploaded.
 	GroupId *GroupId `json:"groupId,omitempty"`
 
+	// IsClientSideTranscodedVideo: If the uploaded file is a video that has
+	// been transcoded on the client side Next tag: 18
+	IsClientSideTranscodedVideo bool `json:"isClientSideTranscodedVideo,omitempty"`
+
 	// OriginalDimension: Original dimension of the content. Only set for
 	// image attachments.
 	OriginalDimension *AppsDynamiteSharedDimension `json:"originalDimension,omitempty"`
@@ -1747,120 +1671,6 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 
 func (s *AppsDynamiteSharedBackendUploadMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedBackendUploadMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedBorderStyle: Represents the complete border style
-// applied to widgets.
-type AppsDynamiteSharedBorderStyle struct {
-	// CornerRadius: The corner radius for the border.
-	CornerRadius int64 `json:"cornerRadius,omitempty"`
-
-	// StrokeColor: The colors to use when the type is `BORDER_TYPE_STROKE`.
-	StrokeColor *Color `json:"strokeColor,omitempty"`
-
-	// Type: The border type.
-	//
-	// Possible values:
-	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
-	//   "NO_BORDER" - No border.
-	//   "STROKE" - Outline.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CornerRadius") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedBorderStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedBorderStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedButton: A button. Can be a text button or an image
-// button.
-type AppsDynamiteSharedButton struct {
-	// AltText: The alternative text used for accessibility. Has no effect
-	// when an icon is set; use `icon.alt_text` instead.
-	AltText string `json:"altText,omitempty"`
-
-	// Color: If set, the button is filled with a solid background.
-	Color *Color `json:"color,omitempty"`
-
-	// Disabled: If true, the button is displayed in a disabled state and
-	// doesn't respond to user actions.
-	Disabled bool `json:"disabled,omitempty"`
-
-	// Icon: The icon image.
-	Icon *AppsDynamiteSharedIcon `json:"icon,omitempty"`
-
-	// OnClick: The action to perform when the button is clicked.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// Text: The text of the button.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedButton) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedButton
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedButtonList: A list of buttons layed out
-// horizontally.
-type AppsDynamiteSharedButtonList struct {
-	Buttons []*AppsDynamiteSharedButton `json:"buttons,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buttons") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buttons") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedButtonList) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedButtonList
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2043,154 +1853,6 @@ func (s *AppsDynamiteSharedCallMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedCard: A card is a UI element that can contain UI
-// widgets such as text and images. For more information, see Cards .
-// For example, the following JSON creates a card that has a header with
-// the name, position, icons, and link for a contact, followed by a
-// section with contact information like email and phone number. ``` {
-// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
-// "imageStyle": "ImageStyle.AVATAR", "imageUrl":
-// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
-// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
-// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
-// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
-// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
-// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
-// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
-// "openLink": { "url": "https://example.com/share" } } }, {
-// "textButton": { "text": "Edit", }, "onClick": { "action": {
-// "function": "goToView", "parameters": [ { "key": "viewType", "value":
-// "EDIT" } ], "loadIndicator": "LoadIndicator.SPINNER" } } } ] } ],
-// "collapsible": true, "uncollapsibleWidgetsCount": 3 } ],
-// "cardActions": [ { "actionLabel": "Send Feedback", "onClick": {
-// "openLink": { "url": "https://example.com/feedback" } } } ], "name":
-// "contact-card-K3wB6arF2H9L" } ```
-type AppsDynamiteSharedCard struct {
-	// CardActions: The actions of this card. They are added to a card's
-	// generated toolbar menu. For example, the following JSON constructs a
-	// card action menu with Settings and Send Feedback options: ```
-	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
-	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
-	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
-	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
-	// "url": "https://example.com/feedback" } } } ] ```
-	CardActions []*AppsDynamiteSharedCardCardAction `json:"cardActions,omitempty"`
-
-	// Header: The header of the card. A header usually contains a title and
-	// an image.
-	Header *AppsDynamiteSharedCardCardHeader `json:"header,omitempty"`
-
-	// Name: Name of the card, which is used as a identifier for the card in
-	// card navigation.
-	Name string `json:"name,omitempty"`
-
-	// Sections: Sections are separated by a line divider.
-	Sections []*AppsDynamiteSharedCardSection `json:"sections,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CardActions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CardActions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCard) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCard
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCardCardAction: A card action is the action
-// associated with the card. For example, an invoice card might include
-// actions such as delete invoice, email invoice, or open the invoice in
-// a browser.
-type AppsDynamiteSharedCardCardAction struct {
-	// ActionLabel: The label that displays as the action menu item.
-	ActionLabel string `json:"actionLabel,omitempty"`
-
-	// OnClick: The onclick action for this action item.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardCardAction) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardCardAction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedCardCardHeader struct {
-	// ImageAltText: The alternative text of this image which is used for
-	// accessibility.
-	ImageAltText string `json:"imageAltText,omitempty"`
-
-	// ImageType: The image's type.
-	//
-	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
-	ImageType string `json:"imageType,omitempty"`
-
-	// ImageUrl: The URL of the image in the card header.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	// Subtitle: The subtitle of the card header.
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// Title: The title of the card header. The title must be specified. The
-	// header has a fixed height: if both a title and subtitle are
-	// specified, each takes up one line. If only the title is specified, it
-	// takes up both lines.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageAltText") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardCardHeader) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardCardHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedCardClickSuggestion: Card click which identifies
 // one suggestion provided by the app/bot.
 type AppsDynamiteSharedCardClickSuggestion struct {
@@ -2222,52 +1884,6 @@ type AppsDynamiteSharedCardClickSuggestion struct {
 
 func (s *AppsDynamiteSharedCardClickSuggestion) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedCardClickSuggestion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedCardSection: A section contains a collection of
-// widgets that are rendered vertically in the order that they are
-// specified. Across all platforms, cards have a narrow fixed width, so
-// there is currently no need for layout properties, for example, float.
-type AppsDynamiteSharedCardSection struct {
-	// Collapsible: Indicates whether this section is collapsible. If a
-	// section is collapsible, the description must be given.
-	Collapsible bool `json:"collapsible,omitempty"`
-
-	// Header: The header of the section. Formatted text is supported.
-	Header string `json:"header,omitempty"`
-
-	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
-	// example, when a section contains five widgets and the
-	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
-	// always shown and the last three are collapsed as default. The
-	// `numUncollapsibleWidget` is taken into account only when collapsible
-	// is set to `true`.
-	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
-
-	// Widgets: A section must contain at least 1 widget.
-	Widgets []*AppsDynamiteSharedWidget `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Collapsible") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Collapsible") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedCardSection) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedCardSection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2486,7 +2102,8 @@ type AppsDynamiteSharedChatItemGroupInfo struct {
 	//   "ACTIVITY_FEED" - Represents an Activity Feed space. These groups
 	// are modeled like flat rooms and contain items for users to catch up
 	// on important things. Each user should only have one group of this
-	// type. See go/activity-feed.
+	// type. See go/activity-feed. Deprecated: The go/activity-feed project
+	// is cancelled and this should no longer be used.
 	// LINT.ThenChange(//depot/google3/logs/proto/apps_dynamite/dynamite_visu
 	// al_element_entry.proto:LoggingGroupType,//depot/google3/java/com/googl
 	// e/apps/dynamite/v1/web/ui/group/groups.js:LoggingGroupType)
@@ -2524,150 +2141,6 @@ type AppsDynamiteSharedChatItemGroupInfo struct {
 
 func (s *AppsDynamiteSharedChatItemGroupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedChatItemGroupInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumns: Represents a Columns widget that displays
-// a single row of columns.
-type AppsDynamiteSharedColumns struct {
-	// ColumnItems: Each card supports up to 2 columns.
-	ColumnItems []*AppsDynamiteSharedColumnsColumn `json:"columnItems,omitempty"`
-
-	// WrapStyle: Controls how the column resizes based on screen width.
-	//
-	// Possible values:
-	//   "WRAP_STYLE_UNSPECIFIED" - Unspecified.
-	//   "NOWRAP" - Column widgets don't wrap.
-	//   "WRAP" - Column Widgets wrap.
-	WrapStyle string `json:"wrapStyle,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ColumnItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnItems") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumns) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumns
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumnsColumn: Represents a Column that consists of
-// widgets stacked vertically.
-type AppsDynamiteSharedColumnsColumn struct {
-	// HorizontalAlignment: The horizontal alignment of the column.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
-
-	// HorizontalSizeStyle: Specifies how the column content is sized
-	// horizontally.
-	//
-	// Possible values:
-	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Unspecified.
-	//   "FILL_AVAILABLE_SPACE" - Fills up the available horizontal width.
-	// Default value if unspecified.
-	//   "FILL_MINIMUM_SPACE" - Fills up the minimum horizontal width.
-	HorizontalSizeStyle string `json:"horizontalSizeStyle,omitempty"`
-
-	// VerticalAlignment: The vertical alignment of the column.
-	//
-	// Possible values:
-	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Unspecified.
-	//   "CENTER" - Aligns the widget in the center of the column. Default
-	// value if unspecified.
-	//   "TOP" - Aligns the widget at the top of the column.
-	//   "BOTTOM" - Aligns the widget at the bottom of the column.
-	VerticalAlignment string `json:"verticalAlignment,omitempty"`
-
-	// Widgets: LINT.ThenChange(//google/apps/card/v1/card.proto) Array of
-	// widgets included in the column.
-	Widgets []*AppsDynamiteSharedColumnsColumnWidgets `json:"widgets,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HorizontalAlignment")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HorizontalAlignment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumnsColumn) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumnsColumn
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedColumnsColumnWidgets: LINT.IfChange The `column`
-// widget can contain these widgets.
-type AppsDynamiteSharedColumnsColumnWidgets struct {
-	// ButtonList: ButtonList widget.
-	ButtonList *AppsDynamiteSharedButtonList `json:"buttonList,omitempty"`
-
-	// DateTimePicker: DateTimePicker widget.
-	DateTimePicker *AppsDynamiteSharedDateTimePicker `json:"dateTimePicker,omitempty"`
-
-	// DecoratedText: DecoratedText widget.
-	DecoratedText *AppsDynamiteSharedDecoratedText `json:"decoratedText,omitempty"`
-
-	// Image: Image widget.
-	Image *AppsDynamiteSharedImage `json:"image,omitempty"`
-
-	// SelectionInput: SelectionInput widget.
-	SelectionInput *AppsDynamiteSharedSelectionInput `json:"selectionInput,omitempty"`
-
-	// TextInput: TextInput widget.
-	TextInput *AppsDynamiteSharedTextInput `json:"textInput,omitempty"`
-
-	// TextParagraph: Text paragraph widget.
-	TextParagraph *AppsDynamiteSharedTextParagraph `json:"textParagraph,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ButtonList") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ButtonList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedColumnsColumnWidgets) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedColumnsColumnWidgets
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2815,171 +2288,6 @@ func (s *AppsDynamiteSharedCustomEmoji) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedDateTimePicker: The widget that lets users to
-// specify a date and time.
-type AppsDynamiteSharedDateTimePicker struct {
-	// Label: The label for the field that displays to the user.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input that's used in formInput, and
-	// uniquely identifies this input.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: Triggered when the user clicks Save or Clear from the
-	// date/time picker dialog. This is only triggered if the value changed
-	// as a result of the Save/Clear operation.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// TimezoneOffsetDate: The number representing the time zone offset from
-	// UTC, in minutes. If set, the `value_ms_epoch` is displayed in the
-	// specified time zone. If not set, it uses the user's time zone setting
-	// on the client side.
-	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
-
-	// Type: The type of the date/time picker.
-	//
-	// Possible values:
-	//   "DATE_AND_TIME" - The user can select a date and time.
-	//   "DATE_ONLY" - The user can only select a date.
-	//   "TIME_ONLY" - The user can only select a time.
-	Type string `json:"type,omitempty"`
-
-	// ValueMsEpoch: The value to display as the default value before user
-	// input or previous user input. It is represented in milliseconds
-	// (Epoch time). For `DATE_AND_TIME` type, the full epoch value is used.
-	// For `DATE_ONLY` type, only date of the epoch time is used. For
-	// `TIME_ONLY` type, only time of the epoch time is used. For example,
-	// you can set epoch time to `3 * 60 * 60 * 1000` to represent 3am.
-	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Label") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Label") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDateTimePicker) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDateTimePicker
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDecoratedText: A widget that displays text with
-// optional decorations such as a label above or below the text, an icon
-// in front of the text, a selection widget or a button after the text.
-type AppsDynamiteSharedDecoratedText struct {
-	// BottomLabel: The formatted text label that shows below the main text.
-	BottomLabel string `json:"bottomLabel,omitempty"`
-
-	// Button: A button that can be clicked to trigger an action.
-	Button *AppsDynamiteSharedButton `json:"button,omitempty"`
-
-	// EndIcon: An icon displayed after the text.
-	EndIcon *AppsDynamiteSharedIcon `json:"endIcon,omitempty"`
-
-	// Icon: Deprecated in favor of start_icon.
-	Icon *AppsDynamiteSharedIcon `json:"icon,omitempty"`
-
-	// OnClick: Only the top and bottom label and content region are
-	// clickable.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// StartIcon: The icon displayed in front of the text.
-	StartIcon *AppsDynamiteSharedIcon `json:"startIcon,omitempty"`
-
-	// SwitchControl: A switch widget can be clicked to change its state or
-	// trigger an action.
-	SwitchControl *AppsDynamiteSharedDecoratedTextSwitchControl `json:"switchControl,omitempty"`
-
-	// Text: Required. The main widget formatted text. See Text formatting
-	// for details.
-	Text string `json:"text,omitempty"`
-
-	// TopLabel: The formatted text label that shows above the main text.
-	TopLabel string `json:"topLabel,omitempty"`
-
-	// WrapText: The wrap text setting. If `true`, the text is wrapped and
-	// displayed in multiline. Otherwise, the text is truncated.
-	WrapText bool `json:"wrapText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BottomLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDecoratedText) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDecoratedText
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedDecoratedTextSwitchControl struct {
-	// ControlType: The control type, either switch or checkbox.
-	//
-	// Possible values:
-	//   "SWITCH"
-	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
-	//   "CHECK_BOX"
-	ControlType string `json:"controlType,omitempty"`
-
-	// Name: The name of the switch widget that's used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: The action when the switch state is changed.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Selected: If the switch is selected.
-	Selected bool `json:"selected,omitempty"`
-
-	// Value: The value is what is passed back in the callback.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ControlType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ControlType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedDecoratedTextSwitchControl) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedDecoratedTextSwitchControl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedDimension: Dimension for the uploaded attachments.
 type AppsDynamiteSharedDimension struct {
 	Height int64 `json:"height,omitempty"`
@@ -3007,10 +2315,6 @@ func (s *AppsDynamiteSharedDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedDimension
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedDivider: A divider that appears in between widgets.
-type AppsDynamiteSharedDivider struct {
 }
 
 // AppsDynamiteSharedDlpMetricsMetadata: LINT.IfChange
@@ -3170,110 +2474,6 @@ func (s *AppsDynamiteSharedFindDocumentSuggestion) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedGrid: Represents a Grid widget that displays items
-// in a configurable grid layout.
-type AppsDynamiteSharedGrid struct {
-	// BorderStyle: The border style to apply to each grid item.
-	BorderStyle *AppsDynamiteSharedBorderStyle `json:"borderStyle,omitempty"`
-
-	// ColumnCount: The number of columns to display in the grid. A default
-	// value is used if this field isn't specified, and that default value
-	// is different depending on where the grid is shown (dialog versus
-	// companion).
-	ColumnCount int64 `json:"columnCount,omitempty"`
-
-	// Items: The items to display in the grid.
-	Items []*AppsDynamiteSharedGridGridItem `json:"items,omitempty"`
-
-	// OnClick: This callback is reused by each individual grid item, but
-	// with the item's identifier and index in the items list added to the
-	// callback's parameters.
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// Title: The text that displays in the grid header.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BorderStyle") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BorderStyle") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGrid) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGrid
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedGridGridItem: Represents a single item in the grid
-// layout.
-type AppsDynamiteSharedGridGridItem struct {
-	// Id: A user-specified identifier for this grid item. This identifier
-	// is returned in the parent Grid's onClick callback parameters.
-	Id string `json:"id,omitempty"`
-
-	// Image: The image that displays in the grid item.
-	Image *AppsDynamiteSharedImageComponent `json:"image,omitempty"`
-
-	// Layout: The layout to use for the grid item.
-	//
-	// Possible values:
-	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - No layout specified.
-	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
-	// item's image.
-	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
-	// item's image.
-	Layout string `json:"layout,omitempty"`
-
-	// Subtitle: The grid item's subtitle.
-	Subtitle string `json:"subtitle,omitempty"`
-
-	// TextAlignment: The horizontal alignment of the grid item's text.
-	//
-	// Possible values:
-	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
-	//   "START" - Alignment to the start position.
-	//   "CENTER" - Alignment to the center position.
-	//   "END" - Alignment to the end position.
-	TextAlignment string `json:"textAlignment,omitempty"`
-
-	// Title: The grid item's title.
-	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedGridGridItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedGridGridItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedGroupDetails: NEXT TAG: 3 A GroupDetails proto will
 // store the information pertaining to single Group.
 type AppsDynamiteSharedGroupDetails struct {
@@ -3337,176 +2537,6 @@ func (s *AppsDynamiteSharedGroupVisibility) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedGroupVisibility
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedIcon struct {
-	// AltText: The description of the icon, used for accessibility. The
-	// default value is provided if you don't specify one.
-	AltText string `json:"altText,omitempty"`
-
-	// IconUrl: The icon specified by a URL.
-	IconUrl string `json:"iconUrl,omitempty"`
-
-	// ImageType: The crop style applied to the image. In some cases,
-	// applying a `CIRCLE` crop causes the image to be drawn larger than a
-	// standard icon.
-	//
-	// Possible values:
-	//   "SQUARE" - Applies no cropping to the image.
-	//   "CIRCLE" - Applies a circular mask to the image.
-	ImageType string `json:"imageType,omitempty"`
-
-	// KnownIcon: The icon specified by the string name of a list of known
-	// icons
-	KnownIcon string `json:"knownIcon,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedIcon) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedIcon
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedImage: An image that is specified by a URL and can
-// have an onClick action.
-type AppsDynamiteSharedImage struct {
-	// AltText: The alternative text of this image, used for accessibility.
-	AltText string `json:"altText,omitempty"`
-
-	// ImageUrl: An image URL.
-	ImageUrl string `json:"imageUrl,omitempty"`
-
-	OnClick *AppsDynamiteSharedOnClick `json:"onClick,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImage) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedImageComponent struct {
-	// AltText: The accessibility label for the image.
-	AltText string `json:"altText,omitempty"`
-
-	// BorderStyle: The border style to apply to the image.
-	BorderStyle *AppsDynamiteSharedBorderStyle `json:"borderStyle,omitempty"`
-
-	// CropStyle: The crop style to apply to the image.
-	CropStyle *AppsDynamiteSharedImageCropStyle `json:"cropStyle,omitempty"`
-
-	// ImageUri: The image URL.
-	ImageUri string `json:"imageUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AltText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AltText") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImageComponent) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImageComponent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedImageCropStyle: Represents the crop style applied
-// to an image.
-type AppsDynamiteSharedImageCropStyle struct {
-	// AspectRatio: The aspect ratio to use if the crop type is
-	// `RECTANGLE_CUSTOM`.
-	AspectRatio float64 `json:"aspectRatio,omitempty"`
-
-	// Type: The crop type.
-	//
-	// Possible values:
-	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified.
-	//   "SQUARE" - Applies a square crop.
-	//   "CIRCLE" - Applies a circular crop.
-	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
-	// aspect ratio.
-	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
-	// ratio.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AspectRatio") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedImageCropStyle) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedImageCropStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *AppsDynamiteSharedImageCropStyle) UnmarshalJSON(data []byte) error {
-	type NoMethod AppsDynamiteSharedImageCropStyle
-	var s1 struct {
-		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.AspectRatio = float64(s1.AspectRatio)
-	return nil
 }
 
 // AppsDynamiteSharedJustification: Data for rendering a justification
@@ -3710,206 +2740,6 @@ type AppsDynamiteSharedMessageIntegrationPayload struct {
 
 func (s *AppsDynamiteSharedMessageIntegrationPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedMessageIntegrationPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedOnClick struct {
-	// Action: If specified, an action is triggered by this onClick.
-	Action *AppsDynamiteSharedAction `json:"action,omitempty"`
-
-	// HostAppAction: Triggers host app action on click directly without
-	// invoking form actions. This is currently not available to end-users
-	// and is used internal only.
-	HostAppAction *HostAppActionMarkup `json:"hostAppAction,omitempty"`
-
-	// OpenDynamicLinkAction: An add-on triggers this action when the action
-	// needs to open a link. This differs from the open_link above in that
-	// this needs to talk to server to get the link. Thus some preparation
-	// work is required for web client to do before the open link action
-	// response comes back.
-	OpenDynamicLinkAction *AppsDynamiteSharedAction `json:"openDynamicLinkAction,omitempty"`
-
-	// OpenLink: If specified, this onClick triggers an open link action.
-	OpenLink *AppsDynamiteSharedOpenLink `json:"openLink,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOnClick) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOnClick
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type AppsDynamiteSharedOpenLink struct {
-	// AppUri: Represents the platform specific uri/intent to open on each
-	// client. For example: A companion_url will open in a companion window
-	// on the web. An iOS URL and android intent will open in the
-	// corresponding hosting apps. If these platform specific URLs can't be
-	// handled correctly, i.e. if the companion isn't supported on web and
-	// the hosting apps aren't available on the mobile platforms then the
-	// `uri` will open in a new browser window on all the platforms.
-	AppUri *AppsDynamiteSharedOpenLinkAppUri `json:"appUri,omitempty"`
-
-	// Possible values:
-	//   "NOTHING" - Doesn’t reload the card after the child window
-	// closes. Reloads the card after the child window closes. If used in
-	// conjunction with
-	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
-	// openas), the child window acts as a modal dialog and the main card is
-	// blocked until the child window closes.
-	//   "RELOAD"
-	OnClose string `json:"onClose,omitempty"`
-
-	// Possible values:
-	//   "FULL_SIZE" - The link opens as a full size window (if that's the
-	// frame used by the client.
-	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
-	OpenAs string `json:"openAs,omitempty"`
-
-	// Url: The URL to open.
-	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppUri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLink) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUri: Represents the platform specific
-// uri/intent to open for each client.
-type AppsDynamiteSharedOpenLinkAppUri struct {
-	// AndroidIntent: An intent object to be opened in the corresponding
-	// android hosting app.
-	AndroidIntent *AppsDynamiteSharedOpenLinkAppUriIntent `json:"androidIntent,omitempty"`
-
-	// CompanionUri: A companion uri string to be opened in the chat
-	// companion window. on the web.
-	CompanionUri string `json:"companionUri,omitempty"`
-
-	// IosUri: A uri string to be opened in the corresponding iOS hosting
-	// app.
-	IosUri string `json:"iosUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidIntent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUri) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUri
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUriIntent: Android intent.
-type AppsDynamiteSharedOpenLinkAppUriIntent struct {
-	// ExtraData: A list of extra data for the android intent. For example,
-	// for a calendar event edit intent, the event title information can be
-	// passed as extra data.
-	ExtraData []*AppsDynamiteSharedOpenLinkAppUriIntentExtraData `json:"extraData,omitempty"`
-
-	// IntentAction: An android intent action string for the {@link
-	// android.content.Intent} object. For example: for the view intent
-	// action type, a valid value will be
-	// android.content.Intent.ACTION_VIEW.
-	IntentAction string `json:"intentAction,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExtraData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExtraData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUriIntent) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUriIntent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedOpenLinkAppUriIntentExtraData: Extra data for an
-// android intent. Valid keys are defined in the hosting app contract.
-type AppsDynamiteSharedOpenLinkAppUriIntentExtraData struct {
-	// Key: A key for the intent extra data.
-	Key string `json:"key,omitempty"`
-
-	// Value: Value for the given extra data key.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedOpenLinkAppUriIntentExtraData) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedOpenLinkAppUriIntentExtraData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4185,90 +3015,6 @@ func (s *AppsDynamiteSharedSegmentedMembershipCounts) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedSelectionInput: A widget that creates a UI item
-// (for example, a drop-down list) with options for users to select.
-type AppsDynamiteSharedSelectionInput struct {
-	Items []*AppsDynamiteSharedSelectionInputSelectionItem `json:"items,omitempty"`
-
-	// Label: The label displayed ahead of the switch control.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input which is used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: If specified, the form is submitted when the
-	// selection changes. If not specified, you must specify a separate
-	// button.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Possible values:
-	//   "CHECK_BOX" - The selection type is a checkbox.
-	//   "RADIO_BUTTON" - The selection type is a radio button.
-	//   "SWITCH" - The selection type is a switch.
-	//   "DROPDOWN" - The selection type is a dropdown.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSelectionInput) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSelectionInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSelectionInputSelectionItem: The item in the switch
-// control. A radio button, at most one of the items is selected.
-type AppsDynamiteSharedSelectionInputSelectionItem struct {
-	// Selected: If more than one item is selected for `RADIO_BUTTON` and
-	// `DROPDOWN`, the first selected item is treated as selected and the
-	// ones after are ignored.
-	Selected bool `json:"selected,omitempty"`
-
-	// Text: The text to be displayed.
-	Text string `json:"text,omitempty"`
-
-	// Value: The value associated with this item. The client should use
-	// this as a form input value.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Selected") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Selected") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSelectionInputSelectionItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSelectionInputSelectionItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedSpaceInfo: Defines the representation of a single
 // matching space.
 type AppsDynamiteSharedSpaceInfo struct {
@@ -4324,65 +3070,6 @@ type AppsDynamiteSharedSpaceInfo struct {
 
 func (s *AppsDynamiteSharedSpaceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppsDynamiteSharedSpaceInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSuggestions: A container wrapping elements
-// necessary for showing suggestion items used in text input
-// autocomplete.
-type AppsDynamiteSharedSuggestions struct {
-	// Items: A list of suggestions items which will be used in are used in
-	// autocomplete.
-	Items []*AppsDynamiteSharedSuggestionsSuggestionItem `json:"items,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSuggestions) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSuggestions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedSuggestionsSuggestionItem: A suggestion item. Only
-// supports text for now.
-type AppsDynamiteSharedSuggestionsSuggestionItem struct {
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedSuggestionsSuggestionItem) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedSuggestionsSuggestionItem
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4536,97 +3223,6 @@ type AppsDynamiteSharedTasksAnnotationDataUserDefinedMessage struct {
 type AppsDynamiteSharedTasksMessageIntegrationPayload struct {
 }
 
-// AppsDynamiteSharedTextInput: A text input is a UI item where users
-// can input text. A text input can also have an onChange action and
-// suggestions.
-type AppsDynamiteSharedTextInput struct {
-	// AutoCompleteAction: The refresh function that returns suggestions
-	// based on the user's input text. If the callback is not specified,
-	// autocomplete is done in client side based on the initial suggestion
-	// items.
-	AutoCompleteAction *AppsDynamiteSharedAction `json:"autoCompleteAction,omitempty"`
-
-	// HintText: The hint text.
-	HintText string `json:"hintText,omitempty"`
-
-	// InitialSuggestions: The initial suggestions made before any user
-	// input.
-	InitialSuggestions *AppsDynamiteSharedSuggestions `json:"initialSuggestions,omitempty"`
-
-	// Label: At least one of label and hintText must be specified.
-	Label string `json:"label,omitempty"`
-
-	// Name: The name of the text input which is used in formInput.
-	Name string `json:"name,omitempty"`
-
-	// OnChangeAction: The onChange action, for example, invoke a function.
-	OnChangeAction *AppsDynamiteSharedAction `json:"onChangeAction,omitempty"`
-
-	// Type: The style of the text, for example, a single line or multiple
-	// lines.
-	//
-	// Possible values:
-	//   "SINGLE_LINE" - The text is put into a single line.
-	//   "MULTIPLE_LINE" - The text is put into multiple lines.
-	Type string `json:"type,omitempty"`
-
-	// Value: The default value when there is no input from the user.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoCompleteAction") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTextInput) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTextInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppsDynamiteSharedTextParagraph: A paragraph of text that supports
-// formatting. See Text formatting
-// (workspace/add-ons/concepts/widgets#text_formatting") for details.
-type AppsDynamiteSharedTextParagraph struct {
-	// Text: The text that's shown in the widget.
-	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppsDynamiteSharedTextParagraph) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedTextParagraph
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppsDynamiteSharedUserBlockRelationship: User-block relationship
 type AppsDynamiteSharedUserBlockRelationship struct {
 	HasBlockedRequester bool `json:"hasBlockedRequester,omitempty"`
@@ -4698,63 +3294,435 @@ func (s *AppsDynamiteSharedVideoReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsDynamiteSharedWidget: A widget is a UI element that presents
-// texts, images, etc.
-type AppsDynamiteSharedWidget struct {
-	// ButtonList: A list of buttons. For example, the following JSON
-	// creates two buttons. The first is a filled text button and the second
-	// is an image button that opens a link: ``` "buttonList": { "buttons":
-	// [ "button": { "text": "Edit", "Color": { "Red": 255 "Green": 255
-	// "Blue": 255 } "disabled": true }, "button": { "icon": { "knownIcon":
-	// "INVITE" "altText": "check calendar" }, "onClick": { "openLink": {
-	// "url": "https://example.com/calendar" } } }, ] } ```
-	ButtonList *AppsDynamiteSharedButtonList `json:"buttonList,omitempty"`
+// AppsDynamiteStorageAction: An action that describes the behavior when
+// the form is submitted. For example, an Apps Script can be invoked to
+// handle the form.
+type AppsDynamiteStorageAction struct {
+	// Function: Apps Script function to invoke when the containing element
+	// is clicked/activated.
+	Function string `json:"function,omitempty"`
 
-	// Columns: Displays a single row of columns with widgets stacked
-	// vertically in each column. For example, the following JSON creates a
-	// 2 column widget each containing a single item. ``` "columns": {
-	// "wrapStyle": "WRAP", "columnItems": [ { "horizontalSizeStyle":
-	// "FILL_AVAILABLE_SPACE", "horizontalAlignment": "CENTER",
-	// "verticalAlignment" : "CENTER", "widgets": [ { "textParagraph": {
-	// "text": "First column text paragraph", } } ] }, {
-	// "horizontalSizeStyle": "FILL_AVAILABLE_SPACE", "horizontalAlignment":
-	// "CENTER", "verticalAlignment" : "CENTER", "widgets": [ {
-	// "textParagraph": { "text": "Second column text paragraph", } } ] }, ]
-	// } } ```
-	Columns *AppsDynamiteSharedColumns `json:"columns,omitempty"`
+	// Possible values:
+	//   "INTERACTION_UNSPECIFIED" - Default value if interaction is not
+	// specified.
+	//   "OPEN_DIALOG" - A dialog opens by clicking the button.
+	Interaction string `json:"interaction,omitempty"`
 
-	// DateTimePicker: Displays a selection/input widget for date/time. For
-	// example, the following JSON creates a date/time picker for an
-	// appointment time: ``` "date_time_picker": { "name":
-	// "appointment_time", "label": "Book your appointment at:", "type":
-	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
-	// ```
-	DateTimePicker *AppsDynamiteSharedDateTimePicker `json:"dateTimePicker,omitempty"`
+	// Possible values:
+	//   "SPINNER" - Displays a spinner to indicate that content is loading.
+	//   "NONE" - Nothing is displayed.
+	LoadIndicator string `json:"loadIndicator,omitempty"`
 
-	// DecoratedText: Displays a decorated text item in this widget. For
-	// example, the following JSON creates a decorated text widget showing
-	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
-	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
-	// "bottomLabel": "This is a new Email address!", "switchWidget": {
-	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
-	// "controlType": "ControlType.CHECKBOX" } } ```
-	DecoratedText *AppsDynamiteSharedDecoratedText `json:"decoratedText,omitempty"`
+	// Parameters: List of action parameters.
+	Parameters []*AppsDynamiteStorageActionActionParameter `json:"parameters,omitempty"`
 
-	// Divider: Displays a divider. For example, the following JSON creates
-	// a divider: ``` "divider": { } ```
-	Divider *AppsDynamiteSharedDivider `json:"divider,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Function") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
 
-	// Grid: Displays a grid with a collection of items. For example, the
-	// following JSON creates a 2 column grid with a single item: ```
-	// "grid": { "title": "A fine collection of items", "numColumns": 2,
-	// "borderStyle": { "type": "STROKE", "cornerRadius": 4.0 }, "items": [
-	// "image": { "imageUri": "https://www.example.com/image.png",
-	// "cropStyle": { "type": "SQUARE" }, "borderStyle": { "type": "STROKE"
-	// } }, "title": "An item", "textAlignment": "CENTER" ], "onClick": {
-	// "openLink": { "url":"https://www.example.com" } } } ```
-	Grid *AppsDynamiteSharedGrid `json:"grid,omitempty"`
+	// NullFields is a list of field names (e.g. "Function") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
 
-	// HorizontalAlignment: The horizontal alignment of this widget.
+func (s *AppsDynamiteStorageAction) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageActionActionParameter: List of string parameters
+// to supply when the action method is invoked. For example, consider
+// three snooze buttons: snooze now, snooze 1 day, snooze next week. You
+// might use action method = snooze(), passing the snooze type and
+// snooze time in the list of string parameters.
+type AppsDynamiteStorageActionActionParameter struct {
+	// Key: The name of the parameter for the action script.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the parameter.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageActionActionParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageActionActionParameter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageBorderStyle: Represents the complete border style
+// applied to widgets.
+type AppsDynamiteStorageBorderStyle struct {
+	// CornerRadius: The corner radius for the border.
+	CornerRadius int64 `json:"cornerRadius,omitempty"`
+
+	// StrokeColor: The colors to use when the type is `BORDER_TYPE_STROKE`.
+	StrokeColor *Color `json:"strokeColor,omitempty"`
+
+	// Type: The border type.
+	//
+	// Possible values:
+	//   "BORDER_TYPE_UNSPECIFIED" - No value specified.
+	//   "NO_BORDER" - No border.
+	//   "STROKE" - Outline.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CornerRadius") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CornerRadius") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageBorderStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageBorderStyle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageButton: A button. Can be a text button or an image
+// button.
+type AppsDynamiteStorageButton struct {
+	// AltText: The alternative text used for accessibility. Has no effect
+	// when an icon is set; use `icon.alt_text` instead.
+	AltText string `json:"altText,omitempty"`
+
+	// Color: If set, the button is filled with a solid background.
+	Color *Color `json:"color,omitempty"`
+
+	// Disabled: If true, the button is displayed in a disabled state and
+	// doesn't respond to user actions.
+	Disabled bool `json:"disabled,omitempty"`
+
+	// Icon: The icon image.
+	Icon *AppsDynamiteStorageIcon `json:"icon,omitempty"`
+
+	// OnClick: The action to perform when the button is clicked.
+	OnClick *AppsDynamiteStorageOnClick `json:"onClick,omitempty"`
+
+	// Text: The text of the button.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageButton) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageButton
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageButtonList: A list of buttons layed out
+// horizontally.
+type AppsDynamiteStorageButtonList struct {
+	Buttons []*AppsDynamiteStorageButton `json:"buttons,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Buttons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Buttons") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageButtonList) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageButtonList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageCard: A card is a UI element that can contain UI
+// widgets such as text and images. For more information, see Cards .
+// For example, the following JSON creates a card that has a header with
+// the name, position, icons, and link for a contact, followed by a
+// section with contact information like email and phone number. ``` {
+// "header": { "title": "Heba Salam", "subtitle": "Software Engineer",
+// "imageStyle": "ImageStyle.AVATAR", "imageUrl":
+// "https://example.com/heba_salam.png", "imageAltText": "Avatar for
+// Heba Salam" }, "sections" : [ { "header": "Contact Info", "widgets":
+// [ { "decorated_text": { "icon": { "knownIcon": "EMAIL" }, "content":
+// "heba.salam@example.com" } }, { "decoratedText": { "icon": {
+// "knownIcon": "PERSON" }, "content": "Online" } }, { "decoratedText":
+// { "icon": { "knownIcon": "PHONE" }, "content": "+1 (555) 555-1234" }
+// }, { "buttons": [ { "textButton": { "text": "Share", }, "onClick": {
+// "openLink": { "url": "https://example.com/share" } } }, {
+// "textButton": { "text": "Edit", }, "onClick": { "action": {
+// "function": "goToView", "parameters": [ { "key": "viewType", "value":
+// "EDIT" } ], "loadIndicator": "LoadIndicator.SPINNER" } } } ] } ],
+// "collapsible": true, "uncollapsibleWidgetsCount": 3 } ],
+// "cardActions": [ { "actionLabel": "Send Feedback", "onClick": {
+// "openLink": { "url": "https://example.com/feedback" } } } ], "name":
+// "contact-card-K3wB6arF2H9L" } ```
+type AppsDynamiteStorageCard struct {
+	// CardActions: The actions of this card. They are added to a card's
+	// generated toolbar menu. For example, the following JSON constructs a
+	// card action menu with Settings and Send Feedback options: ```
+	// "card_actions": [ { "actionLabel": "Setting", "onClick": { "action":
+	// { "functionName": "goToView", "parameters": [ { "key": "viewType",
+	// "value": "SETTING" } ], "loadIndicator": "LoadIndicator.SPINNER" } }
+	// }, { "actionLabel": "Send Feedback", "onClick": { "openLink": {
+	// "url": "https://example.com/feedback" } } } ] ```
+	CardActions []*AppsDynamiteStorageCardCardAction `json:"cardActions,omitempty"`
+
+	// Header: The header of the card. A header usually contains a title and
+	// an image.
+	Header *AppsDynamiteStorageCardCardHeader `json:"header,omitempty"`
+
+	// Name: Name of the card, which is used as a identifier for the card in
+	// card navigation.
+	Name string `json:"name,omitempty"`
+
+	// Sections: Sections are separated by a line divider.
+	Sections []*AppsDynamiteStorageCardSection `json:"sections,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CardActions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CardActions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageCard) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageCard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageCardCardAction: A card action is the action
+// associated with the card. For example, an invoice card might include
+// actions such as delete invoice, email invoice, or open the invoice in
+// a browser.
+type AppsDynamiteStorageCardCardAction struct {
+	// ActionLabel: The label that displays as the action menu item.
+	ActionLabel string `json:"actionLabel,omitempty"`
+
+	// OnClick: The onclick action for this action item.
+	OnClick *AppsDynamiteStorageOnClick `json:"onClick,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionLabel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageCardCardAction) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageCardCardAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteStorageCardCardHeader struct {
+	// ImageAltText: The alternative text of this image which is used for
+	// accessibility.
+	ImageAltText string `json:"imageAltText,omitempty"`
+
+	// ImageType: The image's type.
+	//
+	// Possible values:
+	//   "SQUARE" - Applies no cropping to the image.
+	//   "CIRCLE" - Applies a circular mask to the image.
+	ImageType string `json:"imageType,omitempty"`
+
+	// ImageUrl: The URL of the image in the card header.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	// Subtitle: The subtitle of the card header.
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// Title: The title of the card header. The title must be specified. The
+	// header has a fixed height: if both a title and subtitle are
+	// specified, each takes up one line. If only the title is specified, it
+	// takes up both lines.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageAltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageAltText") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageCardCardHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageCardCardHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageCardSection: A section contains a collection of
+// widgets that are rendered vertically in the order that they are
+// specified. Across all platforms, cards have a narrow fixed width, so
+// there is currently no need for layout properties, for example, float.
+type AppsDynamiteStorageCardSection struct {
+	// Collapsible: Indicates whether this section is collapsible. If a
+	// section is collapsible, the description must be given.
+	Collapsible bool `json:"collapsible,omitempty"`
+
+	// Header: The header of the section. Formatted text is supported.
+	Header string `json:"header,omitempty"`
+
+	// UncollapsibleWidgetsCount: The number of uncollapsible widgets. For
+	// example, when a section contains five widgets and the
+	// `numUncollapsibleWidget` is set to `2`, the first two widgets are
+	// always shown and the last three are collapsed as default. The
+	// `numUncollapsibleWidget` is taken into account only when collapsible
+	// is set to `true`.
+	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
+
+	// Widgets: A section must contain at least 1 widget.
+	Widgets []*AppsDynamiteStorageWidget `json:"widgets,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collapsible") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collapsible") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageCardSection) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageCardSection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageColumns: Represents a Columns widget that displays
+// a single row of columns.
+type AppsDynamiteStorageColumns struct {
+	// ColumnItems: Each card supports up to 2 columns.
+	ColumnItems []*AppsDynamiteStorageColumnsColumn `json:"columnItems,omitempty"`
+
+	// WrapStyle: Controls how the column resizes based on screen width.
+	//
+	// Possible values:
+	//   "WRAP_STYLE_UNSPECIFIED" - Unspecified.
+	//   "NOWRAP" - Column widgets don't wrap.
+	//   "WRAP" - Column Widgets wrap.
+	WrapStyle string `json:"wrapStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnItems") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnItems") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageColumns) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageColumns
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageColumnsColumn: Represents a Column that consists
+// of widgets stacked vertically.
+type AppsDynamiteStorageColumnsColumn struct {
+	// HorizontalAlignment: The horizontal alignment of the column.
 	//
 	// Possible values:
 	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
@@ -4763,36 +3731,78 @@ type AppsDynamiteSharedWidget struct {
 	//   "END" - Alignment to the end position.
 	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
 
-	// Image: Displays an image in this widget. For example, the following
-	// JSON creates an image with alternative text: ``` "image": {
-	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
-	// for Heba Salam" } ```
-	Image *AppsDynamiteSharedImage `json:"image,omitempty"`
+	// HorizontalSizeStyle: Specifies how the column content is sized
+	// horizontally.
+	//
+	// Possible values:
+	//   "HORIZONTAL_SIZE_STYLE_UNSPECIFIED" - Unspecified.
+	//   "FILL_AVAILABLE_SPACE" - Fills up the available horizontal width.
+	// Default value if unspecified.
+	//   "FILL_MINIMUM_SPACE" - Fills up the minimum horizontal width.
+	HorizontalSizeStyle string `json:"horizontalSizeStyle,omitempty"`
 
-	// SelectionInput: Displays a switch control in this widget. For
-	// example, the following JSON creates a dropdown selection for size:
-	// ``` "switchControl": { "name": "size", "label": "Size" "type":
-	// "SelectionType.DROPDOWN", "items": [ { "text": "S", "value": "small",
-	// "selected": false }, { "text": "M", "value": "medium", "selected":
-	// true }, { "text": "L", "value": "large", "selected": false }, {
-	// "text": "XL", "value": "extra_large", "selected": false } ] } ```
-	SelectionInput *AppsDynamiteSharedSelectionInput `json:"selectionInput,omitempty"`
+	// VerticalAlignment: The vertical alignment of the column.
+	//
+	// Possible values:
+	//   "VERTICAL_ALIGNMENT_UNSPECIFIED" - Unspecified.
+	//   "CENTER" - Aligns the widget in the center of the column. Default
+	// value if unspecified.
+	//   "TOP" - Aligns the widget at the top of the column.
+	//   "BOTTOM" - Aligns the widget at the bottom of the column.
+	VerticalAlignment string `json:"verticalAlignment,omitempty"`
 
-	// TextInput: Displays a text input in this widget. For example, the
-	// following JSON creates a text input for mail address: ```
-	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
-	// } ``` As another example, the following JSON creates a text input for
-	// programming language with static suggestions: ``` "textInput": {
-	// "name": "preferred_programing_language", "label": "Preferred
-	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
-	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
-	// } ```
-	TextInput *AppsDynamiteSharedTextInput `json:"textInput,omitempty"`
+	// Widgets:
+	// LINT.ThenChange(//depot/google3/google/apps/card/v1/card.proto) Array
+	// of widgets included in the column.
+	Widgets []*AppsDynamiteStorageColumnsColumnWidgets `json:"widgets,omitempty"`
 
-	// TextParagraph: Displays a text paragraph in this widget. For example,
-	// the following JSON creates a bolded text: ``` "textParagraph": {
-	// "text": " *bold text*" } ```
-	TextParagraph *AppsDynamiteSharedTextParagraph `json:"textParagraph,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HorizontalAlignment")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HorizontalAlignment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageColumnsColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageColumnsColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageColumnsColumnWidgets: LINT.IfChange The `column`
+// widget can contain these widgets.
+type AppsDynamiteStorageColumnsColumnWidgets struct {
+	// ButtonList: ButtonList widget.
+	ButtonList *AppsDynamiteStorageButtonList `json:"buttonList,omitempty"`
+
+	// DateTimePicker: DateTimePicker widget.
+	DateTimePicker *AppsDynamiteStorageDateTimePicker `json:"dateTimePicker,omitempty"`
+
+	// DecoratedText: DecoratedText widget.
+	DecoratedText *AppsDynamiteStorageDecoratedText `json:"decoratedText,omitempty"`
+
+	// Image: Image widget.
+	Image *AppsDynamiteStorageImage `json:"image,omitempty"`
+
+	// SelectionInput: SelectionInput widget.
+	SelectionInput *AppsDynamiteStorageSelectionInput `json:"selectionInput,omitempty"`
+
+	// TextInput: TextInput widget.
+	TextInput *AppsDynamiteStorageTextInput `json:"textInput,omitempty"`
+
+	// TextParagraph: Text paragraph widget.
+	TextParagraph *AppsDynamiteStorageTextParagraph `json:"textParagraph,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ButtonList") to
 	// unconditionally include in API requests. By default, fields with
@@ -4811,8 +3821,1005 @@ type AppsDynamiteSharedWidget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppsDynamiteSharedWidget) MarshalJSON() ([]byte, error) {
-	type NoMethod AppsDynamiteSharedWidget
+func (s *AppsDynamiteStorageColumnsColumnWidgets) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageColumnsColumnWidgets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageDateTimePicker: The widget that lets users to
+// specify a date and time.
+type AppsDynamiteStorageDateTimePicker struct {
+	// Label: The label for the field that displays to the user.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input that's used in formInput, and
+	// uniquely identifies this input.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: Triggered when the user clicks Save or Clear from the
+	// date/time picker dialog. This is only triggered if the value changed
+	// as a result of the Save/Clear operation.
+	OnChangeAction *AppsDynamiteStorageAction `json:"onChangeAction,omitempty"`
+
+	// TimezoneOffsetDate: The number representing the time zone offset from
+	// UTC, in minutes. If set, the `value_ms_epoch` is displayed in the
+	// specified time zone. If not set, it uses the user's time zone setting
+	// on the client side.
+	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
+
+	// Type: The type of the date/time picker.
+	//
+	// Possible values:
+	//   "DATE_AND_TIME" - The user can select a date and time.
+	//   "DATE_ONLY" - The user can only select a date.
+	//   "TIME_ONLY" - The user can only select a time.
+	Type string `json:"type,omitempty"`
+
+	// ValueMsEpoch: The value to display as the default value before user
+	// input or previous user input. It is represented in milliseconds
+	// (Epoch time). For `DATE_AND_TIME` type, the full epoch value is used.
+	// For `DATE_ONLY` type, only date of the epoch time is used. For
+	// `TIME_ONLY` type, only time of the epoch time is used. For example,
+	// you can set epoch time to `3 * 60 * 60 * 1000` to represent 3am.
+	ValueMsEpoch int64 `json:"valueMsEpoch,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageDateTimePicker) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageDateTimePicker
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageDecoratedText: A widget that displays text with
+// optional decorations such as a label above or below the text, an icon
+// in front of the text, a selection widget or a button after the text.
+type AppsDynamiteStorageDecoratedText struct {
+	// BottomLabel: The formatted text label that shows below the main text.
+	BottomLabel string `json:"bottomLabel,omitempty"`
+
+	// Button: A button that can be clicked to trigger an action.
+	Button *AppsDynamiteStorageButton `json:"button,omitempty"`
+
+	// EndIcon: An icon displayed after the text.
+	EndIcon *AppsDynamiteStorageIcon `json:"endIcon,omitempty"`
+
+	// Icon: Deprecated in favor of start_icon.
+	Icon *AppsDynamiteStorageIcon `json:"icon,omitempty"`
+
+	// OnClick: Only the top and bottom label and content region are
+	// clickable.
+	OnClick *AppsDynamiteStorageOnClick `json:"onClick,omitempty"`
+
+	// StartIcon: The icon displayed in front of the text.
+	StartIcon *AppsDynamiteStorageIcon `json:"startIcon,omitempty"`
+
+	// SwitchControl: A switch widget can be clicked to change its state or
+	// trigger an action.
+	SwitchControl *AppsDynamiteStorageDecoratedTextSwitchControl `json:"switchControl,omitempty"`
+
+	// Text: Required. The main widget formatted text. See Text formatting
+	// for details.
+	Text string `json:"text,omitempty"`
+
+	// TopLabel: The formatted text label that shows above the main text.
+	TopLabel string `json:"topLabel,omitempty"`
+
+	// WrapText: The wrap text setting. If `true`, the text is wrapped and
+	// displayed in multiline. Otherwise, the text is truncated.
+	WrapText bool `json:"wrapText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BottomLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BottomLabel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageDecoratedText) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageDecoratedText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteStorageDecoratedTextSwitchControl struct {
+	// ControlType: The control type, either switch or checkbox.
+	//
+	// Possible values:
+	//   "SWITCH"
+	//   "CHECKBOX" - Deprecated in favor of `CHECK_BOX`.
+	//   "CHECK_BOX"
+	ControlType string `json:"controlType,omitempty"`
+
+	// Name: The name of the switch widget that's used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: The action when the switch state is changed.
+	OnChangeAction *AppsDynamiteStorageAction `json:"onChangeAction,omitempty"`
+
+	// Selected: If the switch is selected.
+	Selected bool `json:"selected,omitempty"`
+
+	// Value: The value is what is passed back in the callback.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ControlType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ControlType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageDecoratedTextSwitchControl) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageDecoratedTextSwitchControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageDivider: A divider that appears in between
+// widgets.
+type AppsDynamiteStorageDivider struct {
+}
+
+// AppsDynamiteStorageGrid: Represents a Grid widget that displays items
+// in a configurable grid layout.
+type AppsDynamiteStorageGrid struct {
+	// BorderStyle: The border style to apply to each grid item.
+	BorderStyle *AppsDynamiteStorageBorderStyle `json:"borderStyle,omitempty"`
+
+	// ColumnCount: The number of columns to display in the grid. A default
+	// value is used if this field isn't specified, and that default value
+	// is different depending on where the grid is shown (dialog versus
+	// companion).
+	ColumnCount int64 `json:"columnCount,omitempty"`
+
+	// Items: The items to display in the grid.
+	Items []*AppsDynamiteStorageGridGridItem `json:"items,omitempty"`
+
+	// OnClick: This callback is reused by each individual grid item, but
+	// with the item's identifier and index in the items list added to the
+	// callback's parameters.
+	OnClick *AppsDynamiteStorageOnClick `json:"onClick,omitempty"`
+
+	// Title: The text that displays in the grid header.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BorderStyle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BorderStyle") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageGrid) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageGrid
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageGridGridItem: Represents a single item in the grid
+// layout.
+type AppsDynamiteStorageGridGridItem struct {
+	// Id: A user-specified identifier for this grid item. This identifier
+	// is returned in the parent Grid's onClick callback parameters.
+	Id string `json:"id,omitempty"`
+
+	// Image: The image that displays in the grid item.
+	Image *AppsDynamiteStorageImageComponent `json:"image,omitempty"`
+
+	// Layout: The layout to use for the grid item.
+	//
+	// Possible values:
+	//   "GRID_ITEM_LAYOUT_UNSPECIFIED" - No layout specified.
+	//   "TEXT_BELOW" - The title and subtitle are shown below the grid
+	// item's image.
+	//   "TEXT_ABOVE" - The title and subtitle are shown above the grid
+	// item's image.
+	Layout string `json:"layout,omitempty"`
+
+	// Subtitle: The grid item's subtitle.
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// TextAlignment: The horizontal alignment of the grid item's text.
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
+	//   "START" - Alignment to the start position.
+	//   "CENTER" - Alignment to the center position.
+	//   "END" - Alignment to the end position.
+	TextAlignment string `json:"textAlignment,omitempty"`
+
+	// Title: The grid item's title.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageGridGridItem) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageGridGridItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteStorageIcon struct {
+	// AltText: The description of the icon, used for accessibility. The
+	// default value is provided if you don't specify one.
+	AltText string `json:"altText,omitempty"`
+
+	// IconUrl: The icon specified by a URL.
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// ImageType: The crop style applied to the image. In some cases,
+	// applying a `CIRCLE` crop causes the image to be drawn larger than a
+	// standard icon.
+	//
+	// Possible values:
+	//   "SQUARE" - Applies no cropping to the image.
+	//   "CIRCLE" - Applies a circular mask to the image.
+	ImageType string `json:"imageType,omitempty"`
+
+	// KnownIcon: The icon specified by the string name of a list of known
+	// icons
+	KnownIcon string `json:"knownIcon,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageIcon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageImage: An image that is specified by a URL and can
+// have an onClick action.
+type AppsDynamiteStorageImage struct {
+	// AltText: The alternative text of this image, used for accessibility.
+	AltText string `json:"altText,omitempty"`
+
+	// ImageUrl: An image URL.
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	OnClick *AppsDynamiteStorageOnClick `json:"onClick,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageImage) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageImage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteStorageImageComponent struct {
+	// AltText: The accessibility label for the image.
+	AltText string `json:"altText,omitempty"`
+
+	// BorderStyle: The border style to apply to the image.
+	BorderStyle *AppsDynamiteStorageBorderStyle `json:"borderStyle,omitempty"`
+
+	// CropStyle: The crop style to apply to the image.
+	CropStyle *AppsDynamiteStorageImageCropStyle `json:"cropStyle,omitempty"`
+
+	// ImageUri: The image URL.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AltText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AltText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageImageComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageImageComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageImageCropStyle: Represents the crop style applied
+// to an image.
+type AppsDynamiteStorageImageCropStyle struct {
+	// AspectRatio: The aspect ratio to use if the crop type is
+	// `RECTANGLE_CUSTOM`.
+	AspectRatio float64 `json:"aspectRatio,omitempty"`
+
+	// Type: The crop type.
+	//
+	// Possible values:
+	//   "IMAGE_CROP_TYPE_UNSPECIFIED" - No value specified.
+	//   "SQUARE" - Applies a square crop.
+	//   "CIRCLE" - Applies a circular crop.
+	//   "RECTANGLE_CUSTOM" - Applies a rectangular crop with a custom
+	// aspect ratio.
+	//   "RECTANGLE_4_3" - Applies a rectangular crop with a 4:3 aspect
+	// ratio.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AspectRatio") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageImageCropStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageImageCropStyle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *AppsDynamiteStorageImageCropStyle) UnmarshalJSON(data []byte) error {
+	type NoMethod AppsDynamiteStorageImageCropStyle
+	var s1 struct {
+		AspectRatio gensupport.JSONFloat64 `json:"aspectRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AspectRatio = float64(s1.AspectRatio)
+	return nil
+}
+
+type AppsDynamiteStorageOnClick struct {
+	// Action: If specified, an action is triggered by this onClick.
+	Action *AppsDynamiteStorageAction `json:"action,omitempty"`
+
+	// HostAppAction: Triggers host app action on click directly without
+	// invoking form actions. This is currently not available to end-users
+	// and is used internal only.
+	HostAppAction *HostAppActionMarkup `json:"hostAppAction,omitempty"`
+
+	// OpenDynamicLinkAction: An add-on triggers this action when the action
+	// needs to open a link. This differs from the open_link above in that
+	// this needs to talk to server to get the link. Thus some preparation
+	// work is required for web client to do before the open link action
+	// response comes back.
+	OpenDynamicLinkAction *AppsDynamiteStorageAction `json:"openDynamicLinkAction,omitempty"`
+
+	// OpenLink: If specified, this onClick triggers an open link action.
+	OpenLink *AppsDynamiteStorageOpenLink `json:"openLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageOnClick) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageOnClick
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AppsDynamiteStorageOpenLink struct {
+	// AppUri: Represents the platform specific uri/intent to open on each
+	// client. For example: A companion_url will open in a companion window
+	// on the web. An iOS URL and android intent will open in the
+	// corresponding hosting apps. If these platform specific URLs can't be
+	// handled correctly, i.e. if the companion isn't supported on web and
+	// the hosting apps aren't available on the mobile platforms then the
+	// `uri` will open in a new browser window on all the platforms.
+	AppUri *AppsDynamiteStorageOpenLinkAppUri `json:"appUri,omitempty"`
+
+	// Possible values:
+	//   "NOTHING" - Doesn’t reload the card after the child window
+	// closes. Reloads the card after the child window closes. If used in
+	// conjunction with
+	// [OpenAs.OVERLAY](/workspace/add-ons/reference/rpc/google.apps.card.v1#
+	// openas), the child window acts as a modal dialog and the main card is
+	// blocked until the child window closes.
+	//   "RELOAD"
+	OnClose string `json:"onClose,omitempty"`
+
+	// Possible values:
+	//   "FULL_SIZE" - The link opens as a full size window (if that's the
+	// frame used by the client.
+	//   "OVERLAY" - The link opens as an overlay, such as a pop-up.
+	OpenAs string `json:"openAs,omitempty"`
+
+	// Url: The URL to open.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageOpenLink) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageOpenLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageOpenLinkAppUri: Represents the platform specific
+// uri/intent to open for each client.
+type AppsDynamiteStorageOpenLinkAppUri struct {
+	// AndroidIntent: An intent object to be opened in the corresponding
+	// android hosting app.
+	AndroidIntent *AppsDynamiteStorageOpenLinkAppUriIntent `json:"androidIntent,omitempty"`
+
+	// CompanionUri: A companion uri string to be opened in the chat
+	// companion window. on the web.
+	CompanionUri string `json:"companionUri,omitempty"`
+
+	// IosUri: A uri string to be opened in the corresponding iOS hosting
+	// app.
+	IosUri string `json:"iosUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AndroidIntent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AndroidIntent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageOpenLinkAppUri) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageOpenLinkAppUri
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageOpenLinkAppUriIntent: Android intent.
+type AppsDynamiteStorageOpenLinkAppUriIntent struct {
+	// ExtraData: A list of extra data for the android intent. For example,
+	// for a calendar event edit intent, the event title information can be
+	// passed as extra data.
+	ExtraData []*AppsDynamiteStorageOpenLinkAppUriIntentExtraData `json:"extraData,omitempty"`
+
+	// IntentAction: An android intent action string for the {@link
+	// android.content.Intent} object. For example: for the view intent
+	// action type, a valid value will be
+	// android.content.Intent.ACTION_VIEW.
+	IntentAction string `json:"intentAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExtraData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExtraData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageOpenLinkAppUriIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageOpenLinkAppUriIntent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageOpenLinkAppUriIntentExtraData: Extra data for an
+// android intent. Valid keys are defined in the hosting app contract.
+type AppsDynamiteStorageOpenLinkAppUriIntentExtraData struct {
+	// Key: A key for the intent extra data.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value for the given extra data key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageOpenLinkAppUriIntentExtraData) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageOpenLinkAppUriIntentExtraData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageSelectionInput: A widget that creates a UI item
+// (for example, a drop-down list) with options for users to select.
+type AppsDynamiteStorageSelectionInput struct {
+	Items []*AppsDynamiteStorageSelectionInputSelectionItem `json:"items,omitempty"`
+
+	// Label: The label displayed ahead of the switch control.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input which is used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: If specified, the form is submitted when the
+	// selection changes. If not specified, you must specify a separate
+	// button.
+	OnChangeAction *AppsDynamiteStorageAction `json:"onChangeAction,omitempty"`
+
+	// Possible values:
+	//   "CHECK_BOX" - The selection type is a checkbox.
+	//   "RADIO_BUTTON" - The selection type is a radio button.
+	//   "SWITCH" - The selection type is a switch.
+	//   "DROPDOWN" - The selection type is a dropdown.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageSelectionInput) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageSelectionInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageSelectionInputSelectionItem: The item in the
+// switch control. A radio button, at most one of the items is selected.
+type AppsDynamiteStorageSelectionInputSelectionItem struct {
+	// Selected: If more than one item is selected for `RADIO_BUTTON` and
+	// `DROPDOWN`, the first selected item is treated as selected and the
+	// ones after are ignored.
+	Selected bool `json:"selected,omitempty"`
+
+	// Text: The text to be displayed.
+	Text string `json:"text,omitempty"`
+
+	// Value: The value associated with this item. The client should use
+	// this as a form input value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Selected") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Selected") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageSelectionInputSelectionItem) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageSelectionInputSelectionItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageSuggestions: A container wrapping elements
+// necessary for showing suggestion items used in text input
+// autocomplete.
+type AppsDynamiteStorageSuggestions struct {
+	// Items: A list of suggestions items which will be used in are used in
+	// autocomplete.
+	Items []*AppsDynamiteStorageSuggestionsSuggestionItem `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageSuggestions) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageSuggestions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageSuggestionsSuggestionItem: A suggestion item. Only
+// supports text for now.
+type AppsDynamiteStorageSuggestionsSuggestionItem struct {
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageSuggestionsSuggestionItem) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageSuggestionsSuggestionItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageTextInput: A text input is a UI item where users
+// can input text. A text input can also have an onChange action and
+// suggestions.
+type AppsDynamiteStorageTextInput struct {
+	// AutoCompleteAction: The refresh function that returns suggestions
+	// based on the user's input text. If the callback is not specified,
+	// autocomplete is done in client side based on the initial suggestion
+	// items.
+	AutoCompleteAction *AppsDynamiteStorageAction `json:"autoCompleteAction,omitempty"`
+
+	// HintText: The hint text.
+	HintText string `json:"hintText,omitempty"`
+
+	// InitialSuggestions: The initial suggestions made before any user
+	// input.
+	InitialSuggestions *AppsDynamiteStorageSuggestions `json:"initialSuggestions,omitempty"`
+
+	// Label: At least one of label and hintText must be specified.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the text input which is used in formInput.
+	Name string `json:"name,omitempty"`
+
+	// OnChangeAction: The onChange action, for example, invoke a function.
+	OnChangeAction *AppsDynamiteStorageAction `json:"onChangeAction,omitempty"`
+
+	// Type: The style of the text, for example, a single line or multiple
+	// lines.
+	//
+	// Possible values:
+	//   "SINGLE_LINE" - The text is put into a single line.
+	//   "MULTIPLE_LINE" - The text is put into multiple lines.
+	Type string `json:"type,omitempty"`
+
+	// Value: The default value when there is no input from the user.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoCompleteAction")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoCompleteAction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageTextInput) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageTextInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageTextParagraph: A paragraph of text that supports
+// formatting. See Text formatting
+// (workspace/add-ons/concepts/widgets#text_formatting") for details.
+type AppsDynamiteStorageTextParagraph struct {
+	// Text: The text that's shown in the widget.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageTextParagraph) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageTextParagraph
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppsDynamiteStorageWidget: A widget is a UI element that presents
+// texts, images, etc.
+type AppsDynamiteStorageWidget struct {
+	// ButtonList: A list of buttons. For example, the following JSON
+	// creates two buttons. The first is a filled text button and the second
+	// is an image button that opens a link: ``` "buttonList": { "buttons":
+	// [ "button": { "text": "Edit", "Color": { "Red": 255 "Green": 255
+	// "Blue": 255 } "disabled": true }, "button": { "icon": { "knownIcon":
+	// "INVITE" "altText": "check calendar" }, "onClick": { "openLink": {
+	// "url": "https://example.com/calendar" } } }, ] } ```
+	ButtonList *AppsDynamiteStorageButtonList `json:"buttonList,omitempty"`
+
+	// Columns: Displays a single row of columns with widgets stacked
+	// vertically in each column. For example, the following JSON creates a
+	// 2 column widget each containing a single item. ``` "columns": {
+	// "wrapStyle": "WRAP", "columnItems": [ { "horizontalSizeStyle":
+	// "FILL_AVAILABLE_SPACE", "horizontalAlignment": "CENTER",
+	// "verticalAlignment" : "CENTER", "widgets": [ { "textParagraph": {
+	// "text": "First column text paragraph", } } ] }, {
+	// "horizontalSizeStyle": "FILL_AVAILABLE_SPACE", "horizontalAlignment":
+	// "CENTER", "verticalAlignment" : "CENTER", "widgets": [ {
+	// "textParagraph": { "text": "Second column text paragraph", } } ] }, ]
+	// } } ```
+	Columns *AppsDynamiteStorageColumns `json:"columns,omitempty"`
+
+	// DateTimePicker: Displays a selection/input widget for date/time. For
+	// example, the following JSON creates a date/time picker for an
+	// appointment time: ``` "date_time_picker": { "name":
+	// "appointment_time", "label": "Book your appointment at:", "type":
+	// "DateTimePickerType.DATE_AND_TIME", "valueMsEpoch": "796435200000" }
+	// ```
+	DateTimePicker *AppsDynamiteStorageDateTimePicker `json:"dateTimePicker,omitempty"`
+
+	// DecoratedText: Displays a decorated text item in this widget. For
+	// example, the following JSON creates a decorated text widget showing
+	// email address: ``` "decoratedText": { "icon": { "knownIcon": "EMAIL"
+	// }, "topLabel": "Email Address", "content": "heba.salam@example.com",
+	// "bottomLabel": "This is a new Email address!", "switchWidget": {
+	// "name": "has_send_welcome_email_to_heba_salam", "selected": false,
+	// "controlType": "ControlType.CHECKBOX" } } ```
+	DecoratedText *AppsDynamiteStorageDecoratedText `json:"decoratedText,omitempty"`
+
+	// Divider: Displays a divider. For example, the following JSON creates
+	// a divider: ``` "divider": { } ```
+	Divider *AppsDynamiteStorageDivider `json:"divider,omitempty"`
+
+	// Grid: Displays a grid with a collection of items. For example, the
+	// following JSON creates a 2 column grid with a single item: ```
+	// "grid": { "title": "A fine collection of items", "numColumns": 2,
+	// "borderStyle": { "type": "STROKE", "cornerRadius": 4.0 }, "items": [
+	// "image": { "imageUri": "https://www.example.com/image.png",
+	// "cropStyle": { "type": "SQUARE" }, "borderStyle": { "type": "STROKE"
+	// } }, "title": "An item", "textAlignment": "CENTER" ], "onClick": {
+	// "openLink": { "url":"https://www.example.com" } } } ```
+	Grid *AppsDynamiteStorageGrid `json:"grid,omitempty"`
+
+	// HorizontalAlignment: The horizontal alignment of this widget.
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Unspecified alignment.
+	//   "START" - Alignment to the start position.
+	//   "CENTER" - Alignment to the center position.
+	//   "END" - Alignment to the end position.
+	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+
+	// Image: Displays an image in this widget. For example, the following
+	// JSON creates an image with alternative text: ``` "image": {
+	// "imageUrl": "https://example.com/heba_salam.png" "altText": "Avatar
+	// for Heba Salam" } ```
+	Image *AppsDynamiteStorageImage `json:"image,omitempty"`
+
+	// SelectionInput: Displays a switch control in this widget. For
+	// example, the following JSON creates a dropdown selection for size:
+	// ``` "switchControl": { "name": "size", "label": "Size" "type":
+	// "SelectionType.DROPDOWN", "items": [ { "text": "S", "value": "small",
+	// "selected": false }, { "text": "M", "value": "medium", "selected":
+	// true }, { "text": "L", "value": "large", "selected": false }, {
+	// "text": "XL", "value": "extra_large", "selected": false } ] } ```
+	SelectionInput *AppsDynamiteStorageSelectionInput `json:"selectionInput,omitempty"`
+
+	// TextInput: Displays a text input in this widget. For example, the
+	// following JSON creates a text input for mail address: ```
+	// "textInput": { "name": "mailing_address", "label": "Mailing Address"
+	// } ``` As another example, the following JSON creates a text input for
+	// programming language with static suggestions: ``` "textInput": {
+	// "name": "preferred_programing_language", "label": "Preferred
+	// Language", "initialSuggestions": { "items": [ { "text": "C++" }, {
+	// "text": "Java" }, { "text": "JavaScript" }, { "text": "Python" } ] }
+	// } ```
+	TextInput *AppsDynamiteStorageTextInput `json:"textInput,omitempty"`
+
+	// TextParagraph: Displays a text paragraph in this widget. For example,
+	// the following JSON creates a bolded text: ``` "textParagraph": {
+	// "text": " *bold text*" } ```
+	TextParagraph *AppsDynamiteStorageTextParagraph `json:"textParagraph,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ButtonList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ButtonList") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppsDynamiteStorageWidget) MarshalJSON() ([]byte, error) {
+	type NoMethod AppsDynamiteStorageWidget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5375,7 +5382,7 @@ type Attachment struct {
 
 	// CardAddOnData: Card AddOn attachment with the possibility for
 	// specifying editable widgets.
-	CardAddOnData *AppsDynamiteSharedCard `json:"cardAddOnData,omitempty"`
+	CardAddOnData *AppsDynamiteStorageCard `json:"cardAddOnData,omitempty"`
 
 	// DeprecatedAddOnData: Deprecated version of Gmail AddOn attachment.
 	DeprecatedAddOnData *ContextualAddOnMarkup `json:"deprecatedAddOnData,omitempty"`
@@ -6197,6 +6204,23 @@ type CallInfo struct {
 	// AttachedDocuments: Output only. Documents attached to an ongoing
 	// conference.
 	AttachedDocuments []*DocumentInfo `json:"attachedDocuments,omitempty"`
+
+	// AvailableAccessTypes: List of available access types of the
+	// conference.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACCESS_TYPE_OPEN" - Anyone with meeting join information (url,
+	// phone access...) can join, no knocking required. (Subject to
+	// organization policies)
+	//   "ACCESS_TYPE_TRUSTED" - Members of the Host's organization, invited
+	// external users, and dial-in users can join without knocking, everyone
+	// else must knock. (Subject to organization policies)
+	//   "ACCESS_TYPE_RESTRICTED" - Only participants invited by a host can
+	// automatically join, everyone else must knock and be admitted.
+	// (Subject to organization policies) Participants cannot dial out from
+	// the meeting. And only hosts can accept knocks.
+	AvailableAccessTypes []string `json:"availableAccessTypes,omitempty"`
 
 	// AvailableReactions: Output only. The set of reactions that clients
 	// are allowed to send and can expect to receive. Note that a device in
@@ -9193,7 +9217,11 @@ type DynamiteMessagesScoringInfo struct {
 
 	MessageAgeInDays float64 `json:"messageAgeInDays,omitempty"`
 
+	MessageSenderAffinityScore float64 `json:"messageSenderAffinityScore,omitempty"`
+
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
+
+	UnjoinedSpaceAffinityScore float64 `json:"unjoinedSpaceAffinityScore,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FinalScore") to
 	// unconditionally include in API requests. By default, fields with
@@ -9221,11 +9249,13 @@ func (s *DynamiteMessagesScoringInfo) MarshalJSON() ([]byte, error) {
 func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	type NoMethod DynamiteMessagesScoringInfo
 	var s1 struct {
-		FinalScore               gensupport.JSONFloat64 `json:"finalScore"`
-		FreshnessScore           gensupport.JSONFloat64 `json:"freshnessScore"`
-		JoinedSpaceAffinityScore gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
-		MessageAgeInDays         gensupport.JSONFloat64 `json:"messageAgeInDays"`
-		TopicalityScore          gensupport.JSONFloat64 `json:"topicalityScore"`
+		FinalScore                 gensupport.JSONFloat64 `json:"finalScore"`
+		FreshnessScore             gensupport.JSONFloat64 `json:"freshnessScore"`
+		JoinedSpaceAffinityScore   gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
+		MessageAgeInDays           gensupport.JSONFloat64 `json:"messageAgeInDays"`
+		MessageSenderAffinityScore gensupport.JSONFloat64 `json:"messageSenderAffinityScore"`
+		TopicalityScore            gensupport.JSONFloat64 `json:"topicalityScore"`
+		UnjoinedSpaceAffinityScore gensupport.JSONFloat64 `json:"unjoinedSpaceAffinityScore"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -9236,7 +9266,9 @@ func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpaceAffinityScore = float64(s1.JoinedSpaceAffinityScore)
 	s.MessageAgeInDays = float64(s1.MessageAgeInDays)
+	s.MessageSenderAffinityScore = float64(s1.MessageSenderAffinityScore)
 	s.TopicalityScore = float64(s1.TopicalityScore)
+	s.UnjoinedSpaceAffinityScore = float64(s1.UnjoinedSpaceAffinityScore)
 	return nil
 }
 
@@ -18171,7 +18203,7 @@ func (s *Principal) MarshalJSON() ([]byte, error) {
 // google3/java/com/google/security/credentials/Principal.java
 // google3/security/credentials/go/principal.go unless direct proto
 // access is essential. If you update this protocol buffer, please
-// update the wrapper classes as well.
+// update the wrapper classes as well. LINT.IfChange
 type PrincipalProto struct {
 	// AllAuthenticatedUsers: scope = ALL_AUTHENTICATED_USERS
 	AllAuthenticatedUsers *AllAuthenticatedUsersProto `json:"allAuthenticatedUsers,omitempty"`
@@ -18424,7 +18456,7 @@ type PropertyDefinition struct {
 	// IsFacetable: Indicates that the property can be used for generating
 	// facets. Cannot be true for properties whose type is object.
 	// IsReturnable must be true to set this option. Only supported for
-	// boolean, enum, and text properties.
+	// boolean, enum, integer, and text properties.
 	IsFacetable bool `json:"isFacetable,omitempty"`
 
 	// IsRepeatable: Indicates that multiple values are allowed for the
@@ -19198,7 +19230,7 @@ func (s *Rank) MarshalJSON() ([]byte, error) {
 
 // RbacRoleProto: Principal associated with a given RBAC role. This
 // principal is used by Sphinx Provisioning Service for RBAC
-// (go/cedi-auth) provisionable (go/sphinx-rbacz-design).
+// provisionable (go/sphinx-rbacz).
 type RbacRoleProto struct {
 	Name string `json:"name,omitempty"`
 
@@ -19207,10 +19239,11 @@ type RbacRoleProto struct {
 	// RbacNamespace: DEPRECATED as of 01.11.2019
 	RbacNamespace string `json:"rbacNamespace,omitempty"`
 
-	// RbacRoleName: Format:
-	// "RbacNamespaceName.RbacRoleName(/field=value)*", e.g.,
-	// "hr.v1.Reader",
-	// "hr.v1.Reader/language=EN_US/country=USA/room=NYC-9th-11A201".
+	// RbacRoleName: Format: "role/z?" - "role" is the Sphinx globally
+	// unique name of the Sphinx role that provisions the RBAC role. - "/z?"
+	// suffix indicates which Zanzibar environment stores the role
+	// membership data ("/zd": dev, "/zs": staging, "/zp": prod, "/zt":
+	// local test instance). Example: "mysystem_myrole/zp"
 	RbacRoleName string `json:"rbacRoleName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -19238,7 +19271,7 @@ func (s *RbacRoleProto) MarshalJSON() ([]byte, error) {
 
 // RbacSubjectProto: Principal associated with a given RBAC subject.
 // This principal is used by Sphinx Provisioning Service for RBAC
-// (go/cedi-auth) provisionable (go/sphinx-rbacz-design).
+// provisionable (go/sphinx-rbacz).
 type RbacSubjectProto struct {
 	// Username: Format "username" without "@domain", e.g., "bogdand".
 	Username string `json:"username,omitempty"`
@@ -25217,31 +25250,38 @@ func (s *YouTubeBroadcastStats) MarshalJSON() ([]byte, error) {
 // YouTubeLiveBroadcastEvent: Information about the broadcast to
 // YouTube.
 type YouTubeLiveBroadcastEvent struct {
+	// BrandAccountGaiaId: Input only. If the channel_id is for a YouTube
+	// Channel owned by a Brand Account, client is required to populate this
+	// field with the obfuscated gaia id of the Brand account when starting
+	// the broadcast.
+	BrandAccountGaiaId string `json:"brandAccountGaiaId,omitempty"`
+
 	// BroadcastId: Input only. The broadcast id, used to control the
 	// lifecycle of the event on YouTube
 	BroadcastId string `json:"broadcastId,omitempty"`
 
-	// ChannelId: YouTube channel associated with the broadcast.
+	// ChannelId: YouTube Channel associated with the broadcast.
 	ChannelId string `json:"channelId,omitempty"`
 
 	// ViewUrl: Output only. A URL that can be used to watch the meeting
 	// broadcast. Will be populated by the backend.
 	ViewUrl string `json:"viewUrl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BroadcastId") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BrandAccountGaiaId")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BroadcastId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BrandAccountGaiaId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

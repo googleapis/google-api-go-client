@@ -4092,7 +4092,7 @@ type MetricThreshold struct {
 
 	// ForecastOptions: When this field is present, the MetricThreshold
 	// condition forecasts whether the time series is predicted to violate
-	// the threshold within the forecast_horizion. When this field is not
+	// the threshold within the forecast_horizon. When this field is not
 	// set, the MetricThreshold tests the current value of the timeseries
 	// against the threshold.
 	ForecastOptions *ForecastOptions `json:"forecastOptions,omitempty"`

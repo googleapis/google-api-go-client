@@ -268,6 +268,7 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	// consumption. Don't create production workloads.
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
+	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -765,6 +766,7 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// consumption. Don't create production workloads.
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
+	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the

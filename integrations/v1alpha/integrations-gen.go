@@ -5552,7 +5552,7 @@ func (s *EnterpriseCrmFrontendsEventbusProtoStringParameterArray) MarshalJSON() 
 
 // EnterpriseCrmFrontendsEventbusProtoTaskConfig: The task configuration
 // details. This is not the implementation of Task. There might be
-// multiple TaskConfigs for the same Task. Next available id: 27
+// multiple TaskConfigs for the same Task.
 type EnterpriseCrmFrontendsEventbusProtoTaskConfig struct {
 	// AlertConfigs: Alert configurations on error rate, warning rate,
 	// number of runs, durations, etc.
@@ -5693,8 +5693,7 @@ type EnterpriseCrmFrontendsEventbusProtoTaskConfig struct {
 	// TaskSpec: A string template that allows user to configure task
 	// parameters (with either literal default values or tokens which will
 	// be resolved at execution time) for the task. It will eventually
-	// replace the old "parameters" field. Please refer to
-	// go/eventbus-task-spec-example for detailed usage example.
+	// replace the old "parameters" field.
 	TaskSpec string `json:"taskSpec,omitempty"`
 
 	// TaskTemplateName: Used to define task-template name if task is of
@@ -10782,6 +10781,11 @@ func (s *GoogleCloudIntegrationsV1alphaTriggerConfig) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest:
+// Request for UnpublishIntegrationVersion.
+type GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest struct {
+}
+
 // GoogleCloudIntegrationsV1alphaUpdateBundleRequest: THIS METHOD WILL
 // BE MOVED TO A SEPARATE SERVICE. Request message for Bundle update
 type GoogleCloudIntegrationsV1alphaUpdateBundleRequest struct {
@@ -13802,6 +13806,138 @@ func (c *ProjectsLocationsConnectionsRuntimeEntitySchemasListCall) Pages(ctx con
 	}
 }
 
+// method id "integrations.projects.locations.integrations.delete":
+
+type ProjectsLocationsIntegrationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete the selected integration and all versions inside
+//
+// - name: The location resource of the request.
+func (r *ProjectsLocationsIntegrationsService) Delete(name string) *ProjectsLocationsIntegrationsDeleteCall {
+	c := &ProjectsLocationsIntegrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIntegrationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the selected integration and all versions inside",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "integrations.projects.locations.integrations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The location resource of the request.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "integrations.projects.locations.integrations.execute":
 
 type ProjectsLocationsIntegrationsExecuteCall struct {
@@ -15741,6 +15877,330 @@ func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Do(opts ...googlea
 
 }
 
+// method id "integrations.projects.locations.integrations.versions.delete":
+
+type ProjectsLocationsIntegrationsVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Soft-deletes the integration. Changes the status of the
+// integration to ARCHIVED. If the integration being ARCHIVED is tagged
+// as "HEAD", the tag is removed from this snapshot and set to the
+// previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED,
+// DUE_FOR_DELETION tags are removed too. This RPC throws an exception
+// if the version being deleted is DRAFT, and if the `locked_by` user is
+// not the same as the user performing the Delete. Audit fields updated
+// include last_modified_timestamp, last_modified_by. Any existing lock
+// is released when Deleting a integration. Currently, there is no
+// undelete mechanism.
+//
+//   - name: The version to delete. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
+func (r *ProjectsLocationsIntegrationsVersionsService) Delete(name string) *ProjectsLocationsIntegrationsVersionsDeleteCall {
+	c := &ProjectsLocationsIntegrationsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.versions.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIntegrationsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as \"HEAD\", the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being deleted is DRAFT, and if the `locked_by` user is not the same as the user performing the Delete. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Deleting a integration. Currently, there is no undelete mechanism.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "integrations.projects.locations.integrations.versions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The version to delete. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.integrations.versions.download":
+
+type ProjectsLocationsIntegrationsVersionsDownloadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Download: Downloads an integration. Retrieves the
+// `IntegrationVersion` for a given `integration_id` and returns the
+// response as a string.
+//
+//   - name: The version to download. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
+func (r *ProjectsLocationsIntegrationsVersionsService) Download(name string) *ProjectsLocationsIntegrationsVersionsDownloadCall {
+	c := &ProjectsLocationsIntegrationsVersionsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// FileFormat sets the optional parameter "fileFormat": File format for
+// download request.
+//
+// Possible values:
+//
+//	"FILE_FORMAT_UNSPECIFIED" - Unspecified file format
+//	"JSON" - JSON File Format
+//	"YAML" - YAML File Format
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) FileFormat(fileFormat string) *ProjectsLocationsIntegrationsVersionsDownloadCall {
+	c.urlParams_.Set("fileFormat", fileFormat)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsDownloadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) IfNoneMatch(entityTag string) *ProjectsLocationsIntegrationsVersionsDownloadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsDownloadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:download")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.versions.download" call.
+// Exactly one of
+// *GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsVersionsDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Downloads an integration. Retrieves the `IntegrationVersion` for a given `integration_id` and returns the response as a string.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}:download",
+	//   "httpMethod": "GET",
+	//   "id": "integrations.projects.locations.integrations.versions.download",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "fileFormat": {
+	//       "description": "File format for download request.",
+	//       "enum": [
+	//         "FILE_FORMAT_UNSPECIFIED",
+	//         "JSON",
+	//         "YAML"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified file format",
+	//         "JSON File Format",
+	//         "YAML File Format"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The version to download. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:download",
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaDownloadIntegrationVersionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "integrations.projects.locations.integrations.versions.get":
 
 type ProjectsLocationsIntegrationsVersionsGetCall struct {
@@ -16608,6 +17068,304 @@ func (c *ProjectsLocationsIntegrationsVersionsTakeoverEditLockCall) Do(opts ...g
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaTakeoverEditLockResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.integrations.versions.unpublish":
+
+type ProjectsLocationsIntegrationsVersionsUnpublishCall struct {
+	s                                                                *Service
+	name                                                             string
+	googlecloudintegrationsv1alphaunpublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// Unpublish: Sets the status of the ACTIVE integration to SNAPSHOT with
+// a new tag "PREVIOUSLY_PUBLISHED" after validating it. The "HEAD" and
+// "PUBLISH_REQUESTED" tags do not change. This RPC throws an exception
+// if the version being snapshot is not ACTIVE. Audit fields added
+// include action, action_by, action_timestamp.
+//
+//   - name: The version to deactivate. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
+func (r *ProjectsLocationsIntegrationsVersionsService) Unpublish(name string, googlecloudintegrationsv1alphaunpublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsUnpublishCall {
+	c := &ProjectsLocationsIntegrationsVersionsUnpublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudintegrationsv1alphaunpublishintegrationversionrequest = googlecloudintegrationsv1alphaunpublishintegrationversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsVersionsUnpublishCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsUnpublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsVersionsUnpublishCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsUnpublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsVersionsUnpublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsVersionsUnpublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaunpublishintegrationversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:unpublish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.versions.unpublish" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsIntegrationsVersionsUnpublishCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the status of the ACTIVE integration to SNAPSHOT with a new tag \"PREVIOUSLY_PUBLISHED\" after validating it. The \"HEAD\" and \"PUBLISH_REQUESTED\" tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}:unpublish",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.integrations.versions.unpublish",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:unpublish",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.integrations.versions.upload":
+
+type ProjectsLocationsIntegrationsVersionsUploadCall struct {
+	s                                                             *Service
+	parent                                                        string
+	googlecloudintegrationsv1alphauploadintegrationversionrequest *GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// Upload: Uploads an integration. The content can be a previously
+// downloaded integration. Performs the same function as
+// CreateDraftIntegrationVersion, but accepts input in a string format,
+// which holds the complete representation of the IntegrationVersion
+// content.
+//
+//   - parent: The version to upload. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}.
+func (r *ProjectsLocationsIntegrationsVersionsService) Upload(parent string, googlecloudintegrationsv1alphauploadintegrationversionrequest *GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsUploadCall {
+	c := &ProjectsLocationsIntegrationsVersionsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudintegrationsv1alphauploadintegrationversionrequest = googlecloudintegrationsv1alphauploadintegrationversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsIntegrationsVersionsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsIntegrationsVersionsUploadCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsIntegrationsVersionsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsIntegrationsVersionsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphauploadintegrationversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/versions:upload")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.integrations.versions.upload" call.
+// Exactly one of
+// *GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsIntegrationsVersionsUploadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Uploads an integration. The content can be a previously downloaded integration. Performs the same function as CreateDraftIntegrationVersion, but accepts input in a string format, which holds the complete representation of the IntegrationVersion content.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions:upload",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.integrations.versions.upload",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The version to upload. Format: projects/{project}/locations/{location}/integrations/{integration}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/versions:upload",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -21429,6 +22187,149 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Do(opts ..
 
 }
 
+// method id "integrations.projects.locations.products.integrations.versions.delete":
+
+type ProjectsLocationsProductsIntegrationsVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Soft-deletes the integration. Changes the status of the
+// integration to ARCHIVED. If the integration being ARCHIVED is tagged
+// as "HEAD", the tag is removed from this snapshot and set to the
+// previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED,
+// DUE_FOR_DELETION tags are removed too. This RPC throws an exception
+// if the version being deleted is DRAFT, and if the `locked_by` user is
+// not the same as the user performing the Delete. Audit fields updated
+// include last_modified_timestamp, last_modified_by. Any existing lock
+// is released when Deleting a integration. Currently, there is no
+// undelete mechanism.
+//
+//   - name: The version to delete. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
+func (r *ProjectsLocationsProductsIntegrationsVersionsService) Delete(name string) *ProjectsLocationsProductsIntegrationsVersionsDeleteCall {
+	c := &ProjectsLocationsProductsIntegrationsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProductsIntegrationsVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProductsIntegrationsVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProductsIntegrationsVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProductsIntegrationsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.products.integrations.versions.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProductsIntegrationsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as \"HEAD\", the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being deleted is DRAFT, and if the `locked_by` user is not the same as the user performing the Delete. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Deleting a integration. Currently, there is no undelete mechanism.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "integrations.projects.locations.products.integrations.versions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The version to delete. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "integrations.projects.locations.products.integrations.versions.download":
 
 type ProjectsLocationsProductsIntegrationsVersionsDownloadCall struct {
@@ -22628,6 +23529,154 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsTakeoverEditLockCall) Do(o
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaTakeoverEditLockResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "integrations.projects.locations.products.integrations.versions.unpublish":
+
+type ProjectsLocationsProductsIntegrationsVersionsUnpublishCall struct {
+	s                                                                *Service
+	name                                                             string
+	googlecloudintegrationsv1alphaunpublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest
+	urlParams_                                                       gensupport.URLParams
+	ctx_                                                             context.Context
+	header_                                                          http.Header
+}
+
+// Unpublish: Sets the status of the ACTIVE integration to SNAPSHOT with
+// a new tag "PREVIOUSLY_PUBLISHED" after validating it. The "HEAD" and
+// "PUBLISH_REQUESTED" tags do not change. This RPC throws an exception
+// if the version being snapshot is not ACTIVE. Audit fields added
+// include action, action_by, action_timestamp.
+//
+//   - name: The version to deactivate. Format:
+//     projects/{project}/locations/{location}/integrations/{integration}/v
+//     ersions/{version}.
+func (r *ProjectsLocationsProductsIntegrationsVersionsService) Unpublish(name string, googlecloudintegrationsv1alphaunpublishintegrationversionrequest *GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall {
+	c := &ProjectsLocationsProductsIntegrationsVersionsUnpublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudintegrationsv1alphaunpublishintegrationversionrequest = googlecloudintegrationsv1alphaunpublishintegrationversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaunpublishintegrationversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:unpublish")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "integrations.projects.locations.products.integrations.versions.unpublish" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the status of the ACTIVE integration to SNAPSHOT with a new tag \"PREVIOUSLY_PUBLISHED\" after validating it. The \"HEAD\" and \"PUBLISH_REQUESTED\" tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:unpublish",
+	//   "httpMethod": "POST",
+	//   "id": "integrations.projects.locations.products.integrations.versions.unpublish",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:unpublish",
+	//   "request": {
+	//     "$ref": "GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

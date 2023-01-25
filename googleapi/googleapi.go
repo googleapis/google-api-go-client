@@ -16,7 +16,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
-
+	jsoniter "github.com/json-iterator/go"
 	"google.golang.org/api/internal/third_party/uritemplates"
 )
 
@@ -205,7 +205,7 @@ func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
 	if wrap {
 		buf.Write([]byte(`{"data": `))
 	}
-	err := json.NewEncoder(buf).Encode(v)
+	err := jsoniter.NewEncoder(buf).Encode(v)
 	if err != nil {
 		return nil, err
 	}

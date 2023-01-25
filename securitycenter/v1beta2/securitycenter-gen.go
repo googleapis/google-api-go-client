@@ -474,14 +474,17 @@ type Access struct {
 	// call to, e.g. "iam.googleapis.com"
 	ServiceName string `json:"serviceName,omitempty"`
 
-	// UserAgentFamily: What kind of user agent is associated, e.g.
+	// UserAgentFamily: What kind of user agent is associated, for example
 	// operating system shells, embedded or stand-alone applications, etc.
 	UserAgentFamily string `json:"userAgentFamily,omitempty"`
 
-	// UserName: A string representing a username. This is likely not an IAM
-	// principal. For instance, this may be the system user name if the
-	// finding is VM-related, or this may be some type of application login
-	// user name, depending on the type of finding.
+	// UserName: A string that represents the username of a user, user
+	// account, or other entity involved in the access event. What the
+	// entity is and what its role in the access event is depends on the
+	// finding that this field appears in. The entity is likely not an IAM
+	// principal, but could be a user that is logged into an operating
+	// system, if the finding is VM-related, or a user that is logged into
+	// some type of application that is involved in the access event.
 	UserName string `json:"userName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to

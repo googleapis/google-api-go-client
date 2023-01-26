@@ -1206,6 +1206,9 @@ func (s *InstancePolicyOrTemplate) MarshalJSON() ([]byte, error) {
 
 // InstanceStatus: VM instance status.
 type InstanceStatus struct {
+	// BootDisk: The VM boot disk.
+	BootDisk *Disk `json:"bootDisk,omitempty"`
+
 	// MachineType: The Compute Engine machine type.
 	MachineType string `json:"machineType,omitempty"`
 
@@ -1226,7 +1229,7 @@ type InstanceStatus struct {
 	// type.
 	TaskPack int64 `json:"taskPack,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// ForceSendFields is a list of field names (e.g. "BootDisk") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1234,10 +1237,10 @@ type InstanceStatus struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MachineType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BootDisk") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2338,6 +2341,11 @@ type ServiceAccount struct {
 	// specified in the instance template and it has to match the email
 	// field here.
 	Email string `json:"email,omitempty"`
+
+	// Scopes: List of scopes to be enabled for this service account on the
+	// VM, in addition to the cloud-platform API scope that will be added by
+	// default.
+	Scopes []string `json:"scopes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with

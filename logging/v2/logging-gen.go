@@ -859,7 +859,8 @@ type CmekSettings struct {
 	// yptoKeys/my-key/cryptoKeyVersions/1"This is a read-only field used to
 	// convey the specific configured CryptoKeyVersion of kms_key that has
 	// been configured. It will be populated in cases where the CMEK
-	// settings are bound to a single key version.
+	// settings are bound to a single key version.If this field is
+	// populated, the kms_key is tied to a specific CryptoKeyVersion.
 	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
 
 	// Name: Output only. The resource name of the CMEK settings.
@@ -1532,7 +1533,8 @@ type ListLogEntriesRequest struct {
 	// BUCKET_ID]/views/[VIEW_ID]
 	// folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/
 	// [VIEW_ID]Projects listed in the project_ids field are added to this
-	// list.
+	// list. A maximum of 100 resources may be specified in a single
+	// request.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to

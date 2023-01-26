@@ -670,6 +670,38 @@ type GoogleCloudRetailV2AddLocalInventoriesMetadata struct {
 type GoogleCloudRetailV2AddLocalInventoriesResponse struct {
 }
 
+// GoogleCloudRetailV2CreateModelMetadata: Metadata associated with a
+// create operation.
+type GoogleCloudRetailV2CreateModelMetadata struct {
+	// Model: The resource name of the model that this create applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2CreateModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2CreateModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2ImportCompletionDataResponse: Response of the
 // ImportCompletionDataRequest. If the long running operation is done,
 // this message is returned by the
@@ -863,6 +895,201 @@ func (s *GoogleCloudRetailV2ImportUserEventsResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2Model: Metadata that describes the training and
+// serving parameters of a Model. A Model can be associated with a
+// ServingConfig and then queried through the Predict API.
+type GoogleCloudRetailV2Model struct {
+	// CreateTime: Output only. Timestamp the Recommendation Model was
+	// created at.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DataState: Output only. The state of data requirements for this
+	// model: `DATA_OK` and `DATA_ERROR`. Recommendation model cannot be
+	// trained if the data is in `DATA_ERROR` state. Recommendation model
+	// can have `DATA_ERROR` state even if serving state is `ACTIVE`: models
+	// were trained successfully before, but cannot be refreshed because
+	// model no longer has sufficient data for training.
+	//
+	// Possible values:
+	//   "DATA_STATE_UNSPECIFIED" - Unspecified default value, should never
+	// be explicitly set.
+	//   "DATA_OK" - The model has sufficient training data.
+	//   "DATA_ERROR" - The model does not have sufficient training data.
+	// Error messages can be queried via Stackdriver.
+	DataState string `json:"dataState,omitempty"`
+
+	// DisplayName: Required. The display name of the model. Should be human
+	// readable, used to display Recommendation Models in the Retail Cloud
+	// Console Dashboard. UTF-8 encoded string with limit of 1024
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FilteringOption: Optional. If `RECOMMENDATIONS_FILTERING_ENABLED`,
+	// recommendation filtering by attributes is enabled for the model.
+	//
+	// Possible values:
+	//   "RECOMMENDATIONS_FILTERING_OPTION_UNSPECIFIED" - Value used when
+	// unset. In this case, server behavior defaults to
+	// RECOMMENDATIONS_FILTERING_DISABLED.
+	//   "RECOMMENDATIONS_FILTERING_DISABLED" - Recommendation filtering is
+	// disabled.
+	//   "RECOMMENDATIONS_FILTERING_ENABLED" - Recommendation filtering is
+	// enabled.
+	FilteringOption string `json:"filteringOption,omitempty"`
+
+	// LastTuneTime: Output only. The timestamp when the latest successful
+	// tune finished.
+	LastTuneTime string `json:"lastTuneTime,omitempty"`
+
+	// Name: Required. The fully qualified resource name of the model.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}` catalog_id has char limit of 50.
+	// recommendation_model_id has char limit of 40.
+	Name string `json:"name,omitempty"`
+
+	// OptimizationObjective: Optional. The optimization objective e.g.
+	// `cvr`. Currently supported values: `ctr`, `cvr`, `revenue-per-order`.
+	// If not specified, we choose default based on model type. Default
+	// depends on type of recommendation: `recommended-for-you` => `ctr`
+	// `others-you-may-like` => `ctr` `frequently-bought-together` =>
+	// `revenue_per_order` This field together with optimization_objective
+	// describe model metadata to use to control model training and serving.
+	// See https://cloud.google.com/retail/docs/models for more details on
+	// what the model metadata control and which combination of parameters
+	// are valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
+
+	// PeriodicTuningState: Optional. The state of periodic tuning. The
+	// period we use is 3 months - to do a one-off tune earlier use the
+	// `TuneModel` method. Default value is `PERIODIC_TUNING_ENABLED`.
+	//
+	// Possible values:
+	//   "PERIODIC_TUNING_STATE_UNSPECIFIED" - Unspecified default value,
+	// should never be explicitly set.
+	//   "PERIODIC_TUNING_DISABLED" - The model has periodic tuning
+	// disabled. Tuning can be reenabled by calling the
+	// `EnableModelPeriodicTuning` method or by calling the `TuneModel`
+	// method.
+	//   "ALL_TUNING_DISABLED" - The model cannot be tuned with periodic
+	// tuning OR the `TuneModel` method. Hide the options in customer UI and
+	// reject any requests through the backend self serve API.
+	//   "PERIODIC_TUNING_ENABLED" - The model has periodic tuning enabled.
+	// Tuning can be disabled by calling the `DisableModelPeriodicTuning`
+	// method.
+	PeriodicTuningState string `json:"periodicTuningState,omitempty"`
+
+	// ServingConfigLists: Output only. The list of valid serving configs
+	// associated with the PageOptimizationConfig.
+	ServingConfigLists []*GoogleCloudRetailV2ModelServingConfigList `json:"servingConfigLists,omitempty"`
+
+	// ServingState: Output only. The serving state of the model: `ACTIVE`,
+	// `NOT_ACTIVE`.
+	//
+	// Possible values:
+	//   "SERVING_STATE_UNSPECIFIED" - Unspecified serving state.
+	//   "INACTIVE" - The model is not serving.
+	//   "ACTIVE" - The model is serving and can be queried.
+	//   "TUNED" - The model is trained on tuned hyperparameters and can be
+	// queried.
+	ServingState string `json:"servingState,omitempty"`
+
+	// TrainingState: Optional. The training state that the model is in
+	// (e.g. `TRAINING` or `PAUSED`). Since part of the cost of running the
+	// service is frequency of training - this can be used to determine when
+	// to train model in order to control cost. If not specified: the
+	// default value for `CreateModel` method is `TRAINING`. The default
+	// value for `UpdateModel` method is to keep the state the same as
+	// before.
+	//
+	// Possible values:
+	//   "TRAINING_STATE_UNSPECIFIED" - Unspecified training state.
+	//   "PAUSED" - The model training is paused.
+	//   "TRAINING" - The model is training.
+	TrainingState string `json:"trainingState,omitempty"`
+
+	// TuningOperation: Output only. The tune operation associated with the
+	// model. Can be used to determine if there is an ongoing tune for this
+	// recommendation. Empty field implies no tune is goig on.
+	TuningOperation string `json:"tuningOperation,omitempty"`
+
+	// Type: Required. The type of model e.g. `home-page`. Currently
+	// supported values: `recommended-for-you`, `others-you-may-like`,
+	// `frequently-bought-together`, `page-optimization`, `similar-items`,
+	// `buy-it-again`, `on-sale-items`, and `recently-viewed`(readonly
+	// value). This field together with optimization_objective describe
+	// model metadata to use to control model training and serving. See
+	// https://cloud.google.com/retail/docs/models for more details on what
+	// the model metadata control and which combination of parameters are
+	// valid. For invalid combinations of parameters (e.g. type =
+	// `frequently-bought-together` and optimization_objective = `ctr`), you
+	// receive an error 400 if you try to create/update a recommendation
+	// with this set of knobs.
+	Type string `json:"type,omitempty"`
+
+	// UpdateTime: Output only. Timestamp the Recommendation Model was last
+	// updated. E.g. if a Recommendation Model was paused - this would be
+	// the time the pause was initiated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2Model
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ModelServingConfigList: Represents an ordered
+// combination of valid serving configs, which can be used for
+// `PAGE_OPTIMIZATION` recommendations.
+type GoogleCloudRetailV2ModelServingConfigList struct {
+	// ServingConfigIds: Optional. A set of valid serving configs that may
+	// be used for `PAGE_OPTIMIZATION`.
+	ServingConfigIds []string `json:"servingConfigIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServingConfigIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServingConfigIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ModelServingConfigList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2PurgeMetadata: Metadata related to the progress of
 // the Purge operation. This will be returned by the
 // google.longrunning.Operation.metadata field.
@@ -978,6 +1205,43 @@ type GoogleCloudRetailV2SetInventoryMetadata struct {
 // SetInventoryRequest. Currently empty because there is no meaningful
 // response populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2TuneModelMetadata: Metadata associated with a tune
+// operation.
+type GoogleCloudRetailV2TuneModelMetadata struct {
+	// Model: The resource name of the model that this tune applies to.
+	// Format:
+	// `projects/{project_number}/locations/{location_id}/catalogs/{catalog_i
+	// d}/models/{model_id}`
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2TuneModelMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2TuneModelMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2TuneModelResponse: Response associated with a tune
+// operation.
+type GoogleCloudRetailV2TuneModelResponse struct {
 }
 
 // GoogleCloudRetailV2UserEventImportSummary: A summary of import
@@ -2344,6 +2608,84 @@ type GoogleCloudRetailV2alphaCustomAttribute struct {
 
 func (s *GoogleCloudRetailV2alphaCustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCustomAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaExperimentInfo: Metadata for active A/B
+// testing Experiments.
+type GoogleCloudRetailV2alphaExperimentInfo struct {
+	// ExperimentName: The fully qualified resource name of the experiment
+	// that provides the serving config under test, should an active
+	// experiment exist. For example:
+	// `projects/*/locations/global/catalogs/default_catalog/experiments/expe
+	// riment_id`
+	ExperimentName string `json:"experimentName,omitempty"`
+
+	// ServingConfigExperiment: A/B test between existing Cloud Retail
+	// Search ServingConfigs.
+	ServingConfigExperiment *GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment `json:"servingConfigExperiment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExperimentName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExperimentName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaExperimentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaExperimentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment:
+// Metadata for active serving config A/B tests.
+type GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment struct {
+	// ExperimentServingConfig: The fully qualified resource name of the
+	// serving config VariantArm.serving_config_id responsible for
+	// generating the search response. For example:
+	// `projects/*/locations/*/catalogs/*/servingConfigs/*`.
+	ExperimentServingConfig string `json:"experimentServingConfig,omitempty"`
+
+	// OriginalServingConfig: The fully qualified resource name of the
+	// original SearchRequest.placement in the search request prior to
+	// reassignment by experiment API. For example:
+	// `projects/*/locations/*/catalogs/*/servingConfigs/*`.
+	OriginalServingConfig string `json:"originalServingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExperimentServingConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExperimentServingConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6498,6 +6840,10 @@ type GoogleCloudRetailV2alphaSearchResponse struct {
 	// spell correction type is AUTOMATIC, then the search results are based
 	// on corrected_query. Otherwise the original query is used for search.
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
+
+	// ExperimentInfo: Metadata related to A/B testing Experiment associated
+	// with this response. Only exists when an experiment is triggered.
+	ExperimentInfo []*GoogleCloudRetailV2alphaExperimentInfo `json:"experimentInfo,omitempty"`
 
 	// Facets: Results of facets requested by user.
 	Facets []*GoogleCloudRetailV2alphaSearchResponseFacet `json:"facets,omitempty"`
@@ -11090,9 +11436,7 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // The returned Operations will be obsolete after 1 day, and
 // GetOperation API will return NOT_FOUND afterwards. If conflicting
 // updates are issued, the Operations associated with the stale updates
-// will not be marked as done until being obsolete. This feature is only
-// available for users who have Retail Search enabled. Enable Retail
-// Search on Cloud Console before using this feature.
+// will not be marked as done until being obsolete.
 //
 //   - product: Full resource name of Product, such as
 //     `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -11197,7 +11541,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -11251,9 +11595,7 @@ type ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall struct {
 // effect on local inventories. The returned Operations will be obsolete
 // after 1 day, and GetOperation API will return NOT_FOUND afterwards.
 // If conflicting updates are issued, the Operations associated with the
-// stale updates will not be marked as done until being obsolete. This
-// feature is only available for users who have Retail Search enabled.
-// Enable Retail Search on Cloud Console before using this feature.
+// stale updates will not be marked as done until being obsolete.
 //
 //   - product: Full resource name of Product, such as
 //     `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -11358,7 +11700,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be modified using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Updates local inventory information for a Product at a list of places, while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating inventory information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be modified using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addLocalInventories",
@@ -12601,9 +12943,7 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // The returned Operations will be obsolete after 1 day, and
 // GetOperation API will return NOT_FOUND afterwards. If conflicting
 // updates are issued, the Operations associated with the stale updates
-// will not be marked as done until being obsolete. This feature is only
-// available for users who have Retail Search enabled. Enable Retail
-// Search on Cloud Console before using this feature.
+// will not be marked as done until being obsolete.
 //
 //   - product: Full resource name of Product, such as
 //     `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -12708,7 +13048,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -12760,9 +13100,7 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall struct 
 // effect on local inventories. The returned Operations will be obsolete
 // after 1 day, and GetOperation API will return NOT_FOUND afterwards.
 // If conflicting updates are issued, the Operations associated with the
-// stale updates will not be marked as done until being obsolete. This
-// feature is only available for users who have Retail Search enabled.
-// Enable Retail Search on Cloud Console before using this feature.
+// stale updates will not be marked as done until being obsolete.
 //
 //   - product: Full resource name of Product, such as
 //     `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -12867,7 +13205,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) Do
 	}
 	return ret, nil
 	// {
-	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be removed using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Remove local inventory information for a Product at a list of places at a removal timestamp. This process is asynchronous. If the request is valid, the removal will be enqueued and processed downstream. As a consequence, when a response is returned, removals are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. Local inventory information can only be removed using this method. ProductService.CreateProduct and ProductService.UpdateProduct has no effect on local inventories. The returned Operations will be obsolete after 1 day, and GetOperation API will return NOT_FOUND afterwards. If conflicting updates are issued, the Operations associated with the stale updates will not be marked as done until being obsolete.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeLocalInventories",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeLocalInventories",
@@ -12932,9 +13270,7 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // obsolete after one day, and the GetOperation API returns `NOT_FOUND`
 // afterwards. If conflicting updates are issued, the Operations
 // associated with the stale updates are not marked as done until they
-// are obsolete. This feature is only available for users who have
-// Retail Search enabled. Enable Retail Search on Cloud Console before
-// using this feature.
+// are obsolete.
 //
 //   - name: Immutable. Full resource name of the product, such as
 //     `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -13037,7 +13373,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete. This feature is only available for users who have Retail Search enabled. Enable Retail Search on Cloud Console before using this feature.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update is enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by ProductService.GetProduct or ProductService.ListProducts. When inventory is updated with ProductService.CreateProduct and ProductService.UpdateProduct, the specified inventory field value(s) overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update times for the specified inventory fields are overwritten by the times of the ProductService.CreateProduct or ProductService.UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product is used. If no inventory fields are set in SetInventoryRequest.set_mask, then any existing inventory information is preserved. Pre-existing inventory information can only be updated with ProductService.SetInventory, ProductService.AddFulfillmentPlaces, and ProductService.RemoveFulfillmentPlaces. The returned Operations is obsolete after one day, and the GetOperation API returns `NOT_FOUND` afterwards. If conflicting updates are issued, the Operations associated with the stale updates are not marked as done until they are obsolete.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",

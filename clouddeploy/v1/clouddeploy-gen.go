@@ -6048,6 +6048,14 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) RolloutId
 	return c
 }
 
+// StartingPhaseId sets the optional parameter "startingPhaseId": The
+// starting phase ID for the `Rollout`. If empty the `Rollout` will
+// start at the first phase.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) StartingPhaseId(startingPhaseId string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
+	c.urlParams_.Set("startingPhaseId", startingPhaseId)
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": If set to
 // true, the request is validated and the user is provided with an
 // expected result, but no actual change is made.
@@ -6169,6 +6177,11 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) Do(opts .
 	//     },
 	//     "rolloutId": {
 	//       "description": "Required. ID of the `Rollout`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startingPhaseId": {
+	//       "description": "Optional. The starting phase ID for the `Rollout`. If empty the `Rollout` will start at the first phase.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

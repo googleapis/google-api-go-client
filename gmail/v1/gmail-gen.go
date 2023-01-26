@@ -6956,7 +6956,8 @@ type UsersMessagesSendCall struct {
 }
 
 // Send: Sends the specified message to the recipients in the `To`,
-// `Cc`, and `Bcc` headers.
+// `Cc`, and `Bcc` headers. For example usage, see Sending email
+// (https://developers.google.com/gmail/api/guides/sending).
 //
 //   - userId: The user's email address. The special value `me` can be
 //     used to indicate the authenticated user.
@@ -7125,7 +7126,7 @@ func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers.",
+	//   "description": "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers. For example usage, see [Sending email](https://developers.google.com/gmail/api/guides/sending).",
 	//   "flatPath": "gmail/v1/users/{userId}/messages/send",
 	//   "httpMethod": "POST",
 	//   "id": "gmail.users.messages.send",

@@ -914,8 +914,9 @@ type Container struct {
 	// EnvFrom: Not supported by Cloud Run.
 	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
-	// Image: Required. URL of the Container image in Google Container
-	// Registry or Google Artifact Registry. More info:
+	// Image: Required. Name of the container image in Dockerhub, Google
+	// Artifact Registry, or Google Container Registry. If the host is not
+	// provided, Dockerhub is assumed. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 

@@ -372,20 +372,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -590,20 +586,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1121,20 +1113,16 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1298,20 +1286,16 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1387,20 +1371,16 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1485,20 +1465,16 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	// threat type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
-	// incident threats. This enum was never launched and should be re-used
-	// for the next list.
+	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
 	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter. Interstitial will not be shown for patterns from
-	// this list.
+	// subresource filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
-	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
-	// safe URL expressions.
-	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
-	// in Chrome. See go/sb-accuracytips.
-	//   "SOCIAL_ENGINEERING_LOWER_PRECISION" - Lower precision phishing
-	// list for WebRisk. See go/lower-precision-blocklists-enterprise.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
+	// to be safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
+	// See https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to

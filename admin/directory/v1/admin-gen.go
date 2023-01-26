@@ -1565,20 +1565,23 @@ type ChromeOsDevice struct {
 	//
 	// Possible values:
 	//   "deprovisionReasonUnspecified" - The deprovision reason is unknown.
-	//   "deprovisionReasonSameModelReplacement" - Same model replacement.
-	//   "deprovisionReasonUpgrade" - Device upgrade.
-	//   "deprovisionReasonDomainMove" - Domain move.
-	//   "deprovisionReasonServiceExpiration" - Service expiration.
-	//   "deprovisionReasonOther" - Other.
-	//   "deprovisionReasonDifferentModelReplacement" - Different model
-	// replacement.
-	//   "deprovisionReasonRetiringDevice" - Retiring device.
-	//   "deprovisionReasonUpgradeTransfer" - Transferring perpetual upgrade
-	// to a new device.
-	//   "deprovisionReasonNotRequired" - No reason required, i.e. licenses
-	// returned to customer's license pool.
-	//   "deprovisionReasonRepairCenter" - Deprovisioned by a RMA (service
-	// center) caller.
+	//   "deprovisionReasonSameModelReplacement" - The device was replaced
+	// by a device with the same model.
+	//   "deprovisionReasonUpgrade" - The device was upgraded.
+	//   "deprovisionReasonDomainMove" - The device's domain was changed.
+	//   "deprovisionReasonServiceExpiration" - Service expired for the
+	// device.
+	//   "deprovisionReasonOther" - The device was deprovisioned for a
+	// legacy reason that is no longer supported.
+	//   "deprovisionReasonDifferentModelReplacement" - The device was
+	// replaced by a device with a different model.
+	//   "deprovisionReasonRetiringDevice" - The device was retired.
+	//   "deprovisionReasonUpgradeTransfer" - The device's perpetual upgrade
+	// was transferred to a new device.
+	//   "deprovisionReasonNotRequired" - A reason was not required. For
+	// example, the licenses were returned to the customer's license pool.
+	//   "deprovisionReasonRepairCenter" - The device was deprovisioned by a
+	// repair service center.
 	DeprovisionReason string `json:"deprovisionReason,omitempty"`
 
 	// DeviceFiles: A list of device files to download (Read-only)
@@ -2630,9 +2633,10 @@ func (s *DirectoryChromeosdevicesCommand) MarshalJSON() ([]byte, error) {
 // command.
 type DirectoryChromeosdevicesCommandResult struct {
 	// CommandResultPayload: The payload for the command result. The
-	// following commands respond with a payload: -
-	// DEVICE_START_CRD_SESSION: Payload is a stringified JSON object in the
-	// form: { "url": url }. The URL provides a link to the CRD session.
+	// following commands respond with a payload: *
+	// `DEVICE_START_CRD_SESSION`: Payload is a stringified JSON object in
+	// the form: { "url": url }. The URL provides a link to the Chrome
+	// Remote Desktop session.
 	CommandResultPayload string `json:"commandResultPayload,omitempty"`
 
 	// ErrorMessage: The error message with a short explanation as to why
@@ -2705,15 +2709,14 @@ type DirectoryChromeosdevicesIssueCommandRequest struct {
 	CommandType string `json:"commandType,omitempty"`
 
 	// Payload: The payload for the command, provide it only if command
-	// supports it. The following commands support adding payload: -
-	// SET_VOLUME: Payload is a stringified JSON object in the form: {
+	// supports it. The following commands support adding payload: *
+	// `SET_VOLUME`: Payload is a stringified JSON object in the form: {
 	// "volume": 50 }. The volume has to be an integer in the range [0,100].
-	// - DEVICE_START_CRD_SESSION: Payload is optionally a stringified JSON
-	// object in the form: { "ackedUserPresence": true }. ackedUserPresence
-	// is a boolean. If a device is being used, ackedUserPresence must be
-	// set to true to acknowledge that you want to start a CRD session
-	// anyways. It is false by default, so a CRD command will fail if used
-	// on an active device without this field.
+	// * `DEVICE_START_CRD_SESSION`: Payload is optionally a stringified
+	// JSON object in the form: { "ackedUserPresence": true }.
+	// `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is
+	// set to `false`. To start a Chrome Remote Desktop session for an
+	// active device, set `ackedUserPresence` to `true`.
 	Payload string `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommandType") to
@@ -23700,10 +23703,13 @@ type UsersPatchCall struct {
 }
 
 // Patch: Updates a user using patch semantics. The update method should
-// be used instead, since it also supports patch semantics and has
-// better performance. This method is unable to clear fields that
-// contain repeated objects (`addresses`, `phones`, etc). Use the update
-// method instead.
+// be used instead, because it also supports patch semantics and has
+// better performance. If you're mapping an external identity to a
+// Google identity, use the `update`
+// (https://developers.google.com/admin-sdk/directory/v1/reference/users/update)
+// method instead of the `patch` method. This method is unable to clear
+// fields that contain repeated objects (`addresses`, `phones`, etc).
+// Use the update method instead.
 //
 //   - userKey: Identifies the user in the API request. The value can be
 //     the user's primary email address, alias email address, or unique
@@ -23806,7 +23812,7 @@ func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a user using patch semantics. The update method should be used instead, since it also supports patch semantics and has better performance. This method is unable to clear fields that contain repeated objects (`addresses`, `phones`, etc). Use the update method instead.",
+	//   "description": "Updates a user using patch semantics. The update method should be used instead, because it also supports patch semantics and has better performance. If you're mapping an external identity to a Google identity, use the [`update`](https://developers.google.com/admin-sdk/directory/v1/reference/users/update) method instead of the `patch` method. This method is unable to clear fields that contain repeated objects (`addresses`, `phones`, etc). Use the update method instead.",
 	//   "flatPath": "admin/directory/v1/users/{userKey}",
 	//   "httpMethod": "PATCH",
 	//   "id": "directory.users.patch",

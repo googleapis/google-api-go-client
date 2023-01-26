@@ -6883,7 +6883,7 @@ type LocationsLodgingGetGoogleUpdatedCall struct {
 // location.
 //
 //   - name: Google identifier for this location in the form:
-//     `accounts/{account_id}/locations/{location_id}/lodging`.
+//     `locations/{location_id}/lodging`.
 func (r *LocationsLodgingService) GetGoogleUpdated(nameid string) *LocationsLodgingGetGoogleUpdatedCall {
 	c := &LocationsLodgingGetGoogleUpdatedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -7006,7 +7006,7 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Google identifier for this location in the form: `accounts/{account_id}/locations/{location_id}/lodging`",
+	//       "description": "Required. Google identifier for this location in the form: `locations/{location_id}/lodging`",
 	//       "location": "path",
 	//       "pattern": "^locations/[^/]+/lodging$",
 	//       "required": true,

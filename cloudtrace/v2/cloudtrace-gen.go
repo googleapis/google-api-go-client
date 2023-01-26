@@ -640,8 +640,9 @@ type StackFrame struct {
 	LoadModule *Module `json:"loadModule,omitempty"`
 
 	// OriginalFunctionName: An un-mangled function name, if `function_name`
-	// is mangled (http://www.avabodh.com/cxxin/namemangling.html). The name
-	// can be fully-qualified (up to 1024 bytes).
+	// is mangled. To get information about name mangling, run this search
+	// (https://www.google.com/search?q=cxx+name+mangling). The name can be
+	// fully-qualified (up to 1024 bytes).
 	OriginalFunctionName *TruncatableString `json:"originalFunctionName,omitempty"`
 
 	// SourceVersion: The version of the deployed source code (up to 128

@@ -232,8 +232,9 @@ type ProjectsLocationsSchedulesService struct {
 
 // AcceleratorConfig: Definition of a hardware accelerator. Note that
 // not all combinations of `type` and `core_count` are valid. Check GPUs
-// on Compute Engine (/compute/docs/gpus/#gpus-list) to find a valid
-// combination. TPUs are not supported.
+// on Compute Engine
+// (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
+// valid combination. TPUs are not supported.
 type AcceleratorConfig struct {
 	// CoreCount: Count of cores of this accelerator.
 	CoreCount int64 `json:"coreCount,omitempty,string"`
@@ -310,7 +311,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -327,9 +330,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -563,13 +564,13 @@ type Disk struct {
 	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Indicates a unique device name of your choice that is
-	// reflected into the /dev/disk/by-id/google-* tree of a Linux operating
-	// system running within the instance. This name can be used to
-	// reference the device for mounting, resizing, and so on, from within
-	// the instance. If not specified, the server chooses a default device
-	// name to apply to this disk, in the form persistent-disk-x, where x is
-	// a number assigned by Google Compute Engine.This field is only
-	// applicable for persistent disks.
+	// reflected into the `/dev/disk/by-id/google-*` tree of a Linux
+	// operating system running within the instance. This name can be used
+	// to reference the device for mounting, resizing, and so on, from
+	// within the instance. If not specified, the server chooses a default
+	// device name to apply to this disk, in the form persistent-disk-x,
+	// where x is a number assigned by Google Compute Engine.This field is
+	// only applicable for persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
 
 	// DiskSizeGb: Indicates the size of the disk in base-2 GB.
@@ -590,7 +591,7 @@ type Disk struct {
 	// disks must always use SCSI and the request will fail if you attempt
 	// to attach a persistent disk in any other format than SCSI. Local SSDs
 	// can use either NVME or SCSI. For performance characteristics of SCSI
-	// over NVMe, see Local SSD performance. Valid values: * NVME * SCSI
+	// over NVMe, see Local SSD performance. Valid values: * `NVME` * `SCSI`
 	Interface string `json:"interface,omitempty"`
 
 	// Kind: Type of the resource. Always compute#attachedDisk for attached
@@ -602,17 +603,17 @@ type Disk struct {
 	// and marketplace images.
 	Licenses []string `json:"licenses,omitempty"`
 
-	// Mode: The mode in which to attach this disk, either READ_WRITE or
-	// READ_ONLY. If not specified, the default is to attach the disk in
-	// READ_WRITE mode. Valid values: * READ_ONLY * READ_WRITE
+	// Mode: The mode in which to attach this disk, either `READ_WRITE` or
+	// `READ_ONLY`. If not specified, the default is to attach the disk in
+	// `READ_WRITE` mode. Valid values: * `READ_ONLY` * `READ_WRITE`
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Indicates a valid partial or full URL to an existing
 	// Persistent Disk resource.
 	Source string `json:"source,omitempty"`
 
-	// Type: Indicates the type of the disk, either SCRATCH or PERSISTENT.
-	// Valid values: * PERSISTENT * SCRATCH
+	// Type: Indicates the type of the disk, either `SCRATCH` or
+	// `PERSISTENT`. Valid values: * `PERSISTENT` * `SCRATCH`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoDelete") to
@@ -1121,8 +1122,8 @@ func (s *GetInstanceHealthResponse) MarshalJSON() ([]byte, error) {
 type GuestOsFeature struct {
 	// Type: The ID of a supported feature. Read Enabling guest operating
 	// system features to see a list of available options. Valid values: *
-	// FEATURE_TYPE_UNSPECIFIED * MULTI_IP_SUBNET * SECURE_BOOT *
-	// UEFI_COMPATIBLE * VIRTIO_SCSI_MULTIQUEUE * WINDOWS
+	// `FEATURE_TYPE_UNSPECIFIED` * `MULTI_IP_SUBNET` * `SECURE_BOOT` *
+	// `UEFI_COMPATIBLE` * `VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1153,7 +1154,7 @@ type Instance struct {
 	// AcceleratorConfig: The hardware accelerator used on this instance. If
 	// you use accelerators, make sure that your configuration has enough
 	// vCPUs and memory to support the `machine_type` you have selected
-	// (/compute/docs/gpus/#gpus-list).
+	// (https://cloud.google.com/compute/docs/gpus/#gpus-list).
 	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// BootDiskSizeGb: Input only. The size of the boot disk in GB attached
@@ -1247,7 +1248,8 @@ type Instance struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. The Compute Engine machine type
-	// (/compute/docs/machine-types) of this instance.
+	// (https://cloud.google.com/compute/docs/machine-types) of this
+	// instance.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Metadata: Custom metadata to apply to this instance.
@@ -1558,7 +1560,7 @@ type ListInstancesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Unreachable: Locations that could not be reached. For example,
-	// ['us-west1-a', 'us-central1-b']. A ListInstancesResponse will only
+	// `['us-west1-a', 'us-central1-b']`. A ListInstancesResponse will only
 	// contain either instances or unreachables,
 	Unreachable []string `json:"unreachable,omitempty"`
 
@@ -1673,8 +1675,8 @@ type ListRuntimesResponse struct {
 	Runtimes []*Runtime `json:"runtimes,omitempty"`
 
 	// Unreachable: Locations that could not be reached. For example,
-	// ['us-west1', 'us-central1']. A ListRuntimesResponse will only contain
-	// either runtimes or unreachables,
+	// `['us-west1', 'us-central1']`. A ListRuntimesResponse will only
+	// contain either runtimes or unreachables,
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1760,11 +1762,11 @@ type LocalDisk struct {
 	Boot bool `json:"boot,omitempty"`
 
 	// DeviceName: Optional. Output only. Specifies a unique device name of
-	// your choice that is reflected into the /dev/disk/by-id/google-* tree
-	// of a Linux operating system running within the instance. This name
-	// can be used to reference the device for mounting, resizing, and so
-	// on, from within the instance. If not specified, the server chooses a
-	// default device name to apply to this disk, in the form
+	// your choice that is reflected into the `/dev/disk/by-id/google-*`
+	// tree of a Linux operating system running within the instance. This
+	// name can be used to reference the device for mounting, resizing, and
+	// so on, from within the instance. If not specified, the server chooses
+	// a default device name to apply to this disk, in the form
 	// persistent-disk-x, where x is a number assigned by Google Compute
 	// Engine. This field is only applicable for persistent disks.
 	DeviceName string `json:"deviceName,omitempty"`
@@ -1792,7 +1794,7 @@ type LocalDisk struct {
 	// disks must always use SCSI and the request will fail if you attempt
 	// to attach a persistent disk in any other format than SCSI. Local SSDs
 	// can use either NVME or SCSI. For performance characteristics of SCSI
-	// over NVMe, see Local SSD performance. Valid values: * NVME * SCSI
+	// over NVMe, see Local SSD performance. Valid values: * `NVME` * `SCSI`
 	Interface string `json:"interface,omitempty"`
 
 	// Kind: Output only. Type of the resource. Always compute#attachedDisk
@@ -1802,18 +1804,18 @@ type LocalDisk struct {
 	// Licenses: Output only. Any valid publicly visible licenses.
 	Licenses []string `json:"licenses,omitempty"`
 
-	// Mode: The mode in which to attach this disk, either READ_WRITE or
-	// READ_ONLY. If not specified, the default is to attach the disk in
-	// READ_WRITE mode. Valid values: * READ_ONLY * READ_WRITE
+	// Mode: The mode in which to attach this disk, either `READ_WRITE` or
+	// `READ_ONLY`. If not specified, the default is to attach the disk in
+	// `READ_WRITE` mode. Valid values: * `READ_ONLY` * `READ_WRITE`
 	Mode string `json:"mode,omitempty"`
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource.
 	Source string `json:"source,omitempty"`
 
-	// Type: Specifies the type of the disk, either SCRATCH or PERSISTENT.
-	// If not specified, the default is PERSISTENT. Valid values: *
-	// PERSISTENT * SCRATCH
+	// Type: Specifies the type of the disk, either `SCRATCH` or
+	// `PERSISTENT`. If not specified, the default is `PERSISTENT`. Valid
+	// values: * `PERSISTENT` * `SCRATCH`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoDelete") to
@@ -2268,6 +2270,39 @@ func (s *RegisterInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReportInstanceEventRequest: Request for reporting a Managed Notebook
+// Event.
+type ReportInstanceEventRequest struct {
+	// Event: Required. The Event to be reported.
+	Event *Event `json:"event,omitempty"`
+
+	// VmId: Required. The VM hardware token for authenticating the VM.
+	// https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+	VmId string `json:"vmId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Event") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportInstanceEventRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportInstanceEventRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReportInstanceInfoRequest: Request for notebook instances to report
 // information to Notebooks API.
 type ReportInstanceInfoRequest struct {
@@ -2416,7 +2451,7 @@ func (s *ResetRuntimeRequest) MarshalJSON() ([]byte, error) {
 // RollbackInstanceRequest: Request for rollbacking a notebook instance
 type RollbackInstanceRequest struct {
 	// TargetSnapshot: Required. The snapshot for rollback. Example:
-	// "projects/test-project/global/snapshots/krwlzipynril".
+	// `projects/test-project/global/snapshots/krwlzipynril`.
 	TargetSnapshot string `json:"targetSnapshot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetSnapshot") to
@@ -2464,6 +2499,15 @@ type Runtime struct {
 	//   "AGENT_NOT_RUNNING" - The runtime health monitoring agent is not
 	// running. Applies to ACTIVE state.
 	HealthState string `json:"healthState,omitempty"`
+
+	// Labels: Optional. The labels to associate with this Managed Notebook
+	// or Runtime. Label **keys** must contain 1 to 63 characters, and must
+	// conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label
+	// **values** may be empty, but, if present, must contain 1 to 63
+	// characters, and must conform to RFC 1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be
+	// associated with a cluster.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Metrics: Output only. Contains Runtime daemon metrics such as Service
 	// status and JupyterLab stats.
@@ -2637,8 +2681,8 @@ type RuntimeGuestOsFeature struct {
 	// system features
 	// (https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features)
 	// to see a list of available options. Valid values: *
-	// FEATURE_TYPE_UNSPECIFIED * MULTI_IP_SUBNET * SECURE_BOOT *
-	// UEFI_COMPATIBLE * VIRTIO_SCSI_MULTIQUEUE * WINDOWS
+	// `FEATURE_TYPE_UNSPECIFIED` * `MULTI_IP_SUBNET` * `SECURE_BOOT` *
+	// `UEFI_COMPATIBLE` * `VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -2836,7 +2880,7 @@ type Schedule struct {
 
 	// CronSchedule: Cron-tab formatted schedule by which the job will
 	// execute. Format: minute, hour, day of month, month, day of week, e.g.
-	// 0 0 * * WED = every Wednesday More examples:
+	// `0 0 * * WED` = every Wednesday More examples:
 	// https://crontab.guru/examples.html
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
@@ -2844,8 +2888,8 @@ type Schedule struct {
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Output only. Display name used for UI purposes. Name can
-	// only contain alphanumeric characters, hyphens '-', and underscores
-	// '_'.
+	// only contain alphanumeric characters, hyphens `-`, and underscores
+	// `_`.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// ExecutionTemplate: Notebook Execution Template corresponding to this
@@ -3105,8 +3149,9 @@ func (s *SetInstanceMachineTypeRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ShieldedInstanceConfig: A set of Shielded Instance options. Check
-// [Images using supported Shielded VM features] Not all combinations
-// are valid.
+// Images using supported Shielded VM features
+// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
+// Not all combinations are valid.
 type ShieldedInstanceConfig struct {
 	// EnableIntegrityMonitoring: Defines whether the instance has integrity
 	// monitoring enabled. Enables monitoring and attestation of the boot
@@ -3523,7 +3568,7 @@ type UpgradeHistoryEntry struct {
 	State string `json:"state,omitempty"`
 
 	// TargetImage: Target VM Image. Format:
-	// ainotebooks-vm/project/image-name/name.
+	// `ainotebooks-vm/project/image-name/name`.
 	TargetImage string `json:"targetImage,omitempty"`
 
 	// TargetVersion: Target VM Version, like m63.
@@ -3669,16 +3714,16 @@ func (s *UpgradeRuntimeRequest) MarshalJSON() ([]byte, error) {
 // VertexAIParameters: Parameters used in Vertex AI JobType executions.
 type VertexAIParameters struct {
 	// Env: Environment variables. At most 100 environment variables can be
-	// specified and unique. Example: GCP_BUCKET=gs://my-bucket/samples/
+	// specified and unique. Example: `GCP_BUCKET=gs://my-bucket/samples/`
 	Env map[string]string `json:"env,omitempty"`
 
 	// Network: The full name of the Compute Engine network
-	// (/compute/docs/networks-and-firewalls#networks) to which the Job
-	// should be peered. For example,
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks)
+	// to which the Job should be peered. For example,
 	// `projects/12345/global/networks/myVPC`. Format
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert)
 	// is of the form `projects/{project}/global/networks/{network}`. Where
-	// {project} is a project number, as in `12345`, and {network} is a
+	// `{project}` is a project number, as in `12345`, and `{network}` is a
 	// network name. Private services access must already be configured for
 	// the network. If left unspecified, the job is not peered with any
 	// network.
@@ -5359,7 +5404,7 @@ func (r *ProjectsLocationsExecutionsService) List(parent string) *ProjectsLocati
 
 // Filter sets the optional parameter "filter": Filter applied to
 // resulting executions. Currently only supports filtering executions by
-// a specified schedule_id. Format: `schedule_id=`
+// a specified `schedule_id`. Format: `schedule_id=`
 func (c *ProjectsLocationsExecutionsListCall) Filter(filter string) *ProjectsLocationsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5494,7 +5539,7 @@ func (c *ProjectsLocationsExecutionsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified schedule_id. Format: `schedule_id=`",
+	//       "description": "Filter applied to resulting executions. Currently only supports filtering executions by a specified `schedule_id`. Format: `schedule_id=`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7110,6 +7155,149 @@ func (c *ProjectsLocationsInstancesReportCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+name}:report",
 	//   "request": {
 	//     "$ref": "ReportInstanceInfoRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "notebooks.projects.locations.instances.reportEvent":
+
+type ProjectsLocationsInstancesReportEventCall struct {
+	s                          *Service
+	name                       string
+	reportinstanceeventrequest *ReportInstanceEventRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReportEvent: Reports and processes an instance event.
+//
+//   - name: Format:
+//     `projects/{project_id}/locations/{location}/instances/{instance_id}`.
+func (r *ProjectsLocationsInstancesService) ReportEvent(name string, reportinstanceeventrequest *ReportInstanceEventRequest) *ProjectsLocationsInstancesReportEventCall {
+	c := &ProjectsLocationsInstancesReportEventCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.reportinstanceeventrequest = reportinstanceeventrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesReportEventCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesReportEventCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesReportEventCall) Context(ctx context.Context) *ProjectsLocationsInstancesReportEventCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesReportEventCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesReportEventCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportinstanceeventrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:reportEvent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "notebooks.projects.locations.instances.reportEvent" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesReportEventCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reports and processes an instance event.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:reportEvent",
+	//   "httpMethod": "POST",
+	//   "id": "notebooks.projects.locations.instances.reportEvent",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:reportEvent",
+	//   "request": {
+	//     "$ref": "ReportInstanceEventRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -10792,11 +10980,12 @@ func (c *ProjectsLocationsRuntimesPatchCall) RequestId(requestId string) *Projec
 // the new value, as follows: { "software_config":{ "kernels": [{
 // 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu',
 // 'tag': 'latest' }], } } Currently, only the following fields can be
-// updated: - software_config.kernels -
-// software_config.post_startup_script -
-// software_config.custom_gpu_driver_path -
-// software_config.idle_shutdown - software_config.idle_shutdown_timeout
-// - software_config.disable_terminal
+// updated: - `software_config.kernels` -
+// `software_config.post_startup_script` -
+// `software_config.custom_gpu_driver_path` -
+// `software_config.idle_shutdown` -
+// `software_config.idle_shutdown_timeout` -
+// `software_config.disable_terminal` - `labels`
 func (c *ProjectsLocationsRuntimesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRuntimesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10914,7 +11103,7 @@ func (c *ProjectsLocationsRuntimesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - software_config.kernels - software_config.post_startup_script - software_config.custom_gpu_driver_path - software_config.idle_shutdown - software_config.idle_shutdown_timeout - software_config.disable_terminal",
+	//       "description": "Required. Specifies the path, relative to `Runtime`, of the field to update. For example, to change the software configuration kernels, the `update_mask` parameter would be specified as `software_config.kernels`, and the `PATCH` request body would specify the new value, as follows: { \"software_config\":{ \"kernels\": [{ 'repository': 'gcr.io/deeplearning-platform-release/pytorch-gpu', 'tag': 'latest' }], } } Currently, only the following fields can be updated: - `software_config.kernels` - `software_config.post_startup_script` - `software_config.custom_gpu_driver_path` - `software_config.idle_shutdown` - `software_config.idle_shutdown_timeout` - `software_config.disable_terminal` - `labels`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -400,6 +400,10 @@ type GoogleIdentityStsV1ExchangeOauthTokenResponse struct {
 	// expires.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 
+	// IdToken: Google issued ID token in response to the OAuth token
+	// exchange request for ID token flow.
+	IdToken string `json:"id_token,omitempty"`
+
 	// RefreshToken: A refresh token, issued by Google, in response to the
 	// OAuth token exchange request for refresh token flow
 	RefreshToken string `json:"refresh_token,omitempty"`
@@ -408,8 +412,7 @@ type GoogleIdentityStsV1ExchangeOauthTokenResponse struct {
 	Scope string `json:"scope,omitempty"`
 
 	// TokenType: The type of token. Field reserved for RFC compliance. See
-	// https://www.rfc-editor.org/rfc/rfc6749#section-5.1 Note: No
-	// token_type is returned for current implementation
+	// https://www.rfc-editor.org/rfc/rfc6749#section-5.1
 	TokenType string `json:"token_type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

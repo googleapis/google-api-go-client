@@ -267,6 +267,49 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Autoscale: Auto scaling settings. max_slots and budget are mutually
+// exclusive. If max_slots is set: * The system will create a dedicated
+// `FLEX` capacity commitment to hold the slots for auto-scale. Users
+// won't be able to manage it, to avoid conflicts. * Scale-up will
+// happen if there are always pending tasks for the past 10 minutes. *
+// Scale-down will happen, if the system detects that scale-up won't be
+// triggered again. If budget is set: * The system will try to use more
+// slots immediately. * At a particular moment, the number of slots
+// scaled is determined by the sytsem, based on the remaining budget and
+// system limit. But overall the usage will conform to the budget if
+// there is enough traffic. * The system will round the slot usage every
+// minute. **Note** this is an alpha feature.
+type Autoscale struct {
+	// CurrentSlots: Output only. The slot capacity added to this
+	// reservation when autoscale happens. Will be between [0, max_slots].
+	CurrentSlots int64 `json:"currentSlots,omitempty,string"`
+
+	// MaxSlots: Number of slots to be scaled when needed.
+	MaxSlots int64 `json:"maxSlots,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentSlots") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentSlots") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Autoscale) MarshalJSON() ([]byte, error) {
+	type NoMethod Autoscale
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BiReservation: Represents a BI Reservation.
 type BiReservation struct {
 	// Name: The resource name of the singleton BI reservation. Reservation
@@ -326,6 +369,14 @@ type CapacityCommitment struct {
 	// period. It is applicable only for ACTIVE capacity commitments.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 
+	// Edition: Edition of the capacity commitment.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default value, only for legacy reservations
+	// and capacity commitments.
+	//   "ENTERPRISE" - Enterprise edition.
+	Edition string `json:"edition,omitempty"`
+
 	// FailureStatus: Output only. For FAILED commitment plan, provides the
 	// reason of failure.
 	FailureStatus *Status `json:"failureStatus,omitempty"`
@@ -364,6 +415,13 @@ type CapacityCommitment struct {
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	Plan string `json:"plan,omitempty"`
 
 	// RenewalPlan: The plan this capacity commitment is converted to after
@@ -389,6 +447,13 @@ type CapacityCommitment struct {
 	//   "ANNUAL" - Annual commitments have a committed period of 365 days
 	// after becoming ACTIVE. After that they are converted to a new
 	// commitment based on the renewal_plan.
+	//   "NONE" - Should only be used for `renewal_plan` and is only
+	// meaningful if edition is specified to values other than
+	// EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or
+	// UpdateCapacityCommitmentRequest will be rejected with error code
+	// `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE,
+	// capacity commitment will be removed at the end of its commitment
+	// period.
 	RenewalPlan string `json:"renewalPlan,omitempty"`
 
 	// SlotCount: Number of slots in this commitment.
@@ -632,6 +697,10 @@ func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 // Reservation: A reservation is a mechanism used to guarantee slots to
 // users.
 type Reservation struct {
+	// Autoscale: The configuration parameters for the auto scaling feature.
+	// Note this is an alpha feature.
+	Autoscale *Autoscale `json:"autoscale,omitempty"`
+
 	// Concurrency: Job concurrency target which sets a soft upper bound on
 	// the number of jobs that can run concurrently in this reservation.
 	// This is a soft target due to asynchronous nature of the system and
@@ -643,6 +712,14 @@ type Reservation struct {
 
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
+
+	// Edition: Edition of the reservation.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default value, only for legacy reservations
+	// and capacity commitments.
+	//   "ENTERPRISE" - Enterprise edition.
+	Edition string `json:"edition,omitempty"`
 
 	// IgnoreIdleSlots: If false, any query or pipeline job using this
 	// reservation will use idle slots from other reservations within the
@@ -684,7 +761,7 @@ type Reservation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Concurrency") to
+	// ForceSendFields is a list of field names (e.g. "Autoscale") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -692,10 +769,10 @@ type Reservation struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Concurrency") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Autoscale") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

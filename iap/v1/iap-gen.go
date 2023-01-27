@@ -1250,6 +1250,7 @@ type ReauthSettings struct {
 	//   "LOGIN" - Prompts the user to log in again.
 	//   "PASSWORD" - Deprecated, no longer accepted by IAP APIs.
 	//   "SECURE_KEY" - User must use their secure key 2nd factor device.
+	//   "ENROLLED_SECOND_FACTORS" - User can use any enabled 2nd factor.
 	Method string `json:"method,omitempty"`
 
 	// PolicyType: How IAP determines the effective policy in cases of

@@ -468,8 +468,9 @@ type GoogleCloudRunV2Container struct {
 	// Env: List of environment variables to set in the container.
 	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
 
-	// Image: Required. URL of the Container image in Google Container
-	// Registry or Google Artifact Registry. More info:
+	// Image: Required. Name of the container image in Dockerhub, Google
+	// Artifact Registry, or Google Container Registry. If the host is not
+	// provided, Dockerhub is assumed. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 

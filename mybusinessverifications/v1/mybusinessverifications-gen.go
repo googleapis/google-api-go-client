@@ -732,6 +732,10 @@ func (s *ServiceBusinessContext) MarshalJSON() ([]byte, error) {
 // Verification: A verification represents a verification attempt on a
 // location.
 type Verification struct {
+	// Announcement: Optional. Response announcement set only if the method
+	// is VETTED_PARTNER.
+	Announcement string `json:"announcement,omitempty"`
+
 	// CreateTime: The timestamp when the verification is requested.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -769,7 +773,7 @@ type Verification struct {
 	//   "FAILED" - The verification is failed.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Announcement") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -777,10 +781,10 @@ type Verification struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Announcement") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -798,6 +802,9 @@ func (s *Verification) MarshalJSON() ([]byte, error) {
 type VerificationOption struct {
 	// AddressData: Set only if the method is MAIL.
 	AddressData *AddressVerificationData `json:"addressData,omitempty"`
+
+	// Announcement: Set only if the method is VETTED_PARTNER.
+	Announcement string `json:"announcement,omitempty"`
 
 	// EmailData: Set only if the method is EMAIL.
 	EmailData *EmailVerificationData `json:"emailData,omitempty"`

@@ -401,7 +401,8 @@ type ApiDeployment struct {
 	// ApiSpecRevision: The full resource name (including revision ID) of
 	// the spec of the API being served by the deployment. Changes to this
 	// value will update the revision. Format:
-	// `apis/{api}/deployments/{deployment}`
+	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}
+	// /specs/{spec@revision}`
 	ApiSpecRevision string `json:"apiSpecRevision,omitempty"`
 
 	// CreateTime: Output only. Creation timestamp; when the deployment
@@ -627,6 +628,11 @@ type ApiVersion struct {
 	// Name: Resource name.
 	Name string `json:"name,omitempty"`
 
+	// PrimarySpec: The primary spec for this version. Format:
+	// projects/{project}/locations/{location}/apis/{api}/versions/{version}/
+	// specs/{spec}
+	PrimarySpec string `json:"primarySpec,omitempty"`
+
 	// State: A user-definable description of the lifecycle phase of this
 	// API version. Format: free-form, but we expect single words that
 	// describe API maturity, e.g., "CONCEPT", "DESIGN", "DEVELOPMENT",
@@ -673,6 +679,13 @@ func (s *ApiVersion) MarshalJSON() ([]byte, error) {
 // quickly enumerated and checked for presence without downloading their
 // (potentially-large) contents.
 type Artifact struct {
+	// Annotations: Annotations attach non-identifying metadata to
+	// resources. Annotation keys and values are less restricted than those
+	// of labels, but should be generally used for small values of broad
+	// interest. Larger, topic- specific metadata should be stored in
+	// Artifacts.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// Contents: Input only. The contents of the artifact. Provided by API
 	// callers when artifacts are created or replaced. To access the
 	// contents of an artifact, use GetArtifactContents.
@@ -684,6 +697,17 @@ type Artifact struct {
 	// Hash: Output only. A SHA-256 hash of the artifact's contents. If the
 	// artifact is gzipped, this is the hash of the uncompressed artifact.
 	Hash string `json:"hash,omitempty"`
+
+	// Labels: Labels attach identifying metadata to resources. Identifying
+	// metadata can be used to filter list operations. Label keys and values
+	// can be no longer than 64 characters (Unicode codepoints), can only
+	// contain lowercase letters, numeric characters, underscores and
+	// dashes. International characters are allowed. No more than 64 user
+	// labels can be associated with one resource (System labels are
+	// excluded). See https://goo.gl/xmQnxf for more information and
+	// examples of labels. System reserved label keys are prefixed with
+	// "registry.googleapis.com/" and cannot be changed.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// MimeType: A content type specifier for the artifact. Content type
 	// specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type)
@@ -706,7 +730,7 @@ type Artifact struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -714,10 +738,10 @@ type Artifact struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Contents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -6005,6 +6029,14 @@ func (r *ProjectsLocationsApisDeploymentsService) ListRevisions(name string) *Pr
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression that can
+// be used to filter the list. Filters use the Common Expression
+// Language and can refer to all message fields.
+func (c *ProjectsLocationsApisDeploymentsListRevisionsCall) Filter(filter string) *ProjectsLocationsApisDeploymentsListRevisionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of revisions to return per page.
 func (c *ProjectsLocationsApisDeploymentsListRevisionsCall) PageSize(pageSize int64) *ProjectsLocationsApisDeploymentsListRevisionsCall {
@@ -6128,6 +6160,11 @@ func (c *ProjectsLocationsApisDeploymentsListRevisionsCall) Do(opts ...googleapi
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the deployment to list revisions for.",
 	//       "location": "path",
@@ -11789,6 +11826,14 @@ func (r *ProjectsLocationsApisVersionsSpecsService) ListRevisions(name string) *
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression that can
+// be used to filter the list. Filters use the Common Expression
+// Language and can refer to all message fields.
+func (c *ProjectsLocationsApisVersionsSpecsListRevisionsCall) Filter(filter string) *ProjectsLocationsApisVersionsSpecsListRevisionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of revisions to return per page.
 func (c *ProjectsLocationsApisVersionsSpecsListRevisionsCall) PageSize(pageSize int64) *ProjectsLocationsApisVersionsSpecsListRevisionsCall {
@@ -11911,6 +11956,11 @@ func (c *ProjectsLocationsApisVersionsSpecsListRevisionsCall) Do(opts ...googlea
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the spec to list revisions for.",
 	//       "location": "path",

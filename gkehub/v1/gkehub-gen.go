@@ -571,6 +571,12 @@ func (s *CommonFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommonFleetDefaultMemberConfigSpec:
+// CommonFleetDefaultMemberConfigSpec contains default configuration
+// information for memberships of a fleet
+type CommonFleetDefaultMemberConfigSpec struct {
+}
+
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
 	// AllowVerticalScale: Set to true to allow the vertical scaling.
@@ -1766,6 +1772,10 @@ type Feature struct {
 
 	// DeleteTime: Output only. When the Feature resource was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// FleetDefaultMemberConfig: Optional. Feature configuration applicable
+	// to all memberships of the fleet.
+	FleetDefaultMemberConfig *CommonFleetDefaultMemberConfigSpec `json:"fleetDefaultMemberConfig,omitempty"`
 
 	// Labels: GCP labels for this Feature.
 	Labels map[string]string `json:"labels,omitempty"`

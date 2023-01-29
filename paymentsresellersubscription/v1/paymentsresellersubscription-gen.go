@@ -207,9 +207,10 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte,
 
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the
-	// subscription immediately, and issue a prorated refund for the
-	// remainder of the billing cycle. Otherwise, Google defers the
-	// cancelation at renewal_time, and therefore, will not issue a refund.
+	// subscription immediately, and may or may not (based on the contract)
+	// issue a prorated refund for the remainder of the billing cycle.
+	// Otherwise, Google defers the cancelation at renewal_time, and will
+	// not issue a refund.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
 
 	// CancellationReason: Specifies the reason for the cancellation.

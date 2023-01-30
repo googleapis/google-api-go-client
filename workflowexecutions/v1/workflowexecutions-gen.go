@@ -253,6 +253,13 @@ type Execution struct {
 	// `FAILED` or `CANCELLED`.
 	Error *Error `json:"error,omitempty"`
 
+	// Labels: Labels associated with this execution. Labels can contain at
+	// most 64 entries. Keys and values can be no longer than 63 characters
+	// and can only contain lowercase letters, numeric characters,
+	// underscores and dashes. Label keys must start with a letter.
+	// International characters are allowed.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: Output only. The resource name of the execution. Format:
 	// projects/{project}/locations/{location}/workflows/{workflow}/execution
 	// s/{execution}
@@ -1260,6 +1267,25 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 	return c
 }
 
+// Filter sets the optional parameter "filter": Filters applied to the
+// [Executions.ListExecutions] results. The following fields are
+// supported for filtering: executionID, state, startTime, endTime,
+// duration, workflowRevisionID, stepName, and label.
+func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The orderding applied
+// to the [Executions.ListExecutions] results. By default the ordering
+// is based on descending start time. The following fields are supported
+// for order by: executionID, startTime, endTime, duration, state, and
+// workflowRevisionID.
+func (c *ProjectsLocationsWorkflowsExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsExecutionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // executions to return per call. Max supported value depends on the
 // selected Execution view: it's 1000 for BASIC and 100 for FULL. The
@@ -1406,6 +1432,16 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filters applied to the [Executions.ListExecutions] results. The following fields are supported for filtering: executionID, state, startTime, endTime, duration, workflowRevisionID, stepName, and label.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The orderding applied to the [Executions.ListExecutions] results. By default the ordering is based on descending start time. The following fields are supported for order by: executionID, startTime, endTime, duration, state, and workflowRevisionID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum number of executions to return per call. Max supported value depends on the selected Execution view: it's 1000 for BASIC and 100 for FULL. The default value used if the field is not specified is 100, regardless of the selected view. Values greater than the max value will be coerced down to it.",
 	//       "format": "int32",

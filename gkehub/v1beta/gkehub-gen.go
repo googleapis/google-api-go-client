@@ -555,6 +555,37 @@ func (s *CommonFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommonFleetDefaultMemberConfigSpec:
+// CommonFleetDefaultMemberConfigSpec contains default configuration
+// information for memberships of a fleet
+type CommonFleetDefaultMemberConfigSpec struct {
+	// Identityservice: Identity Service-specific spec.
+	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identityservice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identityservice") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonFleetDefaultMemberConfigSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonFleetDefaultMemberConfigSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigManagementBinauthzConfig: Configuration for Binauthz
 type ConfigManagementBinauthzConfig struct {
 	// Enabled: Whether binauthz is enabled in this cluster.
@@ -1787,6 +1818,10 @@ type Feature struct {
 
 	// DeleteTime: Output only. When the Feature resource was deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// FleetDefaultMemberConfig: Optional. Feature configuration applicable
+	// to all memberships of the fleet.
+	FleetDefaultMemberConfig *CommonFleetDefaultMemberConfigSpec `json:"fleetDefaultMemberConfig,omitempty"`
 
 	// Labels: GCP labels for this Feature.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -3102,7 +3137,7 @@ type PolicyControllerMembershipState struct {
 	// resources running on the cluster. The PCH has a Membership, is aware
 	// of the version the cluster should be running in, but has not
 	// confirmed for itself that the PC is running with that version.
-	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	//   "DECOMMISSIONING" - The PC may have resources on the cluster, but
 	// the PCH wishes to remove the Membership. The Membership still exists.
 	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
 	// to act to make it operational. Entering a CLUSTER_ERROR state happens
@@ -3211,7 +3246,7 @@ type PolicyControllerOnClusterState struct {
 	// resources running on the cluster. The PCH has a Membership, is aware
 	// of the version the cluster should be running in, but has not
 	// confirmed for itself that the PC is running with that version.
-	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	//   "DECOMMISSIONING" - The PC may have resources on the cluster, but
 	// the PCH wishes to remove the Membership. The Membership still exists.
 	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
 	// to act to make it operational. Entering a CLUSTER_ERROR state happens

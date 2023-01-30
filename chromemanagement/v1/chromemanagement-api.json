@@ -638,7 +638,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. Only include resources that match the filter. Supported filter fields: * device_id * user_id * device_org_unit_id * user_org_unit_id * timestamp * event_type",
+                      "description": "Optional. Only include resources that match the filter. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either Epoch milliseconds or RFC 3339 formatted time surrounded by simple double quotes.",
                       "location": "query",
                       "type": "string"
                     },
@@ -720,7 +720,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Only include resources that match the filter. Supported filter fields: * user_id * user_org_unit_id",
+                      "description": "Only include resources that match the filter. Supported filter fields: - user_id - user_org_unit_id ",
                       "location": "query",
                       "type": "string"
                     },
@@ -764,7 +764,7 @@
       }
     }
   },
-  "revision": "20230124",
+  "revision": "20230127",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -2695,7 +2695,6 @@
           "enum": [
             "EVENT_TYPE_UNSPECIFIED",
             "AUDIO_SEVERE_UNDERRUN",
-            "NETWORK_CONNECTION_STATE_CHANGE",
             "USB_ADDED",
             "USB_REMOVED",
             "NETWORK_HTTPS_LATENCY_CHANGE"
@@ -2703,7 +2702,6 @@
           "enumDescriptions": [
             "Event type unknown.",
             "Triggered when a audio devices run out of buffer data for more than 5 seconds.",
-            "Triggered immediately on any changes to a network connection.",
             "Triggered when USB devices are added.",
             "Triggered when USB devices are removed.",
             "Triggered when a new HTTPS latency problem was detected or the device has recovered form an existing HTTPS latency problem."

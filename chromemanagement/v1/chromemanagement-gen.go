@@ -2784,8 +2784,6 @@ type GoogleChromeManagementV1TelemetryEvent struct {
 	//   "EVENT_TYPE_UNSPECIFIED" - Event type unknown.
 	//   "AUDIO_SEVERE_UNDERRUN" - Triggered when a audio devices run out of
 	// buffer data for more than 5 seconds.
-	//   "NETWORK_CONNECTION_STATE_CHANGE" - Triggered immediately on any
-	// changes to a network connection.
 	//   "USB_ADDED" - Triggered when USB devices are added.
 	//   "USB_REMOVED" - Triggered when USB devices are removed.
 	//   "NETWORK_HTTPS_LATENCY_CHANGE" - Triggered when a new HTTPS latency
@@ -5671,8 +5669,10 @@ func (r *CustomersTelemetryEventsService) List(parent string) *CustomersTelemetr
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter. Supported filter fields: * device_id * user_id
-// * device_org_unit_id * user_org_unit_id * timestamp * event_type
+// that match the filter. Supported filter fields: - device_id - user_id
+// - device_org_unit_id - user_org_unit_id - timestamp - event_type The
+// "timestamp" filter accepts either Epoch milliseconds or RFC 3339
+// formatted time surrounded by simple double quotes.
 func (c *CustomersTelemetryEventsListCall) Filter(filter string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5809,7 +5809,7 @@ func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: * device_id * user_id * device_org_unit_id * user_org_unit_id * timestamp * event_type",
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - device_id - user_id - device_org_unit_id - user_org_unit_id - timestamp - event_type The \"timestamp\" filter accepts either Epoch milliseconds or RFC 3339 formatted time surrounded by simple double quotes.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6052,7 +6052,7 @@ func (r *CustomersTelemetryUsersService) List(parent string) *CustomersTelemetry
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter. Supported filter fields: * user_id *
+// that match the filter. Supported filter fields: - user_id -
 // user_org_unit_id
 func (c *CustomersTelemetryUsersListCall) Filter(filter string) *CustomersTelemetryUsersListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6190,7 +6190,7 @@ func (c *CustomersTelemetryUsersListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Only include resources that match the filter. Supported filter fields: * user_id * user_org_unit_id",
+	//       "description": "Only include resources that match the filter. Supported filter fields: - user_id - user_org_unit_id ",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

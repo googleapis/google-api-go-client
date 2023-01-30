@@ -6786,7 +6786,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Comm
 }
 
 // Filter sets the optional parameter "filter": Filter the returned
-// entities based on AIP-160 standard
+// entities based on AIP-160 standard.
 func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Filter(filter string) *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6811,7 +6811,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Page
 	return c
 }
 
-// Tree sets the optional parameter "tree": The tree to fetch
+// Tree sets the optional parameter "tree": The tree to fetch.
 //
 // Possible values:
 //
@@ -6952,7 +6952,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Do(o
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Filter the returned entities based on AIP-160 standard",
+	//       "description": "Filter the returned entities based on AIP-160 standard.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6968,7 +6968,7 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Do(o
 	//       "type": "string"
 	//     },
 	//     "tree": {
-	//       "description": "The tree to fetch",
+	//       "description": "The tree to fetch.",
 	//       "enum": [
 	//         "DB_TREE_TYPE_UNSPECIFIED",
 	//         "SOURCE_TREE",

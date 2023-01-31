@@ -246,7 +246,7 @@ type AuthorizationAttemptInfo struct {
 	// attempt for the domain.
 	//
 	// Possible values:
-	//   "FAILURE_REASON_UNSPECIFIED"
+	//   "FAILURE_REASON_UNSPECIFIED" - FailureReason is unspecified.
 	//   "CONFIG" - There was a problem with the user's DNS or load balancer
 	// configuration for this domain.
 	//   "CAA" - Certificate issuance forbidden by an explicit CAA record
@@ -259,7 +259,7 @@ type AuthorizationAttemptInfo struct {
 	// issuance.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - State is unspecified.
 	//   "AUTHORIZING" - Certificate provisioning for this domain is under
 	// way. GCP will attempt to authorize the domain.
 	//   "AUTHORIZED" - A managed certificate can be provisioned, no issues
@@ -1197,7 +1197,7 @@ type ManagedCertificate struct {
 	// State: Output only. State of the managed certificate resource.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
+	//   "STATE_UNSPECIFIED" - State is unspecified.
 	//   "PROVISIONING" - Certificate Manager attempts to provision or renew
 	// the certificate. If the process takes longer than expected, consult
 	// the `provisioning_issue` field.
@@ -1357,7 +1357,7 @@ type ProvisioningIssue struct {
 	// Reason: Output only. Reason for provisioning failures.
 	//
 	// Possible values:
-	//   "REASON_UNSPECIFIED"
+	//   "REASON_UNSPECIFIED" - Reason is unspecified.
 	//   "AUTHORIZATION_ISSUE" - Certificate provisioning failed due to an
 	// issue with one or more of the domains on the certificate. For details
 	// of which domains failed, consult the `authorization_attempt_info`

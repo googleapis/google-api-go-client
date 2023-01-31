@@ -1760,6 +1760,17 @@ func (r *ProjectsLocationsWorkflowsService) Get(name string) *ProjectsLocationsW
 	return c
 }
 
+// RevisionId sets the optional parameter "revisionId": Optional. The
+// revision of the workflow to retrieve. If the revision_id is empty,
+// the latest revision is retrieved. The format is "000001-a4d", where
+// the first 6 characters define the zero-padded decimal revision
+// number. They are followed by a hyphen and 3 hexadecimal characters.
+// (go/wf_adr_clh_1)
+func (c *ProjectsLocationsWorkflowsGetCall) RevisionId(revisionId string) *ProjectsLocationsWorkflowsGetCall {
+	c.urlParams_.Set("revisionId", revisionId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1872,6 +1883,11 @@ func (c *ProjectsLocationsWorkflowsGetCall) Do(opts ...googleapi.CallOption) (*W
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/workflows/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revisionId": {
+	//       "description": "Optional. Optional. The revision of the workflow to retrieve. If the revision_id is empty, the latest revision is retrieved. The format is \"000001-a4d\", where the first 6 characters define the zero-padded decimal revision number. They are followed by a hyphen and 3 hexadecimal characters. (go/wf_adr_clh_1)",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

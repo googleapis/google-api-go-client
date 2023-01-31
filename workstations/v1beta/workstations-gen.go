@@ -432,15 +432,43 @@ func (s *Container) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
-type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
+// CustomerEncryptionKey: A customer-specified encryption key for the
+// Compute Engine resources of this workstation configuration.
+type CustomerEncryptionKey struct {
+	// KmsKey: The name of the encryption key that is stored in Google Cloud
+	// KMS, for example,
+	// `projects/PROJECT_ID/locations/REGION/keyRings/KEY_RING/cryptoKeys/KEY
+	// _NAME`.
+	KmsKey string `json:"kmsKey,omitempty"`
+
+	// KmsKeyServiceAccount: The service account being used for the
+	// encryption request for the given KMS key. If absent, the Compute
+	// Engine default service account is used. However, it is recommended to
+	// use a separate service account and to follow KMS best practices
+	// mentioned at https://cloud.google.com/kms/docs/separation-of-duties
+	KmsKeyServiceAccount string `json:"kmsKeyServiceAccount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerEncryptionKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -721,7 +749,8 @@ func (s *GenerateAccessTokenRequest) MarshalJSON() ([]byte, error) {
 type GenerateAccessTokenResponse struct {
 	// AccessToken: The generated bearer access token. To use this token,
 	// include it in an Authorization header of an HTTP request sent to the
-	// associated workstation's hostname, e.g. "Authorization: Bearer ".
+	// associated workstation's hostname, for example, `Authorization:
+	// Bearer `.
 	AccessToken string `json:"accessToken,omitempty"`
 
 	// ExpireTime: Time at which the generated token will expire.
@@ -752,6 +781,17 @@ func (s *GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateAccessTokenResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleProtobufEmpty: A generic empty message that you can re-use to
+// avoid defining duplicated empty messages in your APIs. A typical
+// example is to use it as the request or the response type of an API
+// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
+// returns (google.protobuf.Empty); }
+type GoogleProtobufEmpty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Host: Runtime host for a workstation.
@@ -1080,27 +1120,24 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of the long-running
-// operation.
+// OperationMetadata: Metadata for long-running operations.
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
 
-	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have been
-	// cancelled successfully have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
-	CancelRequested bool `json:"cancelRequested,omitempty"`
-
-	// CreateTime: Output only. The time the operation was created.
+	// CreateTime: Output only. Time that the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EndTime: Output only. The time the operation finished running.
+	// EndTime: Output only. Time that the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StatusDetail: Output only. Human-readable status of the operation, if
-	// any.
-	StatusDetail string `json:"statusDetail,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
 
 	// Target: Output only. Server-defined resource path for the target of
 	// the operation.
@@ -1291,9 +1328,8 @@ type PrivateClusterConfig struct {
 	// ServiceAttachmentUri: Output only. Service attachment URI for the
 	// workstation cluster. The service attachemnt is created when private
 	// endpoint is enabled. To access workstations in the cluster, configure
-	// access to the managed service using (Private Service
-	// Connect)[https://cloud.google.com/vpc/docs/configure-private-service-c
-	// onnect-services].
+	// access to the managed service using Private Service Connect
+	// (https://cloud.google.com/vpc/docs/configure-private-service-connect-services).
 	ServiceAttachmentUri string `json:"serviceAttachmentUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusterHostname") to
@@ -1557,7 +1593,7 @@ type Workstation struct {
 	// will be received by the workstation. Authorized traffic will be
 	// received to the workstation as HTTP on port 80. To send traffic to a
 	// different port, clients may prefix the host with the destination port
-	// in the format "{port}-{host}".
+	// in the format `{port}-{host}`.
 	Host string `json:"host,omitempty"`
 
 	// Labels: Client-specified labels that are applied to the resource and
@@ -1735,6 +1771,21 @@ type WorkstationConfig struct {
 	// DisplayName: Human-readable name for this resource.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EncryptionKey: Encrypts resources of this workstation configuration
+	// using a customer-specified encryption key. If specified, the boot
+	// disk of the Compute Engine instance and the persistent disk will be
+	// encrypted using this encryption key. If this field is not set, the
+	// disks will be encrypted using a generated key. Customer-specified
+	// encryption keys do not protect disk metadata. If the
+	// customer-specified encryption key is rotated, when the workstation
+	// instance is stopped, the system will attempt to recreate the
+	// persistent disk with the new version of the key. Be sure to keep
+	// older versions of the key until the persistent disk is recreated.
+	// Otherwise, data on the persistent disk will be lost. If the
+	// encryption key is revoked, the workstation session will automatically
+	// be stopped within 7 hours.
+	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
+
 	// Etag: Checksum computed by the server. May be sent on update and
 	// delete requests to ensure that the client has an up-to-date value
 	// before proceeding.
@@ -1890,13 +1941,13 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "workstations.projects.locations.operations.cancel" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1915,7 +1966,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -1948,7 +1999,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 	//     "$ref": "CancelOperationRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "Empty"
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -2028,13 +2079,13 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "workstations.projects.locations.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2053,7 +2104,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Empty{
+	ret := &GoogleProtobufEmpty{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2083,7 +2134,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "path": "v1beta/{+name}",
 	//   "response": {
-	//     "$ref": "Empty"
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

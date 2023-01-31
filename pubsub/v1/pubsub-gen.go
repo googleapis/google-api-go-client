@@ -356,7 +356,9 @@ type Binding struct {
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
 	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. *
+	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
+	// domain (primary) that represents all the users of that domain. For
+	// example, `google.com` or `example.com`. *
 	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
 	// unique identifier) representing a user that has been recently
 	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
@@ -373,9 +375,7 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. * `domain:{domain}`: The G
-	// Suite domain (primary) that represents all the users of that domain.
-	// For example, `google.com` or `example.com`.
+	// group retains the role in the binding.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -2718,7 +2718,7 @@ type ProjectsSchemasDeleteRevisionCall struct {
 //
 //   - name: The name of the schema revision to be deleted, with a
 //     revision ID explicitly included. Example:
-//     projects/123/schemas/my-schema@c7cfa2a8.
+//     `projects/123/schemas/my-schema@c7cfa2a8`.
 func (r *ProjectsSchemasService) DeleteRevision(name string) *ProjectsSchemasDeleteRevisionCall {
 	c := &ProjectsSchemasDeleteRevisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2828,7 +2828,7 @@ func (c *ProjectsSchemasDeleteRevisionCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the schema revision to be deleted, with a revision ID explicitly included. Example: projects/123/schemas/my-schema@c7cfa2a8",
+	//       "description": "Required. The name of the schema revision to be deleted, with a revision ID explicitly included. Example: `projects/123/schemas/my-schema@c7cfa2a8`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/schemas/[^/]+$",
 	//       "required": true,

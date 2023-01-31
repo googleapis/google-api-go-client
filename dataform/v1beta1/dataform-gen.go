@@ -2074,6 +2074,13 @@ type Repository struct {
 	// in a JSON format.
 	NpmrcEnvironmentVariablesSecretVersion string `json:"npmrcEnvironmentVariablesSecretVersion,omitempty"`
 
+	// WorkspaceCompilationOverrides: Optional. If set, fields of
+	// `workspace_compilation_overrides` override the default compilation
+	// settings that are specified in dataform.json when creating
+	// workspace-scoped compilation results. See documentation for
+	// `WorkspaceCompilationOverrides` for more information.
+	WorkspaceCompilationOverrides *WorkspaceCompilationOverrides `json:"workspaceCompilationOverrides,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2547,6 +2554,52 @@ type Workspace struct {
 
 func (s *Workspace) MarshalJSON() ([]byte, error) {
 	type NoMethod Workspace
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkspaceCompilationOverrides: Configures workspace compilation
+// overrides for a repository. Primarily used by the UI
+// (`console.cloud.google.com`). `schema_suffix` and `table_prefix` can
+// have a special expression - `${workspaceName}`, which refers to the
+// workspace name from which the compilation results will be created.
+// API callers are expected to resolve the expression in these overrides
+// and provide them explicitly in `code_compilation_config`
+// (https://cloud.google.com/dataform/reference/rest/v1beta1/projects.locations.repositories.compilationResults#codecompilationconfig)
+// when creating workspace-scoped compilation results.
+type WorkspaceCompilationOverrides struct {
+	// DefaultDatabase: Optional. The default database (Google Cloud project
+	// ID).
+	DefaultDatabase string `json:"defaultDatabase,omitempty"`
+
+	// SchemaSuffix: Optional. The suffix that should be appended to all
+	// schema (BigQuery dataset ID) names.
+	SchemaSuffix string `json:"schemaSuffix,omitempty"`
+
+	// TablePrefix: Optional. The prefix that should be prepended to all
+	// table names.
+	TablePrefix string `json:"tablePrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultDatabase") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultDatabase") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkspaceCompilationOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkspaceCompilationOverrides
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

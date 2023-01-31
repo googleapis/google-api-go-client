@@ -3289,6 +3289,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/iam/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "iam:v2",
+      "name": "iam",
+      "version": "v2",
+      "title": "Identity and Access Management (IAM) API",
+      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/",
       "preferred": true
     },
     {

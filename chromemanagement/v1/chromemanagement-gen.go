@@ -4771,7 +4771,7 @@ func (r *CustomersReportsService) CountInstalledApps(customer string) *Customers
 // results, AND-separated fields in EBNF syntax. Note: OR operations are
 // not supported in this filter. Supported filter fields: * app_name *
 // app_type * install_type * number_of_permissions * total_install_count
-// * latest_profile_active_date * permission_name
+// * latest_profile_active_date * permission_name * app_id
 func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4779,7 +4779,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *Customer
 
 // OrderBy sets the optional parameter "orderBy": Field used to order
 // results. Supported order by fields: * app_name * app_type *
-// install_type * number_of_permissions * total_install_count
+// install_type * number_of_permissions * total_install_count * app_id
 func (c *CustomersReportsCountInstalledAppsCall) OrderBy(orderBy string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4923,12 +4923,12 @@ func (c *CustomersReportsCountInstalledAppsCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Supported filter fields: * app_name * app_type * install_type * number_of_permissions * total_install_count * latest_profile_active_date * permission_name",
+	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Note: OR operations are not supported in this filter. Supported filter fields: * app_name * app_type * install_type * number_of_permissions * total_install_count * latest_profile_active_date * permission_name * app_id",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field used to order results. Supported order by fields: * app_name * app_type * install_type * number_of_permissions * total_install_count",
+	//       "description": "Field used to order results. Supported order by fields: * app_name * app_type * install_type * number_of_permissions * total_install_count * app_id",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

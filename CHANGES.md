@@ -1,5 +1,19 @@
 # Changes
 
+## [0.109.0](https://github.com/googleapis/google-api-go-client/compare/v0.108.0...v0.109.0) (2023-01-31)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#1817](https://github.com/googleapis/google-api-go-client/issues/1817)) ([ba3ba78](https://github.com/googleapis/google-api-go-client/commit/ba3ba788b274e51d8d68a94252d9f29d45f0e7cc))
+* **all:** Auto-regenerate discovery clients ([#1819](https://github.com/googleapis/google-api-go-client/issues/1819)) ([5935892](https://github.com/googleapis/google-api-go-client/commit/593589291e6121b30375820a8b6ee36fb5bac9cb))
+* **all:** Auto-regenerate discovery clients ([#1821](https://github.com/googleapis/google-api-go-client/issues/1821)) ([884a246](https://github.com/googleapis/google-api-go-client/commit/884a24654f56bd2a7f9e049054fc63774f3769f8))
+* **all:** Auto-regenerate discovery clients ([#1822](https://github.com/googleapis/google-api-go-client/issues/1822)) ([85d0224](https://github.com/googleapis/google-api-go-client/commit/85d022490dfa59e3ff0beed59115c864918f8e4a))
+* **all:** Auto-regenerate discovery clients ([#1825](https://github.com/googleapis/google-api-go-client/issues/1825)) ([6aad438](https://github.com/googleapis/google-api-go-client/commit/6aad43898977685fbbf7b964ad5a7d9764cbcd3b))
+* **all:** Auto-regenerate discovery clients ([#1826](https://github.com/googleapis/google-api-go-client/issues/1826)) ([50fc7c4](https://github.com/googleapis/google-api-go-client/commit/50fc7c423d3d904fa541fb2794e20dde0de8cdee))
+* **all:** Auto-regenerate discovery clients ([#1828](https://github.com/googleapis/google-api-go-client/issues/1828)) ([a5d0daa](https://github.com/googleapis/google-api-go-client/commit/a5d0daae5c8deec101f338d3fe1bf27fd86f22f9))
+* **all:** Auto-regenerate discovery clients ([#1836](https://github.com/googleapis/google-api-go-client/issues/1836)) ([c13cc35](https://github.com/googleapis/google-api-go-client/commit/c13cc35851d528f611acdebf3b57db6c6c184958))
+
 ## [0.108.0](https://github.com/googleapis/google-api-go-client/compare/v0.107.0...v0.108.0) (2023-01-18)
 
 

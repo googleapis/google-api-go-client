@@ -353,7 +353,6 @@ type ProjectsLocationsProductsCertificatesService struct {
 func NewProjectsLocationsProductsIntegrationsService(s *Service) *ProjectsLocationsProductsIntegrationsService {
 	rs := &ProjectsLocationsProductsIntegrationsService{s: s}
 	rs.Executions = NewProjectsLocationsProductsIntegrationsExecutionsService(s)
-	rs.Executionsnapshots = NewProjectsLocationsProductsIntegrationsExecutionsnapshotsService(s)
 	rs.Versions = NewProjectsLocationsProductsIntegrationsVersionsService(s)
 	return rs
 }
@@ -362,8 +361,6 @@ type ProjectsLocationsProductsIntegrationsService struct {
 	s *Service
 
 	Executions *ProjectsLocationsProductsIntegrationsExecutionsService
-
-	Executionsnapshots *ProjectsLocationsProductsIntegrationsExecutionsnapshotsService
 
 	Versions *ProjectsLocationsProductsIntegrationsVersionsService
 }
@@ -386,15 +383,6 @@ func NewProjectsLocationsProductsIntegrationsExecutionsSuspensionsService(s *Ser
 }
 
 type ProjectsLocationsProductsIntegrationsExecutionsSuspensionsService struct {
-	s *Service
-}
-
-func NewProjectsLocationsProductsIntegrationsExecutionsnapshotsService(s *Service) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsService {
-	rs := &ProjectsLocationsProductsIntegrationsExecutionsnapshotsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsProductsIntegrationsExecutionsnapshotsService struct {
 	s *Service
 }
 
@@ -662,8 +650,6 @@ func (s *EnterpriseCrmEventbusProtoAddress) MarshalJSON() ([]byte, error) {
 // EnterpriseCrmEventbusProtoAttributes: Attributes are additional
 // options that can be associated with each event property. For more
 // information, see
-// go/integration-platform/event_bus/attributes_registry.md. Next
-// available: 8
 type EnterpriseCrmEventbusProtoAttributes struct {
 	// DataType: Things like URL, Email, Currency, Timestamp (rather than
 	// string, int64...)
@@ -690,8 +676,7 @@ type EnterpriseCrmEventbusProtoAttributes struct {
 	// DEPRECATED: use searchable.
 	IsSearchable bool `json:"isSearchable,omitempty"`
 
-	// LogSettings: See go/integration-platform/analytics/logging_task.md
-	// for details.
+	// LogSettings: See
 	LogSettings *EnterpriseCrmEventbusProtoLogSettings `json:"logSettings,omitempty"`
 
 	// Possible values:
@@ -774,8 +759,7 @@ func (s *EnterpriseCrmEventbusProtoBaseAlertConfigErrorEnumList) MarshalJSON() (
 // should be specified in the threshold_duration_ms member below. For
 // *AVERAGE_DURATION metrics, these fields should not be set at all. A
 // different member, threshold_duration_ms, must be set in the
-// EventAlertConfig or the TaskAlertConfig. See
-// go/eventbus-alert-config-examples
+// EventAlertConfig or the TaskAlertConfig.
 type EnterpriseCrmEventbusProtoBaseAlertConfigThresholdValue struct {
 	Absolute int64 `json:"absolute,omitempty,string"`
 
@@ -1507,8 +1491,7 @@ func (s *EnterpriseCrmEventbusProtoErrorDetail) MarshalJSON() ([]byte, error) {
 
 // EnterpriseCrmEventbusProtoEventBusProperties: LINT.IfChange This
 // message is used for storing key value pair properties for each Event
-// / Task in the EventBus. Please see
-// go/cloud-crm-eng/platform/event_bus.md for more details.
+// / Task in the EventBus.
 type EnterpriseCrmEventbusProtoEventBusProperties struct {
 	// Properties: An unordered list of property entries.
 	Properties []*EnterpriseCrmEventbusProtoPropertyEntry `json:"properties,omitempty"`
@@ -1748,7 +1731,6 @@ func (s *EnterpriseCrmEventbusProtoEventExecutionSnapshotEventExecutionSnapshotM
 // EnterpriseCrmEventbusProtoEventParameters: LINT.IfChange This message
 // is used for processing and persisting (when applicable) key value
 // pair parameters for each event in the event bus. Please see
-// go/integration-platform/event_bus.md for more details. Next id: 4
 type EnterpriseCrmEventbusProtoEventParameters struct {
 	// Parameters: Parameters are a part of Event and can be used to
 	// communicate between different tasks that are part of the same
@@ -1941,7 +1923,7 @@ func (s *EnterpriseCrmEventbusProtoFailurePolicy) MarshalJSON() ([]byte, error) 
 }
 
 // EnterpriseCrmEventbusProtoField: Information about the value and type
-// of the field. Next Id: 8
+// of the field.
 type EnterpriseCrmEventbusProtoField struct {
 	// Cardinality: By default, if the cardinality is unspecified the field
 	// is considered required while mapping.
@@ -1954,8 +1936,6 @@ type EnterpriseCrmEventbusProtoField struct {
 
 	// DefaultValue: This holds the default values for the fields. This
 	// value is supplied by user so may or may not contain PII or SPII data.
-	// This field will be scrubbed using DatapolScrubber#maybeScrub() with
-	// go/proto-sanitizer#level3
 	DefaultValue *EnterpriseCrmEventbusProtoParameterValueType `json:"defaultValue,omitempty"`
 
 	// FieldType: Specifies the data type of the field.
@@ -1999,9 +1979,8 @@ type EnterpriseCrmEventbusProtoField struct {
 	ReferenceKey string `json:"referenceKey,omitempty"`
 
 	// TransformExpression: This is the transform expression to fetch the
-	// input field value. for e.g. $param1$.CONCAT('test'). See
-	// go/transform-functions-design for more details. Keep points - 1. Only
-	// input field can have a transform expression. 2. If a transform
+	// input field value. for e.g. $param1$.CONCAT('test'). Keep points - 1.
+	// Only input field can have a transform expression. 2. If a transform
 	// expression is provided, reference_key will be ignored. 3. If no value
 	// is returned after evaluation of transform expression, default_value
 	// can be mapped if provided. 4. The field_type should be the type of
@@ -2034,8 +2013,7 @@ func (s *EnterpriseCrmEventbusProtoField) MarshalJSON() ([]byte, error) {
 }
 
 // EnterpriseCrmEventbusProtoFieldMappingConfig: Field Mapping Config to
-// map multiple output fields values from input fields values. Next id:
-// 2
+// map multiple output fields values from input fields values.
 type EnterpriseCrmEventbusProtoFieldMappingConfig struct {
 	MappedFields []*EnterpriseCrmEventbusProtoMappedField `json:"mappedFields,omitempty"`
 
@@ -2337,8 +2315,7 @@ func (s *EnterpriseCrmEventbusProtoJsonFunction) MarshalJSON() ([]byte, error) {
 // EnterpriseCrmEventbusProtoLogSettings: The LogSettings define the
 // logging attributes for an event property. These attributes are used
 // to map the property to the parameter in the log proto. Also used to
-// define scrubbing/truncation behavior and PII information. See
-// go/integration-platform/analytics/logging_task.md for details.
+// define scrubbing/truncation behavior and PII information.
 type EnterpriseCrmEventbusProtoLogSettings struct {
 	// LogFieldName: The name of corresponding logging field of the event
 	// property. If omitted, assumes the same name as the event property
@@ -2446,7 +2423,7 @@ func (s *EnterpriseCrmEventbusProtoLoopMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // EnterpriseCrmEventbusProtoMappedField: Mapped field is a pair of
-// input field and output field. Next Id: 3
+// input field and output field.
 type EnterpriseCrmEventbusProtoMappedField struct {
 	// InputField: The input field being mapped from.
 	InputField *EnterpriseCrmEventbusProtoField `json:"inputField,omitempty"`
@@ -3748,8 +3725,7 @@ func (s *EnterpriseCrmEventbusProtoSuspensionResolutionInfoAudit) MarshalJSON() 
 
 // EnterpriseCrmEventbusProtoTaskAlertConfig: Message to be used to
 // configure alerting in the {@code TaskConfig} protos for tasks in an
-// event. See go/eventbus-alert-config-examples for examples of the
-// different alerts that can be configured.
+// event.
 type EnterpriseCrmEventbusProtoTaskAlertConfig struct {
 	// AggregationPeriod: The period over which the metric value should be
 	// aggregated and evaluated. Format is , where integer should be a
@@ -3943,7 +3919,7 @@ func (s *EnterpriseCrmEventbusProtoTaskExecutionDetailsTaskAttemptStats) Marshal
 }
 
 // EnterpriseCrmEventbusProtoTaskMetadata: TaskMetadata are attributes
-// that are associated to every common Task we have. Next available: 26
+// that are associated to every common Task we have.
 type EnterpriseCrmEventbusProtoTaskMetadata struct {
 	// ActiveTaskName: The new task name to replace the current task if it
 	// is deprecated. Otherwise, it is the same as the current task name.
@@ -4031,8 +4007,7 @@ type EnterpriseCrmEventbusProtoTaskMetadata struct {
 
 	// IconLink: URL to gstatic image icon for this task. This icon shows up
 	// on the task list panel along with the task name in the Workflow
-	// Editor screen. Use the 24p, 2x, gray color icon image format. See
-	// go/icons.
+	// Editor screen. Use the 24p, 2x, gray color icon image format.
 	IconLink string `json:"iconLink,omitempty"`
 
 	// IsDeprecated: The deprecation status of the current task. Default
@@ -4142,7 +4117,6 @@ func (s *EnterpriseCrmEventbusProtoTaskMetadataAdmin) MarshalJSON() ([]byte, err
 // type to configure the UI for a particular task by specifying what UI
 // config modules should be included to compose the UI. Learn more about
 // config module framework:
-// go/integration-platform-config-module-framework
 type EnterpriseCrmEventbusProtoTaskUiConfig struct {
 	// TaskUiModuleConfigs: Configurations of included config modules.
 	TaskUiModuleConfigs []*EnterpriseCrmEventbusProtoTaskUiModuleConfig `json:"taskUiModuleConfigs,omitempty"`
@@ -4458,8 +4432,7 @@ func (s *EnterpriseCrmEventbusProtoValueType) UnmarshalJSON(data []byte) error {
 
 // EnterpriseCrmEventbusProtoWorkflowAlertConfig: Message to be used to
 // configure custom alerting in the {@code EventConfig} protos for an
-// event. See go/eventbus-alert-config-examples for examples of the
-// different alerts that can be configured.
+// event.
 type EnterpriseCrmEventbusProtoWorkflowAlertConfig struct {
 	// AggregationPeriod: For an EXPECTED_MIN threshold, this
 	// aggregation_period must be lesser than 24 hours.
@@ -4544,7 +4517,7 @@ type EnterpriseCrmEventbusProtoWorkflowAlertConfig struct {
 	ThresholdType string `json:"thresholdType,omitempty"`
 
 	// ThresholdValue: The metric value, above or below which the alert
-	// should be triggered. See go/eventbus-alert-config-examples.
+	// should be triggered.
 	ThresholdValue *EnterpriseCrmEventbusProtoBaseAlertConfigThresholdValue `json:"thresholdValue,omitempty"`
 
 	WarningEnumList *EnterpriseCrmEventbusProtoBaseAlertConfigErrorEnumList `json:"warningEnumList,omitempty"`
@@ -4990,7 +4963,6 @@ func (s *EnterpriseCrmFrontendsEventbusProtoEventExecutionSnapshot) MarshalJSON(
 // EnterpriseCrmFrontendsEventbusProtoEventParameters: LINT.IfChange
 // This message is used for processing and persisting (when applicable)
 // key value pair parameters for each event in the event bus. Please see
-// go/integration-platform/event_bus.md for more details. Next id: 4
 type EnterpriseCrmFrontendsEventbusProtoEventParameters struct {
 	// Parameters: Parameters are a part of Event and can be used to
 	// communicate between different tasks that are part of the same
@@ -5950,7 +5922,6 @@ type EnterpriseCrmFrontendsEventbusProtoWorkflowParameterEntry struct {
 	InOutType string `json:"inOutType,omitempty"`
 
 	// IsTransient: Whether this parameter is a transient parameter.
-	// go/ip-transient-parameters
 	IsTransient bool `json:"isTransient,omitempty"`
 
 	// JsonSchema: This schema will be used to validate runtime JSON-typed
@@ -6803,32 +6774,6 @@ func (s *GoogleCloudIntegrationsV1alphaAccessToken) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIntegrationsV1alphaArchiveBundleRequest: Request for
-// ArchiveBundle.
-type GoogleCloudIntegrationsV1alphaArchiveBundleRequest struct {
-}
-
-// GoogleCloudIntegrationsV1alphaArchiveBundleResponse: Response for
-// ArchiveBundle.
-type GoogleCloudIntegrationsV1alphaArchiveBundleResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-}
-
-// GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest:
-// Request for ArchiveIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest struct {
-}
-
-// GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse:
-// Response for ArchiveIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-}
-
 // GoogleCloudIntegrationsV1alphaAttemptStats: Status for the execution
 // attempt.
 type GoogleCloudIntegrationsV1alphaAttemptStats struct {
@@ -7366,83 +7311,6 @@ func (s *GoogleCloudIntegrationsV1alphaCreateAppsScriptProjectResponse) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIntegrationsV1alphaCreateBundleRequest: PROTECT WITH A
-// VISIBILITY LABEL. THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE.
-// Request to create a new Bundle.
-type GoogleCloudIntegrationsV1alphaCreateBundleRequest struct {
-	// BundleId: Required. name of the bundle that will be created
-	BundleId string `json:"bundleId,omitempty"`
-
-	// Integrations: A list of integrations that can be executed by the
-	// bundle
-	Integrations []string `json:"integrations,omitempty"`
-
-	// SecondaryCustomerOrgId: Optional. The prefix for the SA, it should be
-	// in the format "o". This is an optional field, and if empty service
-	// account will be created per project, where we are creating bundle.
-	// This should only be used as the org ID for which we want to run the
-	// integrations in the bundle.
-	SecondaryCustomerOrgId string `json:"secondaryCustomerOrgId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BundleId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaCreateBundleRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaCreateBundleRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaCreateBundleResponse: Response for
-// create bundle.
-type GoogleCloudIntegrationsV1alphaCreateBundleResponse struct {
-	// Config: It contains the bundle data
-	Config *GoogleCloudIntegrationsV1alphaIntegrationBundleConfig `json:"config,omitempty"`
-
-	// TriggerId: trigger_id of the bundle task
-	TriggerId string `json:"triggerId,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaCreateBundleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaCreateBundleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudIntegrationsV1alphaCredential: Defines parameters for a
 // single, canonical credential.
 type GoogleCloudIntegrationsV1alphaCredential struct {
@@ -7515,19 +7383,6 @@ func (s *GoogleCloudIntegrationsV1alphaCredential) MarshalJSON() ([]byte, error)
 	type NoMethod GoogleCloudIntegrationsV1alphaCredential
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest:
-// Request for DeactivateIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest struct {
-}
-
-// GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse:
-// Response for DeactivateIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudIntegrationsV1alphaDoubleParameterArray: This message only
@@ -8096,39 +7951,6 @@ func (s *GoogleCloudIntegrationsV1alphaGenerateTokenResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIntegrationsV1alphaGetBundleResponse: Response for
-// GetBundle.
-type GoogleCloudIntegrationsV1alphaGetBundleResponse struct {
-	// Config: It contains the bundle data
-	Config *GoogleCloudIntegrationsV1alphaIntegrationBundleConfig `json:"config,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaGetBundleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaGetBundleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudIntegrationsV1alphaIntParameterArray: This message only
 // contains a field of integer array.
 type GoogleCloudIntegrationsV1alphaIntParameterArray struct {
@@ -8343,42 +8165,6 @@ type GoogleCloudIntegrationsV1alphaIntegrationAlertConfigThresholdValue struct {
 
 func (s *GoogleCloudIntegrationsV1alphaIntegrationAlertConfigThresholdValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIntegrationsV1alphaIntegrationAlertConfigThresholdValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaIntegrationBundleConfig: This proto
-// holds the core runner data in the bundle task. It is not expected to
-// be directly edited by the user. Instead, a default value will be
-// provided at the task creation time.
-type GoogleCloudIntegrationsV1alphaIntegrationBundleConfig struct {
-	// Integrations: A bundle of integrations that can be executed by the
-	// task at runtime.
-	Integrations []string `json:"integrations,omitempty"`
-
-	// ServiceAccount: Output only. The service account created and owned by
-	// IP and added to the customers GCP project.
-	ServiceAccount string `json:"serviceAccount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Integrations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Integrations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaIntegrationBundleConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaIntegrationBundleConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9024,44 +8810,6 @@ func (s *GoogleCloudIntegrationsV1alphaListConnectionsResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse:
-// Response for listing the integration execution snapshot.
-type GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse struct {
-	// ExecutionSnapshots: Required. The detailed information for the
-	// execution snapshot.
-	ExecutionSnapshots []*EnterpriseCrmEventbusProtoEventExecutionSnapshot `json:"executionSnapshots,omitempty"`
-
-	// NextPageToken: The token returned in the previous response.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ExecutionSnapshots")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExecutionSnapshots") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudIntegrationsV1alphaListExecutionsResponse: Response for
 // listing the integration execution data.
 type GoogleCloudIntegrationsV1alphaListExecutionsResponse struct {
@@ -9403,39 +9151,6 @@ type GoogleCloudIntegrationsV1alphaListSuspensionsResponse struct {
 
 func (s *GoogleCloudIntegrationsV1alphaListSuspensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIntegrationsV1alphaListSuspensionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse: This is a UI
-// only method and will be moved away. Response for ListTaskEntities.
-type GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse struct {
-	// TaskEntities: The list of the tasks.
-	TaskEntities []*EnterpriseCrmFrontendsEventbusProtoTaskEntity `json:"taskEntities,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "TaskEntities") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TaskEntities") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10786,68 +10501,6 @@ func (s *GoogleCloudIntegrationsV1alphaTriggerConfig) MarshalJSON() ([]byte, err
 type GoogleCloudIntegrationsV1alphaUnpublishIntegrationVersionRequest struct {
 }
 
-// GoogleCloudIntegrationsV1alphaUpdateBundleRequest: THIS METHOD WILL
-// BE MOVED TO A SEPARATE SERVICE. Request message for Bundle update
-type GoogleCloudIntegrationsV1alphaUpdateBundleRequest struct {
-	// Config: It contains the updated bundle data
-	Config *GoogleCloudIntegrationsV1alphaIntegrationBundleConfig `json:"config,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaUpdateBundleRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaUpdateBundleRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaUpdateBundleResponse: Response message
-// for Bundle update
-type GoogleCloudIntegrationsV1alphaUpdateBundleResponse struct {
-	// Config: Contains updated bundle config
-	Config *GoogleCloudIntegrationsV1alphaIntegrationBundleConfig `json:"config,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Config") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudIntegrationsV1alphaUpdateBundleResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudIntegrationsV1alphaUpdateBundleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest:
 // Request for UploadIntegrationVersion.
 type GoogleCloudIntegrationsV1alphaUploadIntegrationVersionRequest struct {
@@ -10949,19 +10602,6 @@ func (s *GoogleCloudIntegrationsV1alphaUsernameAndPassword) MarshalJSON() ([]byt
 	type NoMethod GoogleCloudIntegrationsV1alphaUsernameAndPassword
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest:
-// Request for ValidateIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest struct {
-}
-
-// GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse:
-// Response for ValidateIntegrationVersion.
-type GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudIntegrationsV1alphaValueType: The type of the parameter.
@@ -11474,157 +11114,6 @@ func (c *ConnectorPlatformRegionsEnumerateCall) Do(opts ...googleapi.CallOption)
 	//   "path": "v1alpha/connectorPlatformRegions:enumerate",
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaEnumerateConnectorPlatformRegionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.listTaskEntities":
-
-type ProjectsLocationsListTaskEntitiesCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// ListTaskEntities: This is a UI only method and will be moved away.
-// Returns a list of common tasks.
-//
-//   - parent: The location resource of the request. This is not going to
-//     be used but preserve the field for future.
-func (r *ProjectsLocationsService) ListTaskEntities(parent string) *ProjectsLocationsListTaskEntitiesCall {
-	c := &ProjectsLocationsListTaskEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsListTaskEntitiesCall) Fields(s ...googleapi.Field) *ProjectsLocationsListTaskEntitiesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsListTaskEntitiesCall) IfNoneMatch(entityTag string) *ProjectsLocationsListTaskEntitiesCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsListTaskEntitiesCall) Context(ctx context.Context) *ProjectsLocationsListTaskEntitiesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsListTaskEntitiesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsListTaskEntitiesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}:listTaskEntities")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.listTaskEntities" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsListTaskEntitiesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "This is a UI only method and will be moved away. Returns a list of common tasks.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}:listTaskEntities",
-	//   "httpMethod": "GET",
-	//   "id": "integrations.projects.locations.listTaskEntities",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The location resource of the request. This is not going to be used but preserve the field for future.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}:listTaskEntities",
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15407,162 +14896,6 @@ func (c *ProjectsLocationsIntegrationsExecutionsSuspensionsResolveCall) Do(opts 
 
 }
 
-// method id "integrations.projects.locations.integrations.versions.archive":
-
-type ProjectsLocationsIntegrationsVersionsArchiveCall struct {
-	s                                                              *Service
-	name                                                           string
-	googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest
-	urlParams_                                                     gensupport.URLParams
-	ctx_                                                           context.Context
-	header_                                                        http.Header
-}
-
-// Archive: Soft-deletes the integration. Changes the status of the
-// integration to ARCHIVED. If the integration being ARCHIVED is tagged
-// as "HEAD", the tag is removed from this snapshot and set to the
-// previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED,
-// DUE_FOR_DELETION tags are removed too. This RPC throws an exception
-// if the version being archived is DRAFT, and if the `locked_by` user
-// is not the same as the user performing the Archive. Audit fields
-// updated include last_modified_timestamp, last_modified_by. Any
-// existing lock is released when Archiving a integration. Currently,
-// there is no unarchive mechanism.
-//
-//   - name: The version to archive. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsIntegrationsVersionsService) Archive(name string, googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsArchiveCall {
-	c := &ProjectsLocationsIntegrationsVersionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphaarchiveintegrationversionrequest = googlecloudintegrationsv1alphaarchiveintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsArchiveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsArchiveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaarchiveintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:archive")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.integrations.versions.archive" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsIntegrationsVersionsArchiveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as \"HEAD\", the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being archived is DRAFT, and if the `locked_by` user is not the same as the user performing the Archive. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Archiving a integration. Currently, there is no unarchive mechanism.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}:archive",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.integrations.versions.archive",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to archive. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:archive",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "integrations.projects.locations.integrations.versions.create":
 
 type ProjectsLocationsIntegrationsVersionsCreateCall struct {
@@ -15718,157 +15051,6 @@ func (c *ProjectsLocationsIntegrationsVersionsCreateCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaIntegrationVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.integrations.versions.deactivate":
-
-type ProjectsLocationsIntegrationsVersionsDeactivateCall struct {
-	s                                                                 *Service
-	name                                                              string
-	googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest
-	urlParams_                                                        gensupport.URLParams
-	ctx_                                                              context.Context
-	header_                                                           http.Header
-}
-
-// Deactivate: Sets the status of the ACTIVE integration to SNAPSHOT
-// with a new tag "PREVIOUSLY_PUBLISHED" after validating it. The "HEAD"
-// and "PUBLISH_REQUESTED" tags do not change. This RPC throws an
-// exception if the version being snapshot is not ACTIVE. Audit fields
-// added include action, action_by, action_timestamp.
-//
-//   - name: The version to deactivate. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsIntegrationsVersionsService) Deactivate(name string, googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsDeactivateCall {
-	c := &ProjectsLocationsIntegrationsVersionsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphadeactivateintegrationversionrequest = googlecloudintegrationsv1alphadeactivateintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsDeactivateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsDeactivateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphadeactivateintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:deactivate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.integrations.versions.deactivate" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse.Se
-// rverResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsIntegrationsVersionsDeactivateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Sets the status of the ACTIVE integration to SNAPSHOT with a new tag \"PREVIOUSLY_PUBLISHED\" after validating it. The \"HEAD\" and \"PUBLISH_REQUESTED\" tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}:deactivate",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.integrations.versions.deactivate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:deactivate",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -17366,452 +16548,6 @@ func (c *ProjectsLocationsIntegrationsVersionsUploadCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.integrations.versions.validate":
-
-type ProjectsLocationsIntegrationsVersionsValidateCall struct {
-	s                                                               *Service
-	name                                                            string
-	googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest
-	urlParams_                                                      gensupport.URLParams
-	ctx_                                                            context.Context
-	header_                                                         http.Header
-}
-
-// Validate: Validates the given integration. If the id doesn't exist, a
-// NotFoundException is thrown. If validation fails a
-// CanonicalCodeException is thrown. If there was no failure an empty
-// response is returned.
-//
-//   - name: The version to validate. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsIntegrationsVersionsService) Validate(name string, googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest) *ProjectsLocationsIntegrationsVersionsValidateCall {
-	c := &ProjectsLocationsIntegrationsVersionsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphavalidateintegrationversionrequest = googlecloudintegrationsv1alphavalidateintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsIntegrationsVersionsValidateCall) Fields(s ...googleapi.Field) *ProjectsLocationsIntegrationsVersionsValidateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsIntegrationsVersionsValidateCall) Context(ctx context.Context) *ProjectsLocationsIntegrationsVersionsValidateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsIntegrationsVersionsValidateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsIntegrationsVersionsValidateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphavalidateintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:validate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.integrations.versions.validate" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsIntegrationsVersionsValidateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Validates the given integration. If the id doesn't exist, a NotFoundException is thrown. If validation fails a CanonicalCodeException is thrown. If there was no failure an empty response is returned.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/integrations/{integrationsId}/versions/{versionsId}:validate",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.integrations.versions.validate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to validate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:validate",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.products.createBundle":
-
-type ProjectsLocationsProductsCreateBundleCall struct {
-	s                                                 *Service
-	parent                                            string
-	googlecloudintegrationsv1alphacreatebundlerequest *GoogleCloudIntegrationsV1alphaCreateBundleRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// CreateBundle: PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE
-// MOVED TO A SEPARATE SERVICE. Create a bundle.
-//
-// - parent: The location resource of the request.
-func (r *ProjectsLocationsProductsService) CreateBundle(parent string, googlecloudintegrationsv1alphacreatebundlerequest *GoogleCloudIntegrationsV1alphaCreateBundleRequest) *ProjectsLocationsProductsCreateBundleCall {
-	c := &ProjectsLocationsProductsCreateBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudintegrationsv1alphacreatebundlerequest = googlecloudintegrationsv1alphacreatebundlerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsCreateBundleCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsCreateBundleCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsCreateBundleCall) Context(ctx context.Context) *ProjectsLocationsProductsCreateBundleCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsCreateBundleCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsCreateBundleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphacreatebundlerequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}:createBundle")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.createBundle" call.
-// Exactly one of *GoogleCloudIntegrationsV1alphaCreateBundleResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaCreateBundleResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsCreateBundleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaCreateBundleResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaCreateBundleResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE. Create a bundle.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}:createBundle",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.products.createBundle",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The location resource of the request.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}:createBundle",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaCreateBundleRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaCreateBundleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.products.listTaskEntities":
-
-type ProjectsLocationsProductsListTaskEntitiesCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// ListTaskEntities: This is a UI only method and will be moved away.
-// Returns a list of common tasks.
-//
-//   - parent: The location resource of the request. This is not going to
-//     be used but preserve the field for future.
-func (r *ProjectsLocationsProductsService) ListTaskEntities(parent string) *ProjectsLocationsProductsListTaskEntitiesCall {
-	c := &ProjectsLocationsProductsListTaskEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsListTaskEntitiesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) IfNoneMatch(entityTag string) *ProjectsLocationsProductsListTaskEntitiesCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) Context(ctx context.Context) *ProjectsLocationsProductsListTaskEntitiesCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}:listTaskEntities")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.listTaskEntities" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsListTaskEntitiesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "This is a UI only method and will be moved away. Returns a list of common tasks.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}:listTaskEntities",
-	//   "httpMethod": "GET",
-	//   "id": "integrations.projects.locations.products.listTaskEntities",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The location resource of the request. This is not going to be used but preserve the field for future.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}:listTaskEntities",
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaListTaskEntitiesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -19584,152 +18320,6 @@ func (c *ProjectsLocationsProductsCertificatesPatchCall) Do(opts ...googleapi.Ca
 
 }
 
-// method id "integrations.projects.locations.products.integrations.archiveBundle":
-
-type ProjectsLocationsProductsIntegrationsArchiveBundleCall struct {
-	s                                                  *Service
-	name                                               string
-	googlecloudintegrationsv1alphaarchivebundlerequest *GoogleCloudIntegrationsV1alphaArchiveBundleRequest
-	urlParams_                                         gensupport.URLParams
-	ctx_                                               context.Context
-	header_                                            http.Header
-}
-
-// ArchiveBundle: PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE
-// MOVED TO A SEPARATE SERVICE. Soft-deletes the bundle.
-//
-//   - name: The bundle to archive. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}.
-func (r *ProjectsLocationsProductsIntegrationsService) ArchiveBundle(name string, googlecloudintegrationsv1alphaarchivebundlerequest *GoogleCloudIntegrationsV1alphaArchiveBundleRequest) *ProjectsLocationsProductsIntegrationsArchiveBundleCall {
-	c := &ProjectsLocationsProductsIntegrationsArchiveBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphaarchivebundlerequest = googlecloudintegrationsv1alphaarchivebundlerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsArchiveBundleCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsArchiveBundleCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaarchivebundlerequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:archiveBundle")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.archiveBundle" call.
-// Exactly one of *GoogleCloudIntegrationsV1alphaArchiveBundleResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIntegrationsV1alphaArchiveBundleResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsArchiveBundleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaArchiveBundleResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaArchiveBundleResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE. Soft-deletes the bundle.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}:archiveBundle",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.products.integrations.archiveBundle",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The bundle to archive. Format: projects/{project}/locations/{location}/integrations/{integration}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:archiveBundle",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveBundleRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveBundleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "integrations.projects.locations.products.integrations.execute":
 
 type ProjectsLocationsProductsIntegrationsExecuteCall struct {
@@ -21494,385 +20084,6 @@ func (c *ProjectsLocationsProductsIntegrationsExecutionsSuspensionsResolveCall) 
 
 }
 
-// method id "integrations.projects.locations.products.integrations.executionsnapshots.list":
-
-type ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists the snapshots of a given integration executions. This RPC
-// is not being used.
-//
-// - parent: The parent resource name of the integration execution.
-func (r *ProjectsLocationsProductsIntegrationsExecutionsnapshotsService) List(parent string) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c := &ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Currently supports
-// filter by `execution_info_id` or `execution_snapshot_id`.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Filter(filter string) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Number of entries to
-// be returned in a page.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) PageSize(pageSize int64) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The token used to
-// retrieve the next page results.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) PageToken(pageToken string) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// ReadMask sets the optional parameter "readMask": View mask for the
-// response data. If set, only the field specified will be returned as
-// part of the result. If not set, all fields in event execution
-// snapshot will be filled and returned.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) ReadMask(readMask string) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.urlParams_.Set("readMask", readMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/executionsnapshots")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.executionsnapshots.list" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists the snapshots of a given integration executions. This RPC is not being used.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/executionsnapshots",
-	//   "httpMethod": "GET",
-	//   "id": "integrations.projects.locations.products.integrations.executionsnapshots.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Currently supports filter by `execution_info_id` or `execution_snapshot_id`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Number of entries to be returned in a page.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token used to retrieve the next page results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource name of the integration execution.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "View mask for the response data. If set, only the field specified will be returned as part of the result. If not set, all fields in event execution snapshot will be filled and returned.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/executionsnapshots",
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsProductsIntegrationsExecutionsnapshotsListCall) Pages(ctx context.Context, f func(*GoogleCloudIntegrationsV1alphaListExecutionSnapshotsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "integrations.projects.locations.products.integrations.versions.archive":
-
-type ProjectsLocationsProductsIntegrationsVersionsArchiveCall struct {
-	s                                                              *Service
-	name                                                           string
-	googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest
-	urlParams_                                                     gensupport.URLParams
-	ctx_                                                           context.Context
-	header_                                                        http.Header
-}
-
-// Archive: Soft-deletes the integration. Changes the status of the
-// integration to ARCHIVED. If the integration being ARCHIVED is tagged
-// as "HEAD", the tag is removed from this snapshot and set to the
-// previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED,
-// DUE_FOR_DELETION tags are removed too. This RPC throws an exception
-// if the version being archived is DRAFT, and if the `locked_by` user
-// is not the same as the user performing the Archive. Audit fields
-// updated include last_modified_timestamp, last_modified_by. Any
-// existing lock is released when Archiving a integration. Currently,
-// there is no unarchive mechanism.
-//
-//   - name: The version to archive. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsProductsIntegrationsVersionsService) Archive(name string, googlecloudintegrationsv1alphaarchiveintegrationversionrequest *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsArchiveCall {
-	c := &ProjectsLocationsProductsIntegrationsVersionsArchiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphaarchiveintegrationversionrequest = googlecloudintegrationsv1alphaarchiveintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsArchiveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsArchiveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaarchiveintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:archive")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.versions.archive" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsVersionsArchiveCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as \"HEAD\", the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being archived is DRAFT, and if the `locked_by` user is not the same as the user performing the Archive. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Archiving a integration. Currently, there is no unarchive mechanism.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:archive",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.products.integrations.versions.archive",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to archive. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:archive",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaArchiveIntegrationVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "integrations.projects.locations.products.integrations.versions.create":
 
 type ProjectsLocationsProductsIntegrationsVersionsCreateCall struct {
@@ -22028,157 +20239,6 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsCreateCall) Do(opts ...goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaIntegrationVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.products.integrations.versions.deactivate":
-
-type ProjectsLocationsProductsIntegrationsVersionsDeactivateCall struct {
-	s                                                                 *Service
-	name                                                              string
-	googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest
-	urlParams_                                                        gensupport.URLParams
-	ctx_                                                              context.Context
-	header_                                                           http.Header
-}
-
-// Deactivate: Sets the status of the ACTIVE integration to SNAPSHOT
-// with a new tag "PREVIOUSLY_PUBLISHED" after validating it. The "HEAD"
-// and "PUBLISH_REQUESTED" tags do not change. This RPC throws an
-// exception if the version being snapshot is not ACTIVE. Audit fields
-// added include action, action_by, action_timestamp.
-//
-//   - name: The version to deactivate. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsProductsIntegrationsVersionsService) Deactivate(name string, googlecloudintegrationsv1alphadeactivateintegrationversionrequest *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall {
-	c := &ProjectsLocationsProductsIntegrationsVersionsDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphadeactivateintegrationversionrequest = googlecloudintegrationsv1alphadeactivateintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphadeactivateintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:deactivate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.versions.deactivate" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse.Se
-// rverResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsVersionsDeactivateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Sets the status of the ACTIVE integration to SNAPSHOT with a new tag \"PREVIOUSLY_PUBLISHED\" after validating it. The \"HEAD\" and \"PUBLISH_REQUESTED\" tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:deactivate",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.products.integrations.versions.deactivate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:deactivate",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaDeactivateIntegrationVersionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -22653,157 +20713,6 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsGetCall) Do(opts ...google
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaIntegrationVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.products.integrations.versions.getBundle":
-
-type ProjectsLocationsProductsIntegrationsVersionsGetBundleCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetBundle: PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE MOVED
-// TO A SEPARATE SERVICE. RPC to get details of the Bundle
-//
-// - name: The bundle name.
-func (r *ProjectsLocationsProductsIntegrationsVersionsService) GetBundle(name string) *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall {
-	c := &ProjectsLocationsProductsIntegrationsVersionsGetBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) IfNoneMatch(entityTag string) *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:getBundle")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.versions.getBundle" call.
-// Exactly one of *GoogleCloudIntegrationsV1alphaGetBundleResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaGetBundleResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsVersionsGetBundleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaGetBundleResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaGetBundleResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "PROTECT WITH A VISIBILITY LABEL. THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE. RPC to get details of the Bundle",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:getBundle",
-	//   "httpMethod": "GET",
-	//   "id": "integrations.projects.locations.products.integrations.versions.getBundle",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The bundle name.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:getBundle",
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaGetBundleResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -23685,151 +21594,6 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsUnpublishCall) Do(opts ...
 
 }
 
-// method id "integrations.projects.locations.products.integrations.versions.updateBundle":
-
-type ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall struct {
-	s                                                 *Service
-	name                                              string
-	googlecloudintegrationsv1alphaupdatebundlerequest *GoogleCloudIntegrationsV1alphaUpdateBundleRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// UpdateBundle: THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE. RPC to
-// update the Bundle
-//
-// - name: Bundle name.
-func (r *ProjectsLocationsProductsIntegrationsVersionsService) UpdateBundle(name string, googlecloudintegrationsv1alphaupdatebundlerequest *GoogleCloudIntegrationsV1alphaUpdateBundleRequest) *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall {
-	c := &ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphaupdatebundlerequest = googlecloudintegrationsv1alphaupdatebundlerequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphaupdatebundlerequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:updateBundle")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.versions.updateBundle" call.
-// Exactly one of *GoogleCloudIntegrationsV1alphaUpdateBundleResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaUpdateBundleResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsVersionsUpdateBundleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaUpdateBundleResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaUpdateBundleResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "THIS METHOD WILL BE MOVED TO A SEPARATE SERVICE. RPC to update the Bundle",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:updateBundle",
-	//   "httpMethod": "PATCH",
-	//   "id": "integrations.projects.locations.products.integrations.versions.updateBundle",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Bundle name",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:updateBundle",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaUpdateBundleRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaUpdateBundleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "integrations.projects.locations.products.integrations.versions.upload":
 
 type ProjectsLocationsProductsIntegrationsVersionsUploadCall struct {
@@ -23972,156 +21736,6 @@ func (c *ProjectsLocationsProductsIntegrationsVersionsUploadCall) Do(opts ...goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudIntegrationsV1alphaUploadIntegrationVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "integrations.projects.locations.products.integrations.versions.validate":
-
-type ProjectsLocationsProductsIntegrationsVersionsValidateCall struct {
-	s                                                               *Service
-	name                                                            string
-	googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest
-	urlParams_                                                      gensupport.URLParams
-	ctx_                                                            context.Context
-	header_                                                         http.Header
-}
-
-// Validate: Validates the given integration. If the id doesn't exist, a
-// NotFoundException is thrown. If validation fails a
-// CanonicalCodeException is thrown. If there was no failure an empty
-// response is returned.
-//
-//   - name: The version to validate. Format:
-//     projects/{project}/locations/{location}/integrations/{integration}/v
-//     ersions/{version}.
-func (r *ProjectsLocationsProductsIntegrationsVersionsService) Validate(name string, googlecloudintegrationsv1alphavalidateintegrationversionrequest *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest) *ProjectsLocationsProductsIntegrationsVersionsValidateCall {
-	c := &ProjectsLocationsProductsIntegrationsVersionsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudintegrationsv1alphavalidateintegrationversionrequest = googlecloudintegrationsv1alphavalidateintegrationversionrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProductsIntegrationsVersionsValidateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) Context(ctx context.Context) *ProjectsLocationsProductsIntegrationsVersionsValidateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudintegrationsv1alphavalidateintegrationversionrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:validate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "integrations.projects.locations.products.integrations.versions.validate" call.
-// Exactly one of
-// *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsProductsIntegrationsVersionsValidateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Validates the given integration. If the id doesn't exist, a NotFoundException is thrown. If validation fails a CanonicalCodeException is thrown. If there was no failure an empty response is returned.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/products/{productsId}/integrations/{integrationsId}/versions/{versionsId}:validate",
-	//   "httpMethod": "POST",
-	//   "id": "integrations.projects.locations.products.integrations.versions.validate",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The version to validate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/products/[^/]+/integrations/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:validate",
-	//   "request": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaValidateIntegrationVersionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudIntegrationsV1alphaValidateIntegrationVersionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

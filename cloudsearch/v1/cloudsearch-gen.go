@@ -949,8 +949,8 @@ type Annotation struct {
 	// tationSanitizer.java,
 	// //depot/google3/java/com/google/apps/dynamite/v1/backend/action/common
 	// /SystemMessageHelper.java,
-	// //depot/google3/java/com/google/caribou/eli/mediation/chat/AnnotationT
-	// ranslator.java )
+	// //depot/google3/java/com/google/caribou/eli/mediation/chat/AnnotationC
+	// onverter.java )
 	RequiredMessageFeaturesMetadata *RequiredMessageFeaturesMetadata `json:"requiredMessageFeaturesMetadata,omitempty"`
 
 	RoomUpdated *RoomUpdatedMetadata `json:"roomUpdated,omitempty"`
@@ -1560,6 +1560,9 @@ type AppsDynamiteSharedBackendUploadMetadata struct {
 	// anyway.
 	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
 	// skipped because the message originated from Interop or Babel.
+	//   "SCAN_SKIPPED_MESSAGE_SENT_DURING_SPACE_MIGRATION" - Scanning was
+	// skipped because the message was sent while the space is in migration
+	// mode. See go/migration-mode for details.
 	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
 	// happened, but rule evaluation is skipped because no rules were found.
 	//
@@ -8688,6 +8691,9 @@ type DlpScanSummary struct {
 	// anyway.
 	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
 	// skipped because the message originated from Interop or Babel.
+	//   "SCAN_SKIPPED_MESSAGE_SENT_DURING_SPACE_MIGRATION" - Scanning was
+	// skipped because the message was sent while the space is in migration
+	// mode. See go/migration-mode for details.
 	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
 	// happened, but rule evaluation is skipped because no rules were found.
 	//
@@ -9209,6 +9215,18 @@ func (s *DriveTimeSpanRestrict) MarshalJSON() ([]byte, error) {
 // level scoring information. This data is used for logging in query-api
 // server and for testing purposes.
 type DynamiteMessagesScoringInfo struct {
+	CommonContactCount int64 `json:"commonContactCount,omitempty,string"`
+
+	CommonCountToContactListCountRatio float64 `json:"commonCountToContactListCountRatio,omitempty"`
+
+	CommonCountToMembershipCountRatio float64 `json:"commonCountToMembershipCountRatio,omitempty"`
+
+	CreatorGaiaId int64 `json:"creatorGaiaId,omitempty,string"`
+
+	CreatorInSearcherContactList bool `json:"creatorInSearcherContactList,omitempty"`
+
+	DasContactCount int64 `json:"dasContactCount,omitempty,string"`
+
 	FinalScore float64 `json:"finalScore,omitempty"`
 
 	FreshnessScore float64 `json:"freshnessScore,omitempty"`
@@ -9219,24 +9237,29 @@ type DynamiteMessagesScoringInfo struct {
 
 	MessageSenderAffinityScore float64 `json:"messageSenderAffinityScore,omitempty"`
 
+	SpaceId int64 `json:"spaceId,omitempty,string"`
+
+	SpaceMembershipCount int64 `json:"spaceMembershipCount,omitempty,string"`
+
 	TopicalityScore float64 `json:"topicalityScore,omitempty"`
 
 	UnjoinedSpaceAffinityScore float64 `json:"unjoinedSpaceAffinityScore,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FinalScore") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CommonContactCount")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FinalScore") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CommonContactCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -9249,19 +9272,23 @@ func (s *DynamiteMessagesScoringInfo) MarshalJSON() ([]byte, error) {
 func (s *DynamiteMessagesScoringInfo) UnmarshalJSON(data []byte) error {
 	type NoMethod DynamiteMessagesScoringInfo
 	var s1 struct {
-		FinalScore                 gensupport.JSONFloat64 `json:"finalScore"`
-		FreshnessScore             gensupport.JSONFloat64 `json:"freshnessScore"`
-		JoinedSpaceAffinityScore   gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
-		MessageAgeInDays           gensupport.JSONFloat64 `json:"messageAgeInDays"`
-		MessageSenderAffinityScore gensupport.JSONFloat64 `json:"messageSenderAffinityScore"`
-		TopicalityScore            gensupport.JSONFloat64 `json:"topicalityScore"`
-		UnjoinedSpaceAffinityScore gensupport.JSONFloat64 `json:"unjoinedSpaceAffinityScore"`
+		CommonCountToContactListCountRatio gensupport.JSONFloat64 `json:"commonCountToContactListCountRatio"`
+		CommonCountToMembershipCountRatio  gensupport.JSONFloat64 `json:"commonCountToMembershipCountRatio"`
+		FinalScore                         gensupport.JSONFloat64 `json:"finalScore"`
+		FreshnessScore                     gensupport.JSONFloat64 `json:"freshnessScore"`
+		JoinedSpaceAffinityScore           gensupport.JSONFloat64 `json:"joinedSpaceAffinityScore"`
+		MessageAgeInDays                   gensupport.JSONFloat64 `json:"messageAgeInDays"`
+		MessageSenderAffinityScore         gensupport.JSONFloat64 `json:"messageSenderAffinityScore"`
+		TopicalityScore                    gensupport.JSONFloat64 `json:"topicalityScore"`
+		UnjoinedSpaceAffinityScore         gensupport.JSONFloat64 `json:"unjoinedSpaceAffinityScore"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.CommonCountToContactListCountRatio = float64(s1.CommonCountToContactListCountRatio)
+	s.CommonCountToMembershipCountRatio = float64(s1.CommonCountToMembershipCountRatio)
 	s.FinalScore = float64(s1.FinalScore)
 	s.FreshnessScore = float64(s1.FreshnessScore)
 	s.JoinedSpaceAffinityScore = float64(s1.JoinedSpaceAffinityScore)
@@ -16286,6 +16313,9 @@ type Message struct {
 	// anyway.
 	//   "SCAN_SKIPPED_MESSAGE_FROM_UNSUPPORTED_ORIGIN" - Scanning was
 	// skipped because the message originated from Interop or Babel.
+	//   "SCAN_SKIPPED_MESSAGE_SENT_DURING_SPACE_MIGRATION" - Scanning was
+	// skipped because the message was sent while the space is in migration
+	// mode. See go/migration-mode for details.
 	//   "SCAN_RULE_EVALUATION_SKIPPED_NO_RULES_FOUND" - Rule fetch
 	// happened, but rule evaluation is skipped because no rules were found.
 	//

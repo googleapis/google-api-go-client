@@ -1771,6 +1771,44 @@ func (s *PickTimeSeriesFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryExemplarsRequest: QueryExemplarsRequest holds all parameters of
+// the Prometheus upstream API for querying exemplars.
+type QueryExemplarsRequest struct {
+	// End: The end time to evaluate the query for. Either floating point
+	// UNIX seconds or RFC3339 formatted timestamp.
+	End string `json:"end,omitempty"`
+
+	// Query: A PromQL query string. Query lanauge documentation:
+	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
+	Query string `json:"query,omitempty"`
+
+	// Start: The start time to evaluate the query for. Either floating
+	// point UNIX seconds or RFC3339 formatted timestamp.
+	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryExemplarsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryExemplarsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QueryInstantRequest: QueryInstantRequest holds all parameters of the
 // Prometheus upstream instant query API plus GCM specific parameters.
 type QueryInstantRequest struct {
@@ -4692,6 +4730,166 @@ func (c *ProjectsLocationPrometheusApiV1QueryCall) Do(opts ...googleapi.CallOpti
 	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/query",
 	//   "request": {
 	//     "$ref": "QueryInstantRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "HttpBody"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// method id "monitoring.projects.location.prometheus.api.v1.query_exemplars":
+
+type ProjectsLocationPrometheusApiV1QueryExemplarsCall struct {
+	s                     *Service
+	name                  string
+	location              string
+	queryexemplarsrequest *QueryExemplarsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// QueryExemplars: Lists exemplars relevant to a given PromQL query,
+//
+//   - location: Location of the resource information. Has to be "global"
+//     now.
+//   - name: The project on which to execute the request. Data associcated
+//     with the project's workspace stored under the The format is:
+//     projects/PROJECT_ID_OR_NUMBER. Open source API but used as a
+//     request path prefix to distinguish different virtual Prometheus
+//     instances of Google Prometheus Engine.
+func (r *ProjectsLocationPrometheusApiV1Service) QueryExemplars(name string, location string, queryexemplarsrequest *QueryExemplarsRequest) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c := &ProjectsLocationPrometheusApiV1QueryExemplarsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.location = location
+	c.queryexemplarsrequest = queryexemplarsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Fields(s ...googleapi.Field) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Context(ctx context.Context) *ProjectsLocationPrometheusApiV1QueryExemplarsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryexemplarsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/location/{location}/prometheus/api/v1/query_exemplars")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":     c.name,
+		"location": c.location,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.projects.location.prometheus.api.v1.query_exemplars" call.
+// Exactly one of *HttpBody or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists exemplars relevant to a given PromQL query,",
+	//   "flatPath": "v1/projects/{projectsId}/location/{location}/prometheus/api/v1/query_exemplars",
+	//   "httpMethod": "POST",
+	//   "id": "monitoring.projects.location.prometheus.api.v1.query_exemplars",
+	//   "parameterOrder": [
+	//     "name",
+	//     "location"
+	//   ],
+	//   "parameters": {
+	//     "location": {
+	//       "description": "Location of the resource information. Has to be \"global\" now.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The project on which to execute the request. Data associcated with the project's workspace stored under the The format is: projects/PROJECT_ID_OR_NUMBER. Open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}/location/{location}/prometheus/api/v1/query_exemplars",
+	//   "request": {
+	//     "$ref": "QueryExemplarsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "HttpBody"

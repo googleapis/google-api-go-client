@@ -3521,12 +3521,18 @@ type GoogleCloudDocumentaiV1DocumentProvenance struct {
 	// against a `parent`.
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
-	//   "REPLACE" - Replace an element identified by `parent`.
-	//   "EVAL_REQUESTED" - Request human review for the element identified
-	// by `parent`.
-	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
-	// confidence will be set to 1.0.
-	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
+	//   "UPDATE" - Updates any fields within the given provenance scope of
+	// the message. It 'overwrites' the fields rather than replacing them.
+	// This is especially relevant when we just want to update a field value
+	// of an entity without also affecting all the child properties.
+	//   "REPLACE" - Currently unused. Replace an element identified by
+	// `parent`.
+	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
+	// identified by `parent`.
+	//   "EVAL_APPROVED" - Deprecated. Element is reviewed and approved at
+	// human review, confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Deprecated. Element is skipped in the validation
+	// process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -4185,6 +4191,36 @@ type GoogleCloudDocumentaiV1EnableProcessorRequest struct {
 type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
 }
 
+// GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata: Metadata of
+// the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest: Evaluates the
 // given ProcessorVersion against the supplied documents.
 type GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest struct {
@@ -4212,6 +4248,35 @@ type GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest struct {
 
 func (s *GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse: Metadata of
+// the EvaluateProcessorVersion method.
+type GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse struct {
+	// Evaluation: The resource name of the created evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Evaluation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Evaluation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5570,6 +5635,89 @@ func (s *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest) MarshalJSON()
 type GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse struct {
 }
 
+// GoogleCloudDocumentaiV1TrainProcessorVersionMetadata: The metadata
+// that represents a processor version being created.
+type GoogleCloudDocumentaiV1TrainProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// TestDatasetValidation: The test dataset validation information.
+	TestDatasetValidation *GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation `json:"testDatasetValidation,omitempty"`
+
+	// TrainingDatasetValidation: The training dataset validation
+	// information.
+	TrainingDatasetValidation *GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation `json:"trainingDatasetValidation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation:
+//
+//	The dataset validation information. This includes any and all errors
+//
+// with documents and the dataset.
+type GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation struct {
+	// DatasetErrorCount: The total number of dataset errors.
+	DatasetErrorCount int64 `json:"datasetErrorCount,omitempty"`
+
+	// DatasetErrors: Error information for the dataset as a whole. A
+	// maximum of 10 dataset errors will be returned. A single dataset error
+	// is terminal for training.
+	DatasetErrors []*GoogleRpcStatus `json:"datasetErrors,omitempty"`
+
+	// DocumentErrorCount: The total number of document errors.
+	DocumentErrorCount int64 `json:"documentErrorCount,omitempty"`
+
+	// DocumentErrors: Error information pertaining to specific documents. A
+	// maximum of 10 document errors will be returned. Any document with
+	// errors will not be used throughout training.
+	DocumentErrors []*GoogleRpcStatus `json:"documentErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetErrorCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetErrorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1TrainProcessorVersionRequest: Request message
 // for the create processor version method.
 type GoogleCloudDocumentaiV1TrainProcessorVersionRequest struct {
@@ -5644,6 +5792,37 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData struct {
 
 func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1TrainProcessorVersionResponse: The response
+// for the TrainProcessorVersion method.
+type GoogleCloudDocumentaiV1TrainProcessorVersionResponse struct {
+	// ProcessorVersion: The resource name of the processor version produced
+	// by training.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7120,12 +7299,18 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	// against a `parent`.
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
-	//   "REPLACE" - Replace an element identified by `parent`.
-	//   "EVAL_REQUESTED" - Request human review for the element identified
-	// by `parent`.
-	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
-	// confidence will be set to 1.0.
-	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
+	//   "UPDATE" - Updates any fields within the given provenance scope of
+	// the message. It 'overwrites' the fields rather than replacing them.
+	// This is especially relevant when we just want to update a field value
+	// of an entity without also affecting all the child properties.
+	//   "REPLACE" - Currently unused. Replace an element identified by
+	// `parent`.
+	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
+	// identified by `parent`.
+	//   "EVAL_APPROVED" - Deprecated. Element is reviewed and approved at
+	// human review, confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Deprecated. Element is skipped in the validation
+	// process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -9284,12 +9469,18 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	// against a `parent`.
 	//   "ADD" - Add an element.
 	//   "REMOVE" - Remove an element identified by `parent`.
-	//   "REPLACE" - Replace an element identified by `parent`.
-	//   "EVAL_REQUESTED" - Request human review for the element identified
-	// by `parent`.
-	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
-	// confidence will be set to 1.0.
-	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
+	//   "UPDATE" - Updates any fields within the given provenance scope of
+	// the message. It 'overwrites' the fields rather than replacing them.
+	// This is especially relevant when we just want to update a field value
+	// of an entity without also affecting all the child properties.
+	//   "REPLACE" - Currently unused. Replace an element identified by
+	// `parent`.
+	//   "EVAL_REQUESTED" - Deprecated. Request human review for the element
+	// identified by `parent`.
+	//   "EVAL_APPROVED" - Deprecated. Element is reviewed and approved at
+	// human review, confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Deprecated. Element is skipped in the validation
+	// process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
